@@ -15,7 +15,5 @@ export class HomePage {
   ActionLoadQuote(){
     this.navCtrl.navigateRoot('/home/quotelist');
    }
-  
-
 
 }

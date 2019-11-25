@@ -11,11 +11,14 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { QuotePageModule } from './quote/quote.module';
-
+import { CreatequoteComponent } from './quote/createquote/createquote.component'
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,QuotePageModule,HttpClientModule],
+  declarations: [
+    AppComponent,
+    CreatequoteComponent
+  ],
+  entryComponents: [CreatequoteComponent],
+  imports: [BrowserModule, IonicModule.forRoot(),FormsModule, AppRoutingModule,QuotePageModule,HttpClientModule],
   providers: [
     StatusBar,
     SplashScreen,

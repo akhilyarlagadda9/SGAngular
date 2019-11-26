@@ -1,28 +1,36 @@
 <ion-header>
-    <ion-toolbar color="primary">
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/home"></ion-back-button>
-      </ion-buttons>
-      <ion-title>Quote</ion-title>
-      <ion-button slot="end" color="success" size="small" (click)="onCreateQuote()">+</ion-button>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Quote</ion-title>
+    <ion-button slot="end" color="success" size="small" (click)="ActionCreateQuote()">+</ion-button>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
-    <ion-searchbar #quotesearch  (keyup.enter)="ActionSearch(quotesearch.value)"></ion-searchbar>
-    <ion-list>
-        <ion-item *ngFor="let quote of quotelist">
-         <ion-grid class="no-padding">
-          <ion-row><h5 class="no-margin"># {{quote.QuoteNo}} - {{quote.QuoteName}}</h5></ion-row>
-          <ion-row>
-              <small><span>{{quote.SalesPerson}}</span></small>
-            </ion-row>
-            <ion-row>
-              <small><span>{{quote.CustomerName}}</span></small>
-            </ion-row>
-        </ion-grid>
-        </ion-item>
-        <ion-infinite-scroll (ionInfinite)="AtiondoInfinite($event)">
-            <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."></ion-infinite-scroll-content>
-          </ion-infinite-scroll>
-      </ion-list>
+  <ion-searchbar #quotesearch (keyup.enter)="ActionSearch(quotesearch.value)"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let header of quotelist">
+      <ion-grid class="no-padding">
+        <ion-row>
+          <ion-row (click)="ActionQuoteEdit()">
+            <h5 class="no-margin"># {{header.QuoteNo}} - {{header.QuoteName}}</h5>
+          </ion-row>
+        </ion-row>
+        <ion-row>
+          <ion-col class="no-padding" size="10">
+            <ion-row size="12"><small><span>{{header.SalesPerson}}</span></small></ion-row>
+            <ion-row size="12"><small><span>{{header.CustomerName}}</span></small></ion-row>
+          </ion-col>
+          <ion-col class="no-padding" size="2">
+            <button ion-button item-end class="viewbtn">View</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-infinite-scroll (ionInfinite)="AtiondoInfinite($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-list>
 </ion-content>

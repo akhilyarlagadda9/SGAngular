@@ -12,12 +12,14 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { QuotePageModule } from './quote/quote.module';
 import { CreatequoteComponent } from './quote/createquote/createquote.component'
+import { QuoteeditComponent } from './quote/quoteedit/quoteedit.component';
 @NgModule({
   declarations: [
     AppComponent,
-    CreatequoteComponent
+    CreatequoteComponent,
+    QuoteeditComponent
   ],
-  entryComponents: [CreatequoteComponent],
+  entryComponents: [CreatequoteComponent,QuoteeditComponent],
   imports: [BrowserModule, IonicModule.forRoot(),FormsModule, AppRoutingModule,QuotePageModule,HttpClientModule],
   providers: [
     StatusBar,

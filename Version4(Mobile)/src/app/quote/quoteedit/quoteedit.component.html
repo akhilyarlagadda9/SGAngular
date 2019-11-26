@@ -6,28 +6,39 @@
         <ion-title>Quote Info</ion-title>
       </ion-toolbar>
   </ion-header>
-  <ion-item class="no-padding">
-      <div class="row">
-      <span>Job Name :</span>{{header.QuoteName}}</div>
-      <span>Address</span>:{{header.Address1}}
-      <span>Address</span>:{{header.Address1}}
-      <span>City</span>:{{header.City}}
-      <span>State</span>:{{header.State}}
-      <span>Zipcode</span>:{{header.Zipcode}}
-  </ion-item>
-
-<ion-item>
-  
-</ion-item>
-
 
 
   <ion-content>
-   
-
-
-
-
-
-
+      <ion-row>
+          <ion-label>Job Name:</ion-label>
+          <span>{{header.QuoteName}}</span>
+      </ion-row>
+      <ion-row>
+          <span><b>Address:</b></span>
+          <span>
+              {{header.Address1}}
+          </span>
+      </ion-row>
+      <ion-row>
+          <span><b>City:</b></span>
+          <span>
+              {{header.City}}
+          </span>
+      </ion-row>
+      <ion-row>
+          <span><b>State:</b></span>
+          <span>
+              {{header.State}}
+          </span>
+      </ion-row> 
+      <ion-row>
+          <span><b>Zipcode:</b></span>
+          <span>
+              {{header.Zipcode}}
+          </span>
+      </ion-row>
   </ion-content>
+
+
+
+ 

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { CreatequoteComponent } from './createquote/createquote.component'
-
+import { QuoteeditComponent } from './quoteedit/quoteedit.component'
 
 import {QuoteService} from 'src/app/service/quote.service'
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-quote',
@@ -24,6 +25,8 @@ export class QuotePage implements OnInit {
   ngOnInit() {
     this.ActionQuoteList();
   }
+
+  /***** QUOTELIST-INDEFINITE, SEARCHQUOTE *****/
   ActionQuoteList() {
     // set obj
     this.setquoteobj("", 0, 0, 25);
@@ -33,8 +36,6 @@ export class QuotePage implements OnInit {
     this.setquoteobj(q, 0, 0, 25);
     this.GetQuoteList();
   }
-  
-
    AtiondoInfinite(event) {
     //this.pageindex = this.pageindex+1;
     this.qsearchobj.index = this.qsearchobj.index+1;
@@ -69,7 +70,17 @@ export class QuotePage implements OnInit {
   },
   error => console.log(error));
 }
-   async onCreateQuote() {
+
+/***** QUOTEEDIT *****/
+async ActionQuoteEdit() {
+  const modal = await this.Modalcntrl.create({
+    component: QuoteeditComponent
+  });
+  return await modal.present();
+}
+
+/***** CREATE QUOTE *****/
+   async ActionCreateQuote() {
     const modal = await this.Modalcntrl.create({
       component: CreatequoteComponent
     });

@@ -13,7 +13,7 @@
     <ion-item *ngFor="let header of quotelist">
       <ion-grid class="no-padding">
         <ion-row>
-          <ion-row (click)="ActionQuoteEdit()">
+          <ion-row (click)="ActionQuoteEdit(header.ID,header.QuoteNo,header.VersionID)">
             <h5 class="no-margin"># {{header.QuoteNo}} - {{header.QuoteName}}</h5>
           </ion-row>
         </ion-row>
@@ -23,7 +23,7 @@
             <ion-row size="12"><small><span>{{header.CustomerName}}</span></small></ion-row>
           </ion-col>
           <ion-col class="no-padding" size="2">
-            <button ion-button item-end class="viewbtn" (click)="ActionQuoteEdit(header.ID,header.QuoteNo,header.VersionID)">View
+            <button ion-button item-end class="viewbtn">View
 
                 <ion-select interface="popover"  >
                     <ion-select-option *ngFor="let version of header.VersionList" ><span>V - {{version.SrNo}}</span></ion-select-option>

@@ -21,6 +21,10 @@ export class QuotePage implements OnInit {
    search: string,statusId: number,index: number,noOfRecords:number,
    accessmode:number,sortTypeId:number,sortby:number
  };
+ qprmsobj:{
+  quoteid: number,quoteno: string,versionid: number,customerid:number,
+  accountid:number,childaccid:number,phaseid:number,viewtypeid:number
+};
 
   ngOnInit() {
     this.ActionQuoteList();
@@ -72,9 +76,14 @@ export class QuotePage implements OnInit {
 }
 
 /***** QUOTEEDIT *****/
-async ActionQuoteEdit() {
+async ActionQuoteEdit(quoteId,quoteno,versionId) {
+  this.qprmsobj={
+    quoteid: quoteId,quoteno: quoteno,versionid: versionId,customerid:0,
+    accountid:0,childaccid:0,phaseid:0,viewtypeid:0
+  };
   const modal = await this.Modalcntrl.create({
-    component: QuoteeditComponent
+    component: QuoteeditComponent,
+    componentProps: this.qprmsobj,
   });
   return await modal.present();
 }
@@ -87,4 +96,10 @@ async ActionQuoteEdit() {
     return await modal.present();
   }
  
+
 }
+
+
+
+
+

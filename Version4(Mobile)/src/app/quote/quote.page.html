@@ -19,13 +19,14 @@
         </ion-row>
         <ion-row>
           <ion-col class="no-padding" size="10">
-            <ion-row size="12"><small><span>{{header.SalesPerson}}</span></small></ion-row>
-            <ion-row size="12"><small><span>{{header.CustomerName}}</span></small></ion-row>
+            <ion-row size="12"><small><ion-note>{{header.SalesPerson}}</ion-note></small></ion-row>
+            <ion-row size="12"><small><ion-note>{{header.CustomerName}}</ion-note></small></ion-row>
           </ion-col>
           <ion-col class="no-padding" size="2">
+            
             <button ion-button item-end class="viewbtn">View
 
-                <ion-select interface="popover"  >
+                <ion-select interface="popover"  style="height: 2px;">
                     <ion-select-option *ngFor="let version of header.VersionList" ><span>V - {{version.SrNo}}</span></ion-select-option>
                   </ion-select>
             </button>

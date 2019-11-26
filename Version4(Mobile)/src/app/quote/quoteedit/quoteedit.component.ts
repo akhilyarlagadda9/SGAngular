@@ -14,7 +14,6 @@ export class QuoteeditComponent implements OnInit {
   constructor(public Modalcntrl : ModalController,private navParams: NavParams,private service:QuoteService, ) { }
 
   ngOnInit() {
-    debugger;
     this.ActionQuoteInfo();
     this.ActionAreaList();
   }

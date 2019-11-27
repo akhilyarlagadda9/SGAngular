@@ -9,33 +9,39 @@
 </ion-header>
 <ion-content>
   <ion-searchbar #quotesearch (keyup.enter)="ActionSearch(quotesearch.value)"></ion-searchbar>
-  <ion-list>
-    <ion-item *ngFor="let header of quotelist">
-      <ion-grid class="no-padding">
-        <ion-row>
-          <ion-row (click)="ActionQuoteEdit(header.ID,header.QuoteNo,header.VersionID)">
-            <span class="no-margin"># {{header.QuoteNo}} - {{header.QuoteName}}</span>
-          </ion-row>
+<ion-card *ngFor="let header of quotelist" class="margin-bottom">
+  <ion-item (click)="ActionQuoteEdit(header.ID,header.QuoteNo,header.VersionID)"><ion-label>
+   <h2># {{header.QuoteNo}} - {{header.QuoteName}}</h2>
+   <p>{{header.CustomerName}}-{{header.SalesPerson}}</p> </ion-label>
+  </ion-item>
+</ion-card>
+
+<!-- <ion-item *ngFor="let header of quotelist">
+    <ion-grid class="no-padding">
+      <ion-row>
+        <ion-row (click)="ActionQuoteEdit(header.ID,header.QuoteNo,header.VersionID)">
+          <span class="no-margin"># {{header.QuoteNo}} - {{header.QuoteName}}</span>
         </ion-row>
-        <ion-row>
-          <ion-col class="no-padding" size="10">
-              <ion-row size="12"><small><ion-note>{{header.CustomerName}}</ion-note></small></ion-row>
-            <ion-row size="12"><small><ion-note>{{header.SalesPerson}}</ion-note></small></ion-row>
-          </ion-col>
-          <ion-col class="no-padding" size="2">
-            
-            <button ion-button item-end class="viewbtn">View
-                <ion-select interface="popover"  style="height: 2px;">
-                    <ion-select-option *ngFor="let version of header.VersionList" ><span>V - {{version.SrNo}}</span></ion-select-option>
-                  </ion-select>
-            </button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
-    <ion-infinite-scroll (ionInfinite)="AtiondoInfinite($event)">
+      </ion-row>
+      <ion-row>
+        <ion-col class="no-padding" size="10">
+            <ion-row size="12"><small><ion-note>{{header.CustomerName}}</ion-note></small></ion-row>
+          <ion-row size="12"><small><ion-note>{{header.SalesPerson}}</ion-note></small></ion-row>
+        </ion-col>
+        <ion-col class="no-padding" size="2">
+          
+          <button ion-button item-end class="viewbtn">View
+              <ion-select interface="popover"  style="height: 2px;">
+                  <ion-select-option *ngFor="let version of header.VersionList" ><span>V - {{version.SrNo}}</span></ion-select-option>
+                </ion-select>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item> -->
+    <ion-infinite-scroll threshold="50%" (ionInfinite)="AtiondoInfinite($event)">
       <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
-  </ion-list>
+
 </ion-content>

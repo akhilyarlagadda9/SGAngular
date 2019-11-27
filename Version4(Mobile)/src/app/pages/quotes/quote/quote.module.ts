@@ -13,7 +13,7 @@ import { HeadereditComponent } from 'src/app/pages/quotes/headeredit/headeredit.
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonicModule, 
     RouterModule.forChild([
       {
         path: '',

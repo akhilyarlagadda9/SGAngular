@@ -22,6 +22,7 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+/***** PADDING<MARGINS *****/
 .no-padding{
     padding-left: 0px;
     padding-right: 0px;
@@ -34,9 +35,18 @@
     margin-bottom: 0px;
      margin-top: 0px;
  }
+
+ /***** FONTSTYLE *****/
  .labelfont{
     font-size: 14px;
 }
+.fontlarge{
+    font-size:30px;
+}
+.fontmedium{
+    font-size:24px;
+}
+/***** ALIGNMENTS *****/
 .titleheader{
     padding-left: 15px;
     text-align: left;
@@ -50,9 +60,7 @@
 .text-center{
     text-align: center;
 }
-.fontlarge{
-    font-size:30px;
-}
-.fontmedium{
-    font-size:24px;
+/***** COLORS *****/
+.color-white{
+    color:white;
 }

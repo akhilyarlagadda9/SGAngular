@@ -19,7 +19,7 @@ export class QuotePage implements OnInit {
  // pageindex:number= 0;
   qsearchobj:{
    search: string,statusId: number,index: number,noOfRecords:number,
-   accessmode:number,sortTypeId:number,sortby:number
+   accessmode:number,sortTypeId:number,sortby:number,searchmode:number
  };
  qprmsobj:{
   quoteid: number,quoteno: string,versionid: number,customerid:number,
@@ -33,21 +33,22 @@ export class QuotePage implements OnInit {
   /***** QUOTELIST-INDEFINITE, SEARCHQUOTE *****/
   ActionQuoteList() {
     // set obj
-    this.setquoteobj("", 0, 0, 25);
+    this.setquoteobj("", 0, 0, 25,0);
     this.GetQuoteList(undefined);
   }
   ActionSearch(q: string){
-    this.setquoteobj(q, 0, 0, 25);
+    this.setquoteobj(q, 0, 0, 25,1);
     this.GetQuoteList(undefined);
   }
    AtiondoInfinite(event) {
     this.qsearchobj.index = this.qsearchobj.index+1;
+    this.qsearchobj.searchmode = 0;
     this.GetQuoteList(event);
    
   }
-  setquoteobj(search, statusid, index, noOfRecords){
+  setquoteobj(search, statusid, index, noOfRecords,searchmode){
     this.qsearchobj = {
-    search: search,
+    search: search,searchmode:searchmode,
     statusId: statusid,
     index: index,
     noOfRecords:noOfRecords,
@@ -58,7 +59,7 @@ export class QuotePage implements OnInit {
   let obj = this.qsearchobj;
   //get list from db
  let result = this.service.ActionQuoteList(obj.search,obj.statusId,obj.index,obj.noOfRecords,obj.accessmode,0,obj.sortTypeId,obj.sortby).subscribe(
-  data => {this.quotelist = this.quotelist.concat(data); },
+  data => {this.quotelist = obj.searchmode == 1 ? data : this.quotelist.concat(data); },
   error => console.log(error));
   if(event){
     event.target.complete();

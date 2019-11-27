@@ -1,0 +1,57 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-button (click)="ActionCloseQuoteInfo()">Back</ion-button>
+        </ion-buttons>
+        <ion-title>Quote Info</ion-title>
+      </ion-toolbar>
+  </ion-header>
+
+
+  <ion-content>
+    <ion-list style="padding-left:10px;">
+        <ion-row>
+            <ion-note item-end>Job Name:</ion-note>
+            <span>{{header.QuoteName}}</span>
+        </ion-row>
+        <ion-row>
+            <ion-note item-end>Address:</ion-note>
+            <span>
+                {{header.Address1}}
+            </span>
+        </ion-row>
+        <ion-row>
+            <ion-note item-end>City:</ion-note>
+            <span>
+                {{header.City}}
+            </span>
+        </ion-row>
+        <ion-row>
+            <ion-note item-end>State:</ion-note>
+            <span>
+                {{header.State}}
+            </span>
+        </ion-row> 
+        <ion-row>
+            <ion-note item-end>Zipcode:</ion-note>
+            <span>
+                {{header.Zipcode}}
+            </span>
+        </ion-row>
+    </ion-list>
+     
+
+
+<ion-item class="text-center" >
+  <h3>Area Info</h3>
+</ion-item>
+<ion-item >
+    <img src="assets/img/arealayout.png" alt="your image" style="width:305px;height:400px;">
+</ion-item>
+  
+      
+  </ion-content>
+
+
+
+ 

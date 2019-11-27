@@ -27,6 +27,9 @@
     padding-left: 0px;
     padding-right: 0px;
 }
+.paddzero{
+    padding:0px;
+}
 .padding-topbottom{
     padding-top: 3px;
     padding-bottom: 3px;
@@ -46,6 +49,9 @@
 .fontmedium{
     font-size:24px;
 }
+.fontbold {
+    font-weight: 600;
+}
 /***** ALIGNMENTS *****/
 .titleheader{
     padding-left: 15px;
@@ -63,4 +69,8 @@
 /***** COLORS *****/
 .color-white{
     color:white;
+}
+.color-blue{
+    color: blue;
+ 
 }

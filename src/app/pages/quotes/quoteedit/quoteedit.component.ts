@@ -11,6 +11,7 @@ export class QuoteeditComponent implements OnInit {
   quoteno:string;
   qprmsobj = this.navParams.data;
   header:any;
+  version:any;
   constructor(public Modalcntrl : ModalController,private navParams: NavParams,private service:QuoteService, ) { }
 
   ngOnInit() {
@@ -28,7 +29,7 @@ ActionQuoteInfo(){
 ActionAreaList(){
   let result = this.service.ActionAreaList(this.qprmsobj.quoteid,this.qprmsobj.versionid,0).subscribe(
     data => {
-       this.header.Version = data;
+       this.version = data;
     },
     error => console.log(error));
 }

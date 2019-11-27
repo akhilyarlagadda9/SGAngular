@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { CreatequoteComponent } from './createquote/createquote.component'
-import { QuoteeditComponent } from './quoteedit/quoteedit.component'
+import { CreatequoteComponent } from 'src/app/pages/quotes/createquote/createquote.component'
+import { QuoteeditComponent } from 'src/app/pages/quotes/quoteedit/quoteedit.component'
 
 import {QuoteService} from 'src/app/service/quote.service'
 import { from } from 'rxjs';

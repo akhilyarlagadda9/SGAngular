@@ -3,23 +3,18 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http'; 
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { QuotePageModule } from './quote/quote.module';
-import { CreatequoteComponent } from './quote/createquote/createquote.component'
-import { QuoteeditComponent } from './quote/quoteedit/quoteedit.component';
+import { QuotePageModule } from './pages/quotes/quote/quote.module';
+
 @NgModule({
   declarations: [
-    AppComponent,
-    CreatequoteComponent,
-    QuoteeditComponent
-  ],
-  entryComponents: [CreatequoteComponent,QuoteeditComponent],
+    AppComponent],
+  entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(),FormsModule, AppRoutingModule,QuotePageModule,HttpClientModule],
   providers: [
     StatusBar,

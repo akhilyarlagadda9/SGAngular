@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController,NavParams } from '@ionic/angular';
 import {QuoteService} from 'src/app/service/quote.service'
+
+import { HeadereditComponent } from 'src/app/pages/quotes/headeredit/headeredit.component';
 @Component({
   selector: 'app-quoteedit',
   templateUrl: './quoteedit.component.html',
@@ -38,4 +40,14 @@ ActionAreaList(){
       'dismissed': true
     });
   }
+ /***** Quote Header *****/
+ async ActionQuoteHeader() {
+  const modal = await this.Modalcntrl.create({
+    component: HeadereditComponent
+
+  });
+  return await modal.present();
+}
+
+
 }

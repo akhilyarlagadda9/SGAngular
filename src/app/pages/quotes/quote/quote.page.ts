@@ -34,27 +34,16 @@ export class QuotePage implements OnInit {
   ActionQuoteList() {
     // set obj
     this.setquoteobj("", 0, 0, 25);
-    this.GetQuoteList();
+    this.GetQuoteList(undefined);
   }
   ActionSearch(q: string){
     this.setquoteobj(q, 0, 0, 25);
-    this.GetQuoteList();
+    this.GetQuoteList(undefined);
   }
    AtiondoInfinite(event) {
-    //this.pageindex = this.pageindex+1;
     this.qsearchobj.index = this.qsearchobj.index+1;
-    let obj = this.qsearchobj;
-    setTimeout(() => {
-      let result = this.service.ActionQuoteList(obj.search,obj.statusId,obj.index,obj.noOfRecords,obj.accessmode,0,obj.sortTypeId,obj.sortby).subscribe(
-        data => {
-          for(let i=0; i<data.length; i++) {
-            this.quotelist.push(data[i]);
-          }
-
-        },
-        error => console.log(error));
-        event.target.complete();
-    }, 1);
+    this.GetQuoteList(event);
+   
   }
   setquoteobj(search, statusid, index, noOfRecords){
     this.qsearchobj = {
@@ -65,14 +54,15 @@ export class QuotePage implements OnInit {
     accessmode:1,
     sortTypeId:0,sortby:0};
    }
- GetQuoteList(){
+ GetQuoteList(event){
   let obj = this.qsearchobj;
   //get list from db
  let result = this.service.ActionQuoteList(obj.search,obj.statusId,obj.index,obj.noOfRecords,obj.accessmode,0,obj.sortTypeId,obj.sortby).subscribe(
-  data => {
-     this.quotelist = data;
-  },
+  data => {this.quotelist = this.quotelist.concat(data); },
   error => console.log(error));
+  if(event){
+    event.target.complete();
+  }
 }
 
 /***** QUOTEEDIT *****/

@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { QuotePage } from './quote.page';
 import { CreatequoteComponent } from 'src/app/pages/quotes/createquote/createquote.component';
 import { QuoteeditComponent } from 'src/app/pages/quotes/quoteedit/quoteedit.component';
+import { HeadereditComponent } from 'src/app/pages/quotes/headeredit/headeredit.component';
 
 @NgModule({
   imports: [
@@ -20,8 +21,8 @@ import { QuoteeditComponent } from 'src/app/pages/quotes/quoteedit/quoteedit.com
       },
     ])
   ],
-  entryComponents: [CreatequoteComponent,QuoteeditComponent],
+  entryComponents: [CreatequoteComponent,QuoteeditComponent,HeadereditComponent],
   declarations: [QuotePage, CreatequoteComponent,
-    QuoteeditComponent]
+    QuoteeditComponent,HeadereditComponent]
 })
 export class QuotePageModule {}

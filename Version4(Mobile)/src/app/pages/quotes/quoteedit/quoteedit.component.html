@@ -1,57 +1,46 @@
 <ion-header>
     <ion-toolbar color="primary">
         <ion-buttons slot="start">
-          <ion-button (click)="ActionCloseQuoteInfo()">Back</ion-button>
+            <ion-icon class="fontlarge" (click)="ActionCloseQuoteInfo()" name="arrow-back"></ion-icon>
         </ion-buttons>
         <ion-title>#{{header.QuoteNo}} - V{{version.SrNo}}</ion-title>
-      </ion-toolbar>
-  </ion-header>
+    </ion-toolbar>
+</ion-header>
 
 
-  <ion-content>
-    <ion-list style="padding-left:10px;">
-        <ion-row>
-            <ion-note item-end>Job Name:</ion-note>
-            <span>{{header.QuoteName}}</span>
-        </ion-row>
-        <ion-row>
-            <ion-note item-end>Address:</ion-note>
-            <span>
-                {{header.Address1}}
-            </span>
-        </ion-row>
-        <ion-row>
-            <ion-note item-end>City:</ion-note>
-            <span>
-                {{header.City}}
-            </span>
-        </ion-row>
-        <ion-row>
-            <ion-note item-end>State:</ion-note>
-            <span>
-                {{header.State}}
-            </span>
-        </ion-row> 
-        <ion-row>
-            <ion-note item-end>Zipcode:</ion-note>
-            <span>
-                {{header.Zipcode}}
-            </span>
-        </ion-row>
-    </ion-list>
-     
+<ion-content>
+
+    <ion-slides pager>
+        <ion-slide>
+            <ion-list style="padding-left:10px;width:100%;font-size:14px">
+                <ion-row>
+                    <ion-col size="3" class="text-right">Job Name:</ion-col>
+                    <ion-col size="8" class="text-left">{{header.QuoteName}}</ion-col>
+                    <ion-col size="1" class="text-right">
+                        <ion-icon class="fontmedium" (click)="ActionQuoteHeader()" name="create"></ion-icon>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="3" class="text-right">Address:</ion-col>
+                    <ion-col size="9" class="text-left">{{header.Address1}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="3" class="text-right">State:</ion-col>
+                    <ion-col size="9" class="text-left">{{header.City}}, {{header.State}} - {{header.Zipcode}}</ion-col>
+                </ion-row>
+            </ion-list>
+        </ion-slide>
+        <ion-slide>
+
+        </ion-slide>
+    </ion-slides>
+
+    <ion-item class="text-center">
+        <h3>Area Info</h3>
+    </ion-item>
+    <ion-item>
+        <img src="assets/img/arealayout.png" alt="your image" style="width:305px;height:400px;">
+    </ion-item>
 
 
-<ion-item class="text-center" >
-  <h3>Area Info</h3>
-</ion-item>
-<ion-item >
-    <img src="assets/img/arealayout.png" alt="your image" style="width:305px;height:400px;">
-</ion-item>
-  
-      
-  </ion-content>
-
-
-
- 
+</ion-content>

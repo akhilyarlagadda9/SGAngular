@@ -3,15 +3,12 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
 import { HomePage } from './home.page';
-import { QuotePageModule } from '../quote/quote.module';
-import { QuotePage } from '../quote/quote.page';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,QuotePageModule,
+    IonicModule,
     RouterModule.forChild([
       {
         path: '',
@@ -19,11 +16,11 @@ import { QuotePage } from '../quote/quote.page';
       },
       {
         path: 'quotelist',
-        component:QuotePage
-      //  loadChildren: () => import('../quote/quote.module').then( m => m.QuotePageModule)
+       // component:QuotePage
+        loadChildren: () => import('../pages/quotes/quote/quote.module').then( m => m.QuotePageModule)
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [HomePage,]
 })
 export class HomePageModule {}

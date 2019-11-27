@@ -5,7 +5,10 @@ import { QuotePage } from './quote.page';
 
 const routes: Routes = [
   
-  
+  {
+    path: '',
+    component: QuotePage
+  },
 ];
 
 

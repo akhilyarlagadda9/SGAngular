@@ -14,19 +14,18 @@
         <ion-slide>
             <ion-list style="padding-left:10px;width:100%;font-size:14px">
                 <ion-row>
-                    <ion-col size="3" class="text-right">Job Name:</ion-col>
-                    <ion-col size="8" class="text-left">{{header.QuoteName}}</ion-col>
-                    <ion-col size="1" class="text-right">
-                        <ion-icon class="fontmedium" (click)="ActionQuoteHeader()" name="create"></ion-icon>
+                    <ion-col size="3" class="paddzero text-right">Job Name:</ion-col>
+                    <ion-col size="7" class="paddzero text-left fontbold">&nbsp;{{header.QuoteName}}</ion-col>
+                    <ion-col size="2" class="text-right fontbold color-blue" (click)="ActionQuoteHeader()"><u>Edit</u>
                     </ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="3" class="text-right">Address:</ion-col>
-                    <ion-col size="9" class="text-left">{{header.Address1}}</ion-col>
+                    <ion-col size="3" class="paddzero text-right">Address:</ion-col>
+                    <ion-col size="9" class="paddzero text-left fontbold">&nbsp;{{header.Address1}}</ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="3" class="text-right">State:</ion-col>
-                    <ion-col size="9" class="text-left">{{header.City}}, {{header.State}} - {{header.Zipcode}}</ion-col>
+                    <ion-col size="3" class="paddzero text-right"></ion-col>
+                    <ion-col size="9" class="paddzero text-left fontbold">&nbsp;{{header.City}}, {{header.State}} - {{header.Zipcode}}</ion-col>
                 </ion-row>
             </ion-list>
         </ion-slide>

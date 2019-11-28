@@ -8,6 +8,12 @@ import { QuotePage } from './quote.page';
 import { CreatequoteComponent } from 'src/app/pages/quotes/createquote/createquote.component';
 import { QuoteeditComponent } from 'src/app/pages/quotes/quoteedit/quoteedit.component';
 import { HeadereditComponent } from 'src/app/pages/quotes/headeredit/headeredit.component';
+import { HeaderinfoComponent } from '../headerinfo/headerinfo.component';
+import { PoitemsComponent } from '../poitems/poitems.component';
+import { CommhubComponent } from '../commhub/commhub.component';
+import { PrintsComponent } from '../prints/prints.component';
+import { JobdesComponent } from '../jobdes/jobdes.component';
+
 
 @NgModule({
   imports: [
@@ -21,8 +27,8 @@ import { HeadereditComponent } from 'src/app/pages/quotes/headeredit/headeredit.
       },
     ])
   ],
-  entryComponents: [CreatequoteComponent,QuoteeditComponent,HeadereditComponent],
+  entryComponents: [CreatequoteComponent,QuoteeditComponent,HeadereditComponent,HeaderinfoComponent,PoitemsComponent,CommhubComponent,PrintsComponent,JobdesComponent],
   declarations: [QuotePage, CreatequoteComponent,
-    QuoteeditComponent,HeadereditComponent]
+    QuoteeditComponent,HeadereditComponent,HeaderinfoComponent,PoitemsComponent,CommhubComponent,PrintsComponent,JobdesComponent]
 })
 export class QuotePageModule {}

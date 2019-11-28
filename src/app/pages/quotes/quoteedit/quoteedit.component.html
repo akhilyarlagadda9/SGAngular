@@ -8,36 +8,32 @@
             (click)="ActionOpenVersionPopover($event)"></ion-icon>
     </ion-toolbar>
 </ion-header>
-
+    <ion-row>
+        <ion-col size="12">
+            <ion-tab-bar>
+                <ion-segment scrollable>
+                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(1)">Job</ion-segment-button>
+                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(1)">Account
+                    </ion-segment-button>
+                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(1)">Child Account
+                    </ion-segment-button>
+                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(1)">Customer
+                    </ion-segment-button>
+                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(2)">Job Desc
+                    </ion-segment-button>
+                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(3)">PO Items
+                    </ion-segment-button>
+                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(4)">Comm Hub
+                    </ion-segment-button>
+                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(5)">Prints
+                    </ion-segment-button>
+                </ion-segment>
+            </ion-tab-bar>
+        </ion-col>
+    </ion-row>
 
 <ion-content>
-    <ion-grid fixed>
-        <ion-row>
-            <ion-col size="12">
-                <ion-tab-bar>
-                    <ion-segment scrollable>
-                        <ion-segment-button style="padding: 0px 5px;" (click)="ActionQuickLoad(1)">Job</ion-segment-button>
-                        <ion-segment-button style="padding: 0px 5px;" (click)="ActionQuickLoad(1)">Account</ion-segment-button>
-                        <ion-segment-button style="padding: 0px 5px;" (click)="ActionQuickLoad(1)">Child Account</ion-segment-button>
-                        <ion-segment-button style="padding: 0px 5px;" (click)="ActionQuickLoad(1)">Customer</ion-segment-button>
-                        <ion-segment-button style="padding: 0px 5px;" (click)="ActionQuickLoad(2)">Job Desc</ion-segment-button>
-                        <ion-segment-button style="padding: 0px 5px;" (click)="ActionQuickLoad(3)">PO Items</ion-segment-button>
-                        <ion-segment-button style="padding: 0px 5px;" (click)="ActionQuickLoad(4)">Comm Hub</ion-segment-button>
-                        <ion-segment-button style="padding: 0px 5px;" (click)="ActionQuickLoad(5)">Prints</ion-segment-button>
-                    </ion-segment>
-                </ion-tab-bar>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-
-
-<ng-container *ngComponentOutlet="tabComponet"></ng-container>
-
-
-
-
-
-
+    <ng-container *ngComponentOutlet="tabComponet"></ng-container>
     <!-- <ion-slides pager>
         <ion-slide>
             <ion-list style="padding-left:10px;width:100%;font-size:14px">
@@ -69,6 +65,4 @@
     <ion-item>
         <img src="assets/img/arealayout.png" alt="your image" style="width:305px;height:400px;">
     </ion-item> -->
-
-
 </ion-content>

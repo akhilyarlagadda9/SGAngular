@@ -34,9 +34,15 @@
     padding-top: 3px;
     padding-bottom: 3px;
 }
+.paddall{
+    padding: 5px;
+}
 .no-margin{
     margin-bottom: 0px;
      margin-top: 0px;
+ }
+ .mar-btm{
+     margin-bottom: 5px;
  }
  .margin-bottom{
     margin-bottom: 3px;
@@ -44,7 +50,10 @@
  }
  /***** FONTSTYLE *****/
  .labelfont{
-    font-size: 14px;
+    font-size: 12px;
+}
+.text-font{
+    font-size:16px;
 }
 .fontlarge{
     font-size:30px;
@@ -75,5 +84,23 @@
 }
 .color-blue{
     color: blue;
- 
+}
+.bg-gray{
+    --background: #ddd;
+}
+/***** BORDERS *****/
+.borderall{
+    border: 1px solid #ddd;
+}
+.border-btm{
+    border-bottom:1px solid #ddd;
+}
+.border-top{
+    border-top:1px solid #ddd;
+}
+.border-left{
+    border-left:1px solid #ddd;
+}
+.border-right{
+    border-right:1px solid #ddd;
 }

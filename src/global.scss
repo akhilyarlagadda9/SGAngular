@@ -48,6 +48,11 @@
     margin-bottom: 3px;
     margin-top: 0px;
  }
+ .contpadd{
+     --padding-start: 5px;
+     --padding-end: 5px;
+     --padding-top: 5px;
+ }
  /***** FONTSTYLE *****/
  .labelfont{
     font-size: 12px;
@@ -86,7 +91,7 @@
     color: blue;
 }
 .bg-gray{
-    --background: #ddd;
+    background: #ddd;
 }
 /***** BORDERS *****/
 .borderall{

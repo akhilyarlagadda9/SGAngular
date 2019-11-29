@@ -1,0 +1,27 @@
+<ion-header translucent>
+    <ion-toolbar>
+      <ion-title><b>Job Info</b></ion-title>
+      <ion-button slot="end" color="success" size="small">Save</ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionCloseJobDescEdit()">X</ion-button>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list class="ion-no-margin ion-no-padding">
+        <ion-row>
+            <ion-label class="fontbold">
+                <ion-icon name="menu"></ion-icon>
+              &nbsp;Job Description:</ion-label>
+        </ion-row>
+        <ion-row style="padding: 5px;">
+            <ion-textarea rows="6" cols="20" placeholder="Enter Text Here..." class="borderall"></ion-textarea>
+        </ion-row>
+        <ion-row>
+            <ion-label class="fontbold">
+                <ion-icon name="menu"></ion-icon>
+              &nbsp;Private:</ion-label>
+        </ion-row>
+        <ion-row style="padding: 5px;">
+            <ion-textarea rows="6" cols="20" placeholder="Enter Text Here..." class="borderall"></ion-textarea>
+        </ion-row>
+    </ion-list>
+  </ion-content>

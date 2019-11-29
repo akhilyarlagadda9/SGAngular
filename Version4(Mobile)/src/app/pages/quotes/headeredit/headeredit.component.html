@@ -1,88 +1,36 @@
 <ion-header translucent>
   <ion-toolbar>
-    <ion-title><b style="color: blue;">Job Info</b></ion-title>
+    <ion-title><b style="color: blue;">PO ITEMS</b></ion-title>
     <ion-button slot="end" color="success" size="small">Save</ion-button>
     <ion-button slot="end" color="danger" size="small" (click)="ActionCloseQuoteEdit()">X</ion-button>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-list class="ion-no-margin ion-no-padding">
-    <ion-item>
-      <ion-label position="stacked" class="margin-zero labelfont">Job Name</ion-label>
-      <ion-input required type="text" class="inputheight fontbold"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked" class="margin-zero labelfont">Address</ion-label>
-      <ion-input required type="text" class="inputheight fontbold"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked" class="margin-zero labelfont">City</ion-label>
-      <ion-input required type="text" class="inputheight fontbold"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked" class="margin-zero labelfont">State</ion-label>
-      <ion-input required type="text" class="inputheight fontbold"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked" class="margin-zero labelfont">Zipcode</ion-label>
-      <ion-input required type="text" class="inputheight fontbold"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked" class="margin-zero labelfont">Year Built</ion-label>
-      <ion-input required type="text" class="inputheight fontbold"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label class="margin-zero labelfont" position="stacked">Production Type</ion-label>
-      <ion-select [(ngModel)]="productiontype" multiple="true" class="fontbold">
-        <ion-select-option value="Hard Surface">Hard Surface</ion-select-option>
-        <ion-select-option value="Solid Surface">Solid Surface</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label class="margin-zero labelfont" position="stacked">Price List</ion-label>
-      <ion-select [(ngModel)]="pricelsit" class="fontbold">
-        <ion-select-option value="Retail">Retail</ion-select-option>
-        <ion-select-option value="Commercial">Commercial</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label class="margin-zero labelfont" position="stacked">Sales Rep.</ion-label>
-      <ion-select [(ngModel)]="salesrep" class="fontbold">
-        <ion-select-option value="Stonegrid">Stonegrid</ion-select-option>
-        <ion-select-option value="Daniel Finn">Daniel Finn</ion-select-option>
-        <ion-select-option value="Chris Morris">Chris Morris</ion-select-option>
-        <ion-select-option value="Glenn Maxwell">Glenn Maxwell</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label class="margin-zero labelfont" position="stacked">Estimator</ion-label>
-      <ion-select [(ngModel)]="estimator" class="fontbold">
-        <ion-select-option value="Abyu Preez">Abyu Preez</ion-select-option>
-        <ion-select-option value="Tom Moores">Tom Moores</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label class="labelfont" position="stacked">Project Manager</ion-label>
-      <ion-select [(ngModel)]="projectmanager" class="fontbold">
-        <ion-select-option value="David Miller">David Miller</ion-select-option>
-        <ion-select-option value="Michael Clark">Michael Clark</ion-select-option>
-        <ion-select-option value="Philp Salt">Philp Salt</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label class="labelfont" position="stacked">Expire Date</ion-label>
-      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="event.timeStarts" class="fontbold"></ion-datetime>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked" class="margin-zero labelfont">Customer Job#</ion-label>
-      <ion-input required type="text" class="inputheight fontbold"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked" class="margin-zero labelfont">Customer PO#</ion-label>
-      <ion-input required type="text" class="inputheight fontbold"></ion-input>
-    </ion-item>
-    <ion-row>
-      <ion-label class="labelstyle">Job Contacts :</ion-label>
-    </ion-row>
+  <ion-list style="padding-left:10px;width:100%;font-size:14px">
+    <ion-card style="background: lightgrey;">
+      <ion-row style="margin-bottom: 2px;">
+        <ion-col size="4" class="paddzero text-right">PO Number:</ion-col>
+        <ion-col size="6" class="paddzero text-left fontbold">&nbsp;12345</ion-col>
+        <ion-col class="no-padding paddzero" size="2">
+            <ion-col class="text-right fontbold color-blue" (click)="ActionEditPOItem()"><u>ADD+</u></ion-col>
+        </ion-col>
+      </ion-row>
+      <ion-row style="margin-bottom: 2px;">
+          <ion-col size="4" class="paddzero text-right">PO Uploaded By:</ion-col>
+          <ion-col size="8" class="paddzero text-left fontbold">&nbsp;Stonegrid</ion-col>
+      </ion-row>
+      <ion-row style="margin-bottom: 2px;">
+          <ion-col size="4" class="paddzero text-right">PO Date:</ion-col>
+          <ion-col size="8" class="paddzero text-left fontbold">&nbsp;11/11/19</ion-col>
+      </ion-row>
+      <ion-row style="margin-bottom: 2px;">
+          <ion-col size="4" class="paddzero text-right">PO Total($):</ion-col>
+          <ion-col size="8" class="paddzero text-left fontbold">&nbsp;365</ion-col>
+      </ion-row>
+      <ion-row style="margin-bottom: 2px;">
+          <ion-col size="4" class="paddzero text-right">Attachment(s):</ion-col>
+          <ion-col size="8" class="paddzero text-left fontbold">&nbsp;</ion-col>
+      </ion-row>
+    </ion-card>
   </ion-list>
 </ion-content>

@@ -35,7 +35,7 @@
         <ion-col *ngIf="selectedtabtype == 1">
             <ion-card>
                 <ion-item style="border-bottom: none;">
-                    <ion-label>
+                    <ion-label (click)="ActionEditJob()">
                         <h2># {{headerInfo.QuoteName}}</h2>
                         <p>
                             <ion-icon name="contact"></ion-icon>

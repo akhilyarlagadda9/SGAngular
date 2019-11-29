@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-
 @Component({
-  selector: 'app-headeredit',
-  templateUrl: './headeredit.component.html',
-  styleUrls: ['./headeredit.component.scss'],
+  selector: 'app-customeredit',
+  templateUrl: './customeredit.component.html',
+  styleUrls: ['./customeredit.component.scss'],
 })
-export class HeadereditComponent implements OnInit {
+export class CustomereditComponent implements OnInit {
 
   constructor(public Modalcntrl : ModalController) { }
 
   ngOnInit() {}
-
-  /******** Quoteedit Close ************/
-  ActionCloseJobEdit() {
+  ActionCloseCustomer() {
     this.Modalcntrl.dismiss({
       'dismissed': true
     });

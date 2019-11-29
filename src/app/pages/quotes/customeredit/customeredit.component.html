@@ -1,0 +1,35 @@
+<ion-header>
+      <ion-toolbar>
+        <ion-title><b>Customer Info</b></ion-title>
+        <ion-button slot="end" color="success" size="small">Save</ion-button>
+        <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCustomer()">X</ion-button>
+      </ion-toolbar>
+    </ion-header>
+<ion-content>
+  <ion-list class="ion-no-margin ion-no-padding">
+      <ion-item>
+          <ion-label position="stacked" class="margin-zero">Customer</ion-label>
+          <ion-input required type="text" class="inputheight"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="stacked" class="margin-zero">Address</ion-label>
+          <ion-input required type="text" class="inputheight"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="stacked" class="margin-zero">City</ion-label>
+          <ion-input required type="text" class="inputheight"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="stacked" class="margin-zero">State</ion-label>
+          <ion-input required type="text" class="inputheight"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="stacked" class="margin-zero">Zipcode</ion-label>
+          <ion-input required type="text" class="inputheight"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="stacked" class="margin-zero">Country</ion-label>
+          <ion-input required type="text" class="inputheight"></ion-input>
+      </ion-item>
+  </ion-list>
+</ion-content>

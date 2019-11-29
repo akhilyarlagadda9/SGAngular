@@ -1,9 +1,10 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-icon name="arrow-round-back" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
     </ion-buttons>
     <ion-title>Quote</ion-title>
+    <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
     <ion-icon name="add-circle" slot="end" class="fontlarge" (click)="ActionCreateQuote()"></ion-icon>
   </ion-toolbar>
 </ion-header>

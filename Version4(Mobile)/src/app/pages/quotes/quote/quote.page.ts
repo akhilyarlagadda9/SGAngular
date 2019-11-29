@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { CreatequoteComponent } from 'src/app/pages/quotes/createquote/createquote.component'
 import { QuoteeditComponent } from 'src/app/pages/quotes/quoteedit/quoteedit.component'
 
@@ -13,7 +14,7 @@ import { from } from 'rxjs';
 })
 export class QuotePage implements OnInit {
 
-  constructor(private service:QuoteService, public Modalcntrl : ModalController) { }
+  constructor(private service:QuoteService, public Modalcntrl : ModalController, private navCtrl : NavController) { }
 
   quotelist: any[] = [];
  // pageindex:number= 0;
@@ -29,7 +30,9 @@ export class QuotePage implements OnInit {
   ngOnInit() {
     this.ActionQuoteList();
   }
-
+  ActionGoToHome(){
+    this.navCtrl.navigateRoot('/home');
+  }
   /***** QUOTELIST-INDEFINITE, SEARCHQUOTE *****/
   ActionQuoteList() {
     // set obj

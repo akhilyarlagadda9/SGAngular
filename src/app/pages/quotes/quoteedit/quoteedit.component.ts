@@ -31,7 +31,9 @@ export class QuoteeditComponent implements OnInit {
    //this.ActionAreaList();
   }
 
-  
+  ActionGoToHome(){
+    this.navCtrl.navigateRoot('/home');
+  }
   ActionQuoteInfo(){
     let result = this.service.ActionQuoteInfo(this.qprmsobj.quoteid,this.qprmsobj.quoteno,this.qprmsobj.versionid,0,0,0).subscribe(
       data => {

@@ -24,15 +24,28 @@ export class QuoteeditComponent implements OnInit {
   //version: any;
   
   ngOnInit() {
-    this.headeInfo = this.qprmsobj.header;
+    //this.headeInfo = this.qprmsobj.header;
 
 
-    //this.ActionQuoteInfo();
+    this.ActionQuoteInfo();
    //this.ActionAreaList();
   }
 
   
-  
+  ActionQuoteInfo(){
+    let result = this.service.ActionQuoteInfo(this.qprmsobj.quoteid,this.qprmsobj.quoteno,this.qprmsobj.versionid,0,0,0).subscribe(
+      data => {
+         this.headeInfo = data;
+      },
+      error => console.log(error));
+  }
+  // ActionAreaList(){
+  //   let result = this.service.ActionAreaList(this.qprmsobj.quoteid,this.qprmsobj.versionid,0).subscribe(
+  //     data => {
+  //        this.version = data;
+  //     },
+  //     error => console.log(error));
+  // }
   ActionCloseQuoteInfo() {
     this.Modalcntrl.dismiss({
       'dismissed': true

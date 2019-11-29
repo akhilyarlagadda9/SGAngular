@@ -15,5 +15,7 @@ export class HomePage {
   ActionLoadQuote(){
     this.navCtrl.navigateRoot('/home/quotelist');
    }
-
+   ActionLogout(){
+    this.navCtrl.navigateRoot('/login');
+   }
 }

@@ -23,7 +23,7 @@ export class QuotePage implements OnInit {
  };
  qprmsobj:{
   quoteid: number,quoteno: string,versionid: number,customerid:number,
-  accountid:number,childaccid:number,phaseid:number,viewtypeid:number
+  accountid:number,childaccid:number,phaseid:number,viewtypeid:number,header:any
 };
 
   ngOnInit() {
@@ -67,10 +67,10 @@ export class QuotePage implements OnInit {
 }
 
 /***** QUOTEEDIT *****/
-async ActionQuoteEdit(quoteId,quoteno,versionId) {
+async ActionQuoteEdit(header) {
   this.qprmsobj={
-    quoteid: quoteId,quoteno: quoteno,versionid: versionId,customerid:0,
-    accountid:0,childaccid:0,phaseid:0,viewtypeid:0
+    quoteid: header.ID,quoteno: header.QuoteNo,versionid: header.VersionID,customerid:0,
+    accountid:0,childaccid:0,phaseid:0,viewtypeid:0,header:header
   };
   const modal = await this.Modalcntrl.create({
     component: QuoteeditComponent,

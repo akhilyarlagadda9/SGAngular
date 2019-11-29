@@ -9,6 +9,7 @@ import { PoitemsComponent } from '../poitems/poitems.component';
 import { JobdesComponent } from '../jobdes/jobdes.component';
 import { CommhubComponent } from '../commhub/commhub.component';
 import { PrintsComponent } from '../prints/prints.component';
+import { variable } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-quoteedit',
@@ -16,33 +17,27 @@ import { PrintsComponent } from '../prints/prints.component';
   styleUrls: ['./quoteedit.component.scss'],
 })
 export class QuoteeditComponent implements OnInit {
-  tabComponet = HeaderinfoComponent;
+  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private service: QuoteService, private navCtrl: NavController) { }
   quoteId: number;
   quoteno: string;
   qprmsobj = this.navParams.data;
-  header: any;
-  version: any;
-  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private service: QuoteService, private navCtrl: NavController) { }
+  headeInfo:any;
+ 
+
+
+
+  //version: any;
+  selectedtabtype:number = 1;
+  
 
   ngOnInit() {
-    this.ActionQuoteInfo();
-    this.ActionAreaList();
+    this.headeInfo = this.qprmsobj.header;
+    //this.ActionQuoteInfo();
+   //this.ActionAreaList();
   }
 
-  ActionQuoteInfo() {
-    let result = this.service.ActionQuoteInfo(this.qprmsobj.quoteid, this.qprmsobj.quoteno, this.qprmsobj.versionid, 0, 0, 0).subscribe(
-      data => {
-        this.header = data;
-      },
-      error => console.log(error));
-  }
-  ActionAreaList() {
-    let result = this.service.ActionAreaList(this.qprmsobj.quoteid, this.qprmsobj.versionid, 0).subscribe(
-      data => {
-        this.version = data;
-      },
-      error => console.log(error));
-  }
+  
+  
   ActionCloseQuoteInfo() {
     this.Modalcntrl.dismiss({
       'dismissed': true
@@ -58,21 +53,25 @@ export class QuoteeditComponent implements OnInit {
   }
   /*****tabs****** */
   ActionQuickLoad(componet: any) {
-    if (componet == 1) {
-      this.tabComponet = HeaderinfoComponent;
-    } else if (componet == 2) {
-      this.tabComponet = JobdesComponent
-    }
-    else if (componet == 3) {
-      this.tabComponet = PoitemsComponent
-    }
-    else if (componet == 4) {
-      this.tabComponet = CommhubComponent
-    }
-    else if (componet == 5) {
-      this.tabComponet = PrintsComponent
-    }
+    this.selectedtabtype = componet;
   }
+
+  // ActionQuickLoad(componet: any) {
+  //   if (componet == 1) {
+  //     this.tabComponet = HeaderinfoComponent;
+  //   } else if (componet == 2) {
+  //     this.tabComponet = JobdesComponent;
+  //   }
+  //   else if (componet == 3) {
+  //     this.tabComponet = PoitemsComponent;
+  //   }
+  //   else if (componet == 4) {
+  //     this.tabComponet = CommhubComponent;
+  //   }
+  //   else if (componet == 5) {
+  //     this.tabComponet = PrintsComponent;
+  //   }
+  // }
 }
 
 

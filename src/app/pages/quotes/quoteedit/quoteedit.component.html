@@ -13,18 +13,20 @@
     <ion-row>
         <ion-col>
             <ion-tab-bar>
-                <ion-segment scrollable>
-                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(1)">Job</ion-segment-button>
-                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(2)">Customer</ion-segment-button>
+                <ion-segment [(ngModel)]="selectedtabtype" scrollable>
+                    <ion-segment-button class="padd-scroll" value="1" (click)="ActionQuickLoad(1)">Job
+                    </ion-segment-button>
+                    <ion-segment-button class="padd-scroll" value="2" (click)="ActionQuickLoad(2)">Customer
+                    </ion-segment-button>
 
-                   
-                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(3)">Job Desc
+
+                    <ion-segment-button class="padd-scroll" value="3" (click)="ActionQuickLoad(3)">Job Desc
                     </ion-segment-button>
-                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(4)">PO Items
+                    <ion-segment-button class="padd-scroll" value="4" (click)="ActionQuickLoad(4)">PO Items
                     </ion-segment-button>
-                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(5)">Comm Hub
+                    <ion-segment-button class="padd-scroll" value="5" (click)="ActionQuickLoad(5)">Comm Hub
                     </ion-segment-button>
-                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(6)">Prints
+                    <ion-segment-button class="padd-scroll" value="6" (click)="ActionQuickLoad(6)">Prints
                     </ion-segment-button>
                 </ion-segment>
             </ion-tab-bar>
@@ -33,19 +35,26 @@
 
     <ion-row>
         <ion-col *ngIf="selectedtabtype == 1">
-            <ion-card>
+            <ion-card class="margin-bottom">
                 <ion-item style="border-bottom: none;">
                     <ion-label (click)="ActionEditJob()">
                         <h2># {{headerInfo.QuoteName}}</h2>
                         <p>
-                            <ion-icon name="contact"></ion-icon>
+                            <ion-icon name="pin"></ion-icon>
                             {{headerInfo.Address1}},{{headerInfo.City}},{{headerInfo.State}}-{{headerInfo.Zipcode}}
-                        </p>
-                        <p>
-                            <ion-icon name="call"></ion-icon>rwallace@cedarcrestcabinetry.com, (987) 654-3210
                         </p>
                     </ion-label>
                 </ion-item>
+                <ion-row>
+                        <ion-col><span class="text-font fontbold color-blue margin-bottom"> Contacts</span></ion-col>
+                    </ion-row>
+                <ion-row>
+                        <ion-col size="12">
+                            <ion-icon name="contact"></ion-icon> Michael Ethan,
+                            <ion-icon name="mail"></ion-icon>Ethan@gmail.com
+                            <ion-icon name="call"></ion-icon> (987) 456-3210;
+                        </ion-col>
+                    </ion-row>
             </ion-card>
             <app-areainfo></app-areainfo>
         </ion-col>

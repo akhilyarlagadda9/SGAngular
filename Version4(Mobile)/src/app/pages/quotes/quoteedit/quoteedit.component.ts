@@ -61,6 +61,13 @@ export class QuoteeditComponent implements OnInit {
     });
     return await modal.present();
   }
+  async ActionEditJob() {
+    const modal = await this.Modalcntrl.create({
+      component: HeadereditComponent
+
+    });
+    return await modal.present();
+  }
   /*****tabs****** */
   ActionQuickLoad(componet: any) {
     this.selectedtabtype = componet;

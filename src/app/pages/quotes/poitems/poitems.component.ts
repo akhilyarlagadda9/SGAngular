@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Input} from '@angular/core';
 
 @Component({
   selector: 'app-poitems',
@@ -6,9 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./poitems.component.scss'],
 })
 export class PoitemsComponent implements OnInit {
+@Input() public versionId;
+
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+console.log(this.versionId );
+
+  }
 
 }

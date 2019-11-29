@@ -16,7 +16,7 @@ export class QuoteeditComponent implements OnInit {
   quoteId: number;
   quoteno: string;
   qprmsobj = this.navParams.data;
-  headeInfo:any;
+  headerInfo:any;
   selectedtabtype:number = 1;
 
 
@@ -35,7 +35,7 @@ export class QuoteeditComponent implements OnInit {
   ActionQuoteInfo(){
     let result = this.service.ActionQuoteInfo(this.qprmsobj.quoteid,this.qprmsobj.quoteno,this.qprmsobj.versionid,0,0,0).subscribe(
       data => {
-         this.headeInfo = data;
+         this.headerInfo = data;
       },
       error => console.log(error));
   }

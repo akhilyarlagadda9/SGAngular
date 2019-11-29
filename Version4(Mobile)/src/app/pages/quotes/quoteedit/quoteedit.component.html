@@ -3,7 +3,7 @@
         <ion-buttons slot="start">
             <ion-icon class="fontlarge" (click)="ActionCloseQuoteInfo()" name="arrow-back"></ion-icon>
         </ion-buttons>
-        <ion-title>#{{headeInfo.QuoteNo}}</ion-title>
+        <ion-title>#{{headerInfo.QuoteNo}}</ion-title>
         <!-- <ion-title>#{{header.QuoteNo}} - V{{version.SrNo}}</ion-title> -->
 
     </ion-toolbar>
@@ -11,16 +11,13 @@
 
 <ion-content>
     <ion-row>
-        <ion-col size="12">
+        <ion-col>
             <ion-tab-bar>
                 <ion-segment scrollable>
                     <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(1)">Job</ion-segment-button>
-                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(2)">Account
-                    </ion-segment-button>
-                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(2)">Child Account
-                    </ion-segment-button>
-                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(2)">Customer
-                    </ion-segment-button>
+                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(2)">Customer</ion-segment-button>
+
+                   
                     <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(3)">Job Desc
                     </ion-segment-button>
                     <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(4)">PO Items
@@ -34,35 +31,40 @@
         </ion-col>
     </ion-row>
 
-<ion-row>
-    <ion-col *ngIf="selectedtabtype == 1">
-        <ion-item>
-            <ion-label>
-                <h2># {{headeInfo.QuoteName}}</h2>
-                <p>
-                    <ion-icon name="contact"></ion-icon>{{headeInfo.Address1}}
-                </p>
-            <p>{{headeInfo.City}},{{headeInfo.State}}-{{headeInfo.Zipcode}}</p>
-            </ion-label>
-        </ion-item>
-        <app-areainfo></app-areainfo>
-    </ion-col>
-    <!-- <ion-col *ngIf="selectedtabtype == 2">
-            <app-headerinfo [quoteid]="headeInfo.ID" [versionId]="headeInfo.versionId"></app-headerinfo>
-        </ion-col> -->
-    <ion-col *ngIf="selectedtabtype == 3">
-        <app-jobdes></app-jobdes>
-    </ion-col>
-    <ion-col *ngIf="selectedtabtype == 4">
-        <app-poitems [versionId]="headeInfo.VersionID"></app-poitems>
-    </ion-col>
-    <ion-col *ngIf="selectedtabtype == 5">
-        <app-commhub></app-commhub>
-    </ion-col>
-    <ion-col *ngIf="selectedtabtype == 6">
-        <app-prints></app-prints>
-    </ion-col>
-</ion-row>
+    <ion-row>
+        <ion-col *ngIf="selectedtabtype == 1">
+            <ion-card>
+                <ion-item style="border-bottom: none;">
+                    <ion-label>
+                        <h2># {{headerInfo.QuoteName}}</h2>
+                        <p>
+                            <ion-icon name="contact"></ion-icon>
+                            {{headerInfo.Address1}},{{headerInfo.City}},{{headerInfo.State}}-{{headerInfo.Zipcode}}
+                        </p>
+                        <p>
+                            <ion-icon name="call"></ion-icon>rwallace@cedarcrestcabinetry.com, (987) 654-3210
+                        </p>
+                    </ion-label>
+                </ion-item>
+            </ion-card>
+            <app-areainfo></app-areainfo>
+        </ion-col>
+        <ion-col *ngIf="selectedtabtype == 2">
+            <app-headerinfo></app-headerinfo>
+        </ion-col>
+        <ion-col *ngIf="selectedtabtype == 3">
+            <app-jobdes></app-jobdes>
+        </ion-col>
+        <ion-col *ngIf="selectedtabtype == 4">
+            <app-poitems [versionId]="headerInfo.VersionID"></app-poitems>
+        </ion-col>
+        <ion-col *ngIf="selectedtabtype == 5">
+            <app-commhub></app-commhub>
+        </ion-col>
+        <ion-col *ngIf="selectedtabtype == 6">
+            <app-prints></app-prints>
+        </ion-col>
+    </ion-row>
     <!-- <ng-container *ngComponentOutlet="tabComponet"></ng-container> -->
     <!-- <ion-slides pager>
         <ion-slide>

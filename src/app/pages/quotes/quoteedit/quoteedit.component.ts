@@ -4,12 +4,7 @@ import { QuoteService } from 'src/app/service/quote.service'
 
 
 import { HeadereditComponent } from 'src/app/pages/quotes/headeredit/headeredit.component';
-import { HeaderinfoComponent } from '../headerinfo/headerinfo.component';
-import { PoitemsComponent } from '../poitems/poitems.component';
-import { JobdesComponent } from '../jobdes/jobdes.component';
-import { CommhubComponent } from '../commhub/commhub.component';
-import { PrintsComponent } from '../prints/prints.component';
-import { variable } from '@angular/compiler/src/output/output_ast';
+
 
 @Component({
   selector: 'app-quoteedit',
@@ -22,16 +17,16 @@ export class QuoteeditComponent implements OnInit {
   quoteno: string;
   qprmsobj = this.navParams.data;
   headeInfo:any;
- 
+  selectedtabtype:number = 1;
 
 
 
   //version: any;
-  selectedtabtype:number = 1;
   
-
   ngOnInit() {
     this.headeInfo = this.qprmsobj.header;
+
+
     //this.ActionQuoteInfo();
    //this.ActionAreaList();
   }

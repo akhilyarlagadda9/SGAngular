@@ -1,4 +1,4 @@
-import { Component, OnInit,Input  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { QuoteService } from 'src/app/service/quote.service'
 import { QuoteeditComponent } from '../quoteedit/quoteedit.component';
@@ -9,8 +9,8 @@ import { QuoteeditComponent } from '../quoteedit/quoteedit.component';
   styleUrls: ['./headerinfo.component.scss'],
 })
 export class HeaderinfoComponent implements OnInit  {
-  @Input() public hesderQuoteNo;
   constructor(private service: QuoteService) { }
+  headerInfo :any;
   
   ngOnInit () {
     debugger;

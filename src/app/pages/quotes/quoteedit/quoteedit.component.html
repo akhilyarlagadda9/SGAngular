@@ -5,7 +5,7 @@
         </ion-buttons>
         <ion-title>#{{headeInfo.QuoteNo}}</ion-title>
         <!-- <ion-title>#{{header.QuoteNo}} - V{{version.SrNo}}</ion-title> -->
-        
+
     </ion-toolbar>
 </ion-header>
 
@@ -15,41 +15,54 @@
             <ion-tab-bar>
                 <ion-segment scrollable>
                     <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(1)">Job</ion-segment-button>
-                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(1)">Account
+                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(2)">Account
                     </ion-segment-button>
-                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(1)">Child Account
+                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(2)">Child Account
                     </ion-segment-button>
-                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(1)">Customer
+                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(2)">Customer
                     </ion-segment-button>
-                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(2)">Job Desc
+                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(3)">Job Desc
                     </ion-segment-button>
-                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(3)">PO Items
+                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(4)">PO Items
                     </ion-segment-button>
-                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(4)">Comm Hub
+                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(5)">Comm Hub
                     </ion-segment-button>
-                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(5)">Prints
+                    <ion-segment-button class="padd-scroll" (click)="ActionQuickLoad(6)">Prints
                     </ion-segment-button>
                 </ion-segment>
             </ion-tab-bar>
         </ion-col>
     </ion-row>
 
-
-<ion-col  *ngIf="selectedtabtype == 1">
-        <app-headerinfo [hesderQuoteNo]="headeInfo.QuoteNo"></app-headerinfo>
-</ion-col>
-<ion-col  *ngIf="selectedtabtype == 2">
-        <app-jobdes ></app-jobdes>
-</ion-col>
-<ion-col *ngIf="selectedtabtype == 3">
+<ion-row>
+    <ion-col *ngIf="selectedtabtype == 1">
+        <ion-item>
+            <ion-label>
+                <h2># {{headeInfo.QuoteName}}</h2>
+                <p>
+                    <ion-icon name="contact"></ion-icon>{{headeInfo.Address1}}
+                </p>
+            <p>{{headeInfo.City}},{{headeInfo.State}}-{{headeInfo.Zipcode}}</p>
+            </ion-label>
+        </ion-item>
+        <app-areainfo></app-areainfo>
+    </ion-col>
+    <!-- <ion-col *ngIf="selectedtabtype == 2">
+            <app-headerinfo [quoteid]="headeInfo.ID" [versionId]="headeInfo.versionId"></app-headerinfo>
+        </ion-col> -->
+    <ion-col *ngIf="selectedtabtype == 3">
+        <app-jobdes></app-jobdes>
+    </ion-col>
+    <ion-col *ngIf="selectedtabtype == 4">
         <app-poitems [versionId]="headeInfo.VersionID"></app-poitems>
-</ion-col>
-<ion-col  *ngIf="selectedtabtype == 4">
-        <app-commhub ></app-commhub>
-</ion-col>
-<ion-col  *ngIf="selectedtabtype == 5">
+    </ion-col>
+    <ion-col *ngIf="selectedtabtype == 5">
+        <app-commhub></app-commhub>
+    </ion-col>
+    <ion-col *ngIf="selectedtabtype == 6">
         <app-prints></app-prints>
-</ion-col>
+    </ion-col>
+</ion-row>
     <!-- <ng-container *ngComponentOutlet="tabComponet"></ng-container> -->
     <!-- <ion-slides pager>
         <ion-slide>

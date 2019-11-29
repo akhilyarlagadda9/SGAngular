@@ -1,6 +1,7 @@
 <ion-header>
     <ion-toolbar color="primary">
       <ion-buttons slot="start" >
+       
           <img src="assets/img/companylogo.png" alt="your image" style="width:25px;height:25px;">
         </ion-buttons>
         <ion-title>StoneApp</ion-title>
@@ -16,8 +17,12 @@
             <ion-item>
               <ion-input type="password" placeholder="Password"></ion-input>
             </ion-item>
-            <div padding >
-                <ion-button  (click)="ActionLogin()">Log In</ion-button>
-              </div>
+            <ion-grid>
+              <ion-row class="text-center">
+                  <ion-col>
+                      <ion-button (click)="ActionLogin()">Log In</ion-button>
+                  </ion-col>
+              </ion-row>
+            </ion-grid>
         </ion-list>
   </ion-content>

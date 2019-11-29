@@ -1,3 +1,21 @@
-<p>
-  jobdes works!
-</p>
+
+    <ion-list class="ion-no-margin ion-no-padding">
+      <ion-row>
+        <ion-label class="fontbold">
+          <ion-icon name="menu"></ion-icon>
+          &nbsp;<u (click)="ActionEditJobDesc(1)">Job Description:</u>
+        </ion-label>
+      </ion-row>
+      <ion-row style="padding: 5px;">
+        <ion-textarea rows="4" cols="20" class="borderall" readonly="readonly">Test the Job Description</ion-textarea>
+      </ion-row>
+      <ion-row>
+        <ion-label class="fontbold">
+          <ion-icon name="menu" md="md-menu"></ion-icon>
+          &nbsp;<u>Private:</u>
+        </ion-label>
+      </ion-row>
+      <ion-row style="padding: 5px;">
+        <ion-textarea rows="4" cols="20" class="borderall" readonly="readonly">Test the Private</ion-textarea>
+      </ion-row>
+    </ion-list>

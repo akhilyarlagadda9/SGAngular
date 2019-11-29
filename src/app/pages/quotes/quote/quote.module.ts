@@ -14,6 +14,7 @@ import { CommhubComponent } from '../commhub/commhub.component';
 import { PrintsComponent } from '../prints/prints.component';
 import { JobdesComponent } from '../jobdes/jobdes.component';
 import { AreainfoComponent } from '../areainfo/areainfo.component';
+import { PoeditComponent } from '../poedit/poedit.component';
 
 
 @NgModule({
@@ -28,8 +29,8 @@ import { AreainfoComponent } from '../areainfo/areainfo.component';
       },
     ])
   ],
-  entryComponents: [CreatequoteComponent,QuoteeditComponent,HeadereditComponent,HeaderinfoComponent,PoitemsComponent,CommhubComponent,PrintsComponent,JobdesComponent,AreainfoComponent],
+  entryComponents: [CreatequoteComponent,QuoteeditComponent,HeadereditComponent,HeaderinfoComponent,PoitemsComponent,CommhubComponent,PrintsComponent,JobdesComponent,AreainfoComponent,PoeditComponent],
   declarations: [QuotePage, CreatequoteComponent,
-    QuoteeditComponent,HeadereditComponent,HeaderinfoComponent,PoitemsComponent,CommhubComponent,PrintsComponent,JobdesComponent,AreainfoComponent]
+    QuoteeditComponent,HeadereditComponent,HeaderinfoComponent,PoitemsComponent,CommhubComponent,PrintsComponent,JobdesComponent,AreainfoComponent,PoeditComponent]
 })
 export class QuotePageModule {}

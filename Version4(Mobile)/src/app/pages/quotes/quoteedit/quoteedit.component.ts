@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Directive } from '@angular/core';
 import { NavController, ModalController, NavParams } from '@ionic/angular';
 import { QuoteService } from 'src/app/service/quote.service'
 
 
 import { HeadereditComponent } from 'src/app/pages/quotes/headeredit/headeredit.component';
-
 
 @Component({
   selector: 'app-quoteedit',
@@ -32,6 +31,7 @@ export class QuoteeditComponent implements OnInit {
   }
 
   ActionGoToHome(){
+    this.ActionCloseQuoteInfo();
     this.navCtrl.navigateRoot('/home');
   }
   ActionQuoteInfo(){

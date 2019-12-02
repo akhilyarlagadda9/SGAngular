@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,Input } from '@angular/core';
 import { QuoteService } from 'src/app/service/quote.service'
 import { ModalController } from '@ionic/angular';
 import { CustomereditComponent } from '../customeredit/customeredit.component'
@@ -7,10 +7,12 @@ import { CustomereditComponent } from '../customeredit/customeredit.component'
   templateUrl: './headerinfo.component.html',
   styleUrls: ['./headerinfo.component.scss'],
 })
-export class HeaderinfoComponent implements OnInit  {
+export class HeaderinfoComponent  {
+
+  @Input() header: any;
   constructor(private service: QuoteService,public Modalcntrl : ModalController) { }
-  
-  ngOnInit () { }
+
+
   async ActionEditCustomer() {
     const modal = await this.Modalcntrl.create({
       component: CustomereditComponent

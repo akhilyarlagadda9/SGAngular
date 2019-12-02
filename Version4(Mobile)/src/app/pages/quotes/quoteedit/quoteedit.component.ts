@@ -17,7 +17,7 @@ export class QuoteeditComponent implements OnInit {
   qprmsobj = this.navParams.data;
   headerInfo:any;
   selectedtabtype:number = 1;
-
+  QuoteVersionID:number = this.qprmsobj.versionid; 
 
 
   //version: any;

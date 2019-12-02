@@ -13,6 +13,7 @@ export class HeaderinfoComponent  {
   constructor(private service: QuoteService,public Modalcntrl : ModalController) { }
 
 
+
   async ActionEditCustomer() {
     const modal = await this.Modalcntrl.create({
       component: CustomereditComponent

@@ -3,35 +3,35 @@
         <ion-buttons slot="start">
             <ion-icon class="fontlarge" (click)="ActionCloseQuoteInfo()" name="arrow-back"></ion-icon>
         </ion-buttons>
-        <ion-title>#{{headerInfo.QuoteNo}}</ion-title>
-        <!-- <ion-title>#{{header.QuoteNo}} - V{{version.SrNo}}</ion-title> -->
+        <ion-title>
+           <div id="">{{headerInfo.QuoteNo}} - 
+                <select [(ngModel)]="QuoteVersionID" interface="popover" style="border: 0px;background: #3880ff;">
+                        <option  *ngFor="let version of headerInfo.VersionList" value="{{version.ID}}">V{{version.SrNo}}</option>
+                    </select>
+               </div> 
+        </ion-title>
         <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
     </ion-toolbar>
+    <ion-toolbar>
+            <ion-segment [(ngModel)]="selectedtabtype"  scrollable>
+                <ion-segment-button class="padd-scroll bar-header1" value="1" (click)="ActionQuickLoad(1)">Job
+                </ion-segment-button>
+                <ion-segment-button class="padd-scroll bar-header1" value="2" (click)="ActionQuickLoad(2)">Area Info
+                </ion-segment-button>
+                <ion-segment-button class="padd-scroll bar-header1" value="3" (click)="ActionQuickLoad(3)">Job Desc
+                </ion-segment-button>
+                <ion-segment-button class="padd-scroll bar-header1" value="4" (click)="ActionQuickLoad(4)">PO Items
+                </ion-segment-button>
+                <ion-segment-button class="padd-scroll bar-header1" value="5" (click)="ActionQuickLoad(5)">Comm Hub
+                </ion-segment-button>
+                <!-- <ion-segment-button class="padd-scroll bar-header1" value="6" (click)="ActionQuickLoad(6)">Prints
+                </ion-segment-button> -->
+            </ion-segment>
+        </ion-toolbar>
+   
 </ion-header>
-
 <ion-content>
-    <ion-row>
-        <ion-col>
-            <ion-tab-bar>
-                <ion-segment [(ngModel)]="selectedtabtype" scrollable>
-                    <ion-segment-button class="padd-scroll" value="1" (click)="ActionQuickLoad(1)">Job
-                    </ion-segment-button>
-                    <ion-segment-button class="padd-scroll" value="2" (click)="ActionQuickLoad(2)">Area Info
-                    </ion-segment-button>
-
-
-                    <ion-segment-button class="padd-scroll" value="3" (click)="ActionQuickLoad(3)">Job Desc
-                    </ion-segment-button>
-                    <ion-segment-button class="padd-scroll" value="4" (click)="ActionQuickLoad(4)">PO Items
-                    </ion-segment-button>
-                    <ion-segment-button class="padd-scroll" value="5" (click)="ActionQuickLoad(5)">Comm Hub
-                    </ion-segment-button>
-                    <ion-segment-button class="padd-scroll" value="6" (click)="ActionQuickLoad(6)">Prints
-                    </ion-segment-button>
-                </ion-segment>
-            </ion-tab-bar>
-        </ion-col>
-    </ion-row>
+   
 
     <ion-row>
         <ion-col *ngIf="selectedtabtype == 1">
@@ -45,7 +45,7 @@
                         </p>
                     </ion-label>
                 </ion-item>
-                <ion-col size="12"><span class="text-font fontbold color-blue margin-bottom"> Contacts</span></ion-col>
+                <ion-col size="12"><span class="text-font color-blue margin-bottom"> Contacts</span></ion-col>
                 <ion-row>
                         <ion-col size="12">
                             <ion-icon class="text-font" name="contact"></ion-icon> Michael Ethan,

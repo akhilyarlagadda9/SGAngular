@@ -8,7 +8,7 @@
   <ion-content>
     <ion-list class="ion-no-margin ion-no-padding">
       <ion-item>
-        <ion-label position="stacked" class="margin-zero">Category:</ion-label>
+        <ion-label position="floating" color="primary" class="margin-zero">Category:</ion-label>
         <ion-select [(ngModel)]="category" class="fontbold">
           <ion-select-option value="Schedule">Schedule</ion-select-option>
           <ion-select-option value="Material Order">Material Order</ion-select-option>
@@ -16,7 +16,7 @@
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label class="margin-zero" position="stacked">Type:</ion-label>
+        <ion-label class="margin-zero" position="floating" color="primary">Type:</ion-label>
         <ion-select [(ngModel)]="type" class="fontbold">
           <ion-select-option value="Edge">Edge</ion-select-option>
           <ion-select-option value="Appliance">Appliance</ion-select-option>
@@ -25,14 +25,14 @@
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label class="margin-zero" position="stacked">Subject:</ion-label>
+        <ion-label class="margin-zero" position="floating" color="primary">Subject:</ion-label>
         <ion-input type="text" class="inputheight fontbold"></ion-input>
       </ion-item>
       <ion-row>
-          <ion-label class="margin-zero attachstyle">Attachments:</ion-label>
+          <ion-label class="margin-zero attachstyle" color="primary"><u>Attachments:</u></ion-label>
       </ion-row>
       <ion-row>
-        <ion-label class="margin-zero notestyle"><u>Note:</u></ion-label>
+        <ion-label class="margin-zero notestyle" color="primary"><u>Note:</u></ion-label>
       </ion-row>
       <ion-row style="padding: 5px;">
         <ion-textarea rows="4" cols="10" class="borderall"></ion-textarea>

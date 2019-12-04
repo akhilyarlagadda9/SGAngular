@@ -1,18 +1,133 @@
 <ion-row>
-
-
-
-
-
-
-
-  
-  <ion-col size="10">
-      <img src="assets/img/arealayout.png" alt="your image" style="width:305px;height:400px;">
+  <ion-col size="4">
+    <ion-select style="border:1px solid #ddd;background-color:lightblue;padding:5px;border-radius: 5px;"
+      interface="popover" [compareWith]="compareWith" value="{{MyDefaultYearIdValue}}">
+      <ion-select-option *ngFor="let area of arealist" value="{{area.id}}">{{area.name}}</ion-select-option>
+    </ion-select>
   </ion-col>
-  <ion-col>
+
+  <ion-col size="4">
+    <ion-select style="border:1px solid #ddd;background-color:lightblue;padding:5px;border-radius: 5px;"
+      interface="popover" [compareWith]="compareWith" value="{{MyDefaultYearIdValue}}">
+      <ion-select-option *ngFor="let part of partlist" value="{{part.id}}">{{part.name}}</ion-select-option>
+    </ion-select>
+  </ion-col>
+  <ion-col class="text-right">
     <ion-button size="small">
       Add Area
     </ion-button>
   </ion-col>
+</ion-row>
+<ion-row style="background: lightgray;">
+  <ion-col size="1" class="fontmedium paddzero">
+    <ion-icon name="menu" ios="ios-menu" md="md-menu"></ion-icon>
+  </ion-col>
+  <ion-col>Drawing</ion-col>
+  <ion-col><img src="" alt="" width="350px" heigth="400px" /></ion-col>
+</ion-row>
+<ion-row style="background: lightgray;">
+  <ion-col size="9" class="paddzero">Description</ion-col>
+  <ion-col size="3" class="text-right paddzero">Amount</ion-col>
+</ion-row>
+
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;background-color: lightskyblue;">M</ion-col>
+  <ion-col>Absolute Black - 3 CM @22.92SF </ion-col>
+  <ion-col size="3" class="text-right">$ 426.31</ion-col>
+</ion-row>
+
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">S</ion-col>
+  <ion-col>120 * 25.5 = 21.25 SF</ion-col>
+  <ion-col size="3" class="text-right">-</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">B</ion-col>
+  <ion-col>2" backsplash</ion-col>
+  <ion-col size="3" class="text-right">-</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">E</ion-col>
+  <ion-col>Finished Edge @2.6 LF</ion-col>
+  <ion-col size="3" class="text-right">50.00</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">S</ion-col>
+  <ion-col>16ga 2317 Standard @1.00</ion-col>
+  <ion-col size="3" class="text-right">263.75</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">F</ion-col>
+  <ion-col>1B 258-BN Lav Faucet @1.00</ion-col>
+  <ion-col size="3" class="text-right">185.63</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">Sc</ion-col>
+  <ion-col>Cooktop C/O @1.00</ion-col>
+  <ion-col size="3" class="text-right">66.25</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">Ac</ion-col>
+  <ion-col>Cooktop C/O @1.00</ion-col>
+  <ion-col size="3" class="text-right">25.50</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">Oc</ion-col>
+  <ion-col>Cooktop C/O @1.00</ion-col>
+  <ion-col size="3" class="text-right">20.00</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">A</ion-col>
+  <ion-col>Cooktop @1.00</ion-col>
+  <ion-col size="3" class="text-right">127.50</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">Fa</ion-col>
+  <ion-col>Fabrication @22.92</ion-col>
+  <ion-col size="3" class="text-right">0.00</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">T</ion-col>
+  <ion-col>Template @22.92</ion-col>
+  <ion-col size="3" class="text-right">0.00</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">I</ion-col>
+  <ion-col>Install @22.92</ion-col>
+  <ion-col size="3" class="text-right">0.00</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">L</ion-col>
+  <ion-col>3/4 Thick Back Splash @1.00</ion-col>
+  <ion-col size="3" class="text-right">40.00</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">Ap</ion-col>
+  <ion-col>1007 Strainer Basket @2.00</ion-col>
+  <ion-col size="3" class="text-right">37.2</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">C</ion-col>
+  <ion-col>1007 Strainer Basket @3.00</ion-col>
+  <ion-col size="3" class="text-right">76.50</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">T</ion-col>
+  <ion-col>Virtified</ion-col>
+  <ion-col size="3" class="text-right">80.00</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">C</ion-col>
+  <ion-col>Cabinet @1.00</ion-col>
+  <ion-col size="3" class="text-right">45.56</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">Co</ion-col>
+  <ion-col>Consumables @2.00</ion-col>
+  <ion-col size="3" class="text-right">100.00</ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">T</ion-col>
+  <ion-col>Tool @2.00</ion-col>
+  <ion-col size="3" class="text-right">24.00</ion-col>
 </ion-row>

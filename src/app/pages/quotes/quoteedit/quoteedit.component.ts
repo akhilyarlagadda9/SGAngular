@@ -4,6 +4,7 @@ import { QuoteService } from 'src/app/service/quote.service'
 
 
 import { HeadereditComponent } from 'src/app/pages/quotes/headeredit/headeredit.component';
+import { OverlayEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-quoteedit',
@@ -66,9 +67,17 @@ export class QuoteeditComponent implements OnInit {
   }
   async ActionEditJob() {
     const modal = await this.Modalcntrl.create({
-      component: HeadereditComponent
-
+      component: HeadereditComponent,
+      componentProps: this.headerInfo,
     });
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null) {
+        if(detail.data.issave == true){
+          this.headerInfo =  detail.data.componentProps;
+          //this.contacts = detail.data.componentProps.ContactList;
+        }
+      }
+   });
     return await modal.present();
   }
 
@@ -77,6 +86,8 @@ export class QuoteeditComponent implements OnInit {
       'dismissed': true
     });
   }
+
+  
 }
 
 

@@ -46,7 +46,7 @@ export class QuoteeditComponent implements OnInit {
       error => console.log(error));
   }
   ActionAreaList(){
-    let result = this.service.ActionAreaList(this.qprmsobj.versionid).subscribe(
+    let result = this.service.ActionAreaList(this.qprmsobj.quoteid,this.qprmsobj.versionid,0).subscribe(
       data => {
          this.version = data;
       },

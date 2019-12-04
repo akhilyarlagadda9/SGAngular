@@ -8,15 +8,15 @@
   <ion-content>
     <ion-list class="ion-no-margin ion-no-padding">
         <ion-item>
-            <ion-label position="stacked" class="no-margin labelfont1">Job Name</ion-label>
+            <ion-label position="floating" color="primary" class="no-margin labelfont1">Job Name</ion-label>
             <ion-input required type="text" class="inputheight fontbold"></ion-input>
           </ion-item>
       <ion-item>
-        <ion-label class="no-margin labelfont1" position="stacked">First Name</ion-label>
+        <ion-label class="no-margin labelfont1" position="floating" color="primary">First Name</ion-label>
         <ion-input type="text" class="inputheight fontbold"></ion-input>
       </ion-item>
       <ion-item>
-          <ion-label class="no-margin labelfont1" position="stacked">PO Uploaded By:</ion-label>
+          <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Uploaded By:</ion-label>
           <ion-select [(ngModel)]="salesrep" class="fontbold">
             <ion-select-option value="Stonegrid">Stonegrid</ion-select-option>
             <ion-select-option value="Daniel Finn">Daniel Finn</ion-select-option>
@@ -25,15 +25,15 @@
           </ion-select>
         </ion-item>
       <ion-item>
-        <ion-label class="no-margin labelfont1" position="stacked">PO Date:</ion-label>
+        <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Date:</ion-label>
         <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="event.timeStarts" class="fontbold"></ion-datetime>
       </ion-item>
       <ion-item>
-        <ion-label class="no-margin labelfont1" position="stacked">PO Total($):</ion-label>
+        <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Total($):</ion-label>
         <ion-input type="text" class="inputheight fontbold"></ion-input>
       </ion-item>
       <ion-row>
-          <ion-label class="labelstyle fontbold"><u>Attachments:</u></ion-label>
+          <ion-label class="labelstyle" color="primary"><u>Attachments:</u></ion-label>
       </ion-row>
     </ion-list>
   </ion-content>

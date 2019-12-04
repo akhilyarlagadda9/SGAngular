@@ -1,0 +1,138 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title class="titleheader">MATERIAL DETAILS</ion-title>
+      <ion-button slot="end" color="success" size="small">Save</ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+  <form>
+    <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">Material*</ion-label>
+      <ion-input type="text" class="labelfont" placeholder="Absolute Black-3 CM - Polished"></ion-input>
+      <ion-icon slot="end" name="search" style="margin-top: 20px;"></ion-icon>
+    </ion-item>
+    <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Slab</ion-label>
+        <ion-input type="text" class="labelfont" readonly="readonly"></ion-input>
+      </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">Thickness</ion-label>
+      <ion-select [(ngModel)]="Thickness" class="labelfont">
+          <ion-select-option value="number:25" >1 CM</ion-select-option>
+          <ion-select-option value="number:5059">1.2 CM</ion-select-option>
+          <ion-select-option value="number:116">1.3  CM</ion-select-option>
+          <ion-select-option value="number:5145">12mm</ion-select-option>
+          <ion-select-option value="number:28">2 CM</ion-select-option>
+          <ion-select-option value="number:24" selected="true">3 CM</ion-select-option>
+          <ion-select-option value="number:29">4 CM</ion-select-option>
+          <ion-select-option value="number:30">5 CM</ion-select-option>
+          <ion-select-option value="number:5146">5mm</ion-select-option>
+          <ion-select-option value="number:31">6 CM</ion-select-option>
+          <ion-select-option value="number:5147">6mm</ion-select-option>
+          <ion-select-option value="number:123">8 CM</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">Finish</ion-label>
+      <ion-select [(ngModel)]="Finish" class="labelfont">
+          <ion-select-option value="number:119">Antiqued</ion-select-option>
+          <ion-select-option value="number:125">Brushed</ion-select-option>
+          <ion-select-option value="number:5089">Caress</ion-select-option>
+          <ion-select-option value="number:114">Concrete</ion-select-option>
+          <ion-select-option value="number:5144">Flamed</ion-select-option>
+          <ion-select-option value="number:34">Honed</ion-select-option>
+          <ion-select-option value="number:5085">Honed/Leathered</ion-select-option>
+          <ion-select-option value="number:115">Leathered</ion-select-option>
+          <ion-select-option value="number:5057">Matte</ion-select-option>
+          <ion-select-option value="number:5084">Natural Cleft</ion-select-option>
+          <ion-select-option value="number:23" selected="true">Polished</ion-select-option>
+          <ion-select-option value="number:5086">Polished/Antiqued</ion-select-option>
+          <ion-select-option value="number:5087">Polished/Honed</ion-select-option>
+          <ion-select-option value="number:5143">Polished/Leathered</ion-select-option>
+          <ion-select-option value="number:5150">Rough</ion-select-option>
+          <ion-select-option value="number:5122">Rugged</ion-select-option>
+          <ion-select-option value="number:5055">Satin</ion-select-option>
+          <ion-select-option value="number:5056">Suede</ion-select-option>
+          <ion-select-option value="number:5073">Textured</ion-select-option>
+          <ion-select-option value="number:5088">Thermal</ion-select-option>
+          <ion-select-option value="number:5058">Velvet</ion-select-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">WF</ion-label>
+        <ion-input type="text" class="labelfont" placeholder="0"></ion-input>
+    </ion-item>
+    <ion-item style="margin-left: -4%;">
+        <ion-checkbox style="margin-left: 4%;"></ion-checkbox>
+        <ion-label style="color: red;">Save Remnant</ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Price By</ion-label>
+        <ion-select [(ngModel)]="Price" class="labelfont">
+            <ion-select-option value="number:25" selected="true">Sqft</ion-select-option>
+            <ion-select-option value="number:5059">Slab</ion-select-option>
+        </ion-select>
+      </ion-item>
+    <ion-list >
+        <ion-list-header>
+            Mat Pricing:
+          </ion-list-header>
+        <ion-item>
+            <ion-label class="labelfont" position="floating" color="primary">Cost</ion-label>
+            <ion-input type="text" class="labelfont" placeholder="0"></ion-input>
+          </ion-item>
+        <ion-item>
+            <ion-label class="labelfont" position="floating" color="primary">Discount(%)</ion-label>
+            <ion-input type="text" class="labelfont" placeholder="0"></ion-input>
+          </ion-item>
+        <ion-item>
+            <ion-label class="labelfont" position="floating" color="primary">Cost/Sqft</ion-label>
+            <ion-input type="text" class="labelfont" placeholder="0"></ion-input>
+          </ion-item>
+        <ion-item>
+            <ion-label class="labelfont" position="floating" color="primary">Margin(%)</ion-label>
+            <ion-input type="text" class="labelfont" placeholder="0"></ion-input>
+          </ion-item>
+        <ion-item>
+            <ion-label class="labelfont" position="floating" color="primary">Price/Sqft</ion-label>
+            <ion-input type="text" class="labelfont" placeholder="0"></ion-input>
+          </ion-item>
+        <ion-item>
+            <ion-label class="labelfont" position="floating" color="primary">Net Price/Sqft</ion-label>
+            <ion-input type="text" class="labelfont" placeholder="0"></ion-input>
+          </ion-item>
+      </ion-list>
+      <ion-item style="margin-left: -4%;">
+          <ion-checkbox style="margin-left: 4%;"></ion-checkbox>
+          <ion-label>tax</ion-label>
+      </ion-item>
+      <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary">Discount</ion-label>
+          <ion-select [(ngModel)]="Thickness" class="labelfont">
+              <ion-select-option value="number:25">Select</ion-select-option>
+              <ion-select-option value="number:5059" selected="true">Material Discount</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-input type="text" class="labelfont" placeholder="0"></ion-input>
+          </ion-item>
+      <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary"></ion-label>
+          <ion-select [(ngModel)]="pricelsit" class="labelfont">
+            <ion-select-option value="Retail">%</ion-select-option>
+            <ion-select-option value="Commercial" selected="true">$</ion-select-option>
+            <ion-select-option value="Commercial">EA</ion-select-option>
+          </ion-select>
+        </ion-item>
+    <ion-item style="margin-left: -4%;">
+          <ion-checkbox style="margin-left: 4%;"></ion-checkbox>
+          <ion-label style="color: red;">tax</ion-label>
+      </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">Note</ion-label>
+      <ion-textarea type="text" class="labelfont"placeholder="Note"></ion-textarea>
+    </ion-item>
+  </form>
+</ion-content>

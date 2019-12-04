@@ -18,7 +18,22 @@ import { PoeditComponent } from '../poedit/poedit.component';
 import { JobdesceditComponent } from '../jobdescedit/jobdescedit.component';
 import { CustomereditComponent } from '../customeredit/customeredit.component';
 import { CommhubeditComponent } from '../commhubedit/commhubedit.component';
+import { SinkComponent } from '../sink/sink.component';
+import { LaborinfoComponent } from '../laborinfo/laborinfo.component';
+import { AddoninfoComponent } from '../addoninfo/addoninfo.component';
+import { SplashComponent } from '../splash/splash.component';
+import { EdgeinfoComponent } from '../edgeinfo/edgeinfo.component';
+import { CutoutinfoComponent } from '../cutoutinfo/cutoutinfo.component';
+import { MaterialinfoComponent } from '../materialinfo/materialinfo.component';
+import { MeasurementsComponent } from '../measurements/measurements.component';
+import { FaucetsComponent } from '../faucets/faucets.component';
+import { TileinfoComponent } from '../tileinfo/tileinfo.component';
+import { CabinetComponent } from '../cabinet/cabinet.component';
+import { ToolComponent } from '../tool/tool.component';
+import { ConsumableComponent } from '../consumable/consumable.component';
+import { ApplianceComponent } from '../appliance/appliance.component';
 import { CustomerinfoComponent } from '../customerinfo/customerinfo.component';
+import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
 
 
 @NgModule({
@@ -33,12 +48,12 @@ import { CustomerinfoComponent } from '../customerinfo/customerinfo.component';
       },
     ])
   ],
-  entryComponents: [CreatequoteComponent,
+  entryComponents: [CreatequoteComponent, AddmatComponent, ApplianceComponent, ConsumableComponent, ToolComponent, CabinetComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, LaborinfoComponent, SinkComponent,
     QuoteeditComponent,HeadereditComponent,HeaderinfoComponent,
     PoitemsComponent,CommhubComponent,PrintsComponent,
     JobdesComponent,AreainfoComponent,PoeditComponent,
     JobdesceditComponent,CustomereditComponent,CommhubeditComponent,CustomerinfoComponent],
-  declarations: [QuotePage, CreatequoteComponent,QuoteeditComponent,
+  declarations: [QuotePage, ApplianceComponent, AddmatComponent, ConsumableComponent, ToolComponent, CabinetComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, LaborinfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
     HeadereditComponent,HeaderinfoComponent,PoitemsComponent,
     CommhubComponent,PrintsComponent,JobdesComponent,
     AreainfoComponent,PoeditComponent,JobdesceditComponent,

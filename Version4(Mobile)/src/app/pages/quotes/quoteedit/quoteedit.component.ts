@@ -16,6 +16,7 @@ export class QuoteeditComponent implements OnInit {
   quoteno: string;
   qprmsobj = this.navParams.data;
   headerInfo:any;
+  version:any;
   selectedtabtype:number = 1;
   QuoteVersionID:number = this.qprmsobj.versionid; 
 
@@ -24,16 +25,19 @@ export class QuoteeditComponent implements OnInit {
   
   ngOnInit() {
     //this.headeInfo = this.qprmsobj.header;
-
-
     this.ActionQuoteInfo();
-   //this.ActionAreaList();
+    this.ActionAreaList();
   }
+
+
 
   ActionGoToHome(){
     this.ActionCloseQuoteInfo();
     this.navCtrl.navigateRoot('/home');
   }
+
+
+
   ActionQuoteInfo(){
     let result = this.service.ActionQuoteInfo(this.qprmsobj.quoteid,this.qprmsobj.quoteno,this.qprmsobj.versionid,0,0,0).subscribe(
       data => {
@@ -41,17 +45,16 @@ export class QuoteeditComponent implements OnInit {
       },
       error => console.log(error));
   }
-  // ActionAreaList(){
-  //   let result = this.service.ActionAreaList(this.qprmsobj.quoteid,this.qprmsobj.versionid,0).subscribe(
-  //     data => {
-  //        this.version = data;
-  //     },
-  //     error => console.log(error));
-  // }
-  ActionCloseQuoteInfo() {
-    this.Modalcntrl.dismiss({
-      'dismissed': true
-    });
+  ActionAreaList(){
+    let result = this.service.ActionAreaList(this.qprmsobj.versionid).subscribe(
+      data => {
+         this.version = data;
+      },
+      error => console.log(error));
+  }
+  /*****tabs****** */
+  ActionQuickLoad(componet: any) {
+    this.selectedtabtype = componet;
   }
   /***** Quote Header *****/
   async ActionQuoteHeader() {
@@ -68,27 +71,12 @@ export class QuoteeditComponent implements OnInit {
     });
     return await modal.present();
   }
-  /*****tabs****** */
-  ActionQuickLoad(componet: any) {
-    this.selectedtabtype = componet;
-  }
 
-  // ActionQuickLoad(componet: any) {
-  //   if (componet == 1) {
-  //     this.tabComponet = HeaderinfoComponent;
-  //   } else if (componet == 2) {
-  //     this.tabComponet = JobdesComponent;
-  //   }
-  //   else if (componet == 3) {
-  //     this.tabComponet = PoitemsComponent;
-  //   }
-  //   else if (componet == 4) {
-  //     this.tabComponet = CommhubComponent;
-  //   }
-  //   else if (componet == 5) {
-  //     this.tabComponet = PrintsComponent;
-  //   }
-  // }
+  ActionCloseQuoteInfo() {
+    this.Modalcntrl.dismiss({
+      'dismissed': true
+    });
+  }
 }
 
 

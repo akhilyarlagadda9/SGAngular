@@ -1,12 +1,12 @@
 <ion-row>
   <ion-col size="4">
-    <ion-select style="border:1px solid #ddd;background-color:lightblue;padding:5px;border-radius: 5px;"
+    <ion-select class="btninfo"
       interface="popover" [compareWith]="compareWith" value="{{MyDefaultYearIdValue}}">
       <ion-select-option *ngFor="let area of arealist" value="{{area.id}}">{{area.name}}</ion-select-option>
     </ion-select>
   </ion-col>
   <ion-col size="4">
-    <ion-select style="border:1px solid #ddd;background-color:lightblue;padding:5px;border-radius: 5px;"
+    <ion-select class="btninfo"
       interface="popover" [compareWith]="compareWith" value="{{MyDefaultYearIdValue}}">
       <ion-select-option *ngFor="let part of partlist" value="{{part.id}}">{{part.name}}</ion-select-option>
     </ion-select>
@@ -17,119 +17,113 @@
     </ion-button>
   </ion-col>
 </ion-row>
-<!-- <ion-row style="background: lightgray;">
-  <ion-col>Drawing</ion-col>
-  <ion-col size="1" class="fontmedium text-right">
-    <ion-icon name="menu" ios="ios-menu" md="md-menu"></ion-icon>
-  </ion-col>
-</ion-row> -->
 <ion-row>
     <ion-col>
         <img src="assets/img/area.png" alt="" style="width:350px;height:400px;">
     </ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;background-color:mediumpurple;color:white;">M</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:mediumpurple;">M</ion-col>
   <ion-col (click)="ActionCreateMaterial()">Absolute Black - 3 CM @22.92SF </ion-col>
   <ion-col size="3" class="text-right">$ 426.31</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:mediumpurple;color:white;">S</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:mediumpurple;">S</ion-col>
   <ion-col (click)="ActionCreateMeasurement()">120 * 25.5 = 21.25 SF</ion-col>
   <ion-col size="3" class="text-right">-</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:SkyBlue;color:blue;">B</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:mediumpurple;">B</ion-col>
   <ion-col (click)="ActionCreateSplash()">2" backsplash @1.67 SF</ion-col>
   <ion-col size="3" class="text-right">-</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:olivedrab;color:white;">E</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:olivedrab;">E</ion-col>
   <ion-col (click)="ActionCreateEdge()">Finished Edge @2.6 LF</ion-col>
   <ion-col size="3" class="text-right">$ 50.00</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:rgb(238, 162, 22);color:white">S</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(238, 162, 22);">S</ion-col>
   <ion-col (click)="ActionCreateSink()">16ga 2317 Standard @1.00</ion-col>
   <ion-col size="3" class="text-right">$ 263.75</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:rgb(163, 206, 83);color:white;">F</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(163, 206, 83);">F</ion-col>
   <ion-col (click)="ActionCreateFaucets()">1B 258-BN Lav Faucet @1.00</ion-col>
   <ion-col size="3" class="text-right">$ 185.63</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:lightseagreen;color:white;">Sc</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:lightseagreen;">Sc</ion-col>
   <ion-col>Cooktop C/O @1.00</ion-col>
   <ion-col size="3" class="text-right">$ 66.25</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:lightseagreen;color:white;">Ac</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:lightseagreen;">Ac</ion-col>
   <ion-col>Cooktop C/O @1.00</ion-col>
   <ion-col size="3" class="text-right">$ 25.50</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:lightseagreen;color:white;">Oc</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:lightseagreen;">Oc</ion-col>
   <ion-col>Cooktop C/O @1.00</ion-col>
   <ion-col size="3" class="text-right">$ 20.00</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:rgb(238, 162, 22);color:white;">A</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(238, 162, 22);">A</ion-col>
   <ion-col >Cooktop @1.00</ion-col>
   <ion-col size="3" class="text-right">$ 127.50</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:mediumpurple;color:white;">Fa</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:mediumpurple;">Fa</ion-col>
   <ion-col>Fabrication @22.92</ion-col>
   <ion-col size="3" class="text-right">$ 0.00</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:mediumpurple;color:white;">T</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:mediumpurple;">T</ion-col>
   <ion-col>Template @22.92</ion-col>
   <ion-col size="3" class="text-right">$ 0.00</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:mediumpurple;color:white;">I</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:mediumpurple;">I</ion-col>
   <ion-col>Install @22.92</ion-col>
   <ion-col size="3" class="text-right">$ 0.00</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:rgb(238, 162, 22);color:white;">L</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(238, 162, 22);">L</ion-col>
   <ion-col (click)="ActionCreateLabor()">3/4 Thick Back Splash @1.00</ion-col>
   <ion-col size="3" class="text-right">$ 40.00</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:rgb(238, 162, 22);color:white;">Ap</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(238, 162, 22);">Ap</ion-col>
   <ion-col (click)="ActionCreateAppliance()">1007 Strainer Basket @2.00</ion-col>
   <ion-col size="3" class="text-right">$ 37.2</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-    <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:rgb(238, 162, 22);color:white;">Ao</ion-col>
+    <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(238, 162, 22);">Ao</ion-col>
     <ion-col (click)="ActionCreateTile()">Altima, Pure White 0190 @1.00</ion-col>
     <ion-col size="3" class="text-right">$ 28.00</ion-col>
   </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:rgb(238, 162, 22);color:white;">C</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(238, 162, 22);">C</ion-col>
   <ion-col>1007 Strainer Basket @3.00</ion-col>
   <ion-col size="3" class="text-right">$ 76.50</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:rgb(238, 162, 22);color:white;">T</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(238, 162, 22);">T</ion-col>
   <ion-col>Virtified</ion-col>
   <ion-col size="3" class="text-right">$ 80.00</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:rgb(238, 162, 22);color:white;">C</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(238, 162, 22);">C</ion-col>
   <ion-col (click)="ActionCreateCabinet()">Cabinet @1.00</ion-col>
   <ion-col size="3" class="text-right">$ 45.56</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:rgb(238, 162, 22);color:white;">Co</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(238, 162, 22);">Co</ion-col>
   <ion-col (click)="ActionCreateConsumable()">Consumables @2.00</ion-col>
   <ion-col size="3" class="text-right">$ 100.00</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-  <ion-col size="1" style="border-radius: 100%;text-align:center;line-height:15px;background-color:rgb(238, 162, 22);color:white;">T</ion-col>
+  <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(238, 162, 22);">T</ion-col>
   <ion-col (click)="ActionCreateTool()">Tool @2.00</ion-col>
   <ion-col size="3" class="text-right">$ 24.00</ion-col>
 </ion-row>

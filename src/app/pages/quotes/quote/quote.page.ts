@@ -5,7 +5,8 @@ import { CreatequoteComponent } from 'src/app/pages/quotes/createquote/createquo
 import { QuoteeditComponent } from 'src/app/pages/quotes/quoteedit/quoteedit.component'
 
 import {QuoteService} from 'src/app/service/quote.service'
-import { from } from 'rxjs';
+
+
 @Pipe({
   name: 'filter'
 })

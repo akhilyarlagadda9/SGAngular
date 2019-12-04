@@ -19,9 +19,21 @@ export class QuoteService {
   ActionAreaList(quoteId,verId,salesrepId): Observable<any> {
     return this.http.get<any>(this.url +  'api/QEdit/ActionVersionInfo1?quoteId=' + quoteId + '&versionId=' + verId + "&salesrepId=" + salesrepId) 
   }
+
+
+  
 /********** COMMON LISTS ******************/
 
   // ActionGetLeadTypes(){
 
   // }
+
+// private _serviceInterface = new Subject<any>();
+// editinterface$ = this._serviceInterface.asObservable();
+
+// SendData(model:any){
+//   debugger;
+//   this._serviceInterface.next(model);
+// }
+
 }

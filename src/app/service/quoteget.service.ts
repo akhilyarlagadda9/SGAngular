@@ -11,7 +11,7 @@ export class QuotegetService {
   constructor(private http: HttpClient) { }
 
   //Lead type List
-  getLeadDictionaryLists(typeIdList):Observable<any> {
+  LeadDictionaryLists(typeIdList):Observable<any> {
     return this.http.get<any>(this.url +  'api/lead/LeadDictionaryLists?typeIdList=' + typeIdList)
   }
   //Hear About Us List
@@ -26,10 +26,7 @@ export class QuotegetService {
   getpricelists(typeId:number):Observable<any> {
     return this.http.get<any>(this.url +  'api/QuoteAdmin/CustPriceList?typeID=' + "&typeId=" + typeId)
   }
- //Sales Rep List,Estimator List and Project Managers List
-  CustTypeResourceList(custTypeId:any, typeId:number):Observable<any> {
-    return this.http.get<any>(this.url +  'api/QuoteAdmin/CustTypeResourceList?parentID=' + custTypeId + "&typeId=" + typeId)
- }
+
  //Production Type List
  QuoteMasterList(typeID:number):Observable<any> {
   return this.http.get<any>(this.url +  'api/QuoteAdmin/MasterList?typeID=' + typeID)
@@ -40,5 +37,14 @@ export class QuotegetService {
 }
 
  
+
+ //Sales Rep List,Estimator List and Project Managers List
+CustTypeResourceList(parentId:number,typeId:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/QuoteAdmin/CustTypeResourceList?parentID=' + parentId + '&typeId=' + typeId)
+}
+CustomerDictionayList(tIdList:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Customer/CustomerDictionayList?typeIdList=' + tIdList)
+}
+
 
 }

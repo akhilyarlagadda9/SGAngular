@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { QuotegetService } from 'src/app/service/quoteget.service';
 
 @Component({
   selector: 'app-createquote',
@@ -7,16 +8,54 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./createquote.component.scss'],
 })
 export class CreatequoteComponent implements OnInit {
-  create: any;
+  quoteId:number = 0;
+  header:{
+    LeadTypeID:number,
+    LeadInfo:any,
+    Version:{
+      Customer:any,
+      ParentCustInfo:any,
+      ChildParentCustInfo:any
+    },
 
-  constructor(public Modalcntrl : ModalController ) { }
+  };
+  salesPersonsList:any = [];
+        estimatorsList:any = [];
+        projectManagersList:any = [];
+        customerTypes:any = [];
+        leadTypes:any = [];
+        leadHearAbout:any = [];
+        priceList:any = [];
 
-  ngOnInit() {}
+
+
+  
+
+  constructor(public Modalcntrl : ModalController,private getservice:QuotegetService ) { }
+
+  ngOnInit() {
+    let custDicIds = [1];let leadDicIds = [2,3];
+    this.getservice.CustTypeResourceList(4, 3).subscribe(data => {this.salesPersonsList = data});
+    this.getservice.CustTypeResourceList(4, 8).subscribe(data => {this.estimatorsList = data});;
+    this.getservice.CustTypeResourceList(4, 9).subscribe(data => {this.projectManagersList = data});;
+    this.getservice.CustomerDictionayList(custDicIds).subscribe(data => {this.customerTypes = data[0]});
+    this.getservice.CustPriceList(4).subscribe(data => {this.priceList = data});
+    this.getservice.LeadDictionaryLists(leadDicIds).subscribe(
+      data=> { this.leadTypes = data[0] ;this.leadHearAbout = data[1] }
+    );
+   
+    }
+
+  /******* Actions *******/
   ActionCloseCreateQuote() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
     this.Modalcntrl.dismiss({
       'dismissed': true
     });
   }
+ 
+
+
+
+
+
 }

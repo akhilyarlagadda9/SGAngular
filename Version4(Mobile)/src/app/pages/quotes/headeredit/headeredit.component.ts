@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController,NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'app-headeredit',
@@ -8,14 +8,16 @@ import { ModalController } from '@ionic/angular';
 })
 export class HeadereditComponent implements OnInit {
 
-  constructor(public Modalcntrl : ModalController) { }
-
+  constructor(public Modalcntrl : ModalController,private navParams : NavParams) { }
+  headerinfo = this.navParams.data;
   ngOnInit() {}
 
   /******** Quoteedit Close ************/
-  ActionCloseJobEdit() {
+  ActionCloseJobEdit(issave) {
     this.Modalcntrl.dismiss({
-      'dismissed': true
+      'dismissed': true,
+      componentProps:this.headerinfo,
+      issave:issave
     });
   }
 }

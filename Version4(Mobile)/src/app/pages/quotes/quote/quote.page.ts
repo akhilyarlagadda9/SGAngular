@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Pipe } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { CreatequoteComponent } from 'src/app/pages/quotes/createquote/createquote.component'
@@ -6,7 +6,9 @@ import { QuoteeditComponent } from 'src/app/pages/quotes/quoteedit/quoteedit.com
 
 import {QuoteService} from 'src/app/service/quote.service'
 import { from } from 'rxjs';
-
+@Pipe({
+  name: 'filter'
+})
 @Component({
   selector: 'app-quote',
   templateUrl: './quote.page.html',
@@ -71,9 +73,11 @@ export class QuotePage implements OnInit {
 
 /***** QUOTEEDIT *****/
 async ActionQuoteEdit(header) {
+  let version = header.VersionList.filter(x => x.ID === header.VersionID)[0];
+  //let version = header.VersionList.filter(s => {if(header.VersionID == s.ID){return s;} });
   this.qprmsobj={
-    quoteid: header.ID,quoteno: header.QuoteNo,versionid: header.VersionID,customerid:0,
-    accountid:0,childaccid:0,phaseid:0,viewtypeid:0,header:header
+    quoteid: header.ID,quoteno: header.QuoteNo,versionid: header.VersionID,customerid:version.CustomerID,
+    accountid:version.ParentAccID,childaccid:version.ChildAccID,phaseid:0,viewtypeid:0,header:header
   };
   const modal = await this.Modalcntrl.create({
     component: QuoteeditComponent,

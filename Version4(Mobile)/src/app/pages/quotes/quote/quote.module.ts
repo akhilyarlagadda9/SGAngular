@@ -18,6 +18,7 @@ import { PoeditComponent } from '../poedit/poedit.component';
 import { JobdesceditComponent } from '../jobdescedit/jobdescedit.component';
 import { CustomereditComponent } from '../customeredit/customeredit.component';
 import { CommhubeditComponent } from '../commhubedit/commhubedit.component';
+import { CustomerinfoComponent } from '../customerinfo/customerinfo.component';
 
 
 @NgModule({
@@ -32,8 +33,15 @@ import { CommhubeditComponent } from '../commhubedit/commhubedit.component';
       },
     ])
   ],
-  entryComponents: [CreatequoteComponent,QuoteeditComponent,HeadereditComponent,HeaderinfoComponent,PoitemsComponent,CommhubComponent,PrintsComponent,JobdesComponent,AreainfoComponent,PoeditComponent,JobdesceditComponent,CustomereditComponent,CommhubeditComponent],
-  declarations: [QuotePage, CreatequoteComponent,
-    QuoteeditComponent,HeadereditComponent,HeaderinfoComponent,PoitemsComponent,CommhubComponent,PrintsComponent,JobdesComponent,AreainfoComponent,PoeditComponent,JobdesceditComponent,CustomereditComponent,CommhubeditComponent]
+  entryComponents: [CreatequoteComponent,
+    QuoteeditComponent,HeadereditComponent,HeaderinfoComponent,
+    PoitemsComponent,CommhubComponent,PrintsComponent,
+    JobdesComponent,AreainfoComponent,PoeditComponent,
+    JobdesceditComponent,CustomereditComponent,CommhubeditComponent,CustomerinfoComponent],
+  declarations: [QuotePage, CreatequoteComponent,QuoteeditComponent,
+    HeadereditComponent,HeaderinfoComponent,PoitemsComponent,
+    CommhubComponent,PrintsComponent,JobdesComponent,
+    AreainfoComponent,PoeditComponent,JobdesceditComponent,
+    CustomereditComponent,CommhubeditComponent,CustomerinfoComponent]
 })
 export class QuotePageModule {}

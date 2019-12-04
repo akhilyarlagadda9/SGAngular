@@ -30,9 +30,8 @@
         </ion-toolbar>
    
 </ion-header>
-<ion-content>
-   
 
+<ion-content>
     <ion-row>
         <ion-col *ngIf="selectedtabtype == 1">
             <ion-card class="margin-bottom" style="margin-left: 0px;">
@@ -46,20 +45,23 @@
                     </ion-label>
                 </ion-item>
                 <ion-col size="12"><span class="text-font color-blue margin-bottom"> Contacts</span></ion-col>
-                <ion-row>
-                        <ion-col size="12">
-                            <ion-icon class="text-font" name="contact"></ion-icon> Michael Ethan,
-                            <ion-icon class="text-font" name="mail"></ion-icon>Ethan@gmail.com
-                            <ion-icon class="text-font" name="call"></ion-icon> (987) 456-3210;
+                <ion-row *ngFor="let contact of headerInfo.QuoteContacts">
+                        <ion-col size="12" >
+                            <ion-icon class="text-font" name="contact"></ion-icon> {{contact.Name}},
+                            <ion-icon class="text-font" name="mail"></ion-icon>{{contact.Email}}
+                            <ion-icon class="text-font" name="call"></ion-icon> {{contact.Phone}}
                         </ion-col>
                     </ion-row>
             </ion-card>
-
-
-           
-            
-            <app-headerinfo [header]="headerInfo"></app-headerinfo>
-           
+               <div *ngIf="qprmsobj.accountid > 0">
+                    <app-customerinfo (customerEvent)="displayCounter($event)" [customer]="headerInfo.ParentAccount" [SelectedTypeID]="1" [contacts]="headerInfo.ParentAccountContacts"></app-customerinfo>
+               </div> 
+               <div *ngIf="qprmsobj.childaccid > 0">
+                    <app-customerinfo [customer]="headerInfo.ChildAccount" [SelectedTypeID]="2" [contacts]="headerInfo.ChildAccountContacts"></app-customerinfo>
+               </div> 
+               <div *ngIf="qprmsobj.customerid > 0">
+                    <app-customerinfo [customer]="headerInfo.Customer" [SelectedTypeID]="3" [contacts]="headerInfo.CustomerContacts"></app-customerinfo>
+               </div> 
         </ion-col>
         <ion-col *ngIf="selectedtabtype == 2">
         <app-areainfo></app-areainfo>
@@ -77,36 +79,4 @@
             <app-prints></app-prints>
         </ion-col>
     </ion-row>
-    <!-- <ng-container *ngComponentOutlet="tabComponet"></ng-container> -->
-    <!-- <ion-slides pager>
-        <ion-slide>
-            <ion-list style="padding-left:10px;width:100%;font-size:14px">
-                <ion-row>
-                    <ion-col size="3" class="paddzero text-right">Job Name:</ion-col>
-                    <ion-col size="7" class="paddzero text-left fontbold">&nbsp;{{header.QuoteName}}</ion-col>
-                    <ion-col size="2" class="text-right fontbold color-blue" (click)="ActionQuoteHeader()"><u>Edit</u>
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col size="3" class="paddzero text-right">Address:</ion-col>
-                    <ion-col size="9" class="paddzero text-left fontbold">&nbsp;{{header.Address1}}</ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col size="3" class="paddzero text-right"></ion-col>
-                    <ion-col size="9" class="paddzero text-left fontbold">&nbsp;{{header.City}}, {{header.State}} -
-                        {{header.Zipcode}}</ion-col>
-                </ion-row>
-            </ion-list>
-        </ion-slide>
-        <ion-slide>
-
-        </ion-slide>
-    </ion-slides>
-
-    <ion-item class="text-center">
-        <h3>Area Info</h3>
-    </ion-item>
-    <ion-item>
-        <img src="assets/img/arealayout.png" alt="your image" style="width:305px;height:400px;">
-    </ion-item> -->
 </ion-content>

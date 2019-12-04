@@ -10,19 +10,22 @@
 
 <ion-content>
   <ion-list>
-      <ion-item>
-          <ion-button (click)="ActionLoadQuote()">
-          <ion-icon name="logo-buffer"></ion-icon> Quoting
-          </ion-button>
+      <ion-item >
+          <ion-col (click)="ActionLoadQuote()">
+              <h2>  <ion-icon name="logo-buffer"></ion-icon> Quoting</h2>
+        </ion-col>
       </ion-item>
       <ion-item >
-          <ion-icon name="calendar"></ion-icon>  Scheduling
+        <ion-col>
+            <h2><ion-icon name="calendar"></ion-icon> Scheduling</h2></ion-col>
       </ion-item>
       <ion-item >
-          <ion-icon name="barcode"></ion-icon>  Purchasing
+          <ion-col>
+              <h2><ion-icon name="barcode"></ion-icon>  Purchasing</h2></ion-col>
       </ion-item>
         <ion-item >
-            <ion-icon name="clipboard"></ion-icon>  Inventory
+            <ion-col>
+                <h2> <ion-icon name="clipboard"></ion-icon> Inventory</h2></ion-col>
       </ion-item>
   </ion-list>
 </ion-content>

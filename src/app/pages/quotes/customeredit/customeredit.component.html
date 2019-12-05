@@ -9,7 +9,8 @@
     <ion-list class="ion-no-margin ion-no-padding">
         <ion-item>
             <ion-label position="floating" color="primary" class="margin-zero">Customer</ion-label>
-            <ion-input required [(ngModel)]="customerinfo.Name" type="text" class="inputheight"></ion-input>
+            <ion-input required [(ngModel)]="customerinfo.Name" (keyup.enter)="ActionSearchCustomer($event)" type="text" class="inputheight"></ion-input>
+            <ion-icon slot="end" name="search" (click)="ActionSearchCustomer($event)" style="margin-top: 20px;"></ion-icon>
         </ion-item>
         <ion-item>
             <ion-label position="floating" color="primary" class="margin-zero">Address</ion-label>

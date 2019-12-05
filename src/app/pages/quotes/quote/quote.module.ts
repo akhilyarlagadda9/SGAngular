@@ -33,6 +33,7 @@ import { ToolComponent } from '../tool/tool.component';
 import { ConsumableComponent } from '../consumable/consumable.component';
 import { ApplianceComponent } from '../appliance/appliance.component';
 import { CustomerinfoComponent } from '../customerinfo/customerinfo.component';
+import { AddareaComponent } from '../addarea/addarea.component';
 import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
 
 
@@ -52,11 +53,11 @@ import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
     QuoteeditComponent,HeadereditComponent,HeaderinfoComponent,
     PoitemsComponent,CommhubComponent,PrintsComponent,
     JobdesComponent,AreainfoComponent,PoeditComponent,
-    JobdesceditComponent,CustomereditComponent,CommhubeditComponent,CustomerinfoComponent],
+    JobdesceditComponent,CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent],
   declarations: [QuotePage, ApplianceComponent, AddmatComponent, ConsumableComponent, ToolComponent, CabinetComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, LaborinfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
     HeadereditComponent,HeaderinfoComponent,PoitemsComponent,
     CommhubComponent,PrintsComponent,JobdesComponent,
     AreainfoComponent,PoeditComponent,JobdesceditComponent,
-    CustomereditComponent,CommhubeditComponent,CustomerinfoComponent]
+    CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent]
 })
 export class QuotePageModule {}

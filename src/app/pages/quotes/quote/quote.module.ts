@@ -35,6 +35,7 @@ import { ApplianceComponent } from '../appliance/appliance.component';
 import { CustomerinfoComponent } from '../customerinfo/customerinfo.component';
 import { AddareaComponent } from '../addarea/addarea.component';
 import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
+import { CarpetinfoComponent } from '../carpetinfo/carpetinfo.component';
 
 
 @NgModule({
@@ -53,11 +54,11 @@ import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
     QuoteeditComponent,HeadereditComponent,HeaderinfoComponent,
     PoitemsComponent,CommhubComponent,PrintsComponent,
     JobdesComponent,AreainfoComponent,PoeditComponent,
-    JobdesceditComponent,CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent,CustomersearchComponent],
+    JobdesceditComponent,CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent,CustomersearchComponent,CarpetinfoComponent],
   declarations: [QuotePage, ApplianceComponent, AddmatComponent, ConsumableComponent, ToolComponent, CabinetComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, LaborinfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
     HeadereditComponent,HeaderinfoComponent,PoitemsComponent,
     CommhubComponent,PrintsComponent,JobdesComponent,
     AreainfoComponent,PoeditComponent,JobdesceditComponent,
-    CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent,CustomersearchComponent]
+    CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent,CustomersearchComponent,CarpetinfoComponent]
 })
 export class QuotePageModule {}

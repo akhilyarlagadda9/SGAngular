@@ -15,6 +15,7 @@ import { CabinetComponent } from '../cabinet/cabinet.component';
 import { ToolComponent } from '../tool/tool.component';
 import { ConsumableComponent } from '../consumable/consumable.component';
 import { ApplianceComponent } from '../appliance/appliance.component';
+import { CarpetinfoComponent } from '../carpetinfo/carpetinfo.component';
 
 @Component({
   selector: 'app-areainfo',
@@ -24,6 +25,7 @@ import { ApplianceComponent } from '../appliance/appliance.component';
 export class AreainfoComponent implements OnInit {
   arealist: any[] = [{ id: 1, name: 'Area1' }, { id: 2, name: 'Area2' }, { id: 3, name: 'Area3' }, { id: 4, name: 'Area4' }, { id: 5, name: 'Area5' }];
   partlist: any[] = [{ id: 1, name: 'Part1' }, { id: 2, name: 'Part2' }, { id: 3, name: 'Part3' }, { id: 4, name: 'Part4' }, { id: 5, name: 'Part5' }];
+  viewid: any;
   constructor(public Modalcntrl: ModalController) { }
   AreaName: any = this.partlist;
   PartName: any = this.partlist;
@@ -44,7 +46,8 @@ export class AreainfoComponent implements OnInit {
   }
 
   /***** LABOR DETAILS *****/
-  async ActionCreateLabor() {
+  async ActionCreateLabor(typeid: any) {
+     this.viewid = typeid;
     const modal = await this.Modalcntrl.create({
       component: LaborinfoComponent
     });
@@ -150,4 +153,13 @@ export class AreainfoComponent implements OnInit {
     });
     return await modal.present();
   }
+
+   /***** CARPET DETAILS *****/
+   async ActionCreateCarpet() {
+    const modal = await this.Modalcntrl.create({
+      component: CarpetinfoComponent
+    });
+    return await modal.present();
+  }
+
 }

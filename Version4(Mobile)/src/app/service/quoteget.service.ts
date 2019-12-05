@@ -46,5 +46,8 @@ CustomerDictionayList(tIdList:any):Observable<any> {
   return this.http.get<any>(this.url +  'api/Customer/CustomerDictionayList?typeIdList=' + tIdList)
 }
 
+GetParentAccListWithType(typeId:number,search:string):Observable<any> {
+  return this.http.get<any>(this.url +  'api/customer/GetParentAccListWithType?typeId=' + typeId + "&search=" + search)
+}
 
 }

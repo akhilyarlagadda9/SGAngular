@@ -16,7 +16,7 @@ import { JobdesComponent } from '../jobdes/jobdes.component';
 import { AreainfoComponent } from '../areainfo/areainfo.component';
 import { PoeditComponent } from '../poedit/poedit.component';
 import { JobdesceditComponent } from '../jobdescedit/jobdescedit.component';
-import { CustomereditComponent } from '../customeredit/customeredit.component';
+import { CustomereditComponent,CustomersearchComponent } from '../customeredit/customeredit.component';
 import { CommhubeditComponent } from '../commhubedit/commhubedit.component';
 import { SinkComponent } from '../sink/sink.component';
 import { LaborinfoComponent } from '../laborinfo/laborinfo.component';
@@ -53,11 +53,11 @@ import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
     QuoteeditComponent,HeadereditComponent,HeaderinfoComponent,
     PoitemsComponent,CommhubComponent,PrintsComponent,
     JobdesComponent,AreainfoComponent,PoeditComponent,
-    JobdesceditComponent,CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent],
+    JobdesceditComponent,CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent,CustomersearchComponent],
   declarations: [QuotePage, ApplianceComponent, AddmatComponent, ConsumableComponent, ToolComponent, CabinetComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, LaborinfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
     HeadereditComponent,HeaderinfoComponent,PoitemsComponent,
     CommhubComponent,PrintsComponent,JobdesComponent,
     AreainfoComponent,PoeditComponent,JobdesceditComponent,
-    CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent]
+    CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent,CustomersearchComponent]
 })
 export class QuotePageModule {}

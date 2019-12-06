@@ -30,6 +30,9 @@
 .paddzero{
     padding:0px;
 }
+.paddright{
+    padding-right: 5px;
+}
 .padding-topbottom{
     padding-top: 3px;
     padding-bottom: 3px;
@@ -39,7 +42,7 @@
 }
 .no-margin{
     margin-bottom: 0px;
-     margin-top: 0px;
+    margin-top: 0px;
  }
  .mar-btm{
      margin-bottom: 5px;
@@ -64,10 +67,13 @@
     font-size:16px;
 }
 .fontlarge{
-    font-size:30px;
+    font-size:36px;
 }
 .fontmedium{
-    font-size:24px;
+    font-size:28px;
+}
+.fontsmall{
+    font-size: 20px;
 }
 .fontbold {
     font-weight: 600;
@@ -96,6 +102,9 @@
 .bg-gray{
     background: #ddd;
 }
+.color-coral{
+    color:lightcoral;
+}
 /***** BORDERS *****/
 .borderall{
     border: 1px solid #ddd;
@@ -117,4 +126,8 @@
 }
 .flex{
     display: flex;
+}
+/***** ALIGNMENT *****/
+.valignsup{
+    vertical-align: super;
 }

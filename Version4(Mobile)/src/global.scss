@@ -23,6 +23,20 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 /***** PADDING<MARGINS *****/
+ion-icon {
+    zoom: 1.5
+}
+.searchbar-search-icon.sc-ion-searchbar-md {
+    left: 7px;
+    top: 2px;
+    width: 21px;
+    height: 21px;
+}
+.searchbar-left-aligned.sc-ion-searchbar-ios-h .searchbar-input.sc-ion-searchbar-ios {
+    padding-left: unset;
+    -webkit-padding-start: 40px;
+    /* padding-inline-start: 30px; */
+}
 .no-padding{
     padding-left: 0px;
     padding-right: 0px;

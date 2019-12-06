@@ -12,8 +12,12 @@
   <ion-content>
     <form>
       <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Template</ion-label>
-        <ion-input type="text" class="labelfont" value="" readonly="readonly"></ion-input>
+        <ion-label class="labelfont" position="floating" *ngIf="TypeID == 1" color="primary">Fabrication</ion-label>
+        <ion-input type="text" class="labelfont" *ngIf="TypeID == 1"value="Standard Fabrication" readonly="readonly"></ion-input>
+        <ion-label class="labelfont" position="floating" *ngIf="TypeID == 2" color="primary">Template</ion-label>
+        <ion-input type="text" class="labelfont" *ngIf="TypeID == 2"value="Standard Template" readonly="readonly"></ion-input>
+        <ion-label class="labelfont" position="floating" *ngIf="TypeID == 3" color="primary">Install</ion-label>
+        <ion-input type="text" class="labelfont" *ngIf="TypeID == 3"value="Standard Install" readonly="readonly"></ion-input>
       </ion-item>
       <ion-item>
           <ion-label class="labelfont" position="floating" color="primary">Quantity</ion-label>

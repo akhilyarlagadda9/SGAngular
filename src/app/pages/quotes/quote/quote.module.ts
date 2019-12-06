@@ -37,7 +37,7 @@ import { AddareaComponent } from '../addarea/addarea.component';
 import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
 import { TemplateComponent } from '../template/template.component';
 import { CarpetinfoComponent } from '../carpetinfo/carpetinfo.component';
-import { CustitemComponent } from '../custitem/custitem.component';
+import { CustitemComponent, itemsearchComponent } from '../custitem/custitem.component';
 
 
 @NgModule({
@@ -52,7 +52,7 @@ import { CustitemComponent } from '../custitem/custitem.component';
       },
     ])
   ],
-  entryComponents: [CreatequoteComponent,CustitemComponent, TemplateComponent, AddmatComponent, 
+  entryComponents: [CreatequoteComponent,itemsearchComponent,  CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, 
     ApplianceComponent, ConsumableComponent, ToolComponent, CabinetComponent, 
     TileinfoComponent, FaucetsComponent, MeasurementsComponent, 
     MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, 
@@ -64,7 +64,7 @@ import { CustitemComponent } from '../custitem/custitem.component';
     CustomerinfoComponent,AddareaComponent,CustomersearchComponent],
     
 
-  declarations: [QuotePage, ApplianceComponent,CustitemComponent, TemplateComponent, AddmatComponent, ConsumableComponent, ToolComponent, CabinetComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, LaborinfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
+  declarations: [QuotePage, ApplianceComponent, itemsearchComponent, CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, ConsumableComponent, ToolComponent, CabinetComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, LaborinfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
     HeadereditComponent,HeaderinfoComponent,PoitemsComponent,
     CommhubComponent,PrintsComponent,JobdesComponent,
     AreainfoComponent,PoeditComponent,JobdesceditComponent,

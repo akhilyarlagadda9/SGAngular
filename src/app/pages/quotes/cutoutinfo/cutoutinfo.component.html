@@ -52,7 +52,9 @@
       </ion-item>
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Sink Type</ion-label>
-        <ion-input type="text" class="labelfont" value="Sink Cutout"></ion-input>
+        <ion-input type="text" class="labelfont" *ngIf="TypeID == 1"value="Sink Cutout" readonly="readonly"></ion-input>
+        <ion-input type="text" class="labelfont" *ngIf="TypeID == 2"value="Applience Cutout" readonly="readonly"></ion-input>
+        <ion-input type="text" class="labelfont" *ngIf="TypeID == 3"value="Outlet Cutout" readonly="readonly"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Cutout Type</ion-label>

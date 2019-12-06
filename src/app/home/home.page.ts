@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, LoadingController } from '@ionic/angular';
 
 
 
@@ -9,8 +9,9 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  loaderToShow: any;
 
-  constructor(private navCtrl:NavController) {}
+  constructor(private navCtrl:NavController, public loadingController: LoadingController) {}
 
   ActionLoadQuote(){
     this.navCtrl.navigateRoot('/home/quotelist');
@@ -18,4 +19,25 @@ export class HomePage {
    ActionLogout(){
     this.navCtrl.navigateRoot('/login');
    }
+
+   showLoader() {
+    this.loaderToShow = this.loadingController.create({
+      message: 'Please wait'
+    }).then((res) => {
+      res.present();
+ 
+      res.onDidDismiss().then((dis) => {
+        console.log('Loading dismissed!');
+      });
+    });
+    this.hideLoader();
+  }
+
+  hideLoader() {
+    setTimeout(() => {
+      this.loadingController.dismiss();
+    }, 2000);
+  }
+  
+
 }

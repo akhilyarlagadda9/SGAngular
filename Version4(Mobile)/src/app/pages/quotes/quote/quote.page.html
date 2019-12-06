@@ -4,7 +4,7 @@
       <ion-icon name="arrow-round-back" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
     </ion-buttons>
     <ion-title>Quote Inquiry</ion-title>
-    <ion-icon name="add-circle" slot="end" class="fontlarge" (click)="ActionCreateQuote()"></ion-icon>
+    <ion-icon name="add-circle" slot="end" class="fontlarge paddright" (click)="ActionCreateQuote()"></ion-icon>
     <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
   </ion-toolbar>
 </ion-header>
@@ -13,7 +13,7 @@
 <ion-card *ngFor="let header of quotelist" class="margin-bottom">
   <ion-item (click)="ActionQuoteEdit(header)"><ion-label>
    <h2># {{header.QuoteNo}} - {{header.QuoteName}}</h2>
-   <p><ion-icon name="contact" ></ion-icon>{{header.CustomerName}} &nbsp;- &nbsp;<ion-icon name="person" ></ion-icon>{{header.SalesPerson}}</p> </ion-label>
+   <p><ion-icon name="contact" class="color-coral fontmedium"></ion-icon><span class="valignsup">{{header.CustomerName}} &nbsp;- &nbsp;</span><ion-icon name="person" class="fontmedium"></ion-icon><span class="valignsup">{{header.SalesPerson}}</span></p> </ion-label>
   </ion-item>
 </ion-card>
 
@@ -44,5 +44,4 @@
       <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
-
 </ion-content>

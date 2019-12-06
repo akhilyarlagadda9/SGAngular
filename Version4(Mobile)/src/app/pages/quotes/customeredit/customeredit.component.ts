@@ -40,7 +40,14 @@ export class CustomereditComponent implements OnInit {
 
 @Component({
   //selector: 'app-customersearch',
-  template: `<ion-row>
+  template: `
+  <ion-header>
+    <ion-toolbar style="height:37px;top:-8px;left:-10px;">
+      <ion-title style="font-size:15px;">Customer Details</ion-title>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop()" style="font-size:13px; height:17px;width: 22px;">X</ion-button>
+    </ion-toolbar>
+  </ion-header>
+  <ion-row style="height:360px">
   <ion-col *ngFor="let item of searchResults">
 <ion-label>
   <h2>
@@ -57,7 +64,6 @@ export class CustomersearchComponent implements OnInit {
   constructor(private Modalcntrl : ModalController,private navParams : NavParams,private popoverCntrl :PopoverController,private getservice :QuotegetService ) { }
   ngOnInit() {this.ActionSearchParentAccount();}
   ActionSearchParentAccount(){
-    debugger;
     this.getservice.GetParentAccListWithType(this.searchObj.CustTypeID,this.searchObj.search).subscribe(data=>{
       this.searchResults = data
     });
@@ -68,4 +74,12 @@ export class CustomersearchComponent implements OnInit {
        //componentProps:this.customerinfo,
      });
    }
+
+   ActionToClosePop() {
+    // using the injected ModalController this page
+    // can "dismiss" itself and optionally pass back data
+    this.popoverCntrl.dismiss({
+      'dismissed': true
+    });
+  }
 }

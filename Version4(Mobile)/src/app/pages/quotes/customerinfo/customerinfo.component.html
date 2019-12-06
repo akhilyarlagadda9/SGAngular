@@ -1,10 +1,13 @@
 <ion-row>
     <ion-col>
         <h2 class="margin-bottom">
-           <div *ngIf="SelectedTypeID == 1">Account</div>
-           <div *ngIf="SelectedTypeID == 2">Child Account</div> 
-           <div *ngIf="SelectedTypeID == 3">Customer</div>
+            <div *ngIf="SelectedTypeID == 1">Account</div>
+            <div *ngIf="SelectedTypeID == 2">Child Account</div>
+            <div *ngIf="SelectedTypeID == 3">Customer</div>
         </h2>
+    </ion-col>
+    <ion-col size="2" class="text-right">
+        <ion-icon name="open" class="fontmedium" (click)="ActionEditCustomer()"></ion-icon>
     </ion-col>
 </ion-row>
 <ion-row>
@@ -12,23 +15,37 @@
         <ion-card class="margin-bottom" style="margin-left: 0px;">
             <ion-item style="border-bottom: none;">
                 <ion-label>
-                    <h2 (click)="ActionEditCustomer()">{{customer.Name}}</h2>
+                    <h2>
+                        {{customer.Name}}
+                    </h2>
                     <p>
-                        <ion-icon name="pin" class="text-font"></ion-icon>
-                        {{customer.BillAddress}},{{customer.BillCity}},{{customer.BillState}} -{{customer.BillZipCode}}
+                        <ion-icon name="pin" class="iconblue fontmedium"></ion-icon>
+                        <span class="valignsup">{{customer.BillAddress}}
+                            <span
+                                *ngIf="customer.BillCity != '' && customer.BillCity != null">,{{customer.BillCity}}</span>
+                            <span *ngIf="customer.BillState != '' && customer.BillState != null">,{{customer.BillState}}
+                            </span>
+                            <span
+                                *ngIf="customer.BillZipCode != '' && customer.BillZipCode != null">-{{customer.BillZipCode}}
+                            </span>
+                        </span>
                     </p>
                 </ion-label>
             </ion-item>
             <ion-row>
-                    <ion-col><span class="text-font color-blue margin-bottom"> Contacts</span></ion-col>
-                </ion-row>
-                <ion-row *ngFor="let contact of contacts">
-                    <ion-col size="12"  *ngIf="contact.IsQuote == 1">
-                        <ion-icon class="text-font" name="contact"></ion-icon> {{contact.Name}},
-                        <ion-icon class="text-font" name="mail"></ion-icon>{{contact.Email}}
-                        <ion-icon class="text-font" name="call"></ion-icon> {{contact.Phone}}
-                    </ion-col>
-                </ion-row>
+                <ion-col><span class="text-font color-blue margin-bottom"> Contacts</span></ion-col>
+            </ion-row>
+            <ion-row *ngFor="let contact of contacts">
+                <ion-col size="12" *ngIf="contact.IsQuote == 1">
+                    <ion-icon class="fontsmall" name="contact"></ion-icon> {{contact.Name}}
+                    <span *ngIf="contact.Email != '' && contact.Email != null">
+                        ,<ion-icon class="fontsmall" name="mail"></ion-icon>{{contact.Email}}
+                    </span>
+                    <span *ngIf="contact.Phone != '' && contact.Phone != null">
+                        <ion-icon class="fontsmall" name="call"></ion-icon> {{contact.Phone}}
+                    </span>
+                </ion-col>
+            </ion-row>
         </ion-card>
     </ion-col>
 </ion-row>

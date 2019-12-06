@@ -21,7 +21,9 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
-
+ion-icon{
+    zoom:1.1;
+}
 /***** PADDING<MARGINS *****/
 ion-icon {
     zoom: 1.5
@@ -144,4 +146,8 @@ ion-icon {
 /***** ALIGNMENT *****/
 .valignsup{
     vertical-align: super;
+}
+/***** ION ICON BUTTONS *****/
+.iconblue{
+    color: #4c8dff;
 }

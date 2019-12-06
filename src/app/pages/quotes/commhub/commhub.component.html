@@ -1,20 +1,3 @@
-<!-- <ion-list style="padding-left:10px;width:100%;font-size:14px">
-    <ion-card class="margin-bottom" style="margin-top: 0px;">
-        <ion-row style="margin-bottom: 2px;">
-          <ion-col size="7" class="paddzero text-left textsty"><u (click)="ActionEditCommHub()">175645 - Test Customer</u></ion-col>
-          <ion-col class="no-padding paddzero text-right" size="5">
-              <ion-icon name="download"></ion-icon>&nbsp;<ion-icon md="md-cloud-upload"></ion-icon>&nbsp;<ion-icon ios="ios-mail"></ion-icon>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-label><span>Alex David&nbsp;- &nbsp;Stoneapp</span></ion-label>
-        </ion-row>
-        <ion-row>
-            <ion-label><span>11/15/2019 5.30pm</span></ion-label>
-        </ion-row>
-    </ion-card>
-</ion-list> -->
-
 <ion-list style="padding-left:10px;width:100%;font-size:14px">
     <ion-row>
         <ion-col size="4">
@@ -31,20 +14,25 @@
         </ion-col>
       </ion-row>
     <ion-card class="margin-bottom" style="margin-top: 0px;">
-        <ion-row style="margin-bottom: 4px;">
-            <ion-col size="9" class="paddzero text-center textsty"><u (click)="ActionEditCommHub()">175645 - Test Customer</u></ion-col>
-            <ion-col class="no-padding paddzero text-right" size="3">
-                <ion-icon name="download"></ion-icon>
-                <!-- <ion-icon md="md-cloud-upload"></ion-icon>&nbsp;<ion-icon ios="ios-mail"></ion-icon> -->
-            </ion-col>
-        </ion-row>
-        <ion-row style="margin-bottom: 4px;">
-            <ion-col size="9" class="paddzero text-center">Alex David&nbsp;- &nbsp;Stoneapp</ion-col>
-            <ion-col size="3" class="no-padding paddzero text-right"></ion-col>
-        </ion-row>
-        <ion-row style="margin-bottom: 4px;">
-            <ion-col size="9" class="paddzero text-center">11/15/2019 5.30pm</ion-col>
-            <ion-col size="3" class="no-padding paddzero text-right"></ion-col>
-        </ion-row>
+      <ion-row class="no-padding paddzero">
+        <ion-col size="1">
+            <ion-icon name="open" class="fontmedium" (click)="ActionEditCommHub()"></ion-icon>
+        </ion-col>
+        <ion-col size="10">
+            <ion-row class="marbot">
+                <ion-col class="paddzero text-left textsty paddleft">175645 - Test Customer</ion-col>
+            </ion-row>
+            <ion-row class="marbot">
+                <ion-col class="paddzero text-left paddleft">Alex David&nbsp;- &nbsp;Stoneapp</ion-col>
+            </ion-row>
+            <ion-row class="marbot">
+                <ion-col class="paddzero text-left paddleft">11/15/2019 5.30pm</ion-col>
+            </ion-row>
+        </ion-col>
+        <ion-col size="1">
+            <ion-icon name="download"></ion-icon>
+        </ion-col>
+      </ion-row>
+       
     </ion-card>
 </ion-list>

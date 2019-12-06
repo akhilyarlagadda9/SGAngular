@@ -35,7 +35,9 @@ import { ApplianceComponent } from '../appliance/appliance.component';
 import { CustomerinfoComponent } from '../customerinfo/customerinfo.component';
 import { AddareaComponent } from '../addarea/addarea.component';
 import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
+import { TemplateComponent } from '../template/template.component';
 import { CarpetinfoComponent } from '../carpetinfo/carpetinfo.component';
+import { CustitemComponent } from '../custitem/custitem.component';
 
 
 @NgModule({
@@ -50,12 +52,19 @@ import { CarpetinfoComponent } from '../carpetinfo/carpetinfo.component';
       },
     ])
   ],
-  entryComponents: [CreatequoteComponent, AddmatComponent, ApplianceComponent, ConsumableComponent, ToolComponent, CabinetComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, LaborinfoComponent, SinkComponent,
+  entryComponents: [CreatequoteComponent,CustitemComponent, TemplateComponent, AddmatComponent, 
+    ApplianceComponent, ConsumableComponent, ToolComponent, CabinetComponent, 
+    TileinfoComponent, FaucetsComponent, MeasurementsComponent, 
+    MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, 
+    SplashComponent, AddoninfoComponent, LaborinfoComponent, SinkComponent,
     QuoteeditComponent,HeadereditComponent,HeaderinfoComponent,
     PoitemsComponent,CommhubComponent,PrintsComponent,
     JobdesComponent,AreainfoComponent,PoeditComponent,
-    JobdesceditComponent,CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent,CustomersearchComponent,CarpetinfoComponent],
-  declarations: [QuotePage, ApplianceComponent, AddmatComponent, ConsumableComponent, ToolComponent, CabinetComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, LaborinfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
+    JobdesceditComponent,CustomereditComponent,CommhubeditComponent,
+    CustomerinfoComponent,AddareaComponent,CustomersearchComponent],
+    
+
+  declarations: [QuotePage, ApplianceComponent,CustitemComponent, TemplateComponent, AddmatComponent, ConsumableComponent, ToolComponent, CabinetComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, LaborinfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
     HeadereditComponent,HeaderinfoComponent,PoitemsComponent,
     CommhubComponent,PrintsComponent,JobdesComponent,
     AreainfoComponent,PoeditComponent,JobdesceditComponent,

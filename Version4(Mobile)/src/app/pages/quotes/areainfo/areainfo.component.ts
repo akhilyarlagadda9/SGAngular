@@ -15,7 +15,9 @@ import { CabinetComponent } from '../cabinet/cabinet.component';
 import { ToolComponent } from '../tool/tool.component';
 import { ConsumableComponent } from '../consumable/consumable.component';
 import { ApplianceComponent } from '../appliance/appliance.component';
+import { TemplateComponent } from '../template/template.component';
 import { CarpetinfoComponent } from '../carpetinfo/carpetinfo.component';
+import { CustitemComponent } from '../custitem/custitem.component';
 
 @Component({
   selector: 'app-areainfo',
@@ -36,6 +38,16 @@ export class AreainfoComponent implements OnInit {
 
   compareWith: any;
   MyDefaultYearIdValue: string;
+
+
+    async ActionCreateTemplate(typeId) {
+    let obj = {TypeID:typeId}
+    const modal = await this.Modalcntrl.create({
+      component: TemplateComponent,
+      componentProps: obj
+    });
+    return await modal.present();
+  }
 
   /***** SINK DETAILS *****/
   async ActionCreateSink() {
@@ -77,13 +89,17 @@ export class AreainfoComponent implements OnInit {
   }
 
   /***** CUTOUT DETAILS *****/
-  async ActionCreateCutout() {
+  async ActionCreateCutout(typeId) {
+    let obj = {TypeID:typeId}
     const modal = await this.Modalcntrl.create({
-      component: CutoutinfoComponent
+      component: CutoutinfoComponent,
+      componentProps: obj
     });
     return await modal.present();
   }
 
+  
+/***** Addon DETAILS *****/
   async ActionAddArea() {
     const modal = await this.Modalcntrl.create({
       component: AddareaComponent
@@ -134,6 +150,14 @@ export class AreainfoComponent implements OnInit {
   async ActionCreateTool() {
     const modal = await this.Modalcntrl.create({
       component: ToolComponent
+    });
+    return await modal.present();
+  }
+
+  /***** TOOL DETAILS *****/
+  async ActionCreateCi() {
+    const modal = await this.Modalcntrl.create({
+      component: CustitemComponent
     });
     return await modal.present();
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'app-cutoutinfo',
@@ -8,7 +8,8 @@ import { ModalController } from '@ionic/angular';
 })
 export class CutoutinfoComponent implements OnInit {
 
-  constructor(public Modalcntrl : ModalController ) { }
+  constructor(public Modalcntrl : ModalController,private navCntrl:NavParams) { }
+  TypeID = this.navCntrl.data.TypeID;
 
   ngOnInit() {}
 

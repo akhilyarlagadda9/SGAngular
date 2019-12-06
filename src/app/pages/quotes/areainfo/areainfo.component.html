@@ -54,32 +54,32 @@
 </ion-row>
 <ion-row class="rowlineitem">
   <ion-col size="1" class="circlefont text-center color-white" style="background-color:lightseagreen;">Sc</ion-col>
-  <ion-col>Island/Bar/Utility @1.00</ion-col>
+  <ion-col (click)="ActionCreateCutout(1)">Island/Bar/Utility @1.00</ion-col>
   <ion-col size="3" class="text-right">$ 150.00</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
   <ion-col size="1" class="circlefont text-center color-white" style="background-color:lightseagreen;">Ac</ion-col>
-  <ion-col>Bath Tub Cutout  @1.00</ion-col>
+  <ion-col (click)="ActionCreateCutout(2)">Bath Tub Cutout  @1.00</ion-col>
   <ion-col size="3" class="text-right">$ 300.00</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
   <ion-col size="1" class="circlefont text-center color-white" style="background-color:lightseagreen;">Oc</ion-col>
-  <ion-col>Wire Grommet: 3" @1.00</ion-col>
+  <ion-col (click)="ActionCreateCutout(3)">Wire Grommet: 3" @1.00</ion-col>
   <ion-col size="3" class="text-right">$ 25.00</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
   <ion-col size="1" class="circlefont text-center color-white" style="background-color:mediumpurple;">Fa</ion-col>
-  <ion-col (click)="ActionCreateLabor(1)">Fabrication @15.33</ion-col>
+  <ion-col (click)="ActionCreateTemplate(1)">Fabrication @15.33</ion-col>
   <ion-col size="3" class="text-right">$ 0.00</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
   <ion-col size="1" class="circlefont text-center color-white" style="background-color:mediumpurple;">T</ion-col>
-  <ion-col (click)="ActionCreateLabor(2)">Template @15.33</ion-col>
+  <ion-col (click)="ActionCreateTemplate(2)">Template @15.33</ion-col>
   <ion-col size="3" class="text-right">$ 0.00</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
   <ion-col size="1" class="circlefont text-center color-white" style="background-color:mediumpurple;">I</ion-col>
-  <ion-col (click)="ActionCreateLabor(3)">Install @15.33</ion-col>
+  <ion-col (click)="ActionCreateTemplate(3)">Install @15.33</ion-col>
   <ion-col size="3" class="text-right">$ 0.00</ion-col>
 </ion-row>
 
@@ -89,20 +89,15 @@
   <ion-col size="3" class="text-right">$ 0.00</ion-col>
 </ion-row>
 <ion-row class="rowlineitem">
-    <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(238, 162, 22);">L</ion-col>
-    <ion-col (click)="ActionCreateLabor(4)">Kitchen Reconnect @1.00</ion-col>
-    <ion-col size="3" class="text-right">$ 400.00</ion-col>
+    <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(238, 162, 22);">Ao</ion-col>
+    <ion-col (click)="ActionCreateAddon()">Altima, Pure White 0190 @1.00</ion-col>
+    <ion-col size="3" class="text-right">$ 28.00</ion-col>
   </ion-row>
 <!-- <ion-row class="rowlineitem">
   <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(238, 162, 22);">C</ion-col>
   <ion-col (click)="ActionCreateCarpet()">1007 Strainer Basket @3.00</ion-col>
   <ion-col size="3" class="text-right">$ 76.50</ion-col>
 </ion-row> -->
-<ion-row class="rowlineitem">
-  <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(238, 162, 22);">Ao</ion-col>
-  <ion-col (click)="ActionCreateAddon()">Install dishwasher bracket @1.00</ion-col>
-  <ion-col size="3" class="text-right">$ 10.00</ion-col>
-</ion-row>
 <ion-row class="rowlineitem">
     <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(238, 162, 22);">T</ion-col>
     <ion-col (click)="ActionCreateTile()">Antalya Grey, Box @1.00</ion-col>
@@ -123,11 +118,11 @@
   <ion-col (click)="ActionCreateTool()">Tool @1.00</ion-col>
   <ion-col size="3" class="text-right">$ 0.00</ion-col>
 </ion-row>
-<ion-row class="rowlineitem">
+<!-- <ion-row class="rowlineitem">
     <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(238, 162, 22);">Ci</ion-col>
-    <ion-col (click)="ActionCreateTool()">Responsible for elec. reconnection</ion-col>
+    <ion-col (click)="ActionCreateCi()">Responsible for elec. reconnection</ion-col>
     <ion-col size="3" class="text-right">-</ion-col>
-  </ion-row>
+  </ion-row> -->
 <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
     <ion-col size="4" class="fontbold text-right">Sub Total:</ion-col>

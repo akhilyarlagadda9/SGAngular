@@ -1,28 +1,122 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Cutout Details
-      <ion-button color="danger" style="float: right; height: 27.7px;width: 30px;" (click)="ActionToClose()">X</ion-button>
-      <ion-button color="success" size="small" style="float: right;">Save</ion-button>
-    </ion-title>
-  </ion-toolbar>
-</ion-header> -->
-
 <ion-header>
-    <ion-toolbar>
-      <ion-title class="titleheader">Cutout Details</ion-title>
-      <ion-button slot="end" color="success" size="small">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar>
+    <ion-title class="titleheader"><div *ngIf="TypeID == 1">Sink Cutout</div>
+      <div *ngIf="TypeID == 2">Applience Cutout</div><div *ngIf="TypeID == 3">Outlet Cutout</div></ion-title>
+    <ion-button slot="end" color="success" size="small">Save</ion-button>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
+  <form>
+      <ion-row>
+          <ion-col size="3">
+             <ion-label>
+             </ion-label>
+          </ion-col>
+          <ion-col size="9">
+             <img src="assets/img/Uploadimg.png" alt="your image" style="width:150px;height:120px;margin-left: 10px;">
+          </ion-col>
+          <ion-col size="3">
+              <ion-label>
+              </ion-label>
+           </ion-col>
+           <ion-col size="9">
+              <ion-label style="text-align: center;font-style: italic; font-size: 11px; margin-left: 10px;" color="primary">(Tap image to view fullscreen)</ion-label>
+           </ion-col>
+       </ion-row>
+ 
     <ion-item>
-        <ion-input></ion-input>
-        <ion-icon name="arrow-dropdown"></ion-icon>
+        <ion-label class="labelfont" position="floating" color="primary">Product Group</ion-label>
+        <ion-input type="text" class="labelfont" value="Cutout"></ion-input>
       </ion-item>
-  <ion-item>
-    <ion-label fixed>Note:</ion-label>
-    <ion-input type="Note" value=""></ion-input>
-  </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Product Sub-Group</ion-label>
+        <ion-input type="text" class="labelfont" value="Standard Cutout"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Product Code</ion-label>
+        <ion-input type="text" class="labelfont" value="1505"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Supplier Code</ion-label>
+        <ion-input type="text" class="labelfont" value="1505"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Supplier</ion-label>
+        <ion-input type="text" class="labelfont" value="MSI"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Product Name</ion-label>
+        <ion-input type="text" class="labelfont" value="Kitchen Cutout"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Sink Type</ion-label>
+        <ion-input type="text" class="labelfont" value="Sink Cutout"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Cutout Type</ion-label>
+        <ion-input type="text" class="labelfont" value="Undermount"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Measurements(WxH)</ion-label>
+        <ion-input type="text" class="labelfont" readonly="readonly" value="Backsplash"></ion-input>
+      </ion-item>
+      <ion-item style="margin-left: -6%;">
+        <ion-row>
+          <ion-col size="12" style="padding: 0px; margin-left: 14%;">
+                  <ion-col size="3"><input type="text" readonly="readonly" style="width:20%" value="120"></ion-col>
+                  <ion-col size="1">X</ion-col>
+                  <ion-col size="3"><input type="text" readonly="readonly" style="width:20%" value="2"></ion-col>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">No. of Faucet Holes</ion-label>
+        <ion-input type="text" class="labelfont"  value="0"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Basin Type</ion-label>
+        <ion-input type="text" class="labelfont" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">UOM</ion-label>
+        <ion-input type="text" class="labelfont" value="Esch" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Risk level</ion-label>
+        <ion-input type="text" class="labelfont" value="Low" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Re-Order</ion-label>
+        <ion-input type="text" class="labelfont"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Max</ion-label>
+        <ion-input type="text" class="labelfont" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Cost</ion-label>
+        <ion-input type="text" class="labelfont" readonly="readonly" value="10"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Margin(%)</ion-label>
+        <ion-input type="text" class="labelfont" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Tax</ion-label>
+        <ion-input type="text" class="labelfont" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Price</ion-label>
+        <ion-input type="text" class="labelfont" value="12.5"></ion-input>
+      </ion-item>
+      
+    <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">Note</ion-label>
+      <ion-textarea rows="10" cols="25" value="Enter Text Here..." class="borderall"></ion-textarea>
+    </ion-item>
+  </form>
 </ion-content>
+
+

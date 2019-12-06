@@ -4,67 +4,92 @@
             <ion-icon class="fontlarge" (click)="ActionCloseQuoteInfo()" name="arrow-back"></ion-icon>
         </ion-buttons>
         <ion-title>
-           <div id="">{{headerInfo.QuoteNo}} - 
+            <div id="">{{headerInfo.QuoteNo}} -
                 <select [(ngModel)]="QuoteVersionID" interface="popover" style="border: 0px;background: #3880ff;">
-                        <option  *ngFor="let version of headerInfo.VersionList" value="{{version.ID}}">V{{version.SrNo}}</option>
-                    </select>
-               </div> 
+                    <option *ngFor="let version of headerInfo.VersionList" value="{{version.ID}}">V{{version.SrNo}}
+                    </option>
+                </select>
+            </div>
         </ion-title>
         <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
     </ion-toolbar>
     <ion-toolbar>
-            <ion-segment [(ngModel)]="selectedtabtype"  scrollable>
-                <ion-segment-button class="padd-scroll bar-header1" value="1" (click)="ActionQuickLoad(1)">Job
-                </ion-segment-button>
-                <ion-segment-button class="padd-scroll bar-header1" value="2" (click)="ActionQuickLoad(2)">Area Info
-                </ion-segment-button>
-                <ion-segment-button class="padd-scroll bar-header1" value="3" (click)="ActionQuickLoad(3)">Job Desc
-                </ion-segment-button>
-                <ion-segment-button class="padd-scroll bar-header1" value="4" (click)="ActionQuickLoad(4)">PO Items
-                </ion-segment-button>
-                <ion-segment-button class="padd-scroll bar-header1" value="5" (click)="ActionQuickLoad(5)">Comm Hub
-                </ion-segment-button>
-                <!-- <ion-segment-button class="padd-scroll bar-header1" value="6" (click)="ActionQuickLoad(6)">Prints
+        <ion-segment [(ngModel)]="selectedtabtype" scrollable>
+            <ion-segment-button class="padd-scroll bar-header1" value="1" (click)="ActionQuickLoad(1)">Quote Info
+            </ion-segment-button>
+            <ion-segment-button class="padd-scroll bar-header1" value="2" (click)="ActionQuickLoad(2)">Area Info
+            </ion-segment-button>
+            <ion-segment-button class="padd-scroll bar-header1" value="3" (click)="ActionQuickLoad(3)">Job Desc
+            </ion-segment-button>
+            <ion-segment-button class="padd-scroll bar-header1" value="4" (click)="ActionQuickLoad(4)">PO Items
+            </ion-segment-button>
+            <ion-segment-button class="padd-scroll bar-header1" value="5" (click)="ActionQuickLoad(5)">Comm Hub
+            </ion-segment-button>
+            <!-- <ion-segment-button class="padd-scroll bar-header1" value="6" (click)="ActionQuickLoad(6)">Prints
                 </ion-segment-button> -->
-            </ion-segment>
-        </ion-toolbar>
-   
+        </ion-segment>
+    </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
     <ion-row>
         <ion-col *ngIf="selectedtabtype == 1">
+            <ion-row>
+                <ion-col>
+                    <h2 class="margin-bottom">
+                        <div>Quote</div>
+                    </h2>
+                </ion-col>
+                <ion-col size="2" class="text-right">
+                    <ion-icon name="open" class="fontmedium" (click)="ActionEditJob()"></ion-icon>
+                </ion-col>
+            </ion-row>
             <ion-card class="margin-bottom" style="margin-left: 0px;">
                 <ion-item style="border-bottom: none;">
-                    <ion-label (click)="ActionEditJob()">
-                        <h2># {{headerInfo.QuoteName}}</h2>
+                    <ion-label>
+                        <h2>&nbsp;&nbsp;# {{headerInfo.QuoteName}}</h2>
                         <p>
-                            <ion-icon name="pin" class="text-font"></ion-icon>
-                            {{headerInfo.Address1}},{{headerInfo.City}},{{headerInfo.State}}-{{headerInfo.Zipcode}}
+                            <ion-icon name="pin" class="iconblue fontmedium"></ion-icon>
+                            <span class="valignsup">{{headerInfo.Address1}}
+                                <span
+                                    *ngIf="headerInfo.City != '' && headerInfo.City != null">,{{headerInfo.City}}</span>
+                                <span
+                                    *ngIf="headerInfo.State != '' && headerInfo.State != null">,{{headerInfo.State}}</span>
+                                <span
+                                    *ngIf="headerInfo.State != '' && headerInfo.State != null">-{{headerInfo.Zipcode}}</span>
+                            </span>
                         </p>
                     </ion-label>
                 </ion-item>
                 <ion-item><span class="text-font color-blue margin-bottom"> Contacts</span></ion-item>
                 <ion-label *ngFor="let contact of headerInfo.QuoteContacts">
-                        <p>
-                            <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon> {{contact.Name}},
-                            <ion-icon class="text-font" class="fontsmall" name="mail"></ion-icon>{{contact.Email}}
+                    <p>
+                        <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon> {{contact.Name}}
+                        <span *ngIf="headerInfo.Email != '' && headerInfo.Email != null">
+                            ,<ion-icon class="text-font" class="fontsmall" name="mail"></ion-icon>{{contact.Email}}
+                        </span>
+                        <span *ngIf="headerInfo.Phone != '' && headerInfo.Phone != null">
                             <ion-icon class="text-font" class="fontsmall" name="call"></ion-icon> {{contact.Phone}}
-                        </p>
-                    </ion-label>
+                        </span>
+                    </p>
+                </ion-label>
             </ion-card>
-               <div *ngIf="qprmsobj.accountid > 0">
-                    <app-customerinfo (customerEvent)="displayCounter($event)" [customer]="headerInfo.ParentAccount" [SelectedTypeID]="1" [contacts]="headerInfo.ParentAccountContacts"></app-customerinfo>
-               </div> 
-               <div *ngIf="qprmsobj.childaccid > 0">
-                    <app-customerinfo [customer]="headerInfo.ChildAccount" [SelectedTypeID]="2" [contacts]="headerInfo.ChildAccountContacts"></app-customerinfo>
-               </div> 
-               <div *ngIf="qprmsobj.customerid > 0">
-                    <app-customerinfo [customer]="headerInfo.Customer" [SelectedTypeID]="3" [contacts]="headerInfo.CustomerContacts"></app-customerinfo>
-               </div> 
+            <div *ngIf="qprmsobj.accountid > 0">
+                <app-customerinfo (customerEvent)="displayCounter($event)" [customer]="headerInfo.ParentAccount"
+                    [SelectedTypeID]="1" [contacts]="headerInfo.ParentAccountContacts"></app-customerinfo>
+            </div>
+            <div *ngIf="qprmsobj.childaccid > 0">
+                <app-customerinfo [customer]="headerInfo.ChildAccount" [SelectedTypeID]="2"
+                    [contacts]="headerInfo.ChildAccountContacts"></app-customerinfo>
+            </div>
+            <div *ngIf="qprmsobj.customerid > 0">
+                <app-customerinfo [customer]="headerInfo.Customer" [SelectedTypeID]="3"
+                    [contacts]="headerInfo.CustomerContacts"></app-customerinfo>
+            </div>
         </ion-col>
         <ion-col *ngIf="selectedtabtype == 2">
-        <app-areainfo></app-areainfo>
+            <app-areainfo></app-areainfo>
         </ion-col>
         <ion-col *ngIf="selectedtabtype == 3">
             <app-jobdes></app-jobdes>

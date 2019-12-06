@@ -61,10 +61,10 @@
             <ion-col size="10">
                 <ion-label>
                     <h2> {{contact.Name}}</h2>
-                    <p>
+                    <p *ngIf="contact.Email != '' && contact.Email != null">
                         <ion-icon name="mail"></ion-icon> {{contact.Email}}
                     </p>
-                    <p>
+                    <p *ngIf="contact.Phone != '' && contact.Phone != null">
                         <ion-icon name="call"></ion-icon> {{contact.Phone}}
                     </p>
                 </ion-label>

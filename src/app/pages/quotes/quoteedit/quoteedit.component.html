@@ -44,14 +44,14 @@
                         </p>
                     </ion-label>
                 </ion-item>
-                <ion-col size="12"><span class="text-font color-blue margin-bottom"> Contacts</span></ion-col>
-                <ion-row *ngFor="let contact of headerInfo.QuoteContacts">
-                        <ion-col size="12" >
-                            <ion-icon class="text-font" name="contact"></ion-icon> {{contact.Name}},
-                            <ion-icon class="text-font" name="mail"></ion-icon>{{contact.Email}}
-                            <ion-icon class="text-font" name="call"></ion-icon> {{contact.Phone}}
-                        </ion-col>
-                    </ion-row>
+                <ion-item><span class="text-font color-blue margin-bottom"> Contacts</span></ion-item>
+                <ion-label *ngFor="let contact of headerInfo.QuoteContacts">
+                        <p>
+                            <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon> {{contact.Name}},
+                            <ion-icon class="text-font" class="fontsmall" name="mail"></ion-icon>{{contact.Email}}
+                            <ion-icon class="text-font" class="fontsmall" name="call"></ion-icon> {{contact.Phone}}
+                        </p>
+                    </ion-label>
             </ion-card>
                <div *ngIf="qprmsobj.accountid > 0">
                     <app-customerinfo (customerEvent)="displayCounter($event)" [customer]="headerInfo.ParentAccount" [SelectedTypeID]="1" [contacts]="headerInfo.ParentAccountContacts"></app-customerinfo>

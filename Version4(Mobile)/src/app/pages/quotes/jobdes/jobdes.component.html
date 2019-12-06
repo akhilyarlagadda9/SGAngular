@@ -1,21 +1,30 @@
 
     <ion-list class="ion-no-margin ion-no-padding">
-      <ion-row>
-        <ion-label class="fontbold">
-          <ion-icon name="menu"></ion-icon>
-          &nbsp;<u (click)="ActionEditJobDesc(1)">Job Description:</u>
-        </ion-label>
-      </ion-row>
-      <ion-row style="padding: 5px;">
-        <ion-textarea rows="5" cols="20" class="borderall" readonly="readonly">Test the Job Description</ion-textarea>
-      </ion-row>
-      <ion-row>
-        <ion-label class="fontbold">
-          <ion-icon name="menu" md="md-menu"></ion-icon>
-          &nbsp;<u (click)="ActionEditJobDesc(1)">Private:</u>
-        </ion-label>
-      </ion-row>
-      <ion-row style="padding: 5px;">
-        <ion-textarea rows="5" cols="20" class="borderall" readonly="readonly">Test the Private</ion-textarea>
-      </ion-row>
-    </ion-list>
+        <ion-row class="marbot">
+          <ion-col>
+              <h2 class="margin-bottom">
+                  <div>Job Description:</div>
+              </h2>
+          </ion-col>
+          <ion-col size="2" class="text-right">
+            <ion-icon name="open" class="fontmedium" (click)="ActionEditJobDesc(1)"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row style="padding: 5px;">
+          <ion-textarea rows="5" cols="20" class="borderall" readonly="readonly">Test the Job Description</ion-textarea>
+        </ion-row>
+        <ion-row class="marbot">
+            <ion-col>
+                <h2 class="margin-bottom">
+                    <div>Private:</div>
+                </h2>
+            </ion-col>
+            <ion-col size="2" class="text-right">
+              <ion-icon name="open" class="fontmedium" (click)="ActionEditJobDesc(1)"></ion-icon>
+            </ion-col>
+        </ion-row>
+        <ion-row style="padding: 5px;">
+          <ion-textarea rows="5" cols="20" class="borderall" readonly="readonly">Test the Private</ion-textarea>
+        </ion-row>
+      </ion-list>
+  

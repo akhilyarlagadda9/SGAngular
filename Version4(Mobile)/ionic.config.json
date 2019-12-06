@@ -1,5 +1,7 @@
 {
   "name": "StoneApp-Mobile",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

@@ -30,14 +30,6 @@ export class HomePage {
         console.log('Loading dismissed!');
       });
     });
-    this.hideLoader();
   }
-
-  hideLoader() {
-    setTimeout(() => {
-      this.loadingController.dismiss();
-    }, 2000);
-  }
-  
 
 }

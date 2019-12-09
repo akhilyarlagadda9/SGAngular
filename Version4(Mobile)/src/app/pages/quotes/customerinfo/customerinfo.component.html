@@ -33,12 +33,12 @@
     <ion-row *ngFor="let contact of contacts">
         <ion-col size="12" *ngIf="contact.IsQuote == 1">
             <ion-icon class="fontsmall" name="contact"></ion-icon> {{contact.Name}}
-            <span *ngIf="contact.Email != '' && contact.Email != null">
-                ,<ion-icon class="fontsmall" name="mail"></ion-icon>{{contact.Email}}
-            </span>
-            <span *ngIf="contact.Phone != '' && contact.Phone != null">
+            <div *ngIf="contact.Email != '' && contact.Email != null">
+                <ion-icon class="fontsmall" name="mail"></ion-icon> {{contact.Email}}
+            </div>
+            <div *ngIf="contact.Phone != '' && contact.Phone != null">
                 <ion-icon class="fontsmall" name="call"></ion-icon> {{contact.Phone}}
-            </span>
+            </div>
         </ion-col>
     </ion-row>
 </ion-card>

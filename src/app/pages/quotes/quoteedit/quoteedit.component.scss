@@ -7,3 +7,29 @@
   background-image: none !important;
   border-bottom: none !important;
 }
+.scroll{
+  overflow-x: scroll;
+  overflow-y: hidden;
+  .list-scroll{
+    height: 100%;
+    white-space: nowrap;
+  }
+}
+::-webkit-scrollbar { 
+  display: none; 
+}
+ion-segment-button {
+  --padding-top: 0;
+  --padding-end: 16px;
+  --padding-bottom: 0;
+  --padding-start: 16px;
+  --transition: color 0.15s linear 0s,opacity 0.15s linear 0s;
+  min-width: 90px;
+  max-width: 110px !important;
+  min-height: 48px;
+  font-size: 14px !important;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 40px;
+  text-transform: uppercase;
+}

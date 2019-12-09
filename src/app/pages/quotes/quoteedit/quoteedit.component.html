@@ -66,12 +66,12 @@
                 <ion-row *ngFor="let contact of headerInfo.QuoteContacts">
                     <ion-col size="12">
                         <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon> {{contact.Name}}
-                        <span *ngIf="headerInfo.Email != '' && headerInfo.Email != null">
-                            ,<ion-icon class="text-font" class="fontsmall" name="mail"></ion-icon>{{contact.Email}}
-                        </span>
-                        <span *ngIf="headerInfo.Phone != '' && headerInfo.Phone != null">
+                        <div *ngIf="headerInfo.Email != '' && headerInfo.Email != null">
+                            <ion-icon class="text-font" class="fontsmall" name="mail"></ion-icon> {{contact.Email}}
+                        </div>
+                        <div *ngIf="headerInfo.Phone != '' && headerInfo.Phone != null">
                             <ion-icon class="text-font" class="fontsmall" name="call"></ion-icon> {{contact.Phone}}
-                        </span>
+                        </div>
                     </ion-col>
                 </ion-row>
             </ion-card>

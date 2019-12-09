@@ -1,5 +1,5 @@
 import { Component, OnInit,Pipe } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { CreatequoteComponent } from 'src/app/pages/quotes/createquote/createquote.component'
 import { QuoteeditComponent } from 'src/app/pages/quotes/quoteedit/quoteedit.component'
@@ -17,7 +17,7 @@ import {QuoteService} from 'src/app/service/quote.service'
 })
 export class QuotePage implements OnInit {
 
-  constructor(private service:QuoteService, public Modalcntrl : ModalController, private navCtrl : NavController) { }
+  constructor(private service:QuoteService, public Modalcntrl : ModalController, private navCtrl : NavController, private loadingController : LoadingController) { }
 
   quotelist: any[] = [];
  // pageindex:number= 0;
@@ -40,7 +40,7 @@ export class QuotePage implements OnInit {
   ActionQuoteList() {
     // set obj
     this.setquoteobj("", 0, 0, 25,0);
-    this.GetQuoteList(undefined);
+    this.GetQuoteList(undefined);     
   }
   ActionSearch(q: string){
     this.setquoteobj(q, 0, 0, 25,1);
@@ -65,13 +65,15 @@ export class QuotePage implements OnInit {
   let obj = this.qsearchobj;
   //get list from db
  let result = this.service.ActionQuoteList(obj.search,obj.statusId,obj.index,obj.noOfRecords,obj.accessmode,0,obj.sortTypeId,obj.sortby).subscribe(
-  data => {this.quotelist = obj.searchmode == 1 ? data : this.quotelist.concat(data); },
+  data => {this.quotelist = obj.searchmode == 1 ? data : this.quotelist.concat(data);this.hideLoader(); },
   error => console.log(error));
   if(event){
     event.target.complete();
   }
 }
-
+hideLoader() {
+  this.loadingController.dismiss();
+}
 /***** QUOTEEDIT *****/
 async ActionQuoteEdit(header) {
   let version = header.VersionList.filter(x => x.ID === header.VersionID)[0];

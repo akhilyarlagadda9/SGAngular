@@ -7,8 +7,18 @@ import { ModalController, NavParams, PopoverController, } from '@ionic/angular';
   styleUrls: ['./custitem.component.scss'],
 })
 export class CustitemComponent implements OnInit {
+  public items: any = [];
 
-  constructor(public Modalcntrl : ModalController,private navCntrl:NavParams, private popoverCntrl :PopoverController ) { }
+  constructor(public Modalcntrl : ModalController,private navCntrl:NavParams, private popoverCntrl :PopoverController ) {
+    this.items = [
+      { title: "one" },
+      { title: "two" },
+      { title: "three" },
+      { title: "four" },
+      { title: "five" },
+      { title: "six" }
+    ];
+   }
   TypeID = this.navCntrl.data.TypeID;
   SearchTypeID:number;
 searchResults:any = [];
@@ -32,6 +42,14 @@ searchResults:any = [];
    });
    return await popover.present();
  }
+
+ 
+
+ filterItems(searchTerm) {
+  return this.items.filter(item => {
+    return item.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+  });
+}
 
   
 }
@@ -57,6 +75,26 @@ searchResults:any = [];
         <ion-label style="width: 222px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
            2. Customer is Responsible for cooktop reconnection
        </ion-label></ion-row>
+       <ion-row><ion-checkbox color="primary" style="height: 13px;width: 13px;top: 2px;"></ion-checkbox>
+        <ion-label style="width: 222px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
+           3. Customer is Responsible for plumbing Reconnection and dishwasher mounting.
+       </ion-label></ion-row>
+       <ion-row><ion-checkbox color="primary" style="height: 13px;width: 13px;top: 2px;"></ion-checkbox>
+        <ion-label style="width: 222px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
+           4. Customer is Responsible for providing accurate Make and Model Specifications for existing sink/faucet.
+       </ion-label></ion-row>
+       <ion-row><ion-checkbox color="primary" style="height: 13px;width: 13px;top: 2px;"></ion-checkbox>
+        <ion-label style="width: 222px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
+           5. Customer is Responsible for removing the existing tile backsplash.
+       </ion-label></ion-row>
+       <ion-row><ion-checkbox color="primary" style="height: 13px;width: 13px;top: 2px;"></ion-checkbox>
+        <ion-label style="width: 222px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
+           6. Customer is Responsible for supplying a template or detailed drawing for pickup piece/fabrication only.
+       </ion-label></ion-row>
+       <ion-row><ion-checkbox color="primary" style="height: 13px;width: 13px;top: 2px;"></ion-checkbox>
+        <ion-label style="width: 222px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
+           7. Customer is Responsible for the removal of existing countertops.
+       </ion-label></ion-row>
       </ion-list>
   </ion-col>
 </ion-row>`,
@@ -66,8 +104,8 @@ export class itemsearchComponent implements OnInit {
   searchObj = this.navParams.data;
   searchResults = [];
   constructor(private Modalcntrl : ModalController,private navParams : NavParams,private popoverCntrl :PopoverController ) { }
-  ngOnInit() {this.ActionSearchParentAccount();}
-  ActionSearchParentAccount(){
+  ngOnInit() {this.ActionSearchSelect();}
+  ActionSearchSelect(){
     }
 
     ActionToClosePop() {

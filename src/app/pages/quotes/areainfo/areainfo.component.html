@@ -118,11 +118,11 @@
   <ion-col (click)="ActionCreateTool()">Tool @1.00</ion-col>
   <ion-col size="3" class="text-right">$ 0.00</ion-col>
 </ion-row>
-<!-- <ion-row class="rowlineitem">
+<ion-row class="rowlineitem">
     <ion-col size="1" class="circlefont text-center color-white" style="background-color:rgb(238, 162, 22);">Ci</ion-col>
     <ion-col (click)="ActionCreateCi()">Responsible for elec. reconnection</ion-col>
     <ion-col size="3" class="text-right">-</ion-col>
-  </ion-row> -->
+  </ion-row>
 <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
     <ion-col size="4" class="fontbold text-right">Sub Total:</ion-col>
@@ -130,12 +130,12 @@
 </ion-row>
 <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
-    <ion-col size="4" class="fontbold text-right"><u>Discount:</u></ion-col>
+    <ion-col size="4" class="fontbold text-right" (click)="ActionDiscSelect()"><u>Discount:</u></ion-col>
     <ion-col size="4" class="fontbold text-right"><span style="color:red;">($ 0.00)</span></ion-col>
 </ion-row>
 <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
-    <ion-col size="4" class="fontbold text-right"><u>Sales Tax:</u></ion-col>
+    <ion-col size="4" class="fontbold text-right" (click)="ActionTaxSelect()"><u>Sales Tax:</u></ion-col>
     <ion-col size="4" class="fontbold text-right">$ 0.00</ion-col>
 </ion-row>
 <ion-row class="marginbot">
@@ -145,7 +145,7 @@
 </ion-row>
 <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
-    <ion-col size="4" class="fontbold text-right"><u>Fee & Charge:</u></ion-col>
+    <ion-col size="4" class="fontbold text-right" (click)="ActionFeeSelect()"><u>Fee & Charge:</u></ion-col>
     <ion-col size="4" class="fontbold text-right">$ 0.00</ion-col>
 </ion-row>
 <ion-row class="marginbot">

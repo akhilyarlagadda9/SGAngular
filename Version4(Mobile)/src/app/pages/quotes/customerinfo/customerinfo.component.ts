@@ -6,7 +6,7 @@ import { OverlayEventDetail } from '@ionic/core';
 @Component({
   selector: 'app-customerinfo',
   templateUrl: './customerinfo.component.html',
-  //styleUrls: ['./customerinfo.component.scss'],
+  styleUrls: ['./customerinfo.component.scss'],
   inputs:[`customer`,`contacts`,`SelectedTypeID`]
 })
 export class CustomerinfoComponent implements OnInit {

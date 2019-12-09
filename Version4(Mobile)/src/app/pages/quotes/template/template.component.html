@@ -12,32 +12,32 @@
   <ion-content>
     <form>
       <ion-item>
-        <ion-label class="labelfont" position="floating" *ngIf="TypeID == 1" color="primary">Fabrication</ion-label>
+        <ion-label class="labelfont" position="floating" *ngIf="TypeID == 1" color="primary">Description</ion-label>
         <ion-input type="text" class="labelfont" *ngIf="TypeID == 1"value="Standard Fabrication" readonly="readonly"></ion-input>
-        <ion-label class="labelfont" position="floating" *ngIf="TypeID == 2" color="primary">Template</ion-label>
+        <ion-label class="labelfont" position="floating" *ngIf="TypeID == 2" color="primary">Description</ion-label>
         <ion-input type="text" class="labelfont" *ngIf="TypeID == 2"value="Standard Template" readonly="readonly"></ion-input>
-        <ion-label class="labelfont" position="floating" *ngIf="TypeID == 3" color="primary">Install</ion-label>
+        <ion-label class="labelfont" position="floating" *ngIf="TypeID == 3" color="primary">Description</ion-label>
         <ion-input type="text" class="labelfont" *ngIf="TypeID == 3"value="Standard Install" readonly="readonly"></ion-input>
       </ion-item>
       <ion-item>
-          <ion-label class="labelfont" position="floating" color="primary">Quantity</ion-label>
+          <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
           <ion-input type="text" class="labelfont" value="1" readonly="readonly"></ion-input>
         </ion-item>
       <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Cost/Unit($)</ion-label>
-        <ion-input type="tel" class="labelfont" value="211.00"></ion-input>
+        <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
+        <ion-input type="tel" class="labelfont" value="211.00"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Margin</ion-label>
-        <ion-input type="email" class="labelfont" value="20"></ion-input>
+        <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
+        <ion-input type="email" class="labelfont" value="20"><ion-row style="margin-right: 3px;">%</ion-row></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Price/Unit($)</ion-label>
-        <ion-input type="email" class="labelfont" value="263.75"></ion-input>
+        <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
+        <ion-input type="email" class="labelfont" value="263.75"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
       </ion-item>
       <ion-item>
-          <ion-label class="labelfont" position="floating" color="primary">Amount($)</ion-label>
-          <ion-input type="email" class="labelfont" value="263.75" readonly="readonly"></ion-input>
+          <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
+          <ion-input type="email" class="labelfont" value="263.75" readonly="readonly"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
         </ion-item>
       <ion-item>
           <ion-label class="labelfont" position="floating" color="primary">Note</ion-label>

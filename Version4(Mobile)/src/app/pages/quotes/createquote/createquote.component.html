@@ -10,131 +10,24 @@
   <form #quoteheaderForm="ngForm" (ngSubmit)="ActionQuoteSubmit(quoteheaderForm)">
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Lead Type</ion-label>
-      <ion-select name="header.LeadInfo.LeadTypeID" ngModel class="labelfont">
-      <ion-select-option value="{{leadtype.ID}}" *ngFor="let leadtype of leadTypes">{{leadtype.Name}}</ion-select-option>
+      <ion-select [(ngModel)]="header.LeadTypeID" class="labelfont">
+      <ion-select-option  *ngFor="let p of leadTypes" [value]="p.ID">{{p.Name}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Hear About us?</ion-label>
-      <ion-select name="header.LeadInfo.SourceID" ngModel class="labelfont">
-          <ion-select-option value="{{hearabout.ID}}" *ngFor="let hearabout of leadHearAbout">{{hearabout.Name}}</ion-select-option>
+      <ion-select [(ngModel)]="header.SourceID"  class="labelfont">
+          <ion-select-option  *ngFor="let p of leadHearAbout" [value]="p.ID">{{p.Name}}</ion-select-option>
           </ion-select>
     </ion-item>
 
     <ion-item>
-        <ion-input name="header.Version.AccName" ngModel ></ion-input>
-        <ion-icon name="arrow-dropdown" (click)="ActionShowAccountCustomerItems(2)"></ion-icon>
-        <ion-icon name="search"></ion-icon>
+        <ion-label class="labelfont" position="floating" color="primary">Customer</ion-label>
+        <ion-input [(ngModel)]="header.Version.AccName"  ></ion-input>
+        <ion-icon slot="end" style="margin-top: 35px;" name="arrow-dropdown"  (click)="ActionShowAccountCustomerItems(2)"></ion-icon>
+        <ion-icon slot="end" style="margin-top: 35px;" name="search"></ion-icon>
       </ion-item>
 
-    <ion-item>
-      <ion-label  name="header.Version.Customer.FirstName" class="labelfont" position="floating" color="primary">First Name</ion-label>
-      <ion-input type="text" class="labelfont"></ion-input>
-    </ion-item>
-
-
-    <ion-item>
-        <ion-label class="labelfont" name="header.Version.Customer.LastName" position="floating" color="primary">Last Name</ion-label>
-        <ion-input type="text" class="labelfont"></ion-input>
-      </ion-item>
-
-    <ion-item>
-      <ion-label class="labelfont" position="floating" color="primary">Phone</ion-label>
-      <ion-input type="tel" class="labelfont"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label class="labelfont" position="floating" color="primary">Email</ion-label>
-      <ion-input type="email" class="labelfont"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label class="labelfont" position="floating" color="primary">Project Type</ion-label>
-      <ion-select [(ngModel)]="projecttype" class="labelfont">
-        <ion-select-option value="Retail">Retail</ion-select-option>
-        <ion-select-option value="Commercial">Commercial</ion-select-option>
-        <ion-select-option value="Designers">Designers</ion-select-option>
-        <ion-select-option value="Floor Decarators">Floor Decarators</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label class="labelfont" position="floating" color="primary">Sales Rep.</ion-label>
-      <ion-select [(ngModel)]="salesrep" class="labelfont">
-        <ion-select-option value="Stonegrid">Stonegrid</ion-select-option>
-        <ion-select-option value="Daniel Finn">Daniel Finn</ion-select-option>
-        <ion-select-option value="Chris Morris">Chris Morris</ion-select-option>
-        <ion-select-option value="Glenn Maxwell">Glenn Maxwell</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label class="labelfont" position="floating" color="primary">Estimator</ion-label>
-      <ion-select [(ngModel)]="estimator" class="labelfont">
-        <ion-select-option value="Abyu Preez">Abyu Preez</ion-select-option>
-        <ion-select-option value="Tom Moores">Tom Moores</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label class="labelfont" position="floating" color="primary">Project Manager</ion-label>
-      <ion-select [(ngModel)]="projectmanager" class="labelfont">
-        <ion-select-option value="David Miller">David Miller</ion-select-option>
-        <ion-select-option value="Michael Clark">Michael Clark</ion-select-option>
-        <ion-select-option value="Philp Salt">Philp Salt</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Production Type</ion-label>
-        <ion-select [(ngModel)]="productiontype" multiple="true" class="labelfont">
-          <ion-select-option value="Hard Surface">Hard Surface</ion-select-option>
-          <ion-select-option value="Solid Surface">Solid Surface</ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item>
-          <ion-label class="labelfont" position="floating" color="primary">Price List</ion-label>
-          <ion-select [(ngModel)]="pricelsit" class="labelfont">
-            <ion-select-option value="Retail">Retail</ion-select-option>
-            <ion-select-option value="Commercial">Commercial</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-    <ion-item>
-      <ion-label class="labelfont" position="floating" color="primary">Job Name</ion-label>
-      <ion-input type="text" class="labelfont"></ion-input>
-    </ion-item>
-
-    <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Job Address1</ion-label>
-        <ion-input type="text" class="labelfont"></ion-input>
-      </ion-item>
-
-    <ion-item>
-      <ion-label class="labelfont" position="floating" color="primary">Job Address2</ion-label>
-      <ion-input type="text" class="labelfont"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label class="labelfont" position="floating" color="primary">Job City</ion-label>
-      <ion-input type="text" class="labelfont"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label class="labelfont" position="floating" color="primary">Job State</ion-label>
-      <ion-input type="text" class="labelfont"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label class="labelfont" position="floating" color="primary">Job ZipCode</ion-label>
-      <ion-input type="text" class="labelfont"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label class="labelfont" position="floating" color="primary">Year Built</ion-label>
-      <ion-input type="text" class="labelfont"></ion-input>
-    </ion-item>
 
   </form>
 </ion-content>

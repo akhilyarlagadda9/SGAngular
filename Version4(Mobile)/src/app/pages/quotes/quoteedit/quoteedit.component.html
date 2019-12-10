@@ -15,18 +15,18 @@
     </ion-toolbar>
     <ion-toolbar class="scroll">
         <ion-segment [(ngModel)]="selectedtabtype" scrollable class="list-scroll">
-            <ion-segment-button class="padd-scroll bar-header1" value="1" (click)="ActionQuickLoad(1)">Quote Info
-            </ion-segment-button>
-            <ion-segment-button class="padd-scroll bar-header1" value="2" (click)="ActionQuickLoad(2)">Area Info
-            </ion-segment-button>
-            <ion-segment-button class="padd-scroll bar-header1" value="3" (click)="ActionQuickLoad(3)">Job Desc
-            </ion-segment-button>
-            <ion-segment-button class="padd-scroll bar-header1" value="4" (click)="ActionQuickLoad(4)">PO Items
-            </ion-segment-button>
-            <ion-segment-button class="padd-scroll bar-header1" value="5" (click)="ActionQuickLoad(5)">Comm Hub
-            </ion-segment-button>
-            <!-- <ion-segment-button class="padd-scroll bar-header1" value="6" (click)="ActionQuickLoad(6)">Prints
-                </ion-segment-button> -->
+            <ion-button shape="round" class="btn-ion bar-header1 active" value="1" (click)="ActionQuickLoad(1)"><ion-icon name="add"></ion-icon> Quote Info
+            </ion-button>
+            <ion-button shape="round" class="btn-ion bar-header1" value="2" (click)="ActionQuickLoad(2)">Area Info
+            </ion-button>
+            <ion-button shape="round" class="btn-ion bar-header1" value="3" (click)="ActionQuickLoad(3)">Job Desc
+            </ion-button>
+            <ion-button shape="round" class="btn-ion bar-header1" value="4" (click)="ActionQuickLoad(4)">PO Items
+            </ion-button>
+            <ion-button shape="round" class="btn-ion bar-header1" value="5" (click)="ActionQuickLoad(5)">Comm Hub
+            </ion-button>
+            <!-- <ion-button shape="round" class="btn-ion bar-header1" value="6" (click)="ActionQuickLoad(6)">Prints
+                </ion-button> -->
         </ion-segment>
     </ion-toolbar>
 

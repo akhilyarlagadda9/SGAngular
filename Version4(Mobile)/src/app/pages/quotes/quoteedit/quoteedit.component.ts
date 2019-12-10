@@ -5,6 +5,7 @@ import { QuoteService } from 'src/app/service/quote.service'
 
 import { HeadereditComponent } from 'src/app/pages/quotes/headeredit/headeredit.component';
 import { OverlayEventDetail } from '@ionic/core';
+import { QuoterepService } from 'src/app/service/quoterep.service';
 
 @Component({
   selector: 'app-quoteedit',
@@ -12,12 +13,13 @@ import { OverlayEventDetail } from '@ionic/core';
   styleUrls: ['./quoteedit.component.scss'],
 })
 export class QuoteeditComponent implements OnInit {
-  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private service: QuoteService, private navCtrl: NavController) { }
+  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private service: QuoteService,
+     private navCtrl: NavController,private repservice: QuoterepService,) { }
   quoteId: number;
   quoteno: string;
   qprmsobj = this.navParams.data;
   headerInfo:any;
-  version:any;
+  //version:any;
   selectedtabtype:number = 1;
   QuoteVersionID:number = this.qprmsobj.versionid; 
 
@@ -27,7 +29,7 @@ export class QuoteeditComponent implements OnInit {
   ngOnInit() {
     //this.headeInfo = this.qprmsobj.header;
     this.ActionQuoteInfo();
-    this.ActionAreaList();
+    //this.ActionAreaList();
   }
 
 
@@ -43,13 +45,15 @@ export class QuoteeditComponent implements OnInit {
     let result = this.service.ActionQuoteInfo(this.qprmsobj.quoteid,this.qprmsobj.quoteno,this.qprmsobj.versionid,0,0,0).subscribe(
       data => {
          this.headerInfo = data;
+         this.headerInfo.Version = this.headerInfo.VersionList.filter(x => x.ID === this.qprmsobj.versionid)[0];
       },
       error => console.log(error));
   }
+  
   ActionAreaList(){
     let result = this.service.ActionAreaList(this.qprmsobj.quoteid,this.qprmsobj.versionid,0).subscribe(
       data => {
-         this.version = data;
+         //this.version = data;
       },
       error => console.log(error));
   }
@@ -66,9 +70,10 @@ export class QuoteeditComponent implements OnInit {
     return await modal.present();
   }
   async ActionEditJob() {
+    let obj = this.headerInfo;
     const modal = await this.Modalcntrl.create({
       component: HeadereditComponent,
-      componentProps: this.headerInfo,
+      componentProps: obj,
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {

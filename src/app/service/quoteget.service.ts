@@ -50,4 +50,19 @@ GetParentAccListWithType(typeId:number,search:string):Observable<any> {
   return this.http.get<any>(this.url +  'api/customer/GetParentAccListWithType?typeId=' + typeId + "&search=" + search)
 }
 
+
+/********** Pricebook Lists *************/
+
+//Edge,Splash,Cutout,Labor List
+qsgetpricelistitems(pricelistId:any):Observable<any> {
+   let typeIdList = []; typeIdList.push(5); typeIdList.push(6); typeIdList.push(10); typeIdList.push(7);
+  return this.http.get<any>(this.url +  'api/Quote/FabDropDownList?id=' + pricelistId + 'typeIds' + typeIdList)
+}
+//Sink,Faucet,Labor,Add on,Tile,Appliance,Tool,Consumables Lists
+qsgetpricelistproductItems(pricelistId:any, producttypeId:any, searchTypeId:any, search:string):Observable<any> {
+   let parameterAry = [pricelistId, producttypeId, 0, searchTypeId, search];
+  return this.http.get<any>(this.url +  'api/Quote/SearchPriceItemList?modelAry=' + parameterAry)
+}
+
+
 }

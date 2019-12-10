@@ -13,14 +13,14 @@ import { PoitemsComponent } from '../poitems/poitems.component';
 import { CommhubComponent } from '../commhub/commhub.component';
 import { PrintsComponent } from '../prints/prints.component';
 import { JobdesComponent } from '../jobdes/jobdes.component';
-import { AreainfoComponent } from '../areainfo/areainfo.component';
+import { AreainfoComponent,DiscountComponent,taxComponent,feeComponent } from '../areainfo/areainfo.component';
 import { PoeditComponent } from '../poedit/poedit.component';
 import { JobdesceditComponent } from '../jobdescedit/jobdescedit.component';
 import { CustomereditComponent,CustomersearchComponent } from '../customeredit/customeredit.component';
 import { CommhubeditComponent } from '../commhubedit/commhubedit.component';
 import { SinkComponent } from '../sink/sink.component';
 import { LaborinfoComponent } from '../laborinfo/laborinfo.component';
-import { AddoninfoComponent } from '../addoninfo/addoninfo.component';
+import { AddoninfoComponent, } from '../addoninfo/addoninfo.component';
 import { SplashComponent } from '../splash/splash.component';
 import { EdgeinfoComponent } from '../edgeinfo/edgeinfo.component';
 import { CutoutinfoComponent } from '../cutoutinfo/cutoutinfo.component';
@@ -38,6 +38,7 @@ import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
 import { TemplateComponent } from '../template/template.component';
 import { CarpetinfoComponent } from '../carpetinfo/carpetinfo.component';
 import { CustitemComponent, itemsearchComponent } from '../custitem/custitem.component';
+import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 
 
 @NgModule({
@@ -52,7 +53,7 @@ import { CustitemComponent, itemsearchComponent } from '../custitem/custitem.com
       },
     ])
   ],
-  entryComponents: [CreatequoteComponent,itemsearchComponent,  CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, 
+  entryComponents: [CreatequoteComponent,AdditionalitemserachComponent,DiscountComponent,feeComponent,taxComponent, itemsearchComponent,  CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, 
     ApplianceComponent, ConsumableComponent, ToolComponent, CabinetComponent, 
     TileinfoComponent, FaucetsComponent, MeasurementsComponent, 
     MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, 
@@ -64,7 +65,7 @@ import { CustitemComponent, itemsearchComponent } from '../custitem/custitem.com
     CustomerinfoComponent,AddareaComponent,CustomersearchComponent],
     
 
-  declarations: [QuotePage, ApplianceComponent, itemsearchComponent, CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, ConsumableComponent, ToolComponent, CabinetComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, LaborinfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
+  declarations: [QuotePage, ApplianceComponent,AdditionalitemserachComponent,taxComponent,feeComponent,DiscountComponent, itemsearchComponent, CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, ConsumableComponent, ToolComponent, CabinetComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, LaborinfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
     HeadereditComponent,HeaderinfoComponent,PoitemsComponent,
     CommhubComponent,PrintsComponent,JobdesComponent,
     AreainfoComponent,PoeditComponent,JobdesceditComponent,

@@ -39,6 +39,7 @@ searchResults:any = [];
      event: ev,
      translucent: true,
      componentProps:obj,
+     cssClass: "popover_class"
    });
    return await popover.present();
  }
@@ -56,7 +57,7 @@ searchResults:any = [];
 @Component({
   //selector: 'app-itemsearchComponent',
   template:`
-  <ion-header>
+  <ion-header >
     <ion-toolbar style="height:37px;top:-8px;left:-10px;">
       <ion-title style="font-size:15px;">Customer Details</ion-title>
       <ion-button slot="end" color="success" size="small" style="font-size:13px; height:17px;width: 58px;">Select</ion-button>

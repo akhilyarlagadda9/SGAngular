@@ -53,7 +53,7 @@ import { AdditionalitemserachComponent } from '../additionalitemserach/additiona
       },
     ])
   ],
-  entryComponents: [CreatequoteComponent,AdditionalitemserachComponent,DiscountComponent,feeComponent,taxComponent, itemsearchComponent,  CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, 
+  entryComponents: [CreatequoteComponent, CustomersearchComponent,AdditionalitemserachComponent,DiscountComponent,feeComponent,taxComponent, itemsearchComponent,  CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, 
     ApplianceComponent, ConsumableComponent, ToolComponent, CabinetComponent, 
     TileinfoComponent, FaucetsComponent, MeasurementsComponent, 
     MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, 
@@ -65,7 +65,7 @@ import { AdditionalitemserachComponent } from '../additionalitemserach/additiona
     CustomerinfoComponent,AddareaComponent,CustomersearchComponent],
     
 
-  declarations: [QuotePage, ApplianceComponent,AdditionalitemserachComponent,taxComponent,feeComponent,DiscountComponent, itemsearchComponent, CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, ConsumableComponent, ToolComponent, CabinetComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, LaborinfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
+  declarations: [QuotePage, CustomersearchComponent, ApplianceComponent,AdditionalitemserachComponent,taxComponent,feeComponent,DiscountComponent, itemsearchComponent, CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, ConsumableComponent, ToolComponent, CabinetComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, LaborinfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
     HeadereditComponent,HeaderinfoComponent,PoitemsComponent,
     CommhubComponent,PrintsComponent,JobdesComponent,
     AreainfoComponent,PoeditComponent,JobdesceditComponent,

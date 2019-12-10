@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { QuotegetService } from 'src/app/service/quoteget.service';
+import { CustomersearchComponent } from '../customeredit/customeredit.component';
 
 @Component({
   selector: 'app-createquote',
@@ -17,7 +18,7 @@ export class CreatequoteComponent implements OnInit {
   leadTypes:any = [];
   leadHearAbout:any = [];
   priceList:any = [];
-  constructor(public Modalcntrl : ModalController,private getservice:QuotegetService ) { }
+  constructor(public Modalcntrl : ModalController,private getservice:QuotegetService,private popoverCntrl :PopoverController ) { }
   ngOnInit() {
     let custDicIds = [1];let leadDicIds = [2,3];
     this.getservice.CustTypeResourceList(4, 3).subscribe(data => {this.salesPersonsList = data});
@@ -48,6 +49,18 @@ export class CreatequoteComponent implements OnInit {
       'dismissed': true
     });
   }
+
+  async ActionShowAccountCustomerItems(ev: any,) {
+    let obj={}
+   const popover = await this.popoverCntrl.create({
+     component: CustomersearchComponent,
+     event: ev,
+     translucent: true,
+     componentProps:obj,
+     cssClass: "popover_class"
+   });
+   return await popover.present();
+ }
 }
 
 

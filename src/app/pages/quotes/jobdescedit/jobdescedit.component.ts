@@ -1,18 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
+
 @Component({
   selector: 'app-jobdescedit',
   templateUrl: './jobdescedit.component.html',
   styleUrls: ['./jobdescedit.component.scss'],
 })
 export class JobdesceditComponent implements OnInit {
-
-  constructor(public Modalcntrl : ModalController) { }
+    
+  constructor(public Modalcntrl : ModalController,private navParams : NavParams) { }
+  version = this.navParams.data;
 
   ngOnInit() {}
-  ActionCloseJobDescEdit() {
+ 
+  ActionCloseJobDescEdit(issave) {
     this.Modalcntrl.dismiss({
-      'dismissed': true
+      'dismissed': true,
+      componentProps:this.version,
+      issave:issave
     });
   }
 }

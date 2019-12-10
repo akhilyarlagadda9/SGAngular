@@ -23,9 +23,9 @@
 
     <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Customer</ion-label>
-        <ion-input [(ngModel)]="header.Version.AccName"  ></ion-input>
+        <ion-input [(ngModel)]="header.Version.AccName" (keyup.enter)="ActionShowAccountCustomerItems(2)" ></ion-input>
         <ion-icon slot="end" style="margin-top: 35px;" name="arrow-dropdown"  (click)="ActionShowAccountCustomerItems(2)"></ion-icon>
-        <ion-icon slot="end" style="margin-top: 35px;" name="search"></ion-icon>
+        <ion-icon slot="end" style="margin-top: 35px;" name="search" (click)="ActionShowAccountCustomerItems(2)"></ion-icon>
       </ion-item>
 
 

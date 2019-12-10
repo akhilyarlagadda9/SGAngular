@@ -7,10 +7,10 @@ import { OverlayEventDetail } from '@ionic/core';
   selector: 'app-customerinfo',
   templateUrl: './customerinfo.component.html',
   styleUrls: ['./customerinfo.component.scss'],
-  inputs:[`customer`,`contacts`,`SelectedTypeID`]
+  inputs:[`version`,`customer`,`contacts`,`SelectedTypeID`]
 })
 export class CustomerinfoComponent implements OnInit {
-  public customer: any;
+  public customer: any;public version: any;
   public contacts: any;
   public SelectedTypeID: number;
   constructor(private Modalcntrl : ModalController) { }
@@ -18,11 +18,14 @@ export class CustomerinfoComponent implements OnInit {
    // this.customer = this.custComponent.customerinfo;
   }
   async ActionEditCustomer() {
-    let custinf = this.customer;
-    custinf.ContactList = this.contacts;
+   
+    let custinfo = this.customer;
+    custinfo.ContactList = this.contacts;
+    let copyobj = JSON.parse(JSON.stringify(custinfo))
+    let obj = {version:this.version,customerinfo:copyobj,SelectedTypeID:this.SelectedTypeID}
     const modal = await this.Modalcntrl.create({
       component: CustomereditComponent,
-      componentProps: custinf,
+      componentProps: obj,
     })
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {

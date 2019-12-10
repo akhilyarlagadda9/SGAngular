@@ -1,0 +1,16 @@
+<style>.popover-content {width: 318px; margin: -40px;}</style>
+  <ion-header>
+    <ion-toolbar style="height:37px;top:-8px;left:-10px;">
+      <ion-title style="font-size:15px;">Description</ion-title>
+      <ion-button slot="end" color="success" size="small" style="font-size:13px; height:17px;width: 58px;">Select</ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop(false)" style="font-size:13px; height:17px;width: 22px;">X</ion-button>
+    </ion-toolbar>
+  </ion-header>
+  <ion-row style="height:360px">
+  <ion-col>
+  <ion-list *ngFor="let item of listItems" (click)="ActionSelectItem(item)">
+    <ion-row style="font-size: 16px;">{{item.Description}}</ion-row>
+    <ion-row style="color: blue; font-size: 12px;">{{item.ProductDescription}}</ion-row>
+      </ion-list>
+  </ion-col>
+</ion-row>

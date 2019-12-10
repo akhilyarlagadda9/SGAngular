@@ -9,30 +9,15 @@ import { QuotegetService } from 'src/app/service/quoteget.service';
 })
 export class CreatequoteComponent implements OnInit {
   quoteId:number = 0;
-  header:{
-    LeadTypeID:number,
-    LeadInfo:any,
-    Version:{
-      Customer:any,
-      ParentCustInfo:any,
-      ChildParentCustInfo:any
-    },
-
-  };
+  header :any;
   salesPersonsList:any = [];
-        estimatorsList:any = [];
-        projectManagersList:any = [];
-        customerTypes:any = [];
-        leadTypes:any = [];
-        leadHearAbout:any = [];
-        priceList:any = [];
-
-
-
-  
-
+  estimatorsList:any = [];
+  projectManagersList:any = [];
+  customerTypes:any = [];
+  leadTypes:any = [];
+  leadHearAbout:any = [];
+  priceList:any = [];
   constructor(public Modalcntrl : ModalController,private getservice:QuotegetService ) { }
-
   ngOnInit() {
     let custDicIds = [1];let leadDicIds = [2,3];
     this.getservice.CustTypeResourceList(4, 3).subscribe(data => {this.salesPersonsList = data});
@@ -43,19 +28,26 @@ export class CreatequoteComponent implements OnInit {
     this.getservice.LeadDictionaryLists(leadDicIds).subscribe(
       data=> { this.leadTypes = data[0] ;this.leadHearAbout = data[1] }
     );
-   
+    this.header= {
+      LeadTypeID:0,
+      SourceID:0,
+      
+      
+      
+      Version:{
+        AccName:"",
+        Customer:{},
+        ParentCustInfo:{},
+        ChildParentCustInfo:{}
+      },
+    };
     }
-
   /******* Actions *******/
   ActionCloseCreateQuote() {
     this.Modalcntrl.dismiss({
       'dismissed': true
     });
   }
- 
-
-
-
-
-
 }
+
+

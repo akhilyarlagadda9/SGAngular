@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
+
+
 @Component({
   selector: 'app-poedit',
   templateUrl: './poedit.component.html',
@@ -7,12 +9,16 @@ import { ModalController } from '@ionic/angular';
 })
 export class PoeditComponent implements OnInit {
 
-  constructor(public Modalcntrl : ModalController) { }
+  constructor(public Modalcntrl : ModalController,private navParams : NavParams) { }
+  poitem = this.navParams.data;
 
   ngOnInit() {}
-  ActionClosePOItem() {
+
+  ActionClosePOItem(issave) {
     this.Modalcntrl.dismiss({
-      'dismissed': true
+      'dismissed': true,
+      componentProps:this.poitem,
+      issave:issave
     });
   }
 }

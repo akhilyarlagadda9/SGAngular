@@ -1,23 +1,19 @@
 <ion-header translucent>
     <ion-toolbar>
       <ion-title><b>PO Item Info</b></ion-title>
-      <ion-button slot="end" color="success" size="small">Save</ion-button>
+      <ion-button slot="end" color="success" size="small" (click)="ActionClosePOItem()">Save</ion-button>
       <ion-button slot="end" color="danger" size="small" (click)="ActionClosePOItem()">X</ion-button>
     </ion-toolbar>
   </ion-header>
   <ion-content>
     <ion-list class="ion-no-margin ion-no-padding">
-        <ion-item>
-            <ion-label position="floating" color="primary" class="no-margin labelfont1">Job Name</ion-label>
-            <ion-input required type="text" class="inputheight fontbold"></ion-input>
-          </ion-item>
       <ion-item>
-        <ion-label class="no-margin labelfont1" position="floating" color="primary">First Name</ion-label>
-        <ion-input type="text" class="inputheight fontbold"></ion-input>
+            <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Number:</ion-label>
+            <ion-input type="text" [(ngModel)]="poitem.PONumber" class="inputheight fontbold"></ion-input>
       </ion-item>
       <ion-item>
           <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Uploaded By:</ion-label>
-          <ion-select [(ngModel)]="salesrep" class="fontbold">
+          <ion-select [(ngModel)]="poitem.POBy" class="fontbold">
             <ion-select-option value="Stonegrid">Stonegrid</ion-select-option>
             <ion-select-option value="Daniel Finn">Daniel Finn</ion-select-option>
             <ion-select-option value="Chris Morris">Chris Morris</ion-select-option>
@@ -26,14 +22,14 @@
         </ion-item>
       <ion-item>
         <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Date:</ion-label>
-        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="event.timeStarts" class="fontbold"></ion-datetime>
+        <ion-datetime displayFormat="MM/DD/YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="poitem.PODate" class="fontbold"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Total($):</ion-label>
-        <ion-input type="text" class="inputheight fontbold"></ion-input>
+        <ion-input type="text" [(ngModel)]="poitem.POAmount" class="inputheight fontbold"></ion-input>
       </ion-item>
       <ion-row>
-          <ion-label class="labelstyle" color="primary"><u>Attachments:</u></ion-label>
+          <ion-label class="labelstyle" [(ngModel)]="poitem.Path" color="primary"><u>Attachments:</u></ion-label>
       </ion-row>
     </ion-list>
   </ion-content>

@@ -1,3 +1,20 @@
-<p>
-  customersearch works!
-</p>
+<ion-header>
+    <ion-toolbar style="height:37px;top:-8px;left:-10px;">
+      <ion-title style="font-size:15px;">Customer Details</ion-title>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop(false)" style="font-size:13px; height:17px;width: 22px;">X</ion-button>
+    </ion-toolbar>
+  </ion-header>
+  <ion-item>
+  <ion-row style="height:360px">
+  <ion-col *ngFor="let customer of searchResults" (click)="ActionPopulateParentInfo(customer)">
+<ion-label>
+  <h2>
+      {{customer.Name}}
+  </h2>
+  <p>
+    {{customer.TypeName}}
+  </p>
+</ion-label>
+  </ion-col>
+</ion-row>
+</ion-item>

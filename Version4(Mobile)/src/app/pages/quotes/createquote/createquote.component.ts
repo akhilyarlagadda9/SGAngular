@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { QuotegetService } from 'src/app/service/quoteget.service';
-import { CustomersearchComponent } from '../customeredit/customeredit.component';
+import { FormsModule } from '@angular/forms'; 
+import { CustomersearchComponent } from '../customersearch/customersearch.component';
+import { OverlayEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-createquote',
@@ -20,28 +22,29 @@ export class CreatequoteComponent implements OnInit {
   priceList:any = [];
   constructor(public Modalcntrl : ModalController,private getservice:QuotegetService,private popoverCntrl :PopoverController ) { }
   ngOnInit() {
+    this.header= {
+      LeadTypeID:0,ProjectManagerID:0,EstimatorID:0,SalesPersonID:0,
+      SourceID:0,
+      JobName:"",Address1:"",Address2:"",City:"",State:"",Zipcode:"",YearBuilt:"",    
+      Version:{
+        AccName:"",PriceListID:0,ProductionTypeID:0,
+        Customer:{
+          FirstName:"",
+          LastName:"",
+          PPhone:"",
+          Email:""
+        },
+        ParentCustInfo:{},
+        ChildParentCustInfo:{},
+        ParentAccID :0,CustTypeID:4,  ChildAccID:0
+      },
+    };
     let custDicIds = [1];let leadDicIds = [2,3];
-    this.getservice.CustTypeResourceList(4, 3).subscribe(data => {this.salesPersonsList = data});
-    this.getservice.CustTypeResourceList(4, 8).subscribe(data => {this.estimatorsList = data});;
-    this.getservice.CustTypeResourceList(4, 9).subscribe(data => {this.projectManagersList = data});;
-    this.getservice.CustomerDictionayList(custDicIds).subscribe(data => {this.customerTypes = data[0]});
-    this.getservice.CustPriceList(4).subscribe(data => {this.priceList = data});
     this.getservice.LeadDictionaryLists(leadDicIds).subscribe(
       data=> { this.leadTypes = data[0] ;this.leadHearAbout = data[1] }
     );
-    this.header= {
-      LeadTypeID:0,
-      SourceID:0,
-      
-      
-      
-      Version:{
-        AccName:"",
-        Customer:{},
-        ParentCustInfo:{},
-        ChildParentCustInfo:{}
-      },
-    };
+    this.getservice.CustomerDictionayList(custDicIds).subscribe(data => {this.customerTypes = data[0]});
+   this.PopulateDropDownList(4);
     }
   /******* Actions *******/
   ActionCloseCreateQuote() {
@@ -50,17 +53,196 @@ export class CreatequoteComponent implements OnInit {
     });
   }
 
-  async ActionShowAccountCustomerItems(ev: any,) {
-    let obj={}
+  ActionShowNewCustomerList(ev: any,typeId:number,search:string){
+     search = search == undefined ? "" : search;
+     if ((search != null && search != "") || typeId == 2) {
+      this.ActionShowPopover(ev,typeId,search);
+    }
+}
+
+
+  async ActionShowPopover(ev: any,typeId:number,search) {
+    let custTypeID = this.header.Version.ParentAccID > 0 ? 4 : 0;
+    let obj={search:search,selectTypeId:typeId,custTypeID:custTypeID}
    const popover = await this.popoverCntrl.create({
      component: CustomersearchComponent,
      event: ev,
      translucent: true,
      componentProps:obj,
      cssClass: "popover_class"
-   });
+   })
+   popover.onDidDismiss().then((detail: OverlayEventDetail) => {
+    if (detail !== null) {
+      if(detail.data.isselect == true){
+        if(this.header.Version.ParentAccID  > 0 && detail.data.componentProps.TypeID == 4){
+          this.PopulateCustomerInfo(detail.data.componentProps);
+        }else{
+          this.PopulateParentCustInfo(detail.data.componentProps);
+        }
+       
+      }
+    }
+ });
    return await popover.present();
  }
+
+
+ ActionChangeRetailCheckBox = function () {
+  let custID = this.header.Version != undefined ? 0 : this.header.Version.CustomerID;
+  if (custID == 0) {
+    this.header.Version.Customer.Name = '';
+    this.header.Version.Customer.FirstName = '';
+    this.header.Version.Customer.LastName = '';
+  }        
+}
+
+
+ PopulateParentCustInfo(info:any){
+  this.header.Version.CustTypeID = info.TypeID;
+  this.ActionPopulateParentAccounts(info.TypeID);       
+  if (info.TypeID == 4) {            
+    this.PopulateCustomerInfo(info);
+  }else{
+    if (info != '') {
+     this.header = this.getservice.Prepareparentcustmodel(this.header, info);
+    this.populateSalesPersonList(info);
+   //  populateSelPriceList(modelItem);
+     this.populateEstimatorList(info);
+     this.populateProjManagerList(info);
+     this.Actionsameasaccountcustomeraddress();
+  }        
+  }
+ }
+
+ ActionPopulateParentAccounts = function (Id) {
+  this.header.Version.IsCustRetail = 0;
+  this.header.Version.ChildAccID = 0;
+  this.header.Version.ParentAccID = 0;
+  this.header.Version.ParentCustInfo = {};
+  this.header.Version.AccName = '';
+  this.header.Version.CreatePrimaryContactID = 0;
+  this.selectedAccID = 0;
+  this.CreateaccountContacts = [];
+  if (Id != 4) {
+    this.PopulateIsCustDefault(Id);
+  }
+  this.PopulateDropDownList(Id);
+}
+PopulateDropDownList(Id:number){
+  this.getservice.CustTypeResourceList(Id, 3).subscribe(data => {this.salesPersonsList = data});
+  this.getservice.CustTypeResourceList(Id, 8).subscribe(data => {this.estimatorsList = data});;
+  this.getservice.CustTypeResourceList(Id, 9).subscribe(data => {this.projectManagersList = data});;
+  this.getservice.CustPriceList(Id).subscribe(data => {this.priceList = data});
+}
+PopulateIsCustDefault(Id){
+  this.getservice.SelTypePrefInfo(Id,5).subscribe(data =>
+     {if (data != null && data != "") { this.header.Version.IsCustRetail = data.Isdefault }});
+}
+PopulateCustomerInfo(info:any){
+  this.header = this.getservice.Preparecustomermodel(this.header,info);
+  if (this.header.Version.IsCustRetail == 1) {
+    let childAccCode =this.header.Version.ChildAccID == 0 ? "" : this.header.Version.ParentCustInfo.Code + " - ";
+    this.header.QuoteName = this.header.Version.ParentCustInfo.SelCode + " - " + childAccCode + info.Name;
+  }
+  this.ActionPopulateCustName();
+  this.Getcustomercontacts();
+}
+ActionPopulateCustName(){
+  let header = this.header;
+  let custname = header.Version.Customer.Name, firstname = header.Version.Customer.FirstName, lastname = header.Version.Customer.LastName;
+  if (firstname == "") { header.Version.Customer.chkflag = true; }
+
+  if ((firstname == "" || firstname == null) || header.Version.Customer.chkflag == true) {
+      //Step1
+      var commaNames = (custname != "" && custname != undefined) ? custname.split(',') : "";
+      if (commaNames.length == 1) {
+          header.Version.Customer.FirstName = commaNames[0];
+      }
+      else if (commaNames.length > 1) {
+          header.Version.Customer.FirstName = commaNames[commaNames.length - 1];
+          header.Version.Customer.LastName = commaNames.slice(0, commaNames.length - 1).join(" ");
+          return;
+      }
+      //Step2
+      var names = (custname != "" && custname != undefined) ? custname.split(' ') : "";
+      if (names.length == 1) {
+          header.Version.Customer.FirstName = names[0];
+      }
+      else if (names.length > 1) {
+          header.Version.Customer.LastName = names[names.length - 1];
+          header.Version.Customer.FirstName = names.slice(0, names.length - 1).join(" ");
+      }
+      if (custname == '' || custname == undefined) {
+          header.Version.Customer.FirstName = "";
+          header.Version.Customer.LastName = "";
+      }
+  }
+}
+Getcustomercontacts(){
+  let model:any;let header = this.header;let customerContacts = [];
+  this.getservice.GetCustomerContacts(header.CustomerID).subscribe(data=>{customerContacts = data});
+  if (header.CustomerID > 0) {
+    customerContacts.map(function (elem) { if (elem.CustomerID == header.CustomerID && elem.IsDefault == 1) { model = elem; } });
+      header.Version.CustContactID = model.ID;
+  }
+}
+populateSalesPersonList(modelItem) {
+  let salesperList = [];
+  if (modelItem.SalesPersonIDs != null && modelItem.SalesPersonIDs != "") {
+      salesperList = JSON.parse(modelItem.SalesPersonIDs);
+      salesperList.map(function (elem) { elem.ResourceName = elem.Name; elem.ResourceID = elem.ID; return elem });
+  }
+  if (salesperList.length == 0) {
+      salesperList = this.salesPersonsList;
+  } else {
+      this.header.SalesPersonID = salesperList[0].ID;
+  }
+  return salesperList;
+}
+populateEstimatorList(modelItem) {
+  let salesperList = [];
+  if (modelItem.EstimatorIDs != null && modelItem.EstimatorIDs != "") {
+      salesperList = JSON.parse(modelItem.EstimatorIDs);
+      salesperList.map(function (elem) { elem.ResourceName = elem.Name; elem.ResourceID = elem.ID; return elem });
+  }
+  if (salesperList.length == 0) {
+      salesperList = this.estimatorsList;
+  } else {
+    this.header.EstimatorID = salesperList[0].ID;
+  }
+  return salesperList;
+}
+populateProjManagerList(modelItem) {
+  let salesperList = [];
+  if (modelItem.ProjectManagerIDs != null && modelItem.ProjectManagerIDs != "") {
+      salesperList = JSON.parse(modelItem.ProjectManagerIDs);
+      salesperList.map(function (elem) { elem.ResourceName = elem.Name; elem.ResourceID = elem.ID; return elem });
+  }
+  if (salesperList.length == 0) {
+      salesperList = this.projectManagersList;
+  } else {
+    this.header.ProjectManagerID = salesperList[0].ID;
+  }
+  return salesperList;
+}
+Actionsameasaccountcustomeraddress() {
+  let header = this.header;
+  var add1 = '', add2 = '', city = '', state = '', zip = '', contId = 0, coninfo = '';
+  if (header.IsCheck1 == 1) {
+      add1 = header.Version.ParentCustInfo.BillAddress;
+      add2 = header.Version.ParentCustInfo.BillAddress1;
+      city = header.Version.ParentCustInfo.BillCity;
+      state = header.Version.ParentCustInfo.BillState;
+      zip = header.Version.ParentCustInfo.BillZipCode;
+  }
+  header.Address1 = add1;
+  header.Address2 = add2;
+  header.City = city;
+  header.State = state;
+  header.Zipcode = zip;
+
+  return header;
+}
 }
 
 

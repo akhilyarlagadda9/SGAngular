@@ -16,7 +16,7 @@ import { JobdesComponent } from '../jobdes/jobdes.component';
 import { AreainfoComponent,DiscountComponent,taxComponent,feeComponent } from '../areainfo/areainfo.component';
 import { PoeditComponent } from '../poedit/poedit.component';
 import { JobdesceditComponent } from '../jobdescedit/jobdescedit.component';
-import { CustomereditComponent,CustomersearchComponent } from '../customeredit/customeredit.component';
+import { CustomereditComponent } from '../customeredit/customeredit.component';
 import { CommhubeditComponent } from '../commhubedit/commhubedit.component';
 
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
@@ -35,7 +35,7 @@ import { AddareaComponent } from '../addarea/addarea.component';
 import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
 import { TemplateComponent } from '../template/template.component';
 import { CustitemComponent, itemsearchComponent } from '../custitem/custitem.component';
-
+import { CustomersearchComponent } from '../customersearch/customersearch.component';
 
 @NgModule({
   imports: [
@@ -49,7 +49,7 @@ import { CustitemComponent, itemsearchComponent } from '../custitem/custitem.com
       },
     ])
   ],
-  entryComponents: [CreatequoteComponent, CustomersearchComponent,AdditionalitemserachComponent,DiscountComponent,feeComponent,taxComponent, itemsearchComponent,  CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, 
+  entryComponents: [CreatequoteComponent,AdditionalitemserachComponent,DiscountComponent,feeComponent,taxComponent, itemsearchComponent,  CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, 
     TileinfoComponent, FaucetsComponent, MeasurementsComponent, 
     MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, 
     SplashComponent, AddoninfoComponent, SinkComponent,
@@ -60,7 +60,7 @@ import { CustitemComponent, itemsearchComponent } from '../custitem/custitem.com
     CustomerinfoComponent,AddareaComponent,CustomersearchComponent],
     
 
-  declarations: [QuotePage, CustomersearchComponent,AdditionalitemserachComponent,taxComponent,feeComponent,DiscountComponent, itemsearchComponent, CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
+  declarations: [QuotePage,AdditionalitemserachComponent,taxComponent,feeComponent,DiscountComponent, itemsearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
     HeadereditComponent,HeaderinfoComponent,PoitemsComponent,
     CommhubComponent,PrintsComponent,JobdesComponent,
     AreainfoComponent,PoeditComponent,JobdesceditComponent,

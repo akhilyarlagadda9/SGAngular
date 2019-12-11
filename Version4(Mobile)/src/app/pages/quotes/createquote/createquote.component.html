@@ -10,24 +10,135 @@
   <form #quoteheaderForm="ngForm" (ngSubmit)="ActionQuoteSubmit(quoteheaderForm)">
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Lead Type</ion-label>
-      <ion-select [(ngModel)]="header.LeadTypeID" class="labelfont">
+      <ion-select  [(ngModel)]="header.LeadTypeID" name="LeadTypeID"  class="labelfont">
       <ion-select-option  *ngFor="let p of leadTypes" [value]="p.ID">{{p.Name}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Hear About us?</ion-label>
-      <ion-select [(ngModel)]="header.SourceID"  class="labelfont">
+      <ion-select [(ngModel)]="header.SourceID" name="SourceID"   class="labelfont">
           <ion-select-option  *ngFor="let p of leadHearAbout" [value]="p.ID">{{p.Name}}</ion-select-option>
           </ion-select>
     </ion-item>
 
+    <div *ngIf="header.Version.CustTypeID != 4 && header.Version.CustTypeID > 0">
     <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Customer</ion-label>
-        <ion-input [(ngModel)]="header.Version.AccName" (keyup.enter)="ActionShowAccountCustomerItems(2)" ></ion-input>
-        <ion-icon slot="end" style="margin-top: 35px;" name="arrow-dropdown"  (click)="ActionShowAccountCustomerItems(2)"></ion-icon>
-        <ion-icon slot="end" style="margin-top: 35px;" name="search" (click)="ActionShowAccountCustomerItems(2)"></ion-icon>
+        <ion-label class="labelfont" position="floating" color="primary">Customer/Account</ion-label>
+        <ion-input [(ngModel)]="header.Version.AccName" name="AccName"   (keyup.enter)="ActionShowNewCustomerList($event,1,header.Version.AccName)" ></ion-input>
+        <ion-icon slot="end" style="margin-top: 35px;" name="arrow-dropdown"  (click)="ActionShowNewCustomerList($event,2,header.Version.AccName)"></ion-icon>
+        <ion-icon slot="end" style="margin-top: 35px;" name="search" (click)="ActionShowNewCustomerList($event,1,header.Version.AccName)"></ion-icon>
+      </ion-item>
+      <ion-item>
+          <ion-checkbox color="dark" name="IsCustRetail"  [(ngModel)]="header.Version.IsCustRetail" checked="header.Version.IsCustRetail ==1"></ion-checkbox>
+            <ion-label >Retail</ion-label>
+      </ion-item>
+    </div>
+    <div *ngIf="header.Version.CustTypeID == 4 || header.Version.IsCustRetail == 1">
+        <ion-item >
+            <ion-label class="labelfont" position="floating" color="primary">Customer</ion-label>
+            <ion-input [(ngModel)]="header.Version.Customer.Name" name="Name"   (keyup.enter)="ActionShowNewCustomerList($event,1,header.Version.Customer.Name)" ></ion-input>
+            <ion-icon slot="end" style="margin-top: 35px;" name="arrow-dropdown"  (click)="ActionShowNewCustomerList($event,2,header.Version.Customer.Name)"></ion-icon>
+            <ion-icon slot="end" style="margin-top: 35px;" name="search" (click)="ActionShowNewCustomerList($event,1,header.Version.Customer.Name)"></ion-icon>
+          </ion-item>
+  <ion-item>
+      <ion-label  class="labelfont" position="floating" color="primary">First Name</ion-label>
+      <ion-input [(ngModel)]="header.Version.Customer.FirstName" name="FirstName"  type="text" class="labelfont"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label class="labelfont"  position="floating" color="primary">Last Name</ion-label>
+        <ion-input [(ngModel)]="header.Version.Customer.LastName" name="LastName"  type="text" class="labelfont"></ion-input>
       </ion-item>
 
+    <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">Phone</ion-label>
+      <ion-input type="tel" [(ngModel)]="header.Version.Customer.PPhone" name="PPhone"  class="labelfont"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">Email</ion-label>
+      <ion-input type="email" [(ngModel)]="header.Version.Customer.Email" name="Email"  class="labelfont"></ion-input>
+    </ion-item> 
+
+  </div>
+    
+     <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Project Type</ion-label>
+        <ion-select [(ngModel)]="header.Version.CustTypeID" name="CustTypeID" class="labelfont">
+          <ion-select-option  *ngFor="let p of customerTypes" [value]="p.ID">{{p.Name}}</ion-select-option>
+      </ion-select>
+      
+      </ion-item>
+  
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Sales Rep.</ion-label>
+        <ion-select [(ngModel)]="header.SalesPersonID" name="SalesPersonID" class="labelfont">
+            <ion-select-option  *ngFor="let p of salesPersonsList" [value]="p.ResourceID">{{p.ResourceName}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Estimator</ion-label>
+        <ion-select [(ngModel)]="header.EstimatorID"name="EstimatorID"  class="labelfont">
+            <ion-select-option  *ngFor="let p of estimatorsList" [value]="p.ResourceID">{{p.ResourceName}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Project Manager</ion-label>
+        <ion-select [(ngModel)]="header.ProjectManagerID" name="ProjectManagerID"  class="labelfont">
+            <ion-select-option  *ngFor="let p of projectManagersList" [value]="p.ResourceID">{{p.ResourceName}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+  
+       <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary">Production Type</ion-label>
+          <ion-select [(ngModel)]="header.Version.ProductionTypeID" name="ProductionTypeID"  multiple="true" class="labelfont">
+            <ion-select-option value="Hard Surface">Hard Surface</ion-select-option>
+            <ion-select-option value="Solid Surface">Solid Surface</ion-select-option>
+          </ion-select>
+        </ion-item>
+  
+        <ion-item>
+            <ion-label class="labelfont" position="floating" color="primary">Price List</ion-label>
+            <ion-select [(ngModel)]="header.Version.PriceListID" name="PriceListID"  class="labelfont">
+                <ion-select-option  *ngFor="let p of priceList" [value]="p.ID">{{p.Name}}</ion-select-option>
+            </ion-select>
+          </ion-item> 
+  
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Job Name</ion-label>
+        <ion-input type="text" [(ngModel)]="header.JobName" name="JobName"  class="labelfont"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary">Job Address1</ion-label>
+          <ion-input type="text" [(ngModel)]="header.Address1" name="Address1"  class="labelfont"></ion-input>
+        </ion-item>
+  
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Job Address2</ion-label>
+        <ion-input type="text" [(ngModel)]="header.Address2" name="Address2" class="labelfont"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Job City</ion-label>
+        <ion-input type="text" [(ngModel)]="header.City" name="City" ngModel class="labelfont"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Job State</ion-label>
+        <ion-input type="text" [(ngModel)]="header.State" name="State" class="labelfont"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Job ZipCode</ion-label>
+        <ion-input type="text" [(ngModel)]="header.Zipcode" name="Zipcode" class="labelfont"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Year Built</ion-label>
+        <ion-input type="text" [(ngModel)]="header.YearBuilt" name="YearBuilt" class="labelfont"></ion-input>
+      </ion-item>
 
   </form>
 </ion-content>

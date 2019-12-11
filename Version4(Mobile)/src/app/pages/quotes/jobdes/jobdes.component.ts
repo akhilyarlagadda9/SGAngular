@@ -10,15 +10,18 @@ import { OverlayEventDetail } from '@ionic/core';
   inputs:[`version`]
 })
 export class JobdesComponent implements OnInit {
+
     public version: any;
+    typeId: any;
 
   constructor(public Modalcntrl : ModalController) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
-
-  async ActionEditJobDesc() {
-     let ver = this.version;
+  async ActionEditJobDesc(typeId:any) {
+    let des = typeId == 1 ?this.version.Description: this.version.PrivateNote;
+    let ver = {TypeID: typeId,Description:des}
     const modal = await this.Modalcntrl.create({
       component: JobdesceditComponent,
       componentProps: ver,
@@ -26,7 +29,13 @@ export class JobdesComponent implements OnInit {
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
           if (detail !== null) {
             if(detail.data.issave == true){
-              this.version =  detail.data.componentProps;
+              if(typeId == 1){
+                this.version.Description =  detail.data.componentProps.Description;
+              }
+             else{
+              this.version.PrivateNote =  detail.data.componentProps.Description;
+             }
+              
             }
           }
        });

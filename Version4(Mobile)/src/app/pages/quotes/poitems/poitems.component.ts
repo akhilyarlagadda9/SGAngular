@@ -16,11 +16,9 @@ export class PoitemsComponent implements OnInit {
 
   constructor(public Modalcntrl : ModalController) { }
 
-  ngOnInit() {
-   console.log(this.PoItemList);
-  }
+  ngOnInit() { }
  
-  async ActionEditPOItem(info:any) { 
+  async ActionEditPOItem(info:any) {
     let poitem = info;
    const modal = await this.Modalcntrl.create({
      component: PoeditComponent,
@@ -29,7 +27,8 @@ export class PoitemsComponent implements OnInit {
    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
          if (detail !== null) {
            if(detail.data.issave == true){
-            poitem =  detail.data.componentProps;
+            poitem =  detail.data.componentProps.PoItemList
+            ;
            }
          }
       });

@@ -4,7 +4,7 @@
             <ion-icon class="fontlarge" (click)="ActionCloseQuoteInfo()" name="arrow-back"></ion-icon>
         </ion-buttons>
         <ion-title>
-            <div id="">{{headerInfo.QuoteNo}} -
+            <div id="" class="text-left">{{headerInfo.QuoteNo}} -
                 <select [(ngModel)]="QuoteVersionID" interface="popover" style="border: 0px;background: #3880ff;">
                     <option *ngFor="let version of headerInfo.VersionList" value="{{version.ID}}">V{{version.SrNo}}
                     </option>
@@ -92,10 +92,10 @@
             <app-areainfo></app-areainfo>
         </ion-col>
         <ion-col *ngIf="selectedtabtype == 3">
-            <app-jobdes></app-jobdes>
+            <app-jobdes [version]="headerInfo.Version"></app-jobdes>
         </ion-col>
         <ion-col *ngIf="selectedtabtype == 4">
-            <app-poitems [versionId]="headerInfo.VersionID"></app-poitems>
+            <app-poitems [PoItemList]="headerInfo.PoItemList"></app-poitems>
         </ion-col>
         <ion-col *ngIf="selectedtabtype == 5">
             <app-commhub></app-commhub>

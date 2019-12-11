@@ -41,8 +41,9 @@
                         Quote
                     </span>
                 </ion-col>
-                <ion-col size="2" class="paddzero text-right">
-                    <ion-icon name="open" class="fontmedium" (click)="ActionEditJob()"></ion-icon>
+                <ion-col size="3" class="paddzero text-right">
+                    <ion-icon name="pin" class="iconblue fontmedium"></ion-icon>
+                    <ion-icon name="create" class="fontmedium" (click)="ActionEditJob()"></ion-icon>
                 </ion-col>
             </ion-row>
             <ion-card class="margin-bottom" style="margin-left: 0px;">
@@ -50,7 +51,6 @@
                     <ion-label>
                         <h2>{{headerInfo.QuoteName}}</h2>
                         <p>
-                            <ion-icon name="pin" class="iconblue fontmedium"></ion-icon>
                             <span class="valignsup">{{headerInfo.Address1}}
                                 <span
                                     *ngIf="headerInfo.City != '' && headerInfo.City != null">,{{headerInfo.City}}</span>
@@ -62,9 +62,9 @@
                         </p>
                     </ion-label>
                 </ion-item>
-                <ion-col size="12"><span class="text-font color-blue margin-bottom"> Contacts</span></ion-col>
+                <ion-col size="12"><span class="text-font color-blue margin-bottom paddleft10"> Contacts</span></ion-col>
                 <ion-row *ngFor="let contact of headerInfo.QuoteContacts">
-                    <ion-col size="12">
+                    <ion-col size="12" class="paddleft10">
                         <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon> {{contact.Name}}
                         <div *ngIf="headerInfo.Email != '' && headerInfo.Email != null">
                             <ion-icon class="text-font" class="fontsmall" name="mail"></ion-icon> {{contact.Email}}

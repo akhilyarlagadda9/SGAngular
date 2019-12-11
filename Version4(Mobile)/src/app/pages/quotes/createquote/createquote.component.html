@@ -9,8 +9,8 @@
 <ion-content>
   <form #quoteheaderForm="ngForm" (ngSubmit)="ActionQuoteSubmit(quoteheaderForm)">
     <ion-item>
-      <ion-label class="labelfont" position="floating" color="primary">Lead Type</ion-label>
-      <ion-select  [(ngModel)]="header.LeadTypeID" name="LeadTypeID"  class="labelfont">
+      <ion-label class="labelfont" position="floating" color="primary">Lead Type<span class="requiredField">*</span></ion-label>
+      <ion-select  [(ngModel)]="header.LeadTypeID" name="LeadTypeID"  class="labelfont" required>
       <ion-select-option  *ngFor="let p of leadTypes" [value]="p.ID">{{p.Name}}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -20,11 +20,10 @@
           <ion-select-option  *ngFor="let p of leadHearAbout" [value]="p.ID">{{p.Name}}</ion-select-option>
           </ion-select>
     </ion-item>
-
     <div *ngIf="header.Version.CustTypeID != 4 && header.Version.CustTypeID > 0">
     <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Customer/Account</ion-label>
-        <ion-input [(ngModel)]="header.Version.AccName" name="AccName"   (keyup.enter)="ActionShowNewCustomerList($event,1,header.Version.AccName)" ></ion-input>
+        <ion-label class="labelfont" position="floating" color="primary">Customer/Account<span class="requiredField">*</span></ion-label>
+        <ion-input [(ngModel)]="header.Version.AccName" name="AccName"   (keyup.enter)="ActionShowNewCustomerList($event,1,header.Version.AccName)" required></ion-input>
         <ion-icon slot="end" style="margin-top: 35px;" name="arrow-dropdown"  (click)="ActionShowNewCustomerList($event,2,header.Version.AccName)"></ion-icon>
         <ion-icon slot="end" style="margin-top: 35px;" name="search" (click)="ActionShowNewCustomerList($event,1,header.Version.AccName)"></ion-icon>
       </ion-item>
@@ -35,8 +34,8 @@
     </div>
     <div *ngIf="header.Version.CustTypeID == 4 || header.Version.IsCustRetail == 1">
         <ion-item >
-            <ion-label class="labelfont" position="floating" color="primary">Customer</ion-label>
-            <ion-input [(ngModel)]="header.Version.Customer.Name" name="Name"   (keyup.enter)="ActionShowNewCustomerList($event,1,header.Version.Customer.Name)" ></ion-input>
+            <ion-label class="labelfont" position="floating" color="primary">Customer<span class="requiredField">*</span></ion-label>
+            <ion-input [(ngModel)]="header.Version.Customer.Name" name="Name" (keyup.enter)="ActionShowNewCustomerList($event,1,header.Version.Customer.Name)" required></ion-input>
             <ion-icon slot="end" style="margin-top: 35px;" name="arrow-dropdown"  (click)="ActionShowNewCustomerList($event,2,header.Version.Customer.Name)"></ion-icon>
             <ion-icon slot="end" style="margin-top: 35px;" name="search" (click)="ActionShowNewCustomerList($event,1,header.Version.Customer.Name)"></ion-icon>
           </ion-item>
@@ -62,16 +61,16 @@
   </div>
     
      <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Project Type</ion-label>
-        <ion-select [(ngModel)]="header.Version.CustTypeID" name="CustTypeID" class="labelfont">
+        <ion-label class="labelfont" position="floating" color="primary">Project Type<span class="requiredField">*</span></ion-label>
+        <ion-select [(ngModel)]="header.Version.CustTypeID" name="CustTypeID" class="labelfont" required>
           <ion-select-option  *ngFor="let p of customerTypes" [value]="p.ID">{{p.Name}}</ion-select-option>
       </ion-select>
       
       </ion-item>
   
       <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Sales Rep.</ion-label>
-        <ion-select [(ngModel)]="header.SalesPersonID" name="SalesPersonID" class="labelfont">
+        <ion-label class="labelfont" position="floating" color="primary">Sales Rep<span class="requiredField">*</span></ion-label>
+        <ion-select [(ngModel)]="header.SalesPersonID" name="SalesPersonID" class="labelfont" required>
             <ion-select-option  *ngFor="let p of salesPersonsList" [value]="p.ResourceID">{{p.ResourceName}}</ion-select-option>
         </ion-select>
       </ion-item>
@@ -99,15 +98,15 @@
         </ion-item>
   
         <ion-item>
-            <ion-label class="labelfont" position="floating" color="primary">Price List</ion-label>
-            <ion-select [(ngModel)]="header.Version.PriceListID" name="PriceListID"  class="labelfont">
+            <ion-label class="labelfont" position="floating" color="primary">Price List<span class="requiredField">*</span></ion-label>
+            <ion-select [(ngModel)]="header.Version.PriceListID" name="PriceListID"  class="labelfont" required>
                 <ion-select-option  *ngFor="let p of priceList" [value]="p.ID">{{p.Name}}</ion-select-option>
             </ion-select>
           </ion-item> 
   
       <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Job Name</ion-label>
-        <ion-input type="text" [(ngModel)]="header.JobName" name="JobName"  class="labelfont"></ion-input>
+        <ion-label class="labelfont" position="floating" color="primary">Job Name<span class="requiredField">*</span></ion-label>
+        <ion-input type="text" [(ngModel)]="header.JobName" name="JobName"  class="labelfont" required></ion-input>
       </ion-item>
   
       <ion-item>
@@ -121,13 +120,13 @@
       </ion-item>
   
       <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Job City</ion-label>
-        <ion-input type="text" [(ngModel)]="header.City" name="City" ngModel class="labelfont"></ion-input>
+        <ion-label class="labelfont" position="floating" color="primary">Job City<span class="requiredField">*</span></ion-label>
+        <ion-input type="text" [(ngModel)]="header.City" name="City" ngModel class="labelfont" required></ion-input>
       </ion-item>
   
       <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Job State</ion-label>
-        <ion-input type="text" [(ngModel)]="header.State" name="State" class="labelfont"></ion-input>
+        <ion-label class="labelfont" position="floating" color="primary">Job State<span class="requiredField">*</span></ion-label>
+        <ion-input type="text" [(ngModel)]="header.State" name="State" class="labelfont" required></ion-input>
       </ion-item>
   
       <ion-item>

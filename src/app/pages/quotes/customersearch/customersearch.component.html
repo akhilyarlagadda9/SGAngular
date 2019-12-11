@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
     <ion-toolbar style="height:37px;top:-8px;left:-10px;">
       <ion-title style="font-size:15px;">Customer Details</ion-title>
       <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop(false)" style="font-size:13px; height:17px;width: 22px;">X</ion-button>
@@ -17,4 +17,27 @@
 </ion-label>
   </ion-col>
 </ion-row>
-</ion-item>
+</ion-item> -->
+
+<ion-header>
+    <ion-toolbar style="height:37px;top:-8px;left:-10px;">
+      <ion-title style="font-size:15px;">Customer Details</ion-title>
+      <ion-button slot="end" color="success" size="small" style="font-size:13px; height:17px;width: 58px;">Select
+      </ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop(false)"
+        style="font-size:13px; height:17px;width: 22px;">X</ion-button>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-item>
+      <ion-row>
+      <ion-col *ngFor="let customer of searchResults" (click)="ActionPopulateParentInfo(customer)" style="border-bottom: 1px solid #ddd; width: 65%;">
+        <ion-label>
+          <h3>{{customer.Name}}</h3>
+          <p>{{customer.TypeName}}</p>
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    </ion-item>
+  </ion-content>

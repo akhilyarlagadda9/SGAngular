@@ -9,14 +9,20 @@ import { ModalController, NavParams } from '@ionic/angular';
 export class JobdesceditComponent implements OnInit {
     
   constructor(public Modalcntrl : ModalController,private navParams : NavParams) { }
-  version = this.navParams.data;
+  navObj = this.navParams.data;
+  Description:string = this.navObj.des;
 
   ngOnInit() {}
- 
+
+  ActionSaveJobDescEdit() {
+    this.ActionCloseJobDescEdit(true);
+  }
+
   ActionCloseJobDescEdit(issave) {
+    let obj = {Description:this.Description}
     this.Modalcntrl.dismiss({
       'dismissed': true,
-      componentProps:this.version,
+      componentProps:obj,
       issave:issave
     });
   }

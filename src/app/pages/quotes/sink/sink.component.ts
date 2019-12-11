@@ -9,21 +9,24 @@ import { AdditionalitemserachComponent } from '../additionalitemserach/additiona
 })
 export class SinkComponent implements OnInit {
 
-  constructor(public Modalcntrl : ModalController,private popoverCntrl :PopoverController ) { }
-
+  constructor(public Modalcntrl : ModalController,private popoverCntrl :PopoverController,private navParams : NavParams,) { }
+  sinkinfo = this.navParams.data;
   ngOnInit() {}
 
   ActionToClose() {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
     this.Modalcntrl.dismiss({
-      'dismissed': true
+      'dismissed': true,
+      componentProps:this.sinkinfo,
     });
   }
 
 
-  async ActionSearchSelect(ev: any) {
-    let obj={}
+  async ActionSearchSelect(ev: any,typeid,typeid2) {
+    let obj={
+      searchTypeId:typeid,producttypeId:typeid2,search: this.sinkinfo.Des == undefined ? "" : this.sinkinfo.Des
+    }
    const popover = await this.popoverCntrl.create({
      component: AdditionalitemserachComponent,
      event: ev,
@@ -40,5 +43,6 @@ export class SinkComponent implements OnInit {
   this.popoverCntrl.dismiss({
     'dismissed': true
   });
+ 
 }
 }

@@ -68,32 +68,32 @@ searchResults:any = [];
   <ion-col>
   <ion-list>
         <ion-row><ion-checkbox color="primary" style="height: 13px;width: 13px;top: 2px;"></ion-checkbox>
-        <ion-label style="width: 222px;font-size: 12px;margin-left: 4px;" 
+        <ion-label style="width: 290px;font-size: 12px;margin-left: 4px;" 
         value="Customer is Responsible for any drywall/paint repair that will happen at install">
            1. Customer is Responsible for any drywall/paint repair that will happen at install.
         </ion-label></ion-row>
         <ion-row><ion-checkbox color="primary" style="height: 13px;width: 13px;top: 2px;"></ion-checkbox>
-        <ion-label style="width: 222px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
+        <ion-label style="width: 290px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
            2. Customer is Responsible for cooktop reconnection
        </ion-label></ion-row>
        <ion-row><ion-checkbox color="primary" style="height: 13px;width: 13px;top: 2px;"></ion-checkbox>
-        <ion-label style="width: 222px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
+        <ion-label style="width: 290px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
            3. Customer is Responsible for plumbing Reconnection and dishwasher mounting.
        </ion-label></ion-row>
        <ion-row><ion-checkbox color="primary" style="height: 13px;width: 13px;top: 2px;"></ion-checkbox>
-        <ion-label style="width: 222px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
+        <ion-label style="width: 290px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
            4. Customer is Responsible for providing accurate Make and Model Specifications for existing sink/faucet.
        </ion-label></ion-row>
        <ion-row><ion-checkbox color="primary" style="height: 13px;width: 13px;top: 2px;"></ion-checkbox>
-        <ion-label style="width: 222px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
+        <ion-label style="width: 290px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
            5. Customer is Responsible for removing the existing tile backsplash.
        </ion-label></ion-row>
        <ion-row><ion-checkbox color="primary" style="height: 13px;width: 13px;top: 2px;"></ion-checkbox>
-        <ion-label style="width: 222px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
+        <ion-label style="width: 290px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
            6. Customer is Responsible for supplying a template or detailed drawing for pickup piece/fabrication only.
        </ion-label></ion-row>
        <ion-row><ion-checkbox color="primary" style="height: 13px;width: 13px;top: 2px;"></ion-checkbox>
-        <ion-label style="width: 222px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
+        <ion-label style="width: 290px;font-size: 12px;margin-left: 4px;" value="Customer is Responsible for cooktop reconnection">
            7. Customer is Responsible for the removal of existing countertops.
        </ion-label></ion-row>
       </ion-list>

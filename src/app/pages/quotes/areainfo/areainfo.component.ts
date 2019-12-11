@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams, PopoverController } from '@ionic/angular';
 import { AddareaComponent } from '../addarea/addarea.component';
 import { SinkComponent } from '../sink/sink.component';
-import { LaborinfoComponent } from '../laborinfo/laborinfo.component';
 import { AddoninfoComponent } from '../addoninfo/addoninfo.component';
 import { SplashComponent } from '../splash/splash.component';
 import { EdgeinfoComponent } from '../edgeinfo/edgeinfo.component';
@@ -11,12 +10,7 @@ import { MaterialinfoComponent } from '../materialinfo/materialinfo.component';
 import { MeasurementsComponent } from '../measurements/measurements.component';
 import { FaucetsComponent } from '../faucets/faucets.component';
 import { TileinfoComponent } from '../tileinfo/tileinfo.component';
-import { CabinetComponent } from '../cabinet/cabinet.component';
-import { ToolComponent } from '../tool/tool.component';
-import { ConsumableComponent } from '../consumable/consumable.component';
-import { ApplianceComponent } from '../appliance/appliance.component';
 import { TemplateComponent } from '../template/template.component';
-import { CarpetinfoComponent } from '../carpetinfo/carpetinfo.component';
 import { CustitemComponent } from '../custitem/custitem.component';
 
 @Component({
@@ -56,15 +50,6 @@ export class AreainfoComponent implements OnInit {
     });
     return await modal.present();
   }
-
-  /***** LABOR DETAILS *****/
-  async ActionCreateLabor(typeid: any) {
-     this.viewid = typeid;
-    const modal = await this.Modalcntrl.create({
-      component: LaborinfoComponent
-    });
-    return await modal.present();
-  }
   /***** ADD ON DETAILS *****/
   async ActionCreateAddon() {
     const modal = await this.Modalcntrl.create({
@@ -80,7 +65,7 @@ export class AreainfoComponent implements OnInit {
     });
     return await modal.present();
   }
-  /***** SPLASH DETAILS *****/
+  /***** EDGE DETAILS *****/
   async ActionCreateEdge() {
     const modal = await this.Modalcntrl.create({
       component: EdgeinfoComponent
@@ -99,7 +84,7 @@ export class AreainfoComponent implements OnInit {
   }
 
   
-/***** Addon DETAILS *****/
+/***** Addarea DETAILS *****/
   async ActionAddArea() {
     const modal = await this.Modalcntrl.create({
       component: AddareaComponent
@@ -131,57 +116,19 @@ export class AreainfoComponent implements OnInit {
   }
 
   /***** TILE DETAILS *****/
-  async ActionCreateTile() {
+  async ActionCreateTile(typeId,name) {
+    let obj = {TypeID:typeId,selName:name}
     const modal = await this.Modalcntrl.create({
-      component: TileinfoComponent
+      component: TileinfoComponent,
+      componentProps: obj
     });
     return await modal.present();
   }
 
-  /***** CABINET DETAILS *****/
-  async ActionCreateCabinet() {
-    const modal = await this.Modalcntrl.create({
-      component: CabinetComponent
-    });
-    return await modal.present();
-  }
-
-  /***** TOOL DETAILS *****/
-  async ActionCreateTool() {
-    const modal = await this.Modalcntrl.create({
-      component: ToolComponent
-    });
-    return await modal.present();
-  }
-
-  /***** TOOL DETAILS *****/
+  /***** CUSTOMERITEM DETAILS *****/
   async ActionCreateCi() {
     const modal = await this.Modalcntrl.create({
       component: CustitemComponent
-    });
-    return await modal.present();
-  }
-
-  /***** CONSUMABLE DETAILS *****/
-  async ActionCreateConsumable() {
-    const modal = await this.Modalcntrl.create({
-      component: ConsumableComponent
-    });
-    return await modal.present();
-  }
-
-  /***** APPLIANCE DETAILS *****/
-  async ActionCreateAppliance() {
-    const modal = await this.Modalcntrl.create({
-      component: ApplianceComponent
-    });
-    return await modal.present();
-  }
-
-   /***** CARPET DETAILS *****/
-   async ActionCreateCarpet() {
-    const modal = await this.Modalcntrl.create({
-      component: CarpetinfoComponent
     });
     return await modal.present();
   }

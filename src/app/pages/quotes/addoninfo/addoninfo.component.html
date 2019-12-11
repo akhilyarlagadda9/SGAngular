@@ -12,9 +12,9 @@
       <form>
         <ion-item>
           <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
-          <ion-input type="text" class="labelfont" value="16ga 2317 Standard Rectangle"></ion-input>
-          <ion-icon slot="end" style="margin-top: 20px;" name="arrow-dropdown" (click)="ActionSearchSelect()"></ion-icon>
-          <ion-icon slot="end" style="margin-top: 20px;" name="search" (click)="ActionSearchSelect()"></ion-icon>
+          <ion-input type="text" class="labelfont" value="16ga 2317 Standard Rectangle" [(ngModel)]="addoninfo.Des" (keyup.enter)="ActionSearchSelect($event,2,11)"></ion-input>
+          <ion-icon slot="end" style="margin-top: 20px;" name="arrow-dropdown" (click)="ActionSearchSelect($event,2,11)"></ion-icon>
+          <ion-icon slot="end" style="margin-top: 20px;" name="search" (click)="ActionSearchSelect($event,2,11)"></ion-icon>
         </ion-item>
         <ion-item>
             <ion-label class="labelfont" position="floating" color="primary">Quantity</ion-label>

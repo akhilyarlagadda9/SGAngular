@@ -4,8 +4,9 @@
         <div *ngIf="SelectedTypeID == 2">Child Account</div>
         <div *ngIf="SelectedTypeID == 3">Customer</div>
     </ion-col>
-    <ion-col size="2" class="text-right">
-        <ion-icon name="open" class="fontmedium" (click)="ActionEditCustomer()"></ion-icon>
+    <ion-col size="3" class="text-right">
+        <ion-icon name="pin" class="iconblue fontmedium"></ion-icon>
+        <ion-icon name="create" class="fontmedium" (click)="ActionEditCustomer()"></ion-icon>
     </ion-col>
 </ion-row>
 
@@ -16,7 +17,6 @@
                 {{customer.Name}}
             </h2>
             <p>
-                <ion-icon name="pin" class="iconblue fontmedium"></ion-icon>
                 <span class="valignsup">{{customer.BillAddress}}
                     <span *ngIf="customer.BillCity != '' && customer.BillCity != null">,{{customer.BillCity}}</span>
                     <span *ngIf="customer.BillState != '' && customer.BillState != null">,{{customer.BillState}}
@@ -28,10 +28,10 @@
         </ion-label>
     </ion-item>
     <ion-row>
-        <ion-col><span class="text-font color-blue margin-bottom"> Contacts</span></ion-col>
+        <ion-col><span class="text-font color-blue margin-bottom paddleft10"> Contacts</span></ion-col>
     </ion-row>
     <ion-row *ngFor="let contact of contacts">
-        <ion-col size="12" *ngIf="contact.IsQuote == 1">
+        <ion-col size="12" *ngIf="contact.IsQuote == 1" class="paddleft10">
             <ion-icon class="fontsmall" name="contact"></ion-icon> {{contact.Name}}
             <div *ngIf="contact.Email != '' && contact.Email != null">
                 <ion-icon class="fontsmall" name="mail"></ion-icon> {{contact.Email}}

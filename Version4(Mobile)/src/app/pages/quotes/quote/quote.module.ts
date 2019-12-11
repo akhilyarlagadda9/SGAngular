@@ -18,8 +18,10 @@ import { PoeditComponent } from '../poedit/poedit.component';
 import { JobdesceditComponent } from '../jobdescedit/jobdescedit.component';
 import { CustomereditComponent,CustomersearchComponent } from '../customeredit/customeredit.component';
 import { CommhubeditComponent } from '../commhubedit/commhubedit.component';
+
+import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
+// item popups
 import { SinkComponent } from '../sink/sink.component';
-import { LaborinfoComponent } from '../laborinfo/laborinfo.component';
 import { AddoninfoComponent, } from '../addoninfo/addoninfo.component';
 import { SplashComponent } from '../splash/splash.component';
 import { EdgeinfoComponent } from '../edgeinfo/edgeinfo.component';
@@ -28,17 +30,11 @@ import { MaterialinfoComponent } from '../materialinfo/materialinfo.component';
 import { MeasurementsComponent } from '../measurements/measurements.component';
 import { FaucetsComponent } from '../faucets/faucets.component';
 import { TileinfoComponent } from '../tileinfo/tileinfo.component';
-import { CabinetComponent } from '../cabinet/cabinet.component';
-import { ToolComponent } from '../tool/tool.component';
-import { ConsumableComponent } from '../consumable/consumable.component';
-import { ApplianceComponent } from '../appliance/appliance.component';
 import { CustomerinfoComponent } from '../customerinfo/customerinfo.component';
 import { AddareaComponent } from '../addarea/addarea.component';
 import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
 import { TemplateComponent } from '../template/template.component';
-import { CarpetinfoComponent } from '../carpetinfo/carpetinfo.component';
 import { CustitemComponent, itemsearchComponent } from '../custitem/custitem.component';
-import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 
 
 @NgModule({
@@ -54,10 +50,9 @@ import { AdditionalitemserachComponent } from '../additionalitemserach/additiona
     ])
   ],
   entryComponents: [CreatequoteComponent, CustomersearchComponent,AdditionalitemserachComponent,DiscountComponent,feeComponent,taxComponent, itemsearchComponent,  CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, 
-    ApplianceComponent, ConsumableComponent, ToolComponent, CabinetComponent, 
     TileinfoComponent, FaucetsComponent, MeasurementsComponent, 
     MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, 
-    SplashComponent, AddoninfoComponent, LaborinfoComponent, SinkComponent,
+    SplashComponent, AddoninfoComponent, SinkComponent,
     QuoteeditComponent,HeadereditComponent,HeaderinfoComponent,
     PoitemsComponent,CommhubComponent,PrintsComponent,
     JobdesComponent,AreainfoComponent,PoeditComponent,
@@ -65,10 +60,10 @@ import { AdditionalitemserachComponent } from '../additionalitemserach/additiona
     CustomerinfoComponent,AddareaComponent,CustomersearchComponent],
     
 
-  declarations: [QuotePage, CustomersearchComponent, ApplianceComponent,AdditionalitemserachComponent,taxComponent,feeComponent,DiscountComponent, itemsearchComponent, CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, ConsumableComponent, ToolComponent, CabinetComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, LaborinfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
+  declarations: [QuotePage, CustomersearchComponent,AdditionalitemserachComponent,taxComponent,feeComponent,DiscountComponent, itemsearchComponent, CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
     HeadereditComponent,HeaderinfoComponent,PoitemsComponent,
     CommhubComponent,PrintsComponent,JobdesComponent,
     AreainfoComponent,PoeditComponent,JobdesceditComponent,
-    CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent,CustomersearchComponent,CarpetinfoComponent]
+    CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent,CustomersearchComponent,]
 })
 export class QuotePageModule {}

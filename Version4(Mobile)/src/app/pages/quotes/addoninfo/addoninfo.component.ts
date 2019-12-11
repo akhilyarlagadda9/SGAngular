@@ -9,19 +9,22 @@ import { AdditionalitemserachComponent } from '../additionalitemserach/additiona
 })
 export class AddoninfoComponent implements OnInit {
 
-  constructor(public Modalcntrl : ModalController,private popoverCntrl :PopoverController ) { }
-
+  constructor(public Modalcntrl : ModalController,private popoverCntrl :PopoverController,private navParams : NavParams ) { }
+  addoninfo = this.navParams.data;
   ngOnInit() {}
   ActionToClose() {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
     this.Modalcntrl.dismiss({
-      'dismissed': true
+      'dismissed': true,
+      componentProps:this.addoninfo,
     });
   }
 
-  async ActionSearchSelect(ev: any) {
-    let obj={}
+  async ActionSearchSelect(ev: any,typeid,typeid2) {
+    let obj={
+      searchTypeId:typeid,producttypeId:typeid2,search: this.addoninfo.Des == undefined ? "" : this.addoninfo.Des
+    }
    const popover = await this.popoverCntrl.create({
      component: AdditionalitemserachComponent,
      event: ev,

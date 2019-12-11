@@ -14,7 +14,6 @@ export class AdditionalitemserachComponent implements OnInit {
   
 
   ngOnInit() {
-    debugger;
     this.ActionlistItems()}
 
   
@@ -35,7 +34,7 @@ export class AdditionalitemserachComponent implements OnInit {
     this.ActionToClosePop(true)
   }
   ActionlistItems() {
-   this.getservice.qsgetpricelistproductItems(129,8,this.searchobj.searchTypeId,this.searchobj.search).subscribe(data=>{
+   this.getservice.qsgetpricelistproductItems(129,this.searchobj.producttypeId,this.searchobj.searchTypeId,this.searchobj.search).subscribe(data=>{
      this.listItems = data});
   }
 }

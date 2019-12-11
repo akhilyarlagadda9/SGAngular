@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavParams, PopoverController } from '@ionic/angular';
+import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 
 @Component({
   selector: 'app-faucets',
@@ -8,8 +9,8 @@ import { ModalController } from '@ionic/angular';
 })
 export class FaucetsComponent implements OnInit {
 
-  constructor(public Modalcntrl : ModalController ) { }
-
+  constructor(public Modalcntrl : ModalController,private popoverCntrl :PopoverController,private navParams : NavParams ) { }
+  faucetinfo = this.navParams.data;
   ngOnInit() {}
 
   ActionToClose() {
@@ -20,4 +21,15 @@ export class FaucetsComponent implements OnInit {
     });
   }
 
+  async ActionSearchSelect(ev: any,typeid,typeid2) {
+    let obj={searchTypeId:typeid,producttypeId:typeid2,search: this.faucetinfo.Des == undefined ? "" : this.faucetinfo.Des}
+   const popover = await this.popoverCntrl.create({
+     component: AdditionalitemserachComponent,
+     event: ev,
+     translucent: true,
+     componentProps:obj,
+     cssClass: "popover_class"
+   });
+   return await popover.present();
+ }
 }

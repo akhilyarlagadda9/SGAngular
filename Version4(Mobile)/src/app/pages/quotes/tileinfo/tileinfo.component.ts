@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { ModalController, PopoverController, NavParams } from '@ionic/angular';
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 
 @Component({
@@ -9,8 +9,9 @@ import { AdditionalitemserachComponent } from '../additionalitemserach/additiona
 })
 export class TileinfoComponent implements OnInit {
 
-  constructor(public Modalcntrl : ModalController,private popoverCntrl :PopoverController ) { }
-
+  constructor(public Modalcntrl : ModalController,private navCntrl:NavParams,private popoverCntrl :PopoverController,private navParams : NavParams, ) { }
+  tileinfo = this.navParams.data;
+  TypeID = this.navCntrl.data.TypeID;
   ngOnInit() {}
 
   ActionToClose() {
@@ -21,8 +22,8 @@ export class TileinfoComponent implements OnInit {
     });
   }
 
-  async ActionSearchSelect(ev: any) {
-    let obj={}
+  async ActionSearchSelect(ev: any,typeid,typeid2) {
+    let obj={searchTypeId:typeid,producttypeId:typeid2,search: this.tileinfo.Des == undefined ? "" : this.tileinfo.Des}
    const popover = await this.popoverCntrl.create({
      component: AdditionalitemserachComponent,
      event: ev,
@@ -41,3 +42,6 @@ export class TileinfoComponent implements OnInit {
   });
 }
 }
+
+
+

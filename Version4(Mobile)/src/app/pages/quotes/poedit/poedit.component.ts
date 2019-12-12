@@ -8,14 +8,10 @@ import { ModalController, NavParams } from '@ionic/angular';
   styleUrls: ['./poedit.component.scss'],
 })
 export class PoeditComponent implements OnInit {
-  
 
   constructor(public Modalcntrl : ModalController,private navParams : NavParams) { }
-  navObj = this.navParams.data;
-  poitems:any = this.navObj.info;
-
-  // item = this.navParams.data;
- 
+   poitem = this.navParams.data;
+  
   ngOnInit() {}
 
   ActionSavePOItem() {
@@ -23,7 +19,7 @@ export class PoeditComponent implements OnInit {
   }
 
   ActionClosePOItem(issave) { 
-    let obj = {poitems:this.poitems}
+    let obj = {poitem:this.poitem}
     this.Modalcntrl.dismiss({
       'dismissed': true,
       componentProps:obj,

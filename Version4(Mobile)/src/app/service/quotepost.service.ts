@@ -10,6 +10,11 @@ export class QuotepostService {
   url = "http://64.251.30.12:50005/StoneApp.WebAPI/"; 
   constructor(private http: HttpClient) { }
   
+  ActionSaveQuote(header :any): Observable<any> {
+    var info = JSON.stringify(header);
+    return this.http.post<any>(this.url + 'api/QuoteSave/ActionSaveQuote', info, { headers: { 'Content-Type': 'application/json' } })
+   }
+
   //Save Quote Post function
  
   

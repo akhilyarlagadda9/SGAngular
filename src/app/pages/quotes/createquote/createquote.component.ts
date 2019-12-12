@@ -39,7 +39,7 @@ export class CreatequoteComponent implements OnInit {
         },
         ParentCustInfo:{},
         ChildParentCustInfo:{},
-        ParentAccID :0,CustTypeID:4,  ChildAccID:0
+        ParentAccID :0,CustTypeID:4,  ChildAccID:0,StatusID:1
       },
     };
     let custDicIds = [1];let leadDicIds = [2,3];

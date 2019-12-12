@@ -10,9 +10,11 @@ import { OverlayEventDetail } from '@ionic/core';
   inputs:[`version`,`customer`,`contacts`,`SelectedTypeID`]
 })
 export class CustomerinfoComponent implements OnInit {
+  
   public customer: any;public version: any;
   public contacts: any;
   public SelectedTypeID: number;
+  shownGroup = null;
   constructor(private Modalcntrl : ModalController) { }
   ngOnInit() {
    // this.customer = this.custComponent.customerinfo;
@@ -38,4 +40,14 @@ export class CustomerinfoComponent implements OnInit {
     return await modal.present();
   }
   
+  toggleGroup(group) {
+    if (this.isGroupShown(group)) {
+        this.shownGroup = null;
+    } else {
+        this.shownGroup = group;
+    }
+  };
+  isGroupShown(group) {
+    return this.shownGroup === group;
+  };
 }

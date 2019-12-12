@@ -103,7 +103,7 @@
         <ion-item>
             <ion-label class="labelfont" position="floating" color="primary">Price List<span class="requiredField">*</span></ion-label>
             <ion-select [(ngModel)]="header.Version.PriceListID" name="PriceListID"  class="labelfont" required>
-                <ion-select-option  *ngFor="let p of priceList" [value]="p.ID">{{p.Name}}</ion-select-option>
+                <ion-select-option  *ngFor="let p of priceList" [value]="p.RefID">{{p.Name}}</ion-select-option>
             </ion-select>
           </ion-item> 
           <ion-row>

@@ -37,7 +37,8 @@
         <ion-col *ngIf="selectedtabtype == 1">
             <ion-row>
                 <ion-col>
-                    <span class="fontheading">
+                    <ion-icon name="arrow-dropdown" (click)="toggleGroup(i)" [ngClass]="{active: isGroupShown(i)}"></ion-icon>
+                    <span class="fontheading" >
                         Quote
                     </span>
                 </ion-col>
@@ -46,7 +47,7 @@
                     <ion-icon name="create" class="fontmedium" (click)="ActionEditJob()"></ion-icon>
                 </ion-col>
             </ion-row>
-            <ion-card class="margin-bottom" style="margin-left: 0px;">
+            <ion-card *ngIf="isGroupShown(i)" class="margin-bottom" style="margin-left: 0px;">
                 <ion-item style="border-bottom: none;">
                     <ion-label>
                         <h2>{{headerInfo.QuoteName}}</h2>

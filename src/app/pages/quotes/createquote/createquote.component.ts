@@ -50,16 +50,22 @@ export class CreatequoteComponent implements OnInit {
    this.PopulateDropDownList(4);
     }
   /******* Actions *******/
-  ActionCloseCreateQuote() {
+  ActionCloseCreateQuote(isSave) {
+    let obj = {QuoteId:this.header.ID}
     this.Modalcntrl.dismiss({
-      'dismissed': true
+      'dismissed': true,
+      componentProps:obj,
+      isSave:isSave,
     });
   }
   ActionQuoteSubmit(){
-    debugger;
-
     this.ValidateHeader();
-    this.postservice.ActionSaveQuote(this.header).subscribe(data=> {console.log(data);})
+    //this.postservice.ActionSaveQuote(this.header).subscribe(data=> {
+      //this.header.ID = data;
+     // this.ActionCloseCreateQuote(true);
+     // console.log(data);
+    //})
+    this.ActionCloseCreateQuote(true);
   }
   ActionShowNewCustomerList(ev: any,typeId:number,search:string,clickType:number){
      search = search == undefined ? "" : search;
@@ -123,7 +129,6 @@ ValidateHeader(){
 
 
  PopulateParentCustInfo(info:any){
-   debugger;
   this.header.Version.CustTypeID = info.TypeID;
   this.ActionPopulateParentAccounts(info.TypeID);       
   if (info.TypeID == 4) {            

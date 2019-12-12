@@ -5,7 +5,6 @@ import { QuoteService } from 'src/app/service/quote.service'
 
 import { HeadereditComponent } from 'src/app/pages/quotes/headeredit/headeredit.component';
 import { OverlayEventDetail } from '@ionic/core';
-import { QuoterepService } from 'src/app/service/quoterep.service';
 
 @Component({
   selector: 'app-quoteedit',
@@ -14,9 +13,10 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
 })
 export class QuoteeditComponent implements OnInit {
   constructor(public Modalcntrl: ModalController, private navParams: NavParams, private service: QuoteService,
-     private navCtrl: NavController,private repservice: QuoterepService,) { }
+     private navCtrl: NavController) { }
   quoteId: number;
   quoteno: string;
+  shownGroup = null;
   qprmsobj = this.navParams.data;
   headerInfo:any;
   //version:any;
@@ -26,6 +26,19 @@ export class QuoteeditComponent implements OnInit {
 
   //version: any;
   
+
+  toggleGroup(group) {
+    if (this.isGroupShown(group)) {
+        this.shownGroup = null;
+    } else {
+        this.shownGroup = group;
+    }
+  };
+  isGroupShown(group) {
+    return this.shownGroup === group;
+  };
+
+
   ngOnInit() {
     //this.headeInfo = this.qprmsobj.header;
     this.ActionQuoteInfo();

@@ -9,24 +9,24 @@
     <ion-list class="ion-no-margin ion-no-padding">
       <ion-item>
             <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Number:</ion-label>
-            <ion-input type="text" [(ngModel)]="PONumber" class="inputheight fontbold"></ion-input>
+            <ion-input type="text" [(ngModel)]="poitem.PONumber" class="inputheight fontbold"></ion-input>
       </ion-item>
       <ion-item>
           <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Uploaded By:</ion-label>
-          <ion-select [(ngModel)]="POBy" class="fontbold">
+          <ion-select [(ngModel)]="poitem.POBy" class="fontbold">
             <ion-select-option value="">--Select One--</ion-select-option>
           </ion-select>
         </ion-item>
       <ion-item>
         <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Date:</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="PODate" class="fontbold"></ion-datetime>
+        <ion-datetime displayFormat="MM/DD/YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="poitem.PODate" class="fontbold"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Total($):</ion-label>
-        <ion-input type="text" [(ngModel)]="POAmount" class="inputheight fontbold"></ion-input>
+        <ion-input type="text" [(ngModel)]="poitem.POAmount" class="inputheight fontbold"></ion-input>
       </ion-item>
       <ion-row>
-          <ion-label class="labelstyle" [(ngModel)]="Path" color="primary"><u>Attachments:</u></ion-label>
+          <ion-label class="labelstyle" [(ngModel)]="poitem.Path" color="primary"><u>Attachments:</u></ion-label>
       </ion-row>
     </ion-list>
   </ion-content>

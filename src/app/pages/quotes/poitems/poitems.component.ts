@@ -12,6 +12,7 @@ import { OverlayEventDetail } from '@ionic/core';
 })
 export class PoitemsComponent implements OnInit {
   public PoItemList: any;
+ 
 
 
   constructor(public Modalcntrl : ModalController) { }
@@ -20,15 +21,17 @@ export class PoitemsComponent implements OnInit {
  
   async ActionEditPOItem(info:any) {
     let poitem = info;
+    if(info != 0){
+      poitem.PoItemList = this.PoItemList;
+    }
    const modal = await this.Modalcntrl.create({
      component: PoeditComponent,
-     componentProps: poitem,
+     componentProps: info,
    })
    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
          if (detail !== null) {
            if(detail.data.issave == true){
-            poitem =  detail.data.componentProps.PoItemList
-            ;
+            this.PoItemList =  detail.data.componentProps.obj;
            }
          }
       });

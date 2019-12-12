@@ -57,8 +57,9 @@ export class CreatequoteComponent implements OnInit {
   }
   ActionQuoteSubmit(){
     debugger;
-    let info = this.header;
-    this.postservice.ActionSaveQuote(info).subscribe(data=> {console.log(data);})
+
+    this.ValidateHeader();
+    this.postservice.ActionSaveQuote(this.header).subscribe(data=> {console.log(data);})
   }
   ActionShowNewCustomerList(ev: any,typeId:number,search:string,clickType:number){
      search = search == undefined ? "" : search;
@@ -66,7 +67,24 @@ export class CreatequoteComponent implements OnInit {
       this.ActionShowPopover(ev,typeId,search,clickType);
     }
 }
-
+ValidateHeader(){
+  let header = this.header;
+  header.Version.StatusID = 1;
+            header.Version.IsAccAsCustomer = header.Version.IsCustRetail;
+            header.Version.CustomerID = (header.Version.CustomerID == undefined || header.Version.CustomerID == null) ? 0 : header.Version.CustomerID;
+            if (header.Version.IsCustRetail == 0 && header.Version.CustTypeID != 4) {
+                var modelItem = header.Version.ParentCustInfo;
+                header.CustomerID = modelItem.ID;
+                header.Version.ChildAccID = 0;
+                header.Version.ParentAccID = 0;
+                header.Customer = modelItem;
+                if (modelItem.ParentID > 0) {
+                    header.CustomerID = modelItem.ID;
+                    header.Version.ChildAccID = 0;
+                    header.Version.ParentAccID = modelItem.ParentID;
+                }
+              }
+}
 
   async ActionShowPopover(ev: any,typeId:number,search,clickType:number) {
     let custTypeID = this.header.Version.ParentAccID > 0 && clickType == 0 ? 4 : 0;
@@ -105,6 +123,7 @@ export class CreatequoteComponent implements OnInit {
 
 
  PopulateParentCustInfo(info:any){
+   debugger;
   this.header.Version.CustTypeID = info.TypeID;
   this.ActionPopulateParentAccounts(info.TypeID);       
   if (info.TypeID == 4) {            

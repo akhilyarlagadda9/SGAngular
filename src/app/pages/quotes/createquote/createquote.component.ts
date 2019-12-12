@@ -4,6 +4,7 @@ import { QuotegetService } from 'src/app/service/quoteget.service';
 import { FormsModule } from '@angular/forms'; 
 import { CustomersearchComponent } from '../customersearch/customersearch.component';
 import { OverlayEventDetail } from '@ionic/core';
+import { QuotepostService } from 'src/app/service/quotepost.service';
 
 @Component({
   selector: 'app-createquote',
@@ -20,12 +21,14 @@ export class CreatequoteComponent implements OnInit {
   leadTypes:any = [];
   leadHearAbout:any = [];
   priceList:any = [];
-  constructor(public Modalcntrl : ModalController,private getservice:QuotegetService,private popoverCntrl :PopoverController ) { }
+  constructor(public Modalcntrl : ModalController,private getservice:QuotegetService,private popoverCntrl :PopoverController,private postservice :QuotepostService  ) { }
   ngOnInit() {
     this.header= {
-      LeadTypeID:0,ProjectManagerID:0,EstimatorID:0,SalesPersonID:0,
-      SourceID:0,
-      JobName:"",Address1:"",Address2:"",City:"",State:"",Zipcode:"",YearBuilt:"",    
+      ProjectManagerID:0,EstimatorID:0,SalesPersonID:0,
+      JobName:"",Address1:"",Address2:"",City:"",State:"",Zipcode:"",YearBuilt:"", 
+      LeadInfo:{
+        LeadTypeID:0,SourceID:0,
+      }, 
       Version:{
         AccName:"",PriceListID:0,ProductionTypeID:0,
         Customer:{
@@ -52,17 +55,21 @@ export class CreatequoteComponent implements OnInit {
       'dismissed': true
     });
   }
-
-  ActionShowNewCustomerList(ev: any,typeId:number,search:string){
+  ActionQuoteSubmit(){
+    debugger;
+    let info = this.header;
+    this.postservice.ActionSaveQuote(info).subscribe(data=> {console.log(data);})
+  }
+  ActionShowNewCustomerList(ev: any,typeId:number,search:string,clickType:number){
      search = search == undefined ? "" : search;
      if ((search != null && search != "") || typeId == 2) {
-      this.ActionShowPopover(ev,typeId,search);
+      this.ActionShowPopover(ev,typeId,search,clickType);
     }
 }
 
 
-  async ActionShowPopover(ev: any,typeId:number,search) {
-    let custTypeID = this.header.Version.ParentAccID > 0 ? 4 : 0;
+  async ActionShowPopover(ev: any,typeId:number,search,clickType:number) {
+    let custTypeID = this.header.Version.ParentAccID > 0 && clickType == 0 ? 4 : 0;
     let obj={search:search,selectTypeId:typeId,custTypeID:custTypeID}
    const popover = await this.popoverCntrl.create({
      component: CustomersearchComponent,

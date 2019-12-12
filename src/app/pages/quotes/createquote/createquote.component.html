@@ -1,31 +1,31 @@
 <ion-header>
   <ion-toolbar>
     <ion-title class="titleheader">Create Quote</ion-title>
-    <ion-button slot="end" color="success" size="small">Save</ion-button>
+    
     <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCreateQuote()">X</ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form #quoteheaderForm="ngForm" (ngSubmit)="ActionQuoteSubmit(quoteheaderForm)">
+  <form name="form" (ngSubmit)="ActionQuoteSubmit()" #f="ngForm" >
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Lead Type<span class="requiredField">*</span></ion-label>
-      <ion-select  [(ngModel)]="header.LeadTypeID" name="LeadTypeID"  class="labelfont" required>
+      <ion-select  [(ngModel)]="header.LeadInfo.LeadTypeID" name="LeadTypeID" #LeadTypeID="ngModel"  [ngClass]="{ 'is-invalid': f.submitted && LeadTypeID.invalid }"  class="labelfont" required>
       <ion-select-option  *ngFor="let p of leadTypes" [value]="p.ID">{{p.Name}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Hear About us?</ion-label>
-      <ion-select [(ngModel)]="header.SourceID" name="SourceID"   class="labelfont">
+      <ion-select [(ngModel)]="header.LeadInfo.SourceID" name="SourceID"  class="labelfont">
           <ion-select-option  *ngFor="let p of leadHearAbout" [value]="p.ID">{{p.Name}}</ion-select-option>
           </ion-select>
     </ion-item>
     <div *ngIf="header.Version.CustTypeID != 4 && header.Version.CustTypeID > 0">
     <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Customer/Account<span class="requiredField">*</span></ion-label>
-        <ion-input [(ngModel)]="header.Version.AccName" name="AccName"   (keyup.enter)="ActionShowNewCustomerList($event,1,header.Version.AccName)" required></ion-input>
-        <ion-icon slot="end" style="margin-top: 35px;" name="arrow-dropdown"  (click)="ActionShowNewCustomerList($event,2,header.Version.AccName)"></ion-icon>
-        <ion-icon slot="end" style="margin-top: 35px;" name="search" (click)="ActionShowNewCustomerList($event,1,header.Version.AccName)"></ion-icon>
+        <ion-input [(ngModel)]="header.Version.AccName" name="AccName"   (keyup.enter)="ActionShowNewCustomerList($event,1,header.Version.AccName,1)" required></ion-input>
+        <ion-icon slot="end" style="margin-top: 35px;" name="arrow-dropdown"  (click)="ActionShowNewCustomerList($event,2,header.Version.AccName,1)"></ion-icon>
+        <ion-icon slot="end" style="margin-top: 35px;" name="search" (click)="ActionShowNewCustomerList($event,1,header.Version.AccName,1)"></ion-icon>
       </ion-item>
       <ion-item>
           <ion-checkbox color="dark" name="IsCustRetail"  [(ngModel)]="header.Version.IsCustRetail" checked="header.Version.IsCustRetail ==1"></ion-checkbox>
@@ -35,10 +35,13 @@
     <div *ngIf="header.Version.CustTypeID == 4 || header.Version.IsCustRetail == 1">
         <ion-item >
             <ion-label class="labelfont" position="floating" color="primary">Customer<span class="requiredField">*</span></ion-label>
-            <ion-input [(ngModel)]="header.Version.Customer.Name" name="Name" (keyup.enter)="ActionShowNewCustomerList($event,1,header.Version.Customer.Name)" required></ion-input>
-            <ion-icon slot="end" style="margin-top: 35px;" name="arrow-dropdown"  (click)="ActionShowNewCustomerList($event,2,header.Version.Customer.Name)"></ion-icon>
-            <ion-icon slot="end" style="margin-top: 35px;" name="search" (click)="ActionShowNewCustomerList($event,1,header.Version.Customer.Name)"></ion-icon>
+            <ion-input [(ngModel)]="header.Version.Customer.Name" name="Name"  #Name="ngModel"  [ngClass]="{ 'is-invalid': f.submitted && Name.invalid }" (keyup.enter)="ActionShowNewCustomerList($event,1,header.Version.Customer.Name,0)" required></ion-input>
+            <ion-icon slot="end" style="margin-top: 35px;" name="arrow-dropdown"  (click)="ActionShowNewCustomerList($event,2,header.Version.Customer.Name,0)"></ion-icon>
+            <ion-icon slot="end" style="margin-top: 35px;" name="search" (click)="ActionShowNewCustomerList($event,1,header.Version.Customer.Name,0)"></ion-icon>
           </ion-item>
+          <div *ngIf="f.submitted && Name.invalid" class="invalid-feedback">
+              <div *ngIf="Name.errors.required">First Name is required</div>
+          </div>
   <ion-item>
       <ion-label  class="labelfont" position="floating" color="primary">First Name</ion-label>
       <ion-input [(ngModel)]="header.Version.Customer.FirstName" name="FirstName"  type="text" class="labelfont"></ion-input>
@@ -138,6 +141,6 @@
         <ion-label class="labelfont" position="floating" color="primary">Year Built</ion-label>
         <ion-input type="text" [(ngModel)]="header.YearBuilt" name="YearBuilt" class="labelfont"></ion-input>
       </ion-item>
-
+<ion-item><ion-button slot="end" type="submit" color="success" size="small">Save</ion-button></ion-item>
   </form>
 </ion-content>

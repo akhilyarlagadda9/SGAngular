@@ -72,6 +72,11 @@ qsgetpricelistproductItems(pricelistId:any, producttypeId:any, searchTypeId:any,
   return this.http.get<any>(this.url +  'api/Quote/SearchPriceItemList?modelAry=' + parameterAry)
 }
 
+// Tax List 
+Accounttaxlist(typeID:number,CustTypeID:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Quote/AccountTaxList?typeID=' + typeID + "&custTypeID=" + CustTypeID)
+}
+
 // Created Quote
 Preparecustomermodel(header, model) {
   let typeID = header.Version.CustTypeID;
@@ -149,4 +154,6 @@ Preparecustomermodel(header, model) {
 getloginuserId(){
   return 0;
 }
+
+
 }

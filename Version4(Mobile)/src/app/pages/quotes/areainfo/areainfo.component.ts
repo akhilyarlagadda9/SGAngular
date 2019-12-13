@@ -36,17 +36,17 @@ export class AreainfoComponent implements OnInit {
     let result = this.service.ActionQuickAreaList(this.Version.ID, 0, 0, 0).subscribe(
       data => {
         this.arealist = data.VersionAreaList;
-        this.partinfo = data.PartInfo;
-        this.AreaPartID = this.partinfo.ID;
         if (this.arealist != null) {
-          this.areaInfo = this.arealist[0];
-          this.ActionPartsByArea(this.areaInfo, 0);
+        this.areaInfo = this.arealist[0];
+        this.partinfo = data.PartInfo;
+        this.AreaPartID = this.partinfo == null ? 0 : this.partinfo.ID;
+        this.ActionPartsByArea(this.areaInfo, 0);
         }
       },
       error => console.log(error));
   }
 
-  ActionPartsByArea(area: any, parttype: number) {debugger;
+  ActionPartsByArea(area: any, parttype: number) {
     this.partlist = area.PartList;
     if (this.partlist != null && parttype != 0) {
       let length = this.partlist.length;

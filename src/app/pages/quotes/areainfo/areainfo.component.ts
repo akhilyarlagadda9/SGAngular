@@ -12,30 +12,58 @@ import { FaucetsComponent } from '../faucets/faucets.component';
 import { TileinfoComponent } from '../tileinfo/tileinfo.component';
 import { TemplateComponent } from '../template/template.component';
 import { CustitemComponent } from '../custitem/custitem.component';
+import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-areainfo',
   templateUrl: './areainfo.component.html',
   styleUrls: ['./areainfo.component.scss'],
+  inputs: [`Version`]
 })
 export class AreainfoComponent implements OnInit {
-  arealist: any[] = [{ id: 1, name: 'Area1' }, { id: 2, name: 'Area2' }, { id: 3, name: 'Area3' }, { id: 4, name: 'Area4' }, { id: 5, name: 'Area5' }];
-  partlist: any[] = [{ id: 1, name: 'Part1' }, { id: 2, name: 'Part2' }, { id: 3, name: 'Part3' }, { id: 4, name: 'Part4' }, { id: 5, name: 'Part5' }];
+  public Version: any;
+  arealist: any = [];
+  partinfo: any = [];
+  partlist: any = [];
+  areaInfo:any;AreaPartID:number;
   viewid: any;
-  constructor(public Modalcntrl: ModalController,private popoverCntrl :PopoverController) { }
-  AreaName: any = this.partlist;
-  PartName: any = this.partlist;
+  constructor(private service: QuoteService, public Modalcntrl: ModalController, private popoverCntrl: PopoverController) { }
   ngOnInit() {
-    this.MyDefaultYearIdValue = "1";
+    this.ActionGetAreaList();
   }
-  /// In declarations : 
 
-  compareWith: any;
-  MyDefaultYearIdValue: string;
+  ActionGetAreaList() {
+    let result = this.service.ActionQuickAreaList(this.Version.ID, 0, 0, 0).subscribe(
+      data => {
+        this.arealist = data.VersionAreaList;
+        this.partinfo = data.PartInfo;
+        this.AreaPartID = this.partinfo.ID;
+        if (this.arealist != null) {
+          this.areaInfo = this.arealist[0];
+          this.ActionPartsByArea(this.areaInfo, 0);
+        }
+      },
+      error => console.log(error));
+  }
 
+  ActionPartsByArea(area: any, parttype: number) {debugger;
+    this.partlist = area.PartList;
+    if (this.partlist != null && parttype != 0) {
+      let length = this.partlist.length;
+      //this.ActionGetPartInfo(this.partlist[0].VersionID, this.partlist[0].AreaID, this.partlist[0].ID, 0);
+      if(length > 0){this.ActionGetPartInfo(this.partlist[0].ID);}
+    }
+  }
 
-    async ActionCreateTemplate(typeId) {
-    let obj = {TypeID:typeId}
+  ActionGetPartInfo(partId:number) {
+    let result = this.service.ActionPartInfo(this.areaInfo.VersionID, this.areaInfo.ID, partId, 0).subscribe(
+      data => {
+        this.partinfo = data;
+      },
+      error => console.log(error));
+  }
+  async ActionCreateTemplate(typeId) {
+    let obj = { TypeID: typeId }
     const modal = await this.Modalcntrl.create({
       component: TemplateComponent,
       componentProps: obj
@@ -75,7 +103,7 @@ export class AreainfoComponent implements OnInit {
 
   /***** CUTOUT DETAILS *****/
   async ActionCreateCutout(typeId) {
-    let obj = {TypeID:typeId}
+    let obj = { TypeID: typeId }
     const modal = await this.Modalcntrl.create({
       component: CutoutinfoComponent,
       componentProps: obj
@@ -134,43 +162,43 @@ export class AreainfoComponent implements OnInit {
   }
 
   async ActionDiscSelect(ev: any) {
-    let obj={}
-   const popover = await this.popoverCntrl.create({
-     component: DiscountComponent,
-     event: ev,
-     translucent: true,
-     componentProps:obj,
-   });
-   return await popover.present();
- }
+    let obj = {}
+    const popover = await this.popoverCntrl.create({
+      component: DiscountComponent,
+      event: ev,
+      translucent: true,
+      componentProps: obj,
+    });
+    return await popover.present();
+  }
 
- async ActionTaxSelect(ev: any) {
-  let obj={}
- const popover = await this.popoverCntrl.create({
-   component: taxComponent,
-   event: ev,
-   translucent: true,
-   componentProps:obj,
- });
- return await popover.present();
-}
+  async ActionTaxSelect(ev: any) {
+    let obj = {}
+    const popover = await this.popoverCntrl.create({
+      component: taxComponent,
+      event: ev,
+      translucent: true,
+      componentProps: obj,
+    });
+    return await popover.present();
+  }
 
-async ActionFeeSelect(ev: any) {
-  let obj={}
- const popover = await this.popoverCntrl.create({
-   component: feeComponent,
-   event: ev,
-   translucent: true,
-   componentProps:obj,
- });
- return await popover.present();
-}
+  async ActionFeeSelect(ev: any) {
+    let obj = {}
+    const popover = await this.popoverCntrl.create({
+      component: feeComponent,
+      event: ev,
+      translucent: true,
+      componentProps: obj,
+    });
+    return await popover.present();
+  }
 
 }
 
 @Component({
   //selector: 'app-itemsearchComponent',
-  template:`
+  template: `
   <ion-header>
     <ion-toolbar style="height:37px;top:-8px;left:-10px;">
       <ion-title style="font-size:15px;">Job Discount(S)</ion-title>
@@ -211,24 +239,23 @@ async ActionFeeSelect(ev: any) {
 export class DiscountComponent implements OnInit {
   searchObj = this.navParams.data;
   searchResults = [];
-  constructor(private Modalcntrl : ModalController,private navParams : NavParams,private popoverCntrl :PopoverController ) { }
-  ngOnInit() {this.ActionSearchParentAccount();}
-  ActionSearchParentAccount(){
-    }
-
-    ActionToClosePop() {
-      // using the injected ModalController this page
-      // can "dismiss" itself and optionally pass back data
-      this.popoverCntrl.dismiss({
-        'dismissed': true
-      });
-    }
+  constructor(private Modalcntrl: ModalController, private navParams: NavParams, private popoverCntrl: PopoverController) { }
+  ngOnInit() { this.ActionSearchParentAccount(); }
+  ActionSearchParentAccount() {
   }
 
+  ActionToClosePop() {
+    // using the injected ModalController this page
+    // can "dismiss" itself and optionally pass back data
+    this.popoverCntrl.dismiss({
+      'dismissed': true
+    });
+  }
+}
 
-  @Component({
-    //selector: 'app-itemsearchComponent',
-    template:`
+@Component({
+  //selector: 'app-itemsearchComponent',
+  template: `
     <ion-header>
       <ion-toolbar style="height:37px;top:-8px;left:-10px;">
         <ion-title style="font-size:15px;">Sales Tax(%)</ion-title>
@@ -298,28 +325,28 @@ export class DiscountComponent implements OnInit {
         </ion-item>
     </ion-col>
   </ion-row>`,
-    //styleUrls: ['./customeredit.component.scss'],
-  })
-  export class taxComponent implements OnInit {
-    searchObj = this.navParams.data;
-    searchResults = [];
-    constructor(private Modalcntrl : ModalController,private navParams : NavParams,private popoverCntrl :PopoverController ) { }
-    ngOnInit() {this.ActionSearchParentAccount();}
-    ActionSearchParentAccount(){
-      }
-  
-      ActionToClosePop() {
-        // using the injected ModalController this page
-        // can "dismiss" itself and optionally pass back data
-        this.popoverCntrl.dismiss({
-          'dismissed': true
-        });
-      }
-    }
+  //styleUrls: ['./customeredit.component.scss'],
+})
+export class taxComponent implements OnInit {
+  searchObj = this.navParams.data;
+  searchResults = [];
+  constructor(private Modalcntrl: ModalController, private navParams: NavParams, private popoverCntrl: PopoverController) { }
+  ngOnInit() { this.ActionSearchParentAccount(); }
+  ActionSearchParentAccount() {
+  }
 
-    @Component({
-      //selector: 'app-itemsearchComponent',
-      template:`
+  ActionToClosePop() {
+    // using the injected ModalController this page
+    // can "dismiss" itself and optionally pass back data
+    this.popoverCntrl.dismiss({
+      'dismissed': true
+    });
+  }
+}
+
+@Component({
+  //selector: 'app-itemsearchComponent',
+  template: `
       <ion-header>
         <ion-toolbar style="height:37px;top:-8px;left:-10px;">
           <ion-title style="font-size:15px;">Charges</ion-title>
@@ -373,21 +400,21 @@ export class DiscountComponent implements OnInit {
         </ion-item>
       </ion-col>
     </ion-row>`,
-      //styleUrls: ['./customeredit.component.scss'],
-    })
-    export class feeComponent implements OnInit {
-      searchObj = this.navParams.data;
-      searchResults = [];
-      constructor(private Modalcntrl : ModalController,private navParams : NavParams,private popoverCntrl :PopoverController ) { }
-      ngOnInit() {this.ActionSearchParentAccount();}
-      ActionSearchParentAccount(){
-        }
-    
-        ActionToClosePop() {
-          // using the injected ModalController this page
-          // can "dismiss" itself and optionally pass back data
-          this.popoverCntrl.dismiss({
-            'dismissed': true
-          });
-        }
-      }
+  //styleUrls: ['./customeredit.component.scss'],
+})
+export class feeComponent implements OnInit {
+  searchObj = this.navParams.data;
+  searchResults = [];
+  constructor(private Modalcntrl: ModalController, private navParams: NavParams, private popoverCntrl: PopoverController) { }
+  ngOnInit() { this.ActionSearchParentAccount(); }
+  ActionSearchParentAccount() {
+  }
+
+  ActionToClosePop() {
+    // using the injected ModalController this page
+    // can "dismiss" itself and optionally pass back data
+    this.popoverCntrl.dismiss({
+      'dismissed': true
+    });
+  }
+}

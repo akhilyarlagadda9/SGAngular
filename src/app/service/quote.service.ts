@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class QuoteService {
 
-  url = "http://64.251.30.12:50005/StoneApp.WebAPI/"; 
+  url = "http://localhost:1758/"; 
   constructor(private http: HttpClient) { }
   
   ActionQuoteList(search:string,statusId:number,index:number,noOfRecords:number,accessmode:number,userempid:number,sortTypeId:number,sortby:number): Observable<any> {
@@ -16,12 +16,12 @@ export class QuoteService {
   ActionQuoteInfo(quoteid:number,quoteNo:string,versionId:number,customerId:number,accountId:number,parAccountId:number): Observable<any> {
     return this.http.get<any>(this.url +  'api/QEdit/ActionHeaderInfo?quoteId=' + quoteid + '&quoteNo=' + quoteNo + '&versionId=' + versionId + '&customerId=' + customerId + '&accountId=' + accountId + '&parAccountId=' + parAccountId) 
   }
-  ActionAreaList(quoteId,verId,salesrepId): Observable<any> {
-    return this.http.get<any>(this.url +  'api/QEdit/ActionVersionInfo1?quoteId=' + quoteId + '&versionId=' + verId + "&salesrepId=" + salesrepId) 
+  ActionQuickAreaList(versionId:number,areaId:number,partId:number,mode:number): Observable<any> {
+    return this.http.get<any>(this.url +  'api/QEdit/ActionQuickAreaList?versionId=' + versionId + '&areaId=' + areaId + "&partId=" + partId + "&mode=" + mode) 
   }
-
-
-  
+  ActionPartInfo(versionId:number,areaId:number,partId:number,mode:number):Observable<any>{
+    return this.http.get<any>(this.url +  'api/QEdit/ActionPartInfo?versionId=' + versionId + '&areaId=' + areaId + "&partId=" + partId + "&mode=" + mode) 
+  }
 /********** COMMON LISTS ******************/
 
   // ActionGetLeadTypes(){

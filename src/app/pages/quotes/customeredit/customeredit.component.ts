@@ -5,7 +5,7 @@ import { QuotegetService } from 'src/app/service/quoteget.service';
 @Component({
   selector: 'app-customeredit',
   templateUrl: './customeredit.component.html',
-  //styleUrls: ['./customeredit.component.scss'],
+  styleUrls: ['./customeredit.component.scss'],
 })
 export class CustomereditComponent implements OnInit {
 

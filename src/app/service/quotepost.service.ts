@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class QuotepostService {
 
-  url = "http://64.251.30.12:50005/StoneApp.WebAPI/"; 
+  url = "http://localhost:1758/"; 
   constructor(private http: HttpClient) { }
   
   ActionSaveQuote(header :any): Observable<any> {

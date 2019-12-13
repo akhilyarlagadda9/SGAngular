@@ -90,7 +90,7 @@
   <ion-col size="3" class="text-right">-</ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let edge of partinfo.EdgeList">
-  <ion-col (click)="ActionCreateEdge()"><u class="colorblue">E</u>:
+  <ion-col (click)="ActionEditEdge(edge)"><u class="colorblue">E</u>:
     <span *ngIf="edge.IsChg == '2'">{{ edge.EdgeProfile }}</span>
     <span *ngIf="edge.IsChg != '2'">{{ edge.EdgeProfile }}</span>
     <span *ngIf="edge.CoSrNo > '0'">C{{edge.CoSrNo}}</span>
@@ -108,7 +108,7 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let sinkfaucet of partinfo.SinkList">
-  <ion-col (click)="ActionCreateSink()"><u class="colorblue">S</u>:
+  <ion-col (click)="ActionEditSink(sinkfaucet)"><u class="colorblue">S</u>:
     <span *ngIf="sinkfaucet.Description != null">
       <span *ngIf="sinkfaucet.IsChg == '2'"> {{ sinkfaucet.Description }}</span>
       <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Description }} </span>
@@ -128,7 +128,7 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let faucet of partinfo.FaucetList">
-  <ion-col (click)="ActionCreateFaucets()"><u class="colorblue">F</u>:
+  <ion-col (click)="ActionEditFaucet(faucet)"><u class="colorblue">F</u>:
     <span *ngIf="faucet.Description != null">
       <span *ngIf="faucet.IsChg == '2'">{{ faucet.Description }} </span>
       <span *ngIf="faucet.IsChg == '0'"> {{ faucet.Description }}</span>

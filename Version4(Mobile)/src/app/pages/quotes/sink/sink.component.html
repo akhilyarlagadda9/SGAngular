@@ -8,43 +8,43 @@
   
   <ion-content>
     <form>
-        <ion-item>
-            <ion-label class="labelfont" position="floating" color="primary">Sibk Shape</ion-label>
-            <ion-input type="text" class="labelfont" value="16ga 2317 Standard Rectangle" readonly="readonly"></ion-input>
+        <!-- <ion-item>
+            <ion-label class="labelfont" position="floating" color="primary">Sink Shape</ion-label>
+            <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Description" name="Description" readonly="readonly"></ion-input>
             <ion-icon slot="end" style="margin-top: 20px;" name="arrow-dropdown"></ion-icon>
-          </ion-item>
+          </ion-item> -->
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
-        <ion-input type="text" class="labelfont" [(ngModel)]="sinkinfo.Des" (keyup.enter)="ActionSearchSelect($event,2,8)"></ion-input>
+        <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Description" name="Description" (keyup.enter)="ActionSearchSelect($event,2,8)"></ion-input>
         <ion-icon slot="end" style="margin-top: 20px;" name="search" (click)="ActionSearchSelect($event,2,8)"></ion-icon>
       </ion-item>
       <ion-item>
           <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
-          <ion-input type="text" class="labelfont" value="1" readonly="readonly"></ion-input>
+          <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Qty" name="Qty" readonly="readonly"></ion-input>
         </ion-item>
       <ion-item>
         <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
-        <ion-input type="tel" class="labelfont" value="211.00"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+        <ion-input type="tel" class="labelfont" [(ngModel)]="sinkfaucet.UnitCost" name="UnitCost"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
       </ion-item>
       <ion-item>
         <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
-        <ion-input type="email" class="labelfont" value="20"><ion-row style="margin-right: 3px;">%</ion-row></ion-input>
+        <ion-input type="email" class="labelfont" [(ngModel)]="sinkfaucet.Margin" name="Margin"><ion-row style="margin-right: 3px;">%</ion-row></ion-input>
       </ion-item>
       <ion-item>
         <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
-        <ion-input type="email" class="labelfont" value="263.75"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+        <ion-input type="email" class="labelfont" [(ngModel)]="sinkfaucet.UnitPrice" name="UnitPrice"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
       </ion-item>
       <ion-item>
           <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
-          <ion-input type="email" class="labelfont" value="263.75" readonly="readonly"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+          <ion-input type="email" class="labelfont" [(ngModel)]="sinkfaucet.Amount" name="Amount" readonly="readonly"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
         </ion-item>
         <ion-item>
           <ion-label class="labelfont" position="floating" color="primary">Make</ion-label>
-          <ion-input type="text" class="labelfont" value="1" readonly="readonly"></ion-input>
+          <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Make" name="Make" readonly="readonly"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label class="labelfont" position="floating" color="primary">Model</ion-label>
-          <ion-input type="text" class="labelfont" value="1" readonly="readonly"></ion-input>
+          <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Model" name="Model" readonly="readonly"></ion-input>
         </ion-item>
         <ion-item style="margin-left: -4%;">
             <ion-checkbox style="margin-left: 4%;margin-right:4px;"></ion-checkbox>
@@ -56,19 +56,15 @@
         </ion-item>
         <ion-item>
           <ion-label class="labelfont" position="floating" color="primary">#Bowls</ion-label>
-          <ion-input type="text" class="labelfont"  readonly="readonly"></ion-input>
+          <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.NoOfBowls" name="NoOfBowls" readonly="readonly"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label class="labelfont" position="floating" color="primary">Faucet Holes</ion-label>
-          <ion-input type="text" class="labelfont"  readonly="readonly"></ion-input>
+          <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Holes" name="Holes" readonly="readonly"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label class="labelfont" position="floating" color="primary">Faucet Description</ion-label>
-          <ion-input type="text" class="labelfont"  readonly="readonly"></ion-input>
-        </ion-item>
-      <ion-item>
-          <ion-label class="labelfont" position="floating" color="primary">Note</ion-label>
-          <ion-textarea rows="10" cols="25" value="Enter Text Here..." class="borderall"></ion-textarea>
+          <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.NoOfHoles" name="NoOfHoles" readonly="readonly"></ion-input>
         </ion-item>
     </form>
   </ion-content>

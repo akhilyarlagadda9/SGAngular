@@ -12,6 +12,7 @@ import { FaucetsComponent } from '../faucets/faucets.component';
 import { TileinfoComponent } from '../tileinfo/tileinfo.component';
 import { TemplateComponent } from '../template/template.component';
 import { CustitemComponent } from '../custitem/custitem.component';
+import { QuotegetService } from 'src/app/service/quoteget.service';
 import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
@@ -72,9 +73,12 @@ export class AreainfoComponent implements OnInit {
   }
 
   /***** SINK DETAILS *****/
-  async ActionCreateSink() {
+  async ActionEditSink(snk:any) {
+    let copyobj = JSON.parse(JSON.stringify(snk));
+    let sinkfaucet = {sinkfaucet : copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
-      component: SinkComponent
+      component: SinkComponent,
+      componentProps: sinkfaucet
     });
     return await modal.present();
   }
@@ -87,7 +91,7 @@ export class AreainfoComponent implements OnInit {
   }
 
   /***** SPLASH DETAILS *****/
-  async ActionEditSplash(spl:any) {debugger;
+  async ActionEditSplash(spl:any) {
     let copyobj = JSON.parse(JSON.stringify(spl));
     let splash = {splash : copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
@@ -97,9 +101,12 @@ export class AreainfoComponent implements OnInit {
     return await modal.present();
   }
   /***** EDGE DETAILS *****/
-  async ActionCreateEdge() {
+  async ActionEditEdge(edg:any) {
+    let copyobj = JSON.parse(JSON.stringify(edg));
+    let edge = {edge : copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
-      component: EdgeinfoComponent
+      component: EdgeinfoComponent,
+      componentProps: edge
     });
     return await modal.present();
   }
@@ -145,9 +152,12 @@ export class AreainfoComponent implements OnInit {
   }
 
   /***** FAUCETS DETAILS *****/
-  async ActionCreateFaucets() {
+  async ActionEditFaucet(fau:any) {debugger;
+    let copyobj = JSON.parse(JSON.stringify(fau));
+    let faucet = {faucet : copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
-      component: FaucetsComponent
+      component: FaucetsComponent,
+      componentProps: faucet
     });
     return await modal.present();
   }
@@ -217,25 +227,21 @@ export class AreainfoComponent implements OnInit {
   </ion-header>
   <ion-row style="height:360px">
   <ion-col>
-        <ion-item>
+      <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Discount</ion-label>
-      <ion-select [(ngModel)]="Discount" class="labelfont">
-          <ion-select-option value="number:25" >10% Friends and Family Discount</ion-select-option>
-          <ion-select-option value="number:5059">15% Friends and Family Discount</ion-select-option>
-          <ion-select-option value="number:5059" >25% Friends and Family Discount</ion-select-option>
-          <ion-select-option value="number:5059" selected>Builder Discount</ion-select-option>
-          <ion-select-option value="number:5059">Friends and Family 30% Discount</ion-select-option>
-          <ion-select-option value="number:5059">Personal Use Discount 10%</ion-select-option>
-      </ion-select></ion-item>
+      <ion-select class="btninfo" interface="popover" [(ngModel)]="discname" name="discname"
+        (ionChange)="ActionChangeDiscount()">
+        <ion-select-option *ngFor="let disc of DiscountTypeList" [value]="discname"> {{disc.Name}}</ion-select-option>
+      </ion-select>
+      </ion-item>
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Value($/%)</ion-label>
         <ion-input type="text" class="labelfont" value="0"></ion-input>
         </ion-item>
         <ion-item>
         <ion-label class="labelfont" position="floating" color="primary"></ion-label>
-        <ion-select [(ngModel)]="Discount2" class="labelfont">
-            <ion-select-option value="number:25" selected>%</ion-select-option>
-            <ion-select-option value="number:5059">$</ion-select-option>
+        <ion-select [(ngModel)]="name" class="labelfont">
+           <ion-select-option *ngFor="let disc of DiscTypes1" [value]="name"> {{disc.Name}}</ion-select-option>
         </ion-select></ion-item>
         <ion-item style="margin-left: -4%;">
           <ion-checkbox style="margin-left: 4%;"></ion-checkbox>
@@ -248,10 +254,21 @@ export class AreainfoComponent implements OnInit {
 export class DiscountComponent implements OnInit {
   searchObj = this.navParams.data;
   searchResults = [];
-  constructor(private Modalcntrl: ModalController, private navParams: NavParams, private popoverCntrl: PopoverController) { }
-  ngOnInit() { this.ActionSearchParentAccount(); }
-  ActionSearchParentAccount() {
+  DiscountTypeList:any = [];
+  
+  constructor(private Modalcntrl : ModalController,private navParams : NavParams,private popoverCntrl :PopoverController,private service:QuotegetService ) { }
+  ngOnInit() {
+    this.ActionSearchParentAccount();
+    this.ActionChangeDiscount();
   }
+  ActionSearchParentAccount(){ }
+  DiscTypes1:any = [{ ID: 1, Name: "%" }, { ID: 2, Name: "$" }];
+
+  ActionChangeDiscount(){
+     let result = this.service.QuoteMasterList(2).subscribe(
+      data => {this.DiscountTypeList  = data },
+      error => console.log(error));
+    }
 
   ActionToClosePop() {
     // using the injected ModalController this page
@@ -276,9 +293,10 @@ export class DiscountComponent implements OnInit {
     <ion-col>
           <ion-item>
           <ion-label class="labelfont" position="floating" color="primary">Customer Tax Code:</ion-label>
-        <ion-select [(ngModel)]="Discount" class="labelfont">
-            <ion-select-option value="number:25" >No Tax</ion-select-option>
-        </ion-select></ion-item>
+        <ion-select class="btninfo" interface="popover" [(ngModel)]="taxname" name="taxname" (ionChange)="ActionChangeQuoteTax()">
+            <ion-select-option *ngFor="let mat of TaxTypeList " [value]="taxname"></ion-select-option>
+        </ion-select>
+        </ion-item>
         <ion-item><ion-input type="text" class="labelfont" value="0"></ion-input> </ion-item>
         <ion-item>
         <ion-label class="labelfont" position="stacked" color="primary">Material:</ion-label>
@@ -334,24 +352,37 @@ export class DiscountComponent implements OnInit {
         </ion-item>
     </ion-col>
   </ion-row>`,
-  //styleUrls: ['./customeredit.component.scss'],
-})
-export class taxComponent implements OnInit {
-  searchObj = this.navParams.data;
-  searchResults = [];
-  constructor(private Modalcntrl: ModalController, private navParams: NavParams, private popoverCntrl: PopoverController) { }
-  ngOnInit() { this.ActionSearchParentAccount(); }
-  ActionSearchParentAccount() {
-  }
+    //styleUrls: ['./customeredit.component.scss'],
+  })
+  export class taxComponent implements OnInit {
+    searchObj = this.navParams.data;
+    searchResults = [];
+    TaxTypeList:any = [];
+    header :any;
+    Version: any;
+    
+    constructor(private Modalcntrl : ModalController,private navParams : NavParams,private popoverCntrl :PopoverController,private service:QuotegetService) { }
+    ngOnInit() {
+      this.ActionSearchParentAccount();
+      this.ActionChangeQuoteTax();
+     }
+    ActionSearchParentAccount(){  }
+      
+      ActionChangeQuoteTax() {debugger;
+        let result = this.service.Accounttaxlist(3, this.Version.CustTypeID).subscribe(
+          data => {debugger; this.TaxTypeList  = data },
+          error => console.log(error));
+      }
 
-  ActionToClosePop() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
-    this.popoverCntrl.dismiss({
-      'dismissed': true
-    });
-  }
-}
+      ActionToClosePop() {
+        // using the injected ModalController this page
+        // can "dismiss" itself and optionally pass back data
+        this.popoverCntrl.dismiss({
+          'dismissed': true
+        });
+      }
+    }
+  //styleUrls: ['./customeredit.component.scss'],
 
 @Component({
   //selector: 'app-itemsearchComponent',
@@ -365,26 +396,22 @@ export class taxComponent implements OnInit {
       </ion-header>
       <ion-row style="height:360px">
       <ion-col>
-            <ion-item>
+         <ion-item>
             <ion-label class="labelfont" position="floating" color="primary">Fees</ion-label>
-          <ion-select [(ngModel)]="Discount" class="labelfont">
-              <ion-select-option value="number:25" >Contractor Pref</ion-select-option>
-              <ion-select-option value="number:5059">Contractor Std</ion-select-option>
-              <ion-select-option value="number:5059" >Material Markup</ion-select-option>
-              <ion-select-option value="number:5059" selected>Miscellaneous</ion-select-option>
-              <ion-select-option value="number:5059">Retail</ion-select-option>
-              <ion-select-option value="number:5059">Shop Minimum</ion-select-option>
-          </ion-select></ion-item>
+            <ion-select class="btninfo" interface="popover" [(ngModel)]="discname" name="discname" (ionChange)="ActionChangeFeeType()">
+                <ion-select-option *ngFor="let mat of FeeTypeList " [value]="discname">{{mat.Name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
           <ion-item>
             <ion-label class="labelfont" position="floating" color="primary"></ion-label>
             <ion-input type="text" class="labelfont" value="0"></ion-input>
             </ion-item>
             <ion-item>
             <ion-label class="labelfont" position="floating" color="primary"></ion-label>
-            <ion-select [(ngModel)]="Discount2" class="labelfont">
-                <ion-select-option value="number:25" selected>%</ion-select-option>
-                <ion-select-option value="number:5059">$</ion-select-option>
-            </ion-select></ion-item>
+            <ion-select [(ngModel)]="name" class="labelfont">
+               <ion-select-option *ngFor="let disc of DiscTypes1" [value]="name"> {{disc.Name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
             <ion-item style="margin-left: -4%;">
               <ion-checkbox style="margin-left: 4%;"></ion-checkbox>
               <ion-label style="margin-left: 5px;">FeeTax</ion-label>
@@ -409,21 +436,31 @@ export class taxComponent implements OnInit {
         </ion-item>
       </ion-col>
     </ion-row>`,
-  //styleUrls: ['./customeredit.component.scss'],
-})
-export class feeComponent implements OnInit {
-  searchObj = this.navParams.data;
-  searchResults = [];
-  constructor(private Modalcntrl: ModalController, private navParams: NavParams, private popoverCntrl: PopoverController) { }
-  ngOnInit() { this.ActionSearchParentAccount(); }
-  ActionSearchParentAccount() {
-  }
+      //styleUrls: ['./customeredit.component.scss'],
+    })
+    export class feeComponent implements OnInit {
+      searchObj = this.navParams.data;
+      searchResults = [];
+      FeeTypeList:any = [];
+      constructor(private Modalcntrl : ModalController,private navParams : NavParams,private popoverCntrl :PopoverController,private service:QuotegetService) { }
+      ngOnInit() {
+        this.ActionSearchParentAccount();
+        this.ActionChangeFeeType();
+      }
+      ActionSearchParentAccount(){ }
+      DiscTypes1:any = [{ ID: 1, Name: "%" }, { ID: 2, Name: "$" }];
+        
+      ActionChangeFeeType(){
+        let result = this.service.QuoteMasterList(17).subscribe(
+         data => {this.FeeTypeList  = data },
+         error => console.log(error));
+       }
+      ActionToClosePop() {
+          // using the injected ModalController this page
+          // can "dismiss" itself and optionally pass back data
+          this.popoverCntrl.dismiss({
+            'dismissed': true
+          });
+        }
+    }
 
-  ActionToClosePop() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
-    this.popoverCntrl.dismiss({
-      'dismissed': true
-    });
-  }
-}

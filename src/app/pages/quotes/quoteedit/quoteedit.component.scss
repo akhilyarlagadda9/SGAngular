@@ -41,12 +41,15 @@ ion-segment-button {
 .btn-ion{
   --background: #ddd;
   color: black;
+  font-size: 18px;
+  height: 35px;
   font-weight: 600;
   padding-right: 5px;
   padding-left: 5px;
 }
-.btn-ion:active{
+.active{
   --background:#3880ff;
+  color:#FFFFFF;
 }
 .paddleft10 {
   padding-left: 10px;

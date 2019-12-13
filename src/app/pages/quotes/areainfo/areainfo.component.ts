@@ -87,9 +87,12 @@ export class AreainfoComponent implements OnInit {
   }
 
   /***** SPLASH DETAILS *****/
-  async ActionCreateSplash() {
+  async ActionEditSplash(spl:any) {debugger;
+    let copyobj = JSON.parse(JSON.stringify(spl));
+    let splash = {splash : copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
-      component: SplashComponent
+      component: SplashComponent,
+      componentProps: splash
     });
     return await modal.present();
   }
@@ -120,17 +123,23 @@ export class AreainfoComponent implements OnInit {
     return await modal.present();
   }
   /***** MATERIAL DETAILS *****/
-  async ActionCreateMaterial() {
+  async ActionEditMaterial(mat:any) {
+    let copyobj = JSON.parse(JSON.stringify(mat));
+    let material = {material : copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
-      component: MaterialinfoComponent
+      component: MaterialinfoComponent,
+      componentProps : material
     });
     return await modal.present();
   }
 
   /***** MEASUREMENT DETAILS *****/
-  async ActionCreateMeasurement() {
+  async ActionEditMeasurement(fab:any) {
+    let copyobj = JSON.parse(JSON.stringify(fab));
+    let sizes = {sizes : copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
-      component: MeasurementsComponent
+      component: MeasurementsComponent,
+      componentProps : sizes
     });
     return await modal.present();
   }

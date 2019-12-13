@@ -83,9 +83,12 @@ export class AreainfoComponent implements OnInit {
     return await modal.present();
   }
   /***** ADD ON DETAILS *****/
-  async ActionCreateAddon() {
+  async ActionEditAddon(oth:any) {debugger;
+    let copyobj = JSON.parse(JSON.stringify(oth));
+    let other = {other : copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
-      component: AddoninfoComponent
+      component: AddoninfoComponent,
+      componentProps: other
     });
     return await modal.present();
   }
@@ -163,19 +166,24 @@ export class AreainfoComponent implements OnInit {
   }
 
   /***** TILE DETAILS *****/
-  async ActionCreateTile(typeId,name) {
-    let obj = {TypeID:typeId,selName:name}
+  async ActionEditTile(typeId,name,tile:any) {debugger;
+    
+    let copyobj = JSON.parse(JSON.stringify(tile));
+    let tileobj = {TypeID:typeId,selName:name,labor:copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
       component: TileinfoComponent,
-      componentProps: obj
+      componentProps: tileobj
     });
     return await modal.present();
   }
 
   /***** CUSTOMERITEM DETAILS *****/
-  async ActionCreateCi() {
+  async ActionEditCustItems(res:any) {
+    let copyobj = JSON.parse(JSON.stringify(res));
+    let response = {response : copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
-      component: CustitemComponent
+      component: CustitemComponent,
+      componentProps : response
     });
     return await modal.present();
   }

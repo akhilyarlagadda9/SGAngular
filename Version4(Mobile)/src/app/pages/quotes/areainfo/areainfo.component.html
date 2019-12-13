@@ -238,7 +238,7 @@
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.LaborList">
   <span *ngIf="labor.ViewTypeID != 1">
-    <ion-col (click)="ActionCreateTile(7,'Labor')"><u class="colorblue">L</u>:
+    <ion-col (click)="ActionEditTile(7,'Labor', labor)"><u class="colorblue">L</u>:
       <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
       <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
       <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
@@ -257,7 +257,7 @@
   </span>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let sinkfaucet of partinfo.ApplianceList">
-  <ion-col (click)="ActionCreateTile(18,'Appliance')"><u class="colorblue">A</u>:
+  <ion-col (click)="ActionEditTile(18,'Appliance', sinkfaucet)"><u class="colorblue">A</u>:
     <span *ngIf="sinkfaucet.Description != null">
       <span *ngIf="sinkfaucet.IsChg == '2'"> {{ sinkfaucet.Description }} </span>
       <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Description }}</span>
@@ -276,8 +276,28 @@
     <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Amount | number : '.2-2'}}</span>
   </ion-col>
 </ion-row>
+<ion-row class="rowlineitem" *ngFor="let other of partinfo.OtherList">
+    <ion-col (click)="ActionEditAddon(other)"><u class="colorblue">Adn</u>:
+      <span>
+          <span *ngIf="other.IsChg == '2'">{{ other.Description }}</span>
+          <span *ngIf="other.IsChg == '0'">{{ other.Description }}</span>
+          <span *ngIf="other.CoSrNo > 0">C{{other.CoSrNo}}</span>
+          <span *ngIf="other.IsOptional == 1">Optional</span>&nbsp;
+      </span>
+      <span>@
+        <u class="colorgreen">
+            <span *ngIf="other.IsChg == '2'">{{ other.Qty | number : '.2-2'}}</span>
+            <span *ngIf="other.IsChg == '0'">{{ other.Qty | number : '.2-2'}}</span>
+        </u>
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">$
+        <span *ngIf="other.IsChg == '2'">{{ other.Amount | number : '.2-2'}}</span>
+        <span *ngIf="other.IsChg == '0'">{{ other.Amount | number : '.2-2'}}</span>
+    </ion-col>
+  </ion-row>
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.TileList">
-  <ion-col (click)="ActionCreateTile(12,'Tile')"><u class="colorblue">Tile</u>:
+  <ion-col (click)="ActionEditTile(12,'Tile', labor)"><u class="colorblue">Tile</u>:
     <span>
       <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
       <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
@@ -297,7 +317,7 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.CabinetList">
-  <ion-col (click)="ActionCreateTile(2,'Cabinet')"><u class="colorblue">Cab</u>:
+  <ion-col (click)="ActionEditTile(2,'Cabinet', labor)"><u class="colorblue">Cab</u>:
     <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
     <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
     <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
@@ -315,7 +335,7 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.CarpetList">
-  <ion-col (click)="ActionCreateTile(14,'Carpet')"><u class="colorblue">Car</u>:
+  <ion-col (click)="ActionEditTile(14,'Carpet', labor)"><u class="colorblue">Car</u>:
     <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
     <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
     <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
@@ -333,7 +353,7 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.ConsumableList">
-  <ion-col (click)="ActionCreateTile(19,'Consumable')"><u class="colorblue">Con</u>:
+  <ion-col (click)="ActionEditTile(19,'Consumable', labor)"><u class="colorblue">Con</u>:
     <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
     <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
     <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
@@ -351,7 +371,7 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.ToolList">
-  <ion-col (click)="ActionCreateTile(3,'Tool')"><u class="colorblue">Tool</u>:
+  <ion-col (click)="ActionEditTile(3,'Tool',labor)"><u class="colorblue">Tool</u>:
     <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
     <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
     <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
@@ -369,14 +389,13 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let response of partinfo.CustomerItemList">
-  <ion-col (click)="ActionCreateCi()"><u class="colorblue">Cust</u>:
+  <ion-col (click)="ActionEditCustItems(response)"><u class="colorblue">Cust</u>:
     <span *ngIf="response.IsChg == '2'">{{ response.Description }}</span>
     <span *ngIf="response.IsChg == '0'">{{ response.Description }}</span>
     <span *ngIf="response.CoSrNo > 0">C{{response.CoSrNo}}</span>
   </ion-col>
   <ion-col size="3" class="text-right">-</ion-col>
 </ion-row>
-
 <ion-row class="rowlineitem" *ngFor="let partdisc of partinfo.PartDiscountList">
   <span *ngIf="partdisc.Isactive == 1 && partdisc.PartID == 0 && partdisc.Price != 0">
     <ion-col (click)="ActionCreateTile(3,'Tool')" color="danger"><u class="colorblue">Disc</u>:

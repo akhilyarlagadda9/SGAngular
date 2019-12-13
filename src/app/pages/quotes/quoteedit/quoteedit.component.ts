@@ -16,7 +16,7 @@ export class QuoteeditComponent implements OnInit {
      private navCtrl: NavController) { }
   quoteId: number;
   quoteno: string;
-  shownGroup = null;
+  shownGroup = 1;
   qprmsobj = this.navParams.data;
   headerInfo:any;
   //version:any;
@@ -29,7 +29,7 @@ export class QuoteeditComponent implements OnInit {
 
   toggleGroup(group) {
     if (this.isGroupShown(group)) {
-        this.shownGroup = null;
+        this.shownGroup = 0;
     } else {
         this.shownGroup = group;
     }

@@ -13,7 +13,7 @@ export class CustomersearchComponent implements OnInit {
   ngOnInit() {this.ActionSearchParentAccount()}
   ActionSearchParentAccount(){
     this.getservice.qsgetallcustomersearchlist(this.searchObj.search,this.searchObj.selectTypeId,this.searchObj.custTypeID).subscribe(data=>{
-      this.searchResults = data
+      this.searchResults = data;
     });
   }
   ActionPopulateParentInfo(customer:any) {

@@ -76,21 +76,23 @@
                     </ion-col>
                 </ion-row>
             </ion-card>
+            <div *ngIf="qprmsobj.customerid > 0">
+                    <app-customerinfo [customer]="headerInfo.Customer" [SelectedTypeID]="3"
+                        [contacts]="headerInfo.CustomerContacts"></app-customerinfo>
+                </div>
+                <div *ngIf="qprmsobj.childaccid > 0">
+                        <app-customerinfo [customer]="headerInfo.ChildAccount" [SelectedTypeID]="2"
+                            [contacts]="headerInfo.ChildAccountContacts"></app-customerinfo>
+                    </div>
             <div *ngIf="qprmsobj.accountid > 0">
                 <app-customerinfo (customerEvent)="displayCounter($event)" [customer]="headerInfo.ParentAccount"
                     [SelectedTypeID]="1" [contacts]="headerInfo.ParentAccountContacts"></app-customerinfo>
             </div>
-            <div *ngIf="qprmsobj.childaccid > 0">
-                <app-customerinfo [customer]="headerInfo.ChildAccount" [SelectedTypeID]="2"
-                    [contacts]="headerInfo.ChildAccountContacts"></app-customerinfo>
-            </div>
-            <div *ngIf="qprmsobj.customerid > 0">
-                <app-customerinfo [customer]="headerInfo.Customer" [SelectedTypeID]="3"
-                    [contacts]="headerInfo.CustomerContacts"></app-customerinfo>
-            </div>
+           
+            
         </ion-col>
         <ion-col *ngIf="selectedtabtype == 2">
-            <app-areainfo></app-areainfo>
+            <app-areainfo [Version]="headerInfo.Version"></app-areainfo>
         </ion-col>
         <ion-col *ngIf="selectedtabtype == 3">
             <app-jobdes [version]="headerInfo.Version"></app-jobdes>

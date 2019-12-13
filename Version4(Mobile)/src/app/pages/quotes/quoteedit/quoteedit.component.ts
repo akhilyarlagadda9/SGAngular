@@ -5,6 +5,7 @@ import { QuoteService } from 'src/app/service/quote.service'
 
 import { HeadereditComponent } from 'src/app/pages/quotes/headeredit/headeredit.component';
 import { OverlayEventDetail } from '@ionic/core';
+//import { QuoterepService } from 'src/app/service/quoterep.service';
 
 @Component({
   selector: 'app-quoteedit',
@@ -19,7 +20,6 @@ export class QuoteeditComponent implements OnInit {
   shownGroup = 1;
   qprmsobj = this.navParams.data;
   headerInfo:any;
-  //version:any;
   selectedtabtype:number = 1;
   QuoteVersionID:number = this.qprmsobj.versionid; 
 
@@ -40,9 +40,7 @@ export class QuoteeditComponent implements OnInit {
 
 
   ngOnInit() {
-    //this.headeInfo = this.qprmsobj.header;
     this.ActionQuoteInfo();
-    //this.ActionAreaList();
   }
 
 
@@ -62,14 +60,7 @@ export class QuoteeditComponent implements OnInit {
       },
       error => console.log(error));
   }
-  
-  ActionAreaList(){
-    let result = this.service.ActionAreaList(this.qprmsobj.quoteid,this.qprmsobj.versionid,0).subscribe(
-      data => {
-         //this.version = data;
-      },
-      error => console.log(error));
-  }
+
   /*****tabs****** */
   ActionQuickLoad(componet: any) {
     this.selectedtabtype = componet;

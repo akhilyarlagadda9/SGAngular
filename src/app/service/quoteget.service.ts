@@ -28,7 +28,7 @@ export class QuotegetService {
     return this.http.get<any>(this.url +  'api/QuoteAdmin/CustPriceList?typeID=' + "&typeId=" + typeId)
   }
 
- //Production Type List
+ //Production Type List,DiscountType List
  QuoteMasterList(typeID:number):Observable<any> {
   return this.http.get<any>(this.url +  'api/QuoteAdmin/MasterList?typeID=' + typeID)
 }
@@ -77,6 +77,13 @@ qsgetpricelistproductItems(pricelistId:any, producttypeId:any, searchTypeId:any,
 Accounttaxlist(typeID:number,CustTypeID:any):Observable<any> {
   return this.http.get<any>(this.url +  'api/Quote/AccountTaxList?typeID=' + typeID + "&custTypeID=" + CustTypeID)
 }
+//Inventory Thickness List and Finish Item List
+qsgetinventorydictlist(finishId:any, thickId:any,rislevelId:any):Observable<any> {
+  let result = "", typeIdList = []; typeIdList.push(finishId); typeIdList.push(thickId); typeIdList.push(rislevelId);
+  return this.http.get<any>(this.url +  'api/admin/InventoryDicLists?typeIdList=' + typeIdList)
+}
+
+
 
 // Created Quote
 Preparecustomermodel(header, model) {

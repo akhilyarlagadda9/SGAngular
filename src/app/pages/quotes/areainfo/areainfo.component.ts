@@ -83,7 +83,7 @@ export class AreainfoComponent implements OnInit {
     return await modal.present();
   }
   /***** ADD ON DETAILS *****/
-  async ActionEditAddon(oth:any) {debugger;
+  async ActionEditAddon(oth:any) {
     let copyobj = JSON.parse(JSON.stringify(oth));
     let other = {other : copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
@@ -155,7 +155,7 @@ export class AreainfoComponent implements OnInit {
   }
 
   /***** FAUCETS DETAILS *****/
-  async ActionEditFaucet(fau:any) {debugger;
+  async ActionEditFaucet(fau:any) {
     let copyobj = JSON.parse(JSON.stringify(fau));
     let faucet = {faucet : copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
@@ -166,7 +166,7 @@ export class AreainfoComponent implements OnInit {
   }
 
   /***** TILE DETAILS *****/
-  async ActionEditTile(typeId,name,tile:any) {debugger;
+  async ActionEditTile(typeId,name,tile:any) {
     
     let copyobj = JSON.parse(JSON.stringify(tile));
     let tileobj = {TypeID:typeId,selName:name,labor:copyobj,priceListID:Number(this.Version.PriceListID)}

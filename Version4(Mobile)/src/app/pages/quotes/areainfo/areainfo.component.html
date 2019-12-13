@@ -1,20 +1,36 @@
 <ion-row>
   <ion-col size="4">
-    <ion-select class="btninfo" interface="popover" [(ngModel)]="areaInfo" name="areaInfo"
-      (ionChange)="ActionPartsByArea(areaInfo, 1)">
-      <ion-select-option *ngFor="let area of arealist" [value]="area">{{area.Name}}</ion-select-option>
-    </ion-select>
+      <ion-row>
+          <ion-col size="3" class="paddzero">
+              <ion-icon name="add" (click)="ActionAddArea()"></ion-icon>
+              <div><small>Area</small></div>
+          </ion-col>
+          <ion-col size="9" class="paddzero">
+              <ion-select class="btninfo" interface="popover" [(ngModel)]="areaInfo" name="areaInfo"
+              (ionChange)="ActionPartsByArea(areaInfo, 1)">
+              <ion-select-option *ngFor="let area of arealist" [value]="area">{{area.Name}}</ion-select-option>
+            </ion-select>
+            </ion-col>
+        </ion-row>
   </ion-col>
   <ion-col size="4">
-    <ion-select class="btninfo" interface="popover" [(ngModel)]="AreaPartID" name="AreaPartID"
-      (ionChange)="ActionGetPartInfo(AreaPartID, 1)">
-      <ion-select-option *ngFor="let part of partlist" [value]="part.ID"><span
-          *ngIf="part.Name == '' || part.Name == null">Part{{part.SrNo}}</span>{{part.Name}}</ion-select-option>
-    </ion-select>
+      <ion-row>
+        <ion-col size="3" class="paddzero">
+            <ion-icon name="add"></ion-icon>
+            <div><small>Part</small></div>
+        </ion-col>
+        <ion-col size="9" class="paddzero">
+            <ion-select class="btninfo" interface="popover" [(ngModel)]="AreaPartID" name="AreaPartID"
+            (ionChange)="ActionGetPartInfo(AreaPartID, 1)">
+            <ion-select-option *ngFor="let part of partlist" [value]="part.ID"><span
+                *ngIf="part.Name == '' || part.Name == null">Part{{part.SrNo}}</span>{{part.Name}}</ion-select-option>
+          </ion-select>
+          </ion-col>
+      </ion-row>
   </ion-col>
   <ion-col class="text-right">
-    <ion-button size="small" (click)="ActionAddArea()">
-      Add Area
+    <ion-button size="small" (click)="ActionLineItem()">
+       Item <span class="caret"></span>
     </ion-button>
   </ion-col>
 </ion-row>
@@ -25,7 +41,7 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let material of partinfo.PartMaterialList">
-  <ion-col (click)="ActionCreateMaterial()"><u class="colorblue">M</u>:
+  <ion-col (click)="ActionEditMaterial(material)"><u class="colorblue">M</u>:
     <span *ngIf="material.IsChg == '2' && material.ID > 0">{{material.MaterialName }}</span>
     <span *ngIf="material.IsChg == '0' && material.ID > 0">{{ material.MaterialName }}</span>
     <span *ngIf="material.CoSrNo > 0 && material.ID > 0">&nbsp;C{{material.CoSrNo}}</span>
@@ -42,8 +58,8 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList">
-  <ion-col (click)="ActionCreateMeasurement()"><u class="colorblue">Siz</u>:
-    <span *ngFor="let size of fabrication.MeasureList">
+  <ion-col ><u class="colorblue">Siz</u>:
+    <span *ngFor="let size of fabrication.MeasureList" (click)="ActionEditMeasurement(size)">
       <span *ngIf="size.Sqft != 0">
         <span *ngIf="size.CounterType != '' && size.CounterType != null">({{size.CounterType}})</span>
         <span *ngIf="fabrication.IsChg == '2'">({{size.Width}} * {{size.Height}})</span>
@@ -60,7 +76,7 @@
   <ion-col size="3" class="text-right">-</ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let splash of partinfo.SplashList">
-  <ion-col (click)="ActionCreateSplash()"><u class="colorblue">Spl</u>:
+  <ion-col (click)="ActionEditSplash(splash)"><u class="colorblue">Spl</u>:
     <span *ngIf="splash.IsChg == '2'">{{ splash.Splash }}</span>
     <span *ngIf="splash.IsChg != '2'">{{ splash.Splash }}</span>
     <span *ngIf="splash.CoSrNo > '0'">&nbsp;C{{splash.CoSrNo}}</span>
@@ -361,7 +377,21 @@
   <ion-col size="3" class="text-right">-</ion-col>
 </ion-row>
 
-
+<ion-row class="rowlineitem" *ngFor="let partdisc of partinfo.PartDiscountList">
+  <span *ngIf="partdisc.Isactive == 1 && partdisc.PartID == 0 && partdisc.Price != 0">
+    <ion-col (click)="ActionCreateTile(3,'Tool')" color="danger"><u class="colorblue">Disc</u>:
+    <span>{{partdisc.Description}}</span>
+      <span>@
+        <u class="colorgreen">
+            {{ partdisc.Qty | number: '.2-2'}}
+        </u>
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">$
+        {{ (partdisc.Qty * partdisc.Price) | number: '.2-2'}}
+    </ion-col>
+  </span>
+  </ion-row>
 
 
 <ion-list *ngIf="Version.LatestCoID == 0">

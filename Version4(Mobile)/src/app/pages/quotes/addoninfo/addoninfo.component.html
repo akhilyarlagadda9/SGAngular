@@ -12,33 +12,29 @@
       <form>
         <ion-item>
           <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
-          <ion-input type="text" class="labelfont" value="16ga 2317 Standard Rectangle" [(ngModel)]="addoninfo.Des" (keyup.enter)="ActionSearchSelect($event,2,11)"></ion-input>
+          <ion-input type="text" class="labelfont" [(ngModel)]="other.Description" name="Description" (keyup.enter)="ActionSearchSelect($event,2,11)"></ion-input>
           <ion-icon slot="end" style="margin-top: 20px;" name="arrow-dropdown" (click)="ActionSearchSelect($event,2,11)"></ion-icon>
           <ion-icon slot="end" style="margin-top: 20px;" name="search" (click)="ActionSearchSelect($event,2,11)"></ion-icon>
         </ion-item>
         <ion-item>
             <ion-label class="labelfont" position="floating" color="primary">Quantity</ion-label>
-            <ion-input type="text" class="labelfont" value="1" readonly="readonly"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+            <ion-input type="text" class="labelfont" [(ngModel)]="other.Qty" name="Qty"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
           </ion-item>
         <ion-item>
           <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
-          <ion-input type="tel" class="labelfont" value="211.00"><ion-row style="margin-right: 3px;">%</ion-row></ion-input>
+          <ion-input type="tel" class="labelfont" [(ngModel)]="other.UnitCost" name="UnitCost"><ion-row style="margin-right: 3px;">%</ion-row></ion-input>
         </ion-item>
         <ion-item>
           <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
-          <ion-input type="email" class="labelfont" value="20"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+          <ion-input type="email" class="labelfont" [(ngModel)]="other.Margin" name="Margin"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
         </ion-item>
         <ion-item>
           <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
-          <ion-input type="email" class="labelfont" value="263.75"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+          <ion-input type="email" class="labelfont" [(ngModel)]="other.UnitPrice" name="UnitPrice"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
         </ion-item>
         <ion-item>
             <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
-            <ion-input type="email" class="labelfont" value="263.75" readonly="readonly"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
-          </ion-item>
-        <ion-item>
-            <ion-label class="labelfont" position="floating" color="primary">Note</ion-label>
-            <ion-textarea type="text" class="labelfont"value="Note"></ion-textarea>
+            <ion-input type="email" class="labelfont" [(ngModel)]="other.Amount" name="Amount"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
           </ion-item>
       </form>
     </ion-content>

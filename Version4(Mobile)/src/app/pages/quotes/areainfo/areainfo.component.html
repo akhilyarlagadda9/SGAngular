@@ -1,11 +1,11 @@
 <ion-row>
-  <ion-col size="4">
+  <ion-col size="5">
       <ion-row>
-          <!-- <ion-col size="3" class="paddzero">
-              <ion-icon name="add" (click)="ActionAddArea()"></ion-icon>
+          <ion-col size="3" class="paddzero">
+              <ion-icon name="add-circle-outline" (click)="ActionAddArea()"  class="big"></ion-icon>
               <div><small>Area</small></div>
-          </ion-col> -->
-          <ion-col size="12" class="paddzero">
+          </ion-col>
+          <ion-col size="9" class="paddzero">
               <ion-select class="btninfo" interface="popover" [(ngModel)]="areaInfo" name="areaInfo"
               (ionChange)="ActionPartsByArea(areaInfo, 1)">
               <ion-select-option *ngFor="let area of arealist" [value]="area">{{area.Name}}</ion-select-option>
@@ -13,13 +13,13 @@
             </ion-col>
         </ion-row>
   </ion-col>
-  <ion-col size="4">
+  <ion-col size="5" class="marge">
       <ion-row>
-        <!-- <ion-col size="3" class="paddzero">
-            <ion-icon name="add"></ion-icon>
+        <ion-col size="3" class="paddzero">
+            <ion-icon name="add-circle-outline"></ion-icon>
             <div><small>Part</small></div>
-        </ion-col> -->
-        <ion-col size="12" class="paddzero">
+        </ion-col>
+        <ion-col size="9" class="paddzero">
             <ion-select class="btninfo" interface="popover" [(ngModel)]="AreaPartID" name="AreaPartID"
             (ionChange)="ActionGetPartInfo(AreaPartID, 1)">
             <ion-select-option *ngFor="let part of partlist" [value]="part.ID"><span
@@ -28,8 +28,8 @@
           </ion-col>
       </ion-row>
   </ion-col>
-  <ion-col class="text-right">
-    <ion-button size="small" (click)="ActionAddArea()">
+  <ion-col class="text-right marge2">
+    <ion-button size="small" (click)="ActionAddAreaitem()">
       + Area    
     </ion-button>
   </ion-col>
@@ -215,7 +215,7 @@
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.LaborList">
   <ion-col *ngIf="labor.ViewTypeID == 1 && labor.Description == 'Install'" class="paddzero">
     <ion-row>
-      <ion-col (click)="ActionCreateTemplate(2)"><u class="colorblue">I</u>:
+      <ion-col (click)="ActionCreateTemplate(3)"><u class="colorblue">I</u>:
         <span>
           <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
           <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>

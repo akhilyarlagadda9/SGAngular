@@ -3,7 +3,6 @@
       <ion-row>
           <ion-col size="3" class="paddzero">
               <ion-icon name="add-circle-outline" (click)="ActionAddArea()"  class="big"></ion-icon>
-              <div><small>Area</small></div>
           </ion-col>
           <ion-col size="9" class="paddzero">
               <ion-select class="btninfo" interface="popover" [(ngModel)]="areaInfo" name="areaInfo"
@@ -16,8 +15,7 @@
   <ion-col size="5" class="marge">
       <ion-row>
         <ion-col size="3" class="paddzero">
-            <ion-icon name="add-circle-outline"></ion-icon>
-            <div><small>Part</small></div>
+            <ion-icon name="add-circle-outline" class="big"></ion-icon>
         </ion-col>
         <ion-col size="9" class="paddzero">
             <ion-select class="btninfo" interface="popover" [(ngModel)]="AreaPartID" name="AreaPartID"
@@ -30,7 +28,7 @@
   </ion-col>
   <ion-col class="text-right marge2">
     <ion-button size="small" (click)="ActionAddAreaitem()">
-      + Area    
+      + Item    
     </ion-button>
   </ion-col>
 </ion-row>

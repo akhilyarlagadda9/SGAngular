@@ -37,5 +37,10 @@ export class AdditionalitemserachComponent implements OnInit {
    this.getservice.qsgetpricelistproductItems(129,this.searchobj.producttypeId,this.searchobj.searchTypeId,this.searchobj.search).subscribe(data=>{
      this.listItems = data});
   }
+
+  ActionPopulateParentInfo(item:any) {
+    this.info = item;
+    this.ActionToClosePop(true);
+   }
 }
 

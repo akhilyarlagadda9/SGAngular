@@ -10,11 +10,14 @@ export class JobdesceditComponent implements OnInit {
     
   constructor(public Modalcntrl : ModalController,private navParams : NavParams) { }
   navObj = this.navParams.data;
+  version:any;TypeId:number = this.navObj.TypeId;
   Description:string = this.navObj.des;
 
-  ngOnInit() {}
+  ngOnInit() {this.version = this.navObj.version}
 
   ActionSaveJobDescEdit() {
+
+    
     this.ActionCloseJobDescEdit(true);
   }
 

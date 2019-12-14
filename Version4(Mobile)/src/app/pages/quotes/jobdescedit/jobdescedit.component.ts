@@ -16,7 +16,6 @@ export class JobdesceditComponent implements OnInit {
   ngOnInit() {this.version = this.navObj.version}
 
   ActionSaveJobDescEdit() {
-
     
     this.ActionCloseJobDescEdit(true);
   }

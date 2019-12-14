@@ -14,6 +14,7 @@ import { TemplateComponent } from '../template/template.component';
 import { CustitemComponent } from '../custitem/custitem.component';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { QuoteService } from 'src/app/service/quote.service';
+import { ManagementsummaryComponent } from '../managementsummary/managementsummary.component';
 
 @Component({
   selector: 'app-areainfo',
@@ -219,6 +220,13 @@ export class AreainfoComponent implements OnInit {
       componentProps: obj,
     });
     return await popover.present();
+  }
+//Management summary component
+  async ActionSummaryEdit() {
+    const modal = await this.Modalcntrl.create({
+      component: ManagementsummaryComponent,
+    });
+    return await modal.present();
   }
 
 }

@@ -18,7 +18,7 @@ import {QuoteService} from 'src/app/service/quote.service'
 export class QuotePage implements OnInit {
 
   constructor(private service:QuoteService, public Modalcntrl : ModalController, private navCtrl : NavController, private loadingController : LoadingController) { }
-
+ 
   quotelist: any[] = [];
  // pageindex:number= 0;
   qsearchobj:{
@@ -29,6 +29,8 @@ export class QuotePage implements OnInit {
   quoteid: number,quoteno: string,versionid: number,customerid:number,
   accountid:number,childaccid:number,phaseid:number,viewtypeid:number,header:any
 };
+
+
 
   ngOnInit() {
     this.ActionQuoteList();
@@ -71,7 +73,7 @@ export class QuotePage implements OnInit {
     event.target.complete();
   }
 }
-hideLoader() {
+async hideLoader() {
   this.loadingController.dismiss();
 }
 /***** QUOTEEDIT *****/

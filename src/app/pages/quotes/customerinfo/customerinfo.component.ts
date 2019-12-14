@@ -14,7 +14,7 @@ export class CustomerinfoComponent implements OnInit {
   public customer: any;public version: any;
   public contacts: any;
   public SelectedTypeID: number;
-  shownGroup = null;
+  shownGroup = 1;
   constructor(private Modalcntrl : ModalController) { }
   ngOnInit() {
    // this.customer = this.custComponent.customerinfo;
@@ -41,7 +41,7 @@ export class CustomerinfoComponent implements OnInit {
   
   toggleGroup(group) {
     if (this.isGroupShown(group)) {
-        this.shownGroup = null;
+        this.shownGroup = 0;
     } else {
         this.shownGroup = group;
     }

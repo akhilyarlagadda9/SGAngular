@@ -20,8 +20,8 @@ export class JobdesComponent implements OnInit {
   }
 
   async ActionEditJobDesc(typeId:any) {
-    let des = typeId == 1 ?this.version.Description: this.version.PrivateNote;
-    let ver = {TypeID: typeId,Description:des}
+    //let des = typeId == 1 ?this.version.Description: this.version.PrivateNote;
+    let ver = {TypeID: typeId,version:this.version}
     const modal = await this.Modalcntrl.create({
       component: JobdesceditComponent,
       componentProps: ver,

@@ -20,7 +20,6 @@ export class CustomerinfoComponent implements OnInit {
    // this.customer = this.custComponent.customerinfo;
   }
   async ActionEditCustomer() {
-   
     let custinfo = this.customer;
     custinfo.ContactList = this.contacts;
     let copyobj = JSON.parse(JSON.stringify(custinfo))

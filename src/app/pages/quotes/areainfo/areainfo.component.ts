@@ -496,7 +496,7 @@ export class feeComponent implements OnInit {
           <ion-grid>
         <ion-row>
           <ion-col>
-            <div (click)="ActionEditMaterial(material)">part Material</div>
+            <div (click)="ActionEditMaterial(material)">Part Material</div>
           </ion-col>
           <ion-col>
             <div (click)="ActionEditSink(sinkfaucet)">Sink</div>

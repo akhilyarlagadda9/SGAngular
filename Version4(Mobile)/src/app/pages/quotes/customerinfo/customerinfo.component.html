@@ -2,9 +2,9 @@
         
     <ion-col class="fontheading">
             
-        <div *ngIf="SelectedTypeID == 1"><ion-icon name="arrow-dropdown" (click)="toggleGroup(i)" [ngClass]="{active: isGroupShown(i)}"></ion-icon>Account</div>
-        <div *ngIf="SelectedTypeID == 2"><ion-icon name="arrow-dropdown" (click)="toggleGroup(i)" [ngClass]="{active: isGroupShown(i)}"></ion-icon>Child Account</div>
-        <div *ngIf="SelectedTypeID == 3"><ion-icon name="arrow-dropdown" (click)="toggleGroup(i)" [ngClass]="{active: isGroupShown(i)}"></ion-icon>Customer</div>
+        <div *ngIf="SelectedTypeID == 1"><ion-icon name="arrow-dropdown" (click)="toggleGroup(1)" [ngClass]="{active: isGroupShown(1)}"></ion-icon>Account</div>
+        <div *ngIf="SelectedTypeID == 2"><ion-icon name="arrow-dropdown" (click)="toggleGroup(1)" [ngClass]="{active: isGroupShown(1)}"></ion-icon>Child Account</div>
+        <div *ngIf="SelectedTypeID == 3"><ion-icon name="arrow-dropdown" (click)="toggleGroup(1)" [ngClass]="{active: isGroupShown(1)}"></ion-icon>Customer</div>
     </ion-col>
     <ion-col size="3" class="text-right">
         <ion-icon name="pin" class="iconblue fontmedium"></ion-icon>
@@ -12,7 +12,7 @@
     </ion-col>
 </ion-row>
 
-<ion-card *ngIf="isGroupShown(i)" class="margin-bottom" style="margin-left: 0px;">
+<ion-card *ngIf="isGroupShown(1)" class="margin-bottom" style="margin-left: 0px;">
     <ion-item style="border-bottom: none;">
         <ion-label>
             <h2>

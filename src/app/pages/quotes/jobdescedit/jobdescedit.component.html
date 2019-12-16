@@ -1,7 +1,7 @@
 <ion-header translucent>
     <ion-toolbar>
       <ion-title><b><span *ngIf="TypeID == 1">Description</span><span *ngIf="TypeID == 2">Private Notes</span></b></ion-title>
-      <ion-button slot="end" color="success" size="small" (click)="ActionSaveJobDescEdit(true)">Save</ion-button>
+      <ion-button slot="end" color="success" size="small" (click)="ActionSaveJobDescEdit(Version)">Save</ion-button>
       <ion-button slot="end" color="danger" size="small" (click)="ActionCloseJobDescEdit(false)">X</ion-button>
     </ion-toolbar>
   </ion-header>
@@ -14,7 +14,7 @@
                 &nbsp;Job Description:</ion-label>
           </ion-row>
           <ion-row style="padding: 5px;">
-              <ion-textarea rows="10" cols="25" [(ngModel)]="Description" class="borderall"></ion-textarea>
+              <ion-textarea rows="10" cols="25" [(ngModel)]="Version.Description" class="borderall"></ion-textarea>
           </ion-row>
       </div>
       <div *ngIf="TypeID == 2">
@@ -24,7 +24,7 @@
               &nbsp;Private:</ion-label>
         </ion-row>
         <ion-row style="padding: 5px;">
-            <ion-textarea rows="10" cols="25" [(ngModel)]="Description" class="borderall"></ion-textarea>
+            <ion-textarea rows="10" cols="25" [(ngModel)]="Version.PrivateNote" class="borderall"></ion-textarea>
         </ion-row>
       </div>
     </ion-list>

@@ -7,8 +7,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class QuoteService {
 
-  //url = "http://localhost:1758/"; 
-  url = "http://64.251.30.12:50005/StoneApp.WebAPI/"
+  url = "http://localhost:1758/"; 
+  //url = "http://64.251.30.12:50005/StoneApp.WebAPI/"
   constructor(private http: HttpClient) { }
   
   ActionQuoteList(search:string,statusId:number,index:number,noOfRecords:number,accessmode:number,userempid:number,sortTypeId:number,sortby:number): Observable<any> {
@@ -24,17 +24,5 @@ export class QuoteService {
     return this.http.get<any>(this.url +  'api/QEdit/ActionPartInfo?versionId=' + versionId + '&areaId=' + areaId + "&partId=" + partId + "&mode=" + mode) 
   }
 /********** COMMON LISTS ******************/
-
-  // ActionGetLeadTypes(){
-
-  // }
-
-// private _serviceInterface = new Subject<any>();
-// editinterface$ = this._serviceInterface.asObservable();
-
-// SendData(model:any){
-//   debugger;
-//   this._serviceInterface.next(model);
-// }
 
 }

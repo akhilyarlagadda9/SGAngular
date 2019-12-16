@@ -13,7 +13,7 @@ import { PoitemsComponent } from '../poitems/poitems.component';
 import { CommhubComponent } from '../commhub/commhub.component';
 import { PrintsComponent } from '../prints/prints.component';
 import { JobdesComponent } from '../jobdes/jobdes.component';
-import { AreainfoComponent} from '../areainfo/areainfo.component';
+import { AreainfoComponent, additemComponent} from '../areainfo/areainfo.component';
 import { PoeditComponent } from '../poedit/poedit.component';
 import { JobdesceditComponent } from '../jobdescedit/jobdescedit.component';
 import { CustomereditComponent } from '../customeredit/customeredit.component';
@@ -59,13 +59,13 @@ import { ManagementsummaryComponent,DiscountComponent,taxComponent,feeComponent}
     PoitemsComponent,CommhubComponent,PrintsComponent,
     JobdesComponent,AreainfoComponent,PoeditComponent,
     JobdesceditComponent,CustomereditComponent,CommhubeditComponent,
-    CustomerinfoComponent,AddareaComponent,CustomersearchComponent,ManagementsummaryComponent],
+    CustomerinfoComponent,AddareaComponent,CustomersearchComponent,ManagementsummaryComponent,additemComponent],
     
 
   declarations: [QuotePage,AdditionalitemserachComponent,taxComponent,feeComponent,DiscountComponent, itemsearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
     HeadereditComponent,HeaderinfoComponent,PoitemsComponent,
     CommhubComponent,PrintsComponent,JobdesComponent,
     AreainfoComponent,PoeditComponent,JobdesceditComponent,
-    CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent,CustomersearchComponent,ManagementsummaryComponent]
+    CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent,CustomersearchComponent,ManagementsummaryComponent,additemComponent]
 })
 export class QuotePageModule {}

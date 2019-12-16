@@ -6,35 +6,248 @@
 </ion-header>
 <ion-content class="card-background-page">
   <ion-card>
-    <ion-row>
+    <ion-row *ngIf="Version.LatestCoID == 0">
+      <ion-col size="12">
+        <ion-row class="mar-bot2">
+          <ion-col size="6" class="paddzero text-right">Sub Total:</ion-col>
+          <ion-col size="6" class="paddzero text-right fontboldclr">&nbsp;$ {{(Version.TotalAmt) | number : '.2-2'}}</ion-col>
+        </ion-row>
+        <ion-row class="mar-bot2">
+          <ion-col size="6" class="paddzero text-right" (click)="ActionDiscSelect()"><u>Discount:</u></ion-col>
+          <ion-col size="6" class="paddzero text-right fontboldclr"><span style="color:red;">&nbsp;($
+              {{(Version.DiscountAmt) | number : '.2-2'}})</span></ion-col>
+        </ion-row>
+        <ion-row class="mar-bot2">
+          <ion-col size="6" class="paddzero text-right" (click)="ActionTaxSelect()"><u>Sales Tax:</u></ion-col>
+          <ion-col size="6" class="paddzero text-right fontboldclr">&nbsp;$ {{Version.TaxAmt | number : '.2-2'}}</ion-col>
+        </ion-row>
+        <ion-row class="mar-bot2">
+          <ion-col size="6" class="paddzero text-right">Net Total:</ion-col>
+          <ion-col size="6" class="paddzero text-right fontboldclr">$
+            &nbsp;{{((Version.TotalAmt + Version.RoundOff + Version.TaxAmt - (Version.RefAmt + Version.RoundOff)) - (Version.DiscountAmt)) | number : '.2-2'}}
+          </ion-col>
+        </ion-row>
+        <ion-row class="mar-bot2">
+          <ion-col size="6" class="paddzero text-right" (click)="ActionFeeSelect()"><u>Fee & Charge:</u></ion-col>
+          <ion-col size="6" class="paddzero text-right fontboldclr">&nbsp;$ {{(Version.RefAmt) | number : '.2-2'}}</ion-col>
+        </ion-row>
+        <ion-row class="mar-bot2">
+          <ion-col size="6" class="paddzero text-right">Final Total:</ion-col>
+          <ion-col size="6" class="paddzero text-right fontboldclr">$
+            &nbsp;{{((Version.TotalAmt + Version.RoundOff + Version.TaxAmt) - (Version.DiscountAmt)) | number : '.2-2'}}
+          </ion-col>
+        </ion-row>
+        <ion-row class="mar-bot2">
+          <ion-col size="6" class="paddzero text-right">Payment:</ion-col>
+          <ion-col size="6" class="paddzero text-right fontboldclr">&nbsp;($ {{(Version.PmtReceived) | number : '.2-2'}})</ion-col>
+        </ion-row>
+        <ion-row class="mar-bot2" *ngIf="Version.RefundAmount > 0">
+          <ion-col size="6" class="paddzero text-right">Refunds:</ion-col>
+          <ion-col size="6" class="paddzero text-right fontboldclr">&nbsp;$ {{(Version.RefundAmount) | number : '.2-2'}}</ion-col>
+        </ion-row>
+        <ion-row class="mar-bot2" *ngIf="Version.PmtReceived != 0 || Version.RefundAmount != 0 || Version.CreditAmount != 0">
+          <ion-col size="6" class="paddzero text-right">Balance:</ion-col>
+          <ion-col size="6" class="paddzero text-right fontboldclr">$
+            &nbsp;{{((((Version.TotalAmt + Version.RoundOff + Version.TaxAmt) - Version.DiscountAmt) - (Version.PmtReceived - Version.RefundAmount) - Version.CreditAmount)) | number : '.2-2'}}
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+     <ion-row *ngIf="Version.LatestCoID > 0">
       <ion-col size="12">
         <ion-row class="mar-bot2">
           <ion-col size="5" class="paddzero text-right">Sub Total:</ion-col>
-          <ion-col size="7" class="paddzero text-left fontboldclr">&nbsp;$ 2321.47</ion-col>
+          <ion-col size="7" class="paddzero text-right fontboldclr">
+            <ion-row>
+              <ion-col size="3" class="text-right paddzero">$ {{(Version.TotalAmt- Version.RoundOff) | number : '.2-2'}}
+              </ion-col>
+              <ion-col size="1" class="text-center paddzero">+</ion-col>
+              <ion-col size="3" class="text-right paddzero" color="success">
+                <span *ngIf="Version.FinalAmt > 0">$ {{(Version.FinalAmt - Version.TotalAmt) | number : '.2-2'}}</span>
+                <span *ngIf="Version.FinalAmt == 0">$ {{Version.NetCoTotal | number : '.2-2'}}</span>
+              </ion-col>
+              <ion-col size="1" class="text-center paddzero">=</ion-col>
+              <ion-col size="4" class="text-right paddzero">
+                <span *ngIf="Version.FinalAmt > 0">$ {{(Version.FinalAmt) | number : '.2-2'}}</span>
+                <span *ngIf="Version.FinalAmt == 0">$
+                  {{(Version.TotalAmt + Version.NetCoTotal) | number : '.2-2'}}&nbsp;</span>
+              </ion-col>
+            </ion-row>
+          </ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="5" class="paddzero text-right">Discount:</ion-col>
-          <ion-col size="7" class="paddzero text-left fontbold">&nbsp;<span style="color:red;">($ 0.00)</span></ion-col>
+          <ion-col size="5" class="paddzero text-right" (click)="ActionDiscSelect()">Discount:</ion-col>
+          <ion-col size="7" class="paddzero text-right fontboldclr">
+            <ion-row>
+              <ion-col size="3" class="text-right paddzero" color="danger">($ {{(Version.DiscountAmt) | number : '.2-2'}})
+              </ion-col>
+              <ion-col size="1" class="text-center paddzero">+</ion-col>
+              <ion-col size="3" class="text-right paddzero" color="danger">
+                <span *ngIf="Version.FinalDiscAmt > 0">($
+                  {{Version.FinalDiscAmt - Version.DiscountAmt | number : '.2-2'}})</span>
+                <span *ngIf="Version.FinalDiscAmt == 0">($ {{Version.NetCoDisc | number : '.2-2'}})</span>
+              </ion-col>
+              <ion-col size="1" class="text-center paddzero">=</ion-col>
+              <ion-col size="4" class="text-right paddzero" color="danger">
+                <span *ngIf="Version.FinalDiscAmt > 0">($ {{Version.FinalDiscAmt | number : '.2-2'}})</span>
+                <span *ngIf="Version.FinalDiscAmt == 0">($
+                  {{(Version.DiscountAmt + Version.NetCoDisc) | number : '.2-2'}})&nbsp;</span>
+              </ion-col>
+            </ion-row>
+          </ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="5" class="paddzero text-right">Sales Tax:</ion-col>
-          <ion-col size="7" class="paddzero text-left fontboldclr">&nbsp;$ 0.00</ion-col>
+          <ion-col size="5" class="paddzero text-right" (click)="ActionTaxSelect">Sales Tax:</ion-col>
+          <ion-col size="7" class="paddzero text-right fontboldclr">
+            <ion-row>
+              <ion-col size="3" class="text-right paddzero">$ {{Version.TaxAmt | number : '.2-2'}}</ion-col>
+              <ion-col size="1" class="text-center paddzero">+</ion-col>
+              <ion-col size="3" class="text-right paddzero" color="success">
+                <span *ngIf="Version.FinalTaxAmt > 0">$ {{(Version.FinalTaxAmt - Version.TaxAmt) | number: '.2-2'}}</span>
+                <span *ngIf="Version.FinalTaxAmt == 0">$ {{Version.NetCoTax | number: '.2-2'}}</span>
+              </ion-col>
+              <ion-col size="1" class="text-center paddzero">=</ion-col>
+              <ion-col size="4" class="text-right paddzero">
+                <span *ngIf="Version.FinalTaxAmt > 0">$ {{(Version.FinalTaxAmt) | number: '.2-2'}}&nbsp;</span>
+                <span *ngIf="Version.FinalTaxAmt == 0">$ {{(Version.TaxAmt + Version.NetCoTax) | number: '.2-2'}}&nbsp;</span>
+              </ion-col>
+            </ion-row>
+          </ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
           <ion-col size="5" class="paddzero text-right">Net Total:</ion-col>
-          <ion-col size="7" class="paddzero text-left fontboldclr">&nbsp;$ 2321.47</ion-col>
+          <ion-col size="7" class="paddzero text-right fontboldclr">
+            <ion-row>
+              <ion-col size="3" class="text-right paddzero">$
+                {{((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt) - (Version.RefAmt + Version.RoundOff)) | number: '.2-2'}}
+              </ion-col>
+              <ion-col size="1" class="text-center paddzero">+</ion-col>
+              <ion-col size="3" class="text-right paddzero" color="success">
+                <span *ngIf="Version.FinalNetAmt > 0">$
+                  {{ (Version.FinalNetAmt - ((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt))) | number: '.2-2'}}</span>
+                <span *ngIf="Version.FinalNetAmt == 0">$
+                  {{ ((Version.NetCoTotal + Version.NetCoTax) - Version.NetCoDisc) | number: '.2-2'}}</span>
+              </ion-col>
+              <ion-col size="1" class="text-center paddzero">=</ion-col>
+              <ion-col size="4" class="text-right paddzero">
+                <span *ngIf="Version.FinalNetAmt > 0">$
+                  {{ (Version.FinalNetAmt - (Version.RefAmt + Version.RoundOff)) | number: '.2-2'}}</span>
+                <span *ngIf="Version.FinalNetAmt == 0">$
+                  {{ (((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt)) + ((Version.NetCoTotal + Version.NetCoTax) - Version.NetCoDisc) - (Version.RefAmt + Version.RoundOff)) | number: '.2-2'}}&nbsp;</span>
+              </ion-col>
+            </ion-row>
+          </ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="5" class="paddzero text-right">Fee & Charge:</ion-col>
-          <ion-col size="7" class="paddzero text-left fontboldclr">&nbsp;$ 0.00</ion-col>
+          <ion-col size="5" class="paddzero text-right" (click)="ActionFeeSelect">Fee & Charge:</ion-col>
+          <ion-col size="7" class="paddzero text-right fontboldclr">
+            <ion-row>
+              <ion-col size="3" class="text-right paddzero"> $ {{(Version.RefAmt + Version.RoundOff) | number: '.2-2'}}
+              </ion-col>
+              <ion-col size="1" class="text-center paddzero">+</ion-col>
+              <ion-col size="3" class="text-right paddzero" color="success">
+                <span *ngIf="FinalFeeAndRoundAmt > 0">$
+                  {{(FinalFeeAndRoundAmt - (Version.RefAmt + Version.RoundOff)) | number: '.2-2'}}</span>
+                <span *ngIf="FinalFeeAndRoundAmt == 0">$ {{(Version.RefAmt + Version.RoundOff) | number: '.2-2'}}</span>
+              </ion-col>
+              <ion-col size="1" class="text-center paddzero">=</ion-col>
+              <ion-col size="4" class="text-right paddzero">$ {{FinalFeeAndRoundAmt | number: '.2-2'}}&nbsp;</ion-col>
+            </ion-row>
+          </ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
           <ion-col size="5" class="paddzero text-right">Final Total:</ion-col>
-          <ion-col size="7" class="paddzero text-left fontboldclr">&nbsp;$ 2321.47</ion-col>
+          <ion-col size="7" class="paddzero text-right fontboldclr">
+            <ion-row>
+              <ion-col size="3" class="text-right paddzero">$
+                {{((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt)) | number: '.2-2'}}</ion-col>
+              <ion-col size="1" class="text-center paddzero">+</ion-col>
+              <ion-col size="3" class="text-right paddzero" color="success">
+                <span *ngIf="Version.FinalNetAmt > 0">$
+                  {{ (Version.FinalNetAmt - ((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt))) | number: '.2-2'}}</span>
+                <span *ngIf="Version.FinalNetAmt == 0">$
+                  {{ ((Version.NetCoTotal + Version.NetCoTax) - Version.NetCoDisc) | number: '.2-2'}}</span>
+              </ion-col>
+              <ion-col size="1" class="text-center paddzero">=</ion-col>
+              <ion-col size="4" class="text-right paddzero">
+                <span *ngIf="Version.FinalNetAmt > 0">$ {{ Version.FinalNetAmt | number: '.2-2'}}</span>
+                <span *ngIf="Version.FinalNetAmt == 0">$
+                  {{ (((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt)) + ((Version.NetCoTotal + Version.NetCoTax) - Version.NetCoDisc)) | number: '.2-2'}}&nbsp;</span>
+              </ion-col>
+            </ion-row>
+          </ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
           <ion-col size="5" class="paddzero text-right">Payment:</ion-col>
-          <ion-col size="7" class="paddzero text-left fontbold">&nbsp;<span style="color:red;">($ 0.00)</span></ion-col>
+          <ion-col size="7" class="paddzero text-right fontboldclr">
+            <ion-row>
+              <ion-col size="3" class="text-right paddzero" color="danger">($ {{(Version.PmtReceived) | number: '.2-2'}})
+              </ion-col>
+              <ion-col size="1" class="text-center paddzero">+</ion-col>
+              <ion-col size="3" class="text-right paddzero" color="danger">
+                ($ 0.00)
+              </ion-col>
+              <ion-col size="1" class="text-center paddzero">=</ion-col>
+              <ion-col size="4" class="text-right paddzero" color="danger">
+                ($ {{(Version.PmtReceived) | number: '.2-2'}})&nbsp;
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mar-bot2" *ngIf="Version.CreditAmount > 0">
+          <ion-col size="5" class="paddzero text-right">Credits:</ion-col>
+          <ion-col size="7" class="paddzero text-right fontboldclr">
+            <ion-row>
+              <ion-col size="3" class="text-right paddzero" color="danger">($ {{(Version.CreditAmount) | number: '.2-2'}})
+              </ion-col>
+              <ion-col size="1" class="text-center paddzero">+</ion-col>
+              <ion-col size="3" class="text-right paddzero" color="danger">
+                ($ 0.00)
+              </ion-col>
+              <ion-col size="1" class="text-center paddzero">=</ion-col>
+              <ion-col size="4" class="text-right paddzero">
+                $ {{(Version.CreditAmount) | number: '.2-2'}}&nbsp;
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mar-bot2" *ngIf="Version.RefundAmount > 0">
+          <ion-col size="5" class="paddzero text-right">Refunds:</ion-col>
+          <ion-col size="7" class="paddzero text-right fontboldclr">
+            <ion-row>
+              <ion-col size="3" class="text-right paddzero" color="danger">($
+                {{(quote.header.Version.RefundAmount) | number: '.2-2'}})</ion-col>
+              <ion-col size="1" class="text-center paddzero">+</ion-col>
+              <ion-col size="3" class="text-right paddzero" color="danger">
+                ($ 0.00)
+              </ion-col>
+              <ion-col size="1" class="text-center paddzero">=</ion-col>
+              <ion-col size="4" class="text-right paddzero">
+                $ {{(quote.header.Version.RefundAmount) | number: '.2-2'}}&nbsp;
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mar-bot2" *ngIf="Version.PmtReceived != 0 || Version.RefundAmount != 0 || Version.CreditAmount != 0">
+          <ion-col size="5" class="paddzero text-right">Balance:</ion-col>
+          <ion-col size="7" class="paddzero text-right fontboldclr">
+            <ion-row>
+              <ion-col size="3" class="text-right paddzero">$
+                {{((((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt)) - (Version.PmtReceived - Version.RefundAmount)) - Version.CreditAmount) | number: '.2-2'}}
+              </ion-col>
+              <ion-col size="1" class="text-center paddzero">+</ion-col>
+              <ion-col size="3" class="text-right paddzero">
+                ($ 0.00)
+              </ion-col>
+              <ion-col size="1" class="text-center paddzero">=</ion-col>
+              <ion-col size="4" class="text-right paddzero" color="danger">
+                <span *ngIf="Version.FinalNetAmt > 0">$
+                  {{((Version.FinalNetAmt - (Version.PmtReceived - Version.RefundAmount)) - Version.CreditAmount) | number: '.2-2'}}</span>
+                <span *ngIf="Version.FinalNetAmt == 0">$
+                  {{(((((Version.TotalAmt + Version.TaxAmt + Version.CreditAmount) - (Version.DiscountAmt)) + ((Version.NetCoTotal + Version.NetCoTax) - Version.NetCoDisc)) - (Version.PmtReceived- Version.RefundAmount))) | number: '.2-2'}}&nbsp;</span>
+              </ion-col>
+            </ion-row>
+          </ion-col>
         </ion-row>
       </ion-col>
     </ion-row>
@@ -47,11 +260,11 @@
         <ion-col size="12">
           <ion-row class="mar-bot2">
             <ion-col size="5" class="paddzero text-right">Deposit(50%):</ion-col>
-            <ion-col size="7" class="paddzero text-left fontboldclr">&nbsp;$ 1,160.73</ion-col>
+            <ion-col size="7" class="paddzero text-right fontboldclr">&nbsp;$ 1,160.73</ion-col>
           </ion-row>
           <ion-row class="mar-bot2">
             <ion-col size="5" class="paddzero text-right">Final Payment(50%):</ion-col>
-            <ion-col size="7" class="paddzero text-left fontboldclr">&nbsp;$ 1,160.73</ion-col>
+            <ion-col size="7" class="paddzero text-right fontboldclr">&nbsp;$ 1,160.73</ion-col>
           </ion-row>
         </ion-col>
       </ion-row>
@@ -69,58 +282,58 @@
         </ion-row>
         <ion-row class="mar-bot2">
           <ion-col size="5" class="paddzero text-right">Material:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">25.35</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ 471.51</ion-col>
+          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.MaterialSqft | number : '.2-2'}}</ion-col>
+          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.MatAmount | number : '.2-2'}}</ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
           <ion-col size="5" class="paddzero text-right">Fab Labor:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">25.35</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ 1,156.73</ion-col>
+          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.FabLaborSqft | number : '.2-2'}}</ion-col>
+          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.FabLaborAmount | number : '.2-2'}}</ion-col>
         </ion-row>
-        <ion-row class="mar-bot2">
+        <ion-row class="mar-bot2" *ngIf="Version.EdgeLnft > 0">
           <ion-col size="5" class="paddzero text-right">Edge:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">0.33</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ 6.60</ion-col>
+          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.EdgeLnft | number : '.2-2'}}</ion-col>
+          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.EdgeAmount | number : '.2-2'}}</ion-col>
         </ion-row>
-        <ion-row class="mar-bot2">
+        <ion-row class="mar-bot2" *ngIf="Version.SinkQty > 0 || Version.FaucetQty > 0">
           <ion-col size="5" class="paddzero text-right">Sinks & Faucets:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">2.00</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ 449.38</ion-col>
+          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.SinkQty + Version.FaucetQty | number : '.2-2'}}</ion-col>
+          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.AdditionalAmt | number : '.2-2'}}</ion-col>
         </ion-row>
-        <ion-row class="mar-bot2">
+        <ion-row class="mar-bot2" *ngIf="Version.ApplianceQty > 0">
           <ion-col size="5" class="paddzero text-right">Appliance:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">1.00</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ 10.00</ion-col>
+          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.ApplianceQty | number : '.2-2'}}</ion-col>
+          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.ApplianceAmt | number : '.2-2'}}</ion-col>
         </ion-row>
-        <ion-row class="mar-bot2">
+        <ion-row class="mar-bot2" *ngIf="Version.CutOutLnft > 0">
           <ion-col size="5" class="paddzero text-right">CutOut:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">3.00</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ 165.00</ion-col>
+          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.CutOutLnft | number : '.2-2'}}</ion-col>
+          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.CutOutAmount | number : '.2-2'}}</ion-col>
         </ion-row>
-        <ion-row class="mar-bot2">
+        <ion-row class="mar-bot2" *ngIf="Version.LaborQty > 0">
           <ion-col size="5" class="paddzero text-right">Labor:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">1.00</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ 31.25</ion-col>
+          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.LaborQty | number : '.2-2'}}</ion-col>
+          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.LaborAmt | number : '.2-2'}}</ion-col>
         </ion-row>
-        <ion-row class="mar-bot2">
+        <ion-row class="mar-bot2" *ngIf="Version.TileQty > 0">
           <ion-col size="5" class="paddzero text-right">Tile:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">1.00</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ 5.00</ion-col>
+          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.TileQty | number : '.2-2'}}</ion-col>
+          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.TileAmt | number : '.2-2'}}</ion-col>
         </ion-row>
-        <ion-row class="mar-bot2">
+        <ion-row class="mar-bot2" *ngIf="Version.CabinetQty > 0">
           <ion-col size="5" class="paddzero text-right">Cabinet:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">1.00</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ 5.00</ion-col>
+          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.CabinetQty | number : '.2-2'}}</ion-col>
+          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.CabinetAmt | number : '.2-2'}}</ion-col>
         </ion-row>
-        <ion-row class="mar-bot2">
+        <ion-row class="mar-bot2" *ngIf="Version.CarpetQty > 0">
           <ion-col size="5" class="paddzero text-right">Carpet:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">1.00</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ 5.00</ion-col>
+          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.CarpetQty | number : '.2-2'}}</ion-col>
+          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.CarpetAmt | number : '.2-2'}}</ion-col>
         </ion-row>
-        <ion-row class="mar-bot2">
+        <ion-row class="mar-bot2" *ngIf="Version.AddOnQty > 0">
           <ion-col size="5" class="paddzero text-right">Add.Products:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">1.00</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ 16.00</ion-col>
+          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.AddOnQty | number : '.2-2'}}</ion-col>
+          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.OthersAmount | number : '.2-2'}}</ion-col>
         </ion-row>
       </ion-col>
     </ion-row>
@@ -133,27 +346,38 @@
     <ion-col size="12">
       <ion-row class="mar-bot2">
         <ion-col size="5" class="paddzero text-right">Total Revenue:</ion-col>
-        <ion-col size="7" class="paddzero text-left fontboldclr">&nbsp;$ 2321.47</ion-col>
+        <ion-col size="5" class="paddzero text-right fontboldclr">&nbsp;$ {{Version.SaleRevenue | number : '.2-2'}}</ion-col>
+        <ion-col size="2"></ion-col>
       </ion-row>
       <ion-row class="mar-bot2">
         <ion-col size="5" class="paddzero text-right">Total Cost:</ion-col>
-        <ion-col size="7" class="paddzero text-left fontboldclr">&nbsp;$ 1882.30</ion-col>
+        <ion-col size="5" class="paddzero text-right fontboldclr">&nbsp;$ {{Version.FinalCost | number : '.2-2'}}</ion-col>
+        <ion-col size="2"></ion-col>
       </ion-row>
       <ion-row class="mar-bot2">
         <ion-col size="5" class="paddzero text-right">Material Cost:</ion-col>
-        <ion-col size="7" class="paddzero text-left fontboldclr">&nbsp;$ 392.93</ion-col>
+        <ion-col size="5" class="paddzero text-right fontboldclr">&nbsp;$ {{Version.MatCost | number : '.2-2'}}</ion-col>
+        <ion-col size="2"></ion-col>
       </ion-row>
       <ion-row class="mar-bot2">
         <ion-col size="5" class="paddzero text-right">T$ Amount:</ion-col>
-        <ion-col size="7" class="paddzero text-left fontboldclr">&nbsp;$ 1928.54</ion-col>
+        <ion-col size="5" class="paddzero text-right fontboldclr">&nbsp;$ {{Version.TDollarAmount | number : '.2-2'}}</ion-col>
+        <ion-col size="2" class="paddzero fontboldclr">({{Version.TDolloarPercentage | number:'.0-0'}}%)</ion-col>
       </ion-row>
       <ion-row class="mar-bot2">
         <ion-col size="5" class="paddzero text-right">Gross Margin:</ion-col>
-        <ion-col size="7" class="paddzero text-left fontboldclr">&nbsp;$ 439.16</ion-col>
+        <ion-col size="5" class="paddzero text-right fontboldclr">&nbsp;$ {{Version.NetMargin | number : '.2-2'}}</ion-col>
+        <ion-col size="2" class="paddzero fontboldclr"> ({{Version.NetMarginPercentage | number:'.0-0'}}%)</ion-col>
       </ion-row>
       <ion-row class="mar-bot2">
         <ion-col size="5" class="paddzero text-right">Net Margin:</ion-col>
-        <ion-col size="7" class="paddzero text-left fontboldclr">&nbsp;$ 439.16</ion-col>
+        <ion-col size="5" class="paddzero text-right fontboldclr">&nbsp;$ {{Version.NetMargin | number : '.2-2'}}</ion-col>
+        <ion-col size="2" class="paddzero fontboldclr"> ({{Version.NetMarginPercentage | number:'.0-0'}}%)</ion-col>
+      </ion-row>
+      <ion-row class="mar-bot2" *ngIf="Version.AddonsMargin > 0">
+        <ion-col size="5" class="paddzero text-right">Add On Margin:</ion-col>
+        <ion-col size="5" class="paddzero text-right fontboldclr">&nbsp;$ {{Version.AddonsMargin | number : '.2-2'}}</ion-col>
+        <ion-col size="2" class="paddzero fontboldclr">({{Version.AddonsMarginPercentage | number:'.0-0'}}%)</ion-col>
       </ion-row>
     </ion-col>
   </ion-row>
@@ -175,11 +399,11 @@
         <ion-col size="2" class="paddzero text-right">Addon</ion-col>
       </ion-row>
       <ion-row class="mar-bot2">
-          <ion-col size="3" class="paddzero text-left fontboldclr">0-100</ion-col>
-          <ion-col size="2" class="paddzero text-center fontboldclr">5%</ion-col>
-          <ion-col size="2" class="paddzero text-center fontboldclr">0%</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">21.96</ion-col>
-          <ion-col size="2" class="paddzero text-right fontboldclr">0%</ion-col>
+          <ion-col size="3" class="paddzero text-left fontboldclr">{{percentage.Min}} - {{percentage.Max}}</ion-col>
+          <ion-col size="2" class="paddzero text-center fontboldclr">{{percentage.Std}}%</ion-col>
+          <ion-col size="2" class="paddzero text-center fontboldclr"> {{percentage.Bonus}}%</ion-col>
+          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.CommissionAmount}}</ion-col>
+          <ion-col size="2" class="paddzero text-right fontboldclr">{{Version.Commission.AddOnMargin}}%</ion-col>
         </ion-row>
     </ion-col>
   </ion-card>

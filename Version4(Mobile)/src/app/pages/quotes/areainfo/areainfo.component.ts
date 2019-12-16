@@ -109,11 +109,12 @@ export class AreainfoComponent implements OnInit {
     return await modal.present();
   }
   /***** CUTOUT DETAILS *****/
-  async ActionCreateCutout(typeId) {
-    let obj = { TypeID: typeId }
+  async ActionCreateCutout(typeId:any, cutouts:any) {
+    let copyobj = JSON.parse(JSON.stringify(cutouts));
+    let cutout = { cutout: copyobj, TypeID:typeId, priceListID: Number(this.Version.PriceListID) }
     const modal = await this.Modalcntrl.create({
       component: CutoutinfoComponent,
-      componentProps: obj
+      componentProps: cutout
     });
     return await modal.present();
   }
@@ -137,11 +138,12 @@ export class AreainfoComponent implements OnInit {
     });
     return await modal.present();
   }
-  async ActionCreateTemplate(typeId) {
-    let obj = { TypeID: typeId }
+  async ActionCreateTemplate(typeId: number,temp : any) {
+    let copyobj = JSON.parse(JSON.stringify(temp));
+    let labor = { labor: copyobj, TypeID:typeId }
     const modal = await this.Modalcntrl.create({
       component: TemplateComponent,
-      componentProps: obj
+      componentProps: labor
     });
     return await modal.present();
   }

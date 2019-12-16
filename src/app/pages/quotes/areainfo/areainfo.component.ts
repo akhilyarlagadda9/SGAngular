@@ -33,7 +33,6 @@ export class AreainfoComponent implements OnInit {
   ngOnInit() {
     this.ActionGetAreaList();
   }
-
   ActionGetAreaList() {
     let result = this.service.ActionQuickAreaList(this.Version.ID, 0, 0, 0).subscribe(
       data => {
@@ -47,7 +46,6 @@ export class AreainfoComponent implements OnInit {
       },
       error => console.log(error));
   }
-
   ActionPartsByArea(area: any, parttype: number) {
     this.partlist = area.PartList;
     if (this.partlist != null && parttype != 0) {
@@ -56,7 +54,6 @@ export class AreainfoComponent implements OnInit {
       if (length > 0) { this.ActionGetPartInfo(this.partlist[0].ID); }
     }
   }
-
   ActionGetPartInfo(partId: number) {
     let result = this.service.ActionPartInfo(this.areaInfo.VersionID, this.areaInfo.ID, partId, 0).subscribe(
       data => {
@@ -64,36 +61,33 @@ export class AreainfoComponent implements OnInit {
       },
       error => console.log(error));
   }
-  async ActionCreateTemplate(typeId) {
-    let obj = { TypeID: typeId }
+  /***** Addarea DETAILS *****/
+  async ActionAddArea() {
     const modal = await this.Modalcntrl.create({
-      component: TemplateComponent,
-      componentProps: obj
+      component: AddareaComponent
     });
     return await modal.present();
   }
-
-  /***** SINK DETAILS *****/
-  async ActionEditSink(snk: any) {
-    let copyobj = JSON.parse(JSON.stringify(snk));
-    let sinkfaucet = { sinkfaucet: copyobj, priceListID: Number(this.Version.PriceListID) }
+  /***** MATERIAL DETAILS *****/
+  async ActionEditMaterial(mat: any) {
+    let copyobj = JSON.parse(JSON.stringify(mat));
+    let material = { material: copyobj, priceListID: Number(this.Version.PriceListID) }
     const modal = await this.Modalcntrl.create({
-      component: SinkComponent,
-      componentProps: sinkfaucet
+      component: MaterialinfoComponent,
+      componentProps: material
     });
     return await modal.present();
   }
-  /***** ADD ON DETAILS *****/
-  async ActionEditAddon(oth: any) {
-    let copyobj = JSON.parse(JSON.stringify(oth));
-    let other = { other: copyobj, priceListID: Number(this.Version.PriceListID) }
+  /***** MEASUREMENT DETAILS *****/
+  async ActionEditMeasurement(fab: any) {
+    let copyobj = JSON.parse(JSON.stringify(fab));
+    let sizes = { sizes: copyobj, priceListID: Number(this.Version.PriceListID) }
     const modal = await this.Modalcntrl.create({
-      component: AddoninfoComponent,
-      componentProps: other
+      component: MeasurementsComponent,
+      componentProps: sizes
     });
     return await modal.present();
   }
-
   /***** SPLASH DETAILS *****/
   async ActionEditSplash(spl: any) {
     let copyobj = JSON.parse(JSON.stringify(spl));
@@ -114,7 +108,6 @@ export class AreainfoComponent implements OnInit {
     });
     return await modal.present();
   }
-
   /***** CUTOUT DETAILS *****/
   async ActionCreateCutout(typeId) {
     let obj = { TypeID: typeId }
@@ -124,39 +117,16 @@ export class AreainfoComponent implements OnInit {
     });
     return await modal.present();
   }
-
-
-  /***** Addarea DETAILS *****/
-  async ActionAddArea() {
+  /***** SINK DETAILS *****/
+  async ActionEditSink(snk: any) {
+    let copyobj = JSON.parse(JSON.stringify(snk));
+    let sinkfaucet = { sinkfaucet: copyobj, priceListID: Number(this.Version.PriceListID) }
     const modal = await this.Modalcntrl.create({
-      component: AddareaComponent
+      component: SinkComponent,
+      componentProps: sinkfaucet
     });
     return await modal.present();
   }
-
-
-  /***** MATERIAL DETAILS *****/
-  async ActionEditMaterial(mat: any) {
-    let copyobj = JSON.parse(JSON.stringify(mat));
-    let material = { material: copyobj, priceListID: Number(this.Version.PriceListID) }
-    const modal = await this.Modalcntrl.create({
-      component: MaterialinfoComponent,
-      componentProps: material
-    });
-    return await modal.present();
-  }
-
-  /***** MEASUREMENT DETAILS *****/
-  async ActionEditMeasurement(fab: any) {
-    let copyobj = JSON.parse(JSON.stringify(fab));
-    let sizes = { sizes: copyobj, priceListID: Number(this.Version.PriceListID) }
-    const modal = await this.Modalcntrl.create({
-      component: MeasurementsComponent,
-      componentProps: sizes
-    });
-    return await modal.present();
-  }
-
   /***** FAUCETS DETAILS *****/
   async ActionEditFaucet(fau: any) {
     let copyobj = JSON.parse(JSON.stringify(fau));
@@ -167,7 +137,24 @@ export class AreainfoComponent implements OnInit {
     });
     return await modal.present();
   }
-
+  async ActionCreateTemplate(typeId) {
+    let obj = { TypeID: typeId }
+    const modal = await this.Modalcntrl.create({
+      component: TemplateComponent,
+      componentProps: obj
+    });
+    return await modal.present();
+  }
+  /***** ADD ON DETAILS *****/
+  async ActionEditAddon(oth: any) {
+    let copyobj = JSON.parse(JSON.stringify(oth));
+    let other = { other: copyobj, priceListID: Number(this.Version.PriceListID) }
+    const modal = await this.Modalcntrl.create({
+      component: AddoninfoComponent,
+      componentProps: other
+    });
+    return await modal.present();
+  }
   /***** TILE DETAILS *****/
   async ActionEditTile(typeId, name, tile: any) {
 
@@ -179,6 +166,8 @@ export class AreainfoComponent implements OnInit {
     });
     return await modal.present();
   }
+
+
 
   /***** CUSTOMERITEM DETAILS *****/
   async ActionEditCustItems(res: any) {

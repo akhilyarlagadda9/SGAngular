@@ -13,7 +13,7 @@ import { PoitemsComponent } from '../poitems/poitems.component';
 import { CommhubComponent } from '../commhub/commhub.component';
 import { PrintsComponent } from '../prints/prints.component';
 import { JobdesComponent } from '../jobdes/jobdes.component';
-import { AreainfoComponent,DiscountComponent,taxComponent,feeComponent,areaitem2Component } from '../areainfo/areainfo.component';
+import { AreainfoComponent} from '../areainfo/areainfo.component';
 import { PoeditComponent } from '../poedit/poedit.component';
 import { JobdesceditComponent } from '../jobdescedit/jobdescedit.component';
 import { CustomereditComponent } from '../customeredit/customeredit.component';
@@ -36,7 +36,7 @@ import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
 import { TemplateComponent } from '../template/template.component';
 import { CustitemComponent, itemsearchComponent } from '../custitem/custitem.component';
 import { CustomersearchComponent } from '../customersearch/customersearch.component';
-import { ManagementsummaryComponent } from '../managementsummary/managementsummary.component';
+import { ManagementsummaryComponent,DiscountComponent,taxComponent,feeComponent} from '../managementsummary/managementsummary.component';
 
 
 @NgModule({
@@ -51,7 +51,7 @@ import { ManagementsummaryComponent } from '../managementsummary/managementsumma
       },
     ])
   ],
-  entryComponents: [CreatequoteComponent,areaitem2Component,AdditionalitemserachComponent,DiscountComponent,feeComponent,taxComponent, itemsearchComponent,  CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, 
+  entryComponents: [CreatequoteComponent,AdditionalitemserachComponent,DiscountComponent,feeComponent,taxComponent, itemsearchComponent,  CustomersearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, 
     TileinfoComponent, FaucetsComponent, MeasurementsComponent, 
     MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, 
     SplashComponent, AddoninfoComponent, SinkComponent,
@@ -62,7 +62,7 @@ import { ManagementsummaryComponent } from '../managementsummary/managementsumma
     CustomerinfoComponent,AddareaComponent,CustomersearchComponent,ManagementsummaryComponent],
     
 
-  declarations: [QuotePage,areaitem2Component,AdditionalitemserachComponent,taxComponent,feeComponent,DiscountComponent, itemsearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
+  declarations: [QuotePage,AdditionalitemserachComponent,taxComponent,feeComponent,DiscountComponent, itemsearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
     HeadereditComponent,HeaderinfoComponent,PoitemsComponent,
     CommhubComponent,PrintsComponent,JobdesComponent,
     AreainfoComponent,PoeditComponent,JobdesceditComponent,

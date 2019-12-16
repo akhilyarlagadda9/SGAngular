@@ -27,7 +27,7 @@ export class AreainfoComponent implements OnInit {
   arealist: any = [];
   partinfo: any = [];
   partlist: any = [];
-  areaInfo: any; AreaPartID: number;
+  areaInfo:any;AreaPartID:number;
   viewid: any;
   constructor(private service: QuoteService, public Modalcntrl: ModalController, private popoverCntrl: PopoverController) { }
   ngOnInit() {
@@ -38,10 +38,10 @@ export class AreainfoComponent implements OnInit {
       data => {
         this.arealist = data.VersionAreaList;
         if (this.arealist != null) {
-          this.areaInfo = this.arealist[0];
-          this.partinfo = data.PartInfo;
-          this.AreaPartID = this.partinfo == null ? 0 : this.partinfo.ID;
-          this.ActionPartsByArea(this.areaInfo, 0);
+        this.areaInfo = this.arealist[0];
+        this.partinfo = data.PartInfo;
+        this.AreaPartID = this.partinfo == null ? 0 : this.partinfo.ID;
+        this.ActionPartsByArea(this.areaInfo, 0);
         }
       },
       error => console.log(error));
@@ -51,10 +51,10 @@ export class AreainfoComponent implements OnInit {
     if (this.partlist != null && parttype != 0) {
       let length = this.partlist.length;
       //this.ActionGetPartInfo(this.partlist[0].VersionID, this.partlist[0].AreaID, this.partlist[0].ID, 0);
-      if (length > 0) { this.ActionGetPartInfo(this.partlist[0].ID); }
+      if(length > 0){this.ActionGetPartInfo(this.partlist[0].ID);}
     }
   }
-  ActionGetPartInfo(partId: number) {
+  ActionGetPartInfo(partId:number) {
     let result = this.service.ActionPartInfo(this.areaInfo.VersionID, this.areaInfo.ID, partId, 0).subscribe(
       data => {
         this.partinfo = data;
@@ -89,9 +89,9 @@ export class AreainfoComponent implements OnInit {
     return await modal.present();
   }
   /***** SPLASH DETAILS *****/
-  async ActionEditSplash(spl: any) {
+  async ActionEditSplash(spl:any) {
     let copyobj = JSON.parse(JSON.stringify(spl));
-    let splash = { splash: copyobj, priceListID: Number(this.Version.PriceListID) }
+    let splash = {splash : copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
       component: SplashComponent,
       componentProps: splash
@@ -99,9 +99,9 @@ export class AreainfoComponent implements OnInit {
     return await modal.present();
   }
   /***** EDGE DETAILS *****/
-  async ActionEditEdge(edg: any) {
+  async ActionEditEdge(edg:any) {
     let copyobj = JSON.parse(JSON.stringify(edg));
-    let edge = { edge: copyobj, priceListID: Number(this.Version.PriceListID) }
+    let edge = {edge : copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
       component: EdgeinfoComponent,
       componentProps: edge
@@ -158,10 +158,10 @@ export class AreainfoComponent implements OnInit {
     return await modal.present();
   }
   /***** TILE DETAILS *****/
-  async ActionEditTile(typeId, name, tile: any) {
-
+  async ActionEditTile(typeId,name,tile:any) {
+    
     let copyobj = JSON.parse(JSON.stringify(tile));
-    let tileobj = { TypeID: typeId, selName: name, labor: copyobj, priceListID: Number(this.Version.PriceListID) }
+    let tileobj = {TypeID:typeId,selName:name,labor:copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
       component: TileinfoComponent,
       componentProps: tileobj
@@ -172,308 +172,26 @@ export class AreainfoComponent implements OnInit {
 
 
   /***** CUSTOMERITEM DETAILS *****/
-  async ActionEditCustItems(res: any) {
+  async ActionEditCustItems(res:any) {
     let copyobj = JSON.parse(JSON.stringify(res));
-    let response = { response: copyobj, priceListID: Number(this.Version.PriceListID) }
+    let response = {response : copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
       component: CustitemComponent,
-      componentProps: response
+      componentProps : response
     });
     return await modal.present();
   }
 
-  async ActionDiscSelect(ev: any) {
-    let obj = {}
-    const popover = await this.popoverCntrl.create({
-      component: DiscountComponent,
-      event: ev,
-      translucent: true,
-      componentProps: obj,
-    });
-    return await popover.present();
-  }
 
-  async ActionAddAreaitem(ev: any) {
-    let obj = {}
-    const popover = await this.popoverCntrl.create({
-      component: areaitem2Component,
-      event: ev,
-      translucent: true,
-      componentProps: obj,
-      cssClass: "popover_class"
-    });
-    return await popover.present();
-  }
-  async ActionTaxSelect(ev: any) {
-    let obj = {}
-    const popover = await this.popoverCntrl.create({
-      component: taxComponent,
-      event: ev,
-      translucent: true,
-      componentProps: obj,
-    });
-    return await popover.present();
-  }
-
-  async ActionFeeSelect(ev: any) {
-    let obj = {}
-    const popover = await this.popoverCntrl.create({
-      component: feeComponent,
-      event: ev,
-      translucent: true,
-      componentProps: obj,
-    });
-    return await popover.present();
-  }
 //Management summary component
-  async ActionSummaryEdit(version:any) {
+  async ActionSummaryEdit() {debugger;
+    let version = {Version : this.Version}
     let copyver = JSON.parse(JSON.stringify(version));
     const modal = await this.Modalcntrl.create({
       component: ManagementsummaryComponent,
       componentProps: copyver
     });
     return await modal.present();
-  }
-}
-
-@Component({
-  //selector: 'app-itemsearchComponent',
-  template: `
-  <ion-header>
-    <ion-toolbar style="height:37px;top:-8px;left:-10px;">
-      <ion-title style="font-size:15px;">Job Discount(S)</ion-title>
-      <ion-button slot="end" color="success" size="small" style="font-size:13px; height:17px;width: 42px;">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop()" style="font-size:13px; height:17px;width: 22px;">X</ion-button>
-    </ion-toolbar>
-  </ion-header>
-  <ion-row style="height:360px">
-  <ion-col>
-      <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Discount</ion-label>
-      <ion-select class="btninfo" interface="popover" [(ngModel)]="discname" name="discname"
-        (ionChange)="ActionChangeDiscount()">
-        <ion-select-option *ngFor="let disc of DiscountTypeList" [value]="discname"> {{disc.Name}}</ion-select-option>
-      </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Value($/%)</ion-label>
-        <ion-input type="text" class="labelfont" value="0"></ion-input>
-        </ion-item>
-        <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary"></ion-label>
-        <ion-select [(ngModel)]="name" class="labelfont">
-           <ion-select-option *ngFor="let disc of DiscTypes1" [value]="name"> {{disc.Name}}</ion-select-option>
-        </ion-select></ion-item>
-        <ion-item style="margin-left: -4%;">
-          <ion-checkbox style="margin-left: 4%;"></ion-checkbox>
-          <ion-label style="margin-left: 5px;">Tax</ion-label>
-      </ion-item>
-  </ion-col>
-</ion-row>`,
-  //styleUrls: ['./customeredit.component.scss'],
-})
-export class DiscountComponent implements OnInit {
-  searchObj = this.navParams.data;
-  searchResults = [];
-  DiscountTypeList: any = [];
-
-  constructor(private Modalcntrl: ModalController, private navParams: NavParams, private popoverCntrl: PopoverController, private service: QuotegetService) { }
-  ngOnInit() {
-    this.ActionSearchParentAccount();
-    this.ActionChangeDiscount();
-  }
-  ActionSearchParentAccount() { }
-  DiscTypes1: any = [{ ID: 1, Name: "%" }, { ID: 2, Name: "$" }];
-
-  ActionChangeDiscount() {
-    let result = this.service.QuoteMasterList(2).subscribe(
-      data => { this.DiscountTypeList = data },
-      error => console.log(error));
-  }
-
-  ActionToClosePop() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
-    this.popoverCntrl.dismiss({
-      'dismissed': true
-    });
-  }
-}
-
-
-@Component({
-  //selector: 'app-itemsearchComponent',
-  template: `
-    <ion-header>
-      <ion-toolbar style="height:37px;top:-8px;left:-10px;">
-        <ion-title style="font-size:15px;">Sales Tax(%)</ion-title>
-        <ion-button slot="end" color="success" size="small" style="font-size:13px; height:17px;width: 42px;">Save</ion-button>
-        <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop()" style="font-size:13px; height:17px;width: 22px;">X</ion-button>
-      </ion-toolbar>
-    </ion-header>
-    <ion-row style="height:360px">
-    <ion-col>
-          <ion-item>
-          <ion-label class="labelfont" position="floating" color="primary">Customer Tax Code:</ion-label>
-        <ion-select class="btninfo" interface="popover" [(ngModel)]="taxname" name="taxname" (ionChange)="ActionChangeQuoteTax()">
-            <ion-select-option *ngFor="let mat of TaxTypeList " [value]="taxname"></ion-select-option>
-        </ion-select>
-        </ion-item>
-        <ion-item><ion-input type="text" class="labelfont" value="0"></ion-input> </ion-item>
-        <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Material:</ion-label>
-        <ion-input type="text" class="labelfont" value="0"><ion-row style="margin-right: 3px;">%</ion-row></ion-input>
-        </ion-item>
-        <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Fabrication:</ion-label>
-        <ion-input type="text" class="labelfont" value="100"><ion-row style="margin-right: 3px;">%</ion-row></ion-input>
-        </ion-item>
-        <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Edge,Cutouts:</ion-label>
-        <ion-input type="text" class="labelfont" value="100"><ion-row style="margin-right: 3px;">%</ion-row></ion-input> 
-        </ion-item>
-        <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Sink,Faucet:</ion-label>
-        <ion-input type="text" class="labelfont" value="100"><ion-row style="margin-right: 3px;">%</ion-row></ion-input> 
-        </ion-item>
-        <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Appliance:</ion-label>
-        <ion-input type="text" class="labelfont" value="100"><ion-row style="margin-right: 3px;">%</ion-row></ion-input> 
-        </ion-item>
-        <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Add on:</ion-label>
-        <ion-input type="text" class="labelfont" value="100"><ion-row style="margin-right: 3px;">%</ion-row></ion-input> 
-        </ion-item>
-        <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Labor:</ion-label>
-        <ion-input type="text" class="labelfont" value="100"><ion-row style="margin-right: 3px;">%</ion-row></ion-input> 
-        </ion-item>
-        <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Tile:</ion-label>
-        <ion-input type="text" class="labelfont" value="100"><ion-row style="margin-right: 3px;">%</ion-row></ion-input> 
-        </ion-item>
-        <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Cabinet:</ion-label>
-        <ion-input type="text" class="labelfont" value="100"><ion-row style="margin-right: 3px;">%</ion-row></ion-input> 
-        </ion-item>
-        <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Carpet:</ion-label>
-        <ion-input type="text" class="labelfont" value="100"><ion-row style="margin-right: 3px;">%</ion-row></ion-input> 
-        </ion-item>
-        <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Wood Floor:</ion-label>
-        <ion-input type="text" class="labelfont" value="100"><ion-row style="margin-right: 3px;">%</ion-row></ion-input> 
-        </ion-item>
-        <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Consumable:</ion-label>
-        <ion-input type="text" class="labelfont" value="100"><ion-row style="margin-right: 3px;">%</ion-row></ion-input> 
-        </ion-item>
-        <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Tool:</ion-label>
-        <ion-input type="text" class="labelfont" value="100"><ion-row style="margin-right: 3px;">%</ion-row></ion-input> 
-        </ion-item>
-    </ion-col>
-  </ion-row>`,
-  //styleUrls: ['./customeredit.component.scss'],
-})
-export class taxComponent implements OnInit {
-  searchObj = this.navParams.data;
-  searchResults = [];
-  TaxTypeList: any = [];
-  header: any;
-  Version: any;
-
-  constructor(private Modalcntrl: ModalController, private navParams: NavParams, private popoverCntrl: PopoverController, private service: QuotegetService) { }
-  ngOnInit() {
-    this.ActionSearchParentAccount();
-    this.ActionChangeQuoteTax();
-  }
-  ActionSearchParentAccount() { }
-
-  ActionChangeQuoteTax() {
-    debugger;
-    let result = this.service.Accounttaxlist(3, this.Version.CustTypeID).subscribe(
-      data => { debugger; this.TaxTypeList = data },
-      error => console.log(error));
-  }
-
-  ActionToClosePop() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
-    this.popoverCntrl.dismiss({
-      'dismissed': true
-    });
-  }
-}
-//styleUrls: ['./customeredit.component.scss'],
-
-@Component({
-  //selector: 'app-itemsearchComponent',
-  template: `
-      <ion-header>
-        <ion-toolbar style="height:37px;top:-8px;left:-10px;">
-          <ion-title style="font-size:15px;">Charges</ion-title>
-          <ion-button slot="end" color="success" size="small" style="font-size:13px; height:17px;width: 42px;">Save</ion-button>
-          <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop()" style="font-size:13px; height:17px;width: 22px;">X</ion-button>
-        </ion-toolbar>
-      </ion-header>
-      <ion-row style="height:360px">
-      <ion-col>
-         <ion-item>
-            <ion-label class="labelfont" position="floating" color="primary">Fees</ion-label>
-            <ion-select class="btninfo" interface="popover" [(ngModel)]="discname" name="discname" (ionChange)="ActionChangeFeeType()">
-                <ion-select-option *ngFor="let mat of FeeTypeList " [value]="discname">{{mat.Name}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-label class="labelfont" position="floating" color="primary"></ion-label>
-            <ion-input type="text" class="labelfont" value="0"></ion-input>
-            </ion-item>
-            <ion-item>
-            <ion-label class="labelfont" position="floating" color="primary"></ion-label>
-            <ion-select [(ngModel)]="name" class="labelfont">
-               <ion-select-option *ngFor="let disc of DiscTypes1" [value]="name"> {{disc.Name}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-            <ion-item style="margin-left: -4%;">
-              <ion-checkbox style="margin-left: 4%;"></ion-checkbox>
-              <ion-label style="margin-left: 5px;">FeeTax</ion-label>
-          </ion-item>
-          <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Net Total W/O Round Off: </ion-label>
-        <ion-input type="text" class="labelfont" value="$ 1,365.01" readonly="readonly"></ion-input> 
-        </ion-item>
-        <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Round Off:</ion-label>
-        <ion-input type="text" class="labelfont" value="$ 1,365.01" readonly="readonly"></ion-input> 
-        </ion-item>
-        <ion-item>
-          <ion-range value="20">
-            <ion-icon slot="start" size="small" name="remove"></ion-icon>
-            <ion-icon slot="end" name="add"></ion-icon>
-          </ion-range>
-        </ion-item>
-        <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Net Total:</ion-label>
-        <ion-input type="text" class="labelfont" value="$ 1,365.01" readonly="readonly"></ion-input> 
-        </ion-item>
-      </ion-col>
-    </ion-row>`,
-  //styleUrls: ['./customeredit.component.scss'],
-})
-export class feeComponent implements OnInit {
-  searchObj = this.navParams.data;
-  searchResults = [];
-  FeeTypeList: any = [];
-  constructor(private Modalcntrl: ModalController, private navParams: NavParams, private popoverCntrl: PopoverController, private service: QuotegetService) { }
-  ngOnInit() {
-  }
-  ActionToClosePop() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
-    this.popoverCntrl.dismiss({
-      'dismissed': true
-    });
   }
 }
 

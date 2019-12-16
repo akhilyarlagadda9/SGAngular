@@ -235,13 +235,14 @@ export class AreainfoComponent implements OnInit {
     return await popover.present();
   }
 //Management summary component
-  async ActionSummaryEdit() {
+  async ActionSummaryEdit(version:any) {
+    let copyver = JSON.parse(JSON.stringify(version));
     const modal = await this.Modalcntrl.create({
       component: ManagementsummaryComponent,
+      componentProps: copyver
     });
     return await modal.present();
   }
-
 }
 
 @Component({
@@ -585,9 +586,6 @@ export class feeComponent implements OnInit {
       </ion-grid>`,
   //styleUrls: ['./customeredit.component.scss'],
 })
-
-
-
 export class areaitem2Component implements OnInit {
 
   constructor(private Modalcntrl: ModalController, private navParams: NavParams, private popoverCntrl: PopoverController, private service: QuotegetService) { }

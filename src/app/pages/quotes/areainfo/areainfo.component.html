@@ -454,22 +454,21 @@
   </ion-col>
 </ion-row>
 
-
 <ion-list *ngIf="Version.LatestCoID == 0">
   <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
-    <ion-col size="4" class="fontbold text-right" (click)="ActionSummaryEdit()"><u>Sub Total:</u></ion-col>
+    <ion-col size="4" class="fontbold text-right"><img  (click)="ActionSummaryEdit()" src="assets/img/MoneyImg.png" alt="your image" class="imghw">&nbsp;Sub Total:</ion-col>
     <ion-col size="4" class="fontbold text-right">$ {{(Version.TotalAmt) | number : '.2-2'}}&nbsp;</ion-col>
   </ion-row>
   <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
-    <ion-col size="4" class="fontbold text-right" (click)="ActionDiscSelect()"><u>Discount:</u></ion-col>
+    <ion-col size="4" class="fontbold text-right">Discount:</ion-col>
     <ion-col size="4" class="fontbold text-right"><span style="color:red;">($
         {{(Version.DiscountAmt) | number : '.2-2'}})&nbsp;</span></ion-col>
   </ion-row>
   <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
-    <ion-col size="4" class="fontbold text-right" (click)="ActionTaxSelect()"><u>Sales Tax:</u></ion-col>
+    <ion-col size="4" class="fontbold text-right">Sales Tax:</ion-col>
     <ion-col size="4" class="fontbold text-right">$ {{Version.TaxAmt | number : '.2-2'}}&nbsp;</ion-col>
   </ion-row>
   <ion-row class="marginbot">
@@ -481,7 +480,7 @@
   </ion-row>
   <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
-    <ion-col size="4" class="fontbold text-right" (click)="ActionFeeSelect()"><u>Fee & Charge:</u></ion-col>
+    <ion-col size="4" class="fontbold text-right">Fee & Charge:</ion-col>
     <ion-col size="4" class="fontbold text-right"> $ {{(Version.RefAmt) | number : '.2-2'}}&nbsp;</ion-col>
   </ion-row>
   <ion-row class="marginbot">
@@ -509,8 +508,6 @@
     </ion-col>
   </ion-row>
 </ion-list>
-
-
 <ion-list *ngIf="Version.LatestCoID > 0">
   <ion-row class="marginbot">
     <ion-col size="4" class="fontbold text-right">Sub Total:</ion-col>
@@ -533,7 +530,7 @@
     </ion-col>
   </ion-row>
   <ion-row class="marginbot">
-    <ion-col size="4" class="fontbold text-right" (click)="ActionDiscSelect()">Discount:</ion-col>
+    <ion-col size="4" class="fontbold text-right">Discount:</ion-col>
     <ion-col size="8" class="fontbold text-right">
       <ion-row>
         <ion-col size="3" class="text-right paddzero" color="danger">($ {{(Version.DiscountAmt) | number : '.2-2'}})
@@ -554,7 +551,7 @@
     </ion-col>
   </ion-row>
   <ion-row class="marginbot">
-    <ion-col size="4" class="fontbold text-right" (click)="ActionTaxSelect">Sales Tax:</ion-col>
+    <ion-col size="4" class="fontbold text-right">Sales Tax:</ion-col>
     <ion-col size="8" class="fontbold text-right">
       <ion-row>
         <ion-col size="3" class="text-right paddzero">$ {{Version.TaxAmt | number : '.2-2'}}</ion-col>
@@ -596,7 +593,7 @@
     </ion-col>
   </ion-row>
   <ion-row class="marginbot">
-    <ion-col size="4" class="fontbold text-right" (click)="ActionFeeSelect">Fee & Charge:</ion-col>
+    <ion-col size="4" class="fontbold text-right">Fee & Charge:</ion-col>
     <ion-col size="8" class="fontbold text-right">
       <ion-row>
         <ion-col size="3" class="text-right paddzero"> $ {{(Version.RefAmt + Version.RoundOff) | number: '.2-2'}}

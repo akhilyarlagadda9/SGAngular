@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,Directive, ElementRef, HostBinding, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms'; 
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';

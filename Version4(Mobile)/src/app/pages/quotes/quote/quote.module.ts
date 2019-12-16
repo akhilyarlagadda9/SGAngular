@@ -36,6 +36,7 @@ import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
 import { TemplateComponent } from '../template/template.component';
 import { CustitemComponent, itemsearchComponent } from '../custitem/custitem.component';
 import { CustomersearchComponent } from '../customersearch/customersearch.component';
+import { ManagementsummaryComponent } from '../managementsummary/managementsummary.component';
 
 
 @NgModule({
@@ -58,13 +59,13 @@ import { CustomersearchComponent } from '../customersearch/customersearch.compon
     PoitemsComponent,CommhubComponent,PrintsComponent,
     JobdesComponent,AreainfoComponent,PoeditComponent,
     JobdesceditComponent,CustomereditComponent,CommhubeditComponent,
-    CustomerinfoComponent,AddareaComponent,CustomersearchComponent],
+    CustomerinfoComponent,AddareaComponent,CustomersearchComponent,ManagementsummaryComponent],
     
 
   declarations: [QuotePage,areaitem2Component,AdditionalitemserachComponent,taxComponent,feeComponent,DiscountComponent, itemsearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
     HeadereditComponent,HeaderinfoComponent,PoitemsComponent,
     CommhubComponent,PrintsComponent,JobdesComponent,
     AreainfoComponent,PoeditComponent,JobdesceditComponent,
-    CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent,CustomersearchComponent,]
+    CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent,CustomersearchComponent,ManagementsummaryComponent]
 })
 export class QuotePageModule {}

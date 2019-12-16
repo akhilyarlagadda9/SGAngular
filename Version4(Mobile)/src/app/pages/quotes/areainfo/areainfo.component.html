@@ -56,12 +56,7 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList">
-  <<<<<<< .mine <ion-col><u class="colorblue">Siz</u>:
-    ||||||| .r14195
-    <ion-col><u class="colorblue">Siz</u>:
-      =======
       <ion-col><u class="colorblue textfont14">Siz</u>:
-        >>>>>>> .r14198
         <span *ngFor="let size of fabrication.MeasureList" (click)="ActionEditMeasurement(size)">
           <span *ngIf="size.Sqft != 0">
             <span *ngIf="size.CounterType != '' && size.CounterType != null">({{size.CounterType}})</span>
@@ -151,7 +146,7 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let coutout of partinfo.CutoutList">
-  <<<<<<< .mine <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 1">
+  <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 1">
     <ion-row>
       <ion-col (click)="ActionCreateCutout(1)"><u class="colorblue">SC</u>:
         <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
@@ -166,24 +161,16 @@
         </span>
       </ion-col>
       <ion-col size="3" class="text-right">$
-        <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}</span>
-        <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}</span>
+        <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+        <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
       </ion-col>
     </ion-row>
-    ||||||| .r14195
-    <ion-col (click)="ActionCreateCutout(1)"><u class="colorblue">C</u>:
-      <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
-      <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
-      <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
-      &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
-      <span>@
-        <u class="colorgreen">
-          <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
-          <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
-        </u>
-      </span>
-      =======
-      <ion-col (click)="ActionCreateCutout(1)"><u class="colorblue textfont14">C</u>:
+  </ion-col>
+</ion-row>
+<ion-row class="rowlineitem" *ngFor="let coutout of partinfo.CutoutList">
+  <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 3">
+    <ion-row>
+      <ion-col (click)="ActionCreateCutout(3)"><u class="colorblue">AC</u>:
         <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
         <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
         <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
@@ -194,38 +181,13 @@
             <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
           </u>
         </span>
-        >>>>>>> .r14198
       </ion-col>
-      <<<<<<< .mine </ion-row> <ion-row class="rowlineitem" *ngFor="let coutout of partinfo.CutoutList">
-        <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 3">
-          <ion-row>
-            <ion-col (click)="ActionCreateCutout(3)"><u class="colorblue">AC</u>:
-              <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
-              <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
-              <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
-              &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
-              <span>@
-                <u class="colorgreen">
-                  <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
-                  <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
-                </u>
-              </span>
-            </ion-col>
-            <ion-col size="3" class="text-right">$
-              <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}</span>
-              <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}</span>
-            </ion-col>
-          </ion-row>
-          ||||||| .r14195
-          <ion-col size="3" class="text-right">$
-            <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}</span>
-            <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}</span>
-            =======
-            <ion-col size="3" class="text-right">$
-              <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
-              <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
-              >>>>>>> .r14198
-            </ion-col>
+      <ion-col size="3" class="text-right">$
+        <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+        <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+      </ion-col>
+    </ion-row>
+  </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let coutout of partinfo.CutoutList">
   <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 2">
@@ -243,8 +205,8 @@
         </span>
       </ion-col>
       <ion-col size="3" class="text-right">$
-        <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}</span>
-        <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}</span>
+        <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+        <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
       </ion-col>
     </ion-row>
   </ion-col>
@@ -492,9 +454,7 @@
       </span>
     </ion-col>
     <ion-col size="3" class="text-right">$
-      <<<<<<< .mine {{ (partdisc.Qty * partdisc.Price) | number: '.2-2'}} ||||||| .r14195
-        {{ (partdisc.Qty * partdisc.Price) | number: '.2-2'}}======={{ (partdisc.Qty * partdisc.Price) | number: '.2-2'}}&nbsp;>
-        >>>>>> .r14198
+     {{ (partdisc.Qty * partdisc.Price) | number: '.2-2'}}&nbsp;
     </ion-col>
   </span>
 </ion-row>

@@ -15,6 +15,8 @@ import { CustitemComponent } from '../custitem/custitem.component';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { QuoteService } from 'src/app/service/quote.service';
 import { ManagementsummaryComponent } from '../managementsummary/managementsummary.component';
+import { OverlayEventDetail } from '@ionic/core';
+import { QuoterepService } from 'src/app/service/quoterep.service';
 
 @Component({
   selector: 'app-areainfo',
@@ -23,13 +25,15 @@ import { ManagementsummaryComponent } from '../managementsummary/managementsumma
   inputs: [`Version`]
 })
 export class AreainfoComponent implements OnInit {
-  public Version: any;
+  public Version: any;coId:number;coSrNo:string;
   arealist: any = [];
   partinfo: any = [];
   partlist: any = [];
   areaInfo:any;AreaPartID:number;
   viewid: any;
-  constructor(private service: QuoteService, public Modalcntrl: ModalController, private popoverCntrl: PopoverController) { }
+  constructor(private service: QuoteService, 
+    public Modalcntrl: ModalController, 
+    private popoverCntrl: PopoverController,private quoterep: QuoterepService) { }
   ngOnInit() {
     this.ActionGetAreaList();
   }
@@ -182,9 +186,65 @@ export class AreainfoComponent implements OnInit {
     return await modal.present();
   }
 
-
+  AddAreaItem(loadType:string,loadId:number){
+    switch(loadType) { 
+      case "partmat": { 
+        let partmat = this.quoterep.AddPartMatItem(this.AreaPartID,this.areaInfo.ID,this.areaInfo.VersionID,this.coId,this.coSrNo,this.Version.MatPercent);
+        this.ActionEditMaterial(partmat);
+        break; 
+      } 
+      case "size": { 
+         break; 
+      } 
+      case "splash": {
+         break;    
+      } 
+      case "edge": { 
+        let edge = this.quoterep.AddEdgeItem(this.AreaPartID,this.areaInfo.ID,this.areaInfo.VersionID,this.coId,this.coSrNo,this.Version.MatPercent);
+        this.ActionEditEdge(edge);
+         break; 
+      } 
+      case "cutout": { 
+        break; 
+     }  
+      case "sink": { 
+        break; 
+     } 
+     case "faucet": { 
+        break; 
+     } 
+     case "other": {
+        break;    
+     } 
+     case "labor": { 
+        break; 
+     }  
+     case "tile": { 
+      break; 
+   }  
+   }
+  }
+  async ActionAddAreaitem(ev: any) {
+      let obj = {Shape:this.partinfo.Shape}
+      const popover = await this.popoverCntrl.create({
+        component: additemComponent,
+        event: ev,
+        translucent: true,
+        componentProps: obj,
+        cssClass: "popover_class"
+      });
+      popover.onDidDismiss().then((detail: OverlayEventDetail) => {
+        if (detail !== null) {
+          if(detail.data.isSelect == true){
+          this.AddAreaItem(detail.data.info.loadType,detail.data.info.loadId);
+          }
+        }
+     });
+      return await popover.present();
+    }
+  
 //Management summary component
-  async ActionSummaryEdit() {debugger;
+  async ActionSummaryEdit() {
     let version = {Version : this.Version}
     let copyver = JSON.parse(JSON.stringify(version));
     const modal = await this.Modalcntrl.create({
@@ -195,37 +255,38 @@ export class AreainfoComponent implements OnInit {
   }
 }
 
+
 @Component({
   //selector: 'app-itemsearchComponent',
   template: `
           <ion-header>
             <ion-toolbar style="height:37px;top:-8px;left:-10px;">
-              <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop()" style="font-size:13px; height:17px;width: 22px;">X</ion-button>
+              <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop(false)" style="font-size:13px; height:17px;width: 22px;">X</ion-button>
             </ion-toolbar>
           </ion-header>
           <ion-grid>
         <ion-row>
           <ion-col>
-            <div (click)="ActionEditMaterial(material)">Part Material</div>
+            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('partmat',0)">part Material</div>
           </ion-col>
           <ion-col>
-            <div (click)="ActionEditSink(sinkfaucet)">Sink</div>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-             <div (click)="ActionEditMeasurement(size)">Measurements</div>
-          </ion-col>
-          <ion-col>
-            <div (click)="ActionEditFaucet(faucet)">Faucets</div>
+            <div (click)="ActionLoadPopup('sink',0)">Sink</div>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <div (click)="ActionEditSplash(splash)">Splash</div>
+             <div *ngIf="navObj.Shape == null || navObj.Shape == ''"(click)="ActionLoadPopup('size',0)">Measurements</div>
           </ion-col>
           <ion-col>
-            <div (click)="ActionEditTile(18,'Appliance', sinkfaucet)">Appliance</div>
+            <div (click)="ActionLoadPopup('faucet',0)">Faucets</div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('splash',0)">Splash</div>
+          </ion-col>
+          <ion-col>
+            <div (click)="ActionLoadPopup('tile',18)">Appliance</div>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -233,60 +294,60 @@ export class AreainfoComponent implements OnInit {
              <div>Apron</div>
           </ion-col>
           <ion-col>
-            <div (click)="ActionEditTile(7,'Labor', labor)">Labor</div>
+            <div (click)="ActionLoadPopup('labor',0)">Labor</div>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <div (click)="ActionEditEdge(edge)">Edge</div>
+            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('edge',0)">Edge</div>
           </ion-col>
           <ion-col>
-            <div (click)="ActionEditAddon(other)">Add On Products</div>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <div (click)="ActionCreateCutout(1)">Sink Cutout</div>
-          </ion-col>
-          <ion-col>
-            <div (click)="ActionEditCustItems(response)">Customer Items</div>
+            <div (click)="ActionLoadPopup('other',0)">Add On Products</div>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <div (click)="ActionCreateCutout(2)">Outlet Cutout</div>
+            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('cutout',1)">Sink Cutout</div>
           </ion-col>
           <ion-col>
-            <div (click)="ActionEditTile(12,'Tile', labor)">Tile</div>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <div (click)="ActionCreateCutout(3)">Appliance Cutout</div>
-          </ion-col>
-          <ion-col>
-            <div (click)="ActionEditTile(2,'Cabinet', labor)">Cabinet</div>
+            <div (click)="ActionLoadPopup(response,0)">Customer Items</div>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <div (click)="ActionCreateTemplate(1)">Fabrication</div>
+            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('cutout',2)">Outlet Cutout</div>
           </ion-col>
           <ion-col>
-            <div (click)="ActionEditTile(19,'Consumable', labor)">Consumable</div>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <div (click)="ActionCreateTemplate(2)">Template</div>
-          </ion-col>
-          <ion-col>
-            <div (click)="ActionEditTile(3,'Tool',labor)">Tool</div>
+            <div (click)="ActionLoadPopup('tile',12)">Tile</div>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <div (click)="ActionCreateTemplate(3)">Install</div>
+            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('cutout',3)">Appliance Cutout</div>
+          </ion-col>
+          <ion-col>
+            <div (click)="ActionLoadPopup('tile',13)">Cabinet</div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div (click)="ActionLoadPopup('fab',0)">Fabrication</div>
+          </ion-col>
+          <ion-col>
+            <div (click)="ActionLoadPopup('tile',17)">Consumable</div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div (click)="ActionLoadPopup('labor',1)">Template</div>
+          </ion-col>
+          <ion-col>
+            <div (click)="ActionLoadPopup('tile',19)">Tool</div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div (click)="ActionLoadPopup('labor',2)">Install</div>
           </ion-col>
           <ion-col>
             <div><span style="red">Discount</span></div>
@@ -295,29 +356,24 @@ export class AreainfoComponent implements OnInit {
       </ion-grid>`,
   //styleUrls: ['./customeredit.component.scss'],
 })
-export class areaitem2Component implements OnInit {
+export class additemComponent implements OnInit {
+  navObj = this.navParams.data;
+  constructor(private navParams: NavParams, private popoverCntrl: PopoverController) { }
+   obj:any;
+   ngOnInit(){}
 
-  constructor(private Modalcntrl: ModalController, private navParams: NavParams, private popoverCntrl: PopoverController, private service: QuotegetService) { }
-
-ngOnInit(){}
- 
-
-/***** CUTOUT DETAILS *****/
-async ActionCreateCutout(typeId) {
-  let obj = { TypeID: typeId }
-  const modal = await this.Modalcntrl.create({
-    component: CutoutinfoComponent,
-    componentProps: obj
-  });
-  return await modal.present();
+ActionLoadPopup(loadType:string,loadId:number){
+  this.obj = {loadType:loadType,loadId:loadId};
+  this.ActionToClosePop(true);
 }
-
-ActionToClosePop() {
-  // using the injected ModalController this page
-  // can "dismiss" itself and optionally pass back data
+ActionToClosePop(isSelect:boolean) {
   this.popoverCntrl.dismiss({
-    'dismissed': true
+    'dismissed': true,
+    info:this.obj,
+    isSelect:isSelect
   });
 }
 }
+
+
 

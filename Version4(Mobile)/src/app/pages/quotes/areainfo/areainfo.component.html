@@ -1,34 +1,34 @@
 <ion-row>
   <ion-col size="5">
-      <ion-row>
-          <ion-col size="3" class="paddzero">
-              <ion-icon name="add-circle-outline" (click)="ActionAddArea()"  class="big"></ion-icon>
-          </ion-col>
-          <ion-col size="9" class="paddzero">
-              <ion-select class="btninfo" interface="popover" [(ngModel)]="areaInfo" name="areaInfo"
-              (ionChange)="ActionPartsByArea(areaInfo, 1)">
-              <ion-select-option *ngFor="let area of arealist" [value]="area">{{area.Name}}</ion-select-option>
-            </ion-select>
-            </ion-col>
-        </ion-row>
+    <ion-row>
+      <ion-col size="3" class="paddzero">
+        <ion-icon name="add-circle-outline" (click)="ActionAddArea()" class="big"></ion-icon>
+      </ion-col>
+      <ion-col size="9" class="paddzero">
+        <ion-select class="btninfo" interface="popover" [(ngModel)]="areaInfo" name="areaInfo"
+          (ionChange)="ActionPartsByArea(areaInfo, 1)">
+          <ion-select-option *ngFor="let area of arealist" [value]="area">{{area.Name}}</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
   </ion-col>
   <ion-col size="5" class="marge">
-      <ion-row>
-        <ion-col size="3" class="paddzero">
-            <ion-icon name="add-circle-outline" class="big"></ion-icon>
-        </ion-col>
-        <ion-col size="9" class="paddzero">
-            <ion-select class="btninfo" interface="popover" [(ngModel)]="AreaPartID" name="AreaPartID"
-            (ionChange)="ActionGetPartInfo(AreaPartID, 1)">
-            <ion-select-option *ngFor="let part of partlist" [value]="part.ID"><span
-                *ngIf="part.Name == '' || part.Name == null">Part{{part.SrNo}}</span>{{part.Name}}</ion-select-option>
-          </ion-select>
-          </ion-col>
-      </ion-row>
+    <ion-row>
+      <ion-col size="3" class="paddzero">
+        <ion-icon name="add-circle-outline" class="big"></ion-icon>
+      </ion-col>
+      <ion-col size="9" class="paddzero">
+        <ion-select class="btninfo" interface="popover" [(ngModel)]="AreaPartID" name="AreaPartID"
+          (ionChange)="ActionGetPartInfo(AreaPartID, 1)">
+          <ion-select-option *ngFor="let part of partlist" [value]="part.ID"><span
+              *ngIf="part.Name == '' || part.Name == null">Part{{part.SrNo}}</span>{{part.Name}}</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
   </ion-col>
   <ion-col class="text-right marge2">
     <ion-button size="small" (click)="ActionAddAreaitem()">
-      + Item    
+      + Item
     </ion-button>
   </ion-col>
 </ion-row>
@@ -56,22 +56,27 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList">
-  <ion-col ><u class="colorblue textfont14">Siz</u>:
-    <span *ngFor="let size of fabrication.MeasureList" (click)="ActionEditMeasurement(size)">
-      <span *ngIf="size.Sqft != 0">
-        <span *ngIf="size.CounterType != '' && size.CounterType != null">({{size.CounterType}})</span>
-        <span *ngIf="fabrication.IsChg == '2'">({{size.Width}} * {{size.Height}})</span>
-        <span *ngIf="fabrication.IsChg != '2'">({{size.Width}} * {{size.Height}})</span>
-      </span> <span *ngIf="size.Sqft == 0">-</span>&nbsp;
-      <span>@
-        <u class="colorgreen">
-          <span *ngIf="fabrication.IsChg == '2'">{{ fabrication.PartSqft | number : '.2-2'}}</span>
-          <span *ngIf="fabrication.IsChg != '2'">{{ fabrication.PartSqft | number : '.2-2'}}</span>
-        </u>
-      </span>
-    </span>
-  </ion-col>
-  <ion-col size="3" class="text-right">-&nbsp;</ion-col>
+  <<<<<<< .mine <ion-col><u class="colorblue">Siz</u>:
+    ||||||| .r14195
+    <ion-col><u class="colorblue">Siz</u>:
+      =======
+      <ion-col><u class="colorblue textfont14">Siz</u>:
+        >>>>>>> .r14198
+        <span *ngFor="let size of fabrication.MeasureList" (click)="ActionEditMeasurement(size)">
+          <span *ngIf="size.Sqft != 0">
+            <span *ngIf="size.CounterType != '' && size.CounterType != null">({{size.CounterType}})</span>
+            <span *ngIf="fabrication.IsChg == '2'">({{size.Width}} * {{size.Height}})</span>
+            <span *ngIf="fabrication.IsChg != '2'">({{size.Width}} * {{size.Height}})</span>
+          </span> <span *ngIf="size.Sqft == 0">-</span>&nbsp;
+          <span>@
+            <u class="colorgreen">
+              <span *ngIf="fabrication.IsChg == '2'">{{ fabrication.PartSqft | number : '.2-2'}}</span>
+              <span *ngIf="fabrication.IsChg != '2'">{{ fabrication.PartSqft | number : '.2-2'}}</span>
+            </u>
+          </span>
+        </span>
+      </ion-col>
+      <ion-col size="3" class="text-right">-&nbsp;</ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let splash of partinfo.SplashList">
   <ion-col (click)="ActionEditSplash(splash)"><u class="colorblue textfont14">Spl</u>:
@@ -146,21 +151,102 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let coutout of partinfo.CutoutList">
-  <ion-col (click)="ActionCreateCutout(1)"><u class="colorblue textfont14">C</u>:
-    <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
-    <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
-    <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
-    &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
-    <span>@
-      <u class="colorgreen">
-        <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
-        <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
-      </u>
-    </span>
-  </ion-col>
-  <ion-col size="3" class="text-right">$
-    <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
-    <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+  <<<<<<< .mine <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 1">
+    <ion-row>
+      <ion-col (click)="ActionCreateCutout(1)"><u class="colorblue">SC</u>:
+        <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
+        <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
+        <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
+        &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
+        <span>@
+          <u class="colorgreen">
+            <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
+            <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
+          </u>
+        </span>
+      </ion-col>
+      <ion-col size="3" class="text-right">$
+        <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}</span>
+        <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}</span>
+      </ion-col>
+    </ion-row>
+    ||||||| .r14195
+    <ion-col (click)="ActionCreateCutout(1)"><u class="colorblue">C</u>:
+      <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
+      <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
+      <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
+      &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
+      <span>@
+        <u class="colorgreen">
+          <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
+          <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
+        </u>
+      </span>
+      =======
+      <ion-col (click)="ActionCreateCutout(1)"><u class="colorblue textfont14">C</u>:
+        <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
+        <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
+        <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
+        &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
+        <span>@
+          <u class="colorgreen">
+            <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
+            <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
+          </u>
+        </span>
+        >>>>>>> .r14198
+      </ion-col>
+      <<<<<<< .mine </ion-row> <ion-row class="rowlineitem" *ngFor="let coutout of partinfo.CutoutList">
+        <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 3">
+          <ion-row>
+            <ion-col (click)="ActionCreateCutout(3)"><u class="colorblue">AC</u>:
+              <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
+              <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
+              <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
+              &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
+              <span>@
+                <u class="colorgreen">
+                  <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
+                  <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
+                </u>
+              </span>
+            </ion-col>
+            <ion-col size="3" class="text-right">$
+              <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}</span>
+              <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}</span>
+            </ion-col>
+          </ion-row>
+          ||||||| .r14195
+          <ion-col size="3" class="text-right">$
+            <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}</span>
+            <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}</span>
+            =======
+            <ion-col size="3" class="text-right">$
+              <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+              <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+              >>>>>>> .r14198
+            </ion-col>
+</ion-row>
+<ion-row class="rowlineitem" *ngFor="let coutout of partinfo.CutoutList">
+  <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 2">
+    <ion-row>
+      <ion-col (click)="ActionCreateCutout(2)"><u class="colorblue">OC</u>:
+        <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
+        <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
+        <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
+        &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
+        <span>@
+          <u class="colorgreen">
+            <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
+            <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
+          </u>
+        </span>
+      </ion-col>
+      <ion-col size="3" class="text-right">$
+        <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}</span>
+        <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}</span>
+      </ion-col>
+    </ion-row>
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList">
@@ -275,25 +361,26 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let other of partinfo.OtherList">
-    <ion-col (click)="ActionEditAddon(other)"><u class="colorblue textfont14">Adn</u>:
-      <span>
-          <span *ngIf="other.IsChg == '2'">{{ other.Description }}</span>
-          <span *ngIf="other.IsChg == '0'">{{ other.Description }}</span>
-          <span *ngIf="other.CoSrNo > 0">C{{other.CoSrNo}}</span>
-          <span *ngIf="other.IsOptional == 1">Optional</span>&nbsp;
-      </span>
-      <span>@
-        <u class="colorgreen">
-            <span *ngIf="other.IsChg == '2'">{{ other.Qty | number : '.2-2'}}</span>
-            <span *ngIf="other.IsChg == '0'">{{ other.Qty | number : '.2-2'}}</span>
-        </u>
-      </span>
-    </ion-col>
-    <ion-col size="3" class="text-right">$
-        <span *ngIf="other.IsChg == '2'">{{ other.Amount | number : '.2-2'}}&nbsp;</span>
-        <span *ngIf="other.IsChg == '0'">{{ other.Amount | number : '.2-2'}}&nbsp;</span>
-    </ion-col>
-  </ion-row>
+  <ion-col (click)="ActionEditAddon(other)"><u class="colorblue textfont14">Adn</u>:
+    <span>
+      <span *ngIf="other.IsChg == '2'">{{ other.Description }}</span>
+      <span *ngIf="other.IsChg == '0'">{{ other.Description }}</span>
+      <span *ngIf="other.CoSrNo > 0">C{{other.CoSrNo}}</span>
+      <span *ngIf="other.IsOptional == 1">Optional</span>&nbsp;
+    </span>
+    <span>@
+      <u class="colorgreen">
+        <span *ngIf="other.IsChg == '2'">{{ other.Qty | number : '.2-2'}}</span>
+        <span *ngIf="other.IsChg == '0'">{{ other.Qty | number : '.2-2'}}</span>
+      </u>
+    </span>
+  </ion-col>
+  <ion-col size="3" class="text-right">$
+    <span *ngIf="other.IsChg == '2'">{{ other.Amount | number : '.2-2'}}&nbsp;</span>
+    <span *ngIf="other.IsChg == '0'">{{ other.Amount | number : '.2-2'}}&nbsp;</span>
+  </ion-col>
+</ion-row>
+
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.TileList">
   <ion-col (click)="ActionEditTile(12,'Tile', labor)"><u class="colorblue textfont14">Tile</u>:
     <span>
@@ -397,24 +484,26 @@
 <ion-row class="rowlineitem" *ngFor="let partdisc of partinfo.PartDiscountList">
   <span *ngIf="partdisc.Isactive == 1 && partdisc.PartID == 0 && partdisc.Price != 0">
     <ion-col (click)="ActionCreateTile(3,'Tool')" color="danger"><u class="colorblue textfont14">Disc</u>:
-    <span>{{partdisc.Description}}</span>
+      <span>{{partdisc.Description}}</span>
       <span>@
         <u class="colorgreen">
-            {{ partdisc.Qty | number: '.2-2'}}
+          {{ partdisc.Qty | number: '.2-2'}}
         </u>
       </span>
     </ion-col>
     <ion-col size="3" class="text-right">$
-        {{ (partdisc.Qty * partdisc.Price) | number: '.2-2'}}&nbsp;
+      <<<<<<< .mine {{ (partdisc.Qty * partdisc.Price) | number: '.2-2'}} ||||||| .r14195
+        {{ (partdisc.Qty * partdisc.Price) | number: '.2-2'}}======={{ (partdisc.Qty * partdisc.Price) | number: '.2-2'}}&nbsp;>
+        >>>>>> .r14198
     </ion-col>
   </span>
-  </ion-row>
+</ion-row>
 
 
 <ion-list *ngIf="Version.LatestCoID == 0">
   <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
-    <ion-col size="4" class="fontbold text-right" (click)="ActionSummaryEdit()"><u>Sub Total:</u></ion-col>
+    <ion-col size="4" class="fontbold text-right" (click)="ActionSummaryEdit(Version)"><u>Sub Total:</u></ion-col>
     <ion-col size="4" class="fontbold text-right">$ {{(Version.TotalAmt) | number : '.2-2'}}&nbsp;</ion-col>
   </ion-row>
   <ion-row class="marginbot">
@@ -444,7 +533,8 @@
     <ion-col size="4"></ion-col>
     <ion-col size="4" class="fontbold text-right">Final Total:</ion-col>
     <ion-col size="4" class="fontbold text-right">$
-      {{((Version.TotalAmt + Version.RoundOff + Version.TaxAmt) - (Version.DiscountAmt)) | number : '.2-2'}}&nbsp;</ion-col>
+      {{((Version.TotalAmt + Version.RoundOff + Version.TaxAmt) - (Version.DiscountAmt)) | number : '.2-2'}}&nbsp;
+    </ion-col>
   </ion-row>
   <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
@@ -481,7 +571,8 @@
         <ion-col size="1" class="text-center paddzero">=</ion-col>
         <ion-col size="4" class="text-right paddzero">
           <span *ngIf="Version.FinalAmt > 0">$ {{(Version.FinalAmt) | number : '.2-2'}}</span>
-          <span *ngIf="Version.FinalAmt == 0">$ {{(Version.TotalAmt + Version.NetCoTotal) | number : '.2-2'}}&nbsp;</span>
+          <span *ngIf="Version.FinalAmt == 0">$
+            {{(Version.TotalAmt + Version.NetCoTotal) | number : '.2-2'}}&nbsp;</span>
         </ion-col>
       </ion-row>
     </ion-col>

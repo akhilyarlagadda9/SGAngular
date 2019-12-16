@@ -39,7 +39,7 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let material of partinfo.PartMaterialList">
-  <ion-col (click)="ActionEditMaterial(material)"><u class="colorblue">M</u>:
+  <ion-col (click)="ActionEditMaterial(material)"><u class="colorblue textfont14">M</u>:
     <span *ngIf="material.IsChg == '2' && material.ID > 0">{{material.MaterialName }}</span>
     <span *ngIf="material.IsChg == '0' && material.ID > 0">{{ material.MaterialName }}</span>
     <span *ngIf="material.CoSrNo > 0 && material.ID > 0">&nbsp;C{{material.CoSrNo}}</span>
@@ -56,7 +56,7 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList">
-  <ion-col ><u class="colorblue">Siz</u>:
+  <ion-col ><u class="colorblue textfont14">Siz</u>:
     <span *ngFor="let size of fabrication.MeasureList" (click)="ActionEditMeasurement(size)">
       <span *ngIf="size.Sqft != 0">
         <span *ngIf="size.CounterType != '' && size.CounterType != null">({{size.CounterType}})</span>
@@ -71,10 +71,10 @@
       </span>
     </span>
   </ion-col>
-  <ion-col size="3" class="text-right">-</ion-col>
+  <ion-col size="3" class="text-right">-&nbsp;</ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let splash of partinfo.SplashList">
-  <ion-col (click)="ActionEditSplash(splash)"><u class="colorblue">Spl</u>:
+  <ion-col (click)="ActionEditSplash(splash)"><u class="colorblue textfont14">Spl</u>:
     <span *ngIf="splash.IsChg == '2'">{{ splash.Splash }}</span>
     <span *ngIf="splash.IsChg != '2'">{{ splash.Splash }}</span>
     <span *ngIf="splash.CoSrNo > '0'">&nbsp;C{{splash.CoSrNo}}</span>
@@ -85,10 +85,10 @@
       </u>
     </span>
   </ion-col>
-  <ion-col size="3" class="text-right">-</ion-col>
+  <ion-col size="3" class="text-right">-&nbsp;</ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let edge of partinfo.EdgeList">
-  <ion-col (click)="ActionEditEdge(edge)"><u class="colorblue">E</u>:
+  <ion-col (click)="ActionEditEdge(edge)"><u class="colorblue textfont14">E</u>:
     <span *ngIf="edge.IsChg == '2'">{{ edge.EdgeProfile }}</span>
     <span *ngIf="edge.IsChg != '2'">{{ edge.EdgeProfile }}</span>
     <span *ngIf="edge.CoSrNo > '0'">C{{edge.CoSrNo}}</span>
@@ -101,12 +101,12 @@
     </span>
   </ion-col>
   <ion-col size="3" class="text-right">$
-    <span *ngIf="edge.IsChg == '2'">{{ edge.Amt | number : '.2-2'}}</span>
-    <span *ngIf="edge.IsChg == '0'">{{ edge.Amt | number : '.2-2'}}</span>
+    <span *ngIf="edge.IsChg == '2'">{{ edge.Amt | number : '.2-2'}}&nbsp;</span>
+    <span *ngIf="edge.IsChg == '0'">{{ edge.Amt | number : '.2-2'}}&nbsp;</span>
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let sinkfaucet of partinfo.SinkList">
-  <ion-col (click)="ActionEditSink(sinkfaucet)"><u class="colorblue">S</u>:
+  <ion-col (click)="ActionEditSink(sinkfaucet)"><u class="colorblue textfont14">S</u>:
     <span *ngIf="sinkfaucet.Description != null">
       <span *ngIf="sinkfaucet.IsChg == '2'"> {{ sinkfaucet.Description }}</span>
       <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Description }} </span>
@@ -121,12 +121,12 @@
     </span>
   </ion-col>
   <ion-col size="3" class="text-right">$
-    <span *ngIf="sinkfaucet.IsChg == '2'">{{ sinkfaucet.Amount | number : '.2-2'}}</span>
-    <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Amount | number : '.2-2'}}</span>
+    <span *ngIf="sinkfaucet.IsChg == '2'">{{ sinkfaucet.Amount | number : '.2-2'}}&nbsp;</span>
+    <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Amount | number : '.2-2'}}&nbsp;</span>
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let faucet of partinfo.FaucetList">
-  <ion-col (click)="ActionEditFaucet(faucet)"><u class="colorblue">F</u>:
+  <ion-col (click)="ActionEditFaucet(faucet)"><u class="colorblue textfont14">F</u>:
     <span *ngIf="faucet.Description != null">
       <span *ngIf="faucet.IsChg == '2'">{{ faucet.Description }} </span>
       <span *ngIf="faucet.IsChg == '0'"> {{ faucet.Description }}</span>
@@ -141,12 +141,12 @@
     </span>
   </ion-col>
   <ion-col size="3" class="text-right">$
-    <span *ngIf="faucet.IsChg == '2'">{{ faucet.Amount | number : '.2-2'}}</span>
-    <span *ngIf="faucet.IsChg == '0'">{{ faucet.Amount | number : '.2-2'}}</span>
+    <span *ngIf="faucet.IsChg == '2'">{{ faucet.Amount | number : '.2-2'}}&nbsp;</span>
+    <span *ngIf="faucet.IsChg == '0'">{{ faucet.Amount | number : '.2-2'}}&nbsp;</span>
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let coutout of partinfo.CutoutList">
-  <ion-col (click)="ActionCreateCutout(1)"><u class="colorblue">C</u>:
+  <ion-col (click)="ActionCreateCutout(1)"><u class="colorblue textfont14">C</u>:
     <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
     <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
     <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
@@ -159,12 +159,12 @@
     </span>
   </ion-col>
   <ion-col size="3" class="text-right">$
-    <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}</span>
-    <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}</span>
+    <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+    <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList">
-  <ion-col (click)="ActionCreateTemplate(1)"><u class="colorblue">F</u>:
+  <ion-col (click)="ActionCreateTemplate(1)"><u class="colorblue textfont14">F</u>:
     <span *ngIf="fabrication.IsChg == '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}} Sqft.
       Fabrication</span>
     <span *ngIf="fabrication.IsChg != '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}} Sqft.
@@ -181,15 +181,15 @@
   </ion-col>
   <ion-col size="3" class="text-right">$
     <span
-      *ngIf="fabrication.IsChg == '2'">{{ ((fabrication.PartSqft + fabrication.SplashSqft) * fabrication.LaborUnitPrice) | number : '.2-2'}}</span>
+      *ngIf="fabrication.IsChg == '2'">{{ ((fabrication.PartSqft + fabrication.SplashSqft) * fabrication.LaborUnitPrice) | number : '.2-2'}}&nbsp;</span>
     <span
-      *ngIf="fabrication.IsChg != '2'">{{ ((fabrication.PartSqft + fabrication.SplashSqft) * fabrication.LaborUnitPrice)  | number : '.2-2'}}</span>
+      *ngIf="fabrication.IsChg != '2'">{{ ((fabrication.PartSqft + fabrication.SplashSqft) * fabrication.LaborUnitPrice)  | number : '.2-2'}}&nbsp;</span>
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.LaborList">
   <ion-col *ngIf="labor.ViewTypeID == 1 && labor.Description == 'Template'" class="paddzero">
     <ion-row>
-      <ion-col (click)="ActionCreateTemplate(2)"><u class="colorblue">T</u>:
+      <ion-col (click)="ActionCreateTemplate(2)"><u class="colorblue textfont14">T</u>:
         <span>
           <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
           <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
@@ -204,8 +204,8 @@
         </span>
       </ion-col>
       <ion-col size="3" class="text-right">$
-        <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}</span>
-        <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}</span>
+        <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+        <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
       </ion-col>
     </ion-row>
   </ion-col>
@@ -213,7 +213,7 @@
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.LaborList">
   <ion-col *ngIf="labor.ViewTypeID == 1 && labor.Description == 'Install'" class="paddzero">
     <ion-row>
-      <ion-col (click)="ActionCreateTemplate(3)"><u class="colorblue">I</u>:
+      <ion-col (click)="ActionCreateTemplate(3)"><u class="colorblue textfont14">I</u>:
         <span>
           <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
           <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
@@ -228,15 +228,15 @@
         </span>
       </ion-col>
       <ion-col size="3" class="text-right">$
-        <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}</span>
-        <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}</span>
+        <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+        <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
       </ion-col>
     </ion-row>
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.LaborList">
   <span *ngIf="labor.ViewTypeID != 1">
-    <ion-col (click)="ActionEditTile(7,'Labor', labor)"><u class="colorblue">L</u>:
+    <ion-col (click)="ActionEditTile(7,'Labor', labor)"><u class="colorblue textfont14">L</u>:
       <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
       <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
       <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
@@ -249,13 +249,13 @@
       </span>
     </ion-col>
     <ion-col size="3" class="text-right">$
-      <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}</span>
-      <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}</span>
+      <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+      <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
     </ion-col>
   </span>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let sinkfaucet of partinfo.ApplianceList">
-  <ion-col (click)="ActionEditTile(18,'Appliance', sinkfaucet)"><u class="colorblue">A</u>:
+  <ion-col (click)="ActionEditTile(18,'Appliance', sinkfaucet)"><u class="colorblue textfont14">A</u>:
     <span *ngIf="sinkfaucet.Description != null">
       <span *ngIf="sinkfaucet.IsChg == '2'"> {{ sinkfaucet.Description }} </span>
       <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Description }}</span>
@@ -270,12 +270,12 @@
     </span>
   </ion-col>
   <ion-col size="3" class="text-right">$
-    <span *ngIf="sinkfaucet.IsChg == '2'">{{ sinkfaucet.Amount | number : '.2-2'}}</span>
-    <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Amount | number : '.2-2'}}</span>
+    <span *ngIf="sinkfaucet.IsChg == '2'">{{ sinkfaucet.Amount | number : '.2-2'}}&nbsp;</span>
+    <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Amount | number : '.2-2'}}&nbsp;</span>
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let other of partinfo.OtherList">
-    <ion-col (click)="ActionEditAddon(other)"><u class="colorblue">Adn</u>:
+    <ion-col (click)="ActionEditAddon(other)"><u class="colorblue textfont14">Adn</u>:
       <span>
           <span *ngIf="other.IsChg == '2'">{{ other.Description }}</span>
           <span *ngIf="other.IsChg == '0'">{{ other.Description }}</span>
@@ -290,12 +290,12 @@
       </span>
     </ion-col>
     <ion-col size="3" class="text-right">$
-        <span *ngIf="other.IsChg == '2'">{{ other.Amount | number : '.2-2'}}</span>
-        <span *ngIf="other.IsChg == '0'">{{ other.Amount | number : '.2-2'}}</span>
+        <span *ngIf="other.IsChg == '2'">{{ other.Amount | number : '.2-2'}}&nbsp;</span>
+        <span *ngIf="other.IsChg == '0'">{{ other.Amount | number : '.2-2'}}&nbsp;</span>
     </ion-col>
   </ion-row>
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.TileList">
-  <ion-col (click)="ActionEditTile(12,'Tile', labor)"><u class="colorblue">Tile</u>:
+  <ion-col (click)="ActionEditTile(12,'Tile', labor)"><u class="colorblue textfont14">Tile</u>:
     <span>
       <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
       <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
@@ -310,12 +310,12 @@
     </span>
   </ion-col>
   <ion-col size="3" class="text-right">$
-    <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}</span>
-    <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}</span>
+    <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+    <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.CabinetList">
-  <ion-col (click)="ActionEditTile(2,'Cabinet', labor)"><u class="colorblue">Cab</u>:
+  <ion-col (click)="ActionEditTile(2,'Cabinet', labor)"><u class="colorblue textfont14">Cab</u>:
     <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
     <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
     <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
@@ -328,12 +328,12 @@
     </span>
   </ion-col>
   <ion-col size="3" class="text-right">$
-    <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}</span>
-    <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}</span>
+    <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+    <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.CarpetList">
-  <ion-col (click)="ActionEditTile(14,'Carpet', labor)"><u class="colorblue">Car</u>:
+  <ion-col (click)="ActionEditTile(14,'Carpet', labor)"><u class="colorblue textfont14">Car</u>:
     <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
     <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
     <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
@@ -346,12 +346,12 @@
     </span>
   </ion-col>
   <ion-col size="3" class="text-right">$
-    <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}</span>
-    <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}</span>
+    <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+    <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.ConsumableList">
-  <ion-col (click)="ActionEditTile(19,'Consumable', labor)"><u class="colorblue">Con</u>:
+  <ion-col (click)="ActionEditTile(19,'Consumable', labor)"><u class="colorblue textfont14">Con</u>:
     <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
     <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
     <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
@@ -364,12 +364,12 @@
     </span>
   </ion-col>
   <ion-col size="3" class="text-right">$
-    <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}</span>
-    <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}</span>
+    <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+    <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.ToolList">
-  <ion-col (click)="ActionEditTile(3,'Tool',labor)"><u class="colorblue">Tool</u>:
+  <ion-col (click)="ActionEditTile(3,'Tool',labor)"><u class="colorblue textfont14">Tool</u>:
     <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
     <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
     <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
@@ -382,21 +382,21 @@
     </span>
   </ion-col>
   <ion-col size="3" class="text-right">$
-    <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}</span>
-    <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}</span>
+    <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+    <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let response of partinfo.CustomerItemList">
-  <ion-col (click)="ActionEditCustItems(response)"><u class="colorblue">Cust</u>:
+  <ion-col (click)="ActionEditCustItems(response)"><u class="colorblue textfont14">Cust</u>:
     <span *ngIf="response.IsChg == '2'">{{ response.Description }}</span>
     <span *ngIf="response.IsChg == '0'">{{ response.Description }}</span>
     <span *ngIf="response.CoSrNo > 0">C{{response.CoSrNo}}</span>
   </ion-col>
-  <ion-col size="3" class="text-right">-</ion-col>
+  <ion-col size="3" class="text-right">-&nbsp;</ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let partdisc of partinfo.PartDiscountList">
   <span *ngIf="partdisc.Isactive == 1 && partdisc.PartID == 0 && partdisc.Price != 0">
-    <ion-col (click)="ActionCreateTile(3,'Tool')" color="danger"><u class="colorblue">Disc</u>:
+    <ion-col (click)="ActionCreateTile(3,'Tool')" color="danger"><u class="colorblue textfont14">Disc</u>:
     <span>{{partdisc.Description}}</span>
       <span>@
         <u class="colorgreen">
@@ -405,7 +405,7 @@
       </span>
     </ion-col>
     <ion-col size="3" class="text-right">$
-        {{ (partdisc.Qty * partdisc.Price) | number: '.2-2'}}
+        {{ (partdisc.Qty * partdisc.Price) | number: '.2-2'}}&nbsp;
     </ion-col>
   </span>
   </ion-row>
@@ -415,52 +415,52 @@
   <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
     <ion-col size="4" class="fontbold text-right" (click)="ActionSummaryEdit()"><u>Sub Total:</u></ion-col>
-    <ion-col size="4" class="fontbold text-right">$ {{(Version.TotalAmt) | number : '.2-2'}}</ion-col>
+    <ion-col size="4" class="fontbold text-right">$ {{(Version.TotalAmt) | number : '.2-2'}}&nbsp;</ion-col>
   </ion-row>
   <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
     <ion-col size="4" class="fontbold text-right" (click)="ActionDiscSelect()"><u>Discount:</u></ion-col>
     <ion-col size="4" class="fontbold text-right"><span style="color:red;">($
-        {{(Version.DiscountAmt) | number : '.2-2'}})</span></ion-col>
+        {{(Version.DiscountAmt) | number : '.2-2'}})&nbsp;</span></ion-col>
   </ion-row>
   <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
     <ion-col size="4" class="fontbold text-right" (click)="ActionTaxSelect()"><u>Sales Tax:</u></ion-col>
-    <ion-col size="4" class="fontbold text-right">$ {{Version.TaxAmt | number : '.2-2'}}</ion-col>
+    <ion-col size="4" class="fontbold text-right">$ {{Version.TaxAmt | number : '.2-2'}}&nbsp;</ion-col>
   </ion-row>
   <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
     <ion-col size="4" class="fontbold text-right">Net Total:</ion-col>
     <ion-col size="4" class="fontbold text-right">$
-      {{((Version.TotalAmt + Version.RoundOff + Version.TaxAmt - (Version.RefAmt + Version.RoundOff)) - (Version.DiscountAmt)) | number : '.2-2'}}
+      {{((Version.TotalAmt + Version.RoundOff + Version.TaxAmt - (Version.RefAmt + Version.RoundOff)) - (Version.DiscountAmt)) | number : '.2-2'}}&nbsp;
     </ion-col>
   </ion-row>
   <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
     <ion-col size="4" class="fontbold text-right" (click)="ActionFeeSelect()"><u>Fee & Charge:</u></ion-col>
-    <ion-col size="4" class="fontbold text-right"> $ {{(Version.RefAmt) | number : '.2-2'}}</ion-col>
+    <ion-col size="4" class="fontbold text-right"> $ {{(Version.RefAmt) | number : '.2-2'}}&nbsp;</ion-col>
   </ion-row>
   <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
     <ion-col size="4" class="fontbold text-right">Final Total:</ion-col>
     <ion-col size="4" class="fontbold text-right">$
-      {{((Version.TotalAmt + Version.RoundOff + Version.TaxAmt) - (Version.DiscountAmt)) | number : '.2-2'}}</ion-col>
+      {{((Version.TotalAmt + Version.RoundOff + Version.TaxAmt) - (Version.DiscountAmt)) | number : '.2-2'}}&nbsp;</ion-col>
   </ion-row>
   <ion-row class="marginbot">
     <ion-col size="4"></ion-col>
     <ion-col size="4" class="fontbold text-right">Payment:</ion-col>
-    <ion-col size="4" class="fontbold text-right">($ {{(Version.PmtReceived) | number : '.2-2'}})</ion-col>
+    <ion-col size="4" class="fontbold text-right">($ {{(Version.PmtReceived) | number : '.2-2'}})&nbsp;</ion-col>
   </ion-row>
   <ion-row class="marginbot" *ngIf="Version.RefundAmount > 0">
     <ion-col size="4"></ion-col>
     <ion-col size="4" class="fontbold text-right">Refunds:</ion-col>
-    <ion-col size="4" class="fontbold text-right">$ {{(Version.RefundAmount) | number : '.2-2'}}</ion-col>
+    <ion-col size="4" class="fontbold text-right">$ {{(Version.RefundAmount) | number : '.2-2'}}&nbsp;</ion-col>
   </ion-row>
   <ion-row class="marginbot" *ngIf="Version.PmtReceived != 0 || Version.RefundAmount != 0 || Version.CreditAmount != 0">
     <ion-col size="4"></ion-col>
     <ion-col size="4" class="fontbold text-right">Balance:</ion-col>
     <ion-col size="4" class="fontbold text-right">$
-      {{((((Version.TotalAmt + Version.RoundOff + Version.TaxAmt) - Version.DiscountAmt) - (Version.PmtReceived - Version.RefundAmount) - Version.CreditAmount)) | number : '.2-2'}}
+      {{((((Version.TotalAmt + Version.RoundOff + Version.TaxAmt) - Version.DiscountAmt) - (Version.PmtReceived - Version.RefundAmount) - Version.CreditAmount)) | number : '.2-2'}}&nbsp;
     </ion-col>
   </ion-row>
 </ion-list>
@@ -481,7 +481,7 @@
         <ion-col size="1" class="text-center paddzero">=</ion-col>
         <ion-col size="4" class="text-right paddzero">
           <span *ngIf="Version.FinalAmt > 0">$ {{(Version.FinalAmt) | number : '.2-2'}}</span>
-          <span *ngIf="Version.FinalAmt == 0">$ {{(Version.TotalAmt + Version.NetCoTotal) | number : '.2-2'}}</span>
+          <span *ngIf="Version.FinalAmt == 0">$ {{(Version.TotalAmt + Version.NetCoTotal) | number : '.2-2'}}&nbsp;</span>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -502,7 +502,7 @@
         <ion-col size="4" class="text-right paddzero" color="danger">
           <span *ngIf="Version.FinalDiscAmt > 0">($ {{Version.FinalDiscAmt | number : '.2-2'}})</span>
           <span *ngIf="Version.FinalDiscAmt == 0">($
-            {{(Version.DiscountAmt + Version.NetCoDisc) | number : '.2-2'}})</span>
+            {{(Version.DiscountAmt + Version.NetCoDisc) | number : '.2-2'}})&nbsp;</span>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -519,8 +519,8 @@
         </ion-col>
         <ion-col size="1" class="text-center paddzero">=</ion-col>
         <ion-col size="4" class="text-right paddzero">
-          <span *ngIf="Version.FinalTaxAmt > 0">$ {{(Version.FinalTaxAmt) | number: '.2-2'}}</span>
-          <span *ngIf="Version.FinalTaxAmt == 0">$ {{(Version.TaxAmt + Version.NetCoTax) | number: '.2-2'}}</span>
+          <span *ngIf="Version.FinalTaxAmt > 0">$ {{(Version.FinalTaxAmt) | number: '.2-2'}}&nbsp;</span>
+          <span *ngIf="Version.FinalTaxAmt == 0">$ {{(Version.TaxAmt + Version.NetCoTax) | number: '.2-2'}}&nbsp;</span>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -544,7 +544,7 @@
           <span *ngIf="Version.FinalNetAmt > 0">$
             {{ (Version.FinalNetAmt - (Version.RefAmt + Version.RoundOff)) | number: '.2-2'}}</span>
           <span *ngIf="Version.FinalNetAmt == 0">$
-            {{ (((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt)) + ((Version.NetCoTotal + Version.NetCoTax) - Version.NetCoDisc) - (Version.RefAmt + Version.RoundOff)) | number: '.2-2'}}</span>
+            {{ (((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt)) + ((Version.NetCoTotal + Version.NetCoTax) - Version.NetCoDisc) - (Version.RefAmt + Version.RoundOff)) | number: '.2-2'}}&nbsp;</span>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -562,7 +562,7 @@
           <span *ngIf="FinalFeeAndRoundAmt == 0">$ {{(Version.RefAmt + Version.RoundOff) | number: '.2-2'}}</span>
         </ion-col>
         <ion-col size="1" class="text-center paddzero">=</ion-col>
-        <ion-col size="4" class="text-right paddzero">$ {{FinalFeeAndRoundAmt | number: '.2-2'}} </ion-col>
+        <ion-col size="4" class="text-right paddzero">$ {{FinalFeeAndRoundAmt | number: '.2-2'}}&nbsp;</ion-col>
       </ion-row>
     </ion-col>
   </ion-row>
@@ -583,7 +583,7 @@
         <ion-col size="4" class="text-right paddzero">
           <span *ngIf="Version.FinalNetAmt > 0">$ {{ Version.FinalNetAmt | number: '.2-2'}}</span>
           <span *ngIf="Version.FinalNetAmt == 0">$
-            {{ (((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt)) + ((Version.NetCoTotal + Version.NetCoTax) - Version.NetCoDisc)) | number: '.2-2'}}</span>
+            {{ (((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt)) + ((Version.NetCoTotal + Version.NetCoTax) - Version.NetCoDisc)) | number: '.2-2'}}&nbsp;</span>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -600,7 +600,7 @@
         </ion-col>
         <ion-col size="1" class="text-center paddzero">=</ion-col>
         <ion-col size="4" class="text-right paddzero" color="danger">
-          ($ {{(Version.PmtReceived) | number: '.2-2'}})
+          ($ {{(Version.PmtReceived) | number: '.2-2'}})&nbsp;
         </ion-col>
       </ion-row>
     </ion-col>
@@ -617,7 +617,7 @@
         </ion-col>
         <ion-col size="1" class="text-center paddzero">=</ion-col>
         <ion-col size="4" class="text-right paddzero">
-          $ {{(Version.CreditAmount) | number: '.2-2'}}
+          $ {{(Version.CreditAmount) | number: '.2-2'}}&nbsp;
         </ion-col>
       </ion-row>
     </ion-col>
@@ -634,7 +634,7 @@
         </ion-col>
         <ion-col size="1" class="text-center paddzero">=</ion-col>
         <ion-col size="4" class="text-right paddzero">
-          $ {{(quote.header.Version.RefundAmount) | number: '.2-2'}}
+          $ {{(quote.header.Version.RefundAmount) | number: '.2-2'}}&nbsp;
         </ion-col>
       </ion-row>
     </ion-col>
@@ -655,7 +655,7 @@
           <span *ngIf="Version.FinalNetAmt > 0">$
             {{((Version.FinalNetAmt - (Version.PmtReceived - Version.RefundAmount)) - Version.CreditAmount) | number: '.2-2'}}</span>
           <span *ngIf="Version.FinalNetAmt == 0">$
-            {{(((((Version.TotalAmt + Version.TaxAmt + Version.CreditAmount) - (Version.DiscountAmt)) + ((Version.NetCoTotal + Version.NetCoTax) - Version.NetCoDisc)) - (Version.PmtReceived- Version.RefundAmount))) | number: '.2-2'}}</span>
+            {{(((((Version.TotalAmt + Version.TaxAmt + Version.CreditAmount) - (Version.DiscountAmt)) + ((Version.NetCoTotal + Version.NetCoTax) - Version.NetCoDisc)) - (Version.PmtReceived- Version.RefundAmount))) | number: '.2-2'}}&nbsp;</span>
         </ion-col>
       </ion-row>
     </ion-col>

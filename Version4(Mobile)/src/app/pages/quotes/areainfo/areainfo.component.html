@@ -148,7 +148,7 @@
 <ion-row class="rowlineitem" *ngFor="let coutout of partinfo.CutoutList">
   <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 1">
     <ion-row>
-      <ion-col (click)="ActionCreateCutout(1)"><u class="colorblue">SC</u>:
+      <ion-col (click)="ActionCreateCutout(1)"><u class="colorblue textfont14">SC</u>:
         <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
         <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
         <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
@@ -170,7 +170,7 @@
 <ion-row class="rowlineitem" *ngFor="let coutout of partinfo.CutoutList">
   <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 3">
     <ion-row>
-      <ion-col (click)="ActionCreateCutout(3)"><u class="colorblue">AC</u>:
+      <ion-col (click)="ActionCreateCutout(3)"><u class="colorblue textfont14">AC</u>:
         <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
         <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
         <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
@@ -192,7 +192,7 @@
 <ion-row class="rowlineitem" *ngFor="let coutout of partinfo.CutoutList">
   <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 2">
     <ion-row>
-      <ion-col (click)="ActionCreateCutout(2)"><u class="colorblue">OC</u>:
+      <ion-col (click)="ActionCreateCutout(2)"><u class="colorblue textfont14">OC</u>:
         <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
         <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
         <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>

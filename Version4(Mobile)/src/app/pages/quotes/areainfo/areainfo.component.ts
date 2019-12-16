@@ -267,7 +267,7 @@ export class AreainfoComponent implements OnInit {
           <ion-grid>
         <ion-row>
           <ion-col>
-            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('partmat',0)">part Material</div>
+            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('partmat',0)">Part Material</div>
           </ion-col>
           <ion-col>
             <div (click)="ActionLoadPopup('sink',0)">Sink</div>

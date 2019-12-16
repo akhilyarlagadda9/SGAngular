@@ -25,19 +25,19 @@
       </ion-item>
       <ion-item>
           <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="labor.Qty" name="Qty"></ion-input>
+          <ion-input type="text" class="labelfont" [(ngModel)]="labor.Qty" (change)="ActionSetAmount()"  name="Qty"></ion-input>
         </ion-item>
       <ion-item>
         <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
-        <ion-input type="tel" class="labelfont" [(ngModel)]="labor.UnitCost" name="UnitCost"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+        <ion-input type="tel" class="labelfont" [(ngModel)]="labor.UnitCost" (change)="ActionSetMargin(1,labor,'tile')" name="UnitCost"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
       </ion-item>
       <ion-item>
         <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
-        <ion-input type="email" class="labelfont" [(ngModel)]="labor.Margin" name="Margin"><ion-row style="margin-right: 3px;">%</ion-row></ion-input>
+        <ion-input type="email" class="labelfont" [(ngModel)]="labor.Margin" (change)="ActionSetMargin(1,labor,'tile')" name="Margin"><ion-row style="margin-right: 3px;">%</ion-row></ion-input>
       </ion-item>
       <ion-item>
         <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
-        <ion-input type="email" class="labelfont" [(ngModel)]="labor.UnitPrice" name="UnitPrice"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+        <ion-input type="email" class="labelfont" [(ngModel)]="labor.UnitPrice"  (change)="ActionSetMargin(1,labor,'tile')"name="UnitPrice"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
       </ion-item>
       <ion-item>
           <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>

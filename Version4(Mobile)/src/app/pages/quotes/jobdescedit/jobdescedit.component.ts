@@ -14,7 +14,7 @@ export class JobdesceditComponent implements OnInit {
 
   ngOnInit() { }
 
-  ActionSaveJobDescEdit(Version:any) {debugger;
+  ActionSaveJobDescEdit(Version:any) {
      this.postservice.ActionSaveDescription(this.Version).subscribe(data=> {
      this.ActionCloseJobDescEdit(true);
     })

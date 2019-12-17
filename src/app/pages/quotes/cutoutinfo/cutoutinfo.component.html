@@ -1,13 +1,48 @@
 <ion-header>
   <ion-toolbar>
     <ion-title class="titleheader"><div *ngIf="TypeID == 1">Sink Cutout</div>
-      <div *ngIf="TypeID == 2">Applience Cutout</div><div *ngIf="TypeID == 3">Outlet Cutout</div></ion-title>
+      <div *ngIf="TypeID == 3">Appliance Cutout</div><div *ngIf="TypeID == 2">Outlet Cutout</div></ion-title>
     <ion-button slot="end" color="success" size="small">Save</ion-button>
     <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
+    <form>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
+        <ion-input type="text" class="labelfont" [(ngModel)]="cutout.Type" name="Type"></ion-input>
+        <ion-icon slot="end" style="margin-top: 20px;" name="arrow-dropdown"></ion-icon>
+      </ion-item>
+      <ion-item>
+          <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
+          <ion-input type="text" class="labelfont" [(ngModel)]="cutout.LF" name="LF" readonly="readonly"></ion-input>
+        </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
+        <ion-input type="text" class="labelfont" [(ngModel)]="cutout.UnitCost" name="UnitCost"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
+        <ion-input type="text" class="labelfont" [(ngModel)]="cutout.Margin" name="Margin"><ion-row style="margin-right: 3px;">%</ion-row></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
+        <ion-input type="text" class="labelfont" [(ngModel)]="cutout.Unitprice" name="UnitPrice"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
+          <ion-input type="text" class="labelfont" [(ngModel)]="cutout.Amt" name="Amt" readonly="readonly"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+        </ion-item>
+    </form>
+</ion-content>
+
+
+
+
+
+
+<!-- DONT DELETE THIS -->
+<!-- <ion-content>
   <form>
       <ion-row>
           <ion-col size="3">
@@ -119,6 +154,4 @@
       <ion-textarea rows="10" cols="25" value="Enter Text Here..." class="borderall"></ion-textarea>
     </ion-item>
   </form>
-</ion-content>
-
-
+</ion-content> -->

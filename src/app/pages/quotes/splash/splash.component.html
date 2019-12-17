@@ -10,23 +10,30 @@
   <form>
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
-      <ion-input type="text" class="labelfont" [(ngModel)]="splash.Splash" name="Splash"></ion-input>
-      <ion-icon slot="end" style="margin-top: 20px;" name="arrow-dropdown"></ion-icon>
+      <ion-select interface="popover" [(ngModel)]="splash.SplashID" name="SplashID">
+        <ion-select-option *ngFor="let spl of splashlist" [value]="spl.ID"> {{spl.Description}}</ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-item style="margin-left: -6%;">
       <ion-row>
         <ion-col size="12" style="padding: 0px; margin-left: 12px;">
           <ion-row>
-            <ion-col size="3"><ion-input type="text" [(ngModel)]="splash.Width" name="Width"
-                style="border-bottom: 1px solid black; border-top: none;border-right: none;border-left: none;"></ion-input>
+            <ion-col size="3">
+              <ion-input type="text" [(ngModel)]="splash.Width" name="Width"
+                style="border-bottom: 1px solid black; border-top: none;border-right: none;border-left: none;">
+              </ion-input>
             </ion-col>
             <ion-col size="1">X</ion-col>
-            <ion-col size="3"><ion-input type="text" [(ngModel)]="splash.Height" name="Height"
-                style="border-bottom: 1px solid black; border-top: none;border-right: none;border-left: none;"></ion-input>
+            <ion-col size="3">
+              <ion-input type="text" [(ngModel)]="splash.Height" name="Height"
+                style="border-bottom: 1px solid black; border-top: none;border-right: none;border-left: none;">
+              </ion-input>
             </ion-col>
             <ion-col size="1">=</ion-col>
-            <ion-col size="3"><ion-input type="text" [(ngModel)]="splash.Sqft" name="Sqft"
-                style="border-bottom: 1px solid black; border-top: none;border-right: none;border-left: none;"></ion-input>
+            <ion-col size="3">
+              <ion-input type="text" [(ngModel)]="splash.Sqft" name="Sqft"
+                style="border-bottom: 1px solid black; border-top: none;border-right: none;border-left: none;">
+              </ion-input>
             </ion-col>
           </ion-row>
         </ion-col>

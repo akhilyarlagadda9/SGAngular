@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { QuoterepService } from 'src/app/service/quoterep.service';
+import { QuotegetService } from 'src/app/service/quoteget.service';
 
 @Component({
   selector: 'app-edgeinfo',
@@ -9,9 +10,14 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
 })
 export class EdgeinfoComponent implements OnInit {
   edge:any;
-  constructor(public Modalcntrl : ModalController,private quoterep: QuoterepService) { }
+  priceListID: any;
+  edgelist: any = [];
 
-  ngOnInit() {}
+  constructor(public Modalcntrl : ModalController,private quoterep: QuoterepService,private getservice: QuotegetService) { }
+
+  ngOnInit() {
+    this.ActionSelectEdge(); 
+  }
 
   ActionSetMargin(typeId:number,model:any,type:string){
    this.edge = this.quoterep.margincalculations(typeId,model,type);
@@ -24,10 +30,15 @@ export class EdgeinfoComponent implements OnInit {
    }
   
   ActionToClose() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
     this.Modalcntrl.dismiss({
       'dismissed': true
     });
+  }
+
+  ActionSelectEdge() {
+    let typeIdList = []; typeIdList.push(5); 
+    this.getservice.qsgetpricelistitems(this.priceListID,typeIdList).subscribe(
+      data => { this.edgelist = data[0] },
+      error => console.log(error));
   }
 }

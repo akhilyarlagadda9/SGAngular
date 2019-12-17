@@ -10,8 +10,11 @@
     <form>
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
-        <ion-input type="text" class="labelfont" [(ngModel)]="edge.Description" name="Description"></ion-input>
-        <ion-icon slot="end" style="margin-top: 20px;" name="arrow-dropdown"></ion-icon>
+        <!-- <ion-input type="text" class="labelfont" [(ngModel)]="edge.Description" name="Description"></ion-input>
+        <ion-icon slot="end" style="margin-top: 20px;" name="arrow-dropdown"></ion-icon> -->
+        <ion-select interface="popover" [(ngModel)]="edge.EdgeProfileID" name="EdgeProfileID">
+          <ion-select-option *ngFor="let edg of edgelist" [value]="edg.ID"> {{edg.Description}}</ion-select-option>
+        </ion-select>
       </ion-item>
       <ion-item>
           <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>

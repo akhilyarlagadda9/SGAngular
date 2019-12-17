@@ -26,7 +26,7 @@ export class SplashComponent implements OnInit {
   ActionSelectSplash() {
     let typeIdList = []; typeIdList.push(6); 
     this.getservice.qsgetpricelistitems(this.priceListID,typeIdList).subscribe(
-      data => { this.splashlist = data[1] },
+      data => { this.splashlist = data[0] },
       error => console.log(error));
   }
 

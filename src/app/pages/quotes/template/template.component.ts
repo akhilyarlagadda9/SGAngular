@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ModalController ,NavParams} from '@ionic/angular';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-template',
@@ -7,11 +8,15 @@ import { ModalController ,NavParams} from '@ionic/angular';
   styleUrls: ['./template.component.scss'],
 })
 export class TemplateComponent implements OnInit {
-
-  constructor(public Modalcntrl : ModalController,private navCntrl:NavParams) { }
+  registerForm: FormGroup;
+  submitted = false;
+  Description="";
+  constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController,private navCntrl:NavParams) { }
   TypeID = this.navCntrl.data.TypeID;
   ngOnInit() {
-    
+    this.registerForm = this.formBuilder.group({
+      Description: ['', Validators.required],
+  });
     console.log(this.TypeID)
   }
 
@@ -22,5 +27,10 @@ export class TemplateComponent implements OnInit {
       'dismissed': true
     });
   }
-
+  ActionFabSubmit(){
+    this.submitted = true;
+    if (this.registerForm.invalid) {
+      return;
+  }
+  }
 }

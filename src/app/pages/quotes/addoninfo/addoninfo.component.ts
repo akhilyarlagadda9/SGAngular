@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams, PopoverController } from '@ionic/angular';
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-addoninfo',
@@ -8,10 +9,16 @@ import { AdditionalitemserachComponent } from '../additionalitemserach/additiona
   styleUrls: ['./addoninfo.component.scss'],
 })
 export class AddoninfoComponent implements OnInit {
-
-  constructor(public Modalcntrl : ModalController,private popoverCntrl :PopoverController,private navParams : NavParams ) { }
+  registerForm: FormGroup;
+  submitted = false;
+  Description="";
+  constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController,private popoverCntrl :PopoverController,private navParams : NavParams ) { }
   addoninfo = this.navParams.data;
-  ngOnInit() {}
+  ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+      Description: ['', Validators.required],
+  });
+  }
   ActionToClose() {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
@@ -41,5 +48,12 @@ export class AddoninfoComponent implements OnInit {
   this.popoverCntrl.dismiss({
     'dismissed': true
   });
+}
+get f() { return this.registerForm.controls; }
+ActionSubmit(){
+  this.submitted = true;
+  if (this.registerForm.invalid) {
+    return;
+}
 }
 }

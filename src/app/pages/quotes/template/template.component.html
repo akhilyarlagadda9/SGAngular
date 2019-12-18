@@ -1,4 +1,4 @@
-<ion-header *ngIf="TypeID == 1">
+<!-- <ion-header *ngIf="TypeID == 1">
   <ion-toolbar>
     <ion-title class="titleheader">
       <div>Fabrication</div>
@@ -43,24 +43,42 @@
       </ion-input>
     </ion-item>
   </form>
-</ion-content>
+</ion-content> -->
 
-<ion-header *ngIf="TypeID == 2 || TypeID == 3">
+<!-- <ion-header *ngIf="TypeID == 1 || TypeID == 2 || TypeID == 3">
   <ion-toolbar>
     <ion-title class="titleheader">
+      <div *ngIf="TypeID == 1">Fabrication</div>
       <div *ngIf="TypeID == 2">Template</div>
       <div *ngIf="TypeID == 3">Install</div>
     </ion-title>
     <ion-button slot="end" color="success" size="small">Save</ion-button>
     <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
   </ion-toolbar>
-</ion-header>
-<ion-content *ngIf="TypeID == 2 || TypeID == 3">
-  <form>
+</ion-header> -->
+<ion-content>
+  <form name="form" (ngSubmit)="ActionFaucetSubmit()" #f="ngForm">
+    <ion-toolbar class="poss">
+      <ion-title class="titleheader">
+        <div *ngIf="TypeID == 1">Fabrication</div>
+        <div *ngIf="TypeID == 2">Template</div>
+        <div *ngIf="TypeID == 3">Install</div>
+      </ion-title>
+      <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
+    </ion-toolbar>
     <ion-item>
-      <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
-      <ion-input type="text" class="labelfont" [(ngModel)]="labor.Description" name="Description"></ion-input>
+      <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="labor.Description" name="Description" 
+      #Description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Description.invalid }"
+      required></ion-input>
+      <ion-icon slot="end" class="marg2" name="arrow-dropdown" ></ion-icon>
+      <ion-icon slot="end" class="marg2" name="search" ></ion-icon>
     </ion-item>
+    <div *ngIf="f.submitted && Description.invalid" class="invalid-feedback padd-Left">
+      <div *ngIf="Description.errors.required" class="error">Description is required</div>
+    </div>
+    
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
       <ion-input type="text" class="labelfont" [(ngModel)]="labor.Qty" readonly="readonly" name="Qty">

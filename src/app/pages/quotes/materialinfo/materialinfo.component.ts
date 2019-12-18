@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AddmatComponent } from './addmat/addmat.component';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-materialinfo',
@@ -8,10 +9,16 @@ import { AddmatComponent } from './addmat/addmat.component';
   styleUrls: ['./materialinfo.component.scss'],
 })
 export class MaterialinfoComponent implements OnInit {
+  registerForm: FormGroup;
+  submitted = false;
+  Description="";
+  constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController ) { }
 
-  constructor(public Modalcntrl : ModalController ) { }
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+      Description: ['', Validators.required],
+  });
+  }
 
   ActionToClose() {
     // using the injected ModalController this page
@@ -28,4 +35,14 @@ export class MaterialinfoComponent implements OnInit {
     });
     return await modal.present();
   }
+
+  get f() { return this.registerForm.controls; }
+
+
+  ActionSubmit(){
+    this.submitted = true;
+    if (this.registerForm.invalid) {
+      return;
+  }
+}
 }

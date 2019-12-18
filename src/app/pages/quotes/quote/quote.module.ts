@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 // Components
 import { QuotePage } from './quote.page';
 import { CreatequoteComponent } from 'src/app/pages/quotes/createquote/createquote.component';
@@ -44,6 +45,7 @@ import { ManagementsummaryComponent,DiscountComponent,taxComponent,feeComponent}
     CommonModule,
     FormsModule,
     IonicModule, 
+    ReactiveFormsModule,
     RouterModule.forChild([
       {
         path: '',

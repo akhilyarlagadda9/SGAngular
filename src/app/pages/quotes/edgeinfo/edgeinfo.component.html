@@ -1,21 +1,25 @@
-<ion-header>
-    <ion-toolbar>
+<ion-content>
+  <form name="form" (ngSubmit)="ActionFaucetSubmit()" #f="ngForm">
+    <ion-toolbar class="poss">
       <ion-title class="titleheader">Edge</ion-title>
-      <ion-button slot="end" color="success" size="small">Save</ion-button>
+      <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
       <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
     </ion-toolbar>
-  </ion-header>
-  
-  <ion-content>
-    <form>
-      <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
-        <!-- <ion-input type="text" class="labelfont" [(ngModel)]="edge.Description" name="Description"></ion-input>
-        <ion-icon slot="end" style="margin-top: 20px;" name="arrow-dropdown"></ion-icon> -->
-        <ion-select interface="popover" [(ngModel)]="edge.EdgeProfileID" name="EdgeProfileID">
-          <ion-select-option *ngFor="let edg of edgelist" [value]="edg.ID"> {{edg.Description}}</ion-select-option>
-        </ion-select>
-      </ion-item>
+
+    <ion-item>
+      <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
+      <!-- <ion-input type="text" class="labelfont" [(ngModel)]="edge.Description" name="Description"></ion-input>
+      <ion-icon slot="end" style="margin-top: 20px;" name="arrow-dropdown"></ion-icon> -->
+      <ion-select [(ngModel)]="edge.EdgeProfileID" name="edge" 
+      #edge="ngModel" [ngClass]="{ 'is-invalid': f.submitted && edge.invalid }" class="labelfont"
+      required>
+        <ion-select-option *ngFor="let edg of edgelist"> {{edg.Description}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div *ngIf="f.submitted && edge.invalid" class="invalid-feedback padd-Left">
+      <div *ngIf="edge.errors.required" class="error">Description is required</div>
+    </div>
+    
       <ion-item>
           <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
           <ion-input type="text" class="labelfont" [(ngModel)]="edge.LF" name="LF" (change)="ActionSetAmount()"></ion-input>

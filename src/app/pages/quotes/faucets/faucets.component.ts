@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams, PopoverController } from '@ionic/angular';
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-faucets',
@@ -8,10 +9,16 @@ import { AdditionalitemserachComponent } from '../additionalitemserach/additiona
   styleUrls: ['./faucets.component.scss'],
 })
 export class FaucetsComponent implements OnInit {
-
-  constructor(public Modalcntrl : ModalController,private popoverCntrl :PopoverController,private navParams : NavParams ) { }
+  registerForm: FormGroup;
+  submitted = false;
+  Description="";
+  constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController,private popoverCntrl :PopoverController,private navParams : NavParams ) { }
   faucetinfo = this.navParams.data;
-  ngOnInit() {}
+  ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+      Description: ['', Validators.required],
+  });
+  }
 
   ActionToClose() {
     // using the injected ModalController this page
@@ -32,4 +39,11 @@ export class FaucetsComponent implements OnInit {
    });
    return await popover.present();
  }
+
+ ActionFaucetSubmit(){
+  this.submitted = true;
+  if (this.registerForm.invalid) {
+    return;
+}
+}
 }

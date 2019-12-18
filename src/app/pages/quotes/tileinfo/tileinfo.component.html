@@ -1,28 +1,40 @@
-<ion-header>
+<!-- <ion-header>
     <ion-toolbar>
       <ion-title class="titleheader">
         <div>{{selName}}</div>
-        <!-- <div *ngIf="TypeID == 12">Tile</div>
+        <div *ngIf="TypeID == 12">Tile</div>
         <div *ngIf="TypeID ==18">Cabinet</div>
         <div *ngIf="TypeID == 3">Tool</div>
         <div *ngIf="TypeID == 4">Consumable</div>
         <div *ngIf="TypeID == 5">Appliance</div>
         <div *ngIf="TypeID == 6">Carpet</div>
-        <div *ngIf="TypeID == 7">Labor</div> -->
+        <div *ngIf="TypeID == 7">Labor</div>
       </ion-title>
       <ion-button slot="end" color="success" size="small">Save</ion-button>
       <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
     </ion-toolbar>
-  </ion-header>
+  </ion-header> -->
   
   <ion-content>
-    <form>
+    <form name="form" (ngSubmit)="ActionSubmit()" #f="ngForm">
+      <ion-toolbar class="poss">
+        <ion-title class="titleheader">
+          <div>{{selName}}</div>
+        </ion-title>
+        <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
+        <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
+      </ion-toolbar>
       <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
-        <ion-input type="text" class="labelfont" [(ngModel)]="labor.Description" name="Description" (keyup.enter)="ActionSearchSelect($event,2,TypeID)"></ion-input>
-        <ion-icon slot="end" style="margin-top: 20px;" name="arrow-dropdown" (click)="ActionSearchSelect($event,2,TypeID)"></ion-icon>
-        <ion-icon slot="end" style="margin-top: 20px;" name="search" (click)="ActionSearchSelect($event,2,TypeID)"></ion-icon>
+        <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
+        <ion-input type="text" class="labelfont" [(ngModel)]="labor.Description" name="Description" 
+        #Description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Description.invalid }" required
+        (keyup.enter)="ActionSearchSelect($event,2,TypeID)"></ion-input>
+        <ion-icon slot="end" class="marg2" name="arrow-dropdown" (click)="ActionSearchSelect($event,2,TypeID)"></ion-icon>
+        <ion-icon slot="end" class="marg2" name="search" (click)="ActionSearchSelect($event,2,TypeID)"></ion-icon>
       </ion-item>
+      <div *ngIf="f.submitted && Description.invalid" class="invalid-feedback padd-Left">
+        <div *ngIf="Description.errors.required" class="error">Description is required</div>
+      </div>
       <ion-item>
           <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
           <ion-input type="text" class="labelfont" [(ngModel)]="labor.Qty" (change)="ActionSetAmount()"  name="Qty"></ion-input>
@@ -41,7 +53,7 @@
       </ion-item>
       <ion-item>
           <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
-          <ion-input type="email" class="labelfont" [(ngModel)]="labor.Amount" name="Amount"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+          <ion-input type="email" class="labelfont" [(ngModel)]="labor.Amount" name="Amount" ><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
         </ion-item>
     </form>
   </ion-content>

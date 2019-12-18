@@ -46,6 +46,9 @@ ion-icon{
 .paddright{
     padding-right: 5px;
 }
+.padd-Left{
+    padding-left: 16px;
+}
 .padding-topbottom{
     padding-top: 3px;
     padding-bottom: 3px;
@@ -189,4 +192,25 @@ ion-icon{
 .titleheader2 {
     padding-left: 15px;
     font-size: 17px;
+}
+
+.error {
+    color: red;
+    font-size: 10px;
+}
+.margin-top {
+    margin-top: 54px !important;
+}
+
+.poss {
+    position: fixed;
+    border-bottom: 1px solid lightgrey;
+}
+
+.marg2 {
+    margin-top: 70px;
+}
+
+.margin-top2{
+    margin-top: 44px !important;
 }

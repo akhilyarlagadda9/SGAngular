@@ -10,8 +10,11 @@
     <form>
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
-        <ion-input type="text" class="labelfont" [(ngModel)]="cutout.Type" name="Type"></ion-input>
-        <ion-icon slot="end" style="margin-top: 20px;" name="arrow-dropdown"></ion-icon>
+        <!-- <ion-input type="text" class="labelfont" [(ngModel)]="cutout.Type" name="Type"></ion-input>
+        <ion-icon slot="end" style="margin-top: 20px;" name="arrow-dropdown"></ion-icon> -->
+        <ion-select interface="popover" [(ngModel)]="cutout.TypeID" name="TypeID">
+          <ion-select-option *ngFor="let cut of cutoutlist" [value]="cut.ID"> <span *ngIf="cut.CutOutRefID == cutout.CutOutTypeID">{{cut.Description}}</span></ion-select-option>
+        </ion-select>
       </ion-item>
       <ion-item>
           <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>

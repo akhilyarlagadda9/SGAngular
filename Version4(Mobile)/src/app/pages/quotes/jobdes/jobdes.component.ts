@@ -19,8 +19,7 @@ export class JobdesComponent implements OnInit {
   ngOnInit() {
   }
 
-  async ActionEditJobDesc(typeId:any) {debugger;
-    //let des = typeId == 1 ?this.version.Description: this.version.PrivateNote;
+  async ActionEditJobDesc(typeId:any) {
     let ver = {TypeID: typeId,Version:this.Version}
     const modal = await this.Modalcntrl.create({
       component: JobdesceditComponent,

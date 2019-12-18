@@ -1,5 +1,6 @@
 import { Component, OnInit, TypeProvider } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 
 @Component({
@@ -8,14 +9,18 @@ import { QuotegetService } from 'src/app/service/quoteget.service';
   styleUrls: ['./cutoutinfo.component.scss'],
 })
 export class CutoutinfoComponent implements OnInit {
+  registerForm: FormGroup;
+  submitted = false;
   priceListID: any;
   cutoutlist: any = [];
-
-  constructor(public Modalcntrl : ModalController,private navCntrl:NavParams,private getservice: QuotegetService ) { }
+  constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController,private navCntrl:NavParams,private getservice: QuotegetService) { }
   TypeID = this.navCntrl.data.TypeID;
 
   ngOnInit() {
-    this.ActionSelectCutout(); 
+    this.registerForm = this.formBuilder.group({
+      Description: ['', Validators.required],
+  });
+  this.ActionSelectCutout()
   }
 
   ActionToClose() {
@@ -23,6 +28,13 @@ export class CutoutinfoComponent implements OnInit {
       'dismissed': true
     });
   }
+  ActionFabSubmit(){
+    this.submitted = true;
+    if (this.registerForm.invalid) {
+      return;
+  }
+  }
+
   ActionSelectCutout() {
     let typeIdList = []; typeIdList.push(10); 
     this.getservice.qsgetpricelistitems(this.priceListID,typeIdList).subscribe(

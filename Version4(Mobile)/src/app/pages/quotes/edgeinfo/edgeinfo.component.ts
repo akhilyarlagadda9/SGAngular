@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { QuotegetService } from 'src/app/service/quoteget.service';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-edgeinfo',
@@ -9,13 +10,18 @@ import { QuotegetService } from 'src/app/service/quoteget.service';
   styleUrls: ['./edgeinfo.component.scss'],
 })
 export class EdgeinfoComponent implements OnInit {
-  edge:any;
+  registerForm: FormGroup;
+  submitted = false;
+  edge:any = "";
   priceListID: any;
-  edgelist: any = [];
+  edgelist: any;
 
-  constructor(public Modalcntrl : ModalController,private quoterep: QuoterepService,private getservice: QuotegetService) { }
+  constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController,private quoterep: QuoterepService,private getservice: QuotegetService) { }
 
   ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+      edge: ['', Validators.required],
+  });
     this.ActionSelectEdge(); 
   }
 
@@ -40,5 +46,12 @@ export class EdgeinfoComponent implements OnInit {
     this.getservice.qsgetpricelistitems(this.priceListID,typeIdList).subscribe(
       data => { this.edgelist = data[0] },
       error => console.log(error));
+  }
+
+  ActionFaucetSubmit(){
+    this.submitted = true;
+    if (this.registerForm.invalid) {
+      return;
+  }
   }
 }

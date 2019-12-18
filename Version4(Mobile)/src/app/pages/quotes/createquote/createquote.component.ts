@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CustomersearchComponent } from '../customersearch/customersearch.component';
 import { OverlayEventDetail } from '@ionic/core';
 import { QuotepostService } from 'src/app/service/quotepost.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-createquote',
@@ -12,6 +13,8 @@ import { QuotepostService } from 'src/app/service/quotepost.service';
   styleUrls: ['./createquote.component.scss'],
 })
 export class CreatequoteComponent implements OnInit {
+  registerForm: FormGroup;
+  submitted = false;
   quoteId:number = 0;
   header :any;
   salesPersonsList:any = [];
@@ -21,16 +24,16 @@ export class CreatequoteComponent implements OnInit {
   leadTypes:any = [];
   leadHearAbout:any = [];
   priceList:any = [];
-  constructor(public Modalcntrl : ModalController,private getservice:QuotegetService,private popoverCntrl :PopoverController,private postservice :QuotepostService  ) { }
+  constructor(private formBuilder: FormBuilder, public Modalcntrl : ModalController,private getservice:QuotegetService,private popoverCntrl :PopoverController,private postservice :QuotepostService  ) { }
   ngOnInit() {
     this.header= {
-      ProjectManagerID:0,EstimatorID:0,SalesPersonID:0,
+      ProjectManagerID:0,EstimatorID:0,SalesPersonID:"",
       JobName:"",Address1:"",Address2:"",City:"",State:"",Zipcode:"",YearBuilt:"", 
       LeadInfo:{
-        LeadTypeID:0,SourceID:0,
+        LeadTypeID: "",SourceID:0,
       }, 
       Version:{
-        AccName:"",PriceListID:0,ProductionTypeID:0,
+        AccName:"",PriceListID:"",ProductionTypeID:0,
         Customer:{
           FirstName:"",
           LastName:"",
@@ -39,9 +42,20 @@ export class CreatequoteComponent implements OnInit {
         },
         ParentCustInfo:{},
         ChildParentCustInfo:{},
-        ParentAccID :0,CustTypeID:4,  ChildAccID:0,StatusID:1
+        ParentAccID :0,CustTypeID:"",  ChildAccID:0,StatusID:1
       },
     };
+    this.registerForm = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      LeadTypeID: ['', Validators.required],
+      CustTypeID: ['', Validators.required],
+      SalesPersonID: ['', Validators.required],
+      PriceListID: ['', Validators.required],
+      QuoteName: ['', Validators.required],
+      City: ['', Validators.required],
+      State: ['', Validators.required],
+      
+  });
     let custDicIds = [1];let leadDicIds = [2,3];
     this.getservice.LeadDictionaryLists(leadDicIds).subscribe(
       data=> { this.leadTypes = data[0] ;this.leadHearAbout = data[1] }
@@ -49,6 +63,7 @@ export class CreatequoteComponent implements OnInit {
     this.getservice.CustomerDictionayList(custDicIds).subscribe(data => {this.customerTypes = data[0]});
    this.PopulateDropDownList(4);
     }
+    
   /******* Actions *******/
   ActionCloseCreateQuote(isSave) {
     let obj = {QuoteId:this.header.ID}
@@ -58,7 +73,15 @@ export class CreatequoteComponent implements OnInit {
       isSave:isSave,
     });
   }
+
+  get f() { return this.registerForm.controls; }
+
+
   ActionQuoteSubmit(){
+    this.submitted = true;
+    if (this.registerForm.invalid) {
+      return;
+  }
     this.ValidateHeader();
     //this.postservice.ActionSaveQuote(this.header).subscribe(data=> {
       //this.header.ID = data;

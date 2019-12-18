@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-measurements',
@@ -7,10 +8,17 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./measurements.component.scss'],
 })
 export class MeasurementsComponent implements OnInit {
+  registerForm: FormGroup;
+  submitted = false;
+  Description="";
+  constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController ) { }
 
-  constructor(public Modalcntrl : ModalController ) { }
+  ngOnInit() {
 
-  ngOnInit() {}
+    this.registerForm = this.formBuilder.group({
+      Description: ['', Validators.required],
+  });
+  }
 
   ActionToClose() {
     // using the injected ModalController this page
@@ -19,5 +27,15 @@ export class MeasurementsComponent implements OnInit {
       'dismissed': true
     });
   }
+
+  get f() { return this.registerForm.controls; }
+
+
+  ActionSubmit(){
+    this.submitted = true;
+    if (this.registerForm.invalid) {
+      return;
+  }
+}
 
 }

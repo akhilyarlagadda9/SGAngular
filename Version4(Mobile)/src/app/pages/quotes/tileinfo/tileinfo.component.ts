@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, PopoverController, NavParams } from '@ionic/angular';
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 import { QuoterepService } from 'src/app/service/quoterep.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-tileinfo',
@@ -9,12 +10,19 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
   styleUrls: ['./tileinfo.component.scss'],
 })
 export class TileinfoComponent implements OnInit {
+  registerForm: FormGroup;
+  submitted = false;
+  Description="";
   labor:any;
-  constructor(public Modalcntrl : ModalController,
+  constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController,
     private popoverCntrl :PopoverController,private navParams : NavParams,private quoterep:QuoterepService ) { }
   tileinfo = this.navParams.data;
   TypeID = this.navParams.data.TypeID;
-  ngOnInit() {}
+  ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+      Description: ['', Validators.required],
+  });
+  }
 
   ActionToClose() {
     // using the injected ModalController this page
@@ -49,6 +57,13 @@ export class TileinfoComponent implements OnInit {
   this.popoverCntrl.dismiss({
     'dismissed': true
   });
+}
+
+ActionSubmit(){
+  this.submitted = true;
+  if (this.registerForm.invalid) {
+    return;
+}
 }
 }
 

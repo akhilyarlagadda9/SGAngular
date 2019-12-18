@@ -1,19 +1,30 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title class="titleheader">Splash</ion-title>
     <ion-button slot="end" color="success" size="small">Save</ion-button>
     <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content>
-  <form>
+  <form name="form" (ngSubmit)="ActionSubmit()" #f="ngForm">
+    <ion-toolbar>
+      <ion-title class="titleheader">Splash</ion-title>
+      <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
+    </ion-toolbar>
+
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
-      <ion-select interface="popover" [(ngModel)]="splash.SplashID" name="SplashID">
-        <ion-select-option *ngFor="let spl of splashlist" [value]="spl.ID"> {{spl.Description}}</ion-select-option>
+      <ion-select [(ngModel)]="splash.SplashID" name="splash" #splash="ngModel" 
+      [ngClass]="{ 'is-invalid': f.submitted && splash.invalid }" required>>
+        <ion-select-option *ngFor="let spl of splashlist"> {{spl.Description}}</ion-select-option>
       </ion-select>
     </ion-item>
+    <div *ngIf="f.submitted && splash.invalid" class="invalid-feedback padd-Left">
+      <div *ngIf="splash.errors.required" class="error">Description is required</div>
+    </div>
+
     <ion-item style="margin-left: -6%;">
       <ion-row>
         <ion-col size="12" style="padding: 0px; margin-left: 12px;">

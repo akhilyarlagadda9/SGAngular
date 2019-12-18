@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, PopoverController, NavParams } from '@ionic/angular';
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
+import { FormGroup, FormBuilder,Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-sink',
@@ -8,10 +9,17 @@ import { AdditionalitemserachComponent } from '../additionalitemserach/additiona
   styleUrls: ['./sink.component.scss'],
 })
 export class SinkComponent implements OnInit {
+  registerForm: FormGroup;
+  submitted = false;
+  Description="";
 
-  constructor(public Modalcntrl : ModalController,private popoverCntrl :PopoverController,private navParams : NavParams,) { }
+  constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController,private popoverCntrl :PopoverController,private navParams : NavParams,) { }
   sinkinfo = this.navParams.data;
-  ngOnInit() {}
+  ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+      Description: ['', Validators.required],
+  });
+  }
 
   ActionToClose() {
     // using the injected ModalController this page
@@ -44,5 +52,15 @@ export class SinkComponent implements OnInit {
     'dismissed': true
   });
  
+}
+
+get f() { return this.registerForm.controls; }
+
+
+  ActionSinkSubmit(){
+    this.submitted = true;
+    if (this.registerForm.invalid) {
+      return;
+  }
 }
 }

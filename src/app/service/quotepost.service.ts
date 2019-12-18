@@ -16,7 +16,7 @@ export class QuotepostService {
     return this.http.post<any>(this.url + 'api/QuoteSave/ActionSaveQuote', info, { headers: { 'Content-Type': 'application/json' } })
    }
 
-  ActionSaveDescription(ver:any):Observable<any> {debugger;
+  ActionSaveDescription(ver:any):Observable<any> {
     var version = JSON.stringify(ver);
     return this.http.post<any>(this.url + 'api/QSave/ActionSaveQuoteNotes' , version , { headers: { 'Content-Type': 'application/json' } })
   }

@@ -26,7 +26,23 @@
         <ion-input type="text" [(ngModel)]="poitem.POAmount" class="inputheight fontbold"></ion-input>
       </ion-item>
       <ion-row>
-          <ion-label class="labelstyle" [(ngModel)]="poitem.Path" color="primary"><u>Attachments:</u></ion-label>
+        <span class="btn btn-success fileinput-button" ngClass="{disabled: disabled}" style="line-height: 1; color:blue;text-decoration:underline; font-weight:bold;
+        text-align: right; background-color: #f3f3f4;border-color: transparent; padding: 0px 6px;
+        font-size: 14px">
+         <u>Attachments:</u>
+
+          <ion-col size="7" class="paddzero text-left fontbold">
+            <input type="file" (change)="ActionUploadPoAttach($event)">
+            <!-- {{info.Path}} -->
+        
+          </ion-col>
+        </span>
       </ion-row>
+      <ion-row>
+
+        <ion-col *ngFor="let attah of poitem.AttachmentList">
+         {{attah.Path}}
+        </ion-col>
+    </ion-row>
     </ion-list>
   </ion-content>

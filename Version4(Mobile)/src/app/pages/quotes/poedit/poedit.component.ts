@@ -11,8 +11,10 @@ export class PoeditComponent implements OnInit {
 
   constructor(public Modalcntrl : ModalController,private navParams : NavParams) { }
    poitem = this.navParams.data;
-  
-  ngOnInit() {}
+
+  ngOnInit() {
+    this.poitem.AttachmentList = this.poitem.AttachmentList == null  || this.poitem.AttachmentList == undefined ? [] : this.poitem.AttachmentList;
+  }
 
   ActionSavePOItem() {
     this.ActionClosePOItem(true);
@@ -26,4 +28,15 @@ export class PoeditComponent implements OnInit {
       issave:issave
     });
   }
+  ActionUploadPoAttach(event: any) {
+   if (event.target.files && event.target.files[0]) {
+     let file = event.target.files[0];
+       var reader = new FileReader();
+       reader.onload = (event: any) => {
+         let model = {ID:0,Path:file.name}
+        this.poitem.AttachmentList.push(model);
+       }
+       reader.readAsDataURL(event.target.files[0]);
+   }
+ }
 }

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TypeProvider } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
+import { QuotegetService } from 'src/app/service/quoteget.service';
 
 @Component({
   selector: 'app-cutoutinfo',
@@ -7,18 +8,25 @@ import { ModalController, NavParams } from '@ionic/angular';
   styleUrls: ['./cutoutinfo.component.scss'],
 })
 export class CutoutinfoComponent implements OnInit {
+  priceListID: any;
+  cutoutlist: any = [];
 
-  constructor(public Modalcntrl : ModalController,private navCntrl:NavParams) { }
+  constructor(public Modalcntrl : ModalController,private navCntrl:NavParams,private getservice: QuotegetService ) { }
   TypeID = this.navCntrl.data.TypeID;
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.ActionSelectCutout(); 
+  }
 
   ActionToClose() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
     this.Modalcntrl.dismiss({
       'dismissed': true
     });
   }
-
+  ActionSelectCutout() {
+    let typeIdList = []; typeIdList.push(10); 
+    this.getservice.qsgetpricelistitems(this.priceListID,typeIdList).subscribe(
+      data => { this.cutoutlist = data[0] },
+      error => console.log(error));
+  }
 }

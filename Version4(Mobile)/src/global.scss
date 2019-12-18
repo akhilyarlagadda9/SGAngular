@@ -193,7 +193,17 @@ ion-icon{
     padding-left: 15px;
     font-size: 17px;
 }
-
+.fileinput-button input {
+    position: absolute;
+   top: 0; 
+   right: 0; 
+    margin: 0; 
+   opacity: 0; 
+   //-ms-filter: 'alpha(opacity=0)';
+   font-size: 16px; 
+   direction: ltr; 
+    cursor: pointer; 
+}
 .error {
     color: red;
     font-size: 10px;

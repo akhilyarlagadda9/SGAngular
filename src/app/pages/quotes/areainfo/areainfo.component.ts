@@ -17,6 +17,8 @@ import { QuoteService } from 'src/app/service/quote.service';
 import { ManagementsummaryComponent } from '../managementsummary/managementsummary.component';
 import { OverlayEventDetail } from '@ionic/core';
 import { QuoterepService } from 'src/app/service/quoterep.service';
+import { FabricationComponent } from '../fabrication/fabrication.component';
+import { LaborinfoComponent } from '../laborinfo/laborinfo.component';
 
 @Component({
   selector: 'app-areainfo',
@@ -142,15 +144,34 @@ export class AreainfoComponent implements OnInit {
     });
     return await modal.present();
   }
-  async ActionCreateTemplate(typeId: number,temp : any) {
+  async ActionEditFabrication(fab:any) {
+    let copyobj = JSON.parse(JSON.stringify(fab));
+    let fabrication = { fabrication: copyobj }
+    const modal = await this.Modalcntrl.create({
+      component: FabricationComponent,
+      componentProps: fabrication
+    });
+    return await modal.present();
+  }
+  async ActionEditTemplate(typeId: number,temp : any, viewtype:string) {
     let copyobj = JSON.parse(JSON.stringify(temp));
-    let labor = { labor: copyobj, TypeID:typeId }
+    let labor = { labor: copyobj, TypeID:typeId, ViewType : viewtype }
     const modal = await this.Modalcntrl.create({
       component: TemplateComponent,
       componentProps: labor
     });
     return await modal.present();
   }
+  async ActionEditLabor(typeId: number,temp : any, viewtype:string) {
+    let copyobj = JSON.parse(JSON.stringify(temp));
+    let labor = { labor: copyobj, TypeID:typeId, ViewType : viewtype }
+    const modal = await this.Modalcntrl.create({
+      component: LaborinfoComponent,
+      componentProps: labor
+    });
+    return await modal.present();
+  }
+  
   /***** ADD ON DETAILS *****/
   async ActionEditAddon(oth: any) {
     let copyobj = JSON.parse(JSON.stringify(oth));
@@ -165,7 +186,7 @@ export class AreainfoComponent implements OnInit {
   async ActionEditTile(typeId,name,tile:any) {
     
     let copyobj = JSON.parse(JSON.stringify(tile));
-    let tileobj = {TypeID:typeId,selName:name,labor:copyobj,priceListID:Number(this.Version.PriceListID)}
+    let tileobj = {TypeID:typeId,selName:name,tile:copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
       component: TileinfoComponent,
       componentProps: tileobj
@@ -186,7 +207,7 @@ export class AreainfoComponent implements OnInit {
     return await modal.present();
   }
 
-  AddAreaItem(loadType:string,loadId:number){
+  AddAreaItem(loadType:string,loadId:number,ViewType:string){
     switch(loadType) { 
       case "partmat": { 
         let partmat = this.quoterep.AddPartMatItem(this.AreaPartID,this.areaInfo.ID,this.areaInfo.VersionID,this.coId,this.coSrNo,this.Version.MatPercent);
@@ -194,10 +215,14 @@ export class AreainfoComponent implements OnInit {
         break; 
       } 
       case "size": { 
+        let fab = this.quoterep.AddMeasurementItem(this.AreaPartID,this.areaInfo.ID,this.areaInfo.VersionID,this.coId,this.coSrNo,this.Version.MatPercent);
+        this.ActionEditMeasurement(fab);
          break; 
       } 
       case "splash": {
-         break;    
+        let splash = this.quoterep.AddSplashItem(this.AreaPartID,this.areaInfo.ID,this.areaInfo.VersionID,this.coId,this.coSrNo,this.Version.MatPercent);
+        this.ActionEditSplash(splash);
+        break;
       } 
       case "edge": { 
         let edge = this.quoterep.AddEdgeItem(this.AreaPartID,this.areaInfo.ID,this.areaInfo.VersionID,this.coId,this.coSrNo,this.Version.MatPercent);
@@ -205,23 +230,45 @@ export class AreainfoComponent implements OnInit {
          break; 
       } 
       case "cutout": { 
+        let cutout = this.quoterep.AddCutoutItem(this.AreaPartID,this.areaInfo.ID,this.areaInfo.VersionID,this.coId,this.coSrNo,this.Version.MatPercent,loadId);
+        this.ActionCreateCutout(loadId, cutout);
         break; 
      }  
       case "sink": { 
+        let sink = this.quoterep.AddSinkItem(this.AreaPartID,this.areaInfo.ID,this.areaInfo.VersionID,this.coId,this.coSrNo,this.Version.MatPercent);
+        this.ActionEditSink(sink);
         break; 
      } 
      case "faucet": { 
-        break; 
+      let faucet = this.quoterep.AddFaucetItem(this.AreaPartID,this.areaInfo.ID,this.areaInfo.VersionID,this.coId,this.coSrNo,this.Version.MatPercent);
+      this.ActionEditFaucet(faucet);
+      break; 
      } 
      case "other": {
-        break;    
+      let other = this.quoterep.AddOtherItem(this.AreaPartID,this.areaInfo.ID,this.areaInfo.VersionID,this.coId,this.coSrNo,this.Version.MatPercent);
+      this.ActionEditAddon(other);
+      break;    
+     } 
+     case "fabrication": { 
+      let fab = this.quoterep.AddFabricationItem(this.AreaPartID,this.areaInfo.ID,this.areaInfo.VersionID,this.coId,this.coSrNo,this.Version.MatPercent);
+      this.ActionEditFabrication(fab);
+      break; 
+     }
+     case "template": { 
+      let labor = this.quoterep.AddTemplateItem(this.AreaPartID,this.areaInfo.ID,this.areaInfo.VersionID,this.coId,this.coSrNo,this.Version.MatPercent, loadId, ViewType);
+      this.ActionEditTemplate(loadId, labor, ViewType);
+      break; 
      } 
      case "labor": { 
-        break; 
+      let labor = this.quoterep.AddLaborItem(this.AreaPartID,this.areaInfo.ID,this.areaInfo.VersionID,this.coId,this.coSrNo,this.Version.MatPercent, loadId, ViewType);
+      this.ActionEditLabor(loadId, labor, ViewType);
+      break; 
      }  
      case "tile": { 
+      let tile = this.quoterep.AddTileItem(this.AreaPartID,this.areaInfo.ID,this.areaInfo.VersionID,this.coId,this.coSrNo,this.Version.MatPercent, loadId, ViewType);
+      this.ActionEditTile(loadId,ViewType, tile);
       break; 
-   }  
+     }
    }
   }
   async ActionAddAreaitem(ev: any) {
@@ -236,7 +283,7 @@ export class AreainfoComponent implements OnInit {
       popover.onDidDismiss().then((detail: OverlayEventDetail) => {
         if (detail !== null) {
           if(detail.data.isSelect == true){
-          this.AddAreaItem(detail.data.info.loadType,detail.data.info.loadId);
+          this.AddAreaItem(detail.data.info.loadType,detail.data.info.loadId,detail.data.info.ViewType);
           }
         }
      });
@@ -267,26 +314,26 @@ export class AreainfoComponent implements OnInit {
           <ion-grid>
         <ion-row>
           <ion-col>
-            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('partmat',0)">Part Material</div>
+            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('partmat',0, 'Material')">Part Material</div>
           </ion-col>
           <ion-col>
-            <div (click)="ActionLoadPopup('sink',0)">Sink</div>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-             <div *ngIf="navObj.Shape == null || navObj.Shape == ''"(click)="ActionLoadPopup('size',0)">Measurements</div>
-          </ion-col>
-          <ion-col>
-            <div (click)="ActionLoadPopup('faucet',0)">Faucets</div>
+            <div (click)="ActionLoadPopup('sink',0, 'Sink')">Sink</div>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('splash',0)">Splash</div>
+             <div *ngIf="navObj.Shape == null || navObj.Shape == ''"(click)="ActionLoadPopup('size',0, 'Measurements')">Measurements</div>
           </ion-col>
           <ion-col>
-            <div (click)="ActionLoadPopup('tile',18)">Appliance</div>
+            <div (click)="ActionLoadPopup('faucet',0, 'Faucet')">Faucets</div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('splash',0, 'Splash')">Splash</div>
+          </ion-col>
+          <ion-col>
+            <div (click)="ActionLoadPopup('tile',18, 'Appliance')">Appliance</div>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -294,60 +341,60 @@ export class AreainfoComponent implements OnInit {
              <div>Apron</div>
           </ion-col>
           <ion-col>
-            <div (click)="ActionLoadPopup('labor',0)">Labor</div>
+            <div (click)="ActionLoadPopup('labor',0, 'Labor')">Labor</div>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('edge',0)">Edge</div>
+            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('edge',0, 'Edge')">Edge</div>
           </ion-col>
           <ion-col>
-            <div (click)="ActionLoadPopup('other',0)">Add On Products</div>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('cutout',1)">Sink Cutout</div>
-          </ion-col>
-          <ion-col>
-            <div (click)="ActionLoadPopup(response,0)">Customer Items</div>
+            <div (click)="ActionLoadPopup('other',0, 'Add On Products')">Add On Products</div>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('cutout',2)">Outlet Cutout</div>
+            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('cutout',1,'Sink CutOut')">Sink Cutout</div>
           </ion-col>
           <ion-col>
-            <div (click)="ActionLoadPopup('tile',12)">Tile</div>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('cutout',3)">Appliance Cutout</div>
-          </ion-col>
-          <ion-col>
-            <div (click)="ActionLoadPopup('tile',13)">Cabinet</div>
+            <div (click)="ActionLoadPopup(response,0,'Customer Items')">Customer Items</div>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <div (click)="ActionLoadPopup('fab',0)">Fabrication</div>
+            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('cutout',2,'Outlet CutOut')">Outlet Cutout</div>
           </ion-col>
           <ion-col>
-            <div (click)="ActionLoadPopup('tile',17)">Consumable</div>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <div (click)="ActionLoadPopup('labor',1)">Template</div>
-          </ion-col>
-          <ion-col>
-            <div (click)="ActionLoadPopup('tile',19)">Tool</div>
+            <div (click)="ActionLoadPopup('tile',12,'Tile')">Tile</div>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <div (click)="ActionLoadPopup('labor',2)">Install</div>
+            <div *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('cutout',3, 'Appliance CutOut')">Appliance Cutout</div>
+          </ion-col>
+          <ion-col>
+            <div (click)="ActionLoadPopup('tile',13, 'Cabinet')">Cabinet</div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div (click)="ActionLoadPopup('fabrication',0, 'Fabrication')">Fabrication</div>
+          </ion-col>
+          <ion-col>
+            <div (click)="ActionLoadPopup('tile',17, 'Consumable')">Consumable</div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div (click)="ActionLoadPopup('template',1, 'Template')">Template</div>
+          </ion-col>
+          <ion-col>
+            <div (click)="ActionLoadPopup('tile',19, 'Tool')">Tool</div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div (click)="ActionLoadPopup('template',2, 'Install')">Install</div>
           </ion-col>
           <ion-col>
             <div><span style="red">Discount</span></div>
@@ -362,8 +409,8 @@ export class additemComponent implements OnInit {
    obj:any;
    ngOnInit(){}
 
-ActionLoadPopup(loadType:string,loadId:number){
-  this.obj = {loadType:loadType,loadId:loadId};
+ActionLoadPopup(loadType:string,loadId:number, viewtype: string){
+  this.obj = {loadType:loadType,loadId:loadId, ViewType : viewtype};
   this.ActionToClosePop(true);
 }
 ActionToClosePop(isSelect:boolean) {

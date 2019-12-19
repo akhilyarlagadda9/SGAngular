@@ -19,29 +19,32 @@
     </div>
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Quantity</ion-label>
-      <ion-input type="text" class="labelfont" [(ngModel)]="faucet.Quantity" name="Quantity" readonly="readonly">
+      <ion-input type="text" class="labelfont" [(ngModel)]="faucet.Qty" name="Qty" (change)="ActionSetAmount()">
       </ion-input>
     </ion-item>
     <ion-item>
-      <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
-      <ion-input type="tel" class="labelfont" [(ngModel)]="faucet.UnitCost" name="UnitCost">
+      <ion-label class="labelfont" position="floating" color="primary">Cost/Unit</ion-label>
+      <ion-input type="tel" class="labelfont" [(ngModel)]="faucet.UnitCost" name="UnitCost"
+        (change)="ActionSetMargin(1,faucet,'fat')">
         <ion-row class="mar-right3">$</ion-row>
       </ion-input>
     </ion-item>
     <ion-item>
-      <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
-      <ion-input type="email" class="labelfont" [(ngModel)]="faucet.Margin" name="Margin">
+      <ion-label class="labelfont" position="floating" color="primary">Margin</ion-label>
+      <ion-input type="email" class="labelfont" [(ngModel)]="faucet.Margin" name="Margin"
+        (change)="ActionSetMargin(2,faucet,'fat')">
         <ion-row class="mar-right3">%</ion-row>
       </ion-input>
     </ion-item>
     <ion-item>
-      <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
-      <ion-input type="email" class="labelfont" [(ngModel)]="faucet.UnitPrice" name="UnitPrice">
+      <ion-label class="labelfont" position="floating" color="primary">Price/Unit</ion-label>
+      <ion-input type="email" class="labelfont" [(ngModel)]="faucet.UnitPrice" name="UnitPrice"
+        (change)="ActionSetMargin(3,faucet,'fat')">
         <ion-row class="mar-right3">$</ion-row>
       </ion-input>
     </ion-item>
     <ion-item>
-      <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
+      <ion-label class="labelfont" position="floating" color="primary">Amount</ion-label>
       <ion-input type="email" class="labelfont" [(ngModel)]="faucet.Amount" name="Amount" readonly="readonly">
         <ion-row class="mar-right3">$</ion-row>
       </ion-input>

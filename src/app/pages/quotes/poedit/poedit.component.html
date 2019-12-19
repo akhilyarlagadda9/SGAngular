@@ -1,7 +1,7 @@
 <ion-header translucent>
     <ion-toolbar>
       <ion-title><b>PO Item Info</b></ion-title>
-      <ion-button slot="end" color="success" size="small" (click)="ActionSavePOItem(true)">Save</ion-button>
+      <ion-button slot="end" color="success" size="small" (click)="ActionSavePOItem()">Save</ion-button>
       <ion-button slot="end" color="danger" size="small" (click)="ActionClosePOItem(false)">X</ion-button>
     </ion-toolbar>
   </ion-header>
@@ -14,7 +14,9 @@
       <ion-item>
           <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Uploaded By:</ion-label>
           <ion-select [(ngModel)]="poitem.POBy" class="fontbold">
-            <ion-select-option value="">--Select One--</ion-select-option>
+              <ion-select [(ngModel)]="ResourceID" name="ResourceID" class="labelfont" required>
+                  <ion-select-option *ngFor="let p of salespersons" [value]="p.ResourceID">{{p.ResourceName}}</ion-select-option>
+              </ion-select> 
           </ion-select>
         </ion-item>
       <ion-item>

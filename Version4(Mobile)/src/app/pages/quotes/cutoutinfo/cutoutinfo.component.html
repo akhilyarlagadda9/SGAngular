@@ -10,7 +10,7 @@
       <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
     </ion-toolbar>
     <ion-item>
-      <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
+      <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
       <ion-select [(ngModel)]="cutout.TypeID" name="TypeID" #TypeID="ngModel"
         [ngClass]="{ 'is-invalid': f.submitted && TypeID.invalid }" required>
         <ion-select-option *ngFor="let cut of cutoutlist" [value]="cut.ID"> <span

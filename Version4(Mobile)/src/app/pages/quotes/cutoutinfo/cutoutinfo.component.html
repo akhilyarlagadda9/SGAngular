@@ -1,11 +1,3 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title class="titleheader"><div *ngIf="TypeID == 1">Sink Cutout</div>
-      <div *ngIf="TypeID == 3">Appliance Cutout</div><div *ngIf="TypeID == 2">Outlet Cutout</div></ion-title>
-    <ion-button slot="end" color="success" size="small">Save</ion-button>
-    <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
-  </ion-toolbar>
-</ion-header> -->
 <ion-content>
     <form name="form" (ngSubmit)="ActionFaucetSubmit()" #f="ngForm">
       <ion-toolbar class="poss">
@@ -21,9 +13,7 @@
         <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
         <!-- <ion-input type="text" class="labelfont" [(ngModel)]="cutout.Type" name="Type"></ion-input>
         <ion-icon slot="end" style="margin-top: 20px;" name="arrow-dropdown"></ion-icon> -->
-        <ion-select  [(ngModel)]="cutout.TypeID" name="TypeID" 
-        #TypeID="ngModel" [ngClass]="{ 'is-invalid': f.submitted && TypeID.invalid }"
-        required>
+        <ion-select  [(ngModel)]="cutout.TypeID" name="TypeID" #TypeID="ngModel" [ngClass]="{ 'is-invalid': f.submitted && TypeID.invalid }" required>
           <ion-select-option *ngFor="let cut of cutoutlist" [value]="cut.ID"> <span *ngIf="cut.CutOutRefID == cutout.CutOutTypeID">{{cut.Description}}</span></ion-select-option>
         </ion-select>
       </ion-item>
@@ -37,25 +27,22 @@
         </ion-item>
       <ion-item>
         <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
-        <ion-input type="text" class="labelfont" [(ngModel)]="cutout.UnitCost" name="UnitCost"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+        <ion-input type="text" class="labelfont" [(ngModel)]="cutout.UnitCost" name="UnitCost"><ion-row class="mar-right3">$</ion-row></ion-input>
       </ion-item>
       <ion-item>
         <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
-        <ion-input type="text" class="labelfont" [(ngModel)]="cutout.Margin" name="Margin"><ion-row style="margin-right: 3px;">%</ion-row></ion-input>
+        <ion-input type="text" class="labelfont" [(ngModel)]="cutout.Margin" name="Margin"><ion-row class="mar-right3">%</ion-row></ion-input>
       </ion-item>
       <ion-item>
         <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
-        <ion-input type="text" class="labelfont" [(ngModel)]="cutout.Unitprice" name="UnitPrice"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+        <ion-input type="text" class="labelfont" [(ngModel)]="cutout.Unitprice" name="UnitPrice"><ion-row class="mar-right3">$</ion-row></ion-input>
       </ion-item>
       <ion-item>
           <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="cutout.Amt" name="Amt" readonly="readonly"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+          <ion-input type="text" class="labelfont" [(ngModel)]="cutout.Amt" name="Amt" readonly="readonly"><ion-row class="mar-right3">$</ion-row></ion-input>
         </ion-item>
     </form>
 </ion-content>
-
-
-
 
 
 

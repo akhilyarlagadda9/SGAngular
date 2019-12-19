@@ -83,6 +83,15 @@ qsgetinventorydictlist(finishId:any, thickId:any,rislevelId:any):Observable<any>
   return this.http.get<any>(this.url +  'api/admin/InventoryDicLists?typeIdList=' + typeIdList)
 }
 
+//DICTIONARY LISTS
+getsalespersons(parentId:number,typeId:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/QuoteAdmin/CustTypeResourceList?parentID=' + parentId + '&typeId=' + typeId,)
+}
+
+
+
+
+
 
 
 // Created Quote

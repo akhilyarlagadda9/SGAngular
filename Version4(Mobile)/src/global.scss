@@ -81,6 +81,9 @@ ion-icon{
     margin-left: 3px;
     margin-right: 3px;
 }
+.margin-right3 {
+    margin-right: 3px;
+}
  /***** FONTSTYLE *****/
  .labelfont{
     font-size: 14px;
@@ -100,6 +103,9 @@ ion-icon{
 .fontbold {
     font-weight: 600;
 }
+.font-size15 {
+    font-size:15px;
+}
 /***** ALIGNMENTS *****/
 .titleheader{
     padding-left: 15px;
@@ -115,6 +121,9 @@ ion-icon{
     text-align: center;
 }
 /***** COLORS *****/
+.bgcolor-gray {
+    background: lightgray;
+}
 .color-white{
     color:white;
 }
@@ -148,6 +157,9 @@ ion-icon{
 }
 .flex{
     display: flex;
+}
+.borbottom {
+    border-bottom: none;
 }
 /***** ALIGNMENT *****/
 .valignsup{
@@ -224,3 +236,10 @@ ion-icon{
 .margin-top2{
     margin-top: 44px !important;
 }
+.mar-top20 {
+    margin-top: 20px;
+}
+.margin-leftzero {
+    margin-left: 0px;
+}
+

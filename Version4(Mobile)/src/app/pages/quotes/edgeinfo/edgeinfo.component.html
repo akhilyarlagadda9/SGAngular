@@ -26,19 +26,19 @@
         </ion-item>
       <ion-item>
         <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
-        <ion-input type="text" class="labelfont" [(ngModel)]="edge.UnitCost" name="UnitCost" (change)="ActionSetMargin(1,edge,'edge')"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+        <ion-input type="text" class="labelfont" [(ngModel)]="edge.UnitCost" name="UnitCost" (change)="ActionSetMargin(1,edge,'edge')"><ion-row class="mar-right3">$</ion-row></ion-input>
       </ion-item>
       <ion-item>
         <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
-        <ion-input type="text" class="labelfont" [(ngModel)]="edge.Margin" name="Margin" (change)="ActionSetMargin(2,edge,'edge')"><ion-row style="margin-right: 3px;">%</ion-row></ion-input>
+        <ion-input type="text" class="labelfont" [(ngModel)]="edge.Margin" name="Margin" (change)="ActionSetMargin(2,edge,'edge')"><ion-row class="mar-right3">%</ion-row></ion-input>
       </ion-item>
       <ion-item>
         <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
-        <ion-input type="text" class="labelfont" [(ngModel)]="edge.UnitPrice" name="UnitPrice" (change)="ActionSetMargin(3,edge,'edge')"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+        <ion-input type="text" class="labelfont" [(ngModel)]="edge.UnitPrice" name="UnitPrice" (change)="ActionSetMargin(3,edge,'edge')"><ion-row class="mar-right3">$</ion-row></ion-input>
       </ion-item>
       <ion-item>
           <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="edge.Amt" name="Amount" readonly="readonly"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+          <ion-input type="text" class="labelfont" [(ngModel)]="edge.Amt" name="Amount" readonly="readonly"><ion-row class="mar-right3">$</ion-row></ion-input>
         </ion-item>
     </form>
   </ion-content>

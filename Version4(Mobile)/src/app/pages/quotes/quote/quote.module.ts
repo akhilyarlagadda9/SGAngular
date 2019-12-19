@@ -38,6 +38,8 @@ import { TemplateComponent } from '../template/template.component';
 import { CustitemComponent, itemsearchComponent } from '../custitem/custitem.component';
 import { CustomersearchComponent } from '../customersearch/customersearch.component';
 import { ManagementsummaryComponent,DiscountComponent,taxComponent,feeComponent} from '../managementsummary/managementsummary.component';
+import { FabricationComponent } from '../fabrication/fabrication.component';
+import { LaborinfoComponent } from '../laborinfo/laborinfo.component';
 
 
 @NgModule({
@@ -61,13 +63,13 @@ import { ManagementsummaryComponent,DiscountComponent,taxComponent,feeComponent}
     PoitemsComponent,CommhubComponent,PrintsComponent,
     JobdesComponent,AreainfoComponent,PoeditComponent,
     JobdesceditComponent,CustomereditComponent,CommhubeditComponent,
-    CustomerinfoComponent,AddareaComponent,CustomersearchComponent,ManagementsummaryComponent,additemComponent],
+    CustomerinfoComponent,AddareaComponent,CustomersearchComponent,ManagementsummaryComponent,additemComponent,FabricationComponent,LaborinfoComponent],
     
 
   declarations: [QuotePage,AdditionalitemserachComponent,taxComponent,feeComponent,DiscountComponent, itemsearchComponent,CustitemComponent, TemplateComponent, AddmatComponent, TileinfoComponent, FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, SinkComponent, CreatequoteComponent,QuoteeditComponent,
     HeadereditComponent,HeaderinfoComponent,PoitemsComponent,
     CommhubComponent,PrintsComponent,JobdesComponent,
     AreainfoComponent,PoeditComponent,JobdesceditComponent,
-    CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent,CustomersearchComponent,ManagementsummaryComponent,additemComponent]
+    CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,AddareaComponent,CustomersearchComponent,ManagementsummaryComponent,additemComponent,FabricationComponent,LaborinfoComponent]
 })
 export class QuotePageModule {}

@@ -1,43 +1,48 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-title class="titleheader">Labor</ion-title>
-      <ion-button slot="end" color="success" size="small">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <form>
-      <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
-        <ion-input type="text" class="labelfont" value="16ga 2317 Standard Rectangle"></ion-input>
-        <ion-icon slot="end" class="mar-top20" name="arrow-dropdown"></ion-icon>
-        <ion-icon slot="end" class="mar-top20" name="search"></ion-icon>
-      </ion-item>
-      <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
-          <ion-input type="text" class="labelfont" value="1" readonly="readonly"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
-        <ion-input type="tel" class="labelfont" value="211.00"><ion-row class="margin-right3">$</ion-row></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
-        <ion-input type="email" class="labelfont" value="20"><ion-row class="margin-right3">%</ion-row></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
-        <ion-input type="email" class="labelfont" value="263.75"><ion-row class="margin-right3">$</ion-row></ion-input>
-      </ion-item>
-      <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
-          <ion-input type="email" class="labelfont" value="263.75" readonly="readonly"><ion-row class="margin-right3">$</ion-row></ion-input>
-        </ion-item>
-      <ion-item>
-          <ion-label class="labelfont" position="floating" color="primary">Note</ion-label>
-          <ion-textarea rows="10" cols="25" value="Enter Text Here..." class="borderall"></ion-textarea>
-        </ion-item>
-    </form>
-  </ion-content>
-
-
+  <ion-toolbar>
+    <ion-title class="titleheader">
+      {{ViewType}}
+    </ion-title>
+    <ion-button slot="end" color="success" size="small">Save</ion-button>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form>
+    <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="labor.Description" name="Description"></ion-input>
+      <ion-icon slot="end" class="mar-top20" name="arrow-dropdown"></ion-icon>
+      <ion-icon slot="end" class="mar-top20" name="search"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="labor.Qty" readonly="readonly" name="Qty" (change)="ActionSetAmount()">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
+      <ion-input type="tel" class="labelfont" [(ngModel)]="labor.UnitCost" name="UnitCost" (change)="ActionSetMargin(1,labor,'labor')">
+        <ion-row  class="margin-right3">$</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
+      <ion-input type="email" class="labelfont" [(ngModel)]="labor.Margin" name="Margin" (change)="ActionSetMargin(2,labor,'labor')">
+        <ion-row class="margin-right3">%</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
+      <ion-input type="email" class="labelfont" [(ngModel)]="labor.UnitPrice" name="UnitPrice" (change)="ActionSetMargin(3,labor,'labor')">
+        <ion-row class="margin-right3">$</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
+      <ion-input type="email" class="labelfont" [(ngModel)]="labor.Amount" name="Amount">
+        <ion-row class="margin-right3">$</ion-row>
+      </ion-input>
+    </ion-item>
+  </form>
+</ion-content>

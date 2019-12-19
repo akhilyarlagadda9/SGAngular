@@ -209,7 +209,7 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList">
-  <ion-col (click)="ActionCreateTemplate(1, fabrication)"><u class="colorblue textfont14">F</u>:
+  <ion-col (click)="ActionEditFabrication(fabrication)"><u class="colorblue textfont14">F</u>:
     <span *ngIf="fabrication.IsChg == '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}} Sqft.
       Fabrication</span>
     <span *ngIf="fabrication.IsChg != '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}} Sqft.
@@ -234,7 +234,7 @@
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.LaborList">
   <ion-col *ngIf="labor.ViewTypeID == 1 && labor.Description == 'Template'" class="paddzero">
     <ion-row>
-      <ion-col (click)="ActionCreateTemplate(2, labor)"><u class="colorblue textfont14">T</u>:
+      <ion-col (click)="ActionEditTemplate(1, labor, 'Template')"><u class="colorblue textfont14">T</u>:
         <span>
           <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
           <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
@@ -256,7 +256,7 @@
   </ion-col>
   <ion-col *ngIf="labor.ViewTypeID == 1 && labor.Description == 'Install'" class="paddzero">
     <ion-row>
-      <ion-col (click)="ActionCreateTemplate(3, labor)"><u class="colorblue textfont14">I</u>:
+      <ion-col (click)="ActionEditTemplate(1, labor, 'Install')"><u class="colorblue textfont14">I</u>:
         <span>
           <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
           <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
@@ -278,7 +278,7 @@
   </ion-col>
   <ion-col *ngIf="labor.ViewTypeID != 1" class="paddzero">
     <ion-row>
-      <ion-col (click)="ActionEditTile(7,'Labor', labor)"><u class="colorblue textfont14">L</u>:
+      <ion-col (click)="ActionEditLabor(0,labor,'Labor')"><u class="colorblue textfont14">L</u>:
         <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
         <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
         <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>

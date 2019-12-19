@@ -98,7 +98,7 @@
             <app-jobdes [Version]="headerInfo.Version"></app-jobdes>
         </ion-col>
         <ion-col *ngIf="selectedtabtype == 4">
-            <app-poitems [PoItemList]="headerInfo.PoItemList"></app-poitems>
+            <app-poitems [PoItemList]="headerInfo.PoItemList" [Version]="headerInfo.Version" [ParentID]="headerInfo.Version.ParentID"></app-poitems>
         </ion-col>
         <ion-col *ngIf="selectedtabtype == 5">
             <app-commhub></app-commhub>

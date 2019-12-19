@@ -1,84 +1,86 @@
-<!-- <ion-header>
-    <ion-toolbar>
-      <ion-title class="titleheader">Sink</ion-title>
-      <ion-button slot="end" color="success" size="small">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
-    </ion-toolbar>
-  </ion-header> -->
-  
-  <ion-content>
-    <form name="form" (ngSubmit)="ActionSinkSubmit()" #f="ngForm">
-        <!-- <ion-item>
-            <ion-label class="labelfont" position="floating" color="primary">Sink Shape</ion-label>
-            <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Description" name="Description" readonly="readonly"></ion-input>
-            <ion-icon slot="end" class="marg2" name="arrow-dropdown"></ion-icon>
-          </ion-item> -->
-          <ion-toolbar class="poss">
+<ion-content>
+  <form name="form" (ngSubmit)="ActionSinkSubmit()" #f="ngForm">
+    <ion-toolbar class="poss">
       <ion-title class="titleheader">Sink</ion-title>
       <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
       <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
     </ion-toolbar>
-      <ion-item>
-        <ion-label  class="labelfont margin-top" position="floating" color="primary">Description</ion-label >
-        <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Description" name="Description" #Description="ngModel" 
-        [ngClass]="{ 'is-invalid': f.submitted && Description.invalid }" class="labelfont" required 
-        (keyup.enter)="ActionSearchSelect($event,2,8)"></ion-input>
-        <ion-icon slot="end" class="marg2" name="arrow-dropdown" (click)="ActionSearchSelect($event,2,8)"></ion-icon>
-        <ion-icon slot="end" class="marg2" name="search" (click)="ActionSearchSelect($event,2,8)"></ion-icon>
-      </ion-item>
-      <div *ngIf="f.submitted && Description.invalid" class="invalid-feedback padd-Left">
-        <div *ngIf="Description.errors.required" class="error">Description is required</div>
+    <ion-item>
+      <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Description" name="Description"
+        #Description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Description.invalid }" class="labelfont"
+        required (keyup.enter)="ActionSearchSelect($event,2,8)"></ion-input>
+      <ion-icon slot="end" class="marg2" name="arrow-dropdown" (click)="ActionSearchSelect($event,2,8)"></ion-icon>
+      <ion-icon slot="end" class="marg2" name="search" (click)="ActionSearchSelect($event,2,8)"></ion-icon>
+    </ion-item>
+    <div *ngIf="f.submitted && Description.invalid" class="invalid-feedback padd-Left">
+      <div *ngIf="Description.errors.required" class="error">Description is required</div>
     </div>
 
-      <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Qty" name="Qty" readonly="readonly"></ion-input>
-        </ion-item>
-      <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
-        <ion-input type="tel" class="labelfont" [(ngModel)]="sinkfaucet.UnitCost" name="UnitCost"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
-        <ion-input type="email" class="labelfont" [(ngModel)]="sinkfaucet.Margin" name="Margin"><ion-row style="margin-right: 3px;">%</ion-row></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
-        <ion-input type="email" class="labelfont" [(ngModel)]="sinkfaucet.UnitPrice" name="UnitPrice"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
-      </ion-item>
-      <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
-          <ion-input type="email" class="labelfont" [(ngModel)]="sinkfaucet.Amount" name="Amount" readonly="readonly"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label class="labelfont" position="floating" color="primary">Make</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Make" name="Make" readonly="readonly"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label class="labelfont" position="floating" color="primary">Model</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Model" name="Model" readonly="readonly"></ion-input>
-        </ion-item>
-        <ion-item style="margin-left: -4%;">
-            <ion-checkbox style="margin-left: 4%;margin-right:4px;"></ion-checkbox>
-            <ion-label >Customer Supply</ion-label>
-        </ion-item>
-        <ion-item style="margin-left: -4%;">
-            <ion-checkbox style="margin-left: 4%; margin-right:4px;"></ion-checkbox>
-            <ion-label >Sink is at shop</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label class="labelfont" position="floating" color="primary">#Bowls</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.NoOfBowls" name="NoOfBowls" readonly="readonly"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label class="labelfont" position="floating" color="primary">Faucet Holes</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Holes" name="Holes" readonly="readonly"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label class="labelfont" position="floating" color="primary">Faucet Description</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.NoOfHoles" name="NoOfHoles" readonly="readonly"></ion-input>
-        </ion-item>
-    </form>
-  </ion-content>
-
-
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Qty" name="Qty" (change)="ActionSetAmount()">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
+      <ion-input type="tel" class="labelfont" [(ngModel)]="sinkfaucet.UnitCost" name="UnitCost"
+        (change)="ActionSetMargin(1,sinkfaucet,'sink')">
+        <ion-row style="margin-right: 3px;">$</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
+      <ion-input type="email" class="labelfont" [(ngModel)]="sinkfaucet.Margin" name="Margin"
+        (change)="ActionSetMargin(2,sinkfaucet,'sink')">
+        <ion-row style="margin-right: 3px;">%</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
+      <ion-input type="email" class="labelfont" [(ngModel)]="sinkfaucet.UnitPrice" name="UnitPrice"
+        (change)="ActionSetMargin(3,sinkfaucet,'sink')">
+        <ion-row style="margin-right: 3px;">$</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
+      <ion-input type="email" class="labelfont" [(ngModel)]="sinkfaucet.Amount" name="Amount">
+        <ion-row style="margin-right: 3px;">$</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">Make</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Make" name="Make">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">Model</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Model" name="Model">
+      </ion-input>
+    </ion-item>
+    <ion-item style="margin-left: -4%;">
+      <ion-checkbox style="margin-left: 4%;margin-right:4px;"></ion-checkbox>
+      <ion-label>Customer Supply</ion-label>
+    </ion-item>
+    <ion-item style="margin-left: -4%;">
+      <ion-checkbox style="margin-left: 4%; margin-right:4px;"></ion-checkbox>
+      <ion-label>Sink is at shop</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">#Bowls</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.NoOfBowls" name="NoOfBowls">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">Faucet Holes</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Holes" name="Holes">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">Faucet Description</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.NoOfHoles" name="NoOfHoles">
+      </ion-input>
+    </ion-item>
+  </form>
+</ion-content>

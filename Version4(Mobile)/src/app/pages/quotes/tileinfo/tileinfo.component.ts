@@ -34,7 +34,6 @@ export class TileinfoComponent implements OnInit {
   ActionSetMargin(typeId:number,model:any,type:string){
     this.labor = this.quoterep.margincalculations(typeId,model,type);
     this.labor.Amount = this.quoterep.calcitemamt(this.labor.Qty,this.labor.UnitPrice);
-   // this.labor.Amt = this.labor.Amount;
    }
    ActionSetAmount(){
     this.labor.Amount = this.quoterep.calcitemamt(this.labor.Qty,this.labor.UnitPrice);

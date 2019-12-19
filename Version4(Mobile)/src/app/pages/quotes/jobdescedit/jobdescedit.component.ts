@@ -9,7 +9,7 @@ import { QuotepostService } from 'src/app/service/quotepost.service';
 })
 export class JobdesceditComponent implements OnInit {
     
-  constructor(public Modalcntrl : ModalController,private navParams : NavParams, private postservice : QuotepostService) { }
+  constructor(public Modalcntrl : ModalController, private postservice : QuotepostService) { }
   Version:any;
 
   ngOnInit() { }

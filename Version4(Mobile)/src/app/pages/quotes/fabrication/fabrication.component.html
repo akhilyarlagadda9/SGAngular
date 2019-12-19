@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="titleheader">
+      <div>Fabrication</div>
+    </ion-title>
+    <ion-button slot="end" color="success" size="small">Save</ion-button>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form>
+    <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="fabrication.Description" name="Description"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
+      <ion-row> 
+        <span *ngIf="fabrication.SplashSqft != 0">{{(fabrication.PartSqft + fabrication.SplashSqft)}}</span>
+        <span *ngIf="fabrication.SplashSqft == 0">{{fabrication.PartSqft}}</span>
+      </ion-row>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
+      <ion-input type="tel" class="labelfont" [(ngModel)]="fabrication.UnitCost" name="UnitCost" (change)="ActionSetMargin(1,fabrication,'Fab')">
+        <ion-row style="margin-right: 3px;">$</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
+      <ion-input type="email" class="labelfont" [(ngModel)]="fabrication.Margin" name="Margin" (change)="ActionSetMargin(2,fabrication,'Fab')">
+        <ion-row style="margin-right: 3px;">%</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
+      <ion-input type="email" class="labelfont" [(ngModel)]="fabrication.LaborUnitPrice" name="LaborUnitPrice" (change)="ActionSetMargin(3,fabrication,'Fab')">
+        <ion-row style="margin-right: 3px;">$</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
+      <ion-row style="margin-right: 3px;" class="labelfont">$ 
+        <span *ngIf="fabrication.SplashSqft != 0">{{fabrication.LaborUnitPrice * (fabrication.PartSqft + fabrication.SplashSqft)}}</span>
+        <span *ngIf="fabrication.SplashSqft == 0">{{fabrication.LaborUnitPrice * fabrication.PartSqft}}</span>
+      </ion-row>
+    </ion-item>
+  </form>
+</ion-content>

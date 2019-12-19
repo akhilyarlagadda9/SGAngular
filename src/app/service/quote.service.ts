@@ -7,8 +7,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class QuoteService {
 
-  //url = "http://localhost:1758/"; 
-  url = "http://64.251.30.12:50005/StoneApp.WebAPI/"
+  url = "http://localhost:1758/"; 
+  //url = "http://64.251.30.12:50005/StoneApp.WebAPI/"
   constructor(private http: HttpClient) { }
   
   ActionQuoteList(search:string,statusId:number,index:number,noOfRecords:number,accessmode:number,userempid:number,sortTypeId:number,sortby:number): Observable<any> {

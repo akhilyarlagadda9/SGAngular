@@ -214,7 +214,7 @@ ion-icon{
    //-ms-filter: 'alpha(opacity=0)';
    font-size: 16px; 
    direction: ltr; 
-    cursor: pointer; 
+    cursor: pointer;  
 }
 .error {
     color: red;
@@ -223,7 +223,9 @@ ion-icon{
 .margin-top {
     margin-top: 54px !important;
 }
-
+.testClass{
+    color:black;
+}
 .poss {
     position: fixed;
     border-bottom: 1px solid lightgrey;

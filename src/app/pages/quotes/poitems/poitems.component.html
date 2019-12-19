@@ -1,30 +1,30 @@
-<ion-list style="padding-left:10px;width:100%;font-size:14px">
+<ion-list class="liststyle">
   <ion-row>
     <ion-col size="9"></ion-col>
     <ion-col size="3">
       <ion-button (click)="ActionEditPOItem(0)" size="small" class="text-right fontbold">ADD</ion-button>
     </ion-col>
   </ion-row>
-  <ion-card style="margin-top: 0px;" *ngFor="let info of PoItemList; let i = index">
+  <ion-card class="martop0" *ngFor="let info of PoItemList; let i = index">
     <ion-row>
       <ion-col size="11">
-        <ion-row style="margin-bottom: 2px;">
+        <ion-row class="mar-bot2">
           <ion-col size="5" class="paddzero text-right">PO Number:</ion-col>
           <ion-col size="7" class="paddzero text-left fontbold">&nbsp;{{info.PONumber}}</ion-col>
         </ion-row>
-        <ion-row style="margin-bottom: 2px;">
+        <ion-row class="mar-bot2">
           <ion-col size="5" class="paddzero text-right">PO Uploaded By:</ion-col>
           <ion-col size="7" class="paddzero text-left fontbold">&nbsp;{{info.POBy}}</ion-col>
         </ion-row>
-        <ion-row style="margin-bottom: 2px;">
+        <ion-row class="mar-bot2">
           <ion-col size="5" class="paddzero text-right">PO Date:</ion-col>
           <ion-col size="7" class="paddzero text-left fontbold">&nbsp;{{info.PODate | date:'MM/dd/yyyy'}}</ion-col>
         </ion-row>
-        <ion-row style="margin-bottom: 2px;">
+        <ion-row class="mar-bot2">
           <ion-col size="5" class="paddzero text-right">PO Total($):</ion-col>
           <ion-col size="7" class="paddzero text-left fontbold">&nbsp;{{info.POAmount}}</ion-col>
         </ion-row>
-        <ion-row style="margin-bottom: 2px;">
+        <ion-row class="mar-bot2">
           <ion-col size="5" class="paddzero text-right">Attachment(s):</ion-col>
           <ion-col size="7" class="paddzero text-left fontbold">&nbsp;{{info.Path}}</ion-col>
         </ion-row>

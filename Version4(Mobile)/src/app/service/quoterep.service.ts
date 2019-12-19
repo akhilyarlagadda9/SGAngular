@@ -95,6 +95,22 @@ export class QuoterepService {
   };
   return fab;
   }
+  AddMeasurementItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number){
+    let sizes = {
+    AreaID : areaId, VersionID : verId, CoID : coId, CoSrNo : coSrno, ID : 0, Tax : matcent, IsChgFlag : 1, ParentID : 0, SaveFlag : 1, IsActive : 1, Margin : 0, CopyQty : 0,
+    IsOptional : 0, DiscAmt : 0, PartSqft : 0, WF : 0, MaterialID : 0, MeasureList : [], IsChg : 0, Isactive : 1, LaborUnitPrice : 0, UnitCost : 0,
+    SplashSqft : 0, IsPrint : 1, JobQty : 0, JobSplashSf : 0, PartID : partId, Description : '',
+    };
+    return sizes;
+  }
+  AddSplashItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number){
+    let splash = {
+      TypeID : 0, EdgeTypeID : 0, JobDes : '', ProductItemID : 0, JobQty : 0, AreaID : areaId, VersionID : verId, CoID : coId, CoSrNo : coSrno, ID : 0, IsChgFlag : 1, ParentID : 0,
+      SaveFlag : 1, IsOptional : 0, SFPrice : 0, CopyQty : 0, IsPrint : 1, Tax : matcent, WF : 0, Sqft : 0, Isactive : 1, Height : 0, Width : 0, LF : 0, UnitPrice : 0, SFCost : 0, 
+      DiscAmt : 0, MaterialID : 0, IsChg : 0, SplashID : 0, PartID : partId, Description : '',
+    };
+    return splash;
+  }
   //************************************** ITEM CALC *********************************************/
   calcitemamt(qty, price) {
     let amount: any; if (qty != 0 && price != 0) { amount = (qty * price); } 

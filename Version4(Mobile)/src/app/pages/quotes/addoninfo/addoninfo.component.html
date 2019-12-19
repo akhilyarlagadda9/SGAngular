@@ -24,28 +24,28 @@
     </ion-item>
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
-      <ion-input type="tel" class="labelfont" [(ngModel)]="other.UnitCost" name="UnitCost"
+      <ion-input type="text" class="labelfont" [(ngModel)]="other.UnitCost" name="UnitCost"
         (change)="ActionSetMargin(1,other,'addon')">
         <ion-row style="margin-right: 3px;">$</ion-row>
       </ion-input>
     </ion-item>
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
-      <ion-input type="email" class="labelfont" [(ngModel)]="other.Margin" name="Margin"
+      <ion-input type="text" class="labelfont" [(ngModel)]="other.Margin" name="Margin"
         (change)="ActionSetMargin(2,other,'addon')">
         <ion-row style="margin-right: 3px;">%</ion-row>
       </ion-input>
     </ion-item>
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
-      <ion-input type="email" class="labelfont" [(ngModel)]="other.UnitPrice" name="UnitPrice"
+      <ion-input type="text" class="labelfont" [(ngModel)]="other.UnitPrice" name="UnitPrice"
         (change)="ActionSetMargin(3,other,'addon')">
         <ion-row style="margin-right: 3px;">$</ion-row>
       </ion-input>
     </ion-item>
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
-      <ion-input type="email" class="labelfont" [(ngModel)]="other.Amount" name="Amount">
+      <ion-input type="text" class="labelfont" [(ngModel)]="other.Amount" name="Amount">
         <ion-row style="margin-right: 3px;">$</ion-row>
       </ion-input>
     </ion-item>

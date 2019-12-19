@@ -22,19 +22,19 @@
     </ion-item>
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
-      <ion-input type="tel" class="labelfont" [(ngModel)]="fabrication.UnitCost" name="UnitCost" (change)="ActionSetMargin(1,fabrication,'Fab')">
+      <ion-input type="text" class="labelfont" [(ngModel)]="fabrication.UnitCost" name="UnitCost" (change)="ActionSetMargin(1,fabrication,'Fab')">
         <ion-row style="margin-right: 3px;">$</ion-row>
       </ion-input>
     </ion-item>
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
-      <ion-input type="email" class="labelfont" [(ngModel)]="fabrication.Margin" name="Margin" (change)="ActionSetMargin(2,fabrication,'Fab')">
+      <ion-input type="text" class="labelfont" [(ngModel)]="fabrication.Margin" name="Margin" (change)="ActionSetMargin(2,fabrication,'Fab')">
         <ion-row style="margin-right: 3px;">%</ion-row>
       </ion-input>
     </ion-item>
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
-      <ion-input type="email" class="labelfont" [(ngModel)]="fabrication.LaborUnitPrice" name="LaborUnitPrice" (change)="ActionSetMargin(3,fabrication,'Fab')">
+      <ion-input type="text" class="labelfont" [(ngModel)]="fabrication.LaborUnitPrice" name="LaborUnitPrice" (change)="ActionSetMargin(3,fabrication,'Fab')">
         <ion-row style="margin-right: 3px;">$</ion-row>
       </ion-input>
     </ion-item>

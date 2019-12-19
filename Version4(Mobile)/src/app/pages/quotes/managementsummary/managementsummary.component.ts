@@ -53,6 +53,17 @@ export class ManagementsummaryComponent implements OnInit {
     return await popover.present();
   }
 
+  async ActionEditPaymentSchedule(ev: any) {
+    let obj = {}
+    const popover = await this.popoverCntrl.create({
+      component: PaymentScheduleComponent,
+      event: ev,
+      translucent: true,
+      componentProps: obj,
+    });
+    return await popover.present();
+  }
+
 }
 @Component({
   //selector: 'app-itemsearchComponent',
@@ -60,8 +71,8 @@ export class ManagementsummaryComponent implements OnInit {
   <ion-header>
     <ion-toolbar style="height:37px;top:-8px;left:-10px;">
       <ion-title style="font-size:15px;">Job Discount(S)</ion-title>
-      <ion-button slot="end" color="success" size="small" style="font-size:13px; height:17px;width: 42px;">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop()" style="font-size:13px; height:17px;width: 22px;">X</ion-button>
+      <ion-button slot="end" color="success" size="small" class="pob2" (click)="ActionToClosePop()">Save</ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop()" class="pob">X</ion-button>
     </ion-toolbar>
   </ion-header>
   <ion-row style="height:360px">
@@ -122,8 +133,8 @@ export class DiscountComponent implements OnInit {
     <ion-header>
       <ion-toolbar style="height:37px;top:-8px;left:-10px;">
         <ion-title style="font-size:15px;">Sales Tax(%)</ion-title>
-        <ion-button slot="end" color="success" size="small" style="font-size:13px; height:17px;width: 42px;">Save</ion-button>
-        <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop()" style="font-size:13px; height:17px;width: 22px;">X</ion-button>
+        <ion-button slot="end" color="success" size="small" class="pob2" (click)="ActionToClosePop()">Save</ion-button>
+        <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop()" class="pob">X</ion-button>
       </ion-toolbar>
     </ion-header>
     <ion-row style="height:360px">
@@ -227,8 +238,8 @@ export class taxComponent implements OnInit {
           <ion-header>
             <ion-toolbar style="height:37px;top:-8px;left:-10px;">
               <ion-title style="font-size:15px;">Charges</ion-title>
-              <ion-button slot="end" color="success" size="small" style="font-size:13px; height:17px;width: 42px;">Save</ion-button>
-              <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop()" style="font-size:13px; height:17px;width: 22px;">X</ion-button>
+              <ion-button slot="end" color="success" size="small" class="pob2" (click)="ActionToClosePop()">Save</ion-button>
+              <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop()" class="pob">X</ion-button>
             </ion-toolbar>
           </ion-header>
           <ion-row style="height:360px">
@@ -301,6 +312,101 @@ export class feeComponent implements OnInit {
   }
 }
 
+@Component({
+  //selector: 'app-itemsearchComponent',
+  template: `
+  <ion-header>
+    <ion-toolbar style="height:37px;top:-8px;left:-10px;">
+      <ion-title style="font-size:15px;">Payment Schedule</ion-title>
+      <ion-button slot="end" color="success" size="small" class="pob2" (click)="ActionToClosePop()">Save</ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop()" class="pob">X</ion-button>
+    </ion-toolbar>
+  </ion-header>
+  <ion-row style="height:360px width:200px">
+  <ion-col>
+  <ion-row>
+      <ion-checkbox class="marg-all" color="primary"></ion-checkbox>
+      <ion-label class="margtb">C.O.D</ion-label>
+    </ion-row>
+  <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">Deposit(%)</ion-label>
+      <ion-select>
+        <ion-select-option>0</ion-select-option>
+        <ion-select-option>5</ion-select-option>
+        <ion-select-option>10</ion-select-option>
+        <ion-select-option>15</ion-select-option>
+        <ion-select-option>20</ion-select-option>
+        <ion-select-option>25</ion-select-option>
+        <ion-select-option>30</ion-select-option>
+        <ion-select-option>35</ion-select-option>
+        <ion-select-option>40</ion-select-option>
+        <ion-select-option>45</ion-select-option>
+        <ion-select-option>50</ion-select-option>
+        <ion-select-option>55</ion-select-option>
+        <ion-select-option>60</ion-select-option>
+        <ion-select-option>65</ion-select-option>
+        <ion-select-option selected>70</ion-select-option>
+        <ion-select-option>75</ion-select-option>
+        <ion-select-option>80</ion-select-option>
+        <ion-select-option>85</ion-select-option>
+        <ion-select-option>90</ion-select-option>
+        <ion-select-option>95</ion-select-option>
+        <ion-select-option>100</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">Due Before Template(%)</ion-label>
+      <ion-select>
+        <ion-select-option>0</ion-select-option>
+        <ion-select-option>5</ion-select-option>
+        <ion-select-option>10</ion-select-option>
+        <ion-select-option>15</ion-select-option>
+        <ion-select-option>20</ion-select-option>
+        <ion-select-option>25</ion-select-option>
+        <ion-select-option selected>30</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+    <ion-label class="labelfont" position="floating" color="primary">Final Payment(%):</ion-label>
+    <ion-input type="text" class="labelfont" value="0" readonly></ion-input>
+    </ion-item>
+  </ion-col>
+  <ion-col>
+  <ion-row>
+      <ion-checkbox class="marg-all" color="primary"></ion-checkbox>
+      <ion-label class="margtb">NET Terms</ion-label>
+    </ion-row>
+  <ion-item>
+  <ion-label class="labelfont" position="floating" color="primary"></ion-label>
+      <ion-select>
+        <ion-select-option>AR PREF n15</ion-select-option>
+        <ion-select-option>AR STD n10</ion-select-option>
+        <ion-select-option selected>COD</ion-select-option>
+        <ion-select-option>HOLD</ion-select-option>
+        <ion-select-option>LOWES</ion-select-option>
+        <ion-select-option>Net 15 Days</ion-select-option>
+        <ion-select-option>Net 30 Days</ion-select-option>
+        <ion-select-option>Net 45 Days</ion-select-option>
+        <ion-select-option>Net 60 Days</ion-select-option>
+        <ion-select-option>On Receipt</ion-select-option>
+        <ion-select-option>PREPAY</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-col>
+</ion-row>`,
+  //styleUrls: ['./customeredit.component.scss'],
+})
+export class PaymentScheduleComponent implements OnInit {
+
+  constructor( private popoverCntrl: PopoverController) { }
+  ngOnInit() {}
+
+  ActionToClosePop() {
+    this.popoverCntrl.dismiss({
+      'dismissed': true
+    });
+  }
+}
 
 
 

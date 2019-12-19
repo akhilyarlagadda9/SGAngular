@@ -253,7 +253,14 @@
     </ion-row>
   </ion-card>
   <ion-row>
-      <div><b class="titleheader fontheading">Payment Schedule</b></div>
+      <!-- <div><b class="titleheader fontheading">Payment Schedule</b></div>
+      <div><ion-icon  name="create" class="fontmedium marg-left" (click)="ActionEditPaymentScheduleDesc()"></ion-icon></div> -->
+      <ion-col>
+            <div><b class="titleheader marg-left fontheading">Payment Schedule</b></div>
+    </ion-col>
+    <ion-col size="2" class="text-right">
+      <ion-icon name="create" class="fontmedium" (click)="ActionEditPaymentSchedule()"></ion-icon>
+    </ion-col>
   </ion-row>
   <ion-card>
       <ion-row style="background-color:lightgoldenrodyellow;">

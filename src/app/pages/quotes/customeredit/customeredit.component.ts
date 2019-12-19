@@ -1,6 +1,5 @@
 import { Component, OnInit,EventEmitter } from '@angular/core';
-import { ModalController ,NavParams,PopoverController } from '@ionic/angular';
-import { QuotegetService } from 'src/app/service/quoteget.service';
+import { ModalController ,NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'app-customeredit',
@@ -9,7 +8,7 @@ import { QuotegetService } from 'src/app/service/quoteget.service';
 })
 export class CustomereditComponent implements OnInit {
 
-  constructor(private Modalcntrl : ModalController,private navParams : NavParams,private popoverCntrl :PopoverController ) { }
+  constructor(private Modalcntrl : ModalController,private navParams : NavParams,) { }
   customerinfo = this.navParams.data;
   ngOnInit() {}
 

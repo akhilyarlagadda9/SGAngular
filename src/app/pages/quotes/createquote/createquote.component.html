@@ -46,7 +46,7 @@
         <ion-label class="labelfont" position="floating" color="primary">Customer<span class="requiredField">*</span>
         </ion-label>
         <ion-input [(ngModel)]="header.Version.Customer.Name" name="Name" #Name="ngModel"
-          [ngClass]="{ 'is-invalid': f.submitted && Name.invalid }"
+          [ngClass]="{ 'is-invalid': f.submitted && Name.invalid }" type="text"
           (keyup.enter)="ActionShowNewCustomerList($event,1,header.Version.Customer.Name,0)" required></ion-input>
         <ion-icon slot="end" class="martop35" name="arrow-dropdown"
           (click)="ActionShowNewCustomerList($event,2,header.Version.Customer.Name,0)"></ion-icon>
@@ -69,12 +69,12 @@
 
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Phone</ion-label>
-        <ion-input type="tel" [(ngModel)]="header.Version.Customer.PPhone" name="PPhone" class="labelfont"></ion-input>
+        <ion-input type="text" [(ngModel)]="header.Version.Customer.PPhone" name="PPhone" class="labelfont"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Email</ion-label>
-        <ion-input type="email" [(ngModel)]="header.Version.Customer.Email" name="Email" class="labelfont"></ion-input>
+        <ion-input type="text" [(ngModel)]="header.Version.Customer.Email" name="Email" class="labelfont"></ion-input>
       </ion-item>
 
     </div>

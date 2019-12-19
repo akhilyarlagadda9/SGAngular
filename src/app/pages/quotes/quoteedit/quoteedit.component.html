@@ -15,15 +15,15 @@
     </ion-toolbar>
     <ion-toolbar class="scroll">
         <ion-segment [(ngModel)]="selectedtabtype" scrollable class="list-scroll">
-            <ion-button shape="round" class="btn-ion bar-header1" [ngClass]="selectedtabtype == 1 ? 'active' : ''" value="1" (click)="ActionQuickLoad(1)">Quote Info
+            <ion-button shape="round" class="btn-ion bar-header1 active" value="1" (click)="ActionQuickLoad(1)"><ion-icon name="add"></ion-icon> Quote Info
             </ion-button>
-            <ion-button shape="round" class="btn-ion bar-header1" [ngClass]="selectedtabtype == 2 ? 'active' : ''" value="2" (click)="ActionQuickLoad(2)">Area Info
+            <ion-button shape="round" class="btn-ion bar-header1" value="2" (click)="ActionQuickLoad(2)">Area Info
             </ion-button>
-            <ion-button shape="round" class="btn-ion bar-header1" [ngClass]="selectedtabtype == 3 ? 'active' : ''" value="3" (click)="ActionQuickLoad(3)">Job Desc
+            <ion-button shape="round" class="btn-ion bar-header1" value="3" (click)="ActionQuickLoad(3)">Job Desc
             </ion-button>
-            <ion-button shape="round" class="btn-ion bar-header1" [ngClass]="selectedtabtype == 4 ? 'active' : ''" value="4" (click)="ActionQuickLoad(4)">PO Items
+            <ion-button shape="round" class="btn-ion bar-header1" value="4" (click)="ActionQuickLoad(4)">PO Items
             </ion-button>
-            <ion-button shape="round" class="btn-ion bar-header1" [ngClass]="selectedtabtype ==5 ? 'active' : ''" value="5" (click)="ActionQuickLoad(5)">Comm Hub
+            <ion-button shape="round" class="btn-ion bar-header1" value="5" (click)="ActionQuickLoad(5)">Comm Hub
             </ion-button>
             <!-- <ion-button shape="round" class="btn-ion bar-header1" value="6" (click)="ActionQuickLoad(6)">Prints
                 </ion-button> -->
@@ -39,7 +39,7 @@
                 <ion-col>
                     
                     <span class="fontheading" >
-                            <ion-icon name="arrow-dropdown" (click)="toggleGroup(1)" ></ion-icon>Quote
+                            <ion-icon name="arrow-dropdown" (click)="toggleGroup(1)"></ion-icon>Quote
                     </span>
                 </ion-col>
                 <ion-col size="3" class="paddzero text-right">
@@ -76,23 +76,21 @@
                     </ion-col>
                 </ion-row>
             </ion-card>
-            <div *ngIf="qprmsobj.customerid > 0">
-                    <app-customerinfo [customer]="headerInfo.Customer" [SelectedTypeID]="3"
-                        [contacts]="headerInfo.CustomerContacts"></app-customerinfo>
-                </div>
-                <div *ngIf="qprmsobj.childaccid > 0">
-                        <app-customerinfo [customer]="headerInfo.ChildAccount" [SelectedTypeID]="2"
-                            [contacts]="headerInfo.ChildAccountContacts"></app-customerinfo>
-                    </div>
             <div *ngIf="qprmsobj.accountid > 0">
                 <app-customerinfo (customerEvent)="displayCounter($event)" [customer]="headerInfo.ParentAccount"
                     [SelectedTypeID]="1" [contacts]="headerInfo.ParentAccountContacts"></app-customerinfo>
             </div>
-           
-            
+            <div *ngIf="qprmsobj.childaccid > 0">
+                <app-customerinfo [customer]="headerInfo.ChildAccount" [SelectedTypeID]="2"
+                    [contacts]="headerInfo.ChildAccountContacts"></app-customerinfo>
+            </div>
+            <div *ngIf="qprmsobj.customerid > 0">
+                <app-customerinfo [customer]="headerInfo.Customer" [SelectedTypeID]="3"
+                    [contacts]="headerInfo.CustomerContacts"></app-customerinfo>
+            </div>
         </ion-col>
         <ion-col *ngIf="selectedtabtype == 2">
-            <app-areainfo [Version]="headerInfo.Version"></app-areainfo>
+            <app-areainfo  [Version]="headerInfo.Version"></app-areainfo>
         </ion-col>
         <ion-col *ngIf="selectedtabtype == 3">
             <app-jobdes [Version]="headerInfo.Version"></app-jobdes>

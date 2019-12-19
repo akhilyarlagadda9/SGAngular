@@ -5,18 +5,18 @@
       <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
       <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
     </ion-toolbar>
+
     <ion-item>
       <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
       <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Description" name="Description"
-        #Description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Description.invalid }" class="labelfont"
-        required (keyup.enter)="ActionSearchSelect($event,2,8)"></ion-input>
+        #Description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Description.invalid }" required
+        (keyup.enter)="ActionSearchSelect($event,2,8)"></ion-input>
       <ion-icon slot="end" class="marg2" name="arrow-dropdown" (click)="ActionSearchSelect($event,2,8)"></ion-icon>
       <ion-icon slot="end" class="marg2" name="search" (click)="ActionSearchSelect($event,2,8)"></ion-icon>
     </ion-item>
     <div *ngIf="f.submitted && Description.invalid" class="invalid-feedback padd-Left">
       <div *ngIf="Description.errors.required" class="error">Description is required</div>
     </div>
-
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
       <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Qty" name="Qty" (change)="ActionSetAmount()">
@@ -24,28 +24,28 @@
     </ion-item>
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
-      <ion-input type="tel" class="labelfont" [(ngModel)]="sinkfaucet.UnitCost" name="UnitCost"
+      <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.UnitCost" name="UnitCost"
         (change)="ActionSetMargin(1,sinkfaucet,'sink')">
         <ion-row style="margin-right: 3px;">$</ion-row>
       </ion-input>
     </ion-item>
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
-      <ion-input type="email" class="labelfont" [(ngModel)]="sinkfaucet.Margin" name="Margin"
+      <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Margin" name="Margin"
         (change)="ActionSetMargin(2,sinkfaucet,'sink')">
         <ion-row style="margin-right: 3px;">%</ion-row>
       </ion-input>
     </ion-item>
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
-      <ion-input type="email" class="labelfont" [(ngModel)]="sinkfaucet.UnitPrice" name="UnitPrice"
+      <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.UnitPrice" name="UnitPrice"
         (change)="ActionSetMargin(3,sinkfaucet,'sink')">
         <ion-row style="margin-right: 3px;">$</ion-row>
       </ion-input>
     </ion-item>
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
-      <ion-input type="email" class="labelfont" [(ngModel)]="sinkfaucet.Amount" name="Amount">
+      <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Amount" name="Amount">
         <ion-row style="margin-right: 3px;">$</ion-row>
       </ion-input>
     </ion-item>

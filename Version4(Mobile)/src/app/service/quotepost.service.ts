@@ -20,6 +20,9 @@ export class QuotepostService {
     var version = JSON.stringify(ver);
     return this.http.post<any>(this.url + 'api/QSave/ActionSaveQuoteNotes' , version , { headers: { 'Content-Type': 'application/json' } })
   }
-
+  ActionSavePoItem(item:any):Observable<any> {
+    var model = JSON.stringify(item);
+    return this.http.post<any>(this.url + 'api/QSave/ActionSavePoItem' , model , { headers: { 'Content-Type': 'application/json' } })
+  }
 
 }

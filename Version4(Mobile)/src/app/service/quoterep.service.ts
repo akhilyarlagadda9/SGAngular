@@ -25,15 +25,76 @@ export class QuoterepService {
     return partmat;
   }
   AddEdgeItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number) {
-    let partmat: any = {
+    let edge: any = {
       PartID: partId, AreaID: areaId, VersionID: verId, CoID: coId, CoSrNo: coSrno, Tax: matcent, ID: Number, IsChgFlag: 1, ParentID: Number,
       SaveFlag: 1, Isactive: 1, IsActive: 1, JobQty: Number, IsOptional: Number, 
-      EdgeProfileID:Number, EdgeProfile:Number, Description: 'Finished Edge',DiscAmt: 0, IsPrint: 1, IsChg: 0,
+      EdgeProfileID:Number, EdgeProfile:Number, Description: 'Finished Edge', DiscAmt: 0, IsPrint: 1, IsChg: 0,
       Inches:Number,LF:Number,UnitPrice: Number, Margin: Number,UnitCost: Number,Amount: Number,
     }
-    return partmat;
+    return edge;
   }
-
+  AddCutoutItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number, loadId:number){
+     let cutout: any = {
+    JobDes : '', JobQty : 1,
+    AreaID : 0, VersionID : 0, CoID : 0, CoSrNo : 0, ID : 0, IsChgFlag : 1, ParentID : 0, SaveFlag : 1, LF : 1, IsPrint : 1, SrNo : 0, ProductItemID : 0,
+    Unitprice : 0, IsOptional : 0, Tax : 0, Isactive : 1, CutOutTypeID : 0, DiscAmt : 0, IsChg : 0, IsDefault : 1, Amt : 0, ShapeID : 0, SIndex : 0,
+     }
+     return cutout;
+  }
+  AddSinkItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number){
+    let sink:any = {
+      ID: 0, PartID: partId, AreaID: areaId, VersionID: verId, CoID: coId, Qty: 1, JobQty: 1, CoSrNo: coSrno, UserID: 0, IsQtyUpdate: 0, Tax: matcent, IsOptional: 0, IsPrint: 1, Isactive: 1, IsPrice: 1,
+      TypeID: 0, ProductItemID: 0, Description: '', JobDes: '', UnitCost: 0, Margin: 0, UnitPrice: 0, Amount: 0, DiscAmt: 0, IsChgFlag: 1, SaveFlag: 1, IsChg: 0, Notes: '',
+  };
+  return sink;
+  }
+  AddFaucetItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number){
+    let faucet:any = {
+      ID: 0, PartID: partId, AreaID: areaId, VersionID: verId, CoID: coId, CoSrNo: coSrno, UserID: 0, Qty: 1, IsQtyUpdate: 0, Tax: matcent, IsOptional: 0, IsPrice: 1, Isactive: 1, TypeID: 0,
+      ProductItemID: 0, Description: '', JobDes: '', UnitCost: 0, Margin: 0, UnitPrice: 0, Amount: 0, DiscAmt: 0, IsChgFlag: 1, IsChg: 0, IsPrint: 1, JobQty: 1, Notes:'',
+  };
+  return faucet;
+  }
+  AddTileItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number, loadId: Number, ViewType : string){
+    let tile:any = {
+    PartID : partId, AreaID : areaId, VersionID : verId, CoID : coId, CoSrNo : coSrno, UserID : 0, ID : 0, Qty : 1, IsQtyUpdate : 0, Tax : matcent, IsOptional : 0, IsPrint : 1,
+    IsPrice : 1, Isactive : 1, ProductItemID : 0, Description : '', UnitCost : 0, Margin : 0, UnitPrice : 0, SaveFlag : 1, IsChgFlag : 1,
+    Amount : 0, DiscAmt : 0, IsChg : 0, JobDes : '', JobQty : 1, Note : '', ViewType : ViewType, TypeID : loadId,
+  };
+  return tile;
+  }
+  AddOtherItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number){
+    let other:any = {
+      PartID : partId, AreaID : areaId, VersionID : verId, CoID : coId, CoSrNo : coSrno, UserID : 0, ID : 0, Qty : 1, IsQtyUpdate : 0, Tax : matcent, IsOptional : 0,
+      IsPrice : 1, Isactive : 1, TypeID : 0, ProductItemID : 0, Description : '', UnitCost : 0, Margin : 0, UnitPrice : 0, IsPrint : 1,
+      Amount : 0, DiscAmt : 0, IsChg : 0, IsChgFlag : 1, JobDes : '', JobQty : 1, Note : '',
+  };
+  return other;
+  }
+  AddTemplateItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number, loadId:number, viewtype:string){
+    let other:any = {
+      AreaID : areaId, PartID : partId, VersionID : verId, CoID : coId, CoSrNo : coSrno, UserID : 0, ID : 0, Qty : 1, IsQtyUpdate : 0, Tax : matcent, IsOptional : 0,
+      IsPrice : 1, Isactive : 1, LaborTypeID : 0, ProductItemID : 0, UnitTypeID : 0, Description : '', UnitCost : 0, Margin : 0, UnitPrice : 0,
+      Amount : 0, DiscAmt : 0, IsChg : 0, IsPrint : 1, IsChgFlag : 1, JobDes : '', ViewTypeID : 0, Note : '', TypeID :loadId, ViewType : viewtype,
+  };
+  return other;
+  }
+  AddLaborItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number, loadId:number, viewtype:string){
+    let other:any = {
+      AreaID : areaId, PartID : partId, VersionID : verId, CoID : coId, CoSrNo : coSrno, UserID : 0, ID : 0, Qty : 1, IsQtyUpdate : 0, Tax : matcent, IsOptional : 0,
+      IsPrice : 1, Isactive : 1, LaborTypeID : 0, ProductItemID : 0, UnitTypeID : 0, Description : '', UnitCost : 0, Margin : 0, UnitPrice : 0,
+      Amount : 0, DiscAmt : 0, IsChg : 0, IsPrint : 1, IsChgFlag : 1, JobDes : '', ViewTypeID : 0, Note : '', TypeID :loadId, ViewType : viewtype,
+  };
+  return other;
+  }
+  AddFabricationItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number,){
+    let fab:any = {
+      AreaID : areaId, PartID : partId, VersionID : verId, CoID : coId, CoSrNo : coSrno, ID : 0, Tax : matcent, IsChgFlag : 1, ParentID : 0, SaveFlag : 1, IsActive : 1, Margin : 0, CopyQty : 0,
+      IsOptional : 0, DiscAmt : 0, PartSqft : 0, WF : 0, MaterialID : 0, MeasureList : [], IsChg : 0, Isactive : 1, LaborUnitPrice : 0, UnitCost : 0,
+      SplashSqft : 0, IsPrint : 1, JobQty : 0, JobSplashSf : 0, Description : 'Standard Fabrication',
+  };
+  return fab;
+  }
   //************************************** ITEM CALC *********************************************/
   calcitemamt(qty, price) {
     let amount: any; if (qty != 0 && price != 0) { amount = (qty * price); } 

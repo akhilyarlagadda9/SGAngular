@@ -180,16 +180,21 @@ export class AreainfoComponent implements OnInit {
       component: AddoninfoComponent,
       componentProps: other
     });
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {                           
+      this.partinfo.OtherList = detail.data.componentProps.other;
+    });
     return await modal.present();
   }
   /***** TILE DETAILS *****/
   async ActionEditTile(typeId,name,tile:any) {
-    
     let copyobj = JSON.parse(JSON.stringify(tile));
     let tileobj = {TypeID:typeId,selName:name,tile:copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
       component: TileinfoComponent,
       componentProps: tileobj
+    });
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      this.partinfo.TileList = detail.data.componentProps.tile;
     });
     return await modal.present();
   }

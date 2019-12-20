@@ -6,18 +6,21 @@
       <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
     </ion-toolbar>
 
-    <ion-item>
+    <!-- <ion-item>
       <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-      <ion-select [(ngModel)]="edge.EdgeProfileID" name="edge" 
-      #edge="ngModel" [ngClass]="{ 'is-invalid': f.submitted && edge.invalid }" class="labelfont"
+      <ion-select [(ngModel)]="edge.EdgeProfile" name="EdgeProfile" 
+      #EdgeProfile="ngModel" [ngClass]="{ 'is-invalid': f.submitted && EdgeProfile.invalid }" class="labelfont"
       required>
         <ion-select-option *ngFor="let edg of edgelist"> {{edg.Description}}</ion-select-option>
       </ion-select>
     </ion-item>
-    <div *ngIf="f.submitted && edge.invalid" class="invalid-feedback padd-Left">
-      <div *ngIf="edge.errors.required" class="error">Description is required</div>
-    </div>
-    
+    <div *ngIf="f.submitted && EdgeProfile.invalid" class="invalid-feedback padd-Left">
+      <div *ngIf="EdgeProfile.errors.required" class="error">Description is required</div>
+    </div> -->
+    <ion-item>
+      <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="edge.EdgeProfile" name="EdgeProfile"></ion-input>
+    </ion-item>
       <ion-item>
           <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
           <ion-input type="text" class="labelfont" [(ngModel)]="edge.LF" name="LF" (change)="ActionSetAmount()"></ion-input>

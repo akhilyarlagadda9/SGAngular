@@ -18,7 +18,7 @@ export class SplashComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, public Modalcntrl: ModalController, private getservice: QuotegetService, private quoterep: QuoterepService) { }
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      splash: ['', Validators.required],
+      Spl: ['', Validators.required],
     });
     this.ActionSelectSplash();
   }

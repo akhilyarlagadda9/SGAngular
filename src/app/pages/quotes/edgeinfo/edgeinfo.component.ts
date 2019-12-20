@@ -20,7 +20,7 @@ export class EdgeinfoComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      edge: ['', Validators.required],
+      EdgeProfile: ['', Validators.required],
   });
     this.ActionSelectEdge(); 
   }

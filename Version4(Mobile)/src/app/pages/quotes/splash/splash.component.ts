@@ -49,11 +49,13 @@ export class SplashComponent implements OnInit {
     })
   }
   ActionCloseSplash(issave) {
-    let spl = { splash : this.item}
-    this.Modalcntrl.dismiss({
-      'dismissed': true,
-      componentProps: spl,
-      issave: issave
-    });
+    if(issave == true){
+      let spl = { splash : this.item}
+      this.Modalcntrl.dismiss({
+        'dismissed': true,
+        componentProps: spl,
+        issave: issave
+      });
+    }
   }
 }

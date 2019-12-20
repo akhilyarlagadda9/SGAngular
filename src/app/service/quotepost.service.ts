@@ -30,10 +30,15 @@ export class QuotepostService {
   /************************* Item Level Save Functions ***************************************/
 
   //Material Save Function
-  ActionSavePartMaterial(model: any,areaId:any): Observable<any> {
-     var parameter = JSON.stringify(model);
-     return this.http.post<any>(this.url + 'api/QuoteSave/ActionSavePartMaterial?areaId=' + areaId, parameter,{ headers: { 'Content-Type': 'application/json' } })
+  ActionSavePartMaterial(material: any,areaId:any): Observable<any> {
+     var parameter = JSON.stringify(material);
+     return this.http.post<any>(this.url + 'api/QSave/ActionSaveMaterial?areaId=' + areaId, parameter,{ headers: { 'Content-Type': 'application/json' } })
    }
+   //Sizes Save Function
+   ActionSaveSizes(sobj: any): Observable<any> {
+    var parameter = JSON.stringify(sobj.SlabList);
+    return this.http.post<any>(this.url + 'api/QSave/ActionSaveSizes?verId=' + sobj.selectedpart.VersionID + '&areaId=' + sobj.selectedpart.AreaID + '&partId=' + sobj.selectedpart.ID + '&deliveryfee=' + sobj.deliveryFee + '&matId=' + sobj.materialId, parameter,{ headers: { 'Content-Type': 'application/json' } })
+  }
    //Fabrication Save Function
    Actionsavepartfabrication(item: any): Observable<any> {
     var model = JSON.stringify(item);

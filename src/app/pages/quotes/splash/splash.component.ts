@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { QuotepostService } from 'src/app/service/quotepost.service';
 
 @Component({
   selector: 'app-splash',
@@ -15,7 +16,8 @@ export class SplashComponent implements OnInit {
   submitted = false;
   splashlist: any = [];
   priceListID: any;
-  constructor(private formBuilder: FormBuilder, public Modalcntrl: ModalController, private getservice: QuotegetService, private quoterep: QuoterepService) { }
+  item: any;
+  constructor(private formBuilder: FormBuilder, public Modalcntrl: ModalController, private getservice: QuotegetService, private quoterep: QuoterepService, private postservice: QuotepostService) { }
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       Spl: ['', Validators.required],
@@ -31,11 +33,7 @@ export class SplashComponent implements OnInit {
     this.splash.Amount = this.quoterep.calcitemamt(this.splash.Qty, this.splash.UnitPrice);
     this.splash.Amt = this.splash.Amount;
   }
-  ActionToClose() {
-    this.Modalcntrl.dismiss({
-      'dismissed': true
-    });
-  }
+
 
   ActionSelectSplash() {
     let typeIdList = []; typeIdList.push(6);
@@ -44,11 +42,18 @@ export class SplashComponent implements OnInit {
       error => console.log(error));
   }
 
-  ActionSubmit() {
-    this.submitted = true;
-    if (this.registerForm.invalid) {
-      return;
-    }
+  ActionSaveSplash(spl:any) {
+    this.postservice.Actionsavepartsplash(spl).subscribe(data => {
+      this.item = data.SplashList;
+      this.ActionCloseSplash(true);
+    })
   }
-
+  ActionCloseSplash(issave) {
+    let spl = { splash : this.item}
+    this.Modalcntrl.dismiss({
+      'dismissed': true,
+      componentProps: spl,
+      issave: issave
+    });
+  }
 }

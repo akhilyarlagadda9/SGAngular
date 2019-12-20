@@ -92,12 +92,15 @@ export class AreainfoComponent implements OnInit {
     return await modal.present();
   }
   /***** SPLASH DETAILS *****/
-  async ActionEditSplash(spl:any) {debugger;
+  async ActionEditSplash(spl:any) {
     let copyobj = JSON.parse(JSON.stringify(spl));
     let splash = {splash : copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
       component: SplashComponent,
       componentProps: splash
+    });
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      this.partinfo.SplashList = detail.data.componentProps.splash;
     });
     return await modal.present();
   }
@@ -150,7 +153,7 @@ export class AreainfoComponent implements OnInit {
     });
     return await modal.present();
   }
-  async ActionEditTemplate(typeId: number,temp : any, viewtype:string) {debugger;
+  async ActionEditTemplate(typeId: number,temp : any, viewtype:string) {
     let copyobj = JSON.parse(JSON.stringify(temp));
     let labor = { labor: copyobj, TypeID:typeId, ViewType : viewtype }
     const modal = await this.Modalcntrl.create({
@@ -204,7 +207,7 @@ export class AreainfoComponent implements OnInit {
     return await modal.present();
   }
 
-  AddAreaItem(loadType:string,loadId:number,ViewType:string){debugger;
+  AddAreaItem(loadType:string,loadId:number,ViewType:string){
     switch(loadType) { 
       case "partmat": { 
         let partmat = this.quoterep.AddPartMatItem(this.AreaPartID,this.areaInfo.ID,this.areaInfo.VersionID,this.coId,this.coSrNo,this.Version.MatPercent);

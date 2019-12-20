@@ -5,6 +5,7 @@ import { QuoteService } from 'src/app/service/quote.service'
 
 import { HeadereditComponent } from 'src/app/pages/quotes/headeredit/headeredit.component';
 import { OverlayEventDetail } from '@ionic/core';
+import { MapComponent } from '../../map/map.component';
 //import { QuoterepService } from 'src/app/service/quoterep.service';
 
 @Component({
@@ -74,7 +75,7 @@ export class QuoteeditComponent implements OnInit {
     return await modal.present();
   }
   async ActionEditJob() {
-    let obj = this.headerInfo;
+    let obj = JSON.parse(JSON.stringify(this.headerInfo));
     const modal = await this.Modalcntrl.create({
       component: HeadereditComponent,
       componentProps: obj,
@@ -96,6 +97,16 @@ export class QuoteeditComponent implements OnInit {
     });
   }
 
+  async ActionLoadMap() {
+    let copyobj = JSON.parse(JSON.stringify(this.headerInfo));
+   let obj = {headerInfo : copyobj}
+    const modal = await this.Modalcntrl.create({
+      component: MapComponent,
+      componentProps: obj,
+    });
+    return await modal.present();
+  }
+  
   
 }
 

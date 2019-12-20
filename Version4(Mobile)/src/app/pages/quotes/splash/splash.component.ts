@@ -56,6 +56,11 @@ export class SplashComponent implements OnInit {
         componentProps: spl,
         issave: issave
       });
+    }else{
+      this.Modalcntrl.dismiss({
+        'dismissed': true,
+        issave: issave
+      });
     }
   }
 }

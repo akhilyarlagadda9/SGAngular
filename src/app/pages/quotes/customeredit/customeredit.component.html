@@ -1,10 +1,11 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title><b>Customer Info</b></ion-title>
+        <ion-title  class="titleheader">Customer Info</ion-title>
         <ion-button slot="end" color="success" size="small" (click)="ActionCloseCustomer(true)">Save</ion-button>
         <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCustomer(false)">X</ion-button>
     </ion-toolbar>
 </ion-header>
+
 <ion-content>
     <ion-list class="ion-no-margin ion-no-padding">
         <ion-item>
@@ -74,4 +75,5 @@
             </ion-col>
         </ion-row>
     </ion-list>
+    <ng-container *ngTemplateOutlet="firstAndSecond"></ng-container>
 </ion-content>

@@ -35,6 +35,11 @@ export class EdgeinfoComponent implements OnInit {
     this.edge.Amt = this.edge.Amount;
    }
   
+
+   ActionSavePartEdge(){
+     
+   }
+
   ActionToClose() {
     this.Modalcntrl.dismiss({
       'dismissed': true

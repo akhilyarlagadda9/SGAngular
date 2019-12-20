@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\" >\n        <img src=\"assets/img/img_20191122.png\" alt=\"your image\" style=\"width:25px;height:25px;\">\n      </ion-buttons>\n      <ion-title>StoneApp</ion-title>\n   \n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n      <ion-item>\n          <ion-button (click)=\"ActionLoadQuote()\">\n          <ion-icon name=\"logo-buffer\"></ion-icon> Quoting\n          </ion-button>\n      </ion-item>\n      <ion-item >\n          <ion-icon name=\"calendar\"></ion-icon>  Scheduling\n      </ion-item>\n      <ion-item >\n          <ion-icon name=\"barcode\"></ion-icon>  Purchasing\n      </ion-item>\n        <ion-item >\n            <ion-icon name=\"clipboard\"></ion-icon>  Inventory\n      </ion-item>\n  </ion-list>\n</ion-content>\n"
+module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\" >\n        <img src=\"assets/img/companylogo.png\" alt=\"your image\" style=\"width:25px;height:25px;\">\n      </ion-buttons>\n      <ion-title><h1>StoneApp</h1></ion-title>\n      \n      <ion-icon slot=\"end\" class=\"fontlarge\" name=\"power\" color=\"danger\" (click)=\"ActionLogout()\"></ion-icon>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n      <ion-item >\n          <ion-col (click)=\"ActionLoadQuote()\" (click)=\" showLoader()\">\n              <h2>  <ion-icon name=\"logo-buffer\" style=\"color:rgb(148, 24, 117)\"></ion-icon> Quoting</h2>\n        </ion-col>\n      </ion-item>\n      <ion-item >\n        <ion-col>\n            <h2><ion-icon name=\"calendar\" style=\"color: rgb(218, 101, 58);\"></ion-icon> Scheduling</h2></ion-col>\n      </ion-item>\n      <ion-item >\n          <ion-col>\n              <h2><ion-icon name=\"barcode\" style=\"color: rgb(31, 85, 31);\"></ion-icon>  Purchasing</h2></ion-col>\n      </ion-item>\n        <ion-item >\n            <ion-col>\n                <h2> <ion-icon name=\"clipboard\" style=\"color: rgb(160, 140, 28);\"></ion-icon> Inventory</h2></ion-col>\n      </ion-item>\n  </ion-list>\n</ion-content>\n"
 
 /***/ }),
 
@@ -28,10 +28,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
 /* harmony import */ var _home_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./home.page */ "./src/app/home/home.page.ts");
-/* harmony import */ var _quote_quote_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../quote/quote.module */ "./src/app/quote/quote.module.ts");
-/* harmony import */ var _quote_quote_page__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../quote/quote.page */ "./src/app/quote/quote.page.ts");
-
-
 
 
 
@@ -46,7 +42,7 @@ HomePageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         imports: [
             _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormsModule"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["IonicModule"], _quote_quote_module__WEBPACK_IMPORTED_MODULE_7__["QuotePageModule"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["IonicModule"],
             _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterModule"].forChild([
                 {
                     path: '',
@@ -54,12 +50,12 @@ HomePageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 },
                 {
                     path: 'quotelist',
-                    component: _quote_quote_page__WEBPACK_IMPORTED_MODULE_8__["QuotePage"]
-                    //  loadChildren: () => import('../quote/quote.module').then( m => m.QuotePageModule)
+                    // component:QuotePage
+                    loadChildren: () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ../pages/quotes/quote/quote.module */ "./src/app/pages/quotes/quote/quote.module.ts")).then(m => m.QuotePageModule)
                 }
             ])
         ],
-        declarations: [_home_page__WEBPACK_IMPORTED_MODULE_6__["HomePage"]]
+        declarations: [_home_page__WEBPACK_IMPORTED_MODULE_6__["HomePage"],]
     })
 ], HomePageModule);
 
@@ -95,15 +91,30 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let HomePage = class HomePage {
-    constructor(navCtrl) {
+    constructor(navCtrl, loadingController) {
         this.navCtrl = navCtrl;
+        this.loadingController = loadingController;
     }
     ActionLoadQuote() {
         this.navCtrl.navigateRoot('/home/quotelist');
     }
+    ActionLogout() {
+        this.navCtrl.navigateRoot('/login');
+    }
+    showLoader() {
+        this.loaderToShow = this.loadingController.create({
+            message: 'Please wait'
+        }).then((res) => {
+            res.present();
+            res.onDidDismiss().then((dis) => {
+                console.log('Loading dismissed!');
+            });
+        });
+    }
 };
 HomePage.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"] }
 ];
 HomePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -111,7 +122,7 @@ HomePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         template: __webpack_require__(/*! raw-loader!./home.page.html */ "./node_modules/raw-loader/index.js!./src/app/home/home.page.html"),
         styles: [__webpack_require__(/*! ./home.page.scss */ "./src/app/home/home.page.scss")]
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"]])
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"], _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"]])
 ], HomePage);
 
 

@@ -4,12 +4,14 @@
             <ion-icon class="fontlarge" (click)="ActionCloseQuoteInfo()" name="arrow-back"></ion-icon>
         </ion-buttons>
         <ion-title>
+                <h1>
             <div id="" class="text-left">{{headerInfo.QuoteNo}} -
                 <select [(ngModel)]="QuoteVersionID" interface="popover" style="border: 0px;background: #3880ff;">
                     <option *ngFor="let version of headerInfo.VersionList" value="{{version.ID}}">V{{version.SrNo}}
                     </option>
                 </select>
             </div>
+            </h1>
         </ion-title>
         <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
     </ion-toolbar>
@@ -43,7 +45,7 @@
                     </span>
                 </ion-col>
                 <ion-col size="3" class="paddzero text-right">
-                    <ion-icon name="pin" class="iconblue fontmedium"></ion-icon>
+                    <ion-icon name="pin" class="iconblue fontmedium" (click)="ActionLoadMap()"></ion-icon>
                     <ion-icon name="create" class="fontmedium" (click)="ActionEditJob()"></ion-icon>
                 </ion-col>
             </ion-row>

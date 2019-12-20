@@ -5,6 +5,8 @@ import { CreatequoteComponent } from 'src/app/pages/quotes/createquote/createquo
 import { QuoteeditComponent } from 'src/app/pages/quotes/quoteedit/quoteedit.component'
 
 import {QuoteService} from 'src/app/service/quote.service'
+import { OverlayEventDetail } from '@ionic/core';
+import { QlayoutComponent } from '../qlayout/qlayout.component';
 
 
 @Pipe({
@@ -85,7 +87,8 @@ async ActionQuoteEdit(header) {
     accountid:version.ParentAccID,childaccid:version.ChildAccID,phaseid:0,viewtypeid:0,header:header
   };
   const modal = await this.Modalcntrl.create({
-    component: QuoteeditComponent,
+    //component: QuoteeditComponent,
+    component: QlayoutComponent,
     componentProps: this.qprmsobj,
   });
   return await modal.present();

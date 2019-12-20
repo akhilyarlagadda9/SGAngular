@@ -12,7 +12,7 @@
       <ion-input type="text" class="labelfont" [(ngModel)]="labor.Description" name="Description" 
       #Description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Description.invalid }"
       required></ion-input>
-      <ion-icon slot="end" class="marg2" name="arrow-dropdown" ></ion-icon>
+      <ion-icon slot="end" class="marg2" name="arrow-dropdown"></ion-icon>
       <ion-icon slot="end" class="marg2" name="search" ></ion-icon>
     </ion-item>
     <div *ngIf="f.submitted && Description.invalid" class="invalid-feedback padd-Left">

@@ -22,7 +22,7 @@ export class PoeditComponent implements OnInit {
   }
   GetSalesPersonList() {
     this.getservice.getsalespersons(this.ParentID, 3).subscribe(
-      data => { debugger; this.salespersons = data; }
+      data => { this.salespersons = data; }
     );
   }
 

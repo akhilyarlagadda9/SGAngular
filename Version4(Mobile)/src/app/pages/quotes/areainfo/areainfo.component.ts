@@ -12,7 +12,6 @@ import { FaucetsComponent } from '../faucets/faucets.component';
 import { TileinfoComponent } from '../tileinfo/tileinfo.component';
 import { TemplateComponent } from '../template/template.component';
 import { CustitemComponent } from '../custitem/custitem.component';
-import { QuotegetService } from 'src/app/service/quoteget.service';
 import { QuoteService } from 'src/app/service/quote.service';
 import { ManagementsummaryComponent } from '../managementsummary/managementsummary.component';
 import { OverlayEventDetail } from '@ionic/core';
@@ -33,9 +32,7 @@ export class AreainfoComponent implements OnInit {
   partlist: any = [];
   areaInfo:any;AreaPartID:number;
   viewid: any;
-  constructor(private service: QuoteService, 
-    public Modalcntrl: ModalController, 
-    private popoverCntrl: PopoverController,private quoterep: QuoterepService) { }
+  constructor(private service: QuoteService, public Modalcntrl: ModalController, private popoverCntrl: PopoverController,private quoterep: QuoterepService) { }
   ngOnInit() {
     this.ActionGetAreaList();
   }
@@ -95,7 +92,7 @@ export class AreainfoComponent implements OnInit {
     return await modal.present();
   }
   /***** SPLASH DETAILS *****/
-  async ActionEditSplash(spl:any) {
+  async ActionEditSplash(spl:any) {debugger;
     let copyobj = JSON.parse(JSON.stringify(spl));
     let splash = {splash : copyobj,priceListID:Number(this.Version.PriceListID)}
     const modal = await this.Modalcntrl.create({
@@ -153,7 +150,7 @@ export class AreainfoComponent implements OnInit {
     });
     return await modal.present();
   }
-  async ActionEditTemplate(typeId: number,temp : any, viewtype:string) {
+  async ActionEditTemplate(typeId: number,temp : any, viewtype:string) {debugger;
     let copyobj = JSON.parse(JSON.stringify(temp));
     let labor = { labor: copyobj, TypeID:typeId, ViewType : viewtype }
     const modal = await this.Modalcntrl.create({
@@ -207,7 +204,7 @@ export class AreainfoComponent implements OnInit {
     return await modal.present();
   }
 
-  AddAreaItem(loadType:string,loadId:number,ViewType:string){
+  AddAreaItem(loadType:string,loadId:number,ViewType:string){debugger;
     switch(loadType) { 
       case "partmat": { 
         let partmat = this.quoterep.AddPartMatItem(this.AreaPartID,this.areaInfo.ID,this.areaInfo.VersionID,this.coId,this.coSrNo,this.Version.MatPercent);
@@ -394,7 +391,7 @@ export class AreainfoComponent implements OnInit {
         </ion-row>
         <ion-row>
           <ion-col>
-            <div (click)="ActionLoadPopup('template',2, 'Install')">Install</div>
+            <div (click)="ActionLoadPopup('template',1, 'Install')">Install</div>
           </ion-col>
           <ion-col>
             <div><span style="red">Discount</span></div>

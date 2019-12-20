@@ -13,7 +13,7 @@
       </ion-item>
       <ion-item>
           <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Uploaded By:</ion-label>
-          <ion-select [(ngModel)]="poitem.POBy" class="fontbold">
+          <ion-select [(ngModel)]="poitem.POByID" class="fontbold">
               <ion-select [(ngModel)]="ResourceID" name="ResourceID" class="labelfont" required>
                   <ion-select-option *ngFor="let p of salespersons" [value]="p.ResourceID">{{p.ResourceName}}</ion-select-option>
               </ion-select> 

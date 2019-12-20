@@ -8,8 +8,6 @@
 
     <ion-item>
       <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-      <!-- <ion-input type="text" class="labelfont" [(ngModel)]="edge.Description" name="Description"></ion-input>
-      <ion-icon slot="end" style="margin-top: 20px;" name="arrow-dropdown"></ion-icon> -->
       <ion-select [(ngModel)]="edge.EdgeProfileID" name="edge" 
       #edge="ngModel" [ngClass]="{ 'is-invalid': f.submitted && edge.invalid }" class="labelfont"
       required>

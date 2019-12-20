@@ -31,7 +31,7 @@ export class PoitemsComponent implements OnInit {
       component: PoeditComponent,
       componentProps: poitem,
     })
-    modal.onDidDismiss().then((detail: OverlayEventDetail) => {debugger;
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail.data.componentProps.ID == 0) {
         this.PoItemList.push(detail.data.componentProps.poitem)
       }

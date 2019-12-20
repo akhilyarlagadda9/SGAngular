@@ -5,7 +5,7 @@ import {Storage} from '@ionic/storage';
 @Injectable({
   providedIn: 'root'
 })
-export class QuotegetService {
+export class AuthService {
 
   //url = "http://localhost:1758/"; 
   url = "http://64.251.30.12:50005/StoneApp.WebAPI/"

@@ -29,6 +29,11 @@ export class QuotepostService {
 
   /************************* Part Level Save Functions ***************************************/
 
+  //Material Save Function
+  ActionSavePartMaterial(model: any,areaId:any): Observable<any> {
+     var parameter = JSON.stringify(model);
+     return this.http.post<any>(this.url + 'api/QuoteSave/ActionSavePartMaterial?areaId=' + areaId, parameter,{ headers: { 'Content-Type': 'application/json' } })
+   }
   //Splash Save Function
   Actionsavepartsplash(item: any): Observable<any> {
     var model = JSON.stringify(item);

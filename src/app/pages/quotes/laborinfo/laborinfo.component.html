@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title class="titleheader">
       {{ViewType}}
@@ -6,15 +6,27 @@
     <ion-button slot="end" color="success" size="small">Save</ion-button>
     <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 <ion-content>
-  <form>
+  <form name="form" (ngSubmit)="ActionSubmit()" #f="ngForm">
+    <ion-toolbar class="poss">
+      <ion-title class="titleheader">
+        {{ViewType}}
+      </ion-title>
+      <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
+    </ion-toolbar>
     <ion-item>
-      <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
-      <ion-input type="text" class="labelfont" [(ngModel)]="labor.Description" name="Description"></ion-input>
-      <ion-icon slot="end" class="mar-top20" name="arrow-dropdown"></ion-icon>
-      <ion-icon slot="end" class="mar-top20" name="search"></ion-icon>
+      <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="labor.Description" name="Des"
+      #Des="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Des.invalid }" class="labelfont"
+      required></ion-input>
+      <ion-icon slot="end" class="marg2" name="arrow-dropdown"></ion-icon>
+      <ion-icon slot="end" class="marg2" name="search"></ion-icon>
     </ion-item>
+    <div *ngIf="f.submitted && Des.invalid" class="invalid-feedback padd-Left">
+      <div *ngIf="Des.errors.required" class="error">Description is required</div>
+    </div>
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
       <ion-input type="text" class="labelfont" [(ngModel)]="labor.Qty" readonly="readonly" name="Qty" (change)="ActionSetAmount()">

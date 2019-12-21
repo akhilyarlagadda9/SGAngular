@@ -17,18 +17,22 @@
       </ion-title>
       <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
   </ion-toolbar>
-  <ion-toolbar style="--background:#acc9fc">
+  <ion-toolbar style="--background:#ddd">
    
   <ion-row>
     <ion-col size="8">
-        <h2 class="no-margin">{{headerInfo.QuoteName}}</h2>
+        <h4 class="no-margin">{{headerInfo.QuoteName}}</h4>
     </ion-col>
     <ion-col size="4" class="text-right">
-     <h2 class="no-margin">{{headerInfo.QuoteDate | date:'dd/MM'}} &nbsp; SA</h2>
+     <p class="no-margin">{{headerInfo.QuoteDate | date:'dd/MM'}} &nbsp; SA</p>
     </ion-col>
   </ion-row>
  </ion-toolbar>
+ <ion-toolbar>
+    <app-qnavigation></app-qnavigation>
+ </ion-toolbar>
 </ion-header>
+
 <ion-content>
 
  <ion-row>
@@ -61,13 +65,13 @@
  </div>
 
 <ion-row>
-  <ion-col size="12" style="background: #acc9fc;"><h4 class="no-margin">Job Description</h4></ion-col>
+  <ion-col size="12" style="background:#ddd;"><h4 class="no-margin">Job Description</h4></ion-col>
 </ion-row>
 <ion-row>
   <ion-col size="12">{{headerInfo.Version.Description}}</ion-col>
 </ion-row>
   
-  <app-arealayout></app-arealayout>
+  <app-arealayout [layoutId]="qprmsobj.layoutId"></app-arealayout>
   <ion-row class="marginbot">
     
     <ion-col size="8" class="fontbold text-right">Sub Total:</ion-col>

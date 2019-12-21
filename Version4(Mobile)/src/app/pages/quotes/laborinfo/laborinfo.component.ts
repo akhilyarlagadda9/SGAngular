@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { QuoterepService } from 'src/app/service/quoterep.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-laborinfo',
@@ -9,10 +10,17 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
 })
 export class LaborinfoComponent implements OnInit {
   labor: any;
+  registerForm: FormGroup;
+  submitted = false;
+  Des = "";
 
-  constructor(public Modalcntrl : ModalController, private quoterep : QuoterepService ) { }
+  constructor(public Modalcntrl : ModalController, private quoterep : QuoterepService, private formBuilder: FormBuilder ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+      Des: ['', Validators.required],
+    });
+  }
   ActionSetMargin(typeId:number,model:any,type:string){
     this.labor = this.quoterep.margincalculations(typeId,model,type);
     this.labor.Amount = this.quoterep.calcitemamt(this.labor.Qty,this.labor.UnitPrice);
@@ -28,5 +36,11 @@ export class LaborinfoComponent implements OnInit {
     this.Modalcntrl.dismiss({
       'dismissed': true
     });
+  }
+  ActionSubmit() {
+    this.submitted = true;
+    if (this.registerForm.invalid) {
+      return;
+    }
   }
 }

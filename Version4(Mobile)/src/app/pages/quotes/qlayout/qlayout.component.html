@@ -17,228 +17,96 @@
       </ion-title>
       <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
   </ion-toolbar>
-  <ion-toolbar class="scroll">
-      <ion-segment [(ngModel)]="selectedtabtype" scrollable class="list-scroll">
-          <ion-button shape="round" class="btn-ion bar-header1" [ngClass]="selectedtabtype == 1 ? 'active' : ''" value="1" (click)="ActionQuickLoad(1)">Quote Info
-          </ion-button>
-          <ion-button shape="round" class="btn-ion bar-header1" [ngClass]="selectedtabtype == 2 ? 'active' : ''" value="2" (click)="ActionQuickLoad(2)">Area Info
-          </ion-button>
-          <ion-button shape="round" class="btn-ion bar-header1" [ngClass]="selectedtabtype == 3 ? 'active' : ''" value="3" (click)="ActionQuickLoad(3)">Job Desc
-          </ion-button>
-          <ion-button shape="round" class="btn-ion bar-header1" [ngClass]="selectedtabtype == 4 ? 'active' : ''" value="4" (click)="ActionQuickLoad(4)">PO Items
-          </ion-button>
-          <ion-button shape="round" class="btn-ion bar-header1" [ngClass]="selectedtabtype ==5 ? 'active' : ''" value="5" (click)="ActionQuickLoad(5)">Comm Hub
-          </ion-button>
-          <!-- <ion-button shape="round" class="btn-ion bar-header1" value="6" (click)="ActionQuickLoad(6)">Prints
-              </ion-button> -->
-      </ion-segment>
-  </ion-toolbar>
-
+  <ion-toolbar style="--background:#acc9fc">
+   
+  <ion-row>
+    <ion-col size="8">
+        <h2 class="no-margin">{{headerInfo.QuoteName}}</h2>
+    </ion-col>
+    <ion-col size="4" class="text-right">
+     <h2 class="no-margin">{{headerInfo.QuoteDate | date:'dd/MM'}} &nbsp; SA</h2>
+    </ion-col>
+  </ion-row>
+ </ion-toolbar>
 </ion-header>
 <ion-content>
-  <app-headerinfo></app-headerinfo>
+
+ <ion-row>
+   <ion-col size="12" class="text-font">
+    <div class="valignsup">{{headerInfo.Address1}}
+      <span
+          *ngIf="headerInfo.City != '' && headerInfo.City != null">,{{headerInfo.City}}</span>
+      <span
+          *ngIf="headerInfo.State != '' && headerInfo.State != null">,{{headerInfo.State}}</span>
+      <span
+          *ngIf="headerInfo.State != '' && headerInfo.State != null">-{{headerInfo.Zipcode}}</span>
+  </div>
+   </ion-col>
+ </ion-row>
+
+ <div *ngFor="let contact of headerInfo.QuoteContacts">
+  <ion-row style="--padding-start:0px">
+   <ion-col size="12" >
+    <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon>
+        {{contact.Name}}
+       <div *ngIf="headerInfo.Phone != '' && headerInfo.Phone != null">
+          - &nbsp; {{contact.Phone}} 
+       </div>
+   </ion-col>
+   <ion-col size="12" *ngIf="headerInfo.Email != '' && headerInfo.Email != null">
+    <ion-icon class="text-font" class="fontsmall" style="display: none;" name="contact"></ion-icon>
+      <ion-icon class="text-font" class="fontsmall" name="call"></ion-icon> {{contact.Email}}
+  </ion-col>
+ </ion-row>
+ </div>
+
+<ion-row>
+  <ion-col size="12" style="background: #acc9fc;"><h4 class="no-margin">Job Description</h4></ion-col>
+</ion-row>
+<ion-row>
+  <ion-col size="12">{{headerInfo.Version.Description}}</ion-col>
+</ion-row>
+  
   <app-arealayout></app-arealayout>
+  <ion-row class="marginbot">
+    
+    <ion-col size="8" class="fontbold text-right">Sub Total:</ion-col>
+    <ion-col size="4" class="fontbold text-right">$ 1568.20</ion-col>
+</ion-row>
+<ion-row class="marginbot">
+    
+    <ion-col size="8" class="fontbold text-right"><u>Discount:</u></ion-col>
+    <ion-col size="4" class="fontbold text-right"><span style="color:red;">($ 200.50)</span></ion-col>
+</ion-row>
+<ion-row class="marginbot">
+   
+    <ion-col size="8" class="fontbold text-right"><u>Sales Tax:</u></ion-col>
+    <ion-col size="4" class="fontbold text-right">$ 112.58</ion-col>
+</ion-row>
+<ion-row class="marginbot">
+   
+    <ion-col size="8" class="fontbold text-right">Net Total:</ion-col>
+    <ion-col size="4" class="fontbold text-right">$ 1480.28</ion-col>
+</ion-row>
+<ion-row class="marginbot">
+    
+    <ion-col size="8" class="fontbold text-right"><u>Fee & Charge:</u></ion-col>
+    <ion-col size="4" class="fontbold text-right">$ 0.00</ion-col>
+</ion-row>
+<ion-row class="marginbot">
+ 
+    <ion-col size="8" class="fontbold text-right">Final Total:</ion-col>
+    <ion-col size="4" class="fontbold text-right">$ 1480.28</ion-col>
+</ion-row>
+<ion-row class="marginbot">
+   
+    <ion-col size="8" class="fontbold text-right">Payment:</ion-col>
+    <ion-col size="4" class="fontbold text-right"><span style="color:red;">($ 0.00)</span></ion-col>
+</ion-row>
+
+
+
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar>
-    <ion-list *ngIf="Version.LatestCoID > 0">
-      <ion-row class="marginbot">
-        <ion-col size="4" class="fontbold text-right">Sub Total:</ion-col>
-        <ion-col size="8" class="fontbold text-right">
-          <ion-row>
-            <ion-col size="3" class="text-right paddzero">$ {{(Version.TotalAmt- Version.RoundOff) | number : '.2-2'}}
-            </ion-col>
-            <ion-col size="1" class="text-center paddzero">+</ion-col>
-            <ion-col size="3" class="text-right paddzero" color="success">
-              <span *ngIf="Version.FinalAmt > 0">$ {{(Version.FinalAmt - Version.TotalAmt) | number : '.2-2'}}</span>
-              <span *ngIf="Version.FinalAmt == 0">$ {{Version.NetCoTotal | number : '.2-2'}}</span>
-            </ion-col>
-            <ion-col size="1" class="text-center paddzero">=</ion-col>
-            <ion-col size="4" class="text-right paddzero">
-              <span *ngIf="Version.FinalAmt > 0">$ {{(Version.FinalAmt) | number : '.2-2'}}</span>
-              <span *ngIf="Version.FinalAmt == 0">$
-                {{(Version.TotalAmt + Version.NetCoTotal) | number : '.2-2'}}&nbsp;</span>
-            </ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-      <ion-row class="marginbot">
-        <ion-col size="4" class="fontbold text-right">Discount:</ion-col>
-        <ion-col size="8" class="fontbold text-right">
-          <ion-row>
-            <ion-col size="3" class="text-right paddzero" color="danger">($ {{(Version.DiscountAmt) | number : '.2-2'}})
-            </ion-col>
-            <ion-col size="1" class="text-center paddzero">+</ion-col>
-            <ion-col size="3" class="text-right paddzero" color="danger">
-              <span *ngIf="Version.FinalDiscAmt > 0">($
-                {{Version.FinalDiscAmt - Version.DiscountAmt | number : '.2-2'}})</span>
-              <span *ngIf="Version.FinalDiscAmt == 0">($ {{Version.NetCoDisc | number : '.2-2'}})</span>
-            </ion-col>
-            <ion-col size="1" class="text-center paddzero">=</ion-col>
-            <ion-col size="4" class="text-right paddzero" color="danger">
-              <span *ngIf="Version.FinalDiscAmt > 0">($ {{Version.FinalDiscAmt | number : '.2-2'}})</span>
-              <span *ngIf="Version.FinalDiscAmt == 0">($
-                {{(Version.DiscountAmt + Version.NetCoDisc) | number : '.2-2'}})&nbsp;</span>
-            </ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-      <ion-row class="marginbot">
-        <ion-col size="4" class="fontbold text-right">Sales Tax:</ion-col>
-        <ion-col size="8" class="fontbold text-right">
-          <ion-row>
-            <ion-col size="3" class="text-right paddzero">$ {{Version.TaxAmt | number : '.2-2'}}</ion-col>
-            <ion-col size="1" class="text-center paddzero">+</ion-col>
-            <ion-col size="3" class="text-right paddzero" color="success">
-              <span *ngIf="Version.FinalTaxAmt > 0">$ {{(Version.FinalTaxAmt - Version.TaxAmt) | number: '.2-2'}}</span>
-              <span *ngIf="Version.FinalTaxAmt == 0">$ {{Version.NetCoTax | number: '.2-2'}}</span>
-            </ion-col>
-            <ion-col size="1" class="text-center paddzero">=</ion-col>
-            <ion-col size="4" class="text-right paddzero">
-              <span *ngIf="Version.FinalTaxAmt > 0">$ {{(Version.FinalTaxAmt) | number: '.2-2'}}&nbsp;</span>
-              <span *ngIf="Version.FinalTaxAmt == 0">$ {{(Version.TaxAmt + Version.NetCoTax) | number: '.2-2'}}&nbsp;</span>
-            </ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-      <ion-row class="marginbot">
-        <ion-col size="4" class="fontbold text-right">Net Total:</ion-col>
-        <ion-col size="8" class="fontbold text-right">
-          <ion-row>
-            <ion-col size="3" class="text-right paddzero">$
-              {{((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt) - (Version.RefAmt + Version.RoundOff)) | number: '.2-2'}}
-            </ion-col>
-            <ion-col size="1" class="text-center paddzero">+</ion-col>
-            <ion-col size="3" class="text-right paddzero" color="success">
-              <span *ngIf="Version.FinalNetAmt > 0">$
-                {{ (Version.FinalNetAmt - ((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt))) | number: '.2-2'}}</span>
-              <span *ngIf="Version.FinalNetAmt == 0">$
-                {{ ((Version.NetCoTotal + Version.NetCoTax) - Version.NetCoDisc) | number: '.2-2'}}</span>
-            </ion-col>
-            <ion-col size="1" class="text-center paddzero">=</ion-col>
-            <ion-col size="4" class="text-right paddzero">
-              <span *ngIf="Version.FinalNetAmt > 0">$
-                {{ (Version.FinalNetAmt - (Version.RefAmt + Version.RoundOff)) | number: '.2-2'}}</span>
-              <span *ngIf="Version.FinalNetAmt == 0">$
-                {{ (((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt)) + ((Version.NetCoTotal + Version.NetCoTax) - Version.NetCoDisc) - (Version.RefAmt + Version.RoundOff)) | number: '.2-2'}}&nbsp;</span>
-            </ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-      <ion-row class="marginbot">
-        <ion-col size="4" class="fontbold text-right">Fee & Charge:</ion-col>
-        <ion-col size="8" class="fontbold text-right">
-          <ion-row>
-            <ion-col size="3" class="text-right paddzero"> $ {{(Version.RefAmt + Version.RoundOff) | number: '.2-2'}}
-            </ion-col>
-            <ion-col size="1" class="text-center paddzero">+</ion-col>
-            <ion-col size="3" class="text-right paddzero" color="success">
-              <span *ngIf="FinalFeeAndRoundAmt > 0">$
-                {{(FinalFeeAndRoundAmt - (Version.RefAmt + Version.RoundOff)) | number: '.2-2'}}</span>
-              <span *ngIf="FinalFeeAndRoundAmt == 0">$ {{(Version.RefAmt + Version.RoundOff) | number: '.2-2'}}</span>
-            </ion-col>
-            <ion-col size="1" class="text-center paddzero">=</ion-col>
-            <ion-col size="4" class="text-right paddzero">$ {{FinalFeeAndRoundAmt | number: '.2-2'}}&nbsp;</ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-      <ion-row class="marginbot">
-        <ion-col size="4" class="fontbold text-right">Final Total:</ion-col>
-        <ion-col size="8" class="fontbold text-right">
-          <ion-row>
-            <ion-col size="3" class="text-right paddzero">$
-              {{((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt)) | number: '.2-2'}}</ion-col>
-            <ion-col size="1" class="text-center paddzero">+</ion-col>
-            <ion-col size="3" class="text-right paddzero" color="success">
-              <span *ngIf="Version.FinalNetAmt > 0">$
-                {{ (Version.FinalNetAmt - ((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt))) | number: '.2-2'}}</span>
-              <span *ngIf="Version.FinalNetAmt == 0">$
-                {{ ((Version.NetCoTotal + Version.NetCoTax) - Version.NetCoDisc) | number: '.2-2'}}</span>
-            </ion-col>
-            <ion-col size="1" class="text-center paddzero">=</ion-col>
-            <ion-col size="4" class="text-right paddzero">
-              <span *ngIf="Version.FinalNetAmt > 0">$ {{ Version.FinalNetAmt | number: '.2-2'}}</span>
-              <span *ngIf="Version.FinalNetAmt == 0">$
-                {{ (((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt)) + ((Version.NetCoTotal + Version.NetCoTax) - Version.NetCoDisc)) | number: '.2-2'}}&nbsp;</span>
-            </ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-      <ion-row class="marginbot">
-        <ion-col size="4" class="fontbold text-right">Payment:</ion-col>
-        <ion-col size="8" class="fontbold text-right">
-          <ion-row>
-            <ion-col size="3" class="text-right paddzero" color="danger">($ {{(Version.PmtReceived) | number: '.2-2'}})
-            </ion-col>
-            <ion-col size="1" class="text-center paddzero">+</ion-col>
-            <ion-col size="3" class="text-right paddzero" color="danger">
-              ($ 0.00)
-            </ion-col>
-            <ion-col size="1" class="text-center paddzero">=</ion-col>
-            <ion-col size="4" class="text-right paddzero" color="danger">
-              ($ {{(Version.PmtReceived) | number: '.2-2'}})&nbsp;
-            </ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-      <ion-row class="marginbot" *ngIf="Version.CreditAmount > 0">
-        <ion-col size="4" class="fontbold text-right">Credits:</ion-col>
-        <ion-col size="8" class="fontbold text-right">
-          <ion-row>
-            <ion-col size="3" class="text-right paddzero" color="danger">($ {{(Version.CreditAmount) | number: '.2-2'}})
-            </ion-col>
-            <ion-col size="1" class="text-center paddzero">+</ion-col>
-            <ion-col size="3" class="text-right paddzero" color="danger">
-              ($ 0.00)
-            </ion-col>
-            <ion-col size="1" class="text-center paddzero">=</ion-col>
-            <ion-col size="4" class="text-right paddzero">
-              $ {{(Version.CreditAmount) | number: '.2-2'}}&nbsp;
-            </ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-      <ion-row class="marginbot" *ngIf="Version.RefundAmount > 0">
-        <ion-col size="4" class="fontbold text-right">Refunds:</ion-col>
-        <ion-col size="8" class="fontbold text-right">
-          <ion-row>
-            <ion-col size="3" class="text-right paddzero" color="danger">($
-              {{(quote.header.Version.RefundAmount) | number: '.2-2'}})</ion-col>
-            <ion-col size="1" class="text-center paddzero">+</ion-col>
-            <ion-col size="3" class="text-right paddzero" color="danger">
-              ($ 0.00)
-            </ion-col>
-            <ion-col size="1" class="text-center paddzero">=</ion-col>
-            <ion-col size="4" class="text-right paddzero">
-              $ {{(quote.header.Version.RefundAmount) | number: '.2-2'}}&nbsp;
-            </ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-      <ion-row class="marginbot" *ngIf="Version.PmtReceived != 0 || Version.RefundAmount != 0 || Version.CreditAmount != 0">
-        <ion-col size="4" class="fontbold text-right">Balance:</ion-col>
-        <ion-col size="8" class="fontbold text-right">
-          <ion-row>
-            <ion-col size="3" class="text-right paddzero">$
-              {{((((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt)) - (Version.PmtReceived - Version.RefundAmount)) - Version.CreditAmount) | number: '.2-2'}}
-            </ion-col>
-            <ion-col size="1" class="text-center paddzero">+</ion-col>
-            <ion-col size="3" class="text-right paddzero">
-              ($ 0.00)
-            </ion-col>
-            <ion-col size="1" class="text-center paddzero">=</ion-col>
-            <ion-col size="4" class="text-right paddzero" color="danger">
-              <span *ngIf="Version.FinalNetAmt > 0">$
-                {{((Version.FinalNetAmt - (Version.PmtReceived - Version.RefundAmount)) - Version.CreditAmount) | number: '.2-2'}}</span>
-              <span *ngIf="Version.FinalNetAmt == 0">$
-                {{(((((Version.TotalAmt + Version.TaxAmt + Version.CreditAmount) - (Version.DiscountAmt)) + ((Version.NetCoTotal + Version.NetCoTax) - Version.NetCoDisc)) - (Version.PmtReceived- Version.RefundAmount))) | number: '.2-2'}}&nbsp;</span>
-            </ion-col>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-    </ion-list>
-  </ion-toolbar>
-</ion-footer>
 
-
+  

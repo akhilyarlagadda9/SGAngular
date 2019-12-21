@@ -29,9 +29,9 @@ export class QuotePage implements OnInit {
  };
  qprmsobj:{
   quoteid: number,quoteno: string,versionid: number,customerid:number,
-  accountid:number,childaccid:number,phaseid:number,viewtypeid:number,header:any
+  accountid:number,childaccid:number,phaseid:number,viewtypeid:number,header:any,layoutId:1
 };
-
+layId:1;
 
 
   ngOnInit() {
@@ -84,7 +84,7 @@ async ActionQuoteEdit(header) {
   //let version = header.VersionList.filter(s => {if(header.VersionID == s.ID){return s;} });
   this.qprmsobj={
     quoteid: header.ID,quoteno: header.QuoteNo,versionid: header.VersionID,customerid:version.CustomerID,
-    accountid:version.ParentAccID,childaccid:version.ChildAccID,phaseid:0,viewtypeid:0,header:header
+    accountid:version.ParentAccID,childaccid:version.ChildAccID,phaseid:0,viewtypeid:0,header:header,layoutId:this.layId
   };
   const modal = await this.Modalcntrl.create({
     //component: QuoteeditComponent,
@@ -92,6 +92,10 @@ async ActionQuoteEdit(header) {
     componentProps: this.qprmsobj,
   });
   return await modal.present();
+}
+ActionQuoteEdit1(header,typeId){
+  this.layId = typeId;
+  this.ActionQuoteEdit(header);
 }
 
 /***** CREATE QUOTE *****/

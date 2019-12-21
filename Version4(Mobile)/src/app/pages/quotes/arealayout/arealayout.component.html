@@ -1,5 +1,65 @@
-<div >
-  <ion-row style="background:#acc9fc;">
+
+<div *ngIf="layoutId == 1">
+  <ion-row style="background:#ddd;">
+    <ion-col  ><h4 class="no-margin"> Summary</h4></ion-col>
+  </ion-row>
+  
+  <ion-list class="no-margin borbtm">
+    <ion-row class="bolder">
+      <ion-col size="7">Kitchen Room (#3)</ion-col>
+      <ion-col size="2">#P - 1</ion-col>
+      <ion-col size="3" class="text-right">$ 5000.00</ion-col>
+    </ion-row>
+    <ion-row style="font-size:12px">
+      <ion-col>
+        <span>Mat : <b>50.48SF</b></span>,
+        <span>Fab : <b>50.48SF</b></span>,
+        <span>Edg : <b>1.48SF</b></span>,
+        <span>Cut : <b>2.00</b></span>,
+        <span>Snk : <b>1.00</b></span>
+      </ion-col>
+    </ion-row>
+  
+  </ion-list>
+  <ion-list class="no-margin borbtm">
+    <ion-row class="bolder">
+      <ion-col size="7">Living Room (#2)</ion-col>
+      <ion-col size="2">#P - 2</ion-col>
+      <ion-col size="3" class="text-right">$ 2000.00</ion-col>
+    </ion-row>
+    <ion-row style="font-size:12px">
+      <ion-col>
+        <span>Mat : <b>78.24SF</b></span>,
+        <span>Fab : <b>78.24SF</b></span>,
+        <span>Edg : <b>4.88SF</b></span>,
+        <span>Cut : <b>0.00</b></span>,
+        <span>Snk : <b>1.00</b></span>
+      </ion-col>
+    </ion-row>
+  
+  </ion-list>
+  <ion-list class="no-margin borbtm">
+    <ion-row class="bolder">
+      <ion-col size="7">Dinning Room Floor 2</ion-col>
+      <ion-col size="2">#P - 10</ion-col>
+      <ion-col size="3" class="text-right">$ 2000.00</ion-col>
+    </ion-row>
+    <ion-row style="font-size:12px">
+      <ion-col>
+        <span>Mat : <b>78.24SF</b></span>,
+        <span>Fab : <b>78.24SF</b></span>,
+        <span>Edg : <b>4.88SF</b></span>,
+        <span>Cut : <b>0.00</b></span>,
+        <span>Snk : <b>1.00</b></span>
+      </ion-col>
+    </ion-row>
+  
+  </ion-list>
+</div>
+
+
+<div *ngIf="layoutId == 2">
+  <ion-row style="background:#ddd;">
     <ion-col  ><h4 class="no-margin"> Summary</h4></ion-col>
   </ion-row>
   
@@ -59,80 +119,176 @@
   </ion-list>
 </div>
 
-
-
-
-
-
-
-<div >
-  <ion-row style="background:#acc9fc;">
-    <ion-col  ><h4 class="no-margin"> 1. Area1: Kitchen</h4></ion-col>
-    <ion-col size="3" class="text-right"><h4 class="no-margin">  Units: 1</h4></ion-col>
-  </ion-row>
+<div *ngIf="layoutId == 3">
+  <div >
+    <ion-row style="background:#ddd;">
+      <ion-col  ><h4 class="no-margin"> 1. Area1: Kitchen</h4></ion-col>
+      <ion-col size="3" class="text-right"><h4 class="no-margin">  Units: 1</h4></ion-col>
+    </ion-row>
+    <ion-list class="ion-no-margin ion-no-padding font13">
+      <ion-row class="paddzero">
+        <ion-col>
+          <span class="text-left laywidth colorblue">MAT:</span>
+          <span class="text-left" style="background-color: lightgoldenrodyellow;">Pazzi Marble Absolute Black - 3CM -Polished</span>
+          <span class="color-green">@ <u>20.33SF</u></span>
+        </ion-col>
+        <ion-col size="2" class="text-right">950.40</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+          <span class="text-left laywidth colorblue">SIZ:</span>
+          <span class="text-left"><b>P1:</b>130 * 30; <b>P2:</b>156 * 50</span>
+          <span class="color-green">@ <u>38.33SF</u></span>
+        </ion-col>
+        <ion-col size="2" class="text-right">200.00</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">EDG:</span>
+        <span class="text-left">Demi Bullnose - <b>P1,P2 </b></span>
+        <span class="color-green">@ <u>1.32SF</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">20.06</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+          <span class="text-left laywidth colorblue">CUT:</span>
+          <span class="text-left">CookTop - <b>P1,P2 </b></span>
+          <span class="color-green">@ <u>7</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">50.50</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">SNK:</span>
+        <span class="text-left">16ga 2317 Standard</span>
+        <span class="color-green">@ <u>2</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">250.60</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">FAU:</span>
+        <span class="text-left">Faucet 8 Wide </span>
+        <span class="color-green">@ <u>1</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">150.00</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">APP:</span>
+        <span class="text-left">Cooktop</span>
+        <span class="color-green">@ <u>1</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">26.25</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">LAB:</span>
+        <span class="text-left">Thick Back Splash</span>
+        <span class="color-green">@ <u>1</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">31.25</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">ADD:</span>
+        <span class="text-left">Strainer Basket</span>
+        <span class="color-green">@ <u>1</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">16.00</ion-col>
+      </ion-row>
+      <ion-row style="font-size: 15px;">
+        <ion-col>
+    <b >Total</b>
+        </ion-col>
+        <ion-col size="2" class="text-right bordertop"><b>1350.22</b></ion-col>
+      </ion-row>
+    </ion-list>
   
-  <ion-row class="rowlineitem paddzero2">
-    <ion-col><u class="colorblue textfont14">M</u>:
-      <span>
-        Pazzi Marble & Granite - 3CM - polished &nbsp;
-        <u class="colorgreen">
-         @ 45 SF
-          </u>
-          $ 20.33
-      </span>
-    </ion-col>
-    <ion-col size="3" class="text-right">$950.04</ion-col>
-  </ion-row>
-  <ion-row class="rowlineitem paddzero2">
-    <ion-col><u class="colorblue textfont14">Size</u>:
-      <span><b>P1:</b>300*60 &nbsp;<b>P2:</b>400*50 &nbsp;
-        $ 20.33
-      </span>
-    </ion-col>
-    <ion-col size="3" class="text-right">$950.04</ion-col>
-  </ion-row>
-  <ion-row class="rowlineitem paddzero2">
-    <ion-col><u class="colorblue textfont14">Edge</u>:
-      <span>Demi Bullnose - P1,P2 &nbsp;
-        1
-      </span>
-    </ion-col>
-    <ion-col size="3" class="text-right">$20.60</ion-col>
-  </ion-row>
-  <ion-row class="rowlineitem paddzero2">
-    <ion-col><u class="colorblue textfont14">CU</u>:
-      <span>Cooktop - P1</span>&nbsp;7
-    </ion-col>
-    <ion-col size="3" class="text-right">$950.04</ion-col>
-  </ion-row>
-  <ion-row class="rowlineitem paddzero2">
-    <ion-col><u class="colorblue textfont14">SNK</u>:
-      <span>16ga 2317 Standard Rectangle</span>&nbsp;
-      1
-    </ion-col>
-    <ion-col size="3" class="text-right">$ 211.00</ion-col>
-  </ion-row>
-  <ion-row class="rowlineitem paddzero2">
-    <ion-col><u class="colorblue textfont14">FAU</u>:
-      <span>1B 258-BN Lav Faucet 8 Wide Spread</span>&nbsp;
-      1
-    </ion-col>
-    <ion-col size="3" class="text-right">148.50</ion-col>
-  </ion-row>
-  <ion-row class="rowlineitem paddzero2">
-    <ion-col><u class="colorblue textfont14">APP</u>:
-      <span>Cooktop</span>&nbsp;
-      1
-    </ion-col>
-    <ion-col size="3" class="text-right">0.00</ion-col>
-  </ion-row>
-  <ion-row class="rowlineitem paddzero2">
-    <ion-col><u class="colorblue textfont14">LAB</u>:
-      <span>3/4 Thick Back Splash</span>&nbsp;
-      1
-    </ion-col>
-    <ion-col size="3" class="text-right">25.00</ion-col>
-  </ion-row>
+  </div>
+  <div>
+    <ion-row style="background:#ddd;">
+      <ion-col  ><h4 class="no-margin"> 1. Area2: Kitchen #2</h4></ion-col>
+      <ion-col size="3" class="text-right"><h4 class="no-margin">  Units: 1</h4></ion-col>
+    </ion-row>
+    <ion-list class="ion-no-margin ion-no-padding font13">
+      <ion-row class="paddzero">
+        <ion-col>
+          <span class="text-left laywidth colorblue">MAT:</span>
+          <span class="text-left" style="background-color: lightgoldenrodyellow;">Pazzi Marble Absolute Black - 3CM -Polished</span>
+          <span class="color-green">@ <u>20.33SF</u></span>
+        </ion-col>
+        <ion-col size="2" class="text-right">950.40</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+          <span class="text-left laywidth colorblue">SIZ:</span>
+          <span class="text-left"><b>P1:</b> 124 * 48;</span>
+        <span class="color-green">@ <u>16.12SF</u></span>
+        </ion-col>
+        <ion-col size="2" class="text-right">200.00</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">EDG:</span>
+        <span class="text-left">Demi Bullnose - <b>P1</b></span>
+        <span class="color-green">@ <u>1.32SF</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">20.06</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+          <span class="text-left laywidth colorblue">CUT:</span>
+          <span class="text-left">CookTop - <b>P1</b></span>
+          <span class="color-green">@ <u>7</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">50.50</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">SNK:</span>
+        <span class="text-left">16ga 2317 Standard</span>
+        <span class="color-green">@ <u>2</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">250.60</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">FAU:</span>
+        <span class="text-left">Faucet 8 Wide </span>
+        <span class="color-green">@ <u>1</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">150.00</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">APP:</span>
+        <span class="text-left">Cooktop</span>
+        <span class="color-green">@ <u>1</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">26.25</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">LAB:</span>
+        <span class="text-left">Thick Back Splash</span>
+        <span class="color-green">@ <u>1</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">31.25</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">ADD:</span>
+        <span class="text-left">Strainer Basket</span>
+        <span class="color-green">@ <u>1</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">16.00</ion-col>
+      </ion-row>
+    </ion-list>
+ 
+  </div>
+  
   <ion-row class="rowlineitem paddzero2">
     <ion-col><u class="colorblue textfont14">ADD</u>:
       <span>Stain-Proof Plus 15 Year Sealer</span>&nbsp;
@@ -140,20 +296,190 @@
     </ion-col>
     <ion-col size="3" class="text-right">119.00</ion-col>
   </ion-row>
-  <ion-row style="background:#acc9fc;">
+  <ion-row style="font-size: 15px;">
     <ion-col>
-      Mat:
-      <b >4.23 SF</b>
+<b >Total</b>
     </ion-col>
-    <ion-col class="text-right">
-      Fab:
-      <b >4.23 SF</b>
-    </ion-col>
-    <ion-col class="text-right">
-      Units:
-      <b >1,204.51 LF</b>
-    </ion-col>
+    <ion-col size="2" class="text-right bordertop"><b>1350.22</b></ion-col>
   </ion-row>
+</div>
+
+
+<div *ngIf="layoutId == 4">
+  <div >
+    <ion-row style="background:#ddd;">
+      <ion-col  ><h4 class="no-margin"> 1. Area2: Kitchen - Part 1</h4></ion-col>
+      <ion-col size="3" class="text-right"><h4 class="no-margin">  Units: 1</h4></ion-col>
+    </ion-row>
+    <ion-list class="ion-no-margin ion-no-padding font13">
+      <ion-row class="paddzero">
+        <ion-col>
+          <span class="text-left laywidth colorblue">MAT:</span>
+          <span class="text-left" style="background-color: lightgoldenrodyellow;">Pazzi Marble Absolute Black - 3CM -Polished</span>
+          <span class="color-green">@ <u>20.33SF</u></span>
+        </ion-col>
+        <ion-col size="2" class="text-right">950.40</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+          <span class="text-left laywidth colorblue">SIZ:</span>
+          <span class="text-left">124 * 48;</span>
+        <span class="color-green">@ <u>16.12SF</u></span>
+        </ion-col>
+        <ion-col size="2" class="text-right">200.00</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">EDG:</span>
+        <span class="text-left">Demi Bullnose - <b>P1, P2</b></span>
+        <span class="color-green">@ <u>1.32SF</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">20.06</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+          <span class="text-left laywidth colorblue">CUT:</span>
+          <span class="text-left">CookTop - <b>P1</b></span>
+          <span class="color-green">@ <u>7</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">50.50</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">SNK:</span>
+        <span class="text-left">16ga 2317 Standard</span>
+        <span class="color-green">@ <u>2</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">250.60</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">FAU:</span>
+        <span class="text-left">Faucet 8 Wide </span>
+        <span class="color-green">@ <u>1</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">150.00</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">APP:</span>
+        <span class="text-left">Cooktop</span>
+        <span class="color-green">@ <u>1</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">26.25</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">LAB:</span>
+        <span class="text-left">Thick Back Splash</span>
+        <span class="color-green">@ <u>1</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">31.25</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">ADD:</span>
+        <span class="text-left">Strainer Basket</span>
+        <span class="color-green">@ <u>1</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">16.00</ion-col>
+      </ion-row>
+    </ion-list>
+    <ion-row style="font-size: 15px;">
+      <ion-col>
+  <b >Total</b>
+      </ion-col>
+      <ion-col size="2" class="text-right bordertop"><b>1350.22</b></ion-col>
+    </ion-row>
+  </div>
+  
+  
+  <div >
+    <ion-row style="background:#ddd;">
+      <ion-col  ><h4 class="no-margin"> 1. Area1: Kitchen - Part 2</h4></ion-col>
+      <ion-col size="3" class="text-right"><h4 class="no-margin">  Units: 1</h4></ion-col>
+    </ion-row>
+    <ion-list class="ion-no-margin ion-no-padding font13">
+      <ion-row class="paddzero">
+        <ion-col>
+          <span class="text-left laywidth colorblue">MAT:</span>
+          <span class="text-left" style="background-color: lightgoldenrodyellow;">Pazzi Marble Absolute Black - 3CM -Polished</span>
+          <span class="color-green">@ <u>20.33SF</u></span>
+        </ion-col>
+        <ion-col size="2" class="text-right">950.40</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+          <span class="text-left laywidth colorblue">SIZ:</span>
+          <span class="text-left">156 * 50</span>
+          <span class="color-green">@ <u>38.33SF</u></span>
+        </ion-col>
+        <ion-col size="2" class="text-right">200.00</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">EDG:</span>
+        <span class="text-left">Demi Bullnose - <b>P1,P2 </b></span>
+        <span class="color-green">@ <u>1.32SF</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">20.06</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+          <span class="text-left laywidth colorblue">CUT:</span>
+          <span class="text-left">CookTop</span>
+          <span class="color-green">@ <u>7</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">50.50</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">SNK:</span>
+        <span class="text-left">16ga 2317 Standard</span>
+        <span class="color-green">@ <u>2</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">250.60</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">FAU:</span>
+        <span class="text-left">Faucet 8 Wide </span>
+        <span class="color-green">@ <u>1</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">150.00</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">APP:</span>
+        <span class="text-left">Cooktop</span>
+        <span class="color-green">@ <u>1</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">26.25</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">LAB:</span>
+        <span class="text-left">Thick Back Splash</span>
+        <span class="color-green">@ <u>1</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">31.25</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col>
+        <span class="text-left laywidth colorblue">ADD:</span>
+        <span class="text-left">Strainer Basket</span>
+        <span class="color-green">@ <u>1</u></span>
+      </ion-col>
+        <ion-col size="2" class="text-right">16.00</ion-col>
+      </ion-row>
+    </ion-list>
+    <ion-row style="font-size: 15px;">
+      <ion-col>
+  <b >Total</b>
+      </ion-col>
+      <ion-col size="2" class="text-right bordertop"><b>1350.22</b></ion-col>
+    </ion-row>
+  </div>
 </div>
 
 <!-- <ion-list class="ion-no-margin ion-no-padding font13">

@@ -10,7 +10,7 @@ export class QuotegetService {
   //url = "http://localhost:1758/"; 
   url = "http://64.251.30.12:50005/StoneApp.WebAPI/"
   constructor(private http: HttpClient) { }
-
+  
   //Lead type List
   LeadDictionaryLists(typeIdList):Observable<any> {
     return this.http.get<any>(this.url +  'api/lead/LeadDictionaryLists?typeIdList=' + typeIdList)
@@ -88,10 +88,28 @@ getsalespersons(parentId:number,typeId:any):Observable<any> {
   return this.http.get<any>(this.url +  'api/QuoteAdmin/CustTypeResourceList?parentID=' + parentId + '&typeId=' + typeId,)
 }
 
-
-
-
-
+/*************** COMM.HUB LIST *****************/
+//Stages List
+processTypeList(typeId:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/ProjectProcessList?typeId=' + typeId)
+}
+//Category List
+NotecategoryList(Id:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Quote/NotecategoryList?Id=' + Id)
+}
+//Type List
+formsList(typeId:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/FormsList?typeId=' + typeId)
+}
+//Phase List
+CommHubPhaseList(versionID:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/CommHubPhaseList?versionID=' + versionID)
+}
+//Message Status List(QuoteMasterList)
+//Note Attachment List
+NoteAttachements(Id:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Quote/NoteAttachements?Id=' + Id)
+}
 
 
 // Created Quote

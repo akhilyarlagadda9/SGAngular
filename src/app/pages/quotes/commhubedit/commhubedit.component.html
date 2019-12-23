@@ -9,24 +9,31 @@
     <ion-list class="ion-no-margin ion-no-padding">
       <ion-item>
         <ion-label position="floating" color="primary" class="margin-zero">Category:</ion-label>
-        <ion-select [(ngModel)]="category" class="fontbold">
-          <ion-select-option value="Schedule">Schedule</ion-select-option>
-          <ion-select-option value="Material Order">Material Order</ion-select-option>
-          <ion-select-option value="Template">Template</ion-select-option>
-        </ion-select>
+        <ion-select [(ngModel)]="itemSelected" class="fontbold">
+           <ion-select-option *ngFor="let category of categoryList" [value]="">{{category.Name}}</ion-select-option>
+       </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating" color="primary" class="margin-zero">Phase:</ion-label>
+        <ion-select [(ngModel)]="PhaseID" class="fontbold">
+           <ion-select-option *ngFor="let category of phaseList" [value]="">{{category.Name}}</ion-select-option>
+       </ion-select>
       </ion-item>
       <ion-item>
         <ion-label class="margin-zero" position="floating" color="primary">Type:</ion-label>
-        <ion-select [(ngModel)]="type" class="fontbold">
-          <ion-select-option value="Edge">Edge</ion-select-option>
-          <ion-select-option value="Appliance">Appliance</ion-select-option>
-          <ion-select-option value="Layout">Layout</ion-select-option>
-          <ion-select-option value="DIG">DIG</ion-select-option>
+        <ion-select [(ngModel)]="itemsel" class="fontbold">
+          <ion-select-option *ngFor="let category of docFormList" [value]="">{{category.Name}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label class="margin-zero" position="floating" color="primary">Subject:</ion-label>
         <ion-input type="text" class="inputheight fontbold"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="margin-zero" position="floating" color="primary">Status:</ion-label>
+        <ion-select [(ngModel)]="StatusID" class="fontbold">
+          <ion-select-option *ngFor="let category of msgStatusList" [value]="">{{category.Name}}</ion-select-option>
+        </ion-select>
       </ion-item>
       <ion-row>
           <ion-label class="margin-zero attachstyle" color="primary"><u>Attachments:</u></ion-label>

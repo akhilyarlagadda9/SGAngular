@@ -1,18 +1,30 @@
-<ion-header>
+<!-- <ion-header>
     <ion-toolbar>
       <ion-title class="titleheader">MATERIAL DETAILS</ion-title>
       <ion-button slot="end" color="success" size="small">Save</ion-button>
       <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
     </ion-toolbar>
-  </ion-header>
+  </ion-header> -->
 
 <ion-content>
-  <form>
+  <form name="form" (ngSubmit)="ActionSubmit()" #f="ngForm">
+    <ion-toolbar>
+      <ion-title class="titleheader">MATERIAL DETAILS</ion-title>
+      <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
+    </ion-toolbar>
+
+
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Material*</ion-label>
-      <ion-input type="text" class="labelfont" value="Absolute Black-3 CM - Polished"></ion-input>
+      <ion-input type="text" class="labelfont" [(ngModel)]="material.MaterialName" name="material" #material="ngModel" 
+      [ngClass]="{ 'is-invalid': f.submitted && material.invalid }" required></ion-input>
       <ion-icon slot="end" name="search" class="mar-top20"></ion-icon>
     </ion-item>
+    <div *ngIf="f.submitted && material.invalid" class="invalid-feedback padd-Left">
+      <div *ngIf="material.errors.required" class="error">Material Name is required</div>
+  </div>
+
     <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Slab</ion-label>
         <ion-input type="text" class="labelfont" readonly="readonly"></ion-input>

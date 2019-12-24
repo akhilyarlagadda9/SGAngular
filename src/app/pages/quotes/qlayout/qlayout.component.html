@@ -17,59 +17,72 @@
       </ion-title>
       <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
   </ion-toolbar>
-  <ion-toolbar style="--background:#ddd">
-   
-  <ion-row>
-    <ion-col size="8">
-        <h4 class="no-margin">{{headerInfo.QuoteName}}</h4>
-    </ion-col>
-    <ion-col size="4" class="text-right">
-     <p class="no-margin">{{headerInfo.QuoteDate | date:'dd/MM'}} &nbsp; SA</p>
-    </ion-col>
-  </ion-row>
- </ion-toolbar>
- <ion-toolbar>
+  <ion-toolbar>
     <app-qnavigation></app-qnavigation>
  </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
-
+    <ion-row style="background:#ddd" >
+        <ion-col size="9" class="paddtopzero">
+            <h2 class="fontsmall no-margin">{{headerInfo.QuoteName}}</h2>
+        </ion-col>
+        <ion-col size="3" class="text-right paddtopzero" >
+         <p class="no-margin">{{headerInfo.QuoteDate | date:'dd/MM'}} &nbsp; SA</p>
+        </ion-col>
+      </ion-row>
  <ion-row>
-   <ion-col size="12" class="text-font">
-    <div class="valignsup">{{headerInfo.Address1}}
+   
+   <ion-col size="12" class="paddtopzero">
+     
+    <ion-icon class="text-font" class="fontsmall" name="pin"></ion-icon>
+    <span class="valignsup">{{headerInfo.Address1}}
       <span
           *ngIf="headerInfo.City != '' && headerInfo.City != null">,{{headerInfo.City}}</span>
       <span
           *ngIf="headerInfo.State != '' && headerInfo.State != null">,{{headerInfo.State}}</span>
       <span
           *ngIf="headerInfo.State != '' && headerInfo.State != null">-{{headerInfo.Zipcode}}</span>
-  </div>
+  </span>
+
    </ion-col>
+
+   <div *ngFor="let contact of headerInfo.QuoteContacts">
+     <ion-col size="12" class="paddtopzero" >
+      <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon>
+        <span class="valignsup">
+          {{contact.Name}}
+        </span>  
+         <span *ngIf="headerInfo.Phone != '' && headerInfo.Phone != null" class="valignsup">
+            - &nbsp; {{contact.Phone}} 
+         </span>
+     </ion-col>
+     <ion-col size="12" *ngIf="contact.Email != '' && contact.Email != null">
+      <ion-icon class="text-font" class="fontsmall" style="display: none;" name="contact"></ion-icon>
+        <ion-icon class="text-font" class="fontsmall" name="call"></ion-icon> <span class="valignsup">{{contact.Email}}</span>
+    </ion-col>
+   </div>
  </ion-row>
 
- <div *ngFor="let contact of headerInfo.QuoteContacts">
-  <ion-row style="--padding-start:0px">
-   <ion-col size="12" >
-    <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon>
-        {{contact.Name}}
-       <div *ngIf="headerInfo.Phone != '' && headerInfo.Phone != null">
-          - &nbsp; {{contact.Phone}} 
-       </div>
-   </ion-col>
-   <ion-col size="12" *ngIf="headerInfo.Email != '' && headerInfo.Email != null">
-    <ion-icon class="text-font" class="fontsmall" style="display: none;" name="contact"></ion-icon>
-      <ion-icon class="text-font" class="fontsmall" name="call"></ion-icon> {{contact.Email}}
-  </ion-col>
- </ion-row>
- </div>
-
-<ion-row>
-  <ion-col size="12" style="background:#ddd;"><h4 class="no-margin">Job Description</h4></ion-col>
-</ion-row>
-<ion-row>
-  <ion-col size="12">{{headerInfo.Version.Description}}</ion-col>
-</ion-row>
+ 
+ <ion-row>
+    <ion-col size="12" class="text-font paddtopzero" >
+     <div class="valignsup">
+        <span class="color-primary"> Cust:</span>Issac James
+   </div>
+    </ion-col>
+    <ion-col size="12" class="text-font paddtopzero">
+        <div class="valignsup">
+            <span class="color-primary"> Acc:</span>ABC Construction Inc
+      </div>
+       </ion-col>
+       <ion-col size="12" class="text-font paddtopzero" >
+        <div class="valignsup">
+           <span class="color-primary">Des:</span> {{headerInfo.Version.Description}}
+      </div>
+       </ion-col>
+  </ion-row>
   
   <app-arealayout [layoutId]="qprmsobj.layoutId"></app-arealayout>
   <ion-row class="marginbot">

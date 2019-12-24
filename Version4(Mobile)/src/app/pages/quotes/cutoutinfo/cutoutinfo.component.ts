@@ -15,13 +15,11 @@ export class CutoutinfoComponent implements OnInit {
   submitted = false;
   priceListID: any;
   cutoutlist: any = [];
-  constructor(private formBuilder: FormBuilder, public Modalcntrl: ModalController, private getservice: QuotegetService, private quoterep: QuoterepService) { }
-
+  constructor(private formBuilder: FormBuilder,private navCntrl: NavParams, public Modalcntrl: ModalController, private getservice: QuotegetService, private quoterep: QuoterepService) { }
+  TypeID = this.navCntrl.data.TypeID;
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      Description: ['', Validators.required],
-    });
     this.ActionSelectCutout()
+    console.log(this.TypeID)
   }
 
   ActionSetMargin(typeId: number, model: any, type: string) {
@@ -39,7 +37,7 @@ export class CutoutinfoComponent implements OnInit {
       'dismissed': true
     });
   }
-  ActionFabSubmit() {
+  ActionSubmit() {
     this.submitted = true;
     if (this.registerForm.invalid) {
       return;

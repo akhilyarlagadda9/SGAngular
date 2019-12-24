@@ -11,14 +11,13 @@
     </ion-toolbar>
     <ion-item>
       <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-      <ion-select [(ngModel)]="cutout.TypeID" name="TypeID" #typeId="ngModel"
-        [ngClass]="{ 'is-invalid': f.submitted && TypeID.invalid }" required>
-        <ion-select-option *ngFor="let cut of cutoutlist" [value]="cut.ID"> <span
-            *ngIf="cut.CutOutRefID == cutout.CutOutTypeID">{{cut.Description}}</span></ion-select-option>
+      <ion-select [(ngModel)]="cutout.TypeID" name="TypeID" #cutout="ngModel"
+        [ngClass]="{ 'is-invalid': f.submitted && cutout.invalid }" required>
+        <ion-select-option *ngFor="let cut of cutoutlist"> <span>{{cut.Description}}</span></ion-select-option>
       </ion-select>
     </ion-item>
-    <div *ngIf="f.submitted && TypeID.invalid" class="invalid-feedback padd-Left">
-      <div *ngIf="TypeID.errors.required" class="error">Description is required</div>
+    <div *ngIf="f.submitted && cutout.invalid" class="invalid-feedback padd-Left">
+      <div *ngIf="cutout.errors.required" class="error">Description is required</div>
     </div>
 
     <ion-item>

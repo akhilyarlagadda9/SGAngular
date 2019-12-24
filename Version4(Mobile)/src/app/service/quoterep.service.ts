@@ -111,6 +111,13 @@ export class QuoterepService {
     };
     return splash;
   }
+  AddCustomerItems(partId: number, areaId: number, verId: number, coId: number, coSrno: string){
+    let custitem = { 
+      JobDes : '', PartID : partId, AreaID : areaId, VersionID : verId, CoID : coId, CoSrNo : coSrno, UserID : 0, ID : 0,
+       Qty : 1, Isactive : 1, IsPrint : 1, Description : '', IsChg : 0, IsChgFlag : 1,
+  };
+  return custitem;
+}
   //************************************** ITEM CALC *********************************************/
   calcitemamt(qty, price) {
     let amount: any; if (qty != 0 && price != 0) { amount = (qty * price); } 

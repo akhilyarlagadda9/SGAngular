@@ -50,9 +50,9 @@ export class QuotepostService {
     return this.http.post<any>(this.url + 'api/QSave/ActionSavePartSplash', model, { headers: { 'Content-Type': 'application/json' } })
   }
   //Edge Save Function
-  Actionsavepartedge(item: any): Observable<any> {
+  ActionsavepartEdge(item: any): Observable<any> {
     var model = JSON.stringify(item);
-    return this.http.post<any>(this.url + 'api/QSave/ActionSavePartSplash', model, { headers: { 'Content-Type': 'application/json' } })
+    return this.http.post<any>(this.url + 'api/QSave/ActionsavepartEdge', model, { headers: { 'Content-Type': 'application/json' } })
   }
   //Cutout Save Function
   Actionsavepartcutout(item: any): Observable<any> {
@@ -65,7 +65,7 @@ export class QuotepostService {
     return this.http.post<any>(this.url + 'api/QSave/ActionSaveSink', model, { headers: { 'Content-Type': 'application/json' } })
   }
   //Faucet Save Function
-  Actionsavefaucet(item: any): Observable<any> {
+  Actionsavepartfaucet(item: any): Observable<any> {
     var model = JSON.stringify(item);
     return this.http.post<any>(this.url + 'api/QSave/ActionSaveFaucet', model, { headers: { 'Content-Type': 'application/json' } })
   }
@@ -80,11 +80,15 @@ export class QuotepostService {
     return this.http.post<any>(this.url + 'api/QSave/ActionSaveAddon', model, { headers: { 'Content-Type': 'application/json' } })
   }
   //Tile Save Function
-  Actionsavetile(item: any): Observable<any> {
+  Actionsaveparttile(item: any): Observable<any> {
     var model = JSON.stringify(item);
     return this.http.post<any>(this.url + 'api/QSave/ActionSaveTile', model, { headers: { 'Content-Type': 'application/json' } })
   }
-
+  //Customer Items Function
+  Actionsavepartcustitem(item: any): Observable<any> {
+    var model = JSON.stringify(item);
+    return this.http.post<any>(this.url + 'api/QSave/ActionSaveCustResponse', model, { headers: { 'Content-Type': 'application/json' } })
+  }
 
 
 }

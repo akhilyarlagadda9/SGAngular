@@ -1,17 +1,9 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title class="titleheader">Customer Item</ion-title>
-    <ion-button slot="end" color="success" size="small">Save</ion-button>
-    <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
-  </ion-toolbar>
-</ion-header> -->
-
 <ion-content>
-  <form name="form" (ngSubmit)="ActionSubmit()" #f="ngForm">
+  <form name="form" (ngSubmit)="ActionSaveCustomerItems(response)" #f="ngForm">
     <ion-toolbar>
       <ion-title class="titleheader">Customer Item</ion-title>
       <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCustomerItems(false)">X</ion-button>
     </ion-toolbar>
     <ion-item>
       <ion-label position="floating" color="primary" class="margin-zero">Description</ion-label>
@@ -25,5 +17,3 @@
   </div>
   </form>
 </ion-content>
-
-

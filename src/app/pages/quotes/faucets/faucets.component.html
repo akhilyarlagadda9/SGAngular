@@ -1,9 +1,9 @@
 <ion-content>
-  <form name="form" (ngSubmit)="ActionFaucetSubmit()" #f="ngForm">
+  <form name="form" (ngSubmit)="ActionSaveFaucet(faucet)" #f="ngForm">
     <ion-toolbar class="poss">
       <ion-title class="titleheader">Faucet</ion-title>
       <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionCloseFaucet(false)">X</ion-button>
     </ion-toolbar>
     <ion-item>
       <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>

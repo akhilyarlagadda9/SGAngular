@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { QuotepostService } from 'src/app/service/quotepost.service';
 
 @Component({
   selector: 'app-laborinfo',
@@ -13,8 +14,9 @@ export class LaborinfoComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
   Des = "";
+  item: any;
 
-  constructor(public Modalcntrl : ModalController, private quoterep : QuoterepService, private formBuilder: FormBuilder ) { }
+  constructor(public Modalcntrl : ModalController, private quoterep : QuoterepService, private formBuilder: FormBuilder, private postservice : QuotepostService ) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -30,17 +32,26 @@ export class LaborinfoComponent implements OnInit {
     this.labor.Amount = this.quoterep.calcitemamt(this.labor.Qty,this.labor.UnitPrice);
     this.labor.Amt = this.labor.Amount;
    }
-  ActionToClose() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
-    this.Modalcntrl.dismiss({
-      'dismissed': true
-    });
+  
+  ActionSaveLabor(labor:any) {
+    this.postservice.Actionsavelabor(labor).subscribe(data => {
+      this.item = data.laborList;
+      this.ActionCloseLabor(true);
+    })
   }
-  ActionSubmit() {
-    this.submitted = true;
-    if (this.registerForm.invalid) {
-      return;
+  ActionCloseLabor(issave:boolean) {
+    if(issave == true){
+      let labor = { Labor : this.item}
+      this.Modalcntrl.dismiss({
+        'dismissed': true,
+        componentProps: labor,
+        issave: issave
+      });
+    }else{
+      this.Modalcntrl.dismiss({
+        'dismissed': true,
+        issave: issave
+      });
     }
   }
 }

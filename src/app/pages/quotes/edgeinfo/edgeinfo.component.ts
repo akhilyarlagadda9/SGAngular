@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { QuotepostService } from 'src/app/service/quotepost.service';
 
 @Component({
   selector: 'app-edgeinfo',
@@ -15,8 +16,9 @@ export class EdgeinfoComponent implements OnInit {
   edge:any = "";
   priceListID: any;
   edgelist: any;
+  item: any;
 
-  constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController,private quoterep: QuoterepService,private getservice: QuotegetService) { }
+  constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController,private quoterep: QuoterepService,private getservice: QuotegetService, private postservice : QuotepostService) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -35,17 +37,6 @@ export class EdgeinfoComponent implements OnInit {
     this.edge.Amt = this.edge.Amount;
    }
   
-
-   ActionSavePartEdge(){
-     
-   }
-
-  ActionToClose() {
-    this.Modalcntrl.dismiss({
-      'dismissed': true
-    });
-  }
-
   ActionSelectEdge() {
     let typeIdList = []; typeIdList.push(5); 
     this.getservice.qsgetpricelistitems(this.priceListID,typeIdList).subscribe(
@@ -53,10 +44,25 @@ export class EdgeinfoComponent implements OnInit {
       error => console.log(error));
   }
 
-  ActionFaucetSubmit(){
-    this.submitted = true;
-    if (this.registerForm.invalid) {
-      return;
+  ActionSaveEdge(edg:any){
+    this.postservice.ActionsavepartEdge(edg).subscribe(data => {
+      this.item = data.EdgeList;
+      this.ActionCloseEdge(true);
+    })
   }
+  ActionCloseEdge(issave:boolean) {
+    if(issave == true){
+      let edg = { edge : this.item}
+      this.Modalcntrl.dismiss({
+        'dismissed': true,
+        componentProps: edg,
+        issave: issave
+      });
+    }else{
+      this.Modalcntrl.dismiss({
+        'dismissed': true,
+        issave: issave
+      });
+    }
   }
 }

@@ -3,6 +3,7 @@ import { ModalController, PopoverController, NavParams } from '@ionic/angular';
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { QuotepostService } from 'src/app/service/quotepost.service';
 
 @Component({
   selector: 'app-sink',
@@ -14,7 +15,8 @@ export class SinkComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
   Description = "";
-  constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private navParams: NavParams, private quoterep: QuoterepService, private formBuilder: FormBuilder) { }
+  item: any;
+  constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private navParams: NavParams, private quoterep: QuoterepService, private postservice : QuotepostService, private formBuilder: FormBuilder) { }
   sinkinfo = this.navParams.data;
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -30,14 +32,26 @@ export class SinkComponent implements OnInit {
     this.sinkfaucet.Amount = this.quoterep.calcitemamt(this.sinkfaucet.Qty, this.sinkfaucet.UnitPrice);
     this.sinkfaucet.Amt = this.sinkfaucet.Amount;
   }
-
-  ActionToClose() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
-    this.Modalcntrl.dismiss({
-      'dismissed': true,
-      componentProps: this.sinkinfo,
-    });
+  ActionSaveSink(sink:any){
+    this.postservice.Actionsavepartsink(sink).subscribe(data => {
+      this.item = data.sinkfaucetList;
+      this.ActionCloseSink(true);
+    })
+  }
+  ActionCloseSink(issave:boolean) {
+    if(issave == true){
+      let sink = { Sink : this.item}
+      this.Modalcntrl.dismiss({
+        'dismissed': true,
+        componentProps: sink,
+        issave: issave
+      });
+    }else{
+      this.Modalcntrl.dismiss({
+        'dismissed': true,
+        issave: issave
+      });
+    }
   }
 
 
@@ -66,11 +80,4 @@ export class SinkComponent implements OnInit {
 
   get f() { return this.registerForm.controls; }
 
-
-  ActionSinkSubmit() {
-    this.submitted = true;
-    if (this.registerForm.invalid) {
-      return;
-    }
-  }
 }

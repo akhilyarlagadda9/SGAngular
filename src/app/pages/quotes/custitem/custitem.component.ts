@@ -1,5 +1,6 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams, PopoverController, } from '@ionic/angular';
+import { QuotepostService } from 'src/app/service/quotepost.service';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -9,10 +10,11 @@ import { FormGroup } from '@angular/forms';
 })
 export class CustitemComponent implements OnInit {
   public items: any = [];
+  response: any;
   registerForm: FormGroup;
   submitted = false;
 
-  constructor(public Modalcntrl : ModalController,private navCntrl:NavParams, private popoverCntrl :PopoverController ) {
+  constructor(public Modalcntrl: ModalController, private navCntrl: NavParams, private popoverCntrl: PopoverController, private postservice:QuotepostService,) {
     this.items = [
       { title: "one" },
       { title: "two" },
@@ -21,52 +23,64 @@ export class CustitemComponent implements OnInit {
       { title: "five" },
       { title: "six" }
     ];
-   }
+  }
   TypeID = this.navCntrl.data.TypeID;
-  SearchTypeID:number;
-searchResults:any = [];
+  SearchTypeID: number;
+  searchResults: any = [];
 
-  ngOnInit() {}
-
-  ActionToClose() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
-    this.Modalcntrl.dismiss({
-      'dismissed': true
-    });
+  ngOnInit() { }
+  ActionSaveCustomerItems(response:any) {
+    this.postservice.Actionsavepartcustitem(response).subscribe(data => {debugger;
+      this.response = data.responseList;
+      this.ActionCloseCustomerItems(true);
+    })
+  }
+  ActionCloseCustomerItems(issave:boolean) {
+    if(issave == true){
+      let response = { Response : this.response}
+      this.Modalcntrl.dismiss({
+        'dismissed': true,
+        componentProps: response,
+        issave: issave
+      });
+    }else{
+      this.Modalcntrl.dismiss({
+        'dismissed': true,
+        issave: issave
+      });
+    }
   }
   async ActionSearchSelect(ev: any) {
-    let obj={}
-   const popover = await this.popoverCntrl.create({
-     component: itemsearchComponent,
-     event: ev,
-     translucent: true,
-     componentProps:obj,
-     cssClass: "popover_class"
-   });
-   return await popover.present();
- }
+    let obj = {}
+    const popover = await this.popoverCntrl.create({
+      component: itemsearchComponent,
+      event: ev,
+      translucent: true,
+      componentProps: obj,
+      cssClass: "popover_class"
+    });
+    return await popover.present();
+  }
 
+  ActionSubmit(){
+    this.submitted = true;
+    if (this.registerForm.invalid) {
+      return;
+  }
+  }
+
+  filterItems(searchTerm) {
+    return this.items.filter(item => {
+      return item.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+    });
+  }
  
 
- filterItems(searchTerm) {
-  return this.items.filter(item => {
-    return item.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
-  });
 }
 
-ActionSubmit(){
-  this.submitted = true;
-  if (this.registerForm.invalid) {
-    return;
-}
-
-  
-}
-}
 @Component({
   //selector: 'app-itemsearchComponent',
-  template:`
+  template: `
   <ion-header >
     <ion-toolbar style="height:37px;top:-8px;left:-10px;">
       <ion-title style="font-size:15px;">Customer Details</ion-title>
@@ -114,17 +128,14 @@ ActionSubmit(){
 export class itemsearchComponent implements OnInit {
   searchObj = this.navParams.data;
   searchResults = [];
-  constructor(private Modalcntrl : ModalController,private navParams : NavParams,private popoverCntrl :PopoverController ) { }
-  ngOnInit() {this.ActionSearchSelect();}
-  ActionSearchSelect(){
-    }
-
-    ActionToClosePop() {
-      // using the injected ModalController this page
-      // can "dismiss" itself and optionally pass back data
-      this.popoverCntrl.dismiss({
-        'dismissed': true
-      });
-    }
+  constructor(private Modalcntrl: ModalController, private navParams: NavParams, private popoverCntrl: PopoverController) { }
+  ngOnInit() { this.ActionSearchSelect(); }
+  ActionSearchSelect() {
   }
 
+  ActionToClosePop() {
+    this.popoverCntrl.dismiss({
+      'dismissed': true
+    });
+  }
+}

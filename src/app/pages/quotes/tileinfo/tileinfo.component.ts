@@ -3,6 +3,7 @@ import { ModalController, PopoverController, NavParams } from '@ionic/angular';
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { QuotepostService } from 'src/app/service/quotepost.service';
 
 @Component({
   selector: 'app-tileinfo',
@@ -13,24 +14,46 @@ export class TileinfoComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
   Description="";
-  labor:any;
-  constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController,
-    private popoverCntrl :PopoverController,private navParams : NavParams,private quoterep:QuoterepService ) { }
+  labor:any;  tile: any;  cabinet: any; carpet: any; appliance: any;  consumable: any;  tool: any;
+
+  constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController, private popoverCntrl :PopoverController,private navParams : NavParams,private quoterep:QuoterepService, private postservice : QuotepostService ) { }
+
   tileinfo = this.navParams.data;
-  TypeID = this.navParams.data.TypeID;
+  
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       Description: ['', Validators.required],
   });
   }
 
-  ActionToClose() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
-    this.Modalcntrl.dismiss({
-      'dismissed': true
-    });
+  ActionSaveTile(tile:any){
+    this.postservice.Actionsaveparttile(tile).subscribe(data => {
+      this.tile = data.TileList;
+      this.cabinet = data.CabinetList;
+      this.carpet = data.CarpetList;
+      this.appliance = data.ApplianceList;
+      this.consumable = data.ConsumableList;
+      this.tool = data.ToolList;
+      this.ActionCloseTile(true);
+    })
   }
+
+  ActionCloseTile(issave:boolean) {
+    if(issave == true){
+      let tile = { Tile : this.tile, Cabinet : this.cabinet, Carpet : this.carpet, Appliance : this.appliance, Consumable : this.consumable, Tool : this.tool}
+      this.Modalcntrl.dismiss({
+        'dismissed': true,
+        componentProps: tile,
+        issave: issave
+      });
+    }else{
+      this.Modalcntrl.dismiss({
+        'dismissed': true,
+        issave: issave
+      });
+    }
+  }
+
   ActionSetMargin(typeId:number,model:any,type:string){
     this.labor = this.quoterep.margincalculations(typeId,model,type);
     this.labor.Amount = this.quoterep.calcitemamt(this.labor.Qty,this.labor.UnitPrice);
@@ -38,8 +61,8 @@ export class TileinfoComponent implements OnInit {
    ActionSetAmount(){
     this.labor.Amount = this.quoterep.calcitemamt(this.labor.Qty,this.labor.UnitPrice);
    }
-  async ActionSearchSelect(ev: any,typeid,typeid2) {
-    let obj={searchTypeId:typeid,producttypeId:typeid2,search: this.tileinfo.Des == undefined ? "" : this.tileinfo.Des}
+  async ActionSearchSelect(ev: any,typeid,productId) {
+    let obj={searchTypeId:typeid,producttypeId:productId,search: this.tileinfo.Des == undefined ? "" : this.tileinfo.Des}
    const popover = await this.popoverCntrl.create({
      component: AdditionalitemserachComponent,
      event: ev,
@@ -51,19 +74,11 @@ export class TileinfoComponent implements OnInit {
  }
 
  ActionToClosePop() {
-  // using the injected ModalController this page
-  // can "dismiss" itself and optionally pass back data
   this.popoverCntrl.dismiss({
     'dismissed': true
   });
 }
 
-ActionSubmit(){
-  this.submitted = true;
-  if (this.registerForm.invalid) {
-    return;
-}
-}
 }
 
 

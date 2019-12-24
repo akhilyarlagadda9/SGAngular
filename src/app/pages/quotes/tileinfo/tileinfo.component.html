@@ -16,13 +16,13 @@
   </ion-header> -->
   
   <ion-content>
-    <form name="form" (ngSubmit)="ActionSubmit()" #f="ngForm">
+    <form name="form" (ngSubmit)="ActionSaveTile(tile)" #f="ngForm">
       <ion-toolbar class="poss">
         <ion-title class="titleheader">
           <div>{{selName}}</div>
         </ion-title>
         <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
-        <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
+        <ion-button slot="end" color="danger" size="small" (click)="ActionCloseTile(false)">X</ion-button>
       </ion-toolbar>
       <ion-item>
 

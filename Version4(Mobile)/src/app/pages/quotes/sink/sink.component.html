@@ -1,9 +1,9 @@
 <ion-content>
-  <form name="form" (ngSubmit)="ActionSinkSubmit()" #f="ngForm">
+  <form name="form" (ngSubmit)="ActionSaveSink(sinkfaucet)" #f="ngForm">
     <ion-toolbar class="poss">
       <ion-title class="titleheader">Sink</ion-title>
       <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionCloseSink(false)">X</ion-button>
     </ion-toolbar>
 
     <ion-item>

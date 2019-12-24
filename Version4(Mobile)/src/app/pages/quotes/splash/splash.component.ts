@@ -48,7 +48,7 @@ export class SplashComponent implements OnInit {
       this.ActionCloseSplash(true);
     })
   }
-  ActionCloseSplash(issave) {
+  ActionCloseSplash(issave:boolean) {
     if(issave == true){
       let spl = { splash : this.item}
       this.Modalcntrl.dismiss({

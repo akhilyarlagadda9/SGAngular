@@ -75,6 +75,10 @@ ion-icon{
  .paddright10 {
     padding-right: 10px;
  }
+ .paddtopzero{
+    padding-top:0px;
+    padding-bottom:0px;
+ }
  .margin-notop {
     margin-bottom: 3px;
     margin-top: 0px;
@@ -138,6 +142,9 @@ ion-icon{
 }
 .color-green{
     color: green;
+}
+.color-primary{
+    color: #3880ff;
 }
 /***** BORDERS *****/
 .borderall{
@@ -276,6 +283,9 @@ ion-icon{
 }
 .mar-top20 {
     margin-top: 20px;
+}
+.no-margin{
+    margin: 0px;
 }
 .margin-leftzero {
     margin-left: 0px;

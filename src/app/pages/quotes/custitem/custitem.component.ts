@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { ModalController, NavParams, PopoverController, } from '@ionic/angular';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-custitem',
@@ -8,6 +9,8 @@ import { ModalController, NavParams, PopoverController, } from '@ionic/angular';
 })
 export class CustitemComponent implements OnInit {
   public items: any = [];
+  registerForm: FormGroup;
+  submitted = false;
 
   constructor(public Modalcntrl : ModalController,private navCntrl:NavParams, private popoverCntrl :PopoverController ) {
     this.items = [
@@ -52,7 +55,14 @@ searchResults:any = [];
   });
 }
 
+ActionSubmit(){
+  this.submitted = true;
+  if (this.registerForm.invalid) {
+    return;
+}
+
   
+}
 }
 @Component({
   //selector: 'app-itemsearchComponent',

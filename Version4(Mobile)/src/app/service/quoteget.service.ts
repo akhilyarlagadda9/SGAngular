@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs'; 
 import { HttpClient } from '@angular/common/http';
-
+declare const appUrl: any;
 @Injectable({
   providedIn: 'root'
 })
 export class QuotegetService {
 
-  //url = "http://localhost:1758/"; 
-  url = "http://64.251.30.12:50005/StoneApp.WebAPI/"
+  url = appUrl;
   constructor(private http: HttpClient) { }
   
   //Lead type List

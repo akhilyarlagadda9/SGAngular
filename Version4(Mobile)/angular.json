@@ -37,9 +37,13 @@
               },
               {
                 "input": "src/global.scss"
+              },
+              {
+                "input": "src/draw.scss"
               }
             ],
-            "scripts": ["./node_modules/@drawingjs/d3.min.js", 
+            "scripts": [
+               "./node_modules/jquery/jquery-1.8.3.min.js","./node_modules/@drawingjs/d3.min.js", 
               "./node_modules/@drawingjs/drawing3.js","./node_modules/@drawingjs/quotebridge3.js",
               "./node_modules/@drawingjs/layout3.js", "./node_modules/@drawingjs/shapedraw3.js",
               "./node_modules/@drawingjs/shapepart3.js", "./node_modules/@drawingjs/shapesides3.js",
@@ -50,7 +54,7 @@
               "./node_modules/@drawingjs/sidesplashseams3.js", "./node_modules/@drawingjs/sidesplashshapes3.js",
               "./node_modules/@drawingjs/slabparts3.js", "./node_modules/@drawingjs/slabshape3.js",
               "./node_modules/@drawingjs/slabsplashs3.js", "./node_modules/@drawingjs/slabsplashseams3.js",
-              "./node_modules/@drawingjs/vectormath3.js","./node_modules/@drawingjs/drawinglog3.js"
+              "./node_modules/@drawingjs/vectormath3.js","./node_modules/@drawingjs/drawinglog3.js"             
             ]
           },
           "configurations": {

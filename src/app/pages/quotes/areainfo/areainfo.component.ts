@@ -19,6 +19,9 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
 import { FabricationComponent } from '../fabrication/fabrication.component';
 import { LaborinfoComponent } from '../laborinfo/laborinfo.component';
 
+declare var _qscope, QBRinitdrawing, QBRinitdrawarea: any;
+
+
 @Component({
   selector: 'app-areainfo',
   templateUrl: './areainfo.component.html',
@@ -39,7 +42,7 @@ export class AreainfoComponent implements OnInit {
   ActionGetAreaList() {
     let result = this.service.ActionQuickAreaList(this.Version.ID, 0, 0, 0).subscribe(
       data => {
-        this.arealist = data.VersionAreaList;
+        this.arealist = data.VersionAreaList; _qscope.quote.Version.AreaList = this.arealist;
         if (this.arealist != null) {
           this.areaInfo = this.arealist[0];
           this.partinfo = data.PartInfo;
@@ -54,13 +57,22 @@ export class AreainfoComponent implements OnInit {
     if (this.partlist != null && parttype != 0) {
       let length = this.partlist.length;
       //this.ActionGetPartInfo(this.partlist[0].VersionID, this.partlist[0].AreaID, this.partlist[0].ID, 0);
-      if (length > 0) { this.ActionGetPartInfo(this.partlist[0].ID); }
+      if (length > 0) {
+        this.ActionGetPartInfo(this.partlist[0].ID);
+        let areaindex = this.getareaindexbyareaid(area.ID);
+        QBRinitdrawing('quote');
+        QBRinitdrawarea(areaindex, 'quote');
+      }
     }
+  }
+  getareaindexbyareaid(areaid) {
+    let areas = _qscope.quote.Version.AreaList; for (let i = 0; i < areas.length; i++) { if (areas[i].ID == areaid) { return i; } }
   }
   ActionGetPartInfo(partId: number) {
     let result = this.service.ActionPartInfo(this.areaInfo.VersionID, this.areaInfo.ID, partId, 0).subscribe(
       data => {
         this.partinfo = data;
+
       },
       error => console.log(error));
   }

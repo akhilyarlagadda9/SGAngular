@@ -26,7 +26,6 @@ export class HeadereditComponent implements OnInit {
   priceList: any = [];
   ngOnInit() {
     this.headerinfo = this.navParams.data;
-   
   }
 
   /******** Quoteedit Close ************/

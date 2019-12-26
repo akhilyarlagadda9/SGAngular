@@ -82,24 +82,30 @@
             <ion-row>
                 <ion-col size="12" class="text-font paddtopzero">
                     <div class="valignsup">
-                        <span class="color-primary"> Cust:</span>{{headerInfo.Customer.Name}}
+                        <span class="color-primary"
+                            (click)="ActionEditCustomer(1,headerInfo.Customer,headerInfo.CustomerContacts)"><u>Cust:</u></span>{{headerInfo.Customer.Name}}
                     </div>
-                    <div class="valignsup" *ngIf="headerInfo.Version.ChildAccID  > 0">
-                        <span class="color-primary"> Child Acc:</span><span class="labelfont">&nbsp;{{headerInfo.ChildAccount.Name}}</span>
+                    <div class="valignsup" *ngIf="headerInfo.Version.ChildAccID  > 0"
+                        (click)="ActionEditCustomer(3,headerInfo.ChildAccount,headerInfo.ChildAccountContacts)">
+                        <span class="color-primary"><u> Child Acc:</u></span><span
+                            class="labelfont">&nbsp;{{headerInfo.ChildAccount.Name}}</span>
                     </div>
-                    <div class="valignsup"  *ngIf="headerInfo.Version.ParentAccID  > 0">
-                        <span class="color-primary"> Acc:</span><span class="labelfont">&nbsp;{{headerInfo.ParentAccount.Name}}</span>
+                    <div class="valignsup" *ngIf="headerInfo.Version.ParentAccID  > 0"
+                        (click)="ActionEditCustomer(2,headerInfo.ParentAccount,headerInfo.ParentAccountContacts)">
+                        <span class="color-primary"><u>Acc:</u></span><span
+                            class="labelfont">&nbsp;{{headerInfo.ParentAccount.Name}}</span>
                     </div>
                 </ion-col>
                 <ion-col size="12" class="text-font paddtopzero">
                     <div class="valignsup">
-                        <span class="color-primary">Job Description:</span>
-                        <span class="labelfont" *ngIf="headerInfo.Version.Description && headerInfo.Version.Description.length >= 85 && expanded == false">
-                            <div [innerHTML]="headerInfo.Version.Description.substr(0,85)"></div >
+                        <span class="color-primary" (click)="ActionEditJobDesc(1)"><u>Job Description:</u></span>
+                        <span class="labelfont"
+                            *ngIf="headerInfo.Version.Description && headerInfo.Version.Description.length >= 85 && expanded == false">
+                            <div [innerHTML]="headerInfo.Version.Description.substr(0,85)"></div>
                             <span (click)="expanded = true" class="color-blue"><u>Read More</u></span>
                         </span>
                         <span class="labelfont" *ngIf="expanded == true">
-                             <div [innerHTML]="headerInfo.Version.Description"></div>
+                            <div [innerHTML]="headerInfo.Version.Description"></div>
                             <span (click)="expanded = false" class="color-blue"><u>Read Less</u></span>
                         </span>
                     </div>
@@ -114,43 +120,61 @@
                <app-areasummary [VersionId]="headerInfo.Version.ID"></app-areasummary>
               </div>
 
-            <ion-row class="marginbot">
-
-                <ion-col size="8" class="fontbold text-right">Sub Total:</ion-col>
-                <ion-col size="4" class="fontbold text-right">$ 1568.20</ion-col>
-            </ion-row>
-            <ion-row class="marginbot">
-
-                <ion-col size="8" class="fontbold text-right"><u>Discount:</u></ion-col>
-                <ion-col size="4" class="fontbold text-right"><span style="color:red;">($ 200.50)</span></ion-col>
-            </ion-row>
-            <ion-row class="marginbot">
-
-                <ion-col size="8" class="fontbold text-right"><u>Sales Tax:</u></ion-col>
-                <ion-col size="4" class="fontbold text-right">$ 112.58</ion-col>
-            </ion-row>
-            <ion-row class="marginbot">
-
-                <ion-col size="8" class="fontbold text-right">Net Total:</ion-col>
-                <ion-col size="4" class="fontbold text-right">$ 1480.28</ion-col>
-            </ion-row>
-            <ion-row class="marginbot">
-
-                <ion-col size="8" class="fontbold text-right"><u>Fee & Charge:</u></ion-col>
-                <ion-col size="4" class="fontbold text-right">$ 0.00</ion-col>
-            </ion-row>
-            <ion-row class="marginbot">
-
-                <ion-col size="8" class="fontbold text-right">Final Total:</ion-col>
-                <ion-col size="4" class="fontbold text-right">$ 1480.28</ion-col>
-            </ion-row>
-            <ion-row class="marginbot">
-
-                <ion-col size="8" class="fontbold text-right">Payment:</ion-col>
-                <ion-col size="4" class="fontbold text-right"><span style="color:red;">($ 0.00)</span></ion-col>
-            </ion-row>
-
+              <ion-list>
+                <ion-row class="marginbot">
+                    <ion-col size="8" class="fontbold text-right" (click)="ActionSummaryEdit()"><u>Sub Total:</u>
+                    </ion-col>
+                    <ion-col size="4" class="fontbold text-right">&nbsp;$
+                        {{headerInfo.Version.TotalAmt | number : '.2-2'}}</ion-col>
+                </ion-row>
+                <ion-row class="marginbot">
+                    <ion-col size="8" class="fontbold text-right">Discount:</ion-col>
+                    <ion-col size="4" class="fontbold text-right"><span
+                            style="color:red;">&nbsp;(${{(headerInfo.Version.DiscountAmt) | number : '.2-2'}})</span>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="marginbot">
+                    <ion-col size="8" class="fontbold text-right">Sales Tax:</ion-col>
+                    <ion-col size="4" class="fontbold text-right">&nbsp;$
+                        {{headerInfo.Version.TaxAmt | number : '.2-2'}}</ion-col>
+                </ion-row>
+                <ion-row class="marginbot">
+                    <ion-col size="8" class="fontbold text-right">Net Total:</ion-col>
+                    <ion-col size="4" class="fontbold text-right">&nbsp;$
+                        {{((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt - (headerInfo.Version.RefAmt + headerInfo.Version.RoundOff)) - (headerInfo.Version.DiscountAmt)) | number : '.2-2'}}
+                    </ion-col>
+                </ion-row>
+                <ion-row class="marginbot">
+                    <ion-col size="8" class="fontbold text-right">Fee & Charge:</ion-col>
+                    <ion-col size="4" class="fontbold text-right">&nbsp;$
+                        {{(headerInfo.Version.RefAmt) | number : '.2-2'}}</ion-col>
+                </ion-row>
+                <ion-row class="marginbot">
+                    <ion-col size="8" class="fontbold text-right">Final Total:</ion-col>
+                    <ion-col size="4" class="fontbold text-right">&nbsp;$
+                        {{((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt) - (headerInfo.Version.DiscountAmt)) | number : '.2-2'}}
+                    </ion-col>
+                </ion-row>
+                <ion-row class="marginbot">
+                    <ion-col size="8" class="fontbold text-right">Payment:</ion-col>
+                    <ion-col size="4" class="fontbold text-right"><span style="color:red;">&nbsp;($
+                            {{(headerInfo.Version.PmtReceived) | number : '.2-2'}})</span></ion-col>
+                </ion-row>
+                <ion-row class="marginbot" *ngIf="headerInfo.Version.RefundAmount > 0">
+                    <ion-col size="8" class="fontbold text-right">Refunds:</ion-col>
+                    <ion-col size="4" class="fontbold text-right">&nbsp;$
+                        {{(headerInfo.Version.RefundAmount) | number : '.2-2'}}</ion-col>
+                </ion-row>
+                <ion-row class="marginbot"
+                    *ngIf="headerInfo.Version.PmtReceived != 0 || headerInfo.Version.RefundAmount != 0 || headerInfo.Version.CreditAmount != 0">
+                    <ion-col size="8" class="fontbold text-right">Balance:</ion-col>
+                    <ion-col size="4" class="fontbold text-right">$
+                        &nbsp;{{((((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt) - headerInfo.Version.DiscountAmt) - (headerInfo.Version.PmtReceived - headerInfo.Version.RefundAmount) - headerInfo.Version.CreditAmount)) | number : '.2-2'}}
+                    </ion-col>
+                </ion-row>
+            </ion-list>
         </ion-col>
+        
         <ion-col *ngSwitchCase="2">
           <app-areainfo [Version]="headerInfo.Version"></app-areainfo>
         </ion-col>

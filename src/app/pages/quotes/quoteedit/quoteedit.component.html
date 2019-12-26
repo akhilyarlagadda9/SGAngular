@@ -121,57 +121,83 @@
               </div>
 
               <ion-list>
-                <ion-row class="marginbot">
-                    <ion-col size="8" class="fontbold text-right" (click)="ActionSummaryEdit()"><u>Sub Total:</u>
+                <ion-row>
+                    <ion-col size="5">
+                       <ion-row>
+                         <div><b class="fontbold text-right">Payment Schedule</b></div>
+                       </ion-row>
+                       <ion-row *ngIf="headerInfo.Version.PayTypeID == 1">
+                           {{headerInfo.Version.DueSigningName}}:({{headerInfo.Version.DueSigning}}%)
+                           <span>$ {{headerInfo.Version.SigningAmt| number:2}}</span>
+                       </ion-row>
+                       <ion-row *ngIf="headerInfo.Version.PayTypeID == 1 && headerInfo.Version.TeamplateAmt != 0">
+                          {{headerInfo.Version.DueTeamplateName}}:({{headerInfo.Version.DueTeamplate}}%)
+                          <span>$ $ {{headerInfo.Version.TeamplateAmt| number:2}}</span>
+                      </ion-row>
+                      <ion-row *ngIf="headerInfo.Version.PayTypeID == 1">
+                         {{headerInfo.Version.DueInstallName}}: ({{headerInfo.Version.DueInstall}}%)
+                         <span>$ {{headerInfo.Version.InstallAmt | number:2}}</span>
+                      </ion-row>
+                      <ion-row *ngIf="headerInfo.Version.PayTypeID == 2">
+                          Pay Terms: <span class="b-Color">{{headerInfo.Version.PaymentTerm}}</span>
+                          <span>$ {{((headerInfo.Version.TotalAmt + headerInfo.Version.TaxAmt) - (headerInfo.Version.DiscountAmt))| number:2}}</span>
+                      </ion-row>
                     </ion-col>
-                    <ion-col size="4" class="fontbold text-right">&nbsp;$
-                        {{headerInfo.Version.TotalAmt | number : '.2-2'}}</ion-col>
-                </ion-row>
-                <ion-row class="marginbot">
-                    <ion-col size="8" class="fontbold text-right">Discount:</ion-col>
-                    <ion-col size="4" class="fontbold text-right"><span
-                            style="color:red;">&nbsp;(${{(headerInfo.Version.DiscountAmt) | number : '.2-2'}})</span>
+                    <ion-col size="7">
+                        <ion-row class="marginbot">
+                            <ion-col size="7" class="fontbold text-right" (click)="ActionSummaryEdit()"><u>Sub Total:</u>
+                            </ion-col>
+                            <ion-col size="5" class="fontbold text-right">&nbsp;$
+                                {{headerInfo.Version.TotalAmt | number : '.2-2'}}</ion-col>
+                        </ion-row>
+                        <ion-row class="marginbot">
+                            <ion-col size="7" class="fontbold text-right">Discount:</ion-col>
+                            <ion-col size="5" class="fontbold text-right"><span
+                                    style="color:red;">&nbsp;(${{(headerInfo.Version.DiscountAmt) | number : '.2-2'}})</span>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row class="marginbot">
+                            <ion-col size="7" class="fontbold text-right">Sales Tax:</ion-col>
+                            <ion-col size="5" class="fontbold text-right">&nbsp;$
+                                {{headerInfo.Version.TaxAmt | number : '.2-2'}}</ion-col>
+                        </ion-row>
+                        <ion-row class="marginbot">
+                            <ion-col size="7" class="fontbold text-right">Net Total:</ion-col>
+                            <ion-col size="5" class="fontbold text-right">&nbsp;$
+                                {{((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt - (headerInfo.Version.RefAmt + headerInfo.Version.RoundOff)) - (headerInfo.Version.DiscountAmt)) | number : '.2-2'}}
+                            </ion-col>
+                        </ion-row>
+                        <ion-row class="marginbot">
+                            <ion-col size="7" class="fontbold text-right">Fee & Charge:</ion-col>
+                            <ion-col size="5" class="fontbold text-right">&nbsp;$
+                                {{(headerInfo.Version.RefAmt) | number : '.2-2'}}</ion-col>
+                        </ion-row>
+                        <ion-row class="marginbot">
+                            <ion-col size="7" class="fontbold text-right">Final Total:</ion-col>
+                            <ion-col size="5" class="fontbold text-right">&nbsp;$
+                                {{((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt) - (headerInfo.Version.DiscountAmt)) | number : '.2-2'}}
+                            </ion-col>
+                        </ion-row>
+                        <ion-row class="marginbot">
+                            <ion-col size="7" class="fontbold text-right">Payment:</ion-col>
+                            <ion-col size="5" class="fontbold text-right"><span style="color:red;">&nbsp;($
+                                    {{(headerInfo.Version.PmtReceived) | number : '.2-2'}})</span></ion-col>
+                        </ion-row>
+                        <ion-row class="marginbot" *ngIf="headerInfo.Version.RefundAmount > 0">
+                            <ion-col size="7" class="fontbold text-right">Refunds:</ion-col>
+                            <ion-col size="5" class="fontbold text-right">&nbsp;$
+                                {{(headerInfo.Version.RefundAmount) | number : '.2-2'}}</ion-col>
+                        </ion-row>
+                        <ion-row class="marginbot"
+                            *ngIf="headerInfo.Version.PmtReceived != 0 || headerInfo.Version.RefundAmount != 0 || headerInfo.Version.CreditAmount != 0">
+                            <ion-col size="7" class="fontbold text-right">Balance:</ion-col>
+                            <ion-col size="5" class="fontbold text-right">$
+                                &nbsp;{{((((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt) - headerInfo.Version.DiscountAmt) - (headerInfo.Version.PmtReceived - headerInfo.Version.RefundAmount) - headerInfo.Version.CreditAmount)) | number : '.2-2'}}
+                            </ion-col>
+                        </ion-row>
                     </ion-col>
                 </ion-row>
-                <ion-row class="marginbot">
-                    <ion-col size="8" class="fontbold text-right">Sales Tax:</ion-col>
-                    <ion-col size="4" class="fontbold text-right">&nbsp;$
-                        {{headerInfo.Version.TaxAmt | number : '.2-2'}}</ion-col>
-                </ion-row>
-                <ion-row class="marginbot">
-                    <ion-col size="8" class="fontbold text-right">Net Total:</ion-col>
-                    <ion-col size="4" class="fontbold text-right">&nbsp;$
-                        {{((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt - (headerInfo.Version.RefAmt + headerInfo.Version.RoundOff)) - (headerInfo.Version.DiscountAmt)) | number : '.2-2'}}
-                    </ion-col>
-                </ion-row>
-                <ion-row class="marginbot">
-                    <ion-col size="8" class="fontbold text-right">Fee & Charge:</ion-col>
-                    <ion-col size="4" class="fontbold text-right">&nbsp;$
-                        {{(headerInfo.Version.RefAmt) | number : '.2-2'}}</ion-col>
-                </ion-row>
-                <ion-row class="marginbot">
-                    <ion-col size="8" class="fontbold text-right">Final Total:</ion-col>
-                    <ion-col size="4" class="fontbold text-right">&nbsp;$
-                        {{((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt) - (headerInfo.Version.DiscountAmt)) | number : '.2-2'}}
-                    </ion-col>
-                </ion-row>
-                <ion-row class="marginbot">
-                    <ion-col size="8" class="fontbold text-right">Payment:</ion-col>
-                    <ion-col size="4" class="fontbold text-right"><span style="color:red;">&nbsp;($
-                            {{(headerInfo.Version.PmtReceived) | number : '.2-2'}})</span></ion-col>
-                </ion-row>
-                <ion-row class="marginbot" *ngIf="headerInfo.Version.RefundAmount > 0">
-                    <ion-col size="8" class="fontbold text-right">Refunds:</ion-col>
-                    <ion-col size="4" class="fontbold text-right">&nbsp;$
-                        {{(headerInfo.Version.RefundAmount) | number : '.2-2'}}</ion-col>
-                </ion-row>
-                <ion-row class="marginbot"
-                    *ngIf="headerInfo.Version.PmtReceived != 0 || headerInfo.Version.RefundAmount != 0 || headerInfo.Version.CreditAmount != 0">
-                    <ion-col size="8" class="fontbold text-right">Balance:</ion-col>
-                    <ion-col size="4" class="fontbold text-right">$
-                        &nbsp;{{((((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt) - headerInfo.Version.DiscountAmt) - (headerInfo.Version.PmtReceived - headerInfo.Version.RefundAmount) - headerInfo.Version.CreditAmount)) | number : '.2-2'}}
-                    </ion-col>
-                </ion-row>
+              
             </ion-list>
         </ion-col>
         

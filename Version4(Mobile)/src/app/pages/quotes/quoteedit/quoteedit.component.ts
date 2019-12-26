@@ -12,6 +12,8 @@ import { ManagementsummaryComponent } from '../managementsummary/managementsumma
 import { PoeditComponent } from '../poedit/poedit.component';
 //import { QuoterepService } from 'src/app/service/quoterep.service';
 
+declare var _qscope: any;
+
 @Component({
   selector: 'app-quoteedit',
   templateUrl: './quoteedit.component.html',
@@ -66,8 +68,9 @@ export class QuoteeditComponent implements OnInit {
   ActionQuoteInfo(){
     let result = this.service.ActionQuoteInfo(this.qprmsobj.quoteid,this.qprmsobj.quoteno,this.qprmsobj.versionid,0,0,0).subscribe(
       data => {
-         this.headerInfo = data;
-         this.headerInfo.Version = this.headerInfo.VersionList.filter(x => x.ID === this.qprmsobj.versionid)[0];
+        this.headerInfo = data; _qscope.quote = {};
+        this.headerInfo.Version = this.headerInfo.VersionList.filter(x => x.ID === this.qprmsobj.versionid)[0];
+        _qscope.quote = this.headerInfo;
       },
       error => console.log(error));
   }

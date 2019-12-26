@@ -1,5 +1,5 @@
 <ion-content>
-  <form name="form" (ngSubmit)="ActionSaveMeasurement(sizes)" #f="ngForm">
+  <form [formGroup]="registerForm" (ngSubmit)="ActionSaveMeasurement(sizes)">
     <ion-toolbar class="poss">
       <ion-title class="titleheader">Measurement</ion-title>
       <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
@@ -7,12 +7,12 @@
     </ion-toolbar>
     <ion-item >
       <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-      <ion-input type="text" class="labelfont" [(ngModel)]="sizes.CounterType" name="CounterType" #CounterType="ngModel" 
-      [ngClass]="{ 'is-invalid': f.submitted && CounterType.invalid }" required></ion-input>
+      <ion-input type="text" class="labelfont" [(ngModel)]="sizes.CounterType" name="CounterType" 
+      formControlName="add" [ngClass]="{ 'is-invalid': submitted && f.add.errors }"></ion-input>
       <ion-icon slot="end" class="marg2" name="arrow-dropdown"></ion-icon>
     </ion-item>
-    <div *ngIf="f.submitted && CounterType.invalid" class="invalid-feedback padd-Left">
-      <div *ngIf="CounterType.errors.required" class="error">Description is required</div>
+    <div *ngIf="submitted && f.add.errors"  class="invalid-feedback padd-Left">
+      <div *ngIf="f.add.errors.required" class="error">Description is required</div>
   </div>
 
     <ion-item class="mar5">

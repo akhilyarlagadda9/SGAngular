@@ -18,8 +18,12 @@
     </div> -->
     <ion-item>
       <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-      <ion-input type="text" class="labelfont" [(ngModel)]="splash.Splash" name="Splash"></ion-input>
+      <ion-input type="text" class="labelfont" [(ngModel)]="splash.Splash" name="Splash" #Spl="ngModel" 
+      [ngClass]="{ 'is-invalid': f.submitted && Spl.invalid }" required></ion-input>
     </ion-item>
+    <div *ngIf="f.submitted && Spl.invalid" class="invalid-feedback padd-Left">
+      <div *ngIf="Spl.errors.required" class="error">Description is required</div>
+    </div>
     <ion-item style="margin-left: -6%;">
       <ion-row>
         <ion-col size="12" style="padding: 0px; margin-left: 12px;">

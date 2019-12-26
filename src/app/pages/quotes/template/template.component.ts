@@ -16,11 +16,10 @@ export class TemplateComponent implements OnInit {
   constructor(public Modalcntrl: ModalController, private navCntrl: NavParams, private quoterep: QuoterepService, private formBuilder: FormBuilder, private postservice : QuotepostService) { }
   registerForm: FormGroup;
   submitted = false;
-  Description = "";
   TypeID = this.navCntrl.data.TypeID;
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      Description: ['', Validators.required],
+      add: ['', Validators.required],
     });
     console.log(this.TypeID)
   }
@@ -33,13 +32,19 @@ export class TemplateComponent implements OnInit {
     this.labor.Amount = this.quoterep.calcitemamt(this.labor.Qty, this.labor.UnitPrice);
     this.labor.Amt = this.labor.Amount;
   }
- 
-  ActionSaveTemplate(temp:any) {
-    this.postservice.Actionsavelabor(temp).subscribe(data => {
+
+  get f() { return this.registerForm.controls; } 
+  ActionSaveTemplate(temp:any){
+    this.submitted = true;
+    if (this.registerForm.valid) {
+      this.postservice.Actionsavelabor(temp).subscribe(data => {
       this.item = data.laborList;
       this.ActionCloseTemplate(true);
     })
   }
+  }
+
+
   ActionCloseTemplate(issave:boolean) {
     if(issave == true){
       let template = { Temp : this.item}

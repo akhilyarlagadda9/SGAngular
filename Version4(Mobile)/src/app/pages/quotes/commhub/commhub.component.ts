@@ -10,28 +10,28 @@ import { QuotegetService } from 'src/app/service/quoteget.service';
   inputs: [`Version`]
 })
 export class CommhubComponent implements OnInit {
-  arealist: any[] = [{ id: 1, name: 'Stages' }, { id: 2, name: 'Material' }, { id: 3, name: 'Scheduling' }, { id: 4, name: 'CAD' }, { id: 5, name: 'Template' }];
-  partlist: any[] = [{ id: 1, name: 'Doc Type' }, { id: 2, name: 'CO Approval' }, { id: 3, name: 'CO Canceled' }, { id: 4, name: 'Directions' }, { id: 5, name: 'Drawings' }];
   Version: any;
   processtypeList: any;
+  docFormList: any;
+  phaseList: any;
+  selectedtabtype: number;
+  type: any;
 
   constructor(public Modalcntrl : ModalController,private getservice: QuotegetService) { }
 
-  AreaName: any = this.partlist;
-  PartName: any = this.partlist;
   ngOnInit() {
-    this.MyDefaultYearIdValue = "1";
     this.GetprocessstatusList();
+    this.GetformsList();
+    this.GetphaseList();
   }
 
-/// In declarations : 
-
-compareWith: any;
-MyDefaultYearIdValue: string;
-  
+  //Tab selection Function
+  ActionLoadTabInfo(componet: any){
+    this.selectedtabtype = componet;
+  }
  //Comm.Hub Edit Function
-  async ActionEditCommHub() {
-    let version = {version : this.Version}
+  async ActionEditCommHub(type:any) {debugger;
+    let version = {version : this.Version,TypeId: type}
     const modal = await this.Modalcntrl.create({
       component: CommhubeditComponent,
       componentProps : version
@@ -45,7 +45,17 @@ MyDefaultYearIdValue: string;
       data => {this.processtypeList = data;}
     );
   }
-
-
+ //Document Forms List Function
+  GetformsList() {
+    this.getservice.formsList(1).subscribe(
+     data => {this.docFormList = data;}
+   );
+  }
+ //Phase List Function
+  GetphaseList() {
+    this.getservice.CommHubPhaseList(this.Version.ID).subscribe(
+      data => { this.phaseList = data; }
+    );
+  }
   
 }

@@ -60,7 +60,10 @@ export class QuoteeditComponent implements OnInit {
       },
       error => console.log(error));
   }
-
+ActionLoadVersion(id:number){
+  this.qprmsobj.versionid = id;
+  this.headerInfo.Version = this.headerInfo.VersionList.filter(x => x.ID === id)[0];
+}
   /*****tabs****** */
   ActionLoadTabInfo(componet: any){
     this.selectedtabtype = componet;

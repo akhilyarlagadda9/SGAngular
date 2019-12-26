@@ -43,8 +43,8 @@
 
 
 <ion-content>
-    <ion-row>
-        <ion-col *ngIf="selectedtabtype == 1">
+    <ion-row [ngSwitch]="selectedtabtype">
+        <ion-col *ngSwitchCase="1">
             <ion-row style="background:#ddd">
                 <ion-col size="9" class="paddtopzero">
                     <h2 class="fontsmall no-margin">{{headerInfo.QuoteName}}</h2>
@@ -82,18 +82,18 @@
             <ion-row>
                 <ion-col size="12" class="text-font paddtopzero">
                     <div class="valignsup">
-                        <span class="color-primary"> Cust:</span>
+                        <span class="color-primary"> Cust:</span>{{headerInfo.Customer.Name}}
                     </div>
-                </ion-col>
-                <ion-col size="12" class="text-font paddtopzero"
-                    *ngFor="let contact of headerInfo.ParentAccountContacts; let i = index;">
-                    <div class="valignsup" *ngIf="i == 0">
-                        <span class="color-primary"> Acc:</span><span class="labelfont">&nbsp;{{contact.Name}}</span>
+                    <div class="valignsup" *ngIf="headerInfo.Version.ChildAccID  > 0">
+                        <span class="color-primary"> Child Acc:</span><span class="labelfont">&nbsp;{{headerInfo.ChildAccount.Name}}</span>
+                    </div>
+                    <div class="valignsup"  *ngIf="headerInfo.Version.ParentAccID  > 0">
+                        <span class="color-primary"> Acc:</span><span class="labelfont">&nbsp;{{headerInfo.ParentAccount.Name}}</span>
                     </div>
                 </ion-col>
                 <ion-col size="12" class="text-font paddtopzero">
                     <div class="valignsup">
-                        <span class="color-primary">Des:</span>
+                        <span class="color-primary">Job Description:</span>
                         <span class="labelfont" *ngIf="headerInfo.Version.Description && headerInfo.Version.Description.length >= 85 && expanded == false">
                             <div [innerHTML]="headerInfo.Version.Description.substr(0,85)"></div >
                             <span (click)="expanded = true" class="color-blue"><u>Read More</u></span>
@@ -201,16 +201,16 @@
             </ion-row>
 
         </ion-col>
-        <ion-col *ngIf="selectedtabtype == 2">
-
+        <ion-col *ngSwitchCase="2">
+          <app-areainfo [Version]="headerInfo.Version"></app-areainfo>
         </ion-col>
-        <ion-col *ngIf="selectedtabtype == 3">
-
+        <ion-col *ngSwitchCase="3">
+          <app-commhub [Version]="headerInfo.Version"></app-commhub>
         </ion-col>
-        <ion-col *ngIf="selectedtabtype == 4">
-
+        <ion-col *ngSwitchCase="4">
+         <app-activities [VersionId]="headerInfo.Version.ID" [PhaseId]="0"></app-activities>
         </ion-col>
-        <ion-col *ngIf="selectedtabtype == 5">
+        <ion-col *ngSwitchCase="5">
 
         </ion-col>
     </ion-row>

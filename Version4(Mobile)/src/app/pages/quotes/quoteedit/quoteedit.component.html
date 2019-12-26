@@ -4,107 +4,160 @@
             <ion-icon class="fontlarge" (click)="ActionCloseQuoteInfo()" name="arrow-back"></ion-icon>
         </ion-buttons>
         <ion-title>
-                <h1>
-            <div id="" class="text-left">{{headerInfo.QuoteNo}} -
-                <select [(ngModel)]="QuoteVersionID" interface="popover" style="border: 0px;background: #3880ff;">
-                    <option *ngFor="let version of headerInfo.VersionList" value="{{version.ID}}">V{{version.SrNo}}
-                    </option>
-                </select>
-            </div>
+            <h1>
+                <div id="" class="text-left">{{headerInfo.QuoteNo}} -
+                    <select [(ngModel)]="QuoteVersionID" interface="popover" style="border: 0px;background: #3880ff;">
+                        <option *ngFor="let version of headerInfo.VersionList" value="{{version.ID}}">V{{version.SrNo}}
+                        </option>
+                    </select>
+                </div>
             </h1>
         </ion-title>
         <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
     </ion-toolbar>
-    <ion-toolbar class="scroll">
-        <ion-segment [(ngModel)]="selectedtabtype" scrollable class="list-scroll">
-            <ion-button shape="round" class="btn-ion bar-header1 active" value="1" (click)="ActionQuickLoad(1)"><ion-icon name="add"></ion-icon> Quote Info
-            </ion-button>
-            <ion-button shape="round" class="btn-ion bar-header1" value="2" (click)="ActionQuickLoad(2)">Area Info
-            </ion-button>
-            <ion-button shape="round" class="btn-ion bar-header1" value="3" (click)="ActionQuickLoad(3)">Job Desc
-            </ion-button>
-            <ion-button shape="round" class="btn-ion bar-header1" value="4" (click)="ActionQuickLoad(4)">PO Items
-            </ion-button>
-            <ion-button shape="round" class="btn-ion bar-header1" value="5" (click)="ActionQuickLoad(5)">Comm Hub
-            </ion-button>
-            <!-- <ion-button shape="round" class="btn-ion bar-header1" value="6" (click)="ActionQuickLoad(6)">Prints
-                </ion-button> -->
-        </ion-segment>
+    <ion-toolbar>
+        <ion-row>
+            <ion-col class="paddtopzero" (click)="ActionLoadTabInfo(1)">
+                <img src="assets/img/Checklist-icon.png" alt="your image" style="width:35px;height:35px;">
+                <div class="mar-top5"><span style="font-size:11px;">summary</span></div>
+            </ion-col>
+            <ion-col class="paddtopzero" (click)="ActionLoadTabInfo(2)">
+                <img src="assets/img/Drawing-icon.png" alt="your image" style="width:35px;height:35px;">
+                <div class="mar-top5"><span style="font-size:11px;">Area Info</span></div>
+            </ion-col>
+            <ion-col class="paddtopzero" (click)="ActionLoadTabInfo(3)">
+                <img src="assets/img/email-icon.png" alt="your image" style="width:35px;height:35px;">
+                <div class="mar-top5"><span style="font-size:11px;">Comm Hub</span></div>
+            </ion-col>
+            <ion-col class="paddtopzero" (click)="ActionLoadTabInfo(4)">
+                <img src="assets/img/calendar-icon.png" alt="your image" style="width:35px;height:35px;">
+                <div class="mar-top5"><span style="font-size:11px;">Activities</span></div>
+            </ion-col>
+            <ion-col class="paddtopzero" (click)="ActionLoadTabInfo(5)">
+                <img src="assets/img/marbles-icon.png" alt="your image" style="width:35px;height:35px;">
+                <div class="mar-top5"><span style="font-size:11px;">Other</span></div>
+            </ion-col>
+        </ion-row>
     </ion-toolbar>
-
 </ion-header>
+
 
 <ion-content>
     <ion-row>
         <ion-col *ngIf="selectedtabtype == 1">
-            <ion-row>
-                <ion-col>
-                    
-                    <span class="fontheading" >
-                            <ion-icon name="arrow-dropdown" (click)="toggleGroup(1)"></ion-icon>Quote
-                    </span>
+            <ion-row style="background:#ddd">
+                <ion-col size="9" class="paddtopzero">
+                    <h2 class="fontsmall no-margin">{{headerInfo.QuoteName}}</h2>
                 </ion-col>
-                <ion-col size="3" class="paddzero text-right">
-                    <ion-icon name="pin" class="iconblue fontmedium" (click)="ActionLoadMap()"></ion-icon>
-                    <ion-icon name="create" class="fontmedium" (click)="ActionEditJob()"></ion-icon>
+                <ion-col size="3" class="text-right paddtopzero">
+                    <p class="no-margin">{{headerInfo.QuoteDate | date:'dd/MM'}} &nbsp; SA</p>
                 </ion-col>
             </ion-row>
-            <ion-card *ngIf="isGroupShown(1)" class="margin-notop">
-                <ion-item class="borbottom">
-                    <ion-label>
-                        <h2>{{headerInfo.QuoteName}}</h2>
-                        <p>
-                            <span class="valignsup">{{headerInfo.Address1}}
-                                <span
-                                    *ngIf="headerInfo.City != '' && headerInfo.City != null">,{{headerInfo.City}}</span>
-                                <span
-                                    *ngIf="headerInfo.State != '' && headerInfo.State != null">,{{headerInfo.State}}</span>
-                                <span
-                                    *ngIf="headerInfo.State != '' && headerInfo.State != null">-{{headerInfo.Zipcode}}</span>
-                            </span>
-                        </p>
-                    </ion-label>
-                </ion-item>
-                <ion-col size="12"><span class="text-font color-blue margin-bottom paddleft10"> Contacts</span></ion-col>
-                <ion-row *ngFor="let contact of headerInfo.QuoteContacts">
-                    <ion-col size="12" class="paddleft10">
-                        <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon> {{contact.Name}}
-                        <div *ngIf="headerInfo.Email != '' && headerInfo.Email != null">
-                            <ion-icon class="text-font" class="fontsmall" name="mail"></ion-icon> {{contact.Email}}
-                        </div>
-                        <div *ngIf="headerInfo.Phone != '' && headerInfo.Phone != null">
-                            <ion-icon class="text-font" class="fontsmall" name="call"></ion-icon> {{contact.Phone}}
-                        </div>
+            <ion-row>
+                <ion-col size="12" class="paddtopzero">
+                    <ion-icon class="text-font" class="fontsmall" name="pin"></ion-icon>
+                    <span class="valignsup">{{headerInfo.Address1}}
+                        <span *ngIf="headerInfo.City != '' && headerInfo.City != null">,{{headerInfo.City}}</span>
+                        <span *ngIf="headerInfo.State != '' && headerInfo.State != null">,{{headerInfo.State}}</span>
+                        <span *ngIf="headerInfo.State != '' && headerInfo.State != null">-{{headerInfo.Zipcode}}</span>
+                    </span>
+                </ion-col>
+                <div *ngFor="let contact of headerInfo.QuoteContacts">
+                    <ion-col size="12" class="paddtopzero">
+                        <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon>
+                        <span class="valignsup">
+                            {{contact.Name}}
+                        </span>
+                        <span *ngIf="headerInfo.Phone != '' && headerInfo.Phone != null" class="valignsup">
+                            - &nbsp; {{contact.Phone}}
+                        </span>
                     </ion-col>
-                </ion-row>
-            </ion-card>
-            <div *ngIf="qprmsobj.accountid > 0">
-                <app-customerinfo (customerEvent)="displayCounter($event)" [customer]="headerInfo.ParentAccount"
-                    [SelectedTypeID]="1" [contacts]="headerInfo.ParentAccountContacts"></app-customerinfo>
-            </div>
-            <div *ngIf="qprmsobj.childaccid > 0">
-                <app-customerinfo [customer]="headerInfo.ChildAccount" [SelectedTypeID]="2"
-                    [contacts]="headerInfo.ChildAccountContacts"></app-customerinfo>
-            </div>
-            <div *ngIf="qprmsobj.customerid > 0">
-                <app-customerinfo [customer]="headerInfo.Customer" [SelectedTypeID]="3"
-                    [contacts]="headerInfo.CustomerContacts"></app-customerinfo>
-            </div>
+                    <ion-col size="12" *ngIf="contact.Email != '' && contact.Email != null">
+                        <ion-icon class="text-font" class="fontsmall" style="display: none;" name="contact"></ion-icon>
+                        <ion-icon class="text-font" class="fontsmall" name="call"></ion-icon> <span
+                            class="valignsup">{{contact.Email}}</span>
+                    </ion-col>
+                </div>
+            </ion-row>
+
+
+            <ion-row>
+                <ion-col size="12" class="text-font paddtopzero">
+                    <div class="valignsup">
+                        <span class="color-primary"> Cust:</span>
+                    </div>
+                </ion-col>
+                <ion-col size="12" class="text-font paddtopzero"
+                    *ngFor="let contact of headerInfo.ParentAccountContacts; let i = index;">
+                    <div class="valignsup" *ngIf="i == 0">
+                        <span class="color-primary"> Acc:</span><span class="labelfont">&nbsp;{{contact.Name}}</span>
+                    </div>
+                </ion-col>
+                <ion-col size="12" class="text-font paddtopzero">
+                    <div class="valignsup">
+                        <span class="color-primary">Des:</span>
+                        <span class="labelfont" *ngIf="headerInfo.Version.Description && headerInfo.Version.Description.length >= 85 && expanded == false">
+                            <div [innerHTML]="headerInfo.Version.Description.substr(0,85)"></div >
+                            <span (click)="expanded = true" class="color-blue"><u>Read More</u></span>
+                        </span>
+                        <span class="labelfont" *ngIf="expanded == true">
+                             <div [innerHTML]="headerInfo.Version.Description"></div>
+                            <span (click)="expanded = false" class="color-blue"><u>Read Less</u></span>
+                        </span>
+                    </div>
+                </ion-col>
+            </ion-row>
+
+            <app-arealayout></app-arealayout>
+
+            <ion-row class="marginbot">
+
+                <ion-col size="8" class="fontbold text-right">Sub Total:</ion-col>
+                <ion-col size="4" class="fontbold text-right">$ 1568.20</ion-col>
+            </ion-row>
+            <ion-row class="marginbot">
+
+                <ion-col size="8" class="fontbold text-right"><u>Discount:</u></ion-col>
+                <ion-col size="4" class="fontbold text-right"><span style="color:red;">($ 200.50)</span></ion-col>
+            </ion-row>
+            <ion-row class="marginbot">
+
+                <ion-col size="8" class="fontbold text-right"><u>Sales Tax:</u></ion-col>
+                <ion-col size="4" class="fontbold text-right">$ 112.58</ion-col>
+            </ion-row>
+            <ion-row class="marginbot">
+
+                <ion-col size="8" class="fontbold text-right">Net Total:</ion-col>
+                <ion-col size="4" class="fontbold text-right">$ 1480.28</ion-col>
+            </ion-row>
+            <ion-row class="marginbot">
+
+                <ion-col size="8" class="fontbold text-right"><u>Fee & Charge:</u></ion-col>
+                <ion-col size="4" class="fontbold text-right">$ 0.00</ion-col>
+            </ion-row>
+            <ion-row class="marginbot">
+
+                <ion-col size="8" class="fontbold text-right">Final Total:</ion-col>
+                <ion-col size="4" class="fontbold text-right">$ 1480.28</ion-col>
+            </ion-row>
+            <ion-row class="marginbot">
+
+                <ion-col size="8" class="fontbold text-right">Payment:</ion-col>
+                <ion-col size="4" class="fontbold text-right"><span style="color:red;">($ 0.00)</span></ion-col>
+            </ion-row>
+
         </ion-col>
         <ion-col *ngIf="selectedtabtype == 2">
-            <app-areainfo  [Version]="headerInfo.Version"></app-areainfo>
+
         </ion-col>
         <ion-col *ngIf="selectedtabtype == 3">
-            <app-jobdes [Version]="headerInfo.Version"></app-jobdes>
+
         </ion-col>
         <ion-col *ngIf="selectedtabtype == 4">
-            <app-poitems [PoItemList]="headerInfo.PoItemList" [Version]="headerInfo.Version" [ParentID]="headerInfo.Version.ParentID"></app-poitems>
+
         </ion-col>
         <ion-col *ngIf="selectedtabtype == 5">
-            <app-commhub [Version]="headerInfo.Version"></app-commhub>
-        </ion-col>
-        <ion-col *ngIf="selectedtabtype == 6">
-            <app-prints></app-prints>
+
         </ion-col>
     </ion-row>
 </ion-content>

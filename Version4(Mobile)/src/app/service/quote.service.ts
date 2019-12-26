@@ -21,6 +21,9 @@ export class QuoteService {
   ActionPartInfo(versionId:number,areaId:number,partId:number,mode:number):Observable<any>{
     return this.http.get<any>(this.url +  'api/QEdit/ActionPartInfo?versionId=' + versionId + '&areaId=' + areaId + "&partId=" + partId + "&mode=" + mode) 
   }
+  ActionQuoteAreaList(versionID:number): Observable<any> {
+    return this.http.get<any>(this.url +  'api/QEdit/ActionQuoteAreaList?versionID=' + versionID) 
+  }
 /********** COMMON LISTS ******************/
 
 }

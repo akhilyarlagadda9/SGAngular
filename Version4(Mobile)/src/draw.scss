@@ -1,0 +1,658 @@
+#loaders {
+    position: absolute;
+    left: 50%;
+    top: 500px;
+    z-index:100000000000000;
+    width: 75px;
+    height: 75px;
+    margin: -32px 0 0 -32px;
+    border: 8px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 8px solid #3498db;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+          .padding1 {
+          padding: 1px;
+      }
+      .btbg {
+          background: #ec971f;
+          border: #ec971f;
+      }
+          .btbg {
+          background: #ec971f;
+          border: #ec971f;
+      }
+          .btbg1 {
+          background: #4cae4c;
+          border: #4cae4c;
+      }
+                  .btbg3 {
+          background:  #23c6c8;
+          border:  #23c6c8;
+      }
+                .btbg4 {
+          background:  #4dc;
+          border:  #4dc;
+      }
+                       .btbg5 {
+          background:  paleturquoise;
+          border:  paleturquoise;
+      }
+  /*#overlay {
+    position: fixed;
+    left: 0%;
+    top: 0%;
+    right:0%;
+    z-index: 100000000000;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.25; 
+    filter: alpha(opacity=50);
+  }*/
+  /*.pic {
+  
+      background-image: url("../Drawing/sink11.svg");
+      stroke: white;
+          stroke-width: 3px;
+          stroke-opacity: 1.0;
+          fill: yellow;
+          fill-opacity: 0.1;
+      }*/
+  
+      .pan {
+          margin-bottom: 2px;
+          background-color: #fff;
+          border: 1px solid transparent;
+          border-radius: 2px;
+          border-color: #ddd;
+      }
+  .drawtabactive {
+      color: yellowgreen;
+      font-weight: bold;
+      /*background-color: lightblue;*/
+      border: 1px solid transparent;
+      border-radius: 2px;
+      border-color: yellowgreen;
+  }
+   .drawtabactive pbody {
+          line-height: 17px;
+          background-color: yellowgreen;
+      }
+      .pbody {
+          line-height: 17px;
+          background-color: aliceblue;
+      }
+      .pheading {
+          padding: 1px 1px;
+          border-bottom: 1px solid transparent;
+          border-top-left-radius: 3px;
+          border-top-right-radius: 3px;
+      }
+      .pdefault > .pheading {
+          border-color: #ddd;
+      }
+      .pandropdown {
+          width: 700px;
+          line-height: 50px;
+          margin: 0px;
+      }
+      .m-r {
+          margin-right: 3px;
+      }
+      .seamdropdown {
+          width: 315px;
+          line-height: 30px;
+          margin: 0px;
+          text-indent: 5px;
+      }
+      .btnlh{
+          line-height:15px;
+      }
+      .splcls{
+          font-size: 20px;color: royalblue;font-weight: 900;line-height:24px;border-bottom: 1px solid #ccc;
+      }
+  .botom{
+      border-bottom: 1px solid #ddd;line-height: 10px;
+  }
+  .b-l{
+      border-left:1px solid #e7eaec;
+  }
+  .dcls{
+      padding: 0px;border: 0px;border-left: 1px solid lightgray;width:10%
+  }
+  .dcls1{
+      padding: 0px;border: 0px;border-left: 1px solid lightgray;
+  }
+  .dcls2{
+      width: 89%;border: 0;
+  }
+  .dcls3{
+      background-color:lightgoldenrodyellow;font-size:13px
+  }
+  .dcls4{
+      float:right;color:white;
+  }
+  .dcls5{
+          width: 100px;    background: lightgoldenrodyellow;    height: 20px;    border: 1px solid;    text-align: right;
+  }
+  .dl{
+      line-height:22px;font-weight:600;
+  }
+  .dh1{
+      font-size: 15px;    font-weight: 600;}
+  .ycolor{
+      background:lightgoldenrodyellow;
+  }
+  .lycolor{
+      background:lightyellow;
+  }
+  div.lineTab1 {
+      overflow: hidden;
+      margin-bottom: 2px;
+  }
+      div.lineTab1 button {
+          background-color: inherit;
+          border: 1px solid black;
+          border-radius: 3px;
+          outline: none;
+          cursor: pointer;
+      }
+      div.lineTab1 button:hover {
+          background-color: #ddd;
+      }
+      div.lineTab1 button.active {
+          border-left: 4px solid blue;
+          font-weight: bold;
+          color: black;
+      }
+  .tablinks1:first-letter {
+      font-size: 16px;
+  }
+  
+  .sideBarInput{
+      background-color:lightgreen;border:1px solid black;width: 60px;text-align:center;font-weight:600;color: black;
+  }
+  .menu {
+      position: relative;
+      border: 1px solid #8fdaf9;
+      padding: 12px 0px 0px;
+      font-size: 11px;
+  }
+  .menu:before {
+      content: attr(data-title);
+      background: #8fdaf9;
+      position: absolute;
+      padding: 0px 2px;
+      color: black;
+      left: 5px;
+      top: -5px;
+  }
+  
+  .blk_color{
+      color:black;
+  }
+  .hidedropdn{
+      width:100%;border:0;background-color:lightyellow;-webkit-appearance: none;-moz-appearance: none;text-indent: 1px;text-overflow: '';
+  }
+  .slabimg {
+      vertical-align: top;
+      float: left;
+      text-align: left;
+  }
+  
+  .lsvg {
+      text-align: left;
+  }
+  
+  .smallimg {
+      width: 26px;
+      height: 16px;
+      cursor:pointer;
+  }
+  
+  .smalltext {
+      width: 30px;
+      height: 15px;
+      text-align: center;
+  }
+  
+  .tabs {
+      width: 150px;
+      border: 1px solid;
+      padding: 3px;
+      margin: 3px;
+      text-align: center;
+      float: left;
+  }
+  
+  /*div {
+      padding: 3px;
+  }*/
+  .overlay {
+      fill: none;
+      pointer-events: all;
+      stroke: blue;
+      stroke-width: 1px;
+  }
+  .shapeline {
+      stroke: blue;
+      stroke-width: 1px;
+      stroke-opacity: 1.0;
+  }
+  .shapehdnthickborder {
+      stroke: white;
+      stroke-width: 1.5px;
+      fill: white;
+  }
+  .shapethickborder {
+      stroke: none;
+      fill: blue;
+  }
+  .shapecorner {
+      stroke: none;   
+      fill:white;
+      cursor: crosshair;
+  }
+  .shapecornerblue {
+      stroke: none;fill: cadetblue;cursor: crosshair;
+  }
+  .shapepath { 
+      fill: yellow;
+      fill-opacity: 0;
+  }
+  .slabshape {
+      stroke: blue;
+      stroke-width: 1px;
+      stroke-opacity: 1.0;
+      fill:white;
+      fill-opacity: 0.1;
+  }
+  .splashshape {
+      stroke: blue;
+      stroke-width: 1px;
+      stroke-opacity: 1.0;
+      fill:gray;
+      fill-opacity: 0.1;
+  }
+  .shapeside {
+      stroke: blue;
+      stroke-width: 1.5px;
+      fill: none;
+  }
+  .shapesideblue {
+      stroke: blue;
+      stroke-width: 12px;
+      cursor: crosshair;
+      fill:none;
+  }
+  .shapesidewhite {
+      stroke: white;
+      stroke-width: 3.0px;
+      stroke-opacity: 1.0;
+      fill: none;
+  }
+  .shapesideseam {
+      stroke: yellow;
+      stroke-width: 2px;
+      stroke-opacity: 1.0;
+  }
+  .shapedbline {
+      stroke: blue;
+      stroke-width: 1px;
+      stroke-opacity: 1.0;
+  }
+  .shapesidered {
+      stroke: red;
+      stroke-width: 1.5px;
+      fill: none;
+  }
+  .shapesidepurple {
+      stroke: purple;
+      stroke-width: 1.5px;
+      fill: none;
+  }
+  .shapesideorange {
+      stroke: orange;
+      stroke-width: 1.5px;
+      fill: none;
+  }
+  .shapesidegold {
+      stroke: goldenrod;
+      stroke-width: 1.5px;
+      fill: none;
+  }
+  .shapesideblack {
+      stroke: black;
+      stroke-width: 1.5px;
+      fill: none;
+  }
+  .shapemarker {
+    /*font-size:11px;*/  
+  }
+  .shapesplash {
+      stroke: none;
+      fill: yellow;    
+      fill-opacity: 0.1;
+  }
+  .sideshape {
+      stroke: none;
+      fill: yellow;    
+      fill-opacity: 0.1;
+  }
+  .sideshapearc {
+      stroke: blue;
+      stroke-width: 1px;
+      stroke-opacity: 1.0;
+      fill: yellow;    
+      fill-opacity: 0.1;
+  }
+  .splashside {
+      stroke: green;    
+      stroke-width: 1px;
+      stroke-opacity: 1.0;
+  }
+  .shapeseam {
+      stroke: red;   
+      stroke-width: 1px;
+      stroke-dasharray:5,5;
+      stroke-opacity: 1.0;
+      fill-opacity: 0.1;
+  }
+  .ns-handle {
+      stroke: red;
+      stroke-width: 5px;
+      stroke-opacity: 1.0;
+      fill: yellow;
+      fill-opacity: 0.2;
+      cursor: ns-resize;
+  }
+  .ew-handle {
+      stroke: red;
+      stroke-width: 5px;
+      stroke-opacity: 1.0;
+      fill: yellow;
+      fill-opacity: 0.2;
+      cursor: ew-resize;
+  }
+  .nwse-handle {
+      stroke: red;
+      stroke-width: 5px;
+      stroke-opacity: 1.0;
+      fill: yellow;
+      fill-opacity: 0.2;
+      cursor: nwse-resize;
+  }
+  .nesw-handle {
+      stroke: red;
+      stroke-width: 5px;
+      stroke-opacity: 1.0;
+      fill: yellow;
+      fill-opacity: 0.2;
+      cursor: nesw-resize;
+  }
+  
+  .selection {
+      stroke: red;
+      stroke-width: 1px;
+      stroke-dasharray: 4px;
+      stroke-opacity: 0.5;
+      fill: transparent;
+  }
+  .arrow {
+      stroke: lightgray;
+      stroke-dasharray: 4px;
+      shape-rendering: crispEdges;
+      vector-effect: non-scaling-stroke;
+      opacity: 0.5;
+  }
+  .cutoutouter {
+      stroke: blue;
+      stroke-width: 1px;
+      stroke-opacity: 1.0;
+      fill: transparent;
+      fill-opacity: 0.1;
+  }
+  .cutoutinner {
+      stroke: blue;
+      fill: yellow;
+      fill-opacity: 0.1;
+  } 
+  .sidearrow {
+      stroke: lightgray;
+      stroke-dasharray: 4px;
+      shape-rendering: crispEdges;
+      vector-effect: non-scaling-stroke;opacity: 0.5;
+  }   
+  .cutoutarrow {
+      stroke: blue;
+      stroke-dasharray: 4px;
+      shape-rendering: crispEdges;
+      vector-effect: non-scaling-stroke;opacity: 0.5;
+  }
+  .seamarrow {
+      stroke: red;
+      stroke-dasharray: 4px;
+      shape-rendering: crispEdges;
+      vector-effect: non-scaling-stroke;opacity: 0.5;
+  }
+  .anglearrow {
+      stroke: blue;
+      stroke-width: 2px;
+      shape-rendering: crispEdges;
+      vector-effect: non-scaling-stroke;
+  }
+  .arrowcircle {
+    fill: yellow;
+    fill-opacity: 0.8;
+    stroke: black;
+    stroke-opacity: 0.15;
+  }
+  .zbutton {
+      padding: 3px;
+  }
+  .mar_bot{
+      cursor:move;
+  }
+  .ui-layout-pane { /* all 'panes' */
+      background: #FFF;
+      border: 1px solid #BBB;
+      padding: 2px;
+      overflow: auto;
+      /* DO NOT add scrolling (or padding) to 'panes' that have a content-div,
+         otherwise you may get double-scrollbars - on the pane AND on the content-div
+         - use ui-layout-wrapper class if pane has a content-div
+         - use ui-layout-container if pane has an inner-layout
+      */
+  }
+  .ui-layout-content {
+      padding: 10px;
+      position: relative;
+      overflow: auto;
+  }
+  .layout-child-container,
+  .layout-content-container {
+      padding: 0;
+      overflow: hidden;
+  }
+  .layout-child-container {
+      border: 0;
+  }
+  .layout-scroll {
+      overflow: auto;
+  }
+  .layout-hide {
+      display: none;
+  }
+  .ui-layout-resizer {
+      background: #DDD;
+      border: 1px solid #BBB;
+      border-width: 0;
+  }
+  .ui-layout-resizer-drag {
+  }
+  .ui-layout-resizer-hover {
+  }
+  .ui-layout-resizer-open-hover,
+  .ui-layout-resizer-dragging {
+      background: #C4E1A4;
+  }
+  .ui-layout-resizer-dragging { 
+      border: 1px solid #BBB;
+  }
+  .ui-layout-resizer-north-dragging,
+  .ui-layout-resizer-south-dragging {
+      border-width: 1px 0;
+  }
+  .ui-layout-resizer-west-dragging,
+  .ui-layout-resizer-east-dragging {
+      border-width: 0 1px;
+  }
+  .ui-layout-resizer-dragging-limit {
+      background: #E1A4A4;
+  }
+  .ui-layout-resizer-closed-hover {
+      background: #EBD5AA;
+  }
+  .ui-layout-resizer-sliding {
+      opacity: .10;
+      filter: alpha(opacity=10);
+  }
+  .ui-layout-resizer-sliding-hover { /* sliding resizer - hover */
+      opacity: 1.00; /* on-hover, show the resizer-bar normally */
+      filter: alpha(opacity=100);
+  }
+  /* sliding resizer - add 'outside-border' to resizer on-hover 
+           * this sample illustrates how to target specific panes and states */
+  .ui-layout-resizer-north-sliding-hover {
+      border-bottom-width: 1px;
+  }
+  .ui-layout-resizer-south-sliding-hover {
+      border-top-width: 1px;
+  }
+  .ui-layout-resizer-west-sliding-hover {
+      border-right-width: 1px;
+  }
+  .ui-layout-resizer-east-sliding-hover {
+      border-left-width: 1px;
+  }
+  .ui-layout-toggler {
+      border: 1px solid #BBB; /* match pane-border */
+      background-color: #BBB;
+  }
+  .ui-layout-resizer-hover .ui-layout-toggler {
+      opacity: .60;
+      filter: alpha(opacity=60);
+  }
+  .ui-layout-toggler-hover, /* need when NOT resizable */
+  .ui-layout-resizer-hover .ui-layout-toggler-hover { /* need specificity when IS resizable */
+      background-color: #FC6;
+      opacity: 1.00;
+      filter: alpha(opacity=100);
+  }
+  .ui-layout-toggler-north,
+  .ui-layout-toggler-south {
+      border-width: 0 1px; /* left/right borders */
+  }
+  .ui-layout-toggler-west,
+  .ui-layout-toggler-east {
+      border-width: 1px 0; /* top/bottom borders */
+  }
+  .ui-layout-resizer-sliding .ui-layout-toggler {
+      display: none;
+  }
+  .ui-layout-toggler .content {
+      color: #666;
+      font-size: 12px;
+      font-weight: bold;
+      width: 100%;
+      padding-bottom: 0.35ex; /* to 'vertically center' text inside text-span */
+  }
+  .ui-layout-mask {
+      border: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      overflow: hidden !important;
+      position: absolute !important;
+      opacity: 0 !important;
+      filter: Alpha(Opacity="0") !important;
+  }
+  .ui-layout-mask-inside-pane { /* masks always inside pane EXCEPT when pane is an iframe */
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+  }
+  div.ui-layout-mask {
+  }
+  iframe.ui-layout-mask {
+  }
+  @media print {
+      html {
+          height: auto !important;
+          overflow: visible !important;
+      }
+      body.ui-layout-container {
+          position: static !important;
+          top: auto !important;
+          bottom: auto !important;
+          left: auto !important;
+          right: auto !important;
+          /* only IE6 has container width & height set by Layout */
+          _width: auto !important;
+          _height: auto !important;
+      }
+      .ui-layout-resizer, .ui-layout-toggler {
+          display: none !important;
+      }
+      .ui-layout-pane {
+          border: none !important;
+          background: transparent !important;
+          position: relative !important;
+          top: auto !important;
+          bottom: auto !important;
+          left: auto !important;
+          right: auto !important;
+          width: auto !important;
+          height: auto !important;
+          overflow: visible !important;
+      }
+  }
+  .crop-shapes { 
+    position:absolute;
+    right:0;
+    left:0;
+    top:0;
+    bottom:0;
+    margin:auto;
+  }
+  .svg-tooltip 
+  {
+      pointer-events: none;
+  }
+  .tooltip {
+      stroke: blue;
+      stroke-width: 1px;
+      stroke-opacity: 1.0;
+      fill:gray;
+      text-align:center;
+      fill-opacity: 0.1;
+  }
+  .lead {
+      font-style: italic;
+  }
+  p {
+      margin: 5px 0px;
+  }
+  polygon {
+      pointer-events: none;
+  }
+  
+  
+  
+  
+  
+  

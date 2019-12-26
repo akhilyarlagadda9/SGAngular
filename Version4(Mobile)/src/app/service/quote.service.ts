@@ -26,4 +26,15 @@ export class QuoteService {
   }
 /********** COMMON LISTS ******************/
 
+
+
+
+
+/*****************ACCOUNTS TAB LISTS*****************/
+ActionGetInvoiceList(custID:number, quoteID:number):Observable<any>{
+  return this.http.get<any>(this.url +  'api/accReceivable/QuoteInvoiceList?custID=' + custID + "&quoteID=" + quoteID) 
+}
+
+
+
 }

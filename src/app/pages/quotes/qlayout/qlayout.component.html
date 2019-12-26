@@ -18,71 +18,101 @@
       <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
   </ion-toolbar>
   <ion-toolbar>
-    <app-qnavigation></app-qnavigation>
+    <!-- <app-qnavigation></app-qnavigation> -->
+    <ion-row>
+        <ion-col class="paddtopzero" (click)="ActionQuickLoad(1)">
+         <img src="assets/img/Checklist-icon.png" alt="your image" style="width:35px;height:35px;">
+         <div class="mar-top5"><span style="font-size:11px;">summary</span></div>
+        </ion-col>
+        <ion-col class="paddtopzero" (click)="ActionQuickLoad(2)">
+         <img src="assets/img/Drawing-icon.png" alt="your image" style="width:35px;height:35px;">
+         <div class="mar-top5"><span style="font-size:11px;">Area Info</span></div>
+        </ion-col>        
+        <ion-col class="paddtopzero" (click)="ActionQuickLoad(3)">
+         <img src="assets/img/email-icon.png" alt="your image" style="width:35px;height:35px;">
+         <div class="mar-top5"><span style="font-size:11px;">Comm Hub</span></div>
+        </ion-col>
+        <ion-col class="paddtopzero" (click)="ActionQuickLoad(4)">
+         <img src="assets/img/calendar-icon.png" alt="your image" style="width:35px;height:35px;">
+         <div class="mar-top5"><span style="font-size:11px;">Activities</span></div>
+        </ion-col>
+        <ion-col class="paddtopzero" (click)="ActionQuickLoad(5)">
+            <img src="assets/img/coin-us-dollar-icon.png" alt="your image" style="width:35px;height:35px;"  >
+            <div class="mar-top5"><span style="font-size:11px;">Accounts</span></div>
+           </ion-col>
+        <ion-col class="paddtopzero" (click)="ActionQuickLoad(6)">
+         <img src="assets/img/marbles-icon.png" alt="your image" style="width:35px;height:35px;">
+         <div class="mar-top5"><span style="font-size:11px;">Other</span></div>
+        </ion-col>
+       </ion-row>
  </ion-toolbar>
 
 </ion-header>
 
-<ion-content>
+<ion-content >
+<ion-col *ngIf="selectedtabtype == 1">
     <ion-row style="background:#ddd" >
-        <ion-col size="9" class="paddtopzero">
-            <h2 class="fontsmall no-margin">{{headerInfo.QuoteName}}</h2>
+        <ion-col size="6" class="paddtopzero">
+            <h2 class="fontsmall no-margin"><ion-icon name="arrow-dropdown" (click)="toggleGroup(1)"></ion-icon>{{headerInfo.QuoteName}}</h2>
         </ion-col>
-        <ion-col size="3" class="text-right paddtopzero" >
+        <ion-col size="3" class="paddtopzero"><h2 class="fontsmall no-margin"><ion-icon name="create" color=primary class="icon-marg-top2"></ion-icon></h2></ion-col>
+        <ion-col size="3" class="text-right paddtopzero">
          <p class="no-margin">{{headerInfo.QuoteDate | date:'dd/MM'}} &nbsp; SA</p>
         </ion-col>
       </ion-row>
- <ion-row>
+ <ion-row *ngIf="isGroupShown(1)">
+    <ion-row>
    
-   <ion-col size="12" class="paddtopzero">
+        <ion-col size="12" class="paddtopzero">
+          
+         <ion-icon class="text-font" class="fontsmall" name="pin"></ion-icon>
+         <span class="valignsup">{{headerInfo.Address1}}
+           <span
+               *ngIf="headerInfo.City != '' && headerInfo.City != null">,{{headerInfo.City}}</span>
+           <span
+               *ngIf="headerInfo.State != '' && headerInfo.State != null">,{{headerInfo.State}}</span>
+           <span
+               *ngIf="headerInfo.State != '' && headerInfo.State != null">-{{headerInfo.Zipcode}}</span>
+       </span>
      
-    <ion-icon class="text-font" class="fontsmall" name="pin"></ion-icon>
-    <span class="valignsup">{{headerInfo.Address1}}
-      <span
-          *ngIf="headerInfo.City != '' && headerInfo.City != null">,{{headerInfo.City}}</span>
-      <span
-          *ngIf="headerInfo.State != '' && headerInfo.State != null">,{{headerInfo.State}}</span>
-      <span
-          *ngIf="headerInfo.State != '' && headerInfo.State != null">-{{headerInfo.Zipcode}}</span>
-  </span>
-
-   </ion-col>
-
-   <div *ngFor="let contact of headerInfo.QuoteContacts">
-     <ion-col size="12" class="paddtopzero" >
-      <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon>
-        <span class="valignsup">
-          {{contact.Name}}
-        </span>  
-         <span *ngIf="headerInfo.Phone != '' && headerInfo.Phone != null" class="valignsup">
-            - &nbsp; {{contact.Phone}} 
-         </span>
-     </ion-col>
-     <ion-col size="12" *ngIf="contact.Email != '' && contact.Email != null">
-      <ion-icon class="text-font" class="fontsmall" style="display: none;" name="contact"></ion-icon>
-        <ion-icon class="text-font" class="fontsmall" name="call"></ion-icon> <span class="valignsup">{{contact.Email}}</span>
-    </ion-col>
-   </div>
+        </ion-col>
+     
+        <div *ngFor="let contact of headerInfo.QuoteContacts">
+          <ion-col size="12" class="paddtopzero" >
+           <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon>
+             <span class="valignsup">
+               {{contact.Name}}
+             </span>  
+              <span *ngIf="headerInfo.Phone != '' && headerInfo.Phone != null" class="valignsup">
+                 - &nbsp; {{contact.Phone}} 
+              </span>
+          </ion-col>
+          <ion-col size="12" *ngIf="contact.Email != '' && contact.Email != null">
+           <ion-icon class="text-font" class="fontsmall" style="display: none;" name="contact"></ion-icon>
+             <ion-icon class="text-font" class="fontsmall" name="call"></ion-icon> <span class="valignsup">{{contact.Email}}</span>
+         </ion-col>
+        </div>
+      </ion-row>
+     
+      
+      <ion-row>
+         <ion-col size="12" class="text-font paddtopzero" >
+          <div class="valignsup">
+             <span class="color-primary"> Cust:</span>Issac James
+        </div>
+         </ion-col>
+         <ion-col size="12" class="text-font paddtopzero">
+             <div class="valignsup">
+                 <span class="color-primary"> Acc:</span>ABC Construction Inc
+           </div>
+            </ion-col>
+            <ion-col size="12" class="text-font paddtopzero" >
+             <div class="valignsup">
+                <span class="color-primary">Des:</span> {{headerInfo.Version.Description}}
+           </div>
+            </ion-col>
+       </ion-row>
  </ion-row>
-
- 
- <ion-row>
-    <ion-col size="12" class="text-font paddtopzero" >
-     <div class="valignsup">
-        <span class="color-primary"> Cust:</span>Issac James
-   </div>
-    </ion-col>
-    <ion-col size="12" class="text-font paddtopzero">
-        <div class="valignsup">
-            <span class="color-primary"> Acc:</span>ABC Construction Inc
-      </div>
-       </ion-col>
-       <ion-col size="12" class="text-font paddtopzero" >
-        <div class="valignsup">
-           <span class="color-primary">Des:</span> {{headerInfo.Version.Description}}
-      </div>
-       </ion-col>
-  </ion-row>
   
   <app-arealayout [layoutId]="qprmsobj.layoutId"></app-arealayout>
   <ion-row class="marginbot">
@@ -120,9 +150,11 @@
     <ion-col size="8" class="fontbold text-right">Payment:</ion-col>
     <ion-col size="4" class="fontbold text-right"><span style="color:red;">($ 0.00)</span></ion-col>
 </ion-row>
+</ion-col>
 
-
-
+<ion-col *ngIf="selectedtabtype == 5">
+    <app-accounts [custID]="headerInfo.Version.CustomerID" [quoteID]="headerInfo.ID"></app-accounts>
+</ion-col>
 </ion-content>
 
 

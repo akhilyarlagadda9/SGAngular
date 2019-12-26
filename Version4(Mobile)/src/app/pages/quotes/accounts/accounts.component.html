@@ -1,0 +1,80 @@
+<!--   <ion-content>
+    <form>
+      <ion-toolbar>
+        <ion-title class="titleheader">ACCOUNTING</ion-title>
+        <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
+        <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
+      </ion-toolbar>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Transaction#</ion-label>
+        <ion-input type="text" class="labelfont"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary">Type</ion-label>
+          <ion-input type="text" class="labelfont" readonly="readonly"></ion-input>
+        </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Date</ion-label>
+        <ion-input type="text" class="labelfont" readonly="readonly"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Amount($)</ion-label>
+        <ion-input type="text" class="labelfont" readonly="readonly"></ion-input>
+      </ion-item>
+    </form>
+  </ion-content> -->
+
+  
+ <!--  <ion-list class="ion-no-margin ion-no-padding">
+    <ion-row class="marbot">
+      <ion-col>
+          <h2 class="margin-bottom6">
+              <div>ACCOUNTING</div>
+          </h2>
+      </ion-col>
+      <ion-col size="2" class="text-right">
+        <ion-icon name="create" class="fontmedium" (click)="ActionEditJobDesc(1)"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row class="paddall">
+      <ion-textarea rows="5" cols="20" [(ngModel)]="Version.Description" class="borderall" readonly="readonly"></ion-textarea>
+    </ion-row>
+  </ion-list> -->
+
+
+    <ion-toolbar ion-no-margin>
+      <ion-title class="titleheader">ACCOUNTING</ion-title>
+    </ion-toolbar>
+      <ion-card *ngFor="let account of accountlist"  class="margin-bottom">
+        <ion-item>
+          <ion-label>
+            <h3>
+              Transaction#: {{account.ExtNo}}
+            </h3>
+            <p>
+              Type:
+              <span *ngIf="account.InvoiceTypeID == 1">INVOICE</span>
+                    <span *ngIf="account.InvoiceTypeID == 3">MATERIAL INVOICE</span>
+                    <span *ngIf="account.InvoiceTypeID == 4">DEPOSIT INVOICE</span>
+                    <span *ngIf="account.InvoiceTypeID == 5">CREDIT MEMO</span>
+                    <span *ngIf="account.InvoiceTypeID == 6">REFUND RECEIPT</span>
+                    <span *ngIf="account.InvoiceTypeID == 7">SALE ORDER</span>
+                    <span *ngIf="account.InvoiceTypeID == 8">ESTIMATE</span>
+                    <span *ngIf="account.InvoiceTypeID == 9">INVOICE</span>
+                    <span *ngIf="account.InvoiceTypeID == 10">INVOICE</span>
+            </p>
+            <p>
+              Date: {{ account.InvoiceDate| date:'MM/dd/yyyy' }}
+            </p>
+            <p>
+              Amount($):{{ account.TotalAmount }}
+            </p>
+            <p>
+              Balance($):{{ account.BalAmt }}
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-card>
+
+
+

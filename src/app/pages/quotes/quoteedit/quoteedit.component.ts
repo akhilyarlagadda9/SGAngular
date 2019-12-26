@@ -1,4 +1,4 @@
-import { Component, OnInit,Directive } from '@angular/core';
+import { Component, OnInit,Directive, Input } from '@angular/core';
 import { NavController, ModalController, NavParams } from '@ionic/angular';
 import { QuoteService } from 'src/app/service/quote.service'
 
@@ -14,8 +14,7 @@ import { MapComponent } from '../../map/map.component';
   styleUrls: ['./quoteedit.component.scss'],
 })
 export class QuoteeditComponent implements OnInit {
-  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private service: QuoteService,
-     private navCtrl: NavController) { }
+  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private service: QuoteService, private navCtrl: NavController) { }
   quoteId: number;
   quoteno: string;
   shownGroup = 1;
@@ -23,7 +22,7 @@ export class QuoteeditComponent implements OnInit {
   headerInfo:any;
   selectedtabtype:number = 1;
   QuoteVersionID:number = this.qprmsobj.versionid; 
-
+  expanded = false;
 
   //version: any;
   
@@ -63,7 +62,10 @@ export class QuoteeditComponent implements OnInit {
   }
 
   /*****tabs****** */
-  ActionQuickLoad(componet: any) {
+  // ActionQuickLoad(componet: any) {
+  //   this.selectedtabtype = componet;
+  // }
+  ActionLoadTabInfo(componet: any){
     this.selectedtabtype = componet;
   }
   /***** Quote Header *****/
@@ -109,6 +111,3 @@ export class QuoteeditComponent implements OnInit {
   
   
 }
-
-
-

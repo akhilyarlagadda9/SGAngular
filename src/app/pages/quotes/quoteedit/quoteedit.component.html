@@ -128,19 +128,19 @@
                        </ion-row>
                        <ion-row *ngIf="headerInfo.Version.PayTypeID == 1">
                            {{headerInfo.Version.DueSigningName}}:({{headerInfo.Version.DueSigning}}%)
-                           <span>$ {{headerInfo.Version.SigningAmt| number:2}}</span>
+                           <span>$ {{headerInfo.Version.SigningAmt| number : '.2-2'}}</span>
                        </ion-row>
                        <ion-row *ngIf="headerInfo.Version.PayTypeID == 1 && headerInfo.Version.TeamplateAmt != 0">
                           {{headerInfo.Version.DueTeamplateName}}:({{headerInfo.Version.DueTeamplate}}%)
-                          <span>$ $ {{headerInfo.Version.TeamplateAmt| number:2}}</span>
+                          <span>$ $ {{headerInfo.Version.TeamplateAmt| number : '.2-2'}}</span>
                       </ion-row>
                       <ion-row *ngIf="headerInfo.Version.PayTypeID == 1">
                          {{headerInfo.Version.DueInstallName}}: ({{headerInfo.Version.DueInstall}}%)
-                         <span>$ {{headerInfo.Version.InstallAmt | number:2}}</span>
+                         <span>$ {{headerInfo.Version.InstallAmt | number : '.2-2'}}</span>
                       </ion-row>
                       <ion-row *ngIf="headerInfo.Version.PayTypeID == 2">
                           Pay Terms: <span class="b-Color">{{headerInfo.Version.PaymentTerm}}</span>
-                          <span>$ {{((headerInfo.Version.TotalAmt + headerInfo.Version.TaxAmt) - (headerInfo.Version.DiscountAmt))| number:2}}</span>
+                          <span>$ {{((headerInfo.Version.TotalAmt + headerInfo.Version.TaxAmt) - (headerInfo.Version.DiscountAmt))| number : '.2-2'}}</span>
                       </ion-row>
                     </ion-col>
                     <ion-col size="7">

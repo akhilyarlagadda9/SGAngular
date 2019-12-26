@@ -45,6 +45,7 @@ import { QlayoutComponent } from '../qlayout/qlayout.component';
 import { ArealayoutComponent } from '../arealayout/arealayout.component';
 import { QnavigationComponent } from '../qnavigation/qnavigation.component';
 import { ActivitiesComponent } from '../../common/activities/activities.component';
+import { AreasummaryComponent } from '../areasummary/areasummary.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -70,7 +71,7 @@ import { ActivitiesComponent } from '../../common/activities/activities.componen
     JobdesComponent,AreainfoComponent,PoeditComponent,
     JobdesceditComponent,CustomereditComponent,CommhubeditComponent,
     CustomerinfoComponent,AddareaComponent,CustomersearchComponent,
-    ManagementsummaryComponent,additemComponent,ActivitiesComponent,
+    ManagementsummaryComponent,additemComponent,ActivitiesComponent,AreasummaryComponent,
     FabricationComponent,LaborinfoComponent,MapComponent,QlayoutComponent,ArealayoutComponent,QnavigationComponent],
     
 
@@ -84,7 +85,7 @@ import { ActivitiesComponent } from '../../common/activities/activities.componen
     CommhubComponent,PrintsComponent,JobdesComponent,
     AreainfoComponent,PoeditComponent,JobdesceditComponent,
     CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,
-    AddareaComponent,CustomersearchComponent,ManagementsummaryComponent,ActivitiesComponent,
+    AddareaComponent,CustomersearchComponent,ManagementsummaryComponent,ActivitiesComponent,AreasummaryComponent,
     additemComponent,additemComponent,FabricationComponent,LaborinfoComponent,MapComponent,QnavigationComponent,QlayoutComponent,ArealayoutComponent]
 })
 export class QuotePageModule {}

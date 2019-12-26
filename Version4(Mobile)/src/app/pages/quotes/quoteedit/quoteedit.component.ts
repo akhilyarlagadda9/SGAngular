@@ -52,7 +52,7 @@ export class QuoteeditComponent implements OnInit {
 
 
 
-  ActionQuoteInfo(){
+  ActionQuoteInfo(){debugger;
     let result = this.service.ActionQuoteInfo(this.qprmsobj.quoteid,this.qprmsobj.quoteno,this.qprmsobj.versionid,0,0,0).subscribe(
       data => {
          this.headerInfo = data;
@@ -62,9 +62,6 @@ export class QuoteeditComponent implements OnInit {
   }
 
   /*****tabs****** */
-  // ActionQuickLoad(componet: any) {
-  //   this.selectedtabtype = componet;
-  // }
   ActionLoadTabInfo(componet: any){
     this.selectedtabtype = componet;
   }

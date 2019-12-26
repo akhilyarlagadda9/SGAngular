@@ -13,7 +13,6 @@ import { QuotepostService } from 'src/app/service/quotepost.service';
 export class TileinfoComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
-  Description="";
   labor:any;  tile: any;  cabinet: any; carpet: any; appliance: any;  consumable: any;  tool: any;
 
   constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController, private popoverCntrl :PopoverController,private navParams : NavParams,private quoterep:QuoterepService, private postservice : QuotepostService ) { }
@@ -22,37 +21,10 @@ export class TileinfoComponent implements OnInit {
   
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      Description: ['', Validators.required],
+      add: ['', Validators.required],
   });
   }
 
-  ActionSaveTile(tile:any){
-    this.postservice.Actionsaveparttile(tile).subscribe(data => {
-      this.tile = data.TileList;
-      this.cabinet = data.CabinetList;
-      this.carpet = data.CarpetList;
-      this.appliance = data.ApplianceList;
-      this.consumable = data.ConsumableList;
-      this.tool = data.ToolList;
-      this.ActionCloseTile(true);
-    })
-  }
-
-  ActionCloseTile(issave:boolean) {
-    if(issave == true){
-      let tile = { Tile : this.tile, Cabinet : this.cabinet, Carpet : this.carpet, Appliance : this.appliance, Consumable : this.consumable, Tool : this.tool}
-      this.Modalcntrl.dismiss({
-        'dismissed': true,
-        componentProps: tile,
-        issave: issave
-      });
-    }else{
-      this.Modalcntrl.dismiss({
-        'dismissed': true,
-        issave: issave
-      });
-    }
-  }
 
   ActionSetMargin(typeId:number,model:any,type:string){
     this.labor = this.quoterep.margincalculations(typeId,model,type);
@@ -79,6 +51,41 @@ export class TileinfoComponent implements OnInit {
   });
 }
 
+
+get f() { return this.registerForm.controls; }  
+
+ActionSaveTile(tile:any){
+  this.submitted = true;
+  if (this.registerForm.valid) {
+    this.postservice.Actionsaveparttile(tile).subscribe(data => {
+      this.tile = data.TileList;
+      this.cabinet = data.CabinetList;
+      this.carpet = data.CarpetList;
+      this.appliance = data.ApplianceList;
+      this.consumable = data.ConsumableList;
+      this.tool = data.ToolList;
+      this.ActionCloseTile(true);
+
+  });
+}
+}
+
+
+ActionCloseTile(issave:boolean) {
+  if(issave == true){
+    let tile = { Tile : this.tile, Cabinet : this.cabinet, Carpet : this.carpet, Appliance : this.appliance, Consumable : this.consumable, Tool : this.tool}
+    this.Modalcntrl.dismiss({
+      'dismissed': true,
+      componentProps: tile,
+      issave: issave
+    });
+  }else{
+    this.Modalcntrl.dismiss({
+      'dismissed': true,
+      issave: issave
+    });
+  }
+}
 }
 
 

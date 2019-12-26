@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title class="titleheader">
       <div>Fabrication</div>
@@ -6,13 +6,24 @@
     <ion-button slot="end" color="success" size="small" (click)="ActionSaveFabrication(fabrication)">Save</ion-button>
     <ion-button slot="end" color="danger" size="small" (click)="ActionCloseFabrication(false)">X</ion-button>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 <ion-content>
-  <form>
+  <form [formGroup]="registerForm" (ngSubmit)="ActionSaveFabrication(fab)">
+    <ion-toolbar >
+      <ion-title class="titleheader">
+        <div>Fabrication</div>
+      </ion-title>
+      <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
+    </ion-toolbar>
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
-      <ion-input type="text" class="labelfont" [(ngModel)]="fabrication.Description" name="Description"></ion-input>
+      <ion-input type="text" class="labelfont" [(ngModel)]="fabrication.Description" name="Description"
+      formControlName="add" [ngClass]="{ 'is-invalid': submitted && f.add.errors }"></ion-input>
     </ion-item>
+    <div *ngIf="submitted && f.add.errors"  class="invalid-feedback padd-Left">
+      <div *ngIf="f.add.errors.required" class="error">Description is required</div>
+  </div>
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
       <ion-row> 

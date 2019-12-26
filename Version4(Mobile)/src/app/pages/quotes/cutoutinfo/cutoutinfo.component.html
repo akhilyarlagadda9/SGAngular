@@ -1,5 +1,5 @@
 <ion-content>
-  <form name="form" (ngSubmit)="ActionSaveCutOut(cutout)" #f="ngForm">
+  <form [formGroup]="registerForm" (ngSubmit)="ActionSaveCutOut(cutout)">
     <ion-toolbar class="poss">
       <ion-title class="titleheader">
         <div *ngIf="TypeID == 1">Sink Cutout</div>
@@ -11,14 +11,13 @@
     </ion-toolbar>
     <ion-item>
       <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-      <ion-select [(ngModel)]="cutout.TypeID" name="TypeID" #cutout="ngModel"
-        [ngClass]="{ 'is-invalid': f.submitted && cutout.invalid }" required>
+      <ion-select [(ngModel)]="cutout.TypeID" name="TypeID" formControlName="add" [ngClass]="{ 'is-invalid': submitted && f.add.errors }">
         <ion-select-option *ngFor="let cut of cutoutlist"> <span>{{cut.Description}}</span></ion-select-option>
       </ion-select>
     </ion-item>
-    <div *ngIf="f.submitted && cutout.invalid" class="invalid-feedback padd-Left">
-      <div *ngIf="cutout.errors.required" class="error">Description is required</div>
-    </div>
+    <div *ngIf="submitted && f.add.errors"  class="invalid-feedback padd-Left">
+      <div *ngIf="f.add.errors.required" class="error">Description is required</div>
+  </div>
 
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>

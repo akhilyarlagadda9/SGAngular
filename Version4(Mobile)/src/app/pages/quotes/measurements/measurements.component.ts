@@ -11,23 +11,25 @@ import { QuotepostService } from 'src/app/service/quotepost.service';
 export class MeasurementsComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
-  Description = "";
   measure: any;
   constructor(private formBuilder: FormBuilder, public Modalcntrl: ModalController, private postservice : QuotepostService) { }
 
   ngOnInit() {
 
     this.registerForm = this.formBuilder.group({
-      Description: ['', Validators.required],
+      add: ['', Validators.required],
     });
   }
 
-  ActionSaveMeasurement(size:any) {debugger;
-    this.postservice.Actionsavepartfabrication(size).subscribe(data => {debugger;
+  ActionSaveMeasurement(size:any){
+  this.submitted = true;
+  if (this.registerForm.valid) {
+    this.postservice.Actionsavepartfabrication(size).subscribe(data => {
       this.measure = data.TileList;
       this.ActionCloseMeasurement(true);
     })
-  }
+}
+}
   ActionCloseMeasurement(issave:boolean) {
     if(issave == true){
       let sizes = { PartFab : this.measure}

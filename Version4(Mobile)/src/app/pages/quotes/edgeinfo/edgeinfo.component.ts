@@ -45,11 +45,16 @@ export class EdgeinfoComponent implements OnInit {
   }
 
   ActionSaveEdge(edg:any){
-    this.postservice.ActionsavepartEdge(edg).subscribe(data => {
+    this.submitted = true;
+    if (this.registerForm.valid) {
+      this.postservice.ActionsavepartEdge(edg).subscribe(data => {
       this.item = data.EdgeList;
       this.ActionCloseEdge(true);
-    })
+    });
   }
+    
+  }
+  get f() { return this.registerForm.controls; }
   ActionCloseEdge(issave:boolean) {
     if(issave == true){
       let edg = { edge : this.item}

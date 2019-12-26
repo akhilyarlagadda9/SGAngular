@@ -11,12 +11,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class MaterialinfoComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
-  Description="";
   constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController ) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      Description: ['', Validators.required],
+      add: ['', Validators.required],
   });
   }
 

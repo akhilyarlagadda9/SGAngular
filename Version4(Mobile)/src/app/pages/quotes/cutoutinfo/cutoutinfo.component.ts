@@ -20,6 +20,9 @@ export class CutoutinfoComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,private navCntrl: NavParams, public Modalcntrl: ModalController, private getservice: QuotegetService, private quoterep: QuoterepService, private postservice : QuotepostService) { }
   TypeID = this.navCntrl.data.TypeID;
   ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+      add: ['', Validators.required],
+  });
     this.ActionSelectCutout()
     console.log(this.TypeID)
   }
@@ -34,12 +37,18 @@ export class CutoutinfoComponent implements OnInit {
     this.cutout.Amt = this.cutout.Amount;
   }
 
-  ActionSaveCutOut(cut:any) {
+
+  get f() { return this.registerForm.controls; }  
+
+  ActionSaveCutOut(cut:any){
+  this.submitted = true;
+  if (this.registerForm.valid) {
     this.postservice.Actionsavepartcutout(cut).subscribe(data => {
       this.item = data.CutList;
       this.ActionCloseCutout(true);
     })
-  }
+}
+}
 
   ActionCloseCutout(issave : boolean) {
     if(issave == true){

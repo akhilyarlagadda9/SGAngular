@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { NavController, ModalController, NavParams } from '@ionic/angular';
 import { QuoteService } from 'src/app/service/quote.service'
+import { NumberValueAccessor } from '@angular/forms';
 
 @Component({
   selector: 'app-qlayout',
@@ -8,15 +9,16 @@ import { QuoteService } from 'src/app/service/quote.service'
   styleUrls: ['./qlayout.component.scss'],
 })
 export class QlayoutComponent implements OnInit {
-
+  
+  
   constructor(public Modalcntrl: ModalController,private navParams: NavParams, private service: QuoteService,
   private navCtrl: NavController) { }
  quoteId: number;
  quoteno: string;
  shownGroup = 1;
+ selectedtabtype: Number= 1;
  qprmsobj = this.navParams.data;
  headerInfo:any;Version:any;
- selectedtabtype:number = 1;
  QuoteVersionID:number = this.qprmsobj.versionid; 
 
   ngOnInit() {
@@ -32,6 +34,7 @@ export class QlayoutComponent implements OnInit {
          this.headerInfo = data;
          this.headerInfo.Version = this.headerInfo.VersionList.filter(x => x.ID === this.qprmsobj.versionid)[0];
          this.Version = this.headerInfo.Version;
+         console.log(this.headerInfo);
         },
       error => console.log(error));
   }
@@ -41,4 +44,17 @@ export class QlayoutComponent implements OnInit {
     });
   }
 
+  toggleGroup(group) {
+    if (this.isGroupShown(group)) {
+        this.shownGroup = 0;
+    } else {
+        this.shownGroup = group;
+    }
+  };
+  isGroupShown(group) {
+    return this.shownGroup === group;
+  };
+  ActionQuickLoad(componet: any) {
+    this.selectedtabtype = componet;
+  }
 }

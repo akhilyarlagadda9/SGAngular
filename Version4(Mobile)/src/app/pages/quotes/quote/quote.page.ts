@@ -87,8 +87,8 @@ async ActionQuoteEdit(header) {
     accountid:version.ParentAccID,childaccid:version.ChildAccID,phaseid:0,viewtypeid:0,header:header,layoutId:this.layId
   };
   const modal = await this.Modalcntrl.create({
-    //component: QuoteeditComponent,
-    component: QlayoutComponent,
+    component: QuoteeditComponent,
+    //component: QlayoutComponent,
     componentProps: this.qprmsobj,
   });
   return await modal.present();

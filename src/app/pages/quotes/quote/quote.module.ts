@@ -44,6 +44,7 @@ import { MapComponent } from '../../map/map.component';
 import { QlayoutComponent } from '../qlayout/qlayout.component';
 import { ArealayoutComponent } from '../arealayout/arealayout.component';
 import { QnavigationComponent } from '../qnavigation/qnavigation.component';
+import { AccountsComponent } from '../accounts/accounts.component';
 import { ActivitiesComponent } from '../../common/activities/activities.component';
 import { AreasummaryComponent } from '../areasummary/areasummary.component';
 @NgModule({
@@ -59,7 +60,7 @@ import { AreasummaryComponent } from '../areasummary/areasummary.component';
       },
     ])
   ],
-  entryComponents: [CreatequoteComponent,PaymentScheduleComponent,
+  entryComponents: [CreatequoteComponent,AccountsComponent,PaymentScheduleComponent,
     AdditionalitemserachComponent,DiscountComponent,feeComponent,
     taxComponent, itemsearchComponent,  CustomersearchComponent,
     CustitemComponent, TemplateComponent, AddmatComponent, 
@@ -75,7 +76,7 @@ import { AreasummaryComponent } from '../areasummary/areasummary.component';
     FabricationComponent,LaborinfoComponent,MapComponent,QlayoutComponent,ArealayoutComponent,QnavigationComponent],
     
 
-  declarations: [QuotePage,PaymentScheduleComponent,AdditionalitemserachComponent,
+  declarations: [QuotePage,AccountsComponent,PaymentScheduleComponent,AdditionalitemserachComponent,
     taxComponent,feeComponent,DiscountComponent, itemsearchComponent,
     CustitemComponent, TemplateComponent, AddmatComponent, TileinfoComponent, 
     FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, 

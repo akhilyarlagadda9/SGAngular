@@ -46,8 +46,8 @@
     <ion-row [ngSwitch]="selectedtabtype">
         <ion-col *ngSwitchCase="1">
             <ion-row style="background:#ddd">
-                <ion-col size="9" class="paddtopzero">
-                    <h2 class="fontsmall no-margin">{{headerInfo.QuoteName}}</h2>
+                <ion-col size="9" class="paddtopzero" (click)="ActionEditJob()">
+                    <h2 class="fontsmall no-margin"><u>{{headerInfo.QuoteName}}</u></h2>
                 </ion-col>
                 <ion-col size="3" class="text-right paddtopzero">
                     <p class="no-margin">{{headerInfo.QuoteDate | date:'dd/MM'}} &nbsp; SA</p>

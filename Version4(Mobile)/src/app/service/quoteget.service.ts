@@ -35,8 +35,10 @@ export class QuotegetService {
  CustPriceList(typeID:number):Observable<any> {
   return this.http.get<any>(this.url +  'api/QuoteAdmin/CustPriceList?typeID=' + typeID)
 }
-
- 
+//Quote Contacts service
+qsgetquotecontacts(quoteId:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/QuoteRep3/GetQuoteContacts?quoteId=' + quoteId)
+}
 
  //Sales Rep List,Estimator List and Project Managers List
 CustTypeResourceList(parentId:number,typeId:number):Observable<any> {

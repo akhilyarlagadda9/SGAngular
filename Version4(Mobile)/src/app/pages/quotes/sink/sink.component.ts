@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, PopoverController, NavParams } from '@ionic/angular';
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 import { QuoterepService } from 'src/app/service/quoterep.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+//import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { QuotepostService } from 'src/app/service/quotepost.service';
-
+import { OverlayEventDetail } from '@ionic/core';
 @Component({
   selector: 'app-sink',
   templateUrl: './sink.component.html',
@@ -12,16 +13,14 @@ import { QuotepostService } from 'src/app/service/quotepost.service';
 })
 export class SinkComponent implements OnInit {
   sinkfaucet: any;
-  registerForm: FormGroup;
+  //registerForm: FormGroup;
   submitted = false;
-  Description = "";
-  item: any;
-  constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private navParams: NavParams, private quoterep: QuoterepService, private postservice : QuotepostService, private formBuilder: FormBuilder) { }
+  //Description = "";
+  sinklist: any = [];
+  constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private navParams: NavParams, private quoterep: QuoterepService, private postservice : QuotepostService) { }
   sinkinfo = this.navParams.data;
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      Description: ['', Validators.required],
-    });
+   
   }
   ActionSetMargin(typeId: number, model: any, type: string) {
     this.sinkfaucet = this.quoterep.margincalculations(typeId, model, type);
@@ -32,26 +31,23 @@ export class SinkComponent implements OnInit {
     this.sinkfaucet.Amount = this.quoterep.calcitemamt(this.sinkfaucet.Qty, this.sinkfaucet.UnitPrice);
     this.sinkfaucet.Amt = this.sinkfaucet.Amount;
   }
-  ActionSaveSink(sink:any){
-    this.postservice.Actionsavepartsink(sink).subscribe(data => {
-      this.item = data.sinkfaucetList;
-      this.ActionCloseSink(true);
+  ActionSaveSink(form:NgForm){
+    debugger;
+    this.submitted = true;
+    if (form.valid) {
+    this.postservice.Actionsavepartsink(this.sinkfaucet).subscribe(data => {
+     // this.sinklist = data.sinkfaucetList;
+      this.ActionCloseSink(false);
     })
   }
+  }
   ActionCloseSink(issave:boolean) {
-    if(issave == true){
-      let sink = { Sink : this.item}
-      this.Modalcntrl.dismiss({
-        'dismissed': true,
-        componentProps: sink,
-        issave: issave
-      });
-    }else{
-      this.Modalcntrl.dismiss({
-        'dismissed': true,
-        issave: issave
-      });
-    }
+    let sink = { Sink : this.sinklist}
+    this.Modalcntrl.dismiss({
+      'dismissed': true,
+      componentProps: sink,
+      issave: issave
+    });
   }
 
 
@@ -66,18 +62,26 @@ export class SinkComponent implements OnInit {
       componentProps: obj,
       cssClass: "popover_class"
     });
+ 
+    popover.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null) {
+        if(detail.data.isselect == true){
+          this.sinkfaucet = this.quoterep.Resetsink(this.sinkfaucet,detail.data.componentProps);
+        }
+      }
+   });
     return await popover.present();
   }
 
   ActionToClosePop() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
     this.popoverCntrl.dismiss({
       'dismissed': true
     });
 
   }
 
-  get f() { return this.registerForm.controls; }
+
+
+ // get f() { return this.registerForm.controls; }
 
 }

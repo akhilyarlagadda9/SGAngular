@@ -47,6 +47,8 @@ import { QnavigationComponent } from '../qnavigation/qnavigation.component';
 import { AccountsComponent } from '../accounts/accounts.component';
 import { ActivitiesComponent } from '../../common/activities/activities.component';
 import { AreasummaryComponent } from '../areasummary/areasummary.component';
+import { OtherComponent } from '../other/other.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -73,7 +75,7 @@ import { AreasummaryComponent } from '../areasummary/areasummary.component';
     JobdesceditComponent,CustomereditComponent,CommhubeditComponent,
     CustomerinfoComponent,AddareaComponent,CustomersearchComponent,
     ManagementsummaryComponent,additemComponent,ActivitiesComponent,AreasummaryComponent,
-    FabricationComponent,LaborinfoComponent,MapComponent,QlayoutComponent,ArealayoutComponent,QnavigationComponent],
+    FabricationComponent,LaborinfoComponent,MapComponent,QlayoutComponent,ArealayoutComponent,QnavigationComponent,OtherComponent],
     
 
   declarations: [QuotePage,AccountsComponent,PaymentScheduleComponent,AdditionalitemserachComponent,
@@ -87,6 +89,6 @@ import { AreasummaryComponent } from '../areasummary/areasummary.component';
     AreainfoComponent,PoeditComponent,JobdesceditComponent,
     CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,
     AddareaComponent,CustomersearchComponent,ManagementsummaryComponent,ActivitiesComponent,AreasummaryComponent,
-    additemComponent,additemComponent,FabricationComponent,LaborinfoComponent,MapComponent,QnavigationComponent,QlayoutComponent,ArealayoutComponent]
+    additemComponent,additemComponent,FabricationComponent,LaborinfoComponent,MapComponent,QnavigationComponent,QlayoutComponent,ArealayoutComponent,OtherComponent]
 })
 export class QuotePageModule {}

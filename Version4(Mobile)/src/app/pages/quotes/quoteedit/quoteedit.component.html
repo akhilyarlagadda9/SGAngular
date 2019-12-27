@@ -123,22 +123,22 @@
               <ion-list>
                 <ion-row>
                     <ion-col size="5">
-                       <ion-row>
+                       <ion-row class="marginbot">
                          <div><b class="fontbold text-right">Payment Schedule</b></div>
                        </ion-row>
-                       <ion-row *ngIf="headerInfo.Version.PayTypeID == 1">
+                       <ion-row *ngIf="headerInfo.Version.PayTypeID == 1" class="marginbot">
                            {{headerInfo.Version.DueSigningName}}:({{headerInfo.Version.DueSigning}}%)
                            <span>$ {{headerInfo.Version.SigningAmt| number : '.2-2'}}</span>
                        </ion-row>
-                       <ion-row *ngIf="headerInfo.Version.PayTypeID == 1 && headerInfo.Version.TeamplateAmt != 0">
+                       <ion-row *ngIf="headerInfo.Version.PayTypeID == 1 && headerInfo.Version.TeamplateAmt != 0" class="marginbot">
                           {{headerInfo.Version.DueTeamplateName}}:({{headerInfo.Version.DueTeamplate}}%)
                           <span>$ $ {{headerInfo.Version.TeamplateAmt| number : '.2-2'}}</span>
                       </ion-row>
-                      <ion-row *ngIf="headerInfo.Version.PayTypeID == 1">
+                      <ion-row *ngIf="headerInfo.Version.PayTypeID == 1" class="marginbot">
                          {{headerInfo.Version.DueInstallName}}: ({{headerInfo.Version.DueInstall}}%)
                          <span>$ {{headerInfo.Version.InstallAmt | number : '.2-2'}}</span>
                       </ion-row>
-                      <ion-row *ngIf="headerInfo.Version.PayTypeID == 2">
+                      <ion-row *ngIf="headerInfo.Version.PayTypeID == 2" class="marginbot">
                           Pay Terms: <span class="b-Color">{{headerInfo.Version.PaymentTerm}}</span>
                           <span>$ {{((headerInfo.Version.TotalAmt + headerInfo.Version.TaxAmt) - (headerInfo.Version.DiscountAmt))| number : '.2-2'}}</span>
                       </ion-row>
@@ -197,7 +197,6 @@
                         </ion-row>
                     </ion-col>
                 </ion-row>
-              
             </ion-list>
         </ion-col>
         

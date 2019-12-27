@@ -25,6 +25,11 @@ export class QuotepostService {
     var model = JSON.stringify(item);
     return this.http.post<any>(this.url + 'api/QSave/ActionSavePoItem', model, { headers: { 'Content-Type': 'application/json' } })
   }
+  //Quote Contacts Save Function
+  ActionSaveJobQuoteContact(qcon: any): Observable<any> {
+    var info = JSON.stringify(qcon);
+    return this.http.post<any>(this.url + 'api/Quote/SaveJobQuoteContacts', info, { headers: { 'Content-Type': 'application/json' } })
+  }
 
   /************************* Item Level Save Functions ***************************************/
 

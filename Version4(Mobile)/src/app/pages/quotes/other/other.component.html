@@ -1,0 +1,49 @@
+<ion-list class="liststy" *ngIf="selectedtabtype == 1">
+  <ion-label>Material</ion-label>
+</ion-list>
+<ion-list class="ion-no-margin" *ngIf="selectedtabtype == 2">
+  <ion-row  class="paddzero" style="font-size: 13px;">
+    <ion-col size="1">&nbsp;</ion-col>
+    <ion-col size="7"><b>Description</b></ion-col>
+    <ion-col size="2" class="text-right"><b>Qty</b></ion-col>
+    <ion-col size="2" class="text-right"><b>Amt</b></ion-col>
+  </ion-row>
+  <ion-row *ngFor="let sink of headerInfo.Version.SinkList">
+  <ion-row>
+    <ion-col size="1">1.</ion-col>
+    <ion-col size="7">{{sink.Description}}</ion-col>
+    <ion-col size="2" class="text-right">{{sink.NoOfUnits * sink.JobQty}}</ion-col>
+    <ion-col size="2" class="text-right">{{sink.Amount}}</ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="3" class="text-center"><ion-icon name="cart"></ion-icon></ion-col>
+    <ion-col size="6" class="text-center">{{sink.AreaName}}</ion-col>
+    <ion-col size="2" class="text-right">Sink</ion-col>
+  </ion-row>
+</ion-row>
+</ion-list>
+<ion-list class="liststy" *ngIf="selectedtabtype == 3">
+  <ion-label>Addons</ion-label>
+</ion-list>
+<ion-toolbar style="margin-top: 350px;">
+  <ion-tabs style="height:45px">  
+    <ion-tab-bar slot="bottom" color="light">  
+      <ion-tab-button (click)="ActionLoadTabInfo(1)">  
+        <ion-icon name="book"></ion-icon>  
+        <ion-label>Material</ion-label>  
+      </ion-tab-button>  
+        
+      <ion-tab-button (click)="ActionLoadTabInfo(2)">  
+        <ion-icon name="mail"></ion-icon>  
+        <ion-label>Sinks</ion-label>  
+      </ion-tab-button>  
+  
+      <ion-tab-button (click)="ActionLoadTabInfo(3)">  
+        <ion-icon name="document"></ion-icon>  
+        <ion-label>Addons</ion-label>  
+      </ion-tab-button>  
+  
+    </ion-tab-bar>  
+  </ion-tabs> 
+  </ion-toolbar>
+    

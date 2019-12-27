@@ -44,8 +44,8 @@
             ],
             "scripts": [
                "./node_modules/jquery/jquery-1.8.3.min.js","./node_modules/@drawingjs/d3.min.js", 
-              "./node_modules/@drawingjs/drawing3.js","./node_modules/@drawingjs/quotebridge3.js",
-              "./node_modules/@drawingjs/layout3.js", "./node_modules/@drawingjs/shapedraw3.js",
+              "./node_modules/@drawingjs/drawing3.js", "./node_modules/@drawingjs/shapedraw3.js",
+              "./node_modules/@drawingjs/quotebridge3.js","./node_modules/@drawingjs/layout3.js",
               "./node_modules/@drawingjs/shapepart3.js", "./node_modules/@drawingjs/shapesides3.js",
               "./node_modules/@drawingjs/shapetools3.js", "./node_modules/@drawingjs/sideangles3.js",
               "./node_modules/@drawingjs/sidecorners3.js", "./node_modules/@drawingjs/sidecutouts3.js",

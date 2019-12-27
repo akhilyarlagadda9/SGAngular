@@ -26,7 +26,9 @@ export class QuoteService {
   }
 /********** COMMON LISTS ******************/
 
-
+QuoteDictionaryLists(tIdList:any):Observable<any> {
+  return this.http.get<any>(appUrl +  'api/QuoteAdmin/QuoteDictionaryLists?typeIdList=' + tIdList)
+}
 
 
 
@@ -35,6 +37,11 @@ ActionGetInvoiceList(custID:number, quoteID:number):Observable<any>{
   return this.http.get<any>(this.url +  'api/accReceivable/QuoteInvoiceList?custID=' + custID + "&quoteID=" + quoteID) 
 }
 
-
+/***********************************************Save Methods************************************/
+ //Fabrication Save Function
+ Actionsavepartfabrication(item: any): Observable<any> {
+  var model = JSON.stringify(item);
+  return this.http.post<any>(this.url + 'api/QSave/ActionSavePartFabrication', model, { headers: { 'Content-Type': 'application/json' } })
+}
 
 }

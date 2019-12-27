@@ -43,11 +43,7 @@ export class QuotepostService {
     var parameter = JSON.stringify(sobj.SlabList);
     return this.http.post<any>(this.url + 'api/QSave/ActionSaveSizes?verId=' + sobj.selectedpart.VersionID + '&areaId=' + sobj.selectedpart.AreaID + '&partId=' + sobj.selectedpart.ID + '&deliveryfee=' + sobj.deliveryFee + '&matId=' + sobj.materialId, parameter,{ headers: { 'Content-Type': 'application/json' } })
   }
-   //Fabrication Save Function
-   Actionsavepartfabrication(item: any): Observable<any> {
-    var model = JSON.stringify(item);
-    return this.http.post<any>(this.url + 'api/QSave/ActionSavePartFabrication', model, { headers: { 'Content-Type': 'application/json' } })
-  }
+  
   //Splash Save Function
   Actionsavepartsplash(item: any): Observable<any> {
     var model = JSON.stringify(item);

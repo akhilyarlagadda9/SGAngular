@@ -59,9 +59,6 @@ export class AreainfoComponent implements OnInit {
       //this.ActionGetPartInfo(this.partlist[0].VersionID, this.partlist[0].AreaID, this.partlist[0].ID, 0);
       if (length > 0) {
         this.ActionGetPartInfo(this.partlist[0].ID);
-        let areaindex = this.getareaindexbyareaid(area.ID);
-        QBRinitdrawing('quote');
-        QBRinitdrawarea(areaindex, 'quote');
       }
     }
   }
@@ -72,7 +69,10 @@ export class AreainfoComponent implements OnInit {
     let result = this.service.ActionPartInfo(this.areaInfo.VersionID, this.areaInfo.ID, partId, 0).subscribe(
       data => {
         this.partinfo = data;
-
+        QBRinitAreadrawing('quote');
+        let areaindex = this.getareaindexbyareaid(this.areaInfo.ID);
+        QBRinitdrawingareapartshape(partId, this.areaInfo);
+        QBRinitdrawarea(areaindex, 'quote');
       },
       error => console.log(error));
   }

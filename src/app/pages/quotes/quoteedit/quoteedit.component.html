@@ -34,6 +34,10 @@
                 <div class="mar-top5"><span style="font-size:11px;">Activities</span></div>
             </ion-col>
             <ion-col class="paddtopzero" (click)="ActionLoadTabInfo(5)">
+                <img src="assets/img/coin-us-dollar-icon.png" alt="your image" style="width:35px;height:35px;"  >
+                <div class="mar-top5"><span style="font-size:11px;">Accounts</span></div>
+               </ion-col>
+            <ion-col class="paddtopzero" (click)="ActionLoadTabInfo(6)">
                 <img src="assets/img/marbles-icon.png" alt="your image" style="width:35px;height:35px;">
                 <div class="mar-top5"><span style="font-size:11px;">Other</span></div>
             </ion-col>
@@ -43,6 +47,8 @@
 
 
 <ion-content>
+
+      
     <ion-row [ngSwitch]="selectedtabtype">
         <ion-col *ngSwitchCase="1">
             <ion-row style="background:#ddd">
@@ -203,14 +209,17 @@
         <ion-col *ngSwitchCase="2">
           <app-areainfo [Version]="headerInfo.Version"></app-areainfo>
         </ion-col>
-        <ion-col *ngSwitchCase="3">
+        <div *ngSwitchCase="3">
+            
           <app-commhub [Version]="headerInfo.Version"></app-commhub>
-        </ion-col>
+            </div>
         <ion-col *ngSwitchCase="4">
          <app-activities [VersionId]="headerInfo.Version.ID" [PhaseId]="0"></app-activities>
         </ion-col>
         <ion-col *ngSwitchCase="5">
-
+            <app-accounts [custID]="headerInfo.Version.CustomerID" [quoteID]="headerInfo.ID"></app-accounts>
+        </ion-col>
+        <ion-col *ngSwitchCase="6">
         </ion-col>
     </ion-row>
 </ion-content>

@@ -10,17 +10,14 @@ import { QuoteService } from 'src/app/service/quote.service';
   inputs: [`custID`,`quoteID`]
 })
 export class AccountsComponent implements OnInit {
-  //public Version: any;
-  custID :number;
-  quoteID :number;
+  public custID: any;
+  public quoteID: any;
   accountlist :any = [];
 
   constructor( public Modalcntrl : ModalController, private getservice: QuotegetService, private service : QuoteService ) { }
-
   ngOnInit() {
     this.GetAccountList();
   }
-
   GetAccountList() {
     this.service.ActionGetInvoiceList(this.custID, this.quoteID).subscribe(
       data => { this.accountlist = data; console.log(this.accountlist); }

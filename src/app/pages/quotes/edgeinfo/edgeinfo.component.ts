@@ -40,34 +40,27 @@ export class EdgeinfoComponent implements OnInit {
   ActionSelectEdge() {
     let typeIdList = []; typeIdList.push(5); 
     this.getservice.qsgetpricelistitems(this.priceListID,typeIdList).subscribe(
-      data => { this.edgelist = data[0] },
+      data => { this.edgelist = data[0] ; console.log(this.edgelist);},
       error => console.log(error));
   }
 
-  ActionSaveEdge(edg:any){
+  ActionSaveEdge(){
     this.submitted = true;
     if (this.registerForm.valid) {
-      this.postservice.ActionsavepartEdge(edg).subscribe(data => {
-      this.item = data.EdgeList;
-      this.ActionCloseEdge(true);
+      this.postservice.ActionsavepartEdge(this.edge).subscribe(data => {
+     // this.item = data.EdgeList;
+      this.ActionCloseEdge(false);
     });
   }
     
   }
   get f() { return this.registerForm.controls; }
   ActionCloseEdge(issave:boolean) {
-    if(issave == true){
-      let edg = { edge : this.item}
-      this.Modalcntrl.dismiss({
-        'dismissed': true,
-        componentProps: edg,
-        issave: issave
-      });
-    }else{
-      this.Modalcntrl.dismiss({
-        'dismissed': true,
-        issave: issave
-      });
+    let edg = { edge : this.item}
+    this.Modalcntrl.dismiss({
+      'dismissed': true,
+      componentProps: edg,
+      issave: issave
+    });
     }
-  }
 }

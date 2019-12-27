@@ -1,43 +1,51 @@
-
-
-    <ion-toolbar class="poss">
-      <ion-title class="titleheader">Measurement</ion-title>
-      <ion-button slot="end" color="success" size="small" type="submit" (click)="ActionSaveMeasurement(fab)">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose(false)">X</ion-button>
-    </ion-toolbar>
-    
-    <div  *ngFor="let sizeInfo of fab.MeasureList;let i=index">
-      <ion-col size="1"> 
-        <ion-icon name="trash" style="font-size: 14px;color: red;" (click)="ActionDelete(index)">
-        </ion-icon>
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="titleheader">Measurement</ion-title>
+    <ion-button slot="end" color="success" size="small" type="submit" (click)="ActionSaveMeasurement(fab)">Save
+    </ion-button>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionToClose(false)">X</ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list class="ion-no-margin ion-no-padding" *ngFor="let sizeInfo of fab.MeasureList;let i=index">
+    <ion-row>
+      <ion-col size="1">
+        <ion-icon name="trash" class="trashsty" (click)="ActionDelete(index)"></ion-icon>
       </ion-col>
       <ion-col size="11">
-      <ion-item>
-        <ion-label class="labelfont margin-top" position="floating" color="primary">Counter Type</ion-label>
-        <ion-select [(ngModel)]="sizeInfo.CounterType" name="CounterType" >
-          <ion-select-option *ngFor="let c of countertypes"> <span>{{c.Name}}</span></ion-select-option>
-        </ion-select>
-      </ion-item></ion-col>
+        <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary">Counter Type</ion-label>
+          <ion-select [(ngModel)]="sizeInfo.CounterType" name="CounterType">
+            <ion-select-option *ngFor="let c of countertypes"> <span>{{c.Name}}</span></ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
       <ion-item>
         <ion-col size="3">
-          <ion-input type="text" [(ngModel)]="sizeInfo.Width" name="Width" class="measuresty" (click)="ActionSetSqft(sizeInfo,0)">
+          <ion-input type="text" [(ngModel)]="sizeInfo.Width" name="Width" class="measuresty"
+            (click)="ActionSetSqft(sizeInfo,0)">
           </ion-input>
         </ion-col>
         <ion-col size="1">X</ion-col>
         <ion-col size="3">
-          <ion-input type="text" [(ngModel)]="sizeInfo.Height" name="Height" class="measuresty" (click)="ActionSetSqft(sizeInfo,0)">
+          <ion-input type="text" [(ngModel)]="sizeInfo.Height" name="Height" class="measuresty"
+            (click)="ActionSetSqft(sizeInfo,0)">
           </ion-input>
         </ion-col>
         <ion-col size="1">=</ion-col>
         <ion-col size="3">
-          <ion-input type="text" [(ngModel)]="sizeInfo.Sqft" name="Sqft" class="measuresty" (click)="ActionSetFabSqft()">
+          <ion-input type="text" [(ngModel)]="sizeInfo.Sqft" name="Sqft" class="measuresty"
+            (click)="ActionSetFabSqft()">
           </ion-input>
         </ion-col>
-      </ion-item >
-    </div>
+      </ion-item>
+    </ion-row>
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
       <ion-input type="text" readonly="readonly" class="labelfont" [(ngModel)]="fab.PartSqft" name="PartSqft">
       </ion-input>
     </ion-item>
-
+  </ion-list>
+</ion-content>

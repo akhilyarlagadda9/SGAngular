@@ -54,7 +54,7 @@
               "./node_modules/@drawingjs/sidesplashseams3.js", "./node_modules/@drawingjs/sidesplashshapes3.js",
               "./node_modules/@drawingjs/slabparts3.js", "./node_modules/@drawingjs/slabshape3.js",
               "./node_modules/@drawingjs/slabsplashs3.js", "./node_modules/@drawingjs/slabsplashseams3.js",
-              "./node_modules/@drawingjs/vectormath3.js","./node_modules/@drawingjs/drawinglog3.js"             
+              "./node_modules/@drawingjs/vectormath3.js", "./node_modules/@drawingjs/drawinglog3.js"             
             ]
           },
           "configurations": {

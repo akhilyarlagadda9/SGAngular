@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { QuotepostService } from 'src/app/service/quotepost.service';
+import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-fabrication',
@@ -11,9 +11,9 @@ import { QuotepostService } from 'src/app/service/quotepost.service';
 })
 export class FabricationComponent implements OnInit {
   fabrication: any;
-  item: any;
+  fablist: any;
 
-  constructor(public Modalcntrl : ModalController, private quoterep : QuoterepService, private formBuilder: FormBuilder, private postservice : QuotepostService) { }
+  constructor(public Modalcntrl : ModalController, private quoterep : QuoterepService, private formBuilder: FormBuilder, private qervice : QuoteService) { }
   registerForm: FormGroup;
   submitted = false;
   ngOnInit() {
@@ -34,26 +34,36 @@ export class FabricationComponent implements OnInit {
   ActionSaveFabrication(fab:any){
     this.submitted = true;
     if (this.registerForm.valid) {
-    this.postservice.Actionsavepartfabrication(fab).subscribe(data => {
-      this.item = data.PartFabList;
-      this.ActionCloseFabrication(true);
+    this.qervice.Actionsavepartfabrication(fab).subscribe(data => {
+      this.fablist = data.PartFabList;
+      this.ActionToClose(true);
     })
   }
   }
 
-  ActionCloseFabrication(issave : boolean) {
-    if(issave == true){
-      let fabrication = { Fab : this.item}
-      this.Modalcntrl.dismiss({
-        'dismissed': true,
-        componentProps: fabrication,
-        issave: issave
-      });
-    }else{
-      this.Modalcntrl.dismiss({
-        'dismissed': true,
-        issave: issave
-      });
-    }
+  ActionToClose(issave : boolean) {
+
+
+    let fabrication = { Fab : this.fablist}
+    this.Modalcntrl.dismiss({
+      'dismissed': true,
+      componentProps: fabrication,
+      issave: issave
+    });
+
+
+    // if(issave == true){
+    //   let fabrication = { Fab : this.item}
+    //   this.Modalcntrl.dismiss({
+    //     'dismissed': true,
+    //     componentProps: fabrication,
+    //     issave: issave
+    //   });
+    // }else{
+    //   this.Modalcntrl.dismiss({
+    //     'dismissed': true,
+    //     issave: issave
+    //   });
+    // }
   }
 }

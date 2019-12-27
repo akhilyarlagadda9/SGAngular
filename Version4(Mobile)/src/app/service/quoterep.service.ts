@@ -118,6 +118,28 @@ export class QuoterepService {
   };
   return custitem;
 }
+
+ Resetsink(sink, productItem) {
+  sink.Description = productItem.Description;
+  sink.JobDes = productItem.Description;
+  sink.ProductDescription = productItem.ProductDescription;
+  sink.Type = productItem.Group;
+  sink.Make = productItem.Make;
+  sink.Model = productItem.Model;
+  sink.Qty = 1; 
+  if (sink.ID == 0) {
+      sink.IsPriceChg = sink.Unitprice != productItem.Price ? true : false;
+      sink.UnitCost = productItem.Cost;
+      sink.Margin = productItem.Margin;
+      sink.UnitPrice = productItem.Price;
+      sink.Amount = sink.UnitPrice;
+  }
+  sink.NoOfBowls = productItem.NoOfBowls;
+  sink.ShapeID = productItem.CutoutShapeID;
+  sink.ProductItemID = productItem.ProductItemID;
+  return sink;
+}
+
   //************************************** ITEM CALC *********************************************/
   calcitemamt(qty, price) {
     let amount: any; if (qty != 0 && price != 0) { amount = (qty * price); } 

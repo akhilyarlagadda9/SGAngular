@@ -96,10 +96,10 @@ export class AreainfoComponent implements OnInit {
   /***** MEASUREMENT DETAILS *****/
   async ActionEditMeasurement(fab: any) {
     let copyobj = JSON.parse(JSON.stringify(fab));
-    let sizes = { sizes: copyobj, priceListID: Number(this.Version.PriceListID) }
+    let fabobj = { fab: copyobj, priceListID: Number(this.Version.PriceListID) }
     const modal = await this.Modalcntrl.create({
       component: MeasurementsComponent,
-      componentProps: sizes
+      componentProps: fabobj
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail.data.issave == true) {

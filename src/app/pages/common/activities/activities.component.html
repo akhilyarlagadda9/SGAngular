@@ -1,3 +1,47 @@
-<p>
-  activities works!
-</p>
+<ion-list class="no-margin border-btm">
+  <ion-row *ngFor="let activity of ActivitiesList,let i = index" class="ion-no-margin">
+    <ion-col size=12 class="paddzero">
+      <ion-row class="paddzero">
+        <ion-col size="7">
+          <span>{{i+1}}. </span>
+          <span>
+            {{activity.ActivityType}}
+          </span>
+        </ion-col>
+        <ion-col>
+          {{activity.SchStartTime | date:'dd/MM'}}
+        </ion-col>
+        <ion-col size="3" class="text-right">
+          <img src="assets/img/Scheduled.png" alt="your image" style="width:20px;height:20px;">
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size=12 class="paddzero" style="font-size:12px">
+      <ion-row>
+        <ion-col size="5">
+          <span>Areas: <b>{{ activity.AreaNames}}</b></span>,
+        </ion-col>
+        <ion-col size="3" class="text-right">
+          <span>Sqft: </span>
+          <span>
+            <b>{{activity.PhaseSF | number: '.2-2'}}</b>
+          </span>,
+        </ion-col>
+        <ion-col>
+          <span>Hours:</span>
+          <span>
+            <b>{{activity.Hrs}} hrs . {{activity.Mins}} min</b>
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="12" class="paddzero" style="font-size:12px">
+       <ion-row>
+          <span>Assigned:</span>
+          <span *ngIf="activity.ResoueceName != null && activity.ResoueceName != ''">
+            {{activity.ResoueceName}}
+          </span>
+       </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-list>

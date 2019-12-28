@@ -36,7 +36,6 @@ export class QuoteeditComponent implements OnInit {
   public Version: any;
   public PoItemList: any;
   public ParentID: number;
-
   //version: any;
   
 
@@ -181,8 +180,6 @@ ActionLoadVersion(id:number){
     });
     return await modal.present();
   }
- 
-
 }
   
   

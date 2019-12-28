@@ -6,9 +6,9 @@
         <ion-icon name="add-circle-outline" (click)="ActionAddArea()" class="big"></ion-icon>
       </ion-col>
       <ion-col size="9" class="paddzero">
-        <ion-select class="btninfo" interface="popover" [(ngModel)]="areaInfo" name="areaInfo"
-          (ionChange)="ActionPartsByArea(areaInfo, 1)">
-          <ion-select-option *ngFor="let area of arealist" [value]="area">{{area.Name}}</ion-select-option>
+        <ion-select class="btninfo" interface="popover" [(ngModel)]="AreaID" name="AreaID"
+          (ionChange)="ActionPartsByArea(AreaID, 1)">
+          <ion-select-option *ngFor="let area of arealist" [value]="area.ID">{{area.Name}}</ion-select-option>
         </ion-select>
       </ion-col>
     </ion-row>
@@ -21,7 +21,7 @@
       <ion-col size="9" class="paddzero">
         <ion-select class="btninfo" interface="popover" [(ngModel)]="AreaPartID" name="AreaPartID"
           (ionChange)="ActionGetPartInfo(AreaPartID, 1)">
-          <ion-select-option *ngFor="let part of partlist" [value]="part.ID"><span
+          <ion-select-option *ngFor="let part of areaInfo.PartList" [value]="part.ID"><span
               *ngIf="part.Name == '' || part.Name == null">Part{{part.SrNo}}</span>{{part.Name}}</ion-select-option>
         </ion-select>
       </ion-col>

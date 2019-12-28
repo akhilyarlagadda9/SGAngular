@@ -30,7 +30,7 @@ export class CommhubComponent implements OnInit {
     this.selectedtabtype = componet;
   }
  //Comm.Hub Edit Function
-  async ActionEditCommHub(type:any) {debugger;
+  async ActionEditCommHub(type:any) {
     let version = {version : this.Version,TypeId: type}
     const modal = await this.Modalcntrl.create({
       component: CommhubeditComponent,

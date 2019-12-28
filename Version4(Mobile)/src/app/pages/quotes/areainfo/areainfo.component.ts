@@ -71,10 +71,11 @@ export class AreainfoComponent implements OnInit {
   //     error => console.log(error));
   // }
   ActionPartsByArea(areaID: any, parttype: number) {
+    alert("call");
     this.service.ActionQuickPartList(this.Version.ID, areaID, 0, 0).subscribe(data => {
       this.areaInfo = data;
+      this.AreaPartID = data.PartInfo.ID;
       this.partinfo = data.PartInfo;
-      this.AreaPartID = this.partinfo.ID;
       if (this.areaInfo.PartList != null) {
         let length = this.areaInfo.PartList.length;
         if (length > 0) {
@@ -88,8 +89,12 @@ export class AreainfoComponent implements OnInit {
   getareaindexbyareaid(areaid) {
     let areas = _qscope.quote.Version.AreaList; for (let i = 0; i < areas.length; i++) { if (areas[i].ID == areaid) { return i; } }
   }
+
+
+  
   ActionGetPartInfo(partId: number) {
-    let result = this.service.ActionPartInfo(this.areaInfo.VersionID, this.areaInfo.ID, partId, 0).subscribe(
+    debugger;
+    let result = this.service.ActionPartInfo(this.areaInfo.VersionID, this.AreaID, partId, 0).subscribe(
       data => {
         this.partinfo = data;
       },

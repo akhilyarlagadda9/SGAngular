@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { QuoterepService } from 'src/app/service/quoterep.service';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, NgForm } from '@angular/forms';
 import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
@@ -14,12 +14,8 @@ export class FabricationComponent implements OnInit {
   fablist: any;
 
   constructor(public Modalcntrl : ModalController, private quoterep : QuoterepService, private formBuilder: FormBuilder, private qervice : QuoteService) { }
-  registerForm: FormGroup;
-  submitted = false;
+
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      add: ['', Validators.required],
-    });
   }
   ActionSetMargin(typeId:number,model:any,type:string){
     this.fabrication = this.quoterep.margincalculations(typeId,model,type);
@@ -29,14 +25,23 @@ export class FabricationComponent implements OnInit {
     this.fabrication.Amount = this.quoterep.calcitemamt(this.fabrication.Qty,this.fabrication.UnitPrice);
    }
 
-   get f() { return this.registerForm.controls; }  
 
-  ActionSaveFabrication(fab:any){
+
+  /* ActionSaveFabrication(fab:any){
     this.submitted = true;
     if (this.registerForm.valid) {
     this.qervice.Actionsavepartfabrication(fab).subscribe(data => {
       this.fablist = data.PartFabList;
       this.ActionToClose(true);
+    })
+  }
+  } */
+
+  ActionSaveFabrication(form:NgForm){
+    if (form.valid) {
+    this.qervice.Actionsavepartfabrication(this.fabrication).subscribe(data => {
+     // this.sinklist = data.sinkfaucetList;
+      this.ActionToClose(false);
     })
   }
   }

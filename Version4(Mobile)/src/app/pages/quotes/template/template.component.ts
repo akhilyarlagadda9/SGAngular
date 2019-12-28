@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { QuoterepService } from 'src/app/service/quoterep.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { QuotepostService } from 'src/app/service/quotepost.service';
 
 @Component({
@@ -14,13 +14,8 @@ export class TemplateComponent implements OnInit {
   item: any;
 
   constructor(public Modalcntrl: ModalController, private navCntrl: NavParams, private quoterep: QuoterepService, private formBuilder: FormBuilder, private postservice : QuotepostService) { }
-  registerForm: FormGroup;
-  submitted = false;
   TypeID = this.navCntrl.data.TypeID;
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      add: ['', Validators.required],
-    });
     console.log(this.TypeID)
   }
   ActionSetMargin(typeId: number, model: any, type: string) {
@@ -33,13 +28,22 @@ export class TemplateComponent implements OnInit {
     this.labor.Amt = this.labor.Amount;
   }
 
-  get f() { return this.registerForm.controls; } 
-  ActionSaveTemplate(temp:any){
+
+ /*  ActionSaveTemplate(temp:any){
     this.submitted = true;
     if (this.registerForm.valid) {
       this.postservice.Actionsavelabor(temp).subscribe(data => {
       this.item = data.laborList;
       this.ActionCloseTemplate(true);
+    })
+  }
+  } */
+
+  ActionSaveTemplate(form:NgForm){
+    if (form.valid) {
+    this.postservice.Actionsavelabor(this.labor).subscribe(data => {
+     // this.sinklist = data.sinkfaucetList;
+      this.ActionCloseTemplate(false);
     })
   }
   }

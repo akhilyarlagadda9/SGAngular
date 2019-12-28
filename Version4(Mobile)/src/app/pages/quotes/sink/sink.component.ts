@@ -14,7 +14,6 @@ import { OverlayEventDetail } from '@ionic/core';
 export class SinkComponent implements OnInit {
   sinkfaucet: any;
   //registerForm: FormGroup;
-  submitted = false;
   //Description = "";
   sinklist: any = [];
   constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private navParams: NavParams, private quoterep: QuoterepService, private postservice : QuotepostService) { }
@@ -32,8 +31,6 @@ export class SinkComponent implements OnInit {
     this.sinkfaucet.Amt = this.sinkfaucet.Amount;
   }
   ActionSaveSink(form:NgForm){
-    debugger;
-    this.submitted = true;
     if (form.valid) {
     this.postservice.Actionsavepartsink(this.sinkfaucet).subscribe(data => {
      // this.sinklist = data.sinkfaucetList;

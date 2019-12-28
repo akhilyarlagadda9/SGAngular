@@ -11,17 +11,12 @@ import { QuotepostService } from 'src/app/service/quotepost.service';
 })
 export class LaborinfoComponent implements OnInit {
   labor: any;
-  registerForm: FormGroup;
-  submitted = false;
   Des = "";
   item: any;
 
   constructor(public Modalcntrl : ModalController, private quoterep : QuoterepService, private formBuilder: FormBuilder, private postservice : QuotepostService ) { }
 
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      Des: ['', Validators.required],
-    });
   }
   ActionSetMargin(typeId:number,model:any,type:string){
     this.labor = this.quoterep.margincalculations(typeId,model,type);

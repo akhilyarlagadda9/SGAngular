@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams, PopoverController } from '@ionic/angular';
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 import { QuoterepService } from 'src/app/service/quoterep.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { QuotepostService } from 'src/app/service/quotepost.service';
+import { OverlayEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-faucets',
@@ -14,14 +15,9 @@ export class FaucetsComponent implements OnInit {
   faucet: any;
   item: any;
   constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private navParams: NavParams, private postservice: QuotepostService, private quoterep: QuoterepService, private formBuilder: FormBuilder) { }
-  registerForm: FormGroup;
-  submitted = false;
   Description = "";
   faucetinfo = this.navParams.data;
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      Description: ['', Validators.required],
-    });
   }
   ActionSetMargin(typeId: number, model: any, type: string) {
     this.faucet = this.quoterep.margincalculations(typeId, model, type);
@@ -32,11 +28,20 @@ export class FaucetsComponent implements OnInit {
     this.faucet.Amount = this.quoterep.calcitemamt(this.faucet.Qty, this.faucet.UnitPrice);
     this.faucet.Amt = this.faucet.Amount;
   }
-  ActionSaveFaucet(fau:any){
+/*   ActionSaveFaucet(fau:any){
     this.postservice.Actionsavepartfaucet(fau).subscribe(data => {
       this.item = data.faucetList;
       this.ActionCloseFaucet(true);
     })
+  } */
+
+  ActionSaveFaucet(form:NgForm){
+    if (form.valid) {
+    this.postservice.Actionsavepartfaucet(this.faucet).subscribe(data => {
+     // this.sinklist = data.sinkfaucetList;
+      this.ActionCloseFaucet(false);
+    })
+  }
   }
   ActionCloseFaucet(issave:boolean) {
     if(issave == true){
@@ -63,6 +68,13 @@ export class FaucetsComponent implements OnInit {
       componentProps: obj,
       cssClass: "popover_class"
     });
+    popover.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null) {
+        if(detail.data.isselect == true){
+          this.faucet = this.quoterep.Resetsink(this.faucet,detail.data.componentProps);
+        }
+      }
+   });
     return await popover.present();
   }
 

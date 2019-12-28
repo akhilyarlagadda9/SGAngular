@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams, PopoverController } from '@ionic/angular';
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 import { QuoterepService } from 'src/app/service/quoterep.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { QuotepostService } from 'src/app/service/quotepost.service';
+import { OverlayEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-addoninfo',
@@ -15,24 +16,22 @@ export class AddoninfoComponent implements OnInit {
   item: any;
 
   constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private navParams: NavParams, private quoterep: QuoterepService, private formBuilder: FormBuilder, private postservice: QuotepostService) { }
-  registerForm: FormGroup;
-  submitted = false;
+
   Description = "";
   addoninfo = this.navParams.data;
 
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      Description: ['', Validators.required],
-    });
   }
    //Margin Calculation
   ActionSetMargin(typeId: number, model: any, type: string) {
     this.other = this.quoterep.margincalculations(typeId, model, type);
     this.other.Amount = this.quoterep.calcitemamt(this.other.Qty, this.other.UnitPrice);
+    this.other.Amt = this.other.Amount;
   }
    //Total amount Calculation
   ActionSetAmount() {
     this.other.Amount = this.quoterep.calcitemamt(this.other.Qty, this.other.UnitPrice);
+    this.other.Amt = this.other.Amount;
   }
  //Search Function
   async ActionSearchSelect(ev: any, typeid, typeid2) {
@@ -46,6 +45,13 @@ export class AddoninfoComponent implements OnInit {
       componentProps: obj,
       cssClass: "popover_class"
     });
+    popover.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null) {
+        if(detail.data.isselect == true){
+          this.other = this.quoterep.Resetsink(this.other,detail.data.componentProps);
+        }
+      }
+   });
     return await popover.present();
   }
 
@@ -54,15 +60,27 @@ export class AddoninfoComponent implements OnInit {
       'dismissed': true
     });
   }
-  get f() { return this.registerForm.controls; }
+/*   get f() { return this.registerForm.controls; } */
 
-  //Addon Save Function
- ActionSaveAddon(oth:any) {
+  
+/*  ActionSaveAddon(oth:any) {
   this.postservice.Actionsaveaddon(oth).subscribe(data => {
     this.item = data.otherList;
     this.ActionCloseAddon(true);
   })
+} */
+
+//Addon Save Function
+ActionSaveAddon(form:NgForm){
+  if (form.valid) {
+  this.postservice.Actionsaveaddon(this.other).subscribe(data => {
+   // this.sinklist = data.sinkfaucetList;
+    this.ActionCloseAddon(false);
+  })
 }
+}
+
+
 //Addon Close Function
 ActionCloseAddon(issave) {
   if(issave == true){

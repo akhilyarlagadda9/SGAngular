@@ -2,6 +2,7 @@ import { Component, OnInit, TypeProvider } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { QuotepostService } from 'src/app/service/quotepost.service';
 
@@ -12,17 +13,13 @@ import { QuotepostService } from 'src/app/service/quotepost.service';
 })
 export class CutoutinfoComponent implements OnInit {
   cutout: any;
-  registerForm: FormGroup;
-  submitted = false;
   priceListID: any;
   cutoutlist: any = [];
   item: any;
+  cut: any;
   constructor(private formBuilder: FormBuilder,private navCntrl: NavParams, public Modalcntrl: ModalController, private getservice: QuotegetService, private quoterep: QuoterepService, private postservice : QuotepostService) { }
   TypeID = this.navCntrl.data.TypeID;
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      add: ['', Validators.required],
-  });
     this.ActionSelectCutout()
     console.log(this.TypeID)
   }
@@ -38,7 +35,7 @@ export class CutoutinfoComponent implements OnInit {
   }
 
 
-  get f() { return this.registerForm.controls; }  
+/*   get f() { return this.registerForm.controls; }  
 
   ActionSaveCutOut(cut:any){
   this.submitted = true;
@@ -47,6 +44,15 @@ export class CutoutinfoComponent implements OnInit {
       this.item = data.CutList;
       this.ActionCloseCutout(true);
     })
+}
+} */
+
+ActionSaveCutOut(form:NgForm){
+  if (form.valid) {
+  this.postservice.Actionsavepartcutout(this.cutout).subscribe(data => {
+   // this.sinklist = data.sinkfaucetList;
+    this.ActionCloseCutout(false);
+  })
 }
 }
 

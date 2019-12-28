@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { QuotegetService } from 'src/app/service/quoteget.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { QuotepostService } from 'src/app/service/quotepost.service';
 
 @Component({
@@ -12,17 +12,12 @@ import { QuotepostService } from 'src/app/service/quotepost.service';
 })
 export class SplashComponent implements OnInit {
   splash: any;
-  registerForm: FormGroup;
-  submitted = false;
   splashlist: any = [];
   priceListID: any;
   item: any;
-  constructor(private formBuilder: FormBuilder, public Modalcntrl: ModalController, private getservice: QuotegetService, private quoterep: QuoterepService, private postservice: QuotepostService) { }
+  constructor(public Modalcntrl: ModalController, private getservice: QuotegetService, private quoterep: QuoterepService, private postservice: QuotepostService) { }
   ngOnInit() {
     console.log(this.splash);
-    this.registerForm = this.formBuilder.group({
-      Spl: ['', Validators.required],
-    });
     this.ActionSplashTypes();
   }
   ActionSetSqft() {
@@ -40,17 +35,27 @@ export class SplashComponent implements OnInit {
   ActionSplashTypes() {
     let typeIdList = []; typeIdList.push(6);
     this.getservice.qsgetpricelistitems(this.priceListID, typeIdList).subscribe(
-      data => { this.splashlist = data[0] },
+      data => { this.splashlist = data[0] ;console.log(this.splashlist)},
       error => console.log(error));
   }
-  ActionSaveSplash() {
+/*   ActionSaveSplash() {
     if (this.registerForm.valid) {
     this.postservice.Actionsavepartsplash(this.splash).subscribe(data => {
       //this.item = data.SplashList;
       this.ActionCloseSplash(false);
     })
+  } */
+
+  ActionSaveSplash(form:NgForm){
+    if (form.valid) {
+    this.postservice.Actionsavepartsplash(this.splash).subscribe(data => {
+     // this.sinklist = data.sinkfaucetList;
+      this.ActionCloseSplash(false);
+    })
   }
   }
+  
+
   ActionCloseSplash(issave:boolean) {
     let spl = { splash : this.item}
     this.Modalcntrl.dismiss({

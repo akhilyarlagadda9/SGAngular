@@ -1,5 +1,5 @@
 <ion-content>
-  <form name="form" (ngSubmit)="ActionSaveFaucet(faucet)" #f="ngForm">
+  <form #form="ngForm" (ngSubmit)="ActionSaveFaucet(form)">
     <ion-toolbar class="poss">
       <ion-title class="titleheader">Faucet</ion-title>
       <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
@@ -8,15 +8,18 @@
     <ion-item>
       <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
       <ion-input type="text" class="labelfont" [(ngModel)]="faucet.Description" name="Description"
-        #Description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Description.invalid }" class="labelfont"
-        required (keyup.enter)="ActionSearchSelect($event,2,9)"></ion-input>
+      #nameField="ngModel" required (keyup.enter)="ActionSearchSelect($event,2,9)"></ion-input>
       <ion-icon slot="end" class="marg2" name="arrow-dropdown" (click)="ActionSearchSelect($event,2,9)">
       </ion-icon>
       <ion-icon slot="end" class="marg2" name="search" (click)="ActionSearchSelect($event,2,9)"></ion-icon>
     </ion-item>
-    <div *ngIf="f.submitted && Description.invalid" class="invalid-feedback padd-Left">
-      <div *ngIf="Description.errors.required" class="error">Description is required</div>
+    <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
+      <div class="error">Description is required</div>
     </div>
+
+    <!-- <div *ngIf="f.submitted && Description.invalid" class="invalid-feedback padd-Left">
+      <div *ngIf="Description.errors.required" class="error">Description is required</div>
+    </div> -->
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Quantity</ion-label>
       <ion-input type="text" class="labelfont" [(ngModel)]="faucet.Qty" name="Qty" (change)="ActionSetAmount()">

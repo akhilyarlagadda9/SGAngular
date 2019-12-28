@@ -8,7 +8,7 @@
     <ion-item>
       <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
       <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Description" name="Description"
-     #nameField="ngModel" (keyup.enter)="ActionSearchSelect($event,2,8)" required></ion-input>
+      #nameField="ngModel" (keyup.enter)="ActionSearchSelect($event,2,8)" required></ion-input>
       <ion-icon slot="end" class="marg2" name="arrow-dropdown" (click)="ActionSearchSelect($event,2,8)"></ion-icon>
       <ion-icon slot="end" class="marg2" name="search" (click)="ActionSearchSelect($event,2,8)"></ion-icon>
     </ion-item>

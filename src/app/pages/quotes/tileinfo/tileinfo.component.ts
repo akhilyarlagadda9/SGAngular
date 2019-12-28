@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, PopoverController, NavParams } from '@ionic/angular';
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 import { QuoterepService } from 'src/app/service/quoterep.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { QuotepostService } from 'src/app/service/quotepost.service';
+import { OverlayEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-tileinfo',
@@ -11,8 +12,6 @@ import { QuotepostService } from 'src/app/service/quotepost.service';
   styleUrls: ['./tileinfo.component.scss'],
 })
 export class TileinfoComponent implements OnInit {
-  registerForm: FormGroup;
-  submitted = false;
   labor:any;  tile: any;  cabinet: any; carpet: any; appliance: any;  consumable: any;  tool: any;
 
   constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController, private popoverCntrl :PopoverController,private navParams : NavParams,private quoterep:QuoterepService, private postservice : QuotepostService ) { }
@@ -20,18 +19,17 @@ export class TileinfoComponent implements OnInit {
   tileinfo = this.navParams.data;
   
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      add: ['', Validators.required],
-  });
   }
 
 
   ActionSetMargin(typeId:number,model:any,type:string){
     this.labor = this.quoterep.margincalculations(typeId,model,type);
     this.labor.Amount = this.quoterep.calcitemamt(this.labor.Qty,this.labor.UnitPrice);
+    this.labor.Amt = this.labor.Amount;
    }
    ActionSetAmount(){
     this.labor.Amount = this.quoterep.calcitemamt(this.labor.Qty,this.labor.UnitPrice);
+    this.labor.Amt = this.labor.Amount;
    }
   async ActionSearchSelect(ev: any,typeid,productId) {
     let obj={searchTypeId:typeid,producttypeId:productId,search: this.tileinfo.Des == undefined ? "" : this.tileinfo.Des}
@@ -42,6 +40,13 @@ export class TileinfoComponent implements OnInit {
      componentProps:obj,
      cssClass: "popover_class"
    });
+   popover.onDidDismiss().then((detail: OverlayEventDetail) => {
+    if (detail !== null) {
+      if(detail.data.isselect == true){
+        this.labor = this.quoterep.Resetsink(this.labor,detail.data.componentProps);
+      }
+    }
+ });
    return await popover.present();
  }
 
@@ -52,9 +57,8 @@ export class TileinfoComponent implements OnInit {
 }
 
 
-get f() { return this.registerForm.controls; }  
 
-ActionSaveTile(tile:any){
+/* ActionSaveTile(tile:any){
   this.submitted = true;
   if (this.registerForm.valid) {
     this.postservice.Actionsaveparttile(tile).subscribe(data => {
@@ -67,6 +71,15 @@ ActionSaveTile(tile:any){
       this.ActionCloseTile(true);
 
   });
+}
+} */
+
+ActionSaveTile(form:NgForm){
+  if (form.valid) {
+  this.postservice.Actionsavepartsink(this.labor).subscribe(data => {
+   // this.sinklist = data.sinkfaucetList;
+    this.ActionCloseTile(false);
+  })
 }
 }
 

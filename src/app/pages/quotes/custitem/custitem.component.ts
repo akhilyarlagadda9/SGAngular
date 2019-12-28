@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams, PopoverController, } from '@ionic/angular';
 import { QuotepostService } from 'src/app/service/quotepost.service';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, NgForm } from '@angular/forms';
+import { OverlayEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-custitem',
@@ -29,12 +30,23 @@ export class CustitemComponent implements OnInit {
   searchResults: any = [];
 
   ngOnInit() { }
-  ActionSaveCustomerItems(response:any) {
+ /*  ActionSaveCustomerItems(response:any) {
     this.postservice.Actionsavepartcustitem(response).subscribe(data => {debugger;
       this.response = data.responseList;
       this.ActionCloseCustomerItems(true);
     })
+  } */
+
+  ActionSaveCustomerItems(form:NgForm){
+    this.submitted = true;
+    if (form.valid) {
+    this.postservice.Actionsavepartfaucet(this.response).subscribe(data => {
+     // this.sinklist = data.sinkfaucetList;
+      this.ActionCloseCustomerItems(false);
+    })
   }
+  }
+
   ActionCloseCustomerItems(issave:boolean) {
     if(issave == true){
       let response = { Response : this.response}

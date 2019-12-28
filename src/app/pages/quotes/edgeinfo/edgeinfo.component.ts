@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { QuotegetService } from 'src/app/service/quoteget.service';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, NgForm } from '@angular/forms';
 import { QuotepostService } from 'src/app/service/quotepost.service';
 
 @Component({
@@ -11,8 +11,6 @@ import { QuotepostService } from 'src/app/service/quotepost.service';
   styleUrls: ['./edgeinfo.component.scss'],
 })
 export class EdgeinfoComponent implements OnInit {
-  registerForm: FormGroup;
-  submitted = false;
   edge:any = "";
   priceListID: any;
   edgelist: any;
@@ -21,9 +19,6 @@ export class EdgeinfoComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController,private quoterep: QuoterepService,private getservice: QuotegetService, private postservice : QuotepostService) { }
 
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      EdgeProfile: ['', Validators.required],
-  });
     this.ActionSelectEdge(); 
   }
 
@@ -44,6 +39,9 @@ export class EdgeinfoComponent implements OnInit {
       error => console.log(error));
   }
 
+  
+
+  /* ActionSaveEdge(edg:any){
   ActionSaveEdge(){
     this.submitted = true;
     if (this.registerForm.valid) {
@@ -53,8 +51,16 @@ export class EdgeinfoComponent implements OnInit {
     });
   }
     
+  } */
+
+  ActionSaveSink(form:NgForm){
+    if (form.valid) {
+    this.postservice.ActionsavepartEdge(this.edge).subscribe(data => {
+     // this.sinklist = data.sinkfaucetList;
+      this.ActionCloseEdge(false);
+    })
   }
-  get f() { return this.registerForm.controls; }
+  }
   ActionCloseEdge(issave:boolean) {
     let edg = { edge : this.item}
     this.Modalcntrl.dismiss({

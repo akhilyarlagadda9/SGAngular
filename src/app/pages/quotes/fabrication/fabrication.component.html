@@ -8,7 +8,7 @@
   </ion-toolbar>
 </ion-header> -->
 <ion-content>
-  <form [formGroup]="registerForm" (ngSubmit)="ActionSaveFabrication(fab)">
+  <form #form="ngForm" (ngSubmit)="ActionSaveFabrication(form)">
     <ion-toolbar >
       <ion-title class="titleheader">
         <div>Fabrication</div>
@@ -19,11 +19,15 @@
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
       <ion-input type="text" class="labelfont" [(ngModel)]="fabrication.Description" name="Description"
-      formControlName="add" [ngClass]="{ 'is-invalid': submitted && f.add.errors }"></ion-input>
+      #nameField="ngModel" required readonly="readonly"></ion-input>
     </ion-item>
-    <div *ngIf="submitted && f.add.errors"  class="invalid-feedback padd-Left">
+    <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
+      <div class="error">Description is required</div>
+    </div>
+
+    <!-- <div *ngIf="submitted && f.add.errors"  class="invalid-feedback padd-Left">
       <div *ngIf="f.add.errors.required" class="error">Description is required</div>
-  </div>
+  </div> -->
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
       <ion-row> 

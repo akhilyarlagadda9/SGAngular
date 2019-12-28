@@ -1,6 +1,6 @@
 
 <ion-list *ngFor="let area of arealist" class="no-margin border-btm">
-  <ion-row >
+  <ion-row  (click)="ActionAreaSelect(area.ID)">
     <ion-col size="9">{{area.Name}} (#{{area.NoOfUnits}})</ion-col>
     <!-- <ion-col size="2">#P - {{1}}</ion-col> -->
     <ion-col size="3" class="text-right">$ {{area.FinalAreaAmt}}</ion-col>

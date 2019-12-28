@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams, PopoverController } from '@ionic/angular';
+import { ModalController, NavParams, PopoverController, ActionSheetController } from '@ionic/angular';
 import { AddareaComponent } from '../addarea/addarea.component';
 import { SinkComponent } from '../sink/sink.component';
 import { AddoninfoComponent } from '../addoninfo/addoninfo.component';
@@ -19,7 +19,7 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
 import { FabricationComponent } from '../fabrication/fabrication.component';
 import { LaborinfoComponent } from '../laborinfo/laborinfo.component';
 
-declare var _qscope, QBRinitAreadrawing, QBRinitdrawingareapartshape, QBRinitdrawarea: any;
+declare var _qscope, QBRinitdrawing, QBRinitdrawarea: any;
 
 
 @Component({
@@ -30,37 +30,60 @@ declare var _qscope, QBRinitAreadrawing, QBRinitdrawingareapartshape, QBRinitdra
 })
 export class AreainfoComponent implements OnInit {
   public Version: any; coId: number; coSrNo: string;
-  arealist: any = [];
+  arealist: any = []; AreaID: number;
+  //partlist: any = [];
+  AreaPartID: number;
+
   partinfo: any = [];
-  partlist: any = [];
-  areaInfo: any; AreaPartID: number;
+  areaInfo: any = {
+    PartList: [], ID: 0,
+  };
   viewid: any;
-  constructor(private service: QuoteService, public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private quoterep: QuoterepService) { }
+  constructor(private service: QuoteService, public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private quoterep: QuoterepService) {
+  }
   ngOnInit() {
-    this.ActionGetAreaList();
+    this.InitLoad();
+
   }
-  ActionGetAreaList() {
-    let result = this.service.ActionQuickAreaList(this.Version.ID, 0, 0, 0).subscribe(
-      data => {
-        this.arealist = data.VersionAreaList; _qscope.quote.Version.AreaList = this.arealist;
-        if (this.arealist != null) {
-          this.areaInfo = this.arealist[0];
-          this.partinfo = data.PartInfo;
-          this.AreaPartID = this.partinfo == null ? 0 : this.partinfo.ID;
-          this.ActionPartsByArea(this.areaInfo, 0);
-        }
-      },
-      error => console.log(error));
-  }
-  ActionPartsByArea(area: any, parttype: number) {
-    this.partlist = area.PartList;
-    if (this.partlist != null && parttype != 0) {
-      let length = this.partlist.length;
-      //this.ActionGetPartInfo(this.partlist[0].VersionID, this.partlist[0].AreaID, this.partlist[0].ID, 0);
-      if (length > 0) {
-        this.ActionGetPartInfo(this.partlist[0].ID);
-      }
+  InitLoad() {
+    this.Version = _qscope.quote.Version;
+    this.arealist = _qscope.quote.Version.AreaList;
+    if (_qscope.quote.Version.AreaID == 0) {
+      this.AreaID = this.arealist[0].ID;
+    } else {
+      this.AreaID = _qscope.quote.Version.AreaID;
     }
+    this.ActionPartsByArea(this.AreaID, 0);
+  }
+
+
+  // ActionGetAreaList() {
+  //   let result = this.service.ActionQuickAreaList(this.Version.ID, 0, 0, 0).subscribe(
+  //     data => {
+  //       this.arealist = data.VersionAreaList; _qscope.quote.Version.AreaList = this.arealist;
+  //       if (this.arealist != null) {
+  //        this.areaInfo = this.arealist[0];
+  //         this.partinfo = data.PartInfo;
+  //         this.AreaPartID = this.partinfo == null ? 0 : this.partinfo.ID;
+  //         this.ActionPartsByArea(this.areaInfo, 0);
+  //       }
+  //     },
+  //     error => console.log(error));
+  // }
+  ActionPartsByArea(areaID: any, parttype: number) {
+    this.service.ActionQuickPartList(this.Version.ID, areaID, 0, 0).subscribe(data => {
+      this.areaInfo = data;
+      this.partinfo = data.PartInfo;
+      this.AreaPartID = this.partinfo.ID;
+      if (this.areaInfo.PartList != null) {
+        let length = this.areaInfo.PartList.length;
+        if (length > 0) {
+          let areaindex = this.getareaindexbyareaid(areaID);
+          QBRinitdrawing('quote');
+          QBRinitdrawarea(areaindex, 'quote');
+        }
+      }
+    })
   }
   getareaindexbyareaid(areaid) {
     let areas = _qscope.quote.Version.AreaList; for (let i = 0; i < areas.length; i++) { if (areas[i].ID == areaid) { return i; } }
@@ -69,10 +92,6 @@ export class AreainfoComponent implements OnInit {
     let result = this.service.ActionPartInfo(this.areaInfo.VersionID, this.areaInfo.ID, partId, 0).subscribe(
       data => {
         this.partinfo = data;
-        QBRinitAreadrawing('quote');
-        let areaindex = this.getareaindexbyareaid(this.areaInfo.ID);
-        QBRinitdrawingareapartshape(partId, this.areaInfo);
-        QBRinitdrawarea(areaindex, 'quote');
       },
       error => console.log(error));
   }
@@ -96,10 +115,10 @@ export class AreainfoComponent implements OnInit {
   /***** MEASUREMENT DETAILS *****/
   async ActionEditMeasurement(fab: any) {
     let copyobj = JSON.parse(JSON.stringify(fab));
-    let fabobj = { fab: copyobj, priceListID: Number(this.Version.PriceListID) }
+    let sizes = { sizes: copyobj, priceListID: Number(this.Version.PriceListID) }
     const modal = await this.Modalcntrl.create({
       component: MeasurementsComponent,
-      componentProps: fabobj
+      componentProps: sizes
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail.data.issave == true) {

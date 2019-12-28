@@ -39,7 +39,6 @@ export class QuotegetService {
 qsgetquotecontacts(quoteId:any):Observable<any> {
   return this.http.get<any>(this.url +  'api/QuoteRep3/GetQuoteContacts?quoteId=' + quoteId)
 }
-
  //Sales Rep List,Estimator List and Project Managers List
 CustTypeResourceList(parentId:number,typeId:number):Observable<any> {
   return this.http.get<any>(this.url +  'api/QuoteAdmin/CustTypeResourceList?parentID=' + parentId + '&typeId=' + typeId)
@@ -112,7 +111,36 @@ NoteAttachements(Id:number):Observable<any> {
   return this.http.get<any>(this.url +  'api/Quote/NoteAttachements?Id=' + Id)
 }
 
-
+ /*************** Material,Sinks And Addons Sections Get Services **************************/
+ //Quote MaterialList
+ QuotematerialList(verId:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/QEdit/ActionVersionMaterialList?versionID=' + verId)
+ }
+ //Quote SinkList
+ QuotesinksList(verId:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/QEdit/ActionVersionSinkList?versionID=' + verId)
+ }
+ //Quote FaucetList
+ QuotefaucetsList(verId:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/QEdit/ActionVersionFaucetList?versionID=' + verId)
+ }
+ //Quote ApplianceList
+ QuoteappliancesList(verId:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/QEdit/ActionVersionApplianceList?versionID=' + verId)
+ }
+ //Quote ConsumablesList
+ QuoteconsumablesList(verId:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/QEdit/ActionVersionConsumablesList?versionID=' + verId)
+ }
+ //Quote ToolsList
+ QuotetoolsList(verId:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/QEdit/ActionVersionToolsList?versionID=' + verId)
+ }
+ //Quote AddonsList
+ QuoteaddonsList(verId:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/QEdit/ActionVersionAddonList?versionID=' + verId)
+ }
+ 
 // Created Quote
 Preparecustomermodel(header, model) {
   let typeID = header.Version.CustTypeID;

@@ -140,6 +140,10 @@ NoteAttachements(Id:number):Observable<any> {
  QuoteaddonsList(verId:any):Observable<any> {
   return this.http.get<any>(this.url +  'api/QEdit/ActionVersionAddonList?versionID=' + verId)
  }
+ //Quote ActivitiesList
+ QuoteactivitiesList(versionID:number,phaseId:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/QuoteBiddingActivityList?versionID=' + versionID + '&phaseId=' + phaseId)
+ }
  
 // Created Quote
 Preparecustomermodel(header, model) {

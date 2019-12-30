@@ -20,8 +20,8 @@
       </ion-col>
       <ion-col size="9" class="paddzero">
         <ion-select class="btninfo" interface="popover" [(ngModel)]="AreaPartID" name="AreaPartID"
-         >
-          <ion-select-option *ngFor="let part of areaInfo.PartList" [value]="part.ID"  ><span (change)="ActionGetPartInfo(AreaPartID,1)" 
+        (ionBlur)="ActionGetPartInfo(AreaPartID)" >
+          <ion-select-option *ngFor="let part of areaInfo.PartList" [value]="part.ID"  ><span  
               *ngIf="part.Name == '' || part.Name == null">Part{{part.SrNo}}</span>{{part.Name}}</ion-select-option>
         </ion-select>
       </ion-col>

@@ -19,8 +19,7 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
 import { FabricationComponent } from '../fabrication/fabrication.component';
 import { LaborinfoComponent } from '../laborinfo/laborinfo.component';
 
-declare var _qscope, QBRinitdrawing, QBRinitdrawarea: any;
-
+declare var _qscope, QBRinitAreadrawing, QBRinitdrawingareapartshape, QBRinitdrawarea: any;
 
 @Component({
   selector: 'app-areainfo',
@@ -31,12 +30,9 @@ declare var _qscope, QBRinitdrawing, QBRinitdrawarea: any;
 export class AreainfoComponent implements OnInit {
   public Version: any; coId: number; coSrNo: string;
   arealist: any = []; AreaID: number;
-  //partlist: any = [];
-  AreaPartID: number;
-
-  partinfo: any = [];
-  areaInfo: any = {
-    PartList: [], ID: 0,
+  partinfo: any = []; AreaPartID: number;
+   areaInfo: any = {
+    //PartList: [], ID: 0,
   };
   viewid: any;
   constructor(private service: QuoteService, public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private quoterep: QuoterepService) {
@@ -46,7 +42,7 @@ export class AreainfoComponent implements OnInit {
 
   }
   InitLoad() {
-    this.Version = _qscope.quote.Version;
+    //this.Version = _qscope.quote.Version;
     this.arealist = _qscope.quote.Version.AreaList;
     if (_qscope.quote.Version.AreaID == 0) {
       this.AreaID = this.arealist[0].ID;
@@ -71,7 +67,6 @@ export class AreainfoComponent implements OnInit {
   //     error => console.log(error));
   // }
   ActionPartsByArea(areaID: any, parttype: number) {
-    alert("call");
     this.service.ActionQuickPartList(this.Version.ID, areaID, 0, 0).subscribe(data => {
       this.areaInfo = data;
       this.AreaPartID = data.PartInfo.ID;
@@ -79,9 +74,7 @@ export class AreainfoComponent implements OnInit {
       if (this.areaInfo.PartList != null) {
         let length = this.areaInfo.PartList.length;
         if (length > 0) {
-          let areaindex = this.getareaindexbyareaid(areaID);
-          QBRinitdrawing('quote');
-          QBRinitdrawarea(areaindex, 'quote');
+          this.PartDrawing(this.AreaPartID);
         }
       }
     })
@@ -91,14 +84,20 @@ export class AreainfoComponent implements OnInit {
   }
 
 
-  
+
   ActionGetPartInfo(partId: number) {
-    debugger;
     let result = this.service.ActionPartInfo(this.areaInfo.VersionID, this.AreaID, partId, 0).subscribe(
       data => {
         this.partinfo = data;
+        this.PartDrawing(partId);
       },
       error => console.log(error));
+  }
+  PartDrawing(partId: number) {
+    QBRinitAreadrawing('quote');
+    let areaindex = this.getareaindexbyareaid(this.AreaID);
+    QBRinitdrawingareapartshape(partId, this.areaInfo);
+    QBRinitdrawarea(areaindex, 'quote');
   }
   /***** Addarea DETAILS *****/
   async ActionAddArea() {

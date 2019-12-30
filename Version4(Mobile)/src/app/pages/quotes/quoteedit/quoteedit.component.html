@@ -34,9 +34,9 @@
                 <div class="mar-top5"><span style="font-size:11px;">Activities</span></div>
             </ion-col>
             <ion-col class="paddtopzero" (click)="ActionLoadTabInfo(5)">
-                <img src="assets/img/coin-us-dollar-icon.png" alt="your image" style="width:35px;height:35px;"  >
+                <img src="assets/img/coin-us-dollar-icon.png" alt="your image" style="width:35px;height:35px;">
                 <div class="mar-top5"><span style="font-size:11px;">Accounts</span></div>
-               </ion-col>
+            </ion-col>
             <ion-col class="paddtopzero" (click)="ActionLoadTabInfo(6)">
                 <img src="assets/img/marbles-icon.png" alt="your image" style="width:35px;height:35px;">
                 <div class="mar-top5"><span style="font-size:11px;">Other</span></div>
@@ -47,8 +47,6 @@
 
 
 <ion-content>
-
-      
     <ion-row [ngSwitch]="selectedtabtype">
         <ion-col *ngSwitchCase="1">
             <ion-row style="background:#ddd">
@@ -120,38 +118,43 @@
 
             <div>
                 <ion-row style="background:#ddd;">
-                  <ion-col  ><h4 class="no-margin"> Summary</h4></ion-col>
+                    <ion-col>
+                        <h4 class="no-margin"> Summary</h4>
+                    </ion-col>
                 </ion-row>
-                
-               <app-areasummary [VersionId]="headerInfo.Version.ID" ></app-areasummary>
-              </div>
 
-              <ion-list  class="ion-no-margin">
+                <app-areasummary [VersionId]="headerInfo.Version.ID"></app-areasummary>
+            </div>
+
+            <ion-list class="ion-no-margin">
                 <ion-row class="paddzero">
                     <ion-col size="5" class="paddzero">
-                       <ion-row class="marginbot">
-                         <div><b class="fontbold text-right">Payment Schedule</b></div>
-                       </ion-row>
-                       <ion-row *ngIf="headerInfo.Version.PayTypeID == 1" class="marginbot">
-                           {{headerInfo.Version.DueSigningName}}:({{headerInfo.Version.DueSigning}}%)
-                           <span>$ {{headerInfo.Version.SigningAmt| number : '.2-2'}}</span>
-                       </ion-row>
-                       <ion-row *ngIf="headerInfo.Version.PayTypeID == 1 && headerInfo.Version.TeamplateAmt != 0" class="marginbot">
-                          {{headerInfo.Version.DueTeamplateName}}:({{headerInfo.Version.DueTeamplate}}%)
-                          <span>$ $ {{headerInfo.Version.TeamplateAmt| number : '.2-2'}}</span>
-                      </ion-row>
-                      <ion-row *ngIf="headerInfo.Version.PayTypeID == 1" class="marginbot">
-                         {{headerInfo.Version.DueInstallName}}: ({{headerInfo.Version.DueInstall}}%)
-                         <span>$ {{headerInfo.Version.InstallAmt | number : '.2-2'}}</span>
-                      </ion-row>
-                      <ion-row *ngIf="headerInfo.Version.PayTypeID == 2" class="marginbot">
-                          Pay Terms: <span class="b-Color">{{headerInfo.Version.PaymentTerm}}</span>
-                          <span>$ {{((headerInfo.Version.TotalAmt + headerInfo.Version.TaxAmt) - (headerInfo.Version.DiscountAmt))| number : '.2-2'}}</span>
-                      </ion-row>
+                        <ion-row class="marginbot">
+                            <div><b class="fontbold text-right">Payment Schedule</b></div>
+                        </ion-row>
+                        <ion-row *ngIf="headerInfo.Version.PayTypeID == 1" class="marginbot">
+                            {{headerInfo.Version.DueSigningName}}:({{headerInfo.Version.DueSigning}}%)
+                            <span>$ {{headerInfo.Version.SigningAmt| number : '.2-2'}}</span>
+                        </ion-row>
+                        <ion-row *ngIf="headerInfo.Version.PayTypeID == 1 && headerInfo.Version.TeamplateAmt != 0"
+                            class="marginbot">
+                            {{headerInfo.Version.DueTeamplateName}}:({{headerInfo.Version.DueTeamplate}}%)
+                            <span>$ $ {{headerInfo.Version.TeamplateAmt| number : '.2-2'}}</span>
+                        </ion-row>
+                        <ion-row *ngIf="headerInfo.Version.PayTypeID == 1" class="marginbot">
+                            {{headerInfo.Version.DueInstallName}}: ({{headerInfo.Version.DueInstall}}%)
+                            <span>$ {{headerInfo.Version.InstallAmt | number : '.2-2'}}</span>
+                        </ion-row>
+                        <ion-row *ngIf="headerInfo.Version.PayTypeID == 2" class="marginbot">
+                            Pay Terms: <span class="b-Color">{{headerInfo.Version.PaymentTerm}}</span>
+                            <span>$
+                                {{((headerInfo.Version.TotalAmt + headerInfo.Version.TaxAmt) - (headerInfo.Version.DiscountAmt))| number : '.2-2'}}</span>
+                        </ion-row>
                     </ion-col>
                     <ion-col size="7" class="paddzero">
                         <ion-row class="marginbot">
-                            <ion-col size="7" class="fontbold text-right" (click)="ActionSummaryEdit()"><u>Sub Total:</u>
+                            <ion-col size="7" class="fontbold text-right" (click)="ActionSummaryEdit()"><u>Sub
+                                    Total:</u>
                             </ion-col>
                             <ion-col size="5" class="fontbold text-right">&nbsp;$
                                 {{headerInfo.Version.TotalAmt | number : '.2-2'}}</ion-col>
@@ -205,22 +208,20 @@
                 </ion-row>
             </ion-list>
         </ion-col>
-        
         <ion-col *ngSwitchCase="2">
-          <app-areainfo [Version]="headerInfo.Version"></app-areainfo>
+            <app-areainfo [Version]="headerInfo.Version"></app-areainfo>
         </ion-col>
-        <div *ngSwitchCase="3">
-            
-          <app-commhub [Version]="headerInfo.Version"></app-commhub>
-            </div>
+        <ion-col *ngSwitchCase="3">
+          <app-commhub [VersionId]="headerInfo.Version.ID"></app-commhub>
+        </ion-col>
         <ion-col *ngSwitchCase="4">
-         <app-activities [VersionId]="headerInfo.Version.ID" [PhaseId]="0"></app-activities>
+            <app-activities [VersionId]="headerInfo.Version.ID" [PhaseId]="0"></app-activities>
         </ion-col>
         <ion-col *ngSwitchCase="5">
             <!-- <app-other [Version]="headerInfo.Version"></app-other> -->
         </ion-col>
         <ion-col *ngSwitchCase="6">
-            <app-other [Version]="headerInfo.Version"></app-other>
+            <app-other [VersionId]="headerInfo.Version.ID"></app-other>
         </ion-col>
     </ion-row>
 </ion-content>

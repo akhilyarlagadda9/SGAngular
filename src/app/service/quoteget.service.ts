@@ -89,6 +89,10 @@ getsalespersons(parentId:number,typeId:any):Observable<any> {
 }
 
 /*************** COMM.HUB LIST *****************/
+//Quote Notes List
+QuoteNotes(Id:number, typeId:number) {
+  return this.http.get<any>(this.url +  'api/Quote/QuoteNotes?Id=' + Id + "&typeId=" + typeId)
+}
 //Stages List
 processTypeList(typeId:number):Observable<any> {
   return this.http.get<any>(this.url +  'api/Project/ProjectProcessList?typeId=' + typeId)

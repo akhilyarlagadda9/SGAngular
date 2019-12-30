@@ -5,8 +5,8 @@
         <ion-button size="small" class="text-right fontbold">Add Activity</ion-button>
       </ion-col>
     </ion-row>
-  <ion-card class="margintop">
-    <ion-item *ngFor="let activity of ActivitiesList,let i = index">
+  <ion-card class="margintop" *ngFor="let activity of ActivitiesList,let i = index">
+    <ion-item >
      <ion-col size="12" class="paddzero">
       <ion-row class="paddzero">
         <ion-col size="9" class="paddzero">
@@ -18,11 +18,11 @@
         </ion-col>
       </ion-row>
       <ion-row class="paddzero">
-        <ion-col size="10" class="paddzero">
+        <ion-col size="9" class="paddzero">
           <span style="font-size:12px">Assigned:</span>
           <span *ngIf="activity.ResoueceName != null && activity.ResoueceName != ''" class="textsty1 no-margin">{{activity.ResoueceName}}</span>
         </ion-col>
-       <ion-col size="2" style="font-size:12px">{{activity.PhaseSF | number: '.2-2'}}SF</ion-col>
+       <ion-col size="3" style="font-size:12px">{{activity.PhaseSF | number: '.2-2'}}SF</ion-col>
       </ion-row>
       <ion-row class="paddzero">
         <ion-col size="12" class="paddzero" style="font-size:12px">

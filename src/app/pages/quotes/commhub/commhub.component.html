@@ -1,259 +1,138 @@
-<!-- <ion-list class="liststy">
-    <ion-row>
-        <ion-col size="4">
-          <ion-select class="btninfo" interface="popover">
-            <ion-select-option *ngFor="let process of processtypeList" value="Name">{{process.Name}}</ion-select-option>
-          </ion-select>
-        </ion-col>
-        <ion-col size="4">
-          <ion-select class="btninfo" interface="popover">
-            <ion-select-option *ngFor="let process of docFormList" value="Name">{{process.Name}}</ion-select-option>
-          </ion-select>
-        </ion-col>
-        <ion-col size="4">
-          <ion-select class="btninfo" interface="popover">
-            <ion-select-option *ngFor="let process of phaseList" value="Name">{{process.Name}}</ion-select-option>
-          </ion-select>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="9" class="fontbold color-blue">Notes</ion-col>
-        <ion-col size="3" class="text-right">
-          <ion-button (click)="ActionEditCommHub()" size="small" class="text-right fontbold">ADD</ion-button>
-        </ion-col>
-      </ion-row>
-    <ion-card class="margin-bottom" style="margin-top: 0px;">
-      <ion-row class="no-padding paddzero">
-        <ion-col size="1">
-            <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub()"></ion-icon>
-        </ion-col>
-        <ion-col size="10">
-            <ion-row class="marbot">
-                <ion-col class="paddzero text-left textsty paddleft">175645 - Test Customer</ion-col>
-            </ion-row>
-            <ion-row class="marbot">
-                <ion-col class="paddzero text-left paddleft">Alex David&nbsp;- &nbsp;Stoneapp</ion-col>
-            </ion-row>
-            <ion-row class="marbot">
-                <ion-col class="paddzero text-left paddleft">11/15/2019 5.30pm</ion-col>
-            </ion-row>
-        </ion-col>
-        <ion-col size="1">
-            <ion-icon name="download"></ion-icon>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-    <ion-row>
-      <ion-col size="9" class="fontbold color-blue">Email</ion-col>
-      <ion-col size="3" class="text-right">
-        <ion-button (click)="ActionEditCommHub()" size="small" class="text-right fontbold">Compose</ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-card class="margin-bottom" style="margin-top: 0px;">
-      <ion-row class="no-padding paddzero">
-        <ion-col size="1">
-            <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub()"></ion-icon>
-        </ion-col>
-        <ion-col size="10">
-            <ion-row class="marbot">
-                <ion-col class="paddzero text-left textsty paddleft">175645 - Test Customer</ion-col>
-            </ion-row>
-            <ion-row class="marbot">
-                <ion-col class="paddzero text-left paddleft">Alex David&nbsp;- &nbsp;Stoneapp</ion-col>
-            </ion-row>
-            <ion-row class="marbot">
-                <ion-col class="paddzero text-left paddleft">11/15/2019 5.30pm</ion-col>
-            </ion-row>
-        </ion-col>
-        <ion-col size="1">
-            <ion-icon name="download"></ion-icon>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-    <ion-row>
-      <ion-col size="9" class="fontbold color-blue">Forms</ion-col>
-    </ion-row>
-    <ion-card class="margin-bottom" style="margin-top: 0px;">
-      <ion-row class="no-padding paddzero">
-        <ion-col size="1">
-            <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub()"></ion-icon>
-        </ion-col>
-        <ion-col size="10">
-            <ion-row class="marbot">
-                <ion-col class="paddzero text-left textsty paddleft">175645 - Test Customer</ion-col>
-            </ion-row>
-            <ion-row class="marbot">
-                <ion-col class="paddzero text-left paddleft">Alex David&nbsp;- &nbsp;Stoneapp</ion-col>
-            </ion-row>
-            <ion-row class="marbot">
-                <ion-col class="paddzero text-left paddleft">11/15/2019 5.30pm</ion-col>
-            </ion-row>
-        </ion-col>
-        <ion-col size="1">
-            <ion-icon name="download"></ion-icon>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-    <ion-row>
-      <ion-col size="9" class="fontbold color-blue">Files</ion-col>
-      <ion-col size="3" class="text-right">
-        <ion-item>
-          <ion-label position="floating" color="primary" class="margin-zero">View By:</ion-label>
-          <ion-select [(ngModel)]="itemSelected" class="fontbold">
-             <ion-select-option *ngFor="let category of categoryList" [value]="">{{category.Name}}</ion-select-option>
-         </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-</ion-list> --> 
-<!-- <ion-header></ion-header>
-<ion-content></ion-content>
-<ion-footer>
-  <ion-toolbar>
-    <ion-button  class="btn-ion bar-header1" value="" (click)="ActionQuickLoad()">Notes</ion-button>
-    <ion-button  class="btn-ion bar-header1" value="" (click)="ActionQuickLoad()">Email</ion-button>
-    <ion-button  class="btn-ion bar-header1" value="" (click)="ActionQuickLoad()">Files</ion-button>
- </ion-toolbar>
-</ion-footer> -->
-<ion-list class="liststy" *ngIf="selectedtabtype == 1">
+<ion-list class="liststy" *ngIf="selectedhubtype == 1">
   <ion-row>
-      <ion-col size="5">
-        <ion-select class="btninfo" interface="popover">
-          <ion-select-option *ngFor="let process of processtypeList" value="Name">{{process.Name}}</ion-select-option>
-        </ion-select>
-      </ion-col>
-      <ion-col size="4">
-        <ion-select class="btninfo" interface="popover">
-          <ion-select-option *ngFor="let process of phaseList" value="Name">{{process.Name}}</ion-select-option>
-        </ion-select>
-      </ion-col>
-      <ion-col size="3" class="text-right">
-        <ion-button (click)="ActionEditCommHub(1)" size="small" class="text-right fontbold">ADD</ion-button>
-      </ion-col>
-    </ion-row>
+    <ion-col size="5">
+      <ion-select class="btninfo" interface="popover">
+        <ion-select-option *ngFor="let process of processtypeList" value="Name">{{process.Name}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col size="4">
+      <ion-select class="btninfo" interface="popover">
+        <ion-select-option *ngFor="let process of phaseList" value="Name">{{process.Name}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col size="3" class="text-right">
+      <ion-button (click)="ActionEditCommHub(1)" size="small" class="text-right fontbold">ADD</ion-button>
+    </ion-col>
+  </ion-row>
   <ion-card class="margin-bottom" style="margin-top: 0px;">
     <ion-row class="no-padding paddzero">
       <ion-col size="1">
-          <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub()"></ion-icon>
+        <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub(1)"></ion-icon>
       </ion-col>
       <ion-col size="9">
-          <ion-row class="marbot">
-              <ion-col class="paddzero text-left textsty paddleft">175645 - Test Customer</ion-col>
-          </ion-row>
-          <ion-row class="marbot">
-              <ion-col class="paddzero text-left paddleft">Alex David&nbsp;- &nbsp;Stoneapp</ion-col>
-          </ion-row>
-          <ion-row class="marbot">
-              <ion-col class="paddzero text-left paddleft">11/15/2019 5.30pm</ion-col>
-          </ion-row>
+        <ion-row class="marbot">
+          <ion-col class="paddzero text-left textsty paddleft">175645 - Test Customer</ion-col>
+        </ion-row>
+        <ion-row class="marbot">
+          <ion-col class="paddzero text-left paddleft">Alex David&nbsp;- &nbsp;Stoneapp</ion-col>
+        </ion-row>
+        <ion-row class="marbot">
+          <ion-col class="paddzero text-left paddleft">11/15/2019 5.30pm</ion-col>
+        </ion-row>
       </ion-col>
       <ion-col size="2" class="text-right">
         <ion-icon name="download" class="downloadsty"></ion-icon>
         <ion-icon name="cloud-upload" class="uploadsty"></ion-icon>
         <ion-icon name="mail" class="uploadsty"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-list>
+<ion-list class="liststy" *ngIf="selectedhubtype == 2">
+  <ion-row>
+    <ion-col size="6">
+      <ion-select class="btninfo" interface="popover">
+        <ion-select-option *ngFor="let process of processtypeList" value="Name">{{process.Name}}</ion-select-option>
+      </ion-select>
     </ion-col>
-    </ion-row>
-  </ion-card>
-</ion-list> 
-<ion-list class="liststy" *ngIf="selectedtabtype == 2">
-  <ion-row>
-      <ion-col size="6">
-        <ion-select class="btninfo" interface="popover">
-          <ion-select-option *ngFor="let process of processtypeList" value="Name">{{process.Name}}</ion-select-option>
-        </ion-select>
-      </ion-col>
-      <ion-col size="3"></ion-col>
-      <ion-col size="3" class="text-right">
-        <ion-button (click)="ActionEditCommHub(2)" size="small" class="text-right fontbold">Compose</ion-button>
-      </ion-col>
-    </ion-row>
+    <ion-col size="3"></ion-col>
+    <ion-col size="3" class="text-right">
+      <ion-button (click)="ActionEditCommHub(2)" size="small" class="text-right fontbold">Compose</ion-button>
+    </ion-col>
+  </ion-row>
   <ion-card class="margin-bottom" style="margin-top: 0px;">
     <ion-row class="no-padding paddzero">
       <ion-col size="1">
-          <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub()"></ion-icon>
+        <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub(2)"></ion-icon>
       </ion-col>
       <ion-col size="9">
-          <ion-row class="marbot">
-              <ion-col class="paddzero text-left textsty paddleft">175645 - Test Customer</ion-col>
-          </ion-row>
-          <ion-row class="marbot">
-              <ion-col class="paddzero text-left paddleft">Alex David&nbsp;- &nbsp;Stoneapp</ion-col>
-          </ion-row>
-          <ion-row class="marbot">
-              <ion-col class="paddzero text-left paddleft">11/15/2019 5.30pm</ion-col>
-          </ion-row>
-      </ion-col>
-        <ion-col size="2" class="text-right">
-          <ion-icon name="download" class="downloadsty"></ion-icon>
-          <ion-icon name="cloud-upload" class="uploadsty"></ion-icon>
-          <ion-icon name="mail" class="uploadsty"></ion-icon>
-      </ion-col>
-    </ion-row>
-  </ion-card>
-</ion-list> 
-<ion-list class="liststy" *ngIf="selectedtabtype == 3">
-  <ion-row>
-      <ion-col size="5">
-        <ion-select class="btninfo" interface="popover">
-          <ion-select-option *ngFor="let process of processtypeList" value="Name">{{process.Name}}</ion-select-option>
-        </ion-select>
-      </ion-col>
-      <ion-col size="1"></ion-col>
-      <ion-col size="6" class="text-right">
-        <span style="vertical-align: super;"><b>View By:&nbsp;</b></span>
-        <span>
-          <span><ion-icon name="menu" style="font-size: 25px;line-height: 30px;color: rgb(0, 0, 255);"></ion-icon>&nbsp;&nbsp;</span>
-          <span><ion-icon name="images" style="font-size: 25px;line-height: 30px;color: rgb(0, 0, 255);"></ion-icon></span> 
-        </span>
-      </ion-col>
-    </ion-row>
-  <ion-card class="margin-bottom" style="margin-top: 0px;">
-    <ion-row class="no-padding paddzero">
-      <ion-col size="1">
-          <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub()"></ion-icon>
-      </ion-col>
-      <ion-col size="9">
-          <ion-row class="marbot">
-              <ion-col class="paddzero text-left textsty paddleft">175645 - Test Customer</ion-col>
-          </ion-row>
-          <ion-row class="marbot">
-              <ion-col class="paddzero text-left paddleft">Alex David&nbsp;- &nbsp;Stoneapp</ion-col>
-          </ion-row>
-          <ion-row class="marbot">
-              <ion-col class="paddzero text-left paddleft">11/15/2019 5.30pm</ion-col>
-          </ion-row>
+        <ion-row class="marbot">
+          <ion-col class="paddzero text-left textsty paddleft">175645 - Test Customer</ion-col>
+        </ion-row>
+        <ion-row class="marbot">
+          <ion-col class="paddzero text-left paddleft">Alex David&nbsp;- &nbsp;Stoneapp</ion-col>
+        </ion-row>
+        <ion-row class="marbot">
+          <ion-col class="paddzero text-left paddleft">11/15/2019 5.30pm</ion-col>
+        </ion-row>
       </ion-col>
       <ion-col size="2" class="text-right">
-          <ion-icon name="download" class="downloadsty"></ion-icon>
-          <ion-icon name="cloud-upload" class="uploadsty"></ion-icon>
-          <ion-icon name="mail" class="uploadsty"></ion-icon>
+        <ion-icon name="download" class="downloadsty"></ion-icon>
+        <ion-icon name="cloud-upload" class="uploadsty"></ion-icon>
+        <ion-icon name="mail" class="uploadsty"></ion-icon>
       </ion-col>
     </ion-row>
   </ion-card>
-</ion-list> 
-
-<ion-toolbar style="margin-top: 350px;">
-<ion-tabs style="height:45px">  
-  <ion-tab-bar slot="bottom" color="light">  
-    <ion-tab-button (click)="ActionLoadTabInfo(1)">  
-      <ion-icon name="book"></ion-icon>  
-      <ion-label class="iconsty">Notes</ion-label>  
-    </ion-tab-button>  
-      
-    <ion-tab-button (click)="ActionLoadTabInfo(2)">  
-      <ion-icon name="mail"></ion-icon>  
-      <ion-label class="iconsty">Mail</ion-label>  
-    </ion-tab-button>  
-
-    <ion-tab-button (click)="ActionLoadTabInfo(3)">  
-      <ion-icon name="document"></ion-icon>  
-      <ion-label class="iconsty">Files</ion-label>  
-    </ion-tab-button>  
-
-  </ion-tab-bar>  
-</ion-tabs> 
+</ion-list>
+<ion-list class="liststy" *ngIf="selectedhubtype == 3">
+  <ion-row>
+    <ion-col size="5">
+      <ion-select class="btninfo" interface="popover">
+        <ion-select-option *ngFor="let process of processtypeList" value="Name">{{process.Name}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col size="1"></ion-col>
+    <ion-col size="6" class="text-right">
+      <span style="vertical-align: super;"><b>View By:&nbsp;</b></span>
+      <span>
+        <span>
+          <ion-icon name="menu" style="font-size: 25px;line-height: 30px;color: rgb(0, 0, 255);"></ion-icon>&nbsp;&nbsp;
+        </span>
+        <span>
+          <ion-icon name="images" style="font-size: 25px;line-height: 30px;color: rgb(0, 0, 255);"></ion-icon>
+        </span>
+      </span>
+    </ion-col>
+  </ion-row>
+  <ion-card class="margin-bottom" style="margin-top: 0px;">
+    <ion-row class="no-padding paddzero">
+      <ion-col size="1">
+        <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub(2)"></ion-icon>
+      </ion-col>
+      <ion-col size="9">
+        <ion-row class="marbot">
+          <ion-col class="paddzero text-left textsty paddleft">175645 - Test Customer</ion-col>
+        </ion-row>
+        <ion-row class="marbot">
+          <ion-col class="paddzero text-left paddleft">Alex David&nbsp;- &nbsp;Stoneapp</ion-col>
+        </ion-row>
+        <ion-row class="marbot">
+          <ion-col class="paddzero text-left paddleft">11/15/2019 5.30pm</ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="2" class="text-right">
+        <ion-icon name="download" class="downloadsty"></ion-icon>
+        <ion-icon name="cloud-upload" class="uploadsty"></ion-icon>
+        <ion-icon name="mail" class="uploadsty"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-list>
+<ion-toolbar class="tab-btm">
+  <ion-tabs style="height:45px">
+    <ion-tab-bar slot="bottom" color="light">
+      <ion-tab-button (click)="ActionLoadHubInfo(1)">
+        <ion-icon name="book"></ion-icon>
+        <ion-label class="iconsty">Notes</ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="ActionLoadHubInfo(2)">
+        <ion-icon name="mail"></ion-icon>
+        <ion-label class="iconsty">Mail</ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="ActionLoadHubInfo(3)">
+        <ion-icon name="document"></ion-icon>
+        <ion-label class="iconsty">Files</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-toolbar>
-  
-    
-
-

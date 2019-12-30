@@ -7,15 +7,16 @@ import { QuotegetService } from 'src/app/service/quoteget.service';
   selector: 'app-commhub',
   templateUrl: './commhub.component.html',
   styleUrls: ['./commhub.component.scss'],
-  inputs: [`Version`]
+  inputs: [`VersionId`]
 })
 export class CommhubComponent implements OnInit {
-  Version: any;
+  VersionId: any;
   processtypeList: any;
   docFormList: any;
   phaseList: any;
   selectedhubtype: number = 1;
   type: any;
+  notesList: any;
 
   constructor(public Modalcntrl : ModalController,private getservice: QuotegetService) { }
 
@@ -23,6 +24,7 @@ export class CommhubComponent implements OnInit {
     this.GetprocessstatusList();
     this.GetformsList();
     this.GetphaseList();
+    this.GetQuoteNoteList();
   }
 
   //Tab selection Function
@@ -31,7 +33,7 @@ export class CommhubComponent implements OnInit {
   }
  //Comm.Hub Edit Function
   async ActionEditCommHub(type:any) {
-    let version = {version : this.Version,TypeId: type}
+    let version = {version : this.VersionId,TypeId: type}
     const modal = await this.Modalcntrl.create({
       component: CommhubeditComponent,
       componentProps : version
@@ -53,8 +55,14 @@ export class CommhubComponent implements OnInit {
   }
  //Phase List Function
   GetphaseList() {
-    this.getservice.CommHubPhaseList(this.Version.ID).subscribe(
+    this.getservice.CommHubPhaseList(this.VersionId).subscribe(
       data => { this.phaseList = data; }
+    );
+  }
+  //Quote Notes List
+  GetQuoteNoteList() {
+    this.getservice.QuoteNotes(this.VersionId,0).subscribe(
+      data => { this.notesList = data; }
     );
   }
   

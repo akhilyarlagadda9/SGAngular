@@ -45,6 +45,7 @@
   </ion-row>
 </ion-list>
 <ion-list class="ion-no-margin" *ngIf="selectedtabtype == 2">
+  <ion-label><b>SINKS:</b></ion-label>
   <ion-row *ngFor="let sink of SinkList,let i = index" class="paddzero">
     <ion-col size=12 class="paddzero">
       <ion-row>
@@ -52,7 +53,7 @@
           <span>{{i+1}}.</span>
           <span>
             <span>{{sink.Description}}</span>
-            <span *ngIf="sink.ProductItemID == 0" style="color: red;">(No Match)</span>
+            <span *ngIf="sink.ProductItemID == 0" style="color: red;">(No Match)</span>&nbsp;
           </span>@
           <span class="colorgreen">{{sink.NoOfUnits * sink.JobQty}}</span>
         </ion-col>
@@ -60,171 +61,101 @@
       </ion-row>
     </ion-col>
     <ion-col size=12 class="paddzero" style="font-size:12px">
-      <ion-row>
-        <ion-col size="4">
-          <span>Area: </span>
-          <span>
-            <b>{{sink.AreaName}}</b>
-          </span>,
-        </ion-col>
-        <ion-col size="4" class="text-right">
-          <span>Type : <b>Sink</b></span>,
-        </ion-col>
-        <ion-col>
-          <span>Price/Unit: </span>
-          <span>
-            <b>{{sink.UnitPrice | number : '.2-2'}}</b>
-          </span>
-        </ion-col>
-      </ion-row>
+      <span>Area : <b>{{sink.AreaName}}</b></span>,
+      <span>Price/Unit : <b>{{sink.UnitPrice | number : '.2-2'}}</b></span>
     </ion-col>
-  </ion-row>
-  <ion-row *ngFor="let sink of FaucetList,let i = index" class="paddzero">
-    <ion-col size=12 class="paddzero">
-      <ion-row>
-        <ion-col size="9">
-          <span>{{SinkList.length + i+1}}.</span>
-          <span>
-            <span>{{sink.Description}}</span>
-            <span *ngIf="sink.ProductItemID == 0" style="color: red;">(No Match)</span>
-          </span>@
-          <span class="colorgreen">{{sink.NoOfUnits * sink.JobQty}}</span>
-        </ion-col>
-        <ion-col size="3" class="text-right">$ {{sink.Amount| number : '.2-2'}}</ion-col>
-      </ion-row>
-    </ion-col>
-    <ion-col size=12 class="paddzero" style="font-size:12px">
-      <ion-row>
-        <ion-col size="4">
-          <span>Area: </span>
-          <span>
-            <b>{{sink.AreaName}}</b>
-          </span>,
-        </ion-col>
-        <ion-col size="4" class="text-right">
-          <span>Type : <b>Faucet</b></span>,
-        </ion-col>
-        <ion-col>
-          <span>Price/Unit: </span>
-          <span>
-            <b>{{sink.UnitPrice | number : '.2-2'}}</b>
-          </span>
-        </ion-col>
-      </ion-row>
-    </ion-col>
-  </ion-row>
-  <ion-row *ngFor="let sink of ApplianceList,let i = index" class="paddzero">
-    <ion-col size=12 class="paddzero">
-      <ion-row>
-        <ion-col size="9">
-          <span>{{SinkList.length + FaucetList.length + i+1}}.</span>
-          <span>
-            <span>{{sink.Description}}</span>
-            <span *ngIf="sink.ProductItemID == 0" style="color: red;">(No Match)</span>
-          </span>@
-          <span class="colorgreen">{{sink.NoOfUnits * sink.JobQty}}</span>
-        </ion-col>
-        <ion-col size="3" class="text-right">$ {{sink.Amount| number : '.2-2'}}</ion-col>
-      </ion-row>
-    </ion-col>
-    <ion-col size=12 class="paddzero" style="font-size:12px">
-      <ion-row>
-        <ion-col size="4">
-          <span>Area: </span>
-          <span>
-            <b>{{sink.AreaName}}</b>
-          </span>,
-        </ion-col>
-        <ion-col size="4" class="text-right">
-          <span>Type : <b>Appliance</b></span>,
-        </ion-col>
-        <ion-col>
-          <span>Price/Unit: </span>
-          <span>
-            <b>{{sink.UnitPrice | number : '.2-2'}}</b>
-          </span>
-        </ion-col>
-      </ion-row>
-    </ion-col>
-  </ion-row>
-  <ion-row *ngFor="let sink of ConsumableList,let i = index" class="paddzero">
-    <ion-col size=12 class="paddzero">
-      <ion-row>
-        <ion-col size="9">
-          <span>{{SinkList.length + FaucetList.length + ApplianceList.length + i+1}}.</span>
-          <span>
-            <span>{{sink.Description}}</span>
-            <span *ngIf="sink.ProductItemID == 0" style="color: red;">(No Match)</span>
-          </span>@
-          <span class="colorgreen">{{sink.NoOfUnits * sink.JobQty}}</span>
-        </ion-col>
-        <ion-col size="3" class="text-right">$ {{sink.Amount| number : '.2-2'}}</ion-col>
-      </ion-row>
-    </ion-col>
-    <ion-col size=12 class="paddzero" style="font-size:12px">
-      <ion-row>
-        <ion-col size="4">
-          <span>Area: </span>
-          <span>
-            <b>{{sink.AreaName}}</b>
-          </span>,
-        </ion-col>
-        <ion-col size="4" class="text-right">
-          <span>Type : <b>Consumable</b></span>,
-        </ion-col>
-        <ion-col>
-          <span>Price/Unit: </span>
-          <span>
-            <b>{{sink.UnitPrice | number : '.2-2'}}</b>
-          </span>
-        </ion-col>
-      </ion-row>
-    </ion-col>
-  </ion-row>
-  <ion-row *ngFor="let sink of ToolList,let i = index" class="paddzero">
-    <ion-col size=12 class="paddzero">
-      <ion-row>
-        <ion-col size="9">
-          <span>{{SinkList.length + FaucetList.length + ApplianceList.length + ConsumableList.length + i+1}}.</span>
-          <span>
-            <span>{{sink.Description}}</span>
-            <span *ngIf="sink.ProductItemID == 0" style="color: red;">(No Match)</span>
-          </span>@
-          <span class="colorgreen">{{sink.NoOfUnits * sink.JobQty}}</span>
-        </ion-col>
-        <ion-col size="3" class="text-right">$ {{sink.Amount| number : '.2-2'}}</ion-col>
-      </ion-row>
-    </ion-col>
-    <ion-col size=12 class="paddzero" style="font-size:12px">
-      <ion-row>
-        <ion-col size="4">
-          <span>Area: </span>
-          <span>
-            <b>{{sink.AreaName}}</b>
-          </span>,
-        </ion-col>
-        <ion-col size="4" class="text-right">
-          <span>Type : <b>Tool</b></span>,
-        </ion-col>
-        <ion-col>
-          <span>Price/Unit: </span>
-          <span>
-            <b>{{sink.UnitPrice | number : '.2-2'}}</b>
-          </span>
-        </ion-col>
-      </ion-row>
-    </ion-col>
-  </ion-row>
-</ion-list>
-<ion-list class="ion-no-margin" *ngIf="selectedtabtype == 3">
-  <ion-row *ngFor="let sink of OtherList,let i = index" class="paddzero">
+   </ion-row>
+   <ion-label><b>FAUCETS:</b></ion-label>
+   <ion-row *ngFor="let sink of FaucetList,let i = index" class="paddzero">
     <ion-col size=12 class="paddzero">
       <ion-row>
         <ion-col size="9">
           <span>{{i+1}}.</span>
           <span>
             <span>{{sink.Description}}</span>
-            <span *ngIf="sink.ProductItemID == 0" style="color: red;">(No Match)</span>
+            <span *ngIf="sink.ProductItemID == 0" style="color: red;">(No Match)</span>&nbsp;
+          </span>@
+          <span class="colorgreen">{{sink.NoOfUnits * sink.JobQty}}</span>
+        </ion-col>
+        <ion-col size="3" class="text-right">$ {{sink.Amount| number : '.2-2'}}</ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size=12 class="paddzero" style="font-size:12px">
+      <span>Area : <b>{{sink.AreaName}}</b></span>,
+      <span>Price/Unit : <b>{{sink.UnitPrice | number : '.2-2'}}</b></span>
+    </ion-col>
+   </ion-row>
+   <ion-label><b>APPLIANCES:</b></ion-label>
+   <ion-row *ngFor="let sink of ApplianceList,let i = index" class="paddzero">
+    <ion-col size=12 class="paddzero">
+      <ion-row>
+        <ion-col size="9">
+          <span>{{i+1}}.</span>
+          <span>
+            <span>{{sink.Description}}</span>
+            <span *ngIf="sink.ProductItemID == 0" style="color: red;">(No Match)</span>&nbsp;
+          </span>@
+          <span class="colorgreen">{{sink.NoOfUnits * sink.JobQty}}</span>
+        </ion-col>
+        <ion-col size="3" class="text-right">$ {{sink.Amount| number : '.2-2'}}</ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size=12 class="paddzero" style="font-size:12px">
+      <span>Area : <b>{{sink.AreaName}}</b></span>,
+      <span>Price/Unit : <b>{{sink.UnitPrice | number : '.2-2'}}</b></span>
+    </ion-col>
+   </ion-row>
+   <ion-label><b>CONSUMABLES:</b></ion-label>
+   <ion-row *ngFor="let sink of ConsumableList,let i = index" class="paddzero">
+    <ion-col size=12 class="paddzero">
+      <ion-row>
+        <ion-col size="9">
+          <span>{{i+1}}.</span>
+          <span>
+            <span>{{sink.Description}}</span>
+            <span *ngIf="sink.ProductItemID == 0" style="color: red;">(No Match)</span>&nbsp;
+          </span>@
+          <span class="colorgreen">{{sink.NoOfUnits * sink.JobQty}}</span>
+        </ion-col>
+        <ion-col size="3" class="text-right">$ {{sink.Amount| number : '.2-2'}}</ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size=12 class="paddzero" style="font-size:12px">
+      <span>Area : <b>{{sink.AreaName}}</b></span>,
+      <span>Price/Unit : <b>{{sink.UnitPrice | number : '.2-2'}}</b></span>
+    </ion-col>
+   </ion-row>
+   <ion-label><b>TOOLS:</b></ion-label>
+   <ion-row *ngFor="let sink of ToolList,let i = index" class="paddzero">
+    <ion-col size=12 class="paddzero">
+      <ion-row>
+        <ion-col size="9">
+          <span>{{i+1}}.</span>
+          <span>
+            <span>{{sink.Description}}</span>
+            <span *ngIf="sink.ProductItemID == 0" style="color: red;">(No Match)</span>&nbsp;
+          </span>@
+          <span class="colorgreen">{{sink.NoOfUnits * sink.JobQty}}</span>
+        </ion-col>
+        <ion-col size="3" class="text-right">$ {{sink.Amount| number : '.2-2'}}</ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size=12 class="paddzero" style="font-size:12px">
+      <span>Area : <b>{{sink.AreaName}}</b></span>,
+      <span>Price/Unit : <b>{{sink.UnitPrice | number : '.2-2'}}</b></span>
+    </ion-col>
+   </ion-row>
+</ion-list>
+<ion-list class="ion-no-margin" *ngIf="selectedtabtype == 3">
+  <ion-label><b>ADDONS:</b></ion-label>
+   <ion-row *ngFor="let sink of OtherList,let i = index" class="paddzero">
+    <ion-col size=12 class="paddzero">
+      <ion-row>
+        <ion-col size="9">
+          <span>{{i+1}}.</span>
+          <span>
+            <span>{{sink.Description}}</span>
+            <span *ngIf="sink.ProductItemID == 0" style="color: red;">(No Match)</span>&nbsp;
           </span>@
           <span class="colorgreen">{{sink.NoOfUnits * sink.Qty}}</span>
         </ion-col>
@@ -232,19 +163,10 @@
       </ion-row>
     </ion-col>
     <ion-col size=12 class="paddzero" style="font-size:12px">
-      <ion-row>
-        <ion-col size="4">
-          <span>Type : <b>Addon</b></span>,
-        </ion-col>
-        <ion-col size="4" class="text-right">
-          <span>Price/Unit: </span>
-          <span>
-            <b>{{sink.UnitPrice | number : '.2-2'}}</b>
-          </span>
-        </ion-col>
-      </ion-row>
+      <span>Area : <b>{{sink.AreaName}}</b></span>,
+      <span>Price/Unit : <b>{{sink.UnitPrice | number : '.2-2'}}</b></span>
     </ion-col>
-  </ion-row>
+   </ion-row>
 </ion-list>
 
 <ion-toolbar>

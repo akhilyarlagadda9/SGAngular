@@ -22,18 +22,24 @@ export class OtherComponent implements OnInit {
   constructor(public Modalcntrl : ModalController,private getservice: QuotegetService) { }
 
   ngOnInit() {
+    this.selectedtabtype = 1;
     this.GetMaterialList();
-   // this.GetSinkList();
-    //this.GetFaucetList();
-   // this.GetApplianceList();
-   // this.GetConsumablesList();
-   // this.GetToolsList();
-  //  this.GetAddonsList();
   }
 
    //Tab selection Function
-   ActionLoadTabInfo(componet: any){
-    this.selectedtabtype = componet;
+   ActionLoadTabInfo(tabType: number){
+    this.selectedtabtype = tabType;
+    if(tabType == 1){
+      this.GetMaterialList();
+    }else if(tabType == 2){
+      this.GetSinkList();
+      this.GetFaucetList();
+      this.GetApplianceList();
+      this.GetConsumablesList();
+      this.GetToolsList();
+    }else{
+      this.GetAddonsList();
+    }
   }
   //Material List Function
   GetMaterialList() {

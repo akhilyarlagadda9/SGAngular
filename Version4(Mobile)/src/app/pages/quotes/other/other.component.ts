@@ -6,11 +6,11 @@ import { QuotegetService } from 'src/app/service/quoteget.service';
   selector: 'app-other',
   templateUrl: './other.component.html',
   styleUrls: ['./other.component.scss'],
-  inputs: [`Version`]
+  inputs: [`VersionId`]
 })
 export class OtherComponent implements OnInit {
   selectedtabtype: number;
-  public Version: any;
+  public VersionId: any;
   SinkList: any;
   FaucetList: any;
   ApplianceList: any;
@@ -23,12 +23,12 @@ export class OtherComponent implements OnInit {
 
   ngOnInit() {
     this.GetMaterialList();
-    this.GetSinkList();
-    this.GetFaucetList();
-    this.GetApplianceList();
-    this.GetConsumablesList();
-    this.GetToolsList();
-    this.GetAddonsList();
+   // this.GetSinkList();
+    //this.GetFaucetList();
+   // this.GetApplianceList();
+   // this.GetConsumablesList();
+   // this.GetToolsList();
+  //  this.GetAddonsList();
   }
 
    //Tab selection Function
@@ -37,43 +37,43 @@ export class OtherComponent implements OnInit {
   }
   //Material List Function
   GetMaterialList() {
-    this.getservice.QuotematerialList(this.Version.ID).subscribe(
+    this.getservice.QuotematerialList(this.VersionId).subscribe(
       data => { this.MaterialList = data; }
     );
   }
   //Sink List Function
   GetSinkList() {
-    this.getservice.QuotesinksList(this.Version.ID).subscribe(
+    this.getservice.QuotesinksList(this.VersionId).subscribe(
       data => { this.SinkList = data; }
     );
   }
  //Faucet List Function
  GetFaucetList() {
-  this.getservice.QuotefaucetsList(this.Version.ID).subscribe(
+  this.getservice.QuotefaucetsList(this.VersionId).subscribe(
     data => { this.FaucetList = data; }
   );
 }
 //Appliance List Function
 GetApplianceList() {
-  this.getservice.QuoteappliancesList(this.Version.ID).subscribe(
+  this.getservice.QuoteappliancesList(this.VersionId).subscribe(
     data => { this.ApplianceList = data; }
   );
 }
 //Consumables List Function
 GetConsumablesList() {
-  this.getservice.QuoteconsumablesList(this.Version.ID).subscribe(
+  this.getservice.QuoteconsumablesList(this.VersionId).subscribe(
     data => { this.ConsumableList = data; }
   );
 }
 //Tool List Function
 GetToolsList() {
-  this.getservice.QuotetoolsList(this.Version.ID).subscribe(
+  this.getservice.QuotetoolsList(this.VersionId).subscribe(
     data => { this.ToolList = data; }
   );
 }
 //Tool List Function
 GetAddonsList() {
-  this.getservice.QuoteaddonsList(this.Version.ID).subscribe(
+  this.getservice.QuoteaddonsList(this.VersionId).subscribe(
     data => { this.OtherList = data; }
   );
 }

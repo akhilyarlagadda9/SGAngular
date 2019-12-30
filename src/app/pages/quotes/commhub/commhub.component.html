@@ -14,20 +14,20 @@
       <ion-button (click)="ActionEditCommHub(1)" size="small" class="text-right fontbold">ADD</ion-button>
     </ion-col>
   </ion-row>
-  <ion-card class="margin-bottom" style="margin-top: 0px;">
+  <ion-card class="margin-bottom" style="margin-top: 0px;" *ngFor="let note of notesList">
     <ion-row class="no-padding paddzero">
       <ion-col size="1">
         <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub(1)"></ion-icon>
       </ion-col>
       <ion-col size="9">
         <ion-row class="marbot">
-          <ion-col class="paddzero text-left textsty paddleft">175645 - Test Customer</ion-col>
+          <ion-col class="paddzero text-left textsty paddleft">{{note.Subject}}</ion-col>
         </ion-row>
         <ion-row class="marbot">
-          <ion-col class="paddzero text-left paddleft">Alex David&nbsp;- &nbsp;Stoneapp</ion-col>
+          <ion-col class="paddzero text-left paddleft">{{note.User}}</ion-col>
         </ion-row>
         <ion-row class="marbot">
-          <ion-col class="paddzero text-left paddleft">11/15/2019 5.30pm</ion-col>
+          <ion-col class="paddzero text-left paddleft">{{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</ion-col>
         </ion-row>
       </ion-col>
       <ion-col size="2" class="text-right">

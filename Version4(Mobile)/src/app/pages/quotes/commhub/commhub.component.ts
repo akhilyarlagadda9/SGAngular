@@ -14,7 +14,7 @@ export class CommhubComponent implements OnInit {
   processtypeList: any;
   docFormList: any;
   phaseList: any;
-  selectedtabtype: number;
+  selectedhubtype: number = 1;
   type: any;
 
   constructor(public Modalcntrl : ModalController,private getservice: QuotegetService) { }
@@ -26,8 +26,8 @@ export class CommhubComponent implements OnInit {
   }
 
   //Tab selection Function
-  ActionLoadTabInfo(componet: any){
-    this.selectedtabtype = componet;
+  ActionLoadHubInfo(componet: any){
+    this.selectedhubtype = componet;
   }
  //Comm.Hub Edit Function
   async ActionEditCommHub(type:any) {

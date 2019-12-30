@@ -1,47 +1,36 @@
-<ion-list class="no-margin border-btm">
-  <ion-row *ngFor="let activity of ActivitiesList,let i = index" class="ion-no-margin">
-    <ion-col size=12 class="paddzero">
+<ion-list class="no-margin">
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col size="4" class="text-right">
+        <ion-button size="small" class="text-right fontbold">Add Activity</ion-button>
+      </ion-col>
+    </ion-row>
+  <ion-card class="margintop">
+    <ion-item *ngFor="let activity of ActivitiesList,let i = index">
+     <ion-col size="12" class="paddzero">
       <ion-row class="paddzero">
-        <ion-col size="7">
-          <span>{{i+1}}. </span>
-          <span>
-            {{activity.ActivityType}}
-          </span>
+        <ion-col size="9" class="paddzero">
+            <h2 class="textsty no-margin">{{activity.ActivityType}}</h2>
         </ion-col>
-        <ion-col>
-          {{activity.SchStartTime | date:'dd/MM'}}
+        <ion-col size="3" style="display: flex;" class="paddzero">
+            <span class="no-margin" style="font-size:12px">{{activity.SchStartTime | date:'dd/MM'}}</span> &nbsp; &nbsp; 
+            <img src="assets/img/Scheduled.png" alt="your image" style="width:15px;height:15px;">
         </ion-col>
-        <ion-col size="3" class="text-right">
-          <img src="assets/img/Scheduled.png" alt="your image" style="width:20px;height:20px;">
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col size="10" class="paddzero">
+          <span style="font-size:12px">Assigned:</span>
+          <span *ngIf="activity.ResoueceName != null && activity.ResoueceName != ''" class="textsty1 no-margin">{{activity.ResoueceName}}</span>
+        </ion-col>
+       <ion-col size="2" style="font-size:12px">{{activity.PhaseSF | number: '.2-2'}}SF</ion-col>
+      </ion-row>
+      <ion-row class="paddzero">
+        <ion-col size="12" class="paddzero" style="font-size:12px">
+          <span>Areas : <b>{{ activity.AreaNames}}</b></span>,
+          <span>Hrs : <b>{{activity.Hrs}}:{{activity.Mins}}</b></span>
         </ion-col>
       </ion-row>
     </ion-col>
-    <ion-col size=12 class="paddzero" style="font-size:12px">
-      <ion-row>
-        <ion-col size="5">
-          <span>Areas: <b>{{ activity.AreaNames}}</b></span>,
-        </ion-col>
-        <ion-col size="3" class="text-right">
-          <span>Sqft: </span>
-          <span>
-            <b>{{activity.PhaseSF | number: '.2-2'}}</b>
-          </span>,
-        </ion-col>
-        <ion-col>
-          <span>Hours:</span>
-          <span>
-            <b>{{activity.Hrs}} hrs . {{activity.Mins}} min</b>
-          </span>
-        </ion-col>
-      </ion-row>
-    </ion-col>
-    <ion-col size="12" class="paddzero" style="font-size:12px">
-       <ion-row>
-          <span>Assigned:</span>
-          <span *ngIf="activity.ResoueceName != null && activity.ResoueceName != ''">
-            {{activity.ResoueceName}}
-          </span>
-       </ion-row>
-    </ion-col>
-  </ion-row>
+    </ion-item>
+  </ion-card>
 </ion-list>

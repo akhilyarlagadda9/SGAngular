@@ -12,12 +12,12 @@
 <ion-content>
   <ion-list>
       <ion-item >
-          <ion-col (click)="ActionLoadQuote()" (click)=" showLoader()">
+          <ion-col (click)="ActionLoadModule('/home/quotelist')" (click)=" showLoader()">
               <h2>  <ion-icon name="logo-buffer" style="color:rgb(148, 24, 117)"></ion-icon> Quoting</h2>
         </ion-col>
       </ion-item>
       <ion-item >
-        <ion-col>
+        <ion-col (click)="ActionLoadModule('/home/scheduling')">
             <h2><ion-icon name="calendar" style="color: rgb(218, 101, 58);"></ion-icon> Scheduling</h2></ion-col>
       </ion-item>
       <ion-item >

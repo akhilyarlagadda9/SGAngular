@@ -12,22 +12,22 @@
         <ion-col size="11" class="paddzero">
           <ion-row>
             <ion-col size="10"><h2 class="textsty no-margin">{{activity.ActivityType}}</h2></ion-col>
-            <ion-col size="2" class="text-right"><span style="font-size:12px;display: flex;">{{activity.SchStartTime | date:'dd/MM'}}</span></ion-col>
+            <ion-col size="2" class="text-right datesty"><span>{{activity.SchStartTime | date:'dd/MM'}}</span></ion-col>
           </ion-row> 
         </ion-col>
-        <ion-col size="1" style="display: flex;" class="paddzero">
-            <img src="assets/img/Scheduled.png" alt="your image" style="width:20px;height:20px;">
+        <ion-col size="1" class="paddzero flex">
+            <img src="assets/img/Scheduled.png" alt="your image" class="imgsty">
         </ion-col>
       </ion-row>
       <ion-row class="paddzero">
         <ion-col size="9" class="paddzero">
-          <span style="font-size:12px">Assigned:</span>
+          <span class="font12">Assigned:</span>
           <span *ngIf="activity.ResoueceName != null && activity.ResoueceName != ''" class="textsty1 no-margin">{{activity.ResoueceName}}</span>
         </ion-col>
-       <ion-col size="3" style="font-size:12px" class="text-right">{{activity.PhaseSF | number: '.2-2'}}SF</ion-col>
+       <ion-col size="3" class="text-right font12">{{activity.PhaseSF | number: '.2-2'}}SF</ion-col>
       </ion-row>
       <ion-row class="paddzero">
-        <ion-col size="12" class="paddzero" style="font-size:12px">
+        <ion-col size="12" class="paddzero font12">
           <span>Areas : <b>{{ activity.AreaNames}}</b></span>,
           <span>Hrs : <b>{{activity.Hrs}}:{{activity.Mins}}</b></span>
         </ion-col>

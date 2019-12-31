@@ -9,12 +9,14 @@
     <ion-item class="paddzero">
      <ion-col size="12" class="paddzero">
       <ion-row class="paddzero paddtop3" style="color: darkcyan;">
-        <ion-col size="9" class="paddzero">
-            <h2 class="textsty no-margin">{{activity.ActivityType}}</h2>
+        <ion-col size="11" class="paddzero">
+          <ion-row>
+            <ion-col size="10"><h2 class="textsty no-margin">{{activity.ActivityType}}</h2></ion-col>
+            <ion-col size="2" class="text-right"><span style="font-size:12px;display: flex;">{{activity.SchStartTime | date:'dd/MM'}}</span></ion-col>
+          </ion-row> 
         </ion-col>
-        <ion-col size="3" style="display: flex;" class="paddzero">
-            <span style="font-size:12px">{{activity.SchStartTime | date:'dd/MM'}}</span> &nbsp; &nbsp; 
-            <img src="assets/img/Scheduled.png" alt="your image" style="width:15px;height:15px;">
+        <ion-col size="1" style="display: flex;" class="paddzero">
+            <img src="assets/img/Scheduled.png" alt="your image" style="width:20px;height:20px;">
         </ion-col>
       </ion-row>
       <ion-row class="paddzero">

@@ -128,24 +128,24 @@
 
             <ion-list class="ion-no-margin">
                 <ion-row class="paddzero">
-                    <ion-col size="5" class="paddzero">
+                    <ion-col size="5" class="paddzero margintop5">
                         <ion-row class="marginbot">
                             <div><b class="fontbold text-right">Payment Schedule</b></div>
                         </ion-row>
-                        <ion-row *ngIf="headerInfo.Version.PayTypeID == 1" class="marginbot">
+                        <ion-row *ngIf="headerInfo.Version.PayTypeID == 1" class="marginbot font12">
                             {{headerInfo.Version.DueSigningName}}:({{headerInfo.Version.DueSigning}}%)
                             <span>$ {{headerInfo.Version.SigningAmt| number : '.2-2'}}</span>
                         </ion-row>
                         <ion-row *ngIf="headerInfo.Version.PayTypeID == 1 && headerInfo.Version.TeamplateAmt != 0"
-                            class="marginbot">
+                            class="marginbot font12">
                             {{headerInfo.Version.DueTeamplateName}}:({{headerInfo.Version.DueTeamplate}}%)
-                            <span>$ $ {{headerInfo.Version.TeamplateAmt| number : '.2-2'}}</span>
+                            <span>$ {{headerInfo.Version.TeamplateAmt| number : '.2-2'}}</span>
                         </ion-row>
-                        <ion-row *ngIf="headerInfo.Version.PayTypeID == 1" class="marginbot">
+                        <ion-row *ngIf="headerInfo.Version.PayTypeID == 1" class="marginbot font12">
                             {{headerInfo.Version.DueInstallName}}: ({{headerInfo.Version.DueInstall}}%)
                             <span>$ {{headerInfo.Version.InstallAmt | number : '.2-2'}}</span>
                         </ion-row>
-                        <ion-row *ngIf="headerInfo.Version.PayTypeID == 2" class="marginbot">
+                        <ion-row *ngIf="headerInfo.Version.PayTypeID == 2" class="marginbot font12">
                             Pay Terms: <span class="b-Color">{{headerInfo.Version.PaymentTerm}}</span>
                             <span>$
                                 {{((headerInfo.Version.TotalAmt + headerInfo.Version.TaxAmt) - (headerInfo.Version.DiscountAmt))| number : '.2-2'}}</span>

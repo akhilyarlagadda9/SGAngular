@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-icon name="menu" class="fontlarge" (click)="presentActionSheet()"></ion-icon>
+
+    <ion-icon name="arrow-back" slot="icon-only" (click)="ActionMove('prev')"></ion-icon>
+    
+    <ion-title>
+      {{ viewTitle }}
+    </ion-title>
+    <!-- <ion-buttons slot="end">
+      <ion-button (click)="today()">Today</ion-button>
+    </ion-buttons> -->
+    <ion-icon name="arrow-forward" slot="icon-only" (click)="ActionMove('next')"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  
+  <!-- Card for adding a new event -->
+  <!-- <ion-card>
+     <ion-item>
+         <ion-label>Event Type</ion-label>
+         <ion-select #C (ionChange)="onChangeOfModelEvent(C.value)" interface="popover">
+         <ion-select-option *ngFor="let i of arrChangeFilter">{{i}}</ion-select-option>
+         </ion-select>
+     </ion-item>
+  </ion-card> -->
+ 
+ 
+  <calendar 
+  [eventSource]="activitylist" 
+  [calendarMode]="calendar.mode" 
+  [currentDate]="calendar.currentDate"
+  (onEventSelected)="onEventSelected($event)"
+  (onTitleChanged)="onViewTitleChanged($event)"
+  
+ 
+  (onCurrentDateChanged)="onDateChanges($event)"
+  startHour="6"
+  endHour="20"
+  step="30"
+  startingDayWeek="1"
+  [monthviewDisplayEventTemplate]="template"
+  >
+ </calendar>
+ <!--<ng-template #template let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
+   ... 
+   </ng-template>-->
+   <!-- <ng-template #template let-view="view" let-row="row" let-col="col">
+     {{view.dates[row*7+col].label}}
+
+     <div no-padding *ngFor="let event of view.dates[row*7+col].events">
+       <div *ngIf= "afterViewType == '';else usualProcess">
+         <ion-card no-padding
+          (click)="onEventSelected(event)"> <ion-label color="light" >{{event.title}}</ion-label>
+         </ion-card> 
+       </div>
+     </div>
+
+       <ng-template #usualProcess>
+         <div no-padding *ngFor = "let events of view.dates[row*7+col].events">
+         <div *ngIf = "afterViewType === events.eventType;else otherfilter">
+         <ion-card no-padding
+         (click)="onEventSelected(events)"> <ion-label color="danger" >{{events.eventType}}</ion-label>
+        </ion-card> 
+       </div>
+       <ng-template #otherfilter>
+           <ion-card no-padding
+       (click)="onEventSelected(events)"> <ion-label color="danger" >{{event.title}}</ion-label>
+          </ion-card>
+       </ng-template>
+        </div>
+       </ng-template>
+</ng-template> -->
+
+<ion-fab vertical="bottom" horizontal="end">
+ <ion-button  color="primary" (click)="AccActivity()"><ion-icon name="add"></ion-icon>
+ </ion-button>
+</ion-fab>
+</ion-content>

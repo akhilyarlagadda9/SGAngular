@@ -264,16 +264,25 @@
   </ion-row>
   <ion-card>
       <ion-row style="background-color:lightgoldenrodyellow;">
-        <ion-col size="12">
-          <ion-row class="mar-bot2">
-            <ion-col size="5" class="paddzero text-right">Deposit(50%):</ion-col>
-            <ion-col size="7" class="paddzero text-right fontboldclr">&nbsp;$ 1,160.73</ion-col>
+        <ion-col size="12" class="paddzero margintop5">
+          <ion-row *ngIf="Version.PayTypeID == 1">
+              {{Version.DueSigningName}}:({{Version.DueSigning}}%)
+              <span>$ {{Version.SigningAmt| number : '.2-2'}}</span>
           </ion-row>
-          <ion-row class="mar-bot2">
-            <ion-col size="5" class="paddzero text-right">Final Payment(50%):</ion-col>
-            <ion-col size="7" class="paddzero text-right fontboldclr">&nbsp;$ 1,160.73</ion-col>
+          <ion-row *ngIf="Version.PayTypeID == 1 && Version.TeamplateAmt != 0">
+              {{Version.DueTeamplateName}}:({{Version.DueTeamplate}}%)
+              <span>$ {{Version.TeamplateAmt| number : '.2-2'}}</span>
           </ion-row>
-        </ion-col>
+          <ion-row *ngIf="Version.PayTypeID == 1">
+              {{Version.DueInstallName}}: ({{Version.DueInstall}}%)
+              <span>$ {{Version.InstallAmt | number : '.2-2'}}</span>
+          </ion-row>
+          <ion-row *ngIf="Version.PayTypeID == 2">
+              Pay Terms: <span class="b-Color">{{Version.PaymentTerm}}</span>
+              <span>$
+                  {{((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt))| number : '.2-2'}}</span>
+          </ion-row>
+      </ion-col>
       </ion-row>
     </ion-card>
   <ion-row>

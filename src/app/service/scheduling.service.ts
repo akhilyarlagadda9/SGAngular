@@ -21,11 +21,11 @@ getactivityList(startDate:Date, endDate:Date, search:any, actTypeSearchId:any, s
   return this.http.get<any>(this.url +  'api/Project/ActivityList3?startDate=' + startDate + "&endDate=" + endDate + "&search=" + search + '&actTypeSearchId=' + actTypeSearchId + "&stageId=" + stageId + "&userId=" + userId + "&monitorView=" + monitorView + "&matTypeId=" + matTypeId + "&managerId=" + managerId + "&resourceIds=" + resourceIds)
 }
 //ActivityType List
-getActivityTypeList(moduleID:number):Observable<any> {
+ActivityTypeList(moduleID:number):Observable<any> {
   return this.http.get<any>(this.url +  'api/Project/ActivityTypeList?moduleID=' + moduleID)
 }
 //Activity Status List
-getStatusList():Observable<any> {
+ActivityStatusList():Observable<any> {
   return this.http.get<any>(this.url +  'api/Project/ActivityStatusList')
 }
 //ActivityType Resource List

@@ -10,6 +10,7 @@ import {IonicStorageModule } from '@ionic/storage';
 import { AppComponent, DropdownDirective } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { QuotePageModule } from './pages/quotes/quote/quote.module';
+import { SchedulingPageModule } from './pages/project/scheduling/scheduling.module';
 //import { AgmCoreModule } from '@agm/core';
 //import { GoogleMaps } from '@ionic-native/google-maps';
 
@@ -26,7 +27,7 @@ declare var urlss;
     // AgmCoreModule.forRoot({
     //   apiKey: 'AIzaSyDLkwxgLxSXDDXWgMss9nnIwBciWaZkPL8' // apiKey is required 
     // }),
-    IonicStorageModule .forRoot(),
+    IonicStorageModule .forRoot(),SchedulingPageModule
   ],
   providers: [
     StatusBar,

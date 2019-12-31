@@ -18,7 +18,11 @@ import { HomePage } from './home.page';
         path: 'quotelist',
        // component:QuotePage
         loadChildren: () => import('../pages/quotes/quote/quote.module').then( m => m.QuotePageModule)
-      }
+      },
+      {
+        path: 'scheduling',
+        loadChildren: () => import('../pages/project/scheduling/scheduling.module').then( m => m.SchedulingPageModule)
+      },
     ])
   ],
   declarations: [HomePage,]

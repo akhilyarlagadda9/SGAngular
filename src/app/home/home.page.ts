@@ -13,9 +13,10 @@ export class HomePage {
 
   constructor(private navCtrl:NavController, public loadingController: LoadingController) {}
 
-  ActionLoadQuote(){
-    this.navCtrl.navigateRoot('/home/quotelist');
+  ActionLoadModule(path:string){
+    this.navCtrl.navigateRoot(path);
    }
+  
    ActionLogout(){
     this.navCtrl.navigateRoot('/login');
    }

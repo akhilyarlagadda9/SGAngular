@@ -13,7 +13,7 @@ export class FabricationComponent implements OnInit {
   fabrication: any;
   fablist: any;
 
-  constructor(public Modalcntrl : ModalController, private quoterep : QuoterepService, private formBuilder: FormBuilder, private qervice : QuoteService) { }
+  constructor(public Modalcntrl : ModalController, private quoterep : QuoterepService, private formBuilder: FormBuilder, private service : QuoteService) { }
 
   ngOnInit() {
   }
@@ -39,7 +39,7 @@ export class FabricationComponent implements OnInit {
 
   ActionSaveFabrication(form:NgForm){
     if (form.valid) {
-    this.qervice.Actionsavepartfabrication(this.fabrication).subscribe(data => {
+    this.service.Actionsavepartfabrication(this.fabrication).subscribe(data => {
      // this.sinklist = data.sinkfaucetList;
       this.ActionToClose(false);
     })

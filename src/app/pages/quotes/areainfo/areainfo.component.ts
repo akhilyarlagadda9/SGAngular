@@ -86,7 +86,7 @@ export class AreainfoComponent implements OnInit {
 
 
   ActionGetPartInfo(partId: number) {
-    let result = this.service.ActionPartInfo(this.areaInfo.VersionID, this.AreaID, partId, 0).subscribe(
+    let result = this.service.ActionPartInfo(this.Version.ID, this.AreaID, partId, 0).subscribe(
       data => {
         this.partinfo = data;
         this.PartDrawing(partId);
@@ -206,7 +206,7 @@ export class AreainfoComponent implements OnInit {
     });
     return await modal.present();
   }
-  async ActionEditFabrication(fab: any) {
+  async ActionEditFabrication(fab: any) {debugger;
     let copyobj = JSON.parse(JSON.stringify(fab));
     let fabrication = { fabrication: copyobj }
     const modal = await this.Modalcntrl.create({

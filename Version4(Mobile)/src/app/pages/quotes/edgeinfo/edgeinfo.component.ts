@@ -53,7 +53,7 @@ export class EdgeinfoComponent implements OnInit {
     
   } */
 
-  ActionSaveSink(form:NgForm){
+  ActionSaveEdge(form:NgForm){
     if (form.valid) {
     this.postservice.ActionsavepartEdge(this.edge).subscribe(data => {
      // this.sinklist = data.sinkfaucetList;

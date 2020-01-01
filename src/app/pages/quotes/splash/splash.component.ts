@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { NgForm } from '@angular/forms';
-import { QuotepostService } from 'src/app/service/quotepost.service';
+import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-splash',
@@ -15,9 +15,8 @@ export class SplashComponent implements OnInit {
   splashlist: any = [];
   priceListID: any;
   item: any;
-  constructor(public Modalcntrl: ModalController, private getservice: QuotegetService, private quoterep: QuoterepService, private postservice: QuotepostService) { }
+  constructor(public Modalcntrl: ModalController, private getservice: QuotegetService, private quoterep: QuoterepService, private service: QuoteService) { }
   ngOnInit() {
-    console.log(this.splash);
     this.ActionSplashTypes();
   }
   ActionSetSqft() {
@@ -48,7 +47,7 @@ export class SplashComponent implements OnInit {
 
   ActionSaveSplash(form:NgForm){
     if (form.valid) {
-    this.postservice.Actionsavepartsplash(this.splash).subscribe(data => {
+    this.service.Actionsavepartsplash(this.splash).subscribe(data => {
      // this.sinklist = data.sinkfaucetList;
       this.ActionCloseSplash(false);
     })

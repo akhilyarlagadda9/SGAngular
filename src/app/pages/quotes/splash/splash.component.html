@@ -8,7 +8,7 @@
 
     <ion-item>
       <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-      <ion-select [(ngModel)]="splash.Splash" name="Splash" #nameField="ngModel" required>>
+      <ion-select [(ngModel)]="splash.Splash" name="Splash" [selectedText]="splash.Splash" #nameField="ngModel" required>
         <ion-select-option *ngFor="let splash of splashlist"> {{splash.Description}}</ion-select-option>
       </ion-select>
     </ion-item>

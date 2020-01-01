@@ -1,3 +1,20 @@
-<p>
-  actinfo works!
-</p>
+<ion-list class="ion-no-margin ion-no-padding">
+  <ion-item class="borderbot paddzero">
+    <ion-label class="text-right">
+      <ion-icon name="create" slot="end" style="font-size: 20px;"></ion-icon>&nbsp;&nbsp;
+      <ion-icon name="trash" slot="end" style="font-size: 20px;color: red;"></ion-icon>&nbsp;&nbsp;
+      <ion-icon name="close" slot="end" style="font-size: 20px;" (click)="ActionCloseActivityEdit()"></ion-icon>
+    </ion-label>
+  </ion-item>
+  <ion-item class="borderbot paddzero">
+    <ion-label>
+      <h4>{{actInfo.QuoteNo}} - {{actInfo.JobName}}</h4>
+      <p>{{actInfo.JobFullAddres}}</p>
+    </ion-label>
+  </ion-item>
+  <ion-item class="borderbot paddzero">
+    <ion-label>
+      <h3>{{actInfo.SalesPerName}}</h3>
+    </ion-label>
+  </ion-item>
+</ion-list>

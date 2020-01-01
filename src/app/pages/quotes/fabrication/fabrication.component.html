@@ -18,8 +18,8 @@
     </ion-toolbar>
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
-      <ion-input type="text" class="labelfont" [(ngModel)]="fabrication.Description" name="Description"
-      #nameField="ngModel" required readonly="readonly"></ion-input>
+      <ion-input type="text" class="labelfont" value="Standard Fabrication"
+      readonly="readonly"></ion-input>
     </ion-item>
     <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
       <div class="error">Description is required</div>

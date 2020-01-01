@@ -4,8 +4,8 @@ import { AdditionalitemserachComponent } from '../additionalitemserach/additiona
 import { QuoterepService } from 'src/app/service/quoterep.service';
 //import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgForm } from '@angular/forms';
-import { QuotepostService } from 'src/app/service/quotepost.service';
 import { OverlayEventDetail } from '@ionic/core';
+import { QuoteService } from 'src/app/service/quote.service';
 @Component({
   selector: 'app-sink',
   templateUrl: './sink.component.html',
@@ -16,10 +16,11 @@ export class SinkComponent implements OnInit {
   //registerForm: FormGroup;
   //Description = "";
   sinklist: any = [];
-  constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private navParams: NavParams, private quoterep: QuoterepService, private postservice : QuotepostService) { }
+  priceListID: any;
+  constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private navParams: NavParams, private quoterep: QuoterepService, private service: QuoteService) { }
   sinkinfo = this.navParams.data;
   ngOnInit() {
-   
+
   }
   ActionSetMargin(typeId: number, model: any, type: string) {
     this.sinkfaucet = this.quoterep.margincalculations(typeId, model, type);
@@ -30,16 +31,16 @@ export class SinkComponent implements OnInit {
     this.sinkfaucet.Amount = this.quoterep.calcitemamt(this.sinkfaucet.Qty, this.sinkfaucet.UnitPrice);
     this.sinkfaucet.Amt = this.sinkfaucet.Amount;
   }
-  ActionSaveSink(form:NgForm){
+  ActionSaveSink(form: NgForm) {
     if (form.valid) {
-    this.postservice.Actionsavepartsink(this.sinkfaucet).subscribe(data => {
-     // this.sinklist = data.sinkfaucetList;
-      this.ActionCloseSink(false);
-    })
+      this.service.Actionsavepartsink(this.sinkfaucet).subscribe(data => {
+        // this.sinklist = data.sinkfaucetList;
+        this.ActionCloseSink(false);
+      })
+    }
   }
-  }
-  ActionCloseSink(issave:boolean) {
-    let sink = { Sink : this.sinklist}
+  ActionCloseSink(issave: boolean) {
+    let sink = { Sink: this.sinklist }
     this.Modalcntrl.dismiss({
       'dismissed': true,
       componentProps: sink,
@@ -48,9 +49,10 @@ export class SinkComponent implements OnInit {
   }
 
 
-  async ActionSearchSelect(ev: any, typeid, typeid2) {
+  async ActionSearchSelect(ev: any, typeid, typeid2) {debugger;
+    debugger;
     let obj = {
-      searchTypeId: typeid, producttypeId: typeid2, search: this.sinkinfo.Des == undefined ? "" : this.sinkinfo.Des
+      pricelistId: this.priceListID, searchTypeId: typeid, producttypeId: typeid2, search: this.sinkinfo.Des == undefined ? "" : this.sinkinfo.Des
     }
     const popover = await this.popoverCntrl.create({
       component: AdditionalitemserachComponent,
@@ -59,14 +61,13 @@ export class SinkComponent implements OnInit {
       componentProps: obj,
       cssClass: "popover_class"
     });
- 
     popover.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {
-        if(detail.data.isselect == true){
-          this.sinkfaucet = this.quoterep.Resetsink(this.sinkfaucet,detail.data.componentProps);
+        if (detail.data.isselect == true) {
+          this.sinkfaucet = this.quoterep.Resetsink(this.sinkfaucet, detail.data.componentProps);
         }
       }
-   });
+    });
     return await popover.present();
   }
 
@@ -79,6 +80,6 @@ export class SinkComponent implements OnInit {
 
 
 
- // get f() { return this.registerForm.controls; }
+  // get f() { return this.registerForm.controls; }
 
 }

@@ -3,8 +3,8 @@ import { ModalController, PopoverController, NavParams } from '@ionic/angular';
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
-import { QuotepostService } from 'src/app/service/quotepost.service';
 import { OverlayEventDetail } from '@ionic/core';
+import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-tileinfo',
@@ -14,7 +14,7 @@ import { OverlayEventDetail } from '@ionic/core';
 export class TileinfoComponent implements OnInit {
   labor:any;  tile: any;  cabinet: any; carpet: any; appliance: any;  consumable: any;  tool: any;
 
-  constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController, private popoverCntrl :PopoverController,private navParams : NavParams,private quoterep:QuoterepService, private postservice : QuotepostService ) { }
+  constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController, private popoverCntrl :PopoverController,private navParams : NavParams,private quoterep:QuoterepService, private service : QuoteService ) { }
 
   tileinfo = this.navParams.data;
   
@@ -76,7 +76,7 @@ export class TileinfoComponent implements OnInit {
 
 ActionSaveTile(form:NgForm){
   if (form.valid) {
-  this.postservice.Actionsavepartsink(this.labor).subscribe(data => {
+  this.service.Actionsaveparttile(this.labor).subscribe(data => {
    // this.sinklist = data.sinkfaucetList;
     this.ActionCloseTile(false);
   })

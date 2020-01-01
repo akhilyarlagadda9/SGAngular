@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
-import { QuotepostService } from 'src/app/service/quotepost.service';
+import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-template',
@@ -13,7 +13,7 @@ export class TemplateComponent implements OnInit {
   labor: any;
   item: any;
 
-  constructor(public Modalcntrl: ModalController, private navCntrl: NavParams, private quoterep: QuoterepService, private formBuilder: FormBuilder, private postservice : QuotepostService) { }
+  constructor(public Modalcntrl: ModalController, private navCntrl: NavParams, private quoterep: QuoterepService, private formBuilder: FormBuilder, private service : QuoteService) { }
   TypeID = this.navCntrl.data.TypeID;
   ngOnInit() {
     console.log(this.TypeID)
@@ -41,7 +41,7 @@ export class TemplateComponent implements OnInit {
 
   ActionSaveTemplate(form:NgForm){
     if (form.valid) {
-    this.postservice.Actionsavelabor(this.labor).subscribe(data => {
+    this.service.Actionsavepartlabor(this.labor).subscribe(data => {
      // this.sinklist = data.sinkfaucetList;
       this.ActionCloseTemplate(false);
     })

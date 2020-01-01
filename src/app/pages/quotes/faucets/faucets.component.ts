@@ -3,8 +3,8 @@ import { ModalController, NavParams, PopoverController } from '@ionic/angular';
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
-import { QuotepostService } from 'src/app/service/quotepost.service';
 import { OverlayEventDetail } from '@ionic/core';
+import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-faucets',
@@ -14,7 +14,8 @@ import { OverlayEventDetail } from '@ionic/core';
 export class FaucetsComponent implements OnInit {
   faucet: any;
   item: any;
-  constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private navParams: NavParams, private postservice: QuotepostService, private quoterep: QuoterepService, private formBuilder: FormBuilder) { }
+  priceListID: any;
+  constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private navParams: NavParams, private service: QuoteService, private quoterep: QuoterepService, private formBuilder: FormBuilder) { }
   Description = "";
   faucetinfo = this.navParams.data;
   ngOnInit() {
@@ -37,7 +38,7 @@ export class FaucetsComponent implements OnInit {
 
   ActionSaveFaucet(form:NgForm){
     if (form.valid) {
-    this.postservice.Actionsavepartfaucet(this.faucet).subscribe(data => {
+    this.service.Actionsavepartfaucet(this.faucet).subscribe(data => {
      // this.sinklist = data.sinkfaucetList;
       this.ActionCloseFaucet(false);
     })
@@ -60,7 +61,7 @@ export class FaucetsComponent implements OnInit {
   }
 
   async ActionSearchSelect(ev: any, typeid, typeid2) {
-    let obj = { searchTypeId: typeid, producttypeId: typeid2, search: this.faucetinfo.Des == undefined ? "" : this.faucetinfo.Des }
+    let obj = { pricelistId: this.priceListID, searchTypeId: typeid, producttypeId: typeid2, search: this.faucetinfo.Des == undefined ? "" : this.faucetinfo.Des }
     const popover = await this.popoverCntrl.create({
       component: AdditionalitemserachComponent,
       event: ev,

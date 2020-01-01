@@ -13,7 +13,7 @@ export class MaterialinfoComponent implements OnInit {
   submitted = false;
   constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController ) { }
 
-  ngOnInit() {
+  ngOnInit() {debugger;
     this.registerForm = this.formBuilder.group({
       add: ['', Validators.required],
   });

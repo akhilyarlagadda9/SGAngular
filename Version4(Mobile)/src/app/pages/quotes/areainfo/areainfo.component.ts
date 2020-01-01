@@ -206,7 +206,7 @@ export class AreainfoComponent implements OnInit {
     });
     return await modal.present();
   }
-  async ActionEditFabrication(fab: any) {debugger;
+  async ActionEditFabrication(fab: any) {
     let copyobj = JSON.parse(JSON.stringify(fab));
     let fabrication = { fabrication: copyobj }
     const modal = await this.Modalcntrl.create({

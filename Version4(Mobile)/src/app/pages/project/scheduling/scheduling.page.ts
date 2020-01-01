@@ -15,7 +15,14 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe]
 })
 export class SchedulingPage implements OnInit {
+  activityId: any;
+  actTypeId: any;
+  startDate: any;
+  endDate: any;
+  activityinfo: any;
   activitylist: any = []; viewTitle: string = '';StartDate:any;
+  TypeList: any;
+  ID: any;
   todaydate = new Date().toISOString();
   @ViewChild(CalendarComponent, { static: true }) myCal: CalendarComponent;
   calendar = {
@@ -27,6 +34,7 @@ export class SchedulingPage implements OnInit {
 
   ngOnInit() {
     //this.ActionActivityList();
+    this.ActionActivityTypeList();
   }
 
   ActionActivityList() {
@@ -37,9 +45,14 @@ export class SchedulingPage implements OnInit {
       console.log(data);
     });
   }
-  onTimeSelected(ev){
-console.log(ev);
-  }
+ 
+  ActionActivityTypeList() {
+    this.schService.ActivityTypeList(4).subscribe(
+      data => { this.TypeList = data; }
+      );
+    }
+ 
+
   onViewTitleChanged(title) {
     this.viewTitle = title;
   }
@@ -71,14 +84,15 @@ console.log(ev);
 
 
 
-  async onEventSelected(ev) {
-   // console.log(ev);
-    let ID = ev.ID;
+  async onEventSelected(ev) {debugger;
+    console.log(ev);
+    let obj = {actId:ev.ID,actTypeID:ev.item.actTypeID,StartDate:ev.StartTime,EndDate:ev.EndTime}
     const modal = await this.Modalcntrl.create({
-      component: ActinfoComponent
+      component: ActinfoComponent,
+      componentProps : obj
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-      if (detail.data != null) {
+          if (detail.data != null) {
         if (detail.data.issave) {
           //this.beforeViewType = detail.data.componentProps.eventType;
           //detail.data.componentProps.eventType = ""; //blanking out as we do not want to bind it beforehand
@@ -94,7 +108,8 @@ console.log(ev);
     });
     return await modal.present();
   }
-  PrepareEvents(list: any) {
+  
+  PrepareEvents(list: any) {debugger;
     for (let j in list) {
       let item = list[j];
       this.activitylist.push({

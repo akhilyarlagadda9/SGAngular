@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams, PopoverController, } from '@ionic/angular';
-import { QuotepostService } from 'src/app/service/quotepost.service';
 import { FormGroup, NgForm } from '@angular/forms';
 import { OverlayEventDetail } from '@ionic/core';
+import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-custitem',
@@ -15,7 +15,7 @@ export class CustitemComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
 
-  constructor(public Modalcntrl: ModalController, private navCntrl: NavParams, private popoverCntrl: PopoverController, private postservice:QuotepostService,) {
+  constructor(public Modalcntrl: ModalController, private navCntrl: NavParams, private popoverCntrl: PopoverController, private service:QuoteService,) {
     this.items = [
       { title: "one" },
       { title: "two" },
@@ -40,7 +40,7 @@ export class CustitemComponent implements OnInit {
   ActionSaveCustomerItems(form:NgForm){
     this.submitted = true;
     if (form.valid) {
-    this.postservice.Actionsavepartfaucet(this.response).subscribe(data => {
+    this.service.Actionsavepartcustitem(this.response).subscribe(data => {
      // this.sinklist = data.sinkfaucetList;
       this.ActionCloseCustomerItems(false);
     })

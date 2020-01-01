@@ -3,8 +3,8 @@ import { ModalController, NavParams, PopoverController } from '@ionic/angular';
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
-import { QuotepostService } from 'src/app/service/quotepost.service';
 import { OverlayEventDetail } from '@ionic/core';
+import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-addoninfo',
@@ -15,7 +15,7 @@ export class AddoninfoComponent implements OnInit {
   other: any;
   item: any;
 
-  constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private navParams: NavParams, private quoterep: QuoterepService, private formBuilder: FormBuilder, private postservice: QuotepostService) { }
+  constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private navParams: NavParams, private quoterep: QuoterepService, private formBuilder: FormBuilder, private service: QuoteService) { }
 
   Description = "";
   addoninfo = this.navParams.data;
@@ -73,7 +73,7 @@ export class AddoninfoComponent implements OnInit {
 //Addon Save Function
 ActionSaveAddon(form:NgForm){
   if (form.valid) {
-  this.postservice.Actionsaveaddon(this.other).subscribe(data => {
+  this.service.Actionsavepartaddon(this.other).subscribe(data => {
    // this.sinklist = data.sinkfaucetList;
     this.ActionCloseAddon(false);
   })

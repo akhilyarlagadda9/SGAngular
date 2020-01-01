@@ -40,11 +40,56 @@ ActionGetInvoiceList(custID:number, quoteID:number):Observable<any>{
   return this.http.get<any>(this.url +  'api/accReceivable/QuoteInvoiceList?custID=' + custID + "&quoteID=" + quoteID) 
 }
 
-/***********************************************Save Methods************************************/
- //Fabrication Save Function
+/***********************************************Part Save Methods************************************/
+ //Fabrication,Measurements Save Function
  Actionsavepartfabrication(item: any): Observable<any> {
   var model = JSON.stringify(item);
   return this.http.post<any>(this.url + 'api/QSave/ActionSavePartFabrication', model, { headers: { 'Content-Type': 'application/json' } })
+}
+ //Splash Save Function
+ Actionsavepartsplash(item: any): Observable<any> {
+  var model = JSON.stringify(item);
+  return this.http.post<any>(this.url + 'api/QSave/ActionSavePartSplash', model, { headers: { 'Content-Type': 'application/json' } })
+}
+ //Edge Save Function
+ ActionsavepartEdge(item: any): Observable<any> {
+  var model = JSON.stringify(item);
+  return this.http.post<any>(this.url + 'api/QSave/ActionSavePartEdge', model, { headers: { 'Content-Type': 'application/json' } })
+}
+ //Cutout Save Function
+ Actionsavepartcutout(item: any): Observable<any> {
+  var model = JSON.stringify(item);
+  return this.http.post<any>(this.url + 'api/QSave/ActionSavePartCutout', model, { headers: { 'Content-Type': 'application/json' } })
+}
+ //Sink Save Function
+ Actionsavepartsink(item: any): Observable<any> {
+  var model = JSON.stringify(item);
+  return this.http.post<any>(this.url + 'api/QSave/ActionSavePartSink', model, { headers: { 'Content-Type': 'application/json' } })
+}
+ //Faucet Save Function
+ Actionsavepartfaucet(item: any): Observable<any> {
+  var model = JSON.stringify(item);
+  return this.http.post<any>(this.url + 'api/QSave/ActionSavePartFaucet', model, { headers: { 'Content-Type': 'application/json' } })
+}
+ //Labor,Template,Install Save Function
+ Actionsavepartlabor(item: any): Observable<any> {
+  var model = JSON.stringify(item);
+  return this.http.post<any>(this.url + 'api/QSave/ActionSavePartLabor', model, { headers: { 'Content-Type': 'application/json' } })
+}
+ //Other Save Function
+ Actionsavepartaddon(item: any): Observable<any> {
+  var model = JSON.stringify(item);
+  return this.http.post<any>(this.url + 'api/QSave/ActionSavePartOther', model, { headers: { 'Content-Type': 'application/json' } })
+}
+ //Tile,Appliance,Cabinet,Carpet,Consumable,Tool Save Function
+ Actionsaveparttile(item: any): Observable<any> {
+  var model = JSON.stringify(item);
+  return this.http.post<any>(this.url + 'api/QSave/ActionSavePartTile', model, { headers: { 'Content-Type': 'application/json' } })
+}
+ //Customer Items Save Function
+ Actionsavepartcustitem(item: any): Observable<any> {
+  var model = JSON.stringify(item);
+  return this.http.post<any>(this.url + 'api/QSave/ActionSavePartCustItem', model, { headers: { 'Content-Type': 'application/json' } })
 }
 
 }

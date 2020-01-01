@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { QuotepostService } from 'src/app/service/quotepost.service';
+import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-laborinfo',
@@ -14,7 +14,7 @@ export class LaborinfoComponent implements OnInit {
   Des = "";
   item: any;
 
-  constructor(public Modalcntrl : ModalController, private quoterep : QuoterepService, private formBuilder: FormBuilder, private postservice : QuotepostService ) { }
+  constructor(public Modalcntrl : ModalController, private quoterep : QuoterepService, private formBuilder: FormBuilder, private service : QuoteService ) { }
 
   ngOnInit() {
   }
@@ -29,7 +29,7 @@ export class LaborinfoComponent implements OnInit {
    }
   
   ActionSaveLabor(labor:any) {
-    this.postservice.Actionsavelabor(labor).subscribe(data => {
+    this.service.Actionsavepartlabor(labor).subscribe(data => {
       this.item = data.laborList;
       this.ActionCloseLabor(true);
     })

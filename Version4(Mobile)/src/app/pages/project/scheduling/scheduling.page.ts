@@ -7,13 +7,15 @@ import { OverlayEventDetail } from '@ionic/core';
 import { SchedulingService } from 'src/app/service/scheduling.service';
 import { NavController } from '@ionic/angular';
 import { ActionSheetController } from '@ionic/angular';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-scheduling',
   templateUrl: './scheduling.page.html',
   styleUrls: ['./scheduling.page.scss'],
+  providers: [DatePipe]
 })
 export class SchedulingPage implements OnInit {
-  activitylist: any = []; viewTitle: string = '';
+  activitylist: any = []; viewTitle: string = '';StartDate:any;
   todaydate = new Date().toISOString();
   @ViewChild(CalendarComponent, { static: true }) myCal: CalendarComponent;
   calendar = {
@@ -21,27 +23,29 @@ export class SchedulingPage implements OnInit {
     currentDate: new Date(),
   };
   constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) private locale: string,
-    private schService: SchedulingService, private navCtrl: NavController,public actionSheetCtrl: ActionSheetController) { }
+    private schService: SchedulingService, private navCtrl: NavController,public actionSheetCtrl: ActionSheetController,private datePipe: DatePipe) { }
 
   ngOnInit() {
-    this.ActionActivityList();
+    //this.ActionActivityList();
   }
 
   ActionActivityList() {
-    let sdate = "12/31/2019"; let edate = "1/1/2020";
     let search = "", resourceIds = "";
-    console.log(this.todaydate);
-    this.schService.ActionQuickActList(sdate, edate, search, 11, 0, resourceIds).subscribe(data => {
+    this.schService.ActionQuickActList(this.StartDate, this.calendar.mode, search, 11, 0, resourceIds).subscribe(data => {
       //this.activitylist = data;
       this.PrepareEvents(data);
       console.log(data);
     });
   }
-
+  onTimeSelected(ev){
+console.log(ev);
+  }
   onViewTitleChanged(title) {
     this.viewTitle = title;
   }
   onDateChanges(ev) {
+  this.StartDate = this.datePipe.transform(ev,"MM-dd-yyyy") ;
+  this.ActionActivityList();
   }
 
   // Change current month/week/day
@@ -127,6 +131,12 @@ export class SchedulingPage implements OnInit {
         this.ActionChangeMode('week');
       }
     }, {
+      text: 'month',
+      icon: 'grid',
+      handler: () => {
+        this.ActionChangeMode('month');
+      }
+    },{
       text: 'Cancel',
       icon: 'close',
       role: 'cancel',

@@ -30,5 +30,10 @@ ActivityStatusList():Observable<any> {
 ActivityTypeResourceList(actTypeId:number):Observable<any> {
   return this.http.get<any>(this.url +  'api/Project/ActivityTypeResourceList?actTypeId=' + actTypeId)
 }
+//ActivityInfo List
+ActivityInfo(activityId:number, actTypeId:number, startDate:Date, endDate:Date):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/ActivityInfo?activityId=' + activityId + "&actTypeId=" + actTypeId + "&startDate=" + startDate + "&endDate=" + endDate)
+}
+
 
 }

@@ -4,7 +4,7 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { QuotegetService } from 'src/app/service/quoteget.service';
-import { QuotepostService } from 'src/app/service/quotepost.service';
+import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-cutoutinfo',
@@ -17,7 +17,7 @@ export class CutoutinfoComponent implements OnInit {
   cutoutlist: any = [];
   item: any;
   cut: any;
-  constructor(private formBuilder: FormBuilder,private navCntrl: NavParams, public Modalcntrl: ModalController, private getservice: QuotegetService, private quoterep: QuoterepService, private postservice : QuotepostService) { }
+  constructor(private formBuilder: FormBuilder,private navCntrl: NavParams, public Modalcntrl: ModalController, private getservice: QuotegetService, private quoterep: QuoterepService, private service : QuoteService) { }
   TypeID = this.navCntrl.data.TypeID;
   ngOnInit() {
     this.ActionSelectCutout()
@@ -49,7 +49,7 @@ export class CutoutinfoComponent implements OnInit {
 
 ActionSaveCutOut(form:NgForm){
   if (form.valid) {
-  this.postservice.Actionsavepartcutout(this.cutout).subscribe(data => {
+  this.service.Actionsavepartcutout(this.cutout).subscribe(data => {
    // this.sinklist = data.sinkfaucetList;
     this.ActionCloseCutout(false);
   })

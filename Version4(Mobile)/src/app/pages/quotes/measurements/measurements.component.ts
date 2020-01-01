@@ -14,13 +14,13 @@ export class MeasurementsComponent implements OnInit {
   submitted = false;
   fablist: any;
   countertypes: any = [];
-  constructor(private formBuilder: FormBuilder, public Modalcntrl: ModalController, private qservice: QuoteService, private quoterep: QuoterepService) { }
+  constructor(private formBuilder: FormBuilder, public Modalcntrl: ModalController, private service: QuoteService, private quoterep: QuoterepService) { }
   ngOnInit() {
     this.GetCounterTypes();
   }
   GetCounterTypes() {
     let typeIdList = []; typeIdList.push(5);
-    this.qservice.QuoteDictionaryLists(typeIdList).subscribe(data => { this.countertypes = data[0]; });
+    this.service.QuoteDictionaryLists(typeIdList).subscribe(data => { this.countertypes = data[0]; });
   }
   ActionSetSqft(size, typeid) {
     size.Sqft = this.quoterep.calcsqft(size.Width, size.Height);
@@ -38,7 +38,7 @@ export class MeasurementsComponent implements OnInit {
   ActionSaveMeasurement(fab: any) {
     this.submitted = true;
     //if (this.registerForm.valid) {
-      this.qservice.Actionsavepartfabrication(fab).subscribe(data => {
+      this.service.Actionsavepartfabrication(fab).subscribe(data => {
         //this.fablist = data.TileList;
         this.ActionToClose(false);
       })
@@ -54,7 +54,7 @@ export class MeasurementsComponent implements OnInit {
     });
   }
 
-  get f() { return this.registerForm.controls; }
+  //get f() { return this.registerForm.controls; }
 
 
 

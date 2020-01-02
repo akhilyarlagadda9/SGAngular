@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="titleheader">PART DETAILS</ion-title>
+    <ion-button slot="end" color="success" size="small">Save</ion-button>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionCloseAddPart()">X</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item>
+    <ion-label class="labelfont" position="floating" color="primary">Part Name</ion-label>
+    <ion-input type="text" class="labelfont"></ion-input>
+  </ion-item>
+  <ion-row>
+    <ion-col class="lablewid ion-padding-top"><b>Mat:</b></ion-col>
+    <ion-col size="7" class="labelfont">
+      <ion-select class="btninfo" interface="popover" class="border-btm">
+        <ion-select-option *ngFor="let material of MaterialList">{{material.StoneType}} - {{material.Color}} -
+          {{material.Depth}} - {{material.Finish}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col size="3" class="flex">
+      <ion-input type="text" class="border-btm"></ion-input><span class="borderall"><span
+          style="vertical-align: -webkit-baseline-middle;">SF</span></span>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="lablewid ion-padding-top"><b>Fab:</b></ion-col>
+    <ion-col size="7">
+      <ion-select class="btninfo" interface="popover" class="border-btm">
+        <ion-select-option *ngFor="let size of CountertypeList">{{size.Name}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col size="3" class="flex">
+      <ion-input type="text" class="border-btm"></ion-input><span class="borderall" (click)="ActionAddSize()"><u
+          style="vertical-align: -webkit-baseline-middle;">SF</u></span>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="lablewid ion-padding-top"><b>Spl:</b></ion-col>
+    <ion-col size="7">
+      <ion-select class="btninfo" interface="popover" class="border-btm">
+        <ion-select-option *ngFor="let spl of SplashList">{{spl.Description}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col size="3" class="flex">
+      <ion-input type="text" class="border-btm"></ion-input><span class="borderall"><u
+          style="vertical-align: -webkit-baseline-middle;">SF</u></span>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="lablewid ion-padding-top"><b>Edg:</b></ion-col>
+    <ion-col size="7">
+      <ion-select class="btninfo" interface="popover" class="border-btm">
+        <ion-select-option *ngFor="let edg of EdgeList">{{edg.Description}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col size="3" class="flex">
+      <ion-input type="text" class="border-btm"></ion-input><span class="borderall"><u
+          style="vertical-align: -webkit-baseline-middle;">LF</u></span>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="lablewid ion-padding-top"><b>Cut:</b></ion-col>
+    <ion-col size="7">
+      <ion-select class="btninfo" interface="popover" class="border-btm">
+        <ion-select-option *ngFor="let cutout of CutoutList">{{cutout.Description}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col size="3" class="flex">
+      <ion-input type="text" class="border-btm"></ion-input><span class="borderall">EA</span>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -46,6 +46,7 @@ import { ArealayoutComponent } from '../arealayout/arealayout.component';
 import { QnavigationComponent } from '../qnavigation/qnavigation.component';
 import { AccountsComponent } from '../accounts/accounts.component';
 import { ActivitiesComponent } from '../../common/activities/activities.component';
+import { AddpartComponent, AddSizesComponent } from '../addpart/addpart.component';
 import { AreasummaryComponent } from '../areasummary/areasummary.component';
 import { OtherComponent } from '../other/other.component';
 
@@ -75,7 +76,7 @@ import { OtherComponent } from '../other/other.component';
     JobdesceditComponent,CustomereditComponent,CommhubeditComponent,
     CustomerinfoComponent,AddareaComponent,CustomersearchComponent,
     ManagementsummaryComponent,additemComponent,ActivitiesComponent,AreasummaryComponent,
-    FabricationComponent,LaborinfoComponent,MapComponent,QlayoutComponent,ArealayoutComponent,QnavigationComponent,OtherComponent],
+    FabricationComponent,LaborinfoComponent,MapComponent,QlayoutComponent,ArealayoutComponent,QnavigationComponent,OtherComponent, AddpartComponent, AddSizesComponent],
     
 
   declarations: [QuotePage,AccountsComponent,PaymentScheduleComponent,AdditionalitemserachComponent,
@@ -89,6 +90,6 @@ import { OtherComponent } from '../other/other.component';
     AreainfoComponent,PoeditComponent,JobdesceditComponent,
     CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,
     AddareaComponent,CustomersearchComponent,ManagementsummaryComponent,ActivitiesComponent,AreasummaryComponent,
-    additemComponent,additemComponent,FabricationComponent,LaborinfoComponent,MapComponent,QnavigationComponent,QlayoutComponent,ArealayoutComponent,OtherComponent]
+    additemComponent,additemComponent,FabricationComponent,LaborinfoComponent,MapComponent,QnavigationComponent,QlayoutComponent,ArealayoutComponent,OtherComponent,AddpartComponent,AddSizesComponent]
 })
 export class QuotePageModule {}

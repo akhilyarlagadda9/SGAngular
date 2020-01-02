@@ -7,12 +7,12 @@ import { OverlayEventDetail } from '@ionic/core';
 import { SchedulingService } from 'src/app/service/scheduling.service';
 import { NavController } from '@ionic/angular';
 import { ActionSheetController } from '@ionic/angular';
-//import { DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-scheduling',
   templateUrl: './scheduling.page.html',
   styleUrls: ['./scheduling.page.scss'],
-  //providers: [DatePipe]
+  providers: [DatePipe]
 })
 export class SchedulingPage implements OnInit {
  calObj :{
@@ -30,15 +30,16 @@ export class SchedulingPage implements OnInit {
 
   };
   constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) private locale: string,
-    private schService: SchedulingService, private navCtrl: NavController, public actionSheetCtrl: ActionSheetController) { }
+    private schService: SchedulingService, private navCtrl: NavController, public actionSheetCtrl: ActionSheetController,public datePipe: DatePipe) { }
 
   ngOnInit() {
     //this.ActionActivityList();
     // this.ActionActivityTypeList();
   }
   ActionOnRangeChanged(ev) {
-    this.calObj.StartDate =  ev.startTime.format('DD-MM-YYYY');
-    this.calObj.EndDate =  ev.endTime.format('DD-MM-YYYY');
+    this.calObj.StartDate = this.datePipe.transform(ev.startTime,"MM-dd-yyyy");
+    this.calObj.EndDate =  this.datePipe.transform(ev.endTime,"MM-dd-yyyy");
+    console.log(this.calObj.StartDate + "end" + this.calObj.EndDate);
     this.ActionLoadEvents();
   }
   ActionLoadEvents(){

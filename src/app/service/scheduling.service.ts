@@ -15,8 +15,8 @@ export class SchedulingService {
  /*************  GET SERVICES ***************/
 
 //Activity List
-ActionQuickActList(startDate:any, mode:string, search:string, actTypeId:number, userId:number, resIds:string):Observable<any> {
-  return this.http.get<any>(this.url +  'api/Project/ActionQuickActList?startDate=' + startDate + "&mode=" + mode + "&search=" + search + '&actTypeId=' + actTypeId + "&userId=" + userId + "&resIds=" + resIds)
+ActionQuickActList(startDate:any, endDate:string, search:string, actTypeId:number, userId:number, resIds:string):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/ActionQuickActList?startDate=' + startDate + "&endDate=" + endDate + "&search=" + search + '&actTypeId=' + actTypeId + "&userId=" + userId + "&resIds=" + resIds)
 }
 //ActivityType List
 ActivityTypeList(moduleID:number):Observable<any> {

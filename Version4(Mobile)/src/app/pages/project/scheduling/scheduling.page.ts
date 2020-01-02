@@ -8,6 +8,7 @@ import { SchedulingService } from 'src/app/service/scheduling.service';
 import { NavController } from '@ionic/angular';
 import { ActionSheetController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
+import { AddactivityComponent } from '../addactivity/addactivity.component';
 @Component({
   selector: 'app-scheduling',
   templateUrl: './scheduling.page.html',
@@ -15,8 +16,9 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe]
 })
 export class SchedulingPage implements OnInit {
+  VersionID: any;
   calObj:any;
- viewTitle: string = '';
+  viewTitle: string = '';
   activitylist: any = [];
   ActTypeList: any;
   //todaydate = new Date().toISOString();
@@ -27,6 +29,8 @@ export class SchedulingPage implements OnInit {
     currentDate: new Date(),
 
   };
+  item: any;
+  
   constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) private locale: string,
     private schService: SchedulingService, private navCtrl: NavController, public actionSheetCtrl: ActionSheetController,public datePipe: DatePipe) {
       this.calObj = {
@@ -115,11 +119,7 @@ export class SchedulingPage implements OnInit {
   ActionGoToHome() {
     this.navCtrl.navigateRoot('/home');
   }
-  ActionActivityTypeList() {
-    this.schService.ActivityTypeList(4).subscribe(
-      data => { this.ActTypeList = data; }
-    );
-  }
+  
   async ActionOnOpenSheet() {
     const actionSheet = await this.actionSheetCtrl.create({
       header: 'Calendar',
@@ -147,4 +147,16 @@ export class SchedulingPage implements OnInit {
     await actionSheet.present();
   }
 
+//Activity Add Function
+async AddActivity() {
+  // let version = {version : this.item.VersionID}
+  const modal = await this.Modalcntrl.create({
+    component: AddactivityComponent,
+   // componentProps: version
+  });
+  return await modal.present();
 }
+
+
+}
+

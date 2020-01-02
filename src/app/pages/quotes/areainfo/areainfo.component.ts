@@ -18,6 +18,7 @@ import { OverlayEventDetail } from '@ionic/core';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { FabricationComponent } from '../fabrication/fabrication.component';
 import { LaborinfoComponent } from '../laborinfo/laborinfo.component';
+import { AddpartComponent } from '../addpart/addpart.component';
 
 declare var _qscope, QBRinitAreadrawing, QBRinitdrawingareapartshape, QBRinitdrawarea: any;
 
@@ -106,6 +107,15 @@ export class AreainfoComponent implements OnInit {
     });
     return await modal.present();
   }
+  async ActionAddPart() {
+    let VersionId = {VersionId : this.Version.ID, priceListID: Number (this.Version.PriceListID)}
+    const modal = await this.Modalcntrl.create({
+      component: AddpartComponent,
+      componentProps: VersionId
+    });
+    return await modal.present();
+  }
+  
   /***** MATERIAL DETAILS *****/
   async ActionEditMaterial(mat: any) {
     let copyobj = JSON.parse(JSON.stringify(mat));
@@ -119,7 +129,7 @@ export class AreainfoComponent implements OnInit {
   /***** MEASUREMENT DETAILS *****/
   async ActionEditMeasurement(fab: any) {
     let copyobj = JSON.parse(JSON.stringify(fab));
-    let sizes = { sizes: copyobj, priceListID: Number(this.Version.PriceListID) }
+    let sizes = { fab: copyobj, priceListID: Number(this.Version.PriceListID) }
     const modal = await this.Modalcntrl.create({
       component: MeasurementsComponent,
       componentProps: sizes

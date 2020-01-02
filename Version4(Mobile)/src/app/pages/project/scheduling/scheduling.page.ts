@@ -15,9 +15,7 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe]
 })
 export class SchedulingPage implements OnInit {
- calObj :{
-  StartDate: any,EndDate:any,ActTypeID:11,Search:'',ResourceIds:'',UserId:0
- }
+  calObj:any;
  viewTitle: string = '';
   activitylist: any = [];
   ActTypeList: any;
@@ -30,7 +28,11 @@ export class SchedulingPage implements OnInit {
 
   };
   constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) private locale: string,
-    private schService: SchedulingService, private navCtrl: NavController, public actionSheetCtrl: ActionSheetController,public datePipe: DatePipe) { }
+    private schService: SchedulingService, private navCtrl: NavController, public actionSheetCtrl: ActionSheetController,public datePipe: DatePipe) {
+      this.calObj = {
+        StartDate: '',EndDate:'',ActTypeID:11,Search:'',ResourceIds:'',UserId:0
+       };
+     }
 
   ngOnInit() {
     //this.ActionActivityList();

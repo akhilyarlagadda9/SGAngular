@@ -9,6 +9,7 @@ import { SchedulingPageRoutingModule } from './scheduling-routing.module';
 import { SchedulingPage } from './scheduling.page';
 import { NgCalendarModule  } from 'ionic2-calendar';
 import { ActinfoComponent } from '../actinfo/actinfo.component';
+import { AddactivityComponent, jobssearchComponent } from '../addactivity/addactivity.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { ActinfoComponent } from '../actinfo/actinfo.component';
     IonicModule,
     SchedulingPageRoutingModule,NgCalendarModule,
   ],
-  declarations: [SchedulingPage,ActinfoComponent],
-  entryComponents: [ActinfoComponent],
+  declarations: [SchedulingPage,ActinfoComponent,AddactivityComponent,jobssearchComponent],
+  entryComponents: [ActinfoComponent,AddactivityComponent,jobssearchComponent],
 })
 export class SchedulingPageModule {}

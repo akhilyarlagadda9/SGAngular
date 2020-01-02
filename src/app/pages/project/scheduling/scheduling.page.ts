@@ -7,62 +7,47 @@ import { OverlayEventDetail } from '@ionic/core';
 import { SchedulingService } from 'src/app/service/scheduling.service';
 import { NavController } from '@ionic/angular';
 import { ActionSheetController } from '@ionic/angular';
-import { DatePipe } from '@angular/common';
+//import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-scheduling',
   templateUrl: './scheduling.page.html',
   styleUrls: ['./scheduling.page.scss'],
-  providers: [DatePipe]
+  //providers: [DatePipe]
 })
 export class SchedulingPage implements OnInit {
-  activityId: any;
-  actTypeId: any;
-  startDate: any;
-  endDate: any;
-  activityinfo: any;
-  activitylist: any = []; viewTitle: string = '';StartDate:any;
-  TypeList: any;
-  ID: any;
-  todaydate = new Date().toISOString();
+ calObj :{
+  StartDate: any,EndDate:any,ActTypeID:11,Search:'',ResourceIds:'',UserId:0
+ }
+ viewTitle: string = '';
+  activitylist: any = [];
+  ActTypeList: any;
+  //todaydate = new Date().toISOString();
   @ViewChild(CalendarComponent, { static: true }) myCal: CalendarComponent;
   calendar = {
     mode: 'day',
+    queryMode: 'remote',
     currentDate: new Date(),
+
   };
   constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) private locale: string,
-    private schService: SchedulingService, private navCtrl: NavController,public actionSheetCtrl: ActionSheetController,private datePipe: DatePipe) { }
+    private schService: SchedulingService, private navCtrl: NavController, public actionSheetCtrl: ActionSheetController) { }
 
   ngOnInit() {
     //this.ActionActivityList();
-    this.ActionActivityTypeList();
+    // this.ActionActivityTypeList();
   }
-
-  ActionActivityList() {
-    let search = "", resourceIds = "";
-    this.schService.ActionQuickActList(this.StartDate, this.calendar.mode, search, 11, 0, resourceIds).subscribe(data => {
-      //this.activitylist = data;
+  ActionOnRangeChanged(ev) {
+    this.calObj.StartDate =  ev.startTime.format('DD-MM-YYYY');
+    this.calObj.EndDate =  ev.endTime.format('DD-MM-YYYY');
+    this.ActionLoadEvents();
+  }
+  ActionLoadEvents(){
+    this.schService.ActionQuickActList(this.calObj.StartDate, this.calObj.EndDate, this.calObj.Search, this.calObj.ActTypeID, this.calObj.UserId, this.calObj.ResourceIds).subscribe(data => {
       this.PrepareEvents(data);
-      console.log(data);
     });
   }
- 
-  ActionActivityTypeList() {
-    this.schService.ActivityTypeList(4).subscribe(
-      data => { this.TypeList = data; }
-      );
-    }
- 
-
-  onViewTitleChanged(title) {
-    this.viewTitle = title;
-  }
-  onDateChanges(ev) {
-  this.StartDate = this.datePipe.transform(ev,"MM-dd-yyyy") ;
-  this.ActionActivityList();
-  }
-
   // Change current month/week/day
-  ActionMove(navtype: string) {
+  ActionOnMove(navtype: string) {
     var swiper = document.querySelector('.swiper-container')['swiper'];
     if (navtype == "prev") {
       swiper.slidePrev();
@@ -71,28 +56,27 @@ export class SchedulingPage implements OnInit {
     }
 
   }
-
   // Change between month/week/day
-  ActionChangeMode(mode) {
+  ActionOnChangeMode(mode) {
     this.calendar.mode = mode;
   }
-
+  ActionOnViewTitleChanged(title) {
+    this.viewTitle = title;
+  }
   // Focus today
-  today() {
+  ActionOnToday() {
     this.calendar.currentDate = new Date();
   }
-
-
-
-  async onEventSelected(ev) {debugger;
-    console.log(ev);
-    let obj = {actId:ev.ID,actTypeID:ev.item.actTypeID,StartDate:ev.StartTime,EndDate:ev.EndTime}
+  async ActionOnEventSelected(ev) {
+    
+    
+    let obj = { actId: ev.ID, actTypeID: ev.item.actTypeID, StartDate: ev.StartTime, EndDate: ev.EndTime }
     const modal = await this.Modalcntrl.create({
       component: ActinfoComponent,
-      componentProps : obj
+      componentProps: obj
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-          if (detail.data != null) {
+      if (detail.data != null) {
         if (detail.data.issave) {
           //this.beforeViewType = detail.data.componentProps.eventType;
           //detail.data.componentProps.eventType = ""; //blanking out as we do not want to bind it beforehand
@@ -108,8 +92,8 @@ export class SchedulingPage implements OnInit {
     });
     return await modal.present();
   }
-  
-  PrepareEvents(list: any) {debugger;
+  PrepareEvents(list: any) {
+    this.activitylist = [];
     for (let j in list) {
       let item = list[j];
       this.activitylist.push({
@@ -117,9 +101,9 @@ export class SchedulingPage implements OnInit {
         startTime: new Date(item.StartTime),
         endTime: new Date(item.EndTime),
         allDay: item.AllDay,
-        ID:item.ID,
-        item:item,
-        color: item.StatusID == 5 ? 'success' :'primary',
+        ID: item.ID,
+        item: item,
+        color: item.StatusID == 5 ? 'success' : 'primary',
       });
     }
     console.log(this.activitylist);
@@ -128,39 +112,36 @@ export class SchedulingPage implements OnInit {
   ActionGoToHome() {
     this.navCtrl.navigateRoot('/home');
   }
-
-
-  async presentActionSheet() {
-  const actionSheet = await this.actionSheetCtrl.create({
-    header: 'Calendar',
-    buttons: [{
-      text: 'Day',
-      icon: 'list',
-      handler: () => {
-        this.ActionChangeMode('day');
-      }
-    }, {
-      text: 'Week',
-      icon: 'grid',
-      handler: () => {
-        this.ActionChangeMode('week');
-      }
-    }, {
-      text: 'month',
-      icon: 'grid',
-      handler: () => {
-        this.ActionChangeMode('month');
-      }
-    },{
-      text: 'Cancel',
-      icon: 'close',
-      role: 'cancel',
-      handler: () => {
-        //console.log('Cancel clicked');
-      }
-    }]
-  });
-  await actionSheet.present();
-}
+  ActionActivityTypeList() {
+    this.schService.ActivityTypeList(4).subscribe(
+      data => { this.ActTypeList = data; }
+    );
+  }
+  async ActionOnOpenSheet() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Calendar',
+      buttons: [{
+        text: 'Day',
+        icon: 'list',
+        handler: () => {
+          this.ActionOnChangeMode('day');
+        }
+      }, {
+        text: 'Week',
+        icon: 'grid',
+        handler: () => {
+          this.ActionOnChangeMode('week');
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          //console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
 
 }

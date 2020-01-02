@@ -34,6 +34,17 @@ ActivityTypeResourceList(actTypeId:number):Observable<any> {
 ActivityInfo(activityId:number, actTypeId:number, startDate:Date, endDate:Date):Observable<any> {
   return this.http.get<any>(this.url +  'api/Project/ActivityInfo?activityId=' + activityId + "&actTypeId=" + actTypeId + "&startDate=" + startDate + "&endDate=" + endDate)
 }
-
+//Approved Job List
+ApprovedJobList(search:string,typeId:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/ApprovedJobList?search=' + search + '&typeId=' + typeId)
+}
+//Phase List
+PhaseList(versionID:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/PhaseList?versionID=' + versionID)
+}
+//Status List
+ActionStatusList(statusIds:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/StatusListByActType?statusIds=' + statusIds)
+}
 
 }

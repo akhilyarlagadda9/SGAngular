@@ -92,4 +92,14 @@ ActionGetInvoiceList(custID:number, quoteID:number):Observable<any>{
   return this.http.post<any>(this.url + 'api/QSave/ActionSavePartCustItem', model, { headers: { 'Content-Type': 'application/json' } })
 }
 
+/******************Material Lists******************/
+ActionGetMaterialList(verId:number):Observable<any>{
+  return this.http.get<any>(this.url + 'api/QEdit/ActionVersionMaterialList?versionID=' + verId) 
+}
+ActionGetCountertypeList():Observable<any>{debugger;
+  let typeIdList = []; typeIdList.push(5);
+  return this.http.get<any>(this.url + 'api/QuoteAdmin/QuoteDictionaryLists?typeIdList=' + typeIdList,) 
+}
+
+
 }

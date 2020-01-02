@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="titleheader">Activity Details</ion-title>
+    <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionCloseAddActivity()">X</ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list class="ion-no-margin ion-no-padding">
+    <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">Job# & Name<span class="requiredField">*</span></ion-label>
+      <ion-input [(ngModel)]="JobName" name="Name" #Name="ngModel" type="text" (keyup.enter)="ActionApprovedJobList('',2)" required></ion-input>
+      <ion-icon slot="end" class="martop35" name="arrow-dropdown" (click)="ActionApprovedJobList('',2)"></ion-icon>
+      <ion-icon slot="end" class="martop35" name="search" (click)="ActionApprovedJobList('',2)"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary" class="margin-zero">Activity Phase:</ion-label>
+      <ion-select [(ngModel)]="PhaseID" class="fontbold">
+         <ion-select-option *ngFor="let info of PhaseList" [value]=""></ion-select-option>
+     </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary" class="margin-zero">Activity Type:</ion-label>
+      <ion-select [(ngModel)]="itemSelected" class="fontbold">
+         <ion-select-option *ngFor="let info of ActTypeList" [value]="">{{info.Name}}</ion-select-option>
+     </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary" class="margin-zero">Areas:</ion-label>
+      <ion-select [(ngModel)]="itemSelected" class="fontbold">
+         <ion-select-option [value]="">Phase1</ion-select-option>
+     </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary" class="margin-zero">Activity Status:</ion-label>
+      <ion-select [(ngModel)]="StatusID" class="fontbold">
+         <ion-select-option *ngFor="let info of StatusList" [value]="">{{info.Name}}</ion-select-option>
+     </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary" class="margin-zero">Start Date & Time:</ion-label>
+      <ion-select [(ngModel)]="itemSelected" class="fontbold">
+         <ion-select-option [value]="">Phase1</ion-select-option>
+     </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary" class="margin-zero">End Date & Time:</ion-label>
+      <ion-select [(ngModel)]="itemSelected" class="fontbold">
+         <ion-select-option [value]="">Phase1</ion-select-option>
+     </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary" class="margin-zero">Resources:</ion-label>
+      <ion-select [(ngModel)]="itemSelected" class="fontbold">
+         <ion-select-option [value]="">Phase1</ion-select-option>
+     </ion-select>
+    </ion-item>
+    <ion-row>
+      <ion-label class="margin-zero notestyle" color="primary"><u>Note:</u></ion-label>
+    </ion-row>
+    <ion-row class="padding5">
+      <ion-textarea rows="4" cols="6" class="borderall"></ion-textarea>
+    </ion-row>
+  </ion-list>
+</ion-content>

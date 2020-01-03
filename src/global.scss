@@ -297,6 +297,81 @@ ion-icon{
 .margin-leftzero {
     margin-left: 0px;
 }
+
+.bg-gray {
+    background-color:#c4c4c4;
+}
+.span1 {
+    border:none; 
+    background-color:white; 
+    color:black;
+}
+.bg-gray2 {
+    background-color:gray;
+}
+.smallfont1{
+    font-size: 11px;
+}
+
+.paddzero2{
+    padding:0px;
+    font-size: 14px;
+}
+
+.bg-yellow {
+    background-color: khaki;
+}
+
+.bg-gray3 {
+    background-color: #fcfcd4;
+}
+.colorblue {
+    color: #2b689e;
+}
+.colorblue2 {
+    color: blue;
+}
+.smallfont2 {
+    font-size: 12px;
+}
+.laywidth {
+    width: 11% !important;
+    max-width: 11% !important;
+}
+.marg-left3 {
+    margin-left: -26px;
+}
+.icon-marg-top {
+    margin-top: 5px;
+}
+
+.icon-marg-top2 {
+    margin-top: 1px;
+}
+
+.margup {
+    margin-top: -24px;
+    margin-left: 33px;
+}
+
+.pad2 {
+    padding: 7px;
+  }
+  
+  /* .popover-content {
+    top: 147px !important;
+    left: 255.5px !important;
+  } */
+
+  .border-r1{
+      border: 1px solid gray!important;
+      border-radius: 4px;
+  }
+
+  .padd-right {
+    padding-right: 7px;
+  }
+
 .tab-btm{
     position: fixed;
     bottom: 0;

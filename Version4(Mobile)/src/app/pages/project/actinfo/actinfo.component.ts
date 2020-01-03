@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 export class ActinfoComponent implements OnInit {
    obj:any =  this.navParams.data;
    actInfo:any;
+  actheader: any;
   constructor(public Modalcntrl: ModalController,private navParams: NavParams,private schService: SchedulingService,private datePipe: DatePipe) { }
 
   ngOnInit() {
@@ -24,6 +25,7 @@ export class ActinfoComponent implements OnInit {
       let result = this.schService.ActivityInfo(this.obj.actId,this.obj.actTypeID,start,end).subscribe(
         data => {
           this.actInfo = data; 
+          this.actheader = data.Version.Header;
           console.log(data);
         },
         error => console.log(error));

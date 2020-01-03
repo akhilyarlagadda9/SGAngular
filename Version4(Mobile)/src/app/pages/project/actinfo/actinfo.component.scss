@@ -1,13 +1,27 @@
 .borderbot{
     --inner-border-width: 0px 0px 0px 0px;
 }
-// . {
-//     font-family: 'Google Sans',Roboto,Arial,sans-serif;
-// font-size: 22px;
-// font-weight: 400;
-// line-height: 28px;
-// color:
-// #3c4043;
-// overflow-wrap: break-word;
-// word-wrap: break-word;
-// }
+.fontsty{
+  font-family: 'Google Sans',Roboto,Arial,sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color:#3c4043;
+  word-wrap: break-word;
+}
+.imgsty {
+    width:20px;
+    height:20px;
+}
+.text2 {
+    font-family: Roboto,Arial,sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: .2px;
+    color:#3c4043;
+}
+.text3 {
+    font-family: Roboto,Arial,sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color:#1a73e8;
+}

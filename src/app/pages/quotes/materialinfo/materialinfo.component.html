@@ -1,5 +1,5 @@
 <ion-content>
-  <form [formGroup]="registerForm" (ngSubmit)="ActionSubmit(material)">
+  <form (ngSubmit)="ActionSubmit(material)">
     <ion-toolbar class="poss">
       <ion-title class="titleheader">Material</ion-title>
       <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
@@ -7,13 +7,11 @@
     </ion-toolbar>
     <ion-item>
       <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-      <ion-input type="text" class="labelfont" [(ngModel)]="material.MaterialName" name="MaterialName" 
-      formControlName="add" [ngClass]="{ 'is-invalid': submitted && f.add.errors }"></ion-input>
-      <ion-icon slot="end" class="marg2" name="add" (click)="ActionCreateAddMaterial()"></ion-icon>
+      <ion-input type="text" class="labelfont" [(ngModel)]="material.MaterialName" name="MaterialName" #nameField="ngModel"></ion-input>
+      <ion-icon slot="end" class="marg2" name="add" (click)="ActionCreateAddMaterial(0, 'QuotePart')"></ion-icon>
+      <ion-icon slot="end" class="marg2" name="pencil" (click)="ActionCreateAddMaterial(material.MaterialID, 'QuotePart')"></ion-icon>
     </ion-item>
-    <div *ngIf="f.submitted && MaterialName.invalid" class="invalid-feedback padd-Left">
-      <div *ngIf="MaterialName.errors.required" class="error">Description is required</div>
-  </div>
+
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
       <ion-input type="text" class="labelfont" [(ngModel)]="material.FinishedSqft" name="FinishedSqft" readonly="readonly"></ion-input>

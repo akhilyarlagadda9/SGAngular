@@ -8,8 +8,9 @@ import { SchedulingService } from 'src/app/service/scheduling.service';
 import { NavController } from '@ionic/angular';
 import { ActionSheetController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
-import { FilterPipe } from 'src/app/FilterPipe';
+
 import { AddactivityComponent } from '../addactivity/addactivity.component';
+import { CalendarfilterComponent } from '../calendarfilter/calendarfilter.component';
 
 @Component({
   selector: 'app-scheduling',
@@ -112,6 +113,7 @@ export class SchedulingPage implements OnInit {
     }
     console.log(this.activitylist);
     this.myCal.loadEvents();
+    
   }
   ActionGoToHome() {
     this.navCtrl.navigateRoot('/home');
@@ -158,27 +160,26 @@ export class SchedulingPage implements OnInit {
   }
 
   async ActionFilterPopup(ev: any) {
-
     let obj = {
-      ActTypeId: this.calObj.ActTypeID,
-      ResourceIds: this.calObj.ResourceIds,
-      ResourceNames: this.calObj.ResourceNames,
-      ActTypeTypeList: this.ActTypeList,
+      ActTypeId: this.calObj.ActTypeID, ResourceIds: this.calObj.ResourceIds,
+      ResourceNames: this.calObj.ResourceNames,ActTypeTypeList: this.ActTypeList,
+      ActivityType:this.calObj.ActivityType,
     };
     const popover = await this.popoverCntrl.create({
-      component: CalendarFilterComponent,
+      component: CalendarfilterComponent,
       event: ev,
       translucent: true,
       componentProps: obj,
       cssClass: "popover_class"
     });
-    popover.onDidDismiss().then((detail: OverlayEventDetail) => {
-      if (detail !== null) {
-        if (detail.data.isselect == true) {
-          this.calObj.ActTypeID = detail.data.componentProps.ActTypeID;
-          this.calObj.ResourceIds = detail.data.componentProps.ResourceIds;
-          this.calObj.ResourceNames = detail.data.componentProps.ResourceNames;
-        }
+    popover.onDidDismiss().then((result: OverlayEventDetail) => {
+      console.log(result);
+      if (result.data !== null && result.data != undefined ) {
+        this.calObj.ActTypeID = result.data.ActTypeId;
+        this.calObj.ResourceIds = result.data.ResourceIds;
+        this.calObj.ResourceNames = result.data.ResourceNames;
+        this.calObj.ActivityType = result.data.ActivityType
+        this.ActionLoadEvents();
       }
     });
     return await popover.present();
@@ -196,104 +197,4 @@ export class SchedulingPage implements OnInit {
 
 
 
-
-@Component({
-  template: `
-  <ion-header>
-    <ion-toolbar style="top:5px;">
-    <ion-searchbar [(ngModel)]="queryString" id="search" placeholder="Search Activity Type"></ion-searchbar>
-    <ion-button slot="end"  size="small" (click)="ActionRunFilter()" ><ul>Run</ul></ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop()" >X</ion-button>
-    </ion-toolbar>
-  </ion-header>
-<ion-content>
-  <ion-row style="height:360px">
-  <ion-col size="6" >
-  <ion-item style="color: darkblue;font-weight:bold">
-  Activity Types
-  </ion-item>
-  <ion-item *ngFor="let item of ActTypeTypeList | FilterPipe: queryString : searchableList" (click)="ActivityTypeResourceList(item.ID)">
-  <ion-label>
-  <h3 >
-      {{item.Name}}
-  </h3>
- </ion-label>
- </ion-item>
- </ion-col>
- <ion-col size="6" >
- <ion-item style="color: darkblue;font-weight:bold">
- Resources
- </ion-item>
-  <ion-item *ngFor="let resource of ResourceList">
-  
-  <ion-checkbox style="width:30px" color="dark" [(ngModel)]="resource.Check" checked="resource.Check ==1"></ion-checkbox> 
-  <small>{{resource.ResourceName}}</small>
-  
-
- </ion-item>
-</ion-col>
-
-</ion-row>
-</ion-content>`,
-  providers: [FilterPipe]
-  //styleUrls: ['./customeredit.component.scss'],
-})
-export class CalendarFilterComponent implements OnInit {
-  filterObj = this.navParams.data; searchableList: any;
-  ActTypeTypeList: any; ResourceList: any = [];
-  constructor(private schService: SchedulingService, private navParams: NavParams,
-    private popoverCntrl: PopoverController, private FilterPipe: FilterPipe) {
-    this.searchableList = ['Name']
-  }
-  ngOnInit() {
-    this.ActTypeTypeList = this.filterObj.ActTypeTypeList;
-    this.ActivityTypeResourceList(this.filterObj.ActTypeId);
-  }
-  ActivityTypeResourceList(Id: number) {
-    this.filterObj.ActTypeId = Id;
-    this.schService.ActivityTypeResourceList(Id).subscribe(data => {
-      this.ResourceList = data;
-      this.PrepareResources();
-    });
-  }
-  PrepareResources() {
-    let check = this.filterObj.ResourceIds == "" || this.filterObj.ResourceIds == null ? 1 : 0;
-    let array = check == 0 ? this.filterObj.ResourceIds.split(",") : [];
-    for (let i in this.ResourceList) {
-      let resource = this.ResourceList[i];
-      let resId = array.find(s => s == resource.ID);
-      if (check == 1 || resId > 0) {
-        resource.Check == 1;
-      }
-    }
-  }
-  ActionRunFilter() {
-    this.PrepareResourceIds();
-  }
-  PrepareResourceIds() {
-    debugger;
-    let resIds = ""; let resNames = "";
-    //  let filterList = this.ResourceList.filter(function(item) {
-    //   return  item.Check == 1;
-    // });
-    for (let j in this.ResourceList) {
-      let obj = this.ResourceList[j];
-      if (obj.Check == 1) {
-        resIds += obj.ResourceID + ",";
-        resNames += obj.ResourceName + ",";
-      }
-    }
-    this.filterObj.ResourceIds = resIds.replace(/(^[,\s]+)|([,\s]+$)/g, '');
-    this.filterObj.ResourceNames = resNames.replace(/(^[,\s]+)|([,\s]+$)/g, '');
-
-    this.ActionToClosePop(true);
-  }
-  ActionToClosePop(isselect) {
-    this.popoverCntrl.dismiss({
-      'dismissed': true,
-      componentProps: this.filterObj,
-      isselect: isselect
-    });
-  }
-}
 

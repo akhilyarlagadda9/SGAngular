@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar style="top:5px;">
+  <ion-searchbar [(ngModel)]="queryString" id="search" placeholder="Search Activity Type"></ion-searchbar>
+  <ion-button slot="end"  size="small" (click)="ActionRunFilter()" ><ul>Run</ul></ion-button>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop(false)" >X</ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+<ion-row style="height:360px">
+<ion-col size="6" >
+<ion-item style="color: darkblue;font-weight:bold">
+Activity Types
+</ion-item>
+<ion-item *ngFor="let item of ActTypeTypeList | FilterPipe: queryString : searchableList" (click)="ActivityTypeResourceList(item.ID,item.Name)">
+<ion-label>
+<h3 >
+    {{item.Name}}
+</h3>
+</ion-label>
+</ion-item>
+</ion-col>
+<ion-col size="6" >
+<ion-item style="color: darkblue;font-weight:bold">
+Resources
+</ion-item>
+<ion-item *ngFor="let resource of ResourceList">
+<ion-checkbox style="width:30px" color="dark"  [(ngModel)]="resource.Check" checked="resource.Check ==1"></ion-checkbox> 
+<small>{{resource.ResourceName}}</small>
+</ion-item>
+</ion-col>
+</ion-row>
+</ion-content>

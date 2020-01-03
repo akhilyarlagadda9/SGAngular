@@ -40,7 +40,6 @@ export class AreainfoComponent implements OnInit {
   }
   ngOnInit() {
     this.InitLoad();
-
   }
   InitLoad() {
     //this.Version = _qscope.quote.Version;

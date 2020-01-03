@@ -152,8 +152,8 @@
 </ion-row>
 </ion-col>
 
-<ion-col *ngIf="selectedtabtype == 5">
-    <app-accounts [custID]="headerInfo.Version.CustomerID" [quoteID]="headerInfo.ID"></app-accounts>
+<ion-col class="marginbot" *ngIf="selectedtabtype == 5">
+    <app-accounts [custID]="headerInfo.Version.CustomerID" [headerInfo]="headerInfo"></app-accounts>
 </ion-col>
 </ion-content>
 

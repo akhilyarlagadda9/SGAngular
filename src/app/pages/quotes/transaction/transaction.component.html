@@ -1,0 +1,188 @@
+<ion-content>
+  <form>
+    <ion-toolbar class="poss">
+      <ion-title class="titleheader">{{ViewType}}</ion-title>
+      <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
+    </ion-toolbar>
+     <!-- <ion-row>
+          <ion-col class="text-right">Estimate#:<span style="color: red;">*</span>190518-2</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="text-right">Estimate Date:<span style="color: red;">*</span>12/27/2019</ion-col>
+        </ion-row> -->
+        <ion-row class="padd-right no-margin paddzero">
+          <ion-col size="6" class=""></ion-col>
+        <ion-col size="6" class=" paddzero border-r1 margin-top">
+          <ion-row>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 1">Sale Order#:<span style="color: red;">*</span></ion-col>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 2">Estimate#:<span style="color: red;">*</span></ion-col>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 3">Invoice#:<span style="color: red;">*</span></ion-col>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 4">Invoice#:<span style="color: red;">*</span></ion-col>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 5">Invoice#:<span style="color: red;">*</span></ion-col>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 6">Invoice#:<span style="color: red;">*</span></ion-col>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 7">Refund Receipt#:<span style="color: red;">*</span></ion-col>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 8">Credit Memo#:<span style="color: red;">*</span></ion-col>
+            <ion-col size="5" class="text-left">{{headerInfo.QuoteNo}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 1">Invoice Date:<span style="color: red;">*</span></ion-col>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 2">Invoice Date:<span style="color: red;">*</span></ion-col>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 3">Invoice Date:<span style="color: red;">*</span></ion-col>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 4">Invoice Date:<span style="color: red;">*</span></ion-col>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 5">Credit Date:<span style="color: red;">*</span></ion-col>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 6">Refund Date:<span style="color: red;">*</span></ion-col>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 7">Sale Order Date:<span style="color: red;">*</span></ion-col>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 8">Estimate Date:<span style="color: red;">*</span></ion-col>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 9">Invoice Date:<span style="color: red;">*</span></ion-col>
+            <ion-col size="7" class="text-right" *ngIf="InvoiceTypeID == 10">Invoice Date:<span style="color: red;">*</span></ion-col>
+            <ion-col size="5" class="text-left">12/27/2019</ion-col>
+          </ion-row>
+          <!-- <p>
+            Estimate#:<span style="color: red;">*</span>190518-2
+          </p>
+          <p>
+            Estimate Date:<span style="color: red;">*</span>
+          </p> -->
+        </ion-col>
+        </ion-row>
+    <ion-row>
+      <ion-col size="12" *ngIf="headerInfo.QuoteName  != null">
+        <ion-row>
+          <h3>{{headerInfo.QuoteName}}</h3>
+        </ion-row>
+        <ion-row><span *ngIf="headerInfo.Address1 != '' && headerInfo.Address1 != null">{{headerInfo.Address1}}</span></ion-row>
+        <ion-row><span *ngIf="headerInfo.Address2 != '' && headerInfo.Address2 != null">{{headerInfo.Address2}}</span></ion-row>
+        <ion-row>
+          <span *ngIf="headerInfo.City != '' && headerInfo.City != null">{{headerInfo.City}}</span>
+          <span *ngIf="headerInfo.State != '' && headerInfo.State != null">,{{headerInfo.State}}</span>
+          <span *ngIf="headerInfo.Zipcode != '' && headerInfo.Zipcode != null">-{{headerInfo.Zipcode}}</span></ion-row>
+        <ion-row><span *ngIf="headerInfo.ContactId != '' && headerInfo.ContactId != null">{{headerInfo.ContactId}}</span></ion-row>
+        <ion-row><span *ngIf="headerInfo.Phone != '' && headerInfo.Phone != null">Phone:({{headerInfo.PhoneExt}})&nbsp;{{headerInfo.Phone}};</span></ion-row>
+        <ion-row><span *ngIf="headerInfo.Email != '' && headerInfo.Email != null">Email:({{headerInfo.Email}})</span></ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" >
+        <ion-row>
+          <h3>{{headerInfo.ParentAccount.Name}}</h3>
+        </ion-row>
+        <ion-row><span *ngIf="headerInfo.ParentAccount.BillAddress != '' && headerInfo.ParentAccount.BillAddress != null">{{headerInfo.ParentAccount.BillAddress}}</span></ion-row>
+        <ion-row><span *ngIf="headerInfo.ParentAccount.BillAddress1 != '' && headerInfo.ParentAccount.BillAddress1 != null">{{headerInfo.ParentAccount.BillAddress1}}</span></ion-row>
+        <ion-row>
+          <span *ngIf="headerInfo.ParentAccount.BillCity != '' && headerInfo.ParentAccount.BillCity != null">{{headerInfo.ParentAccount.BillCity}}</span>
+          <span *ngIf="headerInfo.ParentAccount.BillState != '' && headerInfo.ParentAccount.BillState != null">,{{headerInfo.ParentAccount.BillState}}</span>
+          <span *ngIf="headerInfo.ParentAccount.BillZipCode != '' && headerInfo.ParentAccount.BillZipCode != null">-{{headerInfo.ParentAccount.BillZipCode}}</span></ion-row>
+        <ion-row><span *ngIf="headerInfo.ParentAccount.BillContactName != '' && headerInfo.ParentAccount.BillContactName != null">Contact:{{headerInfo.ParentAccount.BillContactName}}</span></ion-row>
+        <ion-row><span *ngIf="headerInfo.ParentAccount.BillContactPhone != '' && headerInfo.ParentAccount.BillContactPhone != null">Phone:({{headerInfo.ParentAccount.BillContactName }})&nbsp;{{headerInfo.ParentAccount.BillContactPhone}};</span></ion-row>
+        <ion-row><span *ngIf="headerInfo.ParentAccount.BillContactEmail != '' && headerInfo.ParentAccount.BillContactEmail != null">Email:({{headerInfo.ParentAccount.BillContactEmail}})</span></ion-row>
+      </ion-col>
+    </ion-row>
+    
+
+      <ion-row class="paddzero">
+        <ion-col size="10">
+          <ion-row>
+            <ion-col size="10">
+              <span class="text-left" >Description</span>
+            </ion-col>
+            <ion-col size="2" class="text-right paddzero">Amount</ion-col>
+          </ion-row>
+          </ion-col>
+          <ion-col size="2"></ion-col>
+      </ion-row>
+      <ion-list class="ion-no-margin ion-no-padding font13">
+        <ion-row class="paddzero">
+          <ion-col size="10">
+          <ion-row>
+            <ion-col size="10">
+              <span class="text-left">Granite - Absolute Black  - 3 CM  - Antiqued</span>
+              <span >&nbsp; 0.00SF</span>
+              <span >&nbsp; 950.40</span>
+            </ion-col>
+            <ion-col size="2" class="text-right">0.00</ion-col>
+          </ion-row>
+          </ion-col>
+          <ion-col size="2"><ion-checkbox checked></ion-checkbox></ion-col>
+        </ion-row>
+        <ion-row class="paddzero">
+          <ion-col size="10">
+          <ion-row>
+            <ion-col size="10">
+              <span class="text-left" >Granite - Absolute Black  - 3 CM  - Antiqued</span>
+              <span >&nbsp; 0.00SF</span>
+              <span >&nbsp; 950.40</span>
+            </ion-col>
+            <ion-col size="2" class="text-right">0.00</ion-col>
+          </ion-row>
+          </ion-col>
+          <ion-col size="2"><ion-checkbox checked></ion-checkbox></ion-col>
+        </ion-row>
+        <ion-row class="paddzero">
+          <ion-col size="10">
+          <ion-row>
+            <ion-col size="10">
+              <span class="text-left" >Granite - Absolute Black  - 3 CM  - Antiqued</span>
+              <span >&nbsp; 0.00SF</span>
+              <span >&nbsp; 950.40</span>
+            </ion-col>
+            <ion-col size="2" class="text-right">0.00</ion-col>
+          </ion-row>
+          </ion-col>
+          <ion-col size="2"><ion-checkbox checked></ion-checkbox></ion-col>
+        </ion-row>
+        <ion-row class="paddzero">
+          <ion-col size="10">
+          <ion-row>
+            <ion-col size="10">
+              <span class="text-left" >Granite - Absolute Black  - 3 CM  - Antiqued</span>
+              <span >&nbsp; 0.00SF</span>
+              <span >&nbsp; 950.40</span>
+            </ion-col>
+            <ion-col size="2" class="text-right">0.00</ion-col>
+          </ion-row>
+          </ion-col>
+          <ion-col size="2"><ion-checkbox checked></ion-checkbox></ion-col>
+        </ion-row>
+        <ion-row class="paddzero">
+          <ion-col size="10">
+          <ion-row>
+            <ion-col size="10">
+              <span class="text-left" >Granite - Absolute Black  - 3 CM  - Antiqued</span>
+              <span >&nbsp; 0.00SF</span>
+              <span >&nbsp; 950.40</span>
+            </ion-col>
+            <ion-col size="2" class="text-right">0.00</ion-col>
+          </ion-row>
+          </ion-col>
+          <ion-col size="2"><ion-checkbox checked></ion-checkbox></ion-col>
+        </ion-row>
+        <ion-row class="paddzero">
+          <ion-col size="10">
+          <ion-row>
+            <ion-col size="10">
+              <span class="text-left" >Granite - Absolute Black  - 3 CM  - Antiqued</span>
+              <span >&nbsp; 0.00SF</span>
+              <span >&nbsp; 950.40</span>
+            </ion-col>
+            <ion-col size="2" class="text-right">0.00</ion-col>
+          </ion-row>
+          </ion-col>
+          <ion-col size="2"><ion-checkbox checked></ion-checkbox></ion-col>
+        </ion-row>
+        <ion-row class="paddzero">
+          <ion-col size="10">
+          <ion-row>
+            <ion-col size="10">
+              <span class="text-left" >Granite - Absolute Black  - 3 CM  - Antiqued</span>
+              <span >&nbsp; 0.00SF</span>
+              <span >&nbsp; 950.40</span>
+            </ion-col>
+            <ion-col size="2" class="text-right">0.00</ion-col>
+          </ion-row>
+          </ion-col>
+          <ion-col size="2"><ion-checkbox checked></ion-checkbox></ion-col>
+        </ion-row>
+      </ion-list>
+  </form>
+</ion-content>

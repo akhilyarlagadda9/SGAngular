@@ -40,6 +40,10 @@ ActionGetInvoiceList(custID:number, quoteID:number):Observable<any>{
   return this.http.get<any>(this.url +  'api/accReceivable/QuoteInvoiceList?custID=' + custID + "&quoteID=" + quoteID) 
 }
 
+ActionGetPaymentList(custID:number, quoteID:number):Observable<any>{
+  return this.http.get<any>(this.url + 'api/accReceivable/ProjectPmtList?custID=' + custID + "&proID=" + quoteID) 
+}
+
 /***********************************************Part Save Methods************************************/
  //Fabrication,Measurements Save Function
  Actionsavepartfabrication(item: any): Observable<any> {

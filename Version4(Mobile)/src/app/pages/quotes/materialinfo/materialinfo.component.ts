@@ -14,7 +14,6 @@ export class MaterialinfoComponent implements OnInit {
   constructor(public Modalcntrl: ModalController) { }
 
   ngOnInit() {
-    debugger;
 
   }
 

@@ -128,7 +128,7 @@ export class AreainfoComponent implements OnInit {
   /***** MEASUREMENT DETAILS *****/
   async ActionEditMeasurement(fab: any) {
     let copyobj = JSON.parse(JSON.stringify(fab));
-    let sizes = { fab: copyobj, priceListID: Number(this.Version.PriceListID) }
+    let sizes = { sizes: copyobj, priceListID: Number(this.Version.PriceListID) }
     const modal = await this.Modalcntrl.create({
       component: MeasurementsComponent,
       componentProps: sizes

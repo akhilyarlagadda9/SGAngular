@@ -13,6 +13,17 @@
     <ion-icon name="arrow-forward" class="fontlarge" slot="end" (click)="ActionOnMove('next')"></ion-icon>
     <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
   </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-row style="color:darkblue;">
+      <ion-col (click)="ActionFilterPopup()">
+     <h3 class="no-margin" style="font-weight: bold;">{{calObj.ActivityType}} </h3>
+      <p  *ngIf="calObj.ResourceNames != '' && calObj.ResourceNames != null">
+        -  {{calObj.ResourceNames}}
+      </p>
+    </ion-col>
+    </ion-row>
+</ion-toolbar>
 </ion-header>
 <ion-content>
   

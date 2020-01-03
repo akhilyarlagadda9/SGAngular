@@ -6,10 +6,10 @@ import { IonicModule } from '@ionic/angular';
 
 import { SchedulingPageRoutingModule } from './scheduling-routing.module';
 
-import { SchedulingPage } from './scheduling.page';
+import { SchedulingPage,CalendarFilterComponent } from './scheduling.page';
 import { NgCalendarModule  } from 'ionic2-calendar';
 import { ActinfoComponent } from '../actinfo/actinfo.component';
-import { AddactivityComponent, jobssearchComponent } from '../addactivity/addactivity.component';
+import { FilterPipe } from 'src/app/FilterPipe';
 
 @NgModule({
   imports: [
@@ -18,7 +18,7 @@ import { AddactivityComponent, jobssearchComponent } from '../addactivity/addact
     IonicModule,
     SchedulingPageRoutingModule,NgCalendarModule,
   ],
-  declarations: [SchedulingPage,ActinfoComponent,AddactivityComponent,jobssearchComponent],
-  entryComponents: [ActinfoComponent,AddactivityComponent,jobssearchComponent],
+  declarations: [SchedulingPage,ActinfoComponent,CalendarFilterComponent,FilterPipe],
+  entryComponents: [ActinfoComponent,CalendarFilterComponent],
 })
 export class SchedulingPageModule {}

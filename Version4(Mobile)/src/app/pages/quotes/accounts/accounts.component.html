@@ -42,7 +42,7 @@
   </ion-list> -->
 
 
-    <ion-toolbar ion-no-margin>
+    <!-- <ion-toolbar ion-no-margin>
       <ion-title class="titleheader">ACCOUNTING</ion-title>
     </ion-toolbar>
       <ion-card *ngFor="let account of accountlist"  class="margin-bottom">
@@ -74,7 +74,99 @@
             </p>
           </ion-label>
         </ion-item>
-      </ion-card>
+      </ion-card> -->
+      
+      
 
 
+  <ion-row class="margup">
+    <ion-col size="7"></ion-col>
+    <ion-col size="4">
+      <ion-button size="small" (click)="ActionNewTransaction()">New Transaction<ion-icon name="arrow-down"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-card *ngFor="let account of accountlist" class="margin-bottom">
+    <ion-row>
+      <ion-col size="6">
+        <ion-row>
+          <ion-col size="6" class="text-right">Transaction#</ion-col>
+          <ion-col size="6" class="text-left"><span class="highlight"><b>{{account.ExtNo}}</b></span></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="text-right">Type</ion-col>
+          <ion-col size="6" class="text-left highlight"><b>
+            <span *ngIf="account.InvoiceTypeID == 1">INVOICE</span>
+            <span *ngIf="account.InvoiceTypeID == 3">MATERIAL INVOICE</span>
+            <span *ngIf="account.InvoiceTypeID == 4">DEPOSIT INVOICE</span>
+            <span *ngIf="account.InvoiceTypeID == 5">CREDIT MEMO</span>
+            <span *ngIf="account.InvoiceTypeID == 6">REFUND RECEIPT</span>
+            <span *ngIf="account.InvoiceTypeID == 7">SALE ORDER</span>
+            <span *ngIf="account.InvoiceTypeID == 8">ESTIMATE</span>
+            <span *ngIf="account.InvoiceTypeID == 9">INVOICE</span>
+            <span *ngIf="account.InvoiceTypeID == 10">INVOICE</span></b>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="text-right">Date</ion-col>
+          <ion-col size="6" class="text-left highlight"><b>{{ account.InvoiceDate| date:'MM/dd/yyyy' }}</b></ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="6">
+        <ion-row>
+          <ion-col size="6" class="text-right">Amount($)</ion-col>
+          <ion-col size="5" class="text-left highlight"><b>{{ account.TotalAmount |number: '.2-2'  }}</b></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="text-right">Balance($)</ion-col>
+          <ion-col size="6" class="text-left highlight"><b>{{ account.BalAmt |number: '.2-2'  }}</b></ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+  <ion-card *ngFor="let payment of paymentlist" class="margin-bottom">
+    <ion-row>
+      <ion-col size="6">
+        <ion-row>
+          <ion-col size="6" class="text-right">Transaction#</ion-col>
+          <ion-col size="6" class="text-left highlight"><b>{{ payment.ExtPmtNO }}</b></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="text-right">Type</ion-col>
+          <ion-col size="6" class="text-left highlight"><b>
+            <span *ngIf="payment.IsDepositPmt == 0">PAYMENT</span>
+            <span *ngIf="payment.IsDepositPmt == 1">DEPOSIT PAYMENT</span></b>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="text-right">Date</ion-col>
+          <ion-col size="6" class="text-left highlight"><b>{{ payment.PmtDate| date:'MM/dd/yyyy' }}</b></ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="6">
+        <ion-row>
+          <ion-col size="6" class="text-right">Amount($)</ion-col>
+          <ion-col size="6" class="text-left highlight"><b>
+            <span *ngIf="payment.IsDepositPmt == 2">{{ payment.TotalPayment |number: '.2-2'  }}</span>
+            <span *ngIf="payment.IsDepositPmt != 2">{{ payment.TotalPayment |number: '.2-2' }}</span></b>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="text-right">Balance($)</ion-col>
+          <ion-col size="6" class="text-left highlight"><b>{{ payment.UnAppAmt |number: '.2-2' }}</b></ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 
+
+  <!-- <ion-grid>
+    <ion-col>Sale Order (QBD)</ion-col>
+    <ion-col>Estimate (QBO)</ion-col>
+    <ion-col>Receive Deposit</ion-col>
+    <ion-col>Quote Invoice</ion-col>
+    <ion-col>Phase Invoice</ion-col>
+    <ion-col>Receive Payment</ion-col>
+    <ion-col>Refund Receipt</ion-col>
+    <ion-col>Credit Memo</ion-col>
+  </ion-grid> -->

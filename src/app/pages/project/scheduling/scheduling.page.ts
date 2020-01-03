@@ -9,6 +9,7 @@ import { NavController } from '@ionic/angular';
 import { ActionSheetController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
 import { FilterPipe } from 'src/app/FilterPipe';
+import { AddactivityComponent } from '../addactivity/addactivity.component';
 
 @Component({
   selector: 'app-scheduling',
@@ -161,7 +162,7 @@ export class SchedulingPage implements OnInit {
     let obj = {
       ActTypeId: this.calObj.ActTypeID,
       ResourceIds: this.calObj.ResourceIds,
-      ResourceNames :this.calObj.ResourceNames,
+      ResourceNames: this.calObj.ResourceNames,
       ActTypeTypeList: this.ActTypeList,
     };
     const popover = await this.popoverCntrl.create({
@@ -173,18 +174,26 @@ export class SchedulingPage implements OnInit {
     });
     popover.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {
-         if (detail.data.isselect == true) {
+        if (detail.data.isselect == true) {
           this.calObj.ActTypeID = detail.data.componentProps.ActTypeID;
           this.calObj.ResourceIds = detail.data.componentProps.ResourceIds;
           this.calObj.ResourceNames = detail.data.componentProps.ResourceNames;
-          }
+        }
       }
     });
     return await popover.present();
   }
+  async ActionAddActivity() {
+    // let version = {version : this.item.VersionID}
+    const modal = await this.Modalcntrl.create({
+      component: AddactivityComponent,
+      // componentProps: version
+    });
+    return await modal.present();
 
-
+  }
 }
+
 
 
 
@@ -276,14 +285,14 @@ export class CalendarFilterComponent implements OnInit {
     }
     this.filterObj.ResourceIds = resIds.replace(/(^[,\s]+)|([,\s]+$)/g, '');
     this.filterObj.ResourceNames = resNames.replace(/(^[,\s]+)|([,\s]+$)/g, '');
- 
+
     this.ActionToClosePop(true);
   }
   ActionToClosePop(isselect) {
     this.popoverCntrl.dismiss({
       'dismissed': true,
-      componentProps:this.filterObj,
-      isselect:isselect
+      componentProps: this.filterObj,
+      isselect: isselect
     });
   }
 }

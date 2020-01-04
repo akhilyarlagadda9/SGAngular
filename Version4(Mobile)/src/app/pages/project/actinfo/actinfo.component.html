@@ -1,72 +1,57 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="titleheader">Activity Details</ion-title>
-    <ion-icon name="create" slot="end" style="font-size: 20px;"></ion-icon>&nbsp;&nbsp;
-    <ion-icon name="trash" slot="end" style="font-size: 20px;color: red;"></ion-icon>&nbsp;&nbsp;
-    <ion-icon name="close" slot="end" style="font-size: 20px;" (click)="ActionCloseActivityEdit()"></ion-icon>
+    <ion-title class="titleheader">{{actInfo.ActTypeName}}</ion-title>
+    <ion-icon name="create" slot="end" class="fontsmall paddright10"></ion-icon>
+    <ion-icon name="trash" slot="end" class="fontsmall paddright10" color="danger"></ion-icon>
+    <ion-icon name="close" slot="end" class="fontlarge" (click)="ActionCloseActivityEdit()"></ion-icon>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <ion-row>
-    <ion-col size="2" class="font12">Job#:</ion-col>
-    <ion-col size="10">
+    <ion-col size="1"></ion-col>
+    <ion-col size="11" class="paddzero">
       <div><span class="fontsty">{{actheader.QuoteNo}} - {{actheader.QuoteName}} - P{{actheader.PhaseSrNo}}</span></div>
-      <div><span
-          class="text2">{{actheader.Address1}},{{actheader.City}},{{actheader.State}},{{actheader.Zipcode}}</span></div>
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="2" class="font12">Cust:</ion-col>
-    <ion-col size="10">
-      <span class="text2">{{actInfo.CustName}}</span>
+    <ion-col size="1" class="paddt0"><ion-icon name="pin" class="font20"></ion-icon></ion-col>
+    <ion-col size="11" class="paddzero">
+      <div><span class="text2">{{actheader.Address1}},{{actheader.City}},{{actheader.State}},{{actheader.Zipcode}}</span></div>
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="2"><ion-icon name="person" style="font-size: 20px;color: cornflowerblue;"></ion-icon></ion-col>
-    <ion-col size="10">
-      <span class="text2">{{actInfo.SalesPerName}}</span>
+    <ion-col size="1" class="paddt0"><ion-icon name="contact" class="color-coral font24"></ion-icon></ion-col>
+    <ion-col size="11" class="paddzero">
+      <span class="valignsup">{{actInfo.CustName}} &nbsp;- &nbsp;</span>
+      <ion-icon name="person" class="font24 colorb"></ion-icon>
+      <span class="valignsup">{{actInfo.SalesPerName}}</span>
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="2" class="font12">Areas:</ion-col>
-    <ion-col size="10">
-      <ion-row class="paddzero" *ngFor="let part of actInfo.QuotePartList;let i = index">
-        <ion-col class="paddzero">
-          <div *ngIf="part != null">{{part.AreaName}} - Part{{part.NewSrNo}} - {{part.JobSqft}} SF </div>
-          <div *ngIf="part == null"> - </div>
-        </ion-col>
-      </ion-row>
+    <ion-col size="1" class="paddt0"><ion-icon name="calendar" class="font20"></ion-icon></ion-col>
+    <ion-col size="11" class="paddzero">
+      <span class="text2">{{actInfo.SchStartTime  | date:'MM/dd'}} - {{actInfo.StartTime | date:'h:mm a '}} ,
+        {{actInfo.SchEndTime  | date:'MM/dd'}} - {{actInfo.EndTime | date:'h:mm a '}} -
+        {{actInfo.Hrs}} Hrs:{{actInfo.Mins}} Min</span>
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="2" class="font12">Act.Type:</ion-col>
-    <ion-col size="10">
-      <span class="text2"> {{actInfo.ActTypeName}}</span>
-    </ion-col>
+    <ion-col size="1" class="paddt0"><img src="assets/img/Scheduled.png" alt="your image" class="imgsty"></ion-col>
+    <ion-col size="11" class="paddzero"><span class="text2 valignsup">{{actInfo.StatusName}}</span></ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="2" class="font12">Start:</ion-col>
-    <ion-col size="10">
-      <span class="text2">{{actInfo.SchStartTime  | date:'MM/dd/yyyy'}}:{{actInfo.StartTime | date:'h:mm a z'}} -
-        {{actInfo.SchEndTime  | date:'MM/dd/yyyy'}}:{{actInfo.EndTime | date:'h:mm a z'}} -
-        {{actInfo.Hrs}}:{{actInfo.Hrs}}</span>
+    <ion-col size="1" class="paddt0">
+      <ion-icon name="people" class="font24 colorb"></ion-icon>
     </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size="2" class="font12">Status:</ion-col>
-    <ion-col size="10">
-      <span class="text2 flex">{{actInfo.StatusName}}&nbsp;&nbsp; <img src="assets/img/Scheduled.png" alt="your image" class="imgsty"></span>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size="2"><ion-icon name="people" style="font-size: 25px;color: cornflowerblue;"></ion-icon></ion-col>
-    <ion-col size="10">
-      <ion-row class="paddzero" *ngFor="let resource of actInfo.ResourceList">
-        <ion-col class="paddzero">
+    <ion-col size="11" class="paddzero">
+      <ion-row class="paddzero" *ngFor="let resource of actInfo.ResourceList;let i = index">
+        <ion-col size="12" *ngIf="i == 0">{{actInfo.ResourceList.length}} &nbsp; Resource'<span
+            *ngIf="actInfo.ResourceList.length > 1">s</span></ion-col>
+        <ion-col size="12" class="paddzero">
           <div>{{resource.ResourceName}}</div>
           <span *ngIf="resource.EmpMail!= null && resource.EmpMail != ''">
             <ion-icon name="mail"></ion-icon>&nbsp;{{resource.EmpMail}}
-          </span>,
+          </span><span *ngIf="resource.EmpPhone!= null && resource.EmpPhone != ''">,</span>
           <span *ngIf="resource.EmpPhone!= null && resource.EmpPhone != ''">
             <ion-icon name="call"></ion-icon>&nbsp;{{resource.EmpPhone}}
           </span>
@@ -74,4 +59,27 @@
       </ion-row>
     </ion-col>
   </ion-row>
+  <ion-row>
+    <ion-col size="2" class="paddt0"><b>Areas:</b></ion-col>
+    <ion-col size="10" class="text-right paddzero"><b>{{actInfo.PhaseSF | number : '.2-2'}}SF</b>&nbsp;</ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="paddt0"></ion-col>
+    <ion-col size="11" class="paddzero">
+      <ion-row class="paddzero" *ngFor="let part of actInfo.QuotePartList;let i = index;let last = last">
+        <ion-col class="paddzero">
+          <div *ngIf="i < 3 && showmore == 0">{{part.AreaName}} - Part{{part.NewSrNo}} - {{part.JobSqft}} SF </div>
+          <div *ngIf="last && showmore == 0" class="colorb" (click)="ActionMoreAreas(1)"><u>More</u></div>
+        </ion-col>
+      </ion-row>
+      <div *ngIf="showmore == 1">
+        <div *ngFor="let part of actInfo.QuotePartList">{{part.AreaName}} - Part{{part.NewSrNo}} - {{part.JobSqft}} SF
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+  <!-- <ion-row>
+    <ion-col size="1" class="font20 paddt0"><ion-icon name="menu"></ion-icon></ion-col>
+    <ion-col size="11" class="paddzero">{{actInfo.Memo}}</ion-col>
+  </ion-row> -->
 </ion-content>

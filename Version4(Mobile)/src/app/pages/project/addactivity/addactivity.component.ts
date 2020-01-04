@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { ModalController, PopoverController, NavParams } from '@ionic/angular';
 import { SchedulingService } from 'src/app/service/scheduling.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class AddactivityComponent implements OnInit {
   Header: any;
   statusId: number;
 
-  constructor(public Modalcntrl: ModalController, private schService: SchedulingService, public popoverCntrl: PopoverController) {
+  constructor(public Modalcntrl: ModalController, private schService: SchedulingService, public popoverCntrl: PopoverController,private navParams: NavParams) {
     this.serObj = {
       search: '', typeId: 2
     };

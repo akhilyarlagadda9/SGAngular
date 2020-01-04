@@ -12,6 +12,8 @@ export class ActinfoComponent implements OnInit {
    obj:any =  this.navParams.data;
    actInfo:any;
   actheader: any;
+  showmore: number = 0;
+
   constructor(public Modalcntrl: ModalController,private navParams: NavParams,private schService: SchedulingService,private datePipe: DatePipe) { }
 
   ngOnInit() {
@@ -31,6 +33,11 @@ export class ActinfoComponent implements OnInit {
         error => console.log(error));
   
   }
+  //More function
+  ActionMoreAreas(more:number) {
+    this.showmore = more;
+  }
+
   //Close Function
   ActionCloseActivityEdit() {
     this.Modalcntrl.dismiss({

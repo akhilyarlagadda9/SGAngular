@@ -23,6 +23,7 @@ export class SchedulingPage implements OnInit {
   viewTitle: string = '';
   activitylist: any = [];
   ActTypeList: any;
+  loaderToShow: any;
   //todaydate = new Date().toISOString();
   @ViewChild(CalendarComponent, { static: true }) myCal: CalendarComponent;
   calendar = {
@@ -30,7 +31,7 @@ export class SchedulingPage implements OnInit {
     queryMode: 'remote',
     currentDate: new Date(),
   };
-  constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) private locale: string,
+  constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID,) private locale: string,public loadingController: LoadingController,
     private schService: SchedulingService, private navCtrl: NavController, public actionSheetCtrl: ActionSheetController,
     public datePipe: DatePipe, private popoverCntrl: PopoverController) {
     this.calObj = {
@@ -47,10 +48,24 @@ export class SchedulingPage implements OnInit {
     this.calObj.EndDate = this.datePipe.transform(ev.endTime, "MM-dd-yyyy");
     console.log(this.calObj.StartDate + "end" + this.calObj.EndDate);
     this.ActionLoadEvents();
+    
   }
   ActionLoadEvents() {
+    this.showLoader()
     this.schService.ActionQuickActList(this.calObj.StartDate, this.calObj.EndDate, this.calObj.Search, this.calObj.ActTypeID, this.calObj.UserId, this.calObj.ResourceIds).subscribe(data => {
       this.PrepareEvents(data);
+    });
+  }
+
+  showLoader() {
+    this.loaderToShow = this.loadingController.create({
+      message: 'Please wait'
+    }).then((res) => {
+      res.present();
+ 
+      res.onDidDismiss().then((dis) => {
+        console.log('Loading dismissed!');
+      });
     });
   }
   // Change current month/week/day
@@ -113,8 +128,15 @@ export class SchedulingPage implements OnInit {
     }
     console.log(this.activitylist);
     this.myCal.loadEvents();
+    this.hideLoader();
     
   }
+
+  async hideLoader() {
+    this.loadingController.dismiss();
+  }
+
+
   ActionGoToHome() {
     this.navCtrl.navigateRoot('/home');
   }

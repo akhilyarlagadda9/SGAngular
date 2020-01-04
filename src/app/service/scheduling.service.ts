@@ -42,6 +42,7 @@ ApprovedJobList(search:string,typeId:number):Observable<any> {
 }
 //Phase List
 PhaseList(versionID:number):Observable<any> {
+  console.log(versionID);
   return this.http.get<any>(this.url +  'api/Project/PhaseList?versionID=' + versionID)
 }
 //Status List

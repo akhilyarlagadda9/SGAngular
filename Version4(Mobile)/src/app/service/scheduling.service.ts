@@ -46,8 +46,22 @@ PhaseList(versionID:number):Observable<any> {
   return this.http.get<any>(this.url +  'api/Project/PhaseList?versionID=' + versionID)
 }
 //Status List
-ActionStatusList(statusIds:number):Observable<any> {
-  return this.http.get<any>(this.url +  'api/Project/StatusListByActType?statusIds=' + statusIds)
+ActionStatusList():Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/ActivityStatusList')
+}
+//Area List
+ActionAreaList(versionID:number,phaseID:number):Observable<any> {debugger;
+  return this.http.get<any>(this.url +  'api/Project/AreaList?versionID=' + versionID + '&phaseID=' + phaseID)
+}
+
+
+
+//POST SERVICES
+
+//Activity Save Function
+ActionSaveActivityInfo(model:any):Observable<any> {
+  var parameter = JSON.stringify(model);
+  return this.http.post<any>(this.url + 'api/Project/SaveActivityInfo', parameter, { headers: { 'Content-Type': 'application/json' } })
 }
 
 }

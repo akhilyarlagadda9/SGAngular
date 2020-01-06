@@ -220,7 +220,7 @@
             <app-other [VersionId]="headerInfo.Version.ID"></app-other>
         </ion-col>
         <ion-col *ngSwitchCase="6">
-            <app-accounts [custID]="headerInfo.Version.CustomerID" [quoteID]="headerInfo.ID"></app-accounts>
+            <app-accounts [custID]="headerInfo.Version.CustomerID" [headerInfo]="headerInfo"></app-accounts>
         </ion-col>
     </ion-row>
 </ion-content>

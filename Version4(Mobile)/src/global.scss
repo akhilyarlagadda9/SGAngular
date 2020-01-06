@@ -377,3 +377,20 @@ ion-icon{
     bottom: 0;
     right: 0;
 }
+.weekview-allday-content-wrapper {
+    margin-left: 0px !important;
+    overflow: hidden;
+    height: 51px;
+}
+
+.weekview-normal-event-table {
+    display:none;
+}
+
+.weekview-allday-label {
+    display:none;
+}
+
+.weekview-header th.calendar-hour-column{
+    display:none !important; 
+}

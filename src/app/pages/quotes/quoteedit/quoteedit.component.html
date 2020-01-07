@@ -17,27 +17,27 @@
     </ion-toolbar>
     <ion-toolbar>
         <ion-row>
-            <ion-col class="paddtopzero" (click)="ActionLoadTabInfo(1)">
+            <ion-col class="paddtopzero text-center" (click)="ActionLoadTabInfo(1)">
                 <img src="assets/img/Checklist-icon.png" alt="your image" style="width:35px;height:35px;">
                 <div class="mar-top5"><span style="font-size:11px;">summary</span></div>
             </ion-col>
-            <ion-col class="paddtopzero" (click)="ActionLoadTabInfo(2)">
+            <ion-col class="paddtopzero text-center" (click)="ActionLoadTabInfo(2)">
                 <img src="assets/img/Drawing-icon.png" alt="your image" style="width:35px;height:35px;">
                 <div class="mar-top5"><span style="font-size:11px;">Area Info</span></div>
             </ion-col>
-            <ion-col class="paddtopzero" (click)="ActionLoadTabInfo(3)">
+            <ion-col class="paddtopzero text-center" (click)="ActionLoadTabInfo(3)">
                 <img src="assets/img/email-icon.png" alt="your image" style="width:35px;height:35px;">
                 <div class="mar-top5"><span style="font-size:11px;">Comm Hub</span></div>
             </ion-col>
-            <ion-col class="paddtopzero" (click)="ActionLoadTabInfo(4)">
+            <ion-col class="paddtopzero text-center" *ngIf="headerInfo.Version.StatusID == 6" (click)="ActionLoadTabInfo(4)">
                 <img src="assets/img/calendar-icon.png" alt="your image" style="width:35px;height:35px;">
                 <div class="mar-top5"><span style="font-size:11px;">Activities</span></div>
             </ion-col>
-            <ion-col class="paddtopzero" (click)="ActionLoadTabInfo(5)">
+            <ion-col class="paddtopzero text-center" (click)="ActionLoadTabInfo(5)">
                 <img src="assets/img/marbles-icon.png" alt="your image" style="width:35px;height:35px;">
                 <div class="mar-top5"><span style="font-size:11px;">Other</span></div>
             </ion-col>
-            <ion-col class="paddtopzero" (click)="ActionLoadTabInfo(6)">
+            <ion-col class="paddtopzero text-center"  *ngIf="headerInfo.Version.StatusID == 6" (click)="ActionLoadTabInfo(6)">
                 <img src="assets/img/coin-us-dollar-icon.png" alt="your image" style="width:35px;height:35px;">
                 <div class="mar-top5"><span style="font-size:11px;">Accounts</span></div>
             </ion-col>
@@ -220,7 +220,7 @@
             <app-other [VersionId]="headerInfo.Version.ID"></app-other>
         </ion-col>
         <ion-col *ngSwitchCase="6">
-            <app-accounts [custID]="headerInfo.Version.CustomerID" [headerInfo]="headerInfo"></app-accounts>
+            <!-- <app-accounts [custID]="headerInfo.Version.CustomerID" [quoteID]="headerInfo.ID"></app-accounts> -->
         </ion-col>
     </ion-row>
 </ion-content>

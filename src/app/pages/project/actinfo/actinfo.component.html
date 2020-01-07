@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title class="titleheader">{{actInfo.ActTypeName}}</ion-title>
-    <ion-icon name="create" slot="end" class="fontsmall paddright10"></ion-icon>
+    <ion-icon name="create" slot="end" class="fontsmall paddright10" (click)="ActionEditActivity(actInfo,1)"></ion-icon>
     <ion-icon name="trash" slot="end" class="fontsmall paddright10" color="danger"></ion-icon>
     <ion-icon name="close" slot="end" class="fontlarge" (click)="ActionCloseActivityEdit()"></ion-icon>
   </ion-toolbar>
@@ -10,13 +10,13 @@
   <ion-row>
     <ion-col size="1"></ion-col>
     <ion-col size="11" class="paddzero">
-      <div><span class="fontsty">{{actheader.QuoteNo}} - {{actheader.QuoteName}} - P{{actheader.PhaseSrNo}}</span></div>
+      <div><span class="fontsty">{{actInfo.Version.Header.QuoteNo}} - {{actInfo.Version.Header.QuoteName}} - P{{actInfo.Version.Header.PhaseSrNo}}</span></div>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col size="1" class="paddt0"><ion-icon name="pin" class="font20"></ion-icon></ion-col>
     <ion-col size="11" class="paddzero">
-      <div><span class="text2">{{actheader.Address1}},{{actheader.City}},{{actheader.State}},{{actheader.Zipcode}}</span></div>
+      <div><span class="text2">{{actInfo.Version.Header.Address1}},{{actInfo.Version.Header.City}},{{actInfo.Version.Header.State}},{{actInfo.Version.Header.Zipcode}}</span></div>
     </ion-col>
   </ion-row>
   <ion-row>

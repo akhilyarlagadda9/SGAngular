@@ -206,11 +206,11 @@ export class SchedulingPage implements OnInit {
     });
     return await popover.present();
   }
-  async ActionAddActivity() {
-    // let version = {version : this.item.VersionID}
+  async ActionAddActivity(viewId: any) {
+    let viewtypeId = {viewtypeId : viewId}
     const modal = await this.Modalcntrl.create({
       component: AddactivityComponent,
-      // componentProps: version
+      componentProps: viewtypeId,
     });
     return await modal.present();
 

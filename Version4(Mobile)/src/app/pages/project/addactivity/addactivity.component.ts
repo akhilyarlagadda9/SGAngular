@@ -13,6 +13,11 @@ export class AddactivityComponent implements OnInit {
   QuoteNo: any; QuoteName: any; jsalesPerson: any; jcustName: any; JobReschFlag: any; jAddress: string; JobFullAddres: string; City: string; statusList: any[];
   ResourceList: any[];
   PhaseID: number;
+  PhasePartList: any;
+  actTypeId: any;
+  partId: any;
+  areaId: any;
+ // obj:any =  this.navParams.data;
   AreaList: any;
 
   constructor(public Modalcntrl: ModalController, private schService: SchedulingService, public popoverCntrl: PopoverController, private navParams: NavParams) {
@@ -25,6 +30,8 @@ export class AddactivityComponent implements OnInit {
   ngOnInit() {
     this.ActionActivityTypeList();
     this.ActionStatusList();
+    this.ActionAreaList();
+   // this.ActionPhasePartList();
     //this.GetResoucreList();
   }
   GetResoucreList(Id) {
@@ -47,12 +54,18 @@ export class AddactivityComponent implements OnInit {
       data => { this.PhaseList = data; }
     );
   }
-  //Area List Function
-  ActionAreaist() {debugger;
-    this.schService.ActionAreaList(this.actDetails.VersionID,this.PhaseID).subscribe(
+  //Area List 
+  ActionAreaList() {
+    this.schService.ActionAreaList(this.actDetails.VersionID,this.actDetails.PhaseID).subscribe(
       data => { this.AreaList = data; }
     );
   }
+  // //Phase Part List Function
+  // ActionPhasePartList() {
+  //   this.schService.ActionPhasePartList(this.obj.VersionID,this.obj.PhaseID,this.obj.actTypeId,this.obj.partId,this.obj.areaId).subscribe(
+  //     data => { this.PhasePartList = data; }
+  //   );
+  // }
 
   //Activitytype List Function
   ActionActivityTypeList() {
@@ -144,6 +157,7 @@ export class jobssearchComponent implements OnInit {
     this.jobdetails = model;
     this.ActionToClosePop(true);
   }
+  
   ActionToClosePop(isselect) {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data

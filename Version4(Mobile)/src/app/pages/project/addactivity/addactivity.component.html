@@ -8,38 +8,36 @@
 <ion-content>
   <ion-list class="ion-no-margin ion-no-padding">
     <ion-item>
-      <ion-label class="labelfont" position="floating" color="primary">Job# & Name<span class="requiredField">*</span>
-      </ion-label>
-      <ion-input [(ngModel)]="actDetails.JobName" name="Name" #Name="ngModel" type="text"
-        (keyup.enter)="ActionApprovedJobList('',2)" required></ion-input>
-      <ion-icon slot="end" class="martop35" name="arrow-dropdown" (click)="ActionApprovedJobList('',2)"></ion-icon>
-      <ion-icon slot="end" class="martop35" name="search" (click)="ActionApprovedJobList('',2)"></ion-icon>
+      <ion-label class="labelfont" position="floating" color="primary">Job# & Name<span class="requiredField">*</span></ion-label>
+      <ion-input *ngIf="viewtypeId == 0" [(ngModel)]="actDetails.JobName" name="JobName" type="text" #nameField="ngModel"
+        (keyup.enter)="ActionApprovedJobList(actDetails.JobName,2)" required></ion-input>
+      <ion-input *ngIf="viewtypeId != 0" [(ngModel)]="actDetails.JobName" name="JobName" type="text" #nameField="ngModel"
+        (keyup.enter)="ActionApprovedJobList(actDetails.JobName,2)" readonly="readonly"></ion-input>
+      <ion-icon slot="end" class="martop35" name="arrow-dropdown" *ngIf="viewtypeId == 0" (click)="ActionApprovedJobList('',2)"></ion-icon>
+      <ion-icon slot="end" class="martop35" name="search" *ngIf="viewtypeId == 0" (click)="ActionApprovedJobList(actDetails.JobName,1)"></ion-icon>
     </ion-item>
-    <!-- <ion-item>
-     <ion-label> {{actDetails.Header.SalesPerson}} -</ion-label>
-    </ion-item> -->
     <ion-item>
       <ion-label position="floating" color="primary" class="margin-zero">Activity Phase:</ion-label>
-      <ion-select [(ngModel)]="actDetails.PhaseID" >
+      <ion-select [(ngModel)]="actDetails.PhaseID" name="PhaseID" [selectedText]="actDetails.PhaseID" #nameField="ngModel">
         <ion-select-option *ngFor="let info of PhaseList">{{info.Name}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label position="floating" color="primary" class="margin-zero">Activity Type:</ion-label>
-      <ion-select [(ngModel)]="actDetails.itemSelected" 
-        (ionChange)="ActionGetStatusResourceList(actDetails.itemSelected)">
+      <ion-select [(ngModel)]="actDetails.ActTypeName" name="ActTypeName" [selectedText]="actDetails.ActTypeName" #nameField="ngModel"
+        (ionChange)="ActionGetStatusResourceList(actDetails.ActTypeName)">
         <ion-select-option *ngFor="let info of ActTypeList">{{info.Name}}</ion-select-option>
       </ion-select>
     </ion-item>
-    <!-- <ion-item>
+    <ion-item>
       <ion-label position="floating" color="primary" class="margin-zero">Areas:</ion-label>
-      <ion-select [(ngModel)]="actDetails.itemSelected" >
-        <ion-select-option [value]="">{{info.Name}}</ion-select-option>
+      <ion-select [(ngModel)]="actDetails.itemSelected" name="itemSelected" [selectedText]="actDetails.itemSelected" #nameField="ngModel">
+        <ion-select-option *ngFor="let part of AreaList">{{part.AreaName}} - Part{{part.NewSrNo}} - {{part.JobSqft}} SF</ion-select-option>
       </ion-select>
-    </ion-item> -->
+    </ion-item>
     <ion-item>
       <ion-label position="floating" color="primary" class="margin-zero">Activity Status:</ion-label>
-      <ion-select [(ngModel)]="actDetails.StatusID" >
+      <ion-select [(ngModel)]="actDetails.StatusName" name="StatusName" [selectedText]="actDetails.StatusName" #nameField="ngModel">
         <ion-select-option *ngFor="let info of statusList">{{info.Name}}</ion-select-option>
       </ion-select>
     </ion-item>

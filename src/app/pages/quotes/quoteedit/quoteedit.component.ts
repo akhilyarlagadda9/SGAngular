@@ -73,10 +73,7 @@ export class QuoteeditComponent implements OnInit {
       },
       error => console.log(error));
   }
-ActionLoadVersion(id:number){
-  this.qprmsobj.versionid = id;
-  this.headerInfo.Version = this.headerInfo.VersionList.filter(x => x.ID === id)[0];
-}
+
   /*****tabs****** */
   ActionLoadTabInfo(componet: any){
     this.selectedtabtype = componet;
@@ -179,6 +176,18 @@ ActionLoadVersion(id:number){
       componentProps: copyver
     });
     return await modal.present();
+  }
+
+  ActionLoadVersion(id){
+    this.qprmsobj.versionid = id;
+    this.service.ActionVersionInfo1(this.qprmsobj.quoteid,id,0).subscribe(data => {
+      this.headerInfo.Version = data;
+    })
+  }
+  AreaSummarySelect(ev){
+if(ev == "success"){
+this.ActionLoadTabInfo(2);
+}
   }
 }
   

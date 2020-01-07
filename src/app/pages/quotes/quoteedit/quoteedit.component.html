@@ -6,7 +6,7 @@
         <ion-title>
             <h1>
                 <div id="" class="text-left">{{headerInfo.QuoteNo}} -
-                    <select [(ngModel)]="QuoteVersionID" interface="popover" style="border: 0px;background: #3880ff;">
+                    <select [(ngModel)]="QuoteVersionID" (change)="ActionLoadVersion(QuoteVersionID)" interface="popover" style="border: 0px;background: #3880ff;">
                         <option *ngFor="let version of headerInfo.VersionList" value="{{version.ID}}">V{{version.SrNo}}
                         </option>
                     </select>
@@ -123,7 +123,7 @@
                     </ion-col>
                 </ion-row>
 
-                <app-areasummary [VersionId]="headerInfo.Version.ID"></app-areasummary>
+                <app-areasummary [VersionId]="headerInfo.Version.ID" (areaevent)="AreaSummarySelect($event)"></app-areasummary>
             </div>
 
             <ion-list class="ion-no-margin">

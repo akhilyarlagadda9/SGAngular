@@ -50,8 +50,12 @@ ActionStatusList():Observable<any> {
   return this.http.get<any>(this.url +  'api/Project/ActivityStatusList')
 }
 //Area List
-ActionAreaList(versionID:number,phaseID:number):Observable<any> {debugger;
+ActionAreaList(versionID:number,phaseID:number):Observable<any> {
   return this.http.get<any>(this.url +  'api/Project/AreaList?versionID=' + versionID + '&phaseID=' + phaseID)
+}
+//Phase Area List
+ActionPhasePartList(versionID:number, phaseID:number, actTypeId:any,partIds:any,areaIds:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/project3/ActionPhasePartList?versionID=' + versionID + '&phaseID=' + phaseID + "&actTypeId=" + actTypeId + "&partIds=" + partIds + "&areaIds=" + areaIds)
 }
 
 

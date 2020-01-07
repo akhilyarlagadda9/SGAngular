@@ -113,13 +113,14 @@ export class SchedulingPage implements OnInit {
     return await modal.present();
   }
   PrepareEvents(list: any) {
+    let offset = -5.0;
     this.activitylist = [];
     for (let j in list) {
       let item = list[j];
       this.activitylist.push({
         title: item.QuoteNo + " - P" + item.PhaseSrNo,
-        startTime: new Date(item.StartTime),
-        endTime: new Date(item.EndTime),
+        startTime: new Date((new Date(item.StartTime)).getTime()+(new Date(item.StartTime).getTimezoneOffset()*60000)+(3600000*offset)),
+        endTime: new Date((new Date(item.EndTime)).getTime()+(new Date(item.EndTime).getTimezoneOffset()*60000)+(3600000*offset)),
         allDay: item.AllDay,
         ID: item.ID,
         item: item,

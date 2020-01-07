@@ -15,6 +15,10 @@ export class QuoteService {
   ActionQuoteInfo(quoteid:number,quoteNo:string,versionId:number,customerId:number,accountId:number,parAccountId:number): Observable<any> {
     return this.http.get<any>(this.url +  'api/QEdit/ActionHeaderInfo?quoteId=' + quoteid + '&quoteNo=' + quoteNo + '&versionId=' + versionId + '&customerId=' + customerId + '&accountId=' + accountId + '&parAccountId=' + parAccountId) 
   }
+  ActionVersionInfo1(quoteId:number,versionId:string,salesrepId:number): Observable<any> {
+    return this.http.get<any>(this.url +  'api/QEdit/ActionVersionInfo1?quoteId=' + quoteId + '&versionId=' + versionId + '&salesrepId=' + salesrepId) 
+  }
+  
   ActionQuickAreaList(versionId:number,areaId:number,partId:number,mode:number): Observable<any> {
     return this.http.get<any>(this.url +  'api/QEdit/ActionQuickAreaList?versionId=' + versionId + '&areaId=' + areaId + "&partId=" + partId + "&mode=" + mode) 
   }

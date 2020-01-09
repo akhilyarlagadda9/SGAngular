@@ -58,11 +58,22 @@ ActionPhasePartList(versionID:number, phaseID:number, actTypeId:any,partIds:any,
   return this.http.get<any>(this.url +  'api/project3/ActionPhasePartList?versionID=' + versionID + '&phaseID=' + phaseID + "&actTypeId=" + actTypeId + "&partIds=" + partIds + "&areaIds=" + areaIds)
 }
 
+GetActTypeInfo(actTypeId, startDate):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/GetActTypeInfo?actTypeId=' + actTypeId + '&startDate=' + startDate)
+}
+GetDuration(hrs, min,startDate,endDate,type):Observable<any> {
+  return this.http.get<any>(this.url + 'api/Project/AddDuration?hrs=' + hrs + '&minutes=' + min + "&startDate=" + startDate + '&endDate=' + endDate + '&type=' + type)
+}
 
 
 //POST SERVICES
 
 //Activity Save Function
+FollowUpStatus(model:any):Observable<any> {
+  var parameter = JSON.stringify(model);
+  return this.http.post<any>(this.url + 'api/Project/FollowUpStatus', parameter, { headers: { 'Content-Type': 'application/json' } })
+}
+
 ActionSaveActivityInfo(model:any):Observable<any> {
   var parameter = JSON.stringify(model);
   return this.http.post<any>(this.url + 'api/Project/SaveActivityInfo', parameter, { headers: { 'Content-Type': 'application/json' } })

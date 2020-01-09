@@ -403,3 +403,35 @@ ion-icon{
 .weekview-header th.calendar-hour-column{
     display:none !important; 
 }
+
+.weekview-allday-content-wrapper {
+    margin-left: 0px !important;
+    /* overflow: hidden; */
+
+}
+.weekview-allday-content-wrapper {
+    overflow: hidden;
+    height: 100% !important;
+}
+.weekview-allday-table {
+    height: 100% !important;
+    position: relative;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.calendar-event-inner {
+    overflow: hidden;
+    background-color: #3a87ad;
+    color: white;
+    height: 100%;
+    width: 100%;
+    padding: 2px;
+    line-height: 15px;
+    text-align: initial;
+    opacity: 0.6;
+}
+
+.verticalText {
+    writing-mode: vertical-rl;
+}

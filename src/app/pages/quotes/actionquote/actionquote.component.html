@@ -1,0 +1,33 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title class="titleheader">{{ViewType}}</ion-title>
+    <ion-button slot="end" color="success" size="small" (click)="ActionCloseCustomer(true)">Save</ion-button>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCustomer(false)">X</ion-button>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content *ngIf="viewtype2 === 1">
+  <ion-toolbar class="poss">
+    <ion-title class="titleheader">{{ViewType}}</ion-title>
+    <ion-button slot="end" color="success" size="small" (click)="ActionCloseCustomer(true)">Save</ion-button>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCustomer(false)">X</ion-button>
+  </ion-toolbar>
+  <ion-list class="ion-no-margin ion-no-padding">
+    <ion-row>
+      <ion-col class="margin-top">
+        <h2 class="margin-bottom6">
+          <div>Reason:</div>
+        </h2>
+      </ion-col>
+    </ion-row>
+    <ion-row class="paddall">
+      <ion-textarea rows="5" cols="20" class="borderall"></ion-textarea>
+    </ion-row>
+  </ion-list>
+</ion-content>
+<ion-content *ngIf="viewtype2 === 2">
+  <h1>Duplicate Version</h1>
+</ion-content>
+<ion-content *ngIf="viewtype2 === 3">
+  <h4>Copy Quote</h4>
+</ion-content>

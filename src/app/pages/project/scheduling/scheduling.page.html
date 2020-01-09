@@ -14,7 +14,7 @@
     <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <!-- <ion-toolbar>
     <ion-row style="color:darkblue;">
       <ion-col (click)="ActionFilterPopup()">
      <h3 class="no-margin" style="font-weight: bold;">{{calObj.ActivityType}} </h3>
@@ -23,7 +23,7 @@
       </p>
     </ion-col>
     </ion-row>
-</ion-toolbar>
+</ion-toolbar> -->
 </ion-header>
 <ion-content>
   
@@ -50,7 +50,7 @@
   (onRangeChanged)="ActionOnRangeChanged($event)"
   startHour="6"
   endHour="20"
-  step="30"
+  [step]="30"
   startingDayWeek="1"
   [monthviewDisplayEventTemplate]="template"
   >
@@ -84,6 +84,14 @@
         </div>
        </ng-template>
 </ng-template> -->
+<div id="mySidenav" class="sidenav">
+  <ion-fab horizontal="end" vertical="center" slot="fixed">
+    <a (click)="ActionFilterPopup($event,2)" id="resource"  class="verticalText" >Resources</a>
+    <a (click)="ActionFilterPopup($event,1)" id="activity" class="verticalText " >
+      {{calObj.ActivityType}}
+      </a>
+  </ion-fab>
+</div>
 
 <ion-fab vertical="bottom" horizontal="end">
   <ion-button  color="primary" (click)="ActionAddActivity(0)"><ion-icon name="add"></ion-icon> </ion-button>

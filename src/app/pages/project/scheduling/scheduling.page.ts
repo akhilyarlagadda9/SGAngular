@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 
 import { AddactivityComponent } from '../addactivity/addactivity.component';
 import { CalendarfilterComponent } from '../calendarfilter/calendarfilter.component';
+import { prepareEventListenerParameters } from '@angular/compiler/src/render3/view/template';
 
 @Component({
   selector: 'app-scheduling',
@@ -31,7 +32,7 @@ export class SchedulingPage implements OnInit {
     queryMode: 'remote',
     currentDate: new Date(),
   };
-  constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID,) private locale: string,public loadingController: LoadingController,
+  constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) private locale: string, public loadingController: LoadingController,
     private schService: SchedulingService, private navCtrl: NavController, public actionSheetCtrl: ActionSheetController,
     public datePipe: DatePipe, private popoverCntrl: PopoverController) {
     this.calObj = {
@@ -48,10 +49,10 @@ export class SchedulingPage implements OnInit {
     this.calObj.EndDate = this.datePipe.transform(ev.endTime, "MM-dd-yyyy");
     console.log(this.calObj.StartDate + "end" + this.calObj.EndDate);
     this.ActionLoadEvents();
-    
+
   }
   ActionLoadEvents() {
-    this.showLoader()
+    //this.showLoader()
     this.schService.ActionQuickActList(this.calObj.StartDate, this.calObj.EndDate, this.calObj.Search, this.calObj.ActTypeID, this.calObj.UserId, this.calObj.ResourceIds).subscribe(data => {
       this.PrepareEvents(data);
     });
@@ -62,7 +63,7 @@ export class SchedulingPage implements OnInit {
       message: 'Please wait'
     }).then((res) => {
       res.present();
- 
+
       res.onDidDismiss().then((dis) => {
         console.log('Loading dismissed!');
       });
@@ -119,9 +120,9 @@ export class SchedulingPage implements OnInit {
       let item = list[j];
       this.activitylist.push({
         title: item.QuoteNo + " - P" + item.PhaseSrNo,
-        startTime: new Date((new Date(item.StartTime)).getTime()+(new Date(item.StartTime).getTimezoneOffset()*60000)+(3600000*offset)),
-        endTime: new Date((new Date(item.EndTime)).getTime()+(new Date(item.EndTime).getTimezoneOffset()*60000)+(3600000*offset)),
-        allDay: item.AllDay,
+        startTime: new Date((new Date(item.StartTime)).getTime() + (new Date(item.StartTime).getTimezoneOffset() * 60000) + (3600000 * offset)),
+        endTime: new Date((new Date(item.EndTime)).getTime() + (new Date(item.EndTime).getTimezoneOffset() * 60000) + (3600000 * offset)),
+        allDay: this.calendar.mode == "week" ? true : item.AllDay,
         ID: item.ID,
         item: item,
         color: item.StatusID == 5 ? 'success' : 'primary',
@@ -130,7 +131,7 @@ export class SchedulingPage implements OnInit {
     console.log(this.activitylist);
     this.myCal.loadEvents();
     this.hideLoader();
-    
+
   }
 
   async hideLoader() {
@@ -182,11 +183,11 @@ export class SchedulingPage implements OnInit {
     await actionSheet.present();
   }
 
-  async ActionFilterPopup(ev: any) {
+  async ActionFilterPopup(ev: any,filterTypeId) {
     let obj = {
       ActTypeId: this.calObj.ActTypeID, ResourceIds: this.calObj.ResourceIds,
-      ResourceNames: this.calObj.ResourceNames,ActTypeTypeList: this.ActTypeList,
-      ActivityType:this.calObj.ActivityType,
+      ResourceNames: this.calObj.ResourceNames, ActTypeTypeList: this.ActTypeList,
+      ActivityType: this.calObj.ActivityType,FiterTypeID:filterTypeId,
     };
     const popover = await this.popoverCntrl.create({
       component: CalendarfilterComponent,
@@ -197,7 +198,7 @@ export class SchedulingPage implements OnInit {
     });
     popover.onDidDismiss().then((result: OverlayEventDetail) => {
       console.log(result);
-      if (result.data !== null && result.data != undefined ) {
+      if (result.data !== null && result.data != undefined) {
         this.calObj.ActTypeID = result.data.ActTypeId;
         this.calObj.ResourceIds = result.data.ResourceIds;
         this.calObj.ResourceNames = result.data.ResourceNames;
@@ -208,13 +209,82 @@ export class SchedulingPage implements OnInit {
     return await popover.present();
   }
   async ActionAddActivity(viewId: any) {
-    let viewtypeId = {viewtypeId : viewId}
+
+    let actinfo = {
+      ID: 0, VersionID: 0, PhaseID: 0, ActTypeID: this.calObj.ActTypeID, ResourceList: [], SchStartTime: new Date(), SchEndTime: new Date(),
+      ProjectID: 0, JobName: "", TypeID: 0
+    }
+    let viewtypeId = { viewtypeId: viewId }
     const modal = await this.Modalcntrl.create({
       component: AddactivityComponent,
-      componentProps: viewtypeId,
+      componentProps: actinfo,
     });
+
+    modal.onDidDismiss().then((result: OverlayEventDetail) => {
+
+      if (result.data !== null && result.data != undefined) {
+        if (result.data.componentProps != null && result.data.componentProps != undefined) {
+          this.UpdateActivty(result.data.componentProps);
+
+
+        }
+        //this.calObj.ActTypeID = result.data.ActTypeId;
+        // this.calObj.ResourceIds = result.data.ResourceIds;
+        // this.calObj.ResourceNames = result.data.ResourceNames;
+        // this.calObj.ActivityType = result.data.ActivityType
+        //this.ActionLoadEvents();
+      }
+    });
+
     return await modal.present();
 
+  }
+
+  UpdateActivty(info) {
+    let obj: any;  let offset = -5.0;
+    let quickInfo = this.PrepareActInfo(info);
+    obj = {
+      title: quickInfo.QuoteNo + " - P" + quickInfo.PhaseSrNo,
+      startTime: new Date((new Date(quickInfo.StartTime)).getTime() + (new Date(quickInfo.StartTime).getTimezoneOffset() * 60000) + (3600000 * offset)),
+      endTime: new Date((new Date(quickInfo.EndTime)).getTime() + (new Date(quickInfo.EndTime).getTimezoneOffset() * 60000) + (3600000 * offset)),
+      allDay: this.calendar.mode == "week" ? true : quickInfo.AllDay,
+      ID: quickInfo.ID,
+      item: quickInfo,
+      color: quickInfo.StatusID == 5 ? 'success' : 'primary',
+    }
+    if (info.ExtID == 0) {
+      this.activitylist.push(obj);
+    }else{
+      let index = this.activitylist.findIndex(s => { return s.ID == info.ID;});
+      this.activitylist[index] = quickInfo;
+    }
+    console.log(this.activitylist);
+    this.myCal.loadEvents();
+  }
+
+  PrepareActInfo(info) {
+    let item: any;
+    item = {
+      ID: info.ID,
+      PhaseID: info.PhaseID,
+      ProjectID: info.ProjectID,
+      VersionID: info.VersionID,
+      PhaseSrNo: (info.PhaseSrNo == null || info.PhaseSrNo == "") ? "0" : info.PhaseSrNo,
+      StartTime: info.SchStartTime,
+      EndTime: info.SchEndTime,
+      ActivityType: info.ActTypeName,
+      ActivityTypeID: info.ActTypeID,
+      StatusID: info.StatusID,
+      StatusName: info.StatusName,
+      StatusIcon: info.IconPath,
+      PhaseSF: info.PhaseSF,
+      ResourceNames: info.ResourceName,
+      ResourceIDs: info.ResourceIDs,
+      QuoteName: info.JobName,
+      QuoteNo: info.QuoteNO,
+      AllDay: info.AllDay == 1 ? true : false,
+    }
+    return item;
   }
 }
 

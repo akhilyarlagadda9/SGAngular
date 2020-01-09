@@ -1,0 +1,25 @@
+#mySidenav a {
+  position: absolute;
+  /*left: -32px;
+  transition: 0.3s;
+  /*padding: 10px;
+  width: 100px;*/
+  left: -18px;
+  padding-bottom:3px;
+  padding-top:3px;
+  text-decoration: none;
+background-color:white;
+border:1px solid black;
+padding-right:90px;
+  color: #3489eb;
+  border-radius: 10px;
+ }
+#mySidenav a:hover {
+  left: -80px;
+}
+#resource {
+  top:10px;
+ }
+#activity{
+  top:-158px;
+  }

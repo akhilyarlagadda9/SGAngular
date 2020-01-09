@@ -39,7 +39,7 @@ export class CalendarfilterComponent implements OnInit {
   PrepareResources() {
     let check = this.filterObj.ResourceIds == "" || this.filterObj.ResourceIds == null ? 1 : 0;
     let array = check == 0 ? this.filterObj.ResourceIds.split(",") : [];
-    console.log(array);
+   // console.log(array);
     for (let i in this.ResourceList) {
       let resource = this.ResourceList[i];
       let res = array.find(s => s == resource.ResourceID);

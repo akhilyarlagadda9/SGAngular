@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { QuoteService } from 'src/app/service/quote.service';
 import { QuotegetService } from 'src/app/service/quoteget.service';
+import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
 
 @Component({
   selector: 'app-addpart',
@@ -61,6 +62,14 @@ export class AddpartComponent implements OnInit {
       cssClass: "popover_class"
     });
     return await popover.present();
+  }
+
+
+  async ActionAddMaterial() {
+    const modal = await this.Modalcntrl.create({
+      component: AddmatComponent
+    });
+    return await modal.present();
   }
 
 }

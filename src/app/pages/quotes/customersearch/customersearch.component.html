@@ -1,16 +1,19 @@
 <ion-header>
   <ion-toolbar class="toolbarsty">
     <ion-title class="font-size15">Customer Details</ion-title>
-    <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop(false)" class="buttonsty">X</ion-button>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop(false)" class="buttonsty">X
+    </ion-button>
   </ion-toolbar>
 </ion-header>
-<ion-item>
-  <ion-row>
-    <ion-col *ngFor="let customer of searchResults" (click)="ActionPopulateParentInfo(customer)">
-      <ion-label>
-        <h2>{{customer.Name}}</h2>
-        <p>{{customer.TypeName}}</p>
-      </ion-label>
-    </ion-col>
-  </ion-row>
-</ion-item>
+<ion-list>
+  <ion-item *ngFor="let customer of customerList" (click)="ActionPopulateParentInfo(customer)">
+    <div *ngIf="customer.TypeID != 4">
+      <b class="labelfont">{{customer.SelName }} {{customer.ShowHyphen}}{{customer.Name}}</b>
+      <div class="smallfont2 color-blue">{{customer.CustType}}</div>
+    </div>
+    <div *ngIf="customer.TypeID == 4">
+      <b class="labelfont">{{customer.Name}}</b>
+      <div class="smallfont2 color-blue">{{customer.CustType}}</div>
+    </div>
+  </ion-item>
+</ion-list>

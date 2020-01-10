@@ -18,6 +18,7 @@ import { QlayoutComponent } from '../qlayout/qlayout.component';
   styleUrls: ['./quote.page.scss'],
 })
 export class QuotePage implements OnInit {
+  NavigateTab: number;
 
   constructor(private service:QuoteService, public Modalcntrl : ModalController, private navCtrl : NavController, private loadingController : LoadingController) { }
  
@@ -100,8 +101,10 @@ ActionQuoteEdit1(header,typeId){
 
 /***** CREATE QUOTE *****/
    async ActionCreateQuote() {
+     let NavigateTab = {NavigateTab :  1};
     const modal = await this.Modalcntrl.create({
-      component: CreatequoteComponent
+      component: CreatequoteComponent,
+      componentProps: NavigateTab
     });
     return await modal.present();
   }

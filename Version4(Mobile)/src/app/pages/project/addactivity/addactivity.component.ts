@@ -13,8 +13,9 @@ import { NgForm } from '@angular/forms';
 export class AddactivityComponent implements OnInit {
 
   actinfo: any = this.navParams.data; ApproveList: any; serObj: any; 
-  ActTypeList: any; statusList: any; phaseList: any;ResourceList: any[];PhasePartList: any;
+  ActTypeList: any; statusList: any; phaseList: any;ResourceList: any[];PhasePartList: any;ResourceListWithDates: any[];
   eventCopy :any;
+  IsResource: boolean;
   constructor(public Modalcntrl: ModalController, private schService: SchedulingService,
   public popoverCntrl: PopoverController, private navParams: NavParams, 
   private datePipe: DatePipe,private alertCtrl:AlertController) { }
@@ -24,6 +25,7 @@ export class AddactivityComponent implements OnInit {
       this.ActionActivityInfo();
     }else{
       this.statusList = this.actinfo.StatusList;
+      
     }
     this.ActionActivityTypeList();
    
@@ -43,6 +45,7 @@ export class AddactivityComponent implements OnInit {
         this.actinfo.PrevEndDate = data.SchEndTime;
         this.statusList = data.StatusList;
         this.PopulateActualDate();
+      
       },
       error => console.log(error));
   }
@@ -87,7 +90,10 @@ export class AddactivityComponent implements OnInit {
   //Activitytype List Function
   ActionActivityTypeList() {
     this.schService.ActivityTypeList(4).subscribe(
-      data => { this.ActTypeList = data; }
+      data => { 
+        this.ActTypeList = data;
+        this.GetResoucreList();
+       }
     );
   }
   ActionGetStatusResourceList(Id) {
@@ -377,8 +383,14 @@ let edate = this.actinfo.SchEndTime;
   this.actinfo.Duration = Number(this.actinfo.Hrs * 60) + Number(this.actinfo.Mins);
   })
 }
-
-
+//Resources function
+ActionopenResourcePopup() {
+  this.IsResource = true;
+}
+//Resources Close Function
+ActionCloseResourcePopup() {
+  this.IsResource = false;
+}
 
 
 }

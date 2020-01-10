@@ -22,8 +22,17 @@ export class PoeditComponent implements OnInit {
   }
   GetSalesPersonList() {
     this.getservice.getsalespersons(this.ParentID, 3).subscribe(
-      data => { this.salespersons = data; }
+      data => { 
+        this.salespersons = data;
+        this.GetSelectedSalespersonName();
+       }
     );
+  }
+  GetSelectedSalespersonName() {
+    let poitem = this.salespersons.find(s => s.ResourceID == this.poitem.POByID);
+    if (poitem != null) {
+      this.poitem.POByID = poitem.ResourceName;
+    }
   }
 
   ActionSavePOItem() {

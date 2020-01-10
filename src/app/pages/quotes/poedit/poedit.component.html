@@ -9,35 +9,34 @@
     <ion-list class="ion-no-margin ion-no-padding">
       <ion-item>
             <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Number:</ion-label>
-            <ion-input type="text" [(ngModel)]="poitem.PONumber" class="inputheight fontbold"></ion-input>
+            <ion-input type="text" [(ngModel)]="poitem.PONumber" class="inputheight"></ion-input>
       </ion-item>
       <ion-item>
           <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Uploaded By:</ion-label>
-          <ion-select [(ngModel)]="poitem.POByID" class="fontbold">
-              <ion-select [(ngModel)]="ResourceID" name="ResourceID" class="labelfont" required>
-                  <ion-select-option *ngFor="let p of salespersons" [value]="p.ResourceID">{{p.ResourceName}}</ion-select-option>
-              </ion-select> 
+          <ion-select [(ngModel)]="poitem.POByID" name="POByID" [selectedText]="poitem.POByID">
+               <ion-select-option *ngFor="let poitem of salespersons" [value]="poitem.POByID">{{poitem.POBy}}</ion-select-option>
           </ion-select>
-        </ion-item>
+      </ion-item>
       <ion-item>
         <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Date:</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="poitem.PODate" class="fontbold"></ion-datetime>
+        <ion-datetime displayFormat="MM/DD/YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="poitem.PODate"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Total($):</ion-label>
-        <ion-input type="text" [(ngModel)]="poitem.POAmount" class="inputheight fontbold"></ion-input>
+        <ion-input type="text" [(ngModel)]="poitem.POAmount" class="inputheight"></ion-input>
       </ion-item>
       <ion-row>
         <span class="btn btn-success fileinput-button" ngClass="{disabled: disabled}">
            <u class="labelstyle">Attachments:</u>
-          <ion-col size="7" class="paddzero text-left fontbold">
+          <ion-col size="7" class="paddzero text-left">
             <input type="file" (change)="ActionUploadPoAttach($event)">
           </ion-col>
         </span>
       </ion-row>
-      <ion-row>
-        <ion-col *ngFor="let attah of poitem.AttachmentList">
-         {{attah.Path}}
+      <ion-row *ngFor="let attah of poitem.AttachmentList">
+        <ion-col class="paddleft5">
+          <span><ion-icon name="trash" class="delsty"></ion-icon></span>&nbsp;
+          <span>{{attah.Path}}</span>
         </ion-col>
     </ion-row>
     </ion-list>

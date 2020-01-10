@@ -88,9 +88,12 @@ ion-icon{
 .margin-right3 {
     margin-right: 3px;
 }
+.nomargin{
+    margin: 0px;
+}
  /***** FONTSTYLE *****/
  .labelfont{
-    font-size: 14px;
+    font-size: 14px !important;
 }
 .text-font{
     font-size:16px;

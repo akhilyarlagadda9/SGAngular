@@ -88,7 +88,7 @@ export class AddactivityComponent implements OnInit {
   }
 
   //Activitytype List Function
-  ActionActivityTypeList() {
+  ActionActivityTypeList() {debugger;
     this.schService.ActivityTypeList(4).subscribe(
       data => { 
         this.ActTypeList = data;

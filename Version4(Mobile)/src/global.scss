@@ -441,16 +441,18 @@ ion-icon{
 
 .popupCls {
     padding: 5px;
-    bottom: 40px;
+    bottom: 190px;
     left: 35px;
     background-color: #f3f3f4;
     position: absolute;
     z-index: 16000;
-    min-height: 100px;
+   // min-height: 100px;
     max-width: 300px;
     border-radius: 4px;
     box-shadow: 0 6px 12px rgba(0, 0, 0,0.5);
     color: black;
+    height: 300px;
+    overflow: auto;
 }
 
 .marg-check {

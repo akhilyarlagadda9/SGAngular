@@ -8,12 +8,12 @@ import { QuotegetService } from 'src/app/service/quoteget.service';
 })
 export class CustomersearchComponent implements OnInit {
   searchObj = this.navParams.data;
-  searchResults = [];info:any;
+  customerList = [];info:any;
   constructor(private navParams : NavParams,private popoverCntrl :PopoverController,private getservice:QuotegetService ) { }
   ngOnInit() {this.ActionSearchParentAccount()}
   ActionSearchParentAccount(){
     this.getservice.qsgetallcustomersearchlist(this.searchObj.search,this.searchObj.selectTypeId,this.searchObj.custTypeID).subscribe(data=>{
-      this.searchResults = data;
+      this.customerList = data;
     });
   }
   ActionPopulateParentInfo(customer:any) {

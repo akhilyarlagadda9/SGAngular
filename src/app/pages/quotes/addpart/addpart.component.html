@@ -19,6 +19,7 @@
         <ion-select-option *ngFor="let material of MaterialList">{{material.StoneType}} - {{material.Color}} -
           {{material.Depth}} - {{material.Finish}}</ion-select-option>
       </ion-select>
+      <ion-icon name="add" class="font-medium" (click)="ActionAddMaterial()"></ion-icon>
     </ion-col>
     <ion-col size="3" class="flex">
       <ion-input type="text" class="border-btm"></ion-input><span class="borderall"><span

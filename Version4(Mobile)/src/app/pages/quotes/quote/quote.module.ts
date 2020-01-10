@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 // Components
 import { QuotePage } from './quote.page';
 import { CreatequoteComponent } from 'src/app/pages/quotes/createquote/createquote.component';
-import { QuoteeditComponent } from 'src/app/pages/quotes/quoteedit/quoteedit.component';
+import { QuoteeditComponent ,NewactionComponent } from 'src/app/pages/quotes/quoteedit/quoteedit.component';
 import { HeadereditComponent } from 'src/app/pages/quotes/headeredit/headeredit.component';
 import { HeaderinfoComponent } from '../headerinfo/headerinfo.component';
 import { PoitemsComponent } from '../poitems/poitems.component';
@@ -44,11 +44,14 @@ import { MapComponent } from '../../map/map.component';
 import { QlayoutComponent } from '../qlayout/qlayout.component';
 import { ArealayoutComponent } from '../arealayout/arealayout.component';
 import { QnavigationComponent } from '../qnavigation/qnavigation.component';
-import { AccountsComponent } from '../accounts/accounts.component';
+import { AccountsComponent, NewtranComponent } from '../accounts/accounts.component';
 import { ActivitiesComponent } from '../../common/activities/activities.component';
 import { AddpartComponent, AddSizesComponent } from '../addpart/addpart.component';
 import { AreasummaryComponent } from '../areasummary/areasummary.component';
+import { TransactionComponent } from '../transaction/transaction.component';
+
 import { OtherComponent } from '../other/other.component';
+import { ActionquoteComponent } from '../actionquote/actionquote.component';
 
 @NgModule({
   imports: [
@@ -63,7 +66,7 @@ import { OtherComponent } from '../other/other.component';
       },
     ])
   ],
-  entryComponents: [CreatequoteComponent,AccountsComponent,PaymentScheduleComponent,
+  entryComponents: [CreatequoteComponent,ActionquoteComponent,NewactionComponent,TransactionComponent,NewtranComponent,AccountsComponent,PaymentScheduleComponent,
     AdditionalitemserachComponent,DiscountComponent,feeComponent,
     taxComponent, itemsearchComponent,  CustomersearchComponent,
     CustitemComponent, TemplateComponent, AddmatComponent, 
@@ -79,7 +82,7 @@ import { OtherComponent } from '../other/other.component';
     FabricationComponent,LaborinfoComponent,MapComponent,QlayoutComponent,ArealayoutComponent,QnavigationComponent,OtherComponent, AddpartComponent, AddSizesComponent],
     
 
-  declarations: [QuotePage,AccountsComponent,PaymentScheduleComponent,AdditionalitemserachComponent,
+  declarations: [QuotePage, ActionquoteComponent,NewactionComponent, TransactionComponent,AccountsComponent,NewtranComponent,PaymentScheduleComponent,AdditionalitemserachComponent,
     taxComponent,feeComponent,DiscountComponent, itemsearchComponent,
     CustitemComponent, TemplateComponent, AddmatComponent, TileinfoComponent, 
     FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, 

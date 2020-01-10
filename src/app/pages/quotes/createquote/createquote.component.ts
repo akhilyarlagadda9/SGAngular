@@ -71,9 +71,9 @@ export class CreatequoteComponent implements OnInit {
       this.ValidateHeader();
       this.postservice.ActionSaveQuote(this.header).subscribe(data => {
         //this.hideLoader();
-        this.header.ID = data; 
+        this.header.ID = data;
         //this.verId = Ids[1], this.quoteNo = Ids[2], this.customerId = Ids[3],
-          this.accountId = this.header.Version.ChildAccID, this.parAccountId = this.header.Version.ParentAccID;
+        this.accountId = this.header.Version.ChildAccID, this.parAccountId = this.header.Version.ParentAccID;
         this.ActionCloseCreateQuote(true);
         console.log(this.header);
       })
@@ -226,12 +226,18 @@ export class CreatequoteComponent implements OnInit {
     }
   }
   Getcustomercontacts() {
+    debugger;
     let model: any; let header = this.header; let customerContacts = [];
-    this.getservice.GetCustomerContacts(header.CustomerID).subscribe(data => { customerContacts = data });
+    this.getservice.GetCustomerContacts(header.CustomerID).subscribe(data => { customerContacts = data ;
     if (header.CustomerID > 0) {
-      customerContacts.map(function (elem) { if (elem.CustomerID == header.CustomerID && elem.IsDefault == 1) { model = elem; } });
-      header.Version.CustContactID = model.ID;
+      model = customerContacts.find(s => s.CustomerID == header.CustomerID && s.IsDefault == 1);
+      if (model != "" && model != null && model != undefined) {
+        header.Version.CustContactID = model.ID;
+      }
+      //  customerContacts.map(function (elem) { if (elem.CustomerID == header.CustomerID && elem.IsDefault == 1) { model = elem; } });
+
     }
+  });
   }
   populateSalesPersonList(modelItem) {
     let salesperList = [];

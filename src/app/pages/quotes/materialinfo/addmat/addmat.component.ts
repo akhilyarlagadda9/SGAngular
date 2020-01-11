@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { QuotegetService } from 'src/app/service/quoteget.service';
+
+declare var _qscope: any;
 
 @Component({
   selector: 'app-addmat',
@@ -10,8 +13,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class AddmatComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
+  shownGroup = 0;
+  public verId : any;
+  MaterialList :any = [];
 
-  constructor(public Modalcntrl : ModalController ) { }
+  constructor(public Modalcntrl : ModalController, private getservice: QuotegetService,private navParams: NavParams, ) { }
 
   ngOnInit() {
   }
@@ -30,5 +36,27 @@ export class AddmatComponent implements OnInit {
       return;
   }
 }
+
+/* ActionGetMatList() { debugger
+  let verId = []; 
+  this.getservice.QuotematerialList(verId).subscribe(
+    data => { this.MaterialList = data[0] ; console.log(this.MaterialList);},
+    error => console.log(error));
+} */
+
+
+
+
+toggleGroup(group) {
+  if (this.isGroupShown(group)) {
+      this.shownGroup = 0;
+  } else {
+      this.shownGroup = group;
+  }
+};
+
+isGroupShown(group) {
+  return this.shownGroup === group;
+};
 
 }

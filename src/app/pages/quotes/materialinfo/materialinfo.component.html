@@ -8,8 +8,8 @@
     <ion-item>
       <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
       <ion-input type="text" class="labelfont" [(ngModel)]="material.MaterialName" name="MaterialName" #nameField="ngModel"></ion-input>
-      <ion-icon slot="end" class="marg2" name="add" (click)="ActionCreateAddMaterial(0, 'QuotePart')"></ion-icon>
-      <ion-icon slot="end" class="marg2" name="pencil" (click)="ActionCreateAddMaterial(material.MaterialID, 'QuotePart')"></ion-icon>
+      <ion-icon slot="end" class="marg2" name="add" (click)="ActionCreateAddMaterial(1,0, 'QuotePart')"></ion-icon>
+      <ion-icon slot="end" class="marg2" name="create" (click)="ActionCreateAddMaterial(2,material.MaterialID, 'QuotePart')"></ion-icon>
     </ion-item>
 
     <ion-item>

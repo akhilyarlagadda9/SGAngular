@@ -1,23 +1,27 @@
 <ion-list class="liststy" *ngIf="selectedhubtype == 1">
   <ion-row>
     <ion-col size="5">
+      <!-- <ion-select class="btninfo" interface="popover" [(ngModel)]="type.ID" name="type">
+        <ion-select-option [value]="0" selected="selected">ALL</ion-select-option>
+        <ion-select-option *ngFor="let process of processtypeList" [value]="process.ID">{{process.Name}}</ion-select-option>
+      </ion-select> -->
       <ion-select class="btninfo" interface="popover">
-        <ion-select-option *ngFor="let process of processtypeList" value="Name">{{process.Name}}</ion-select-option>
+        <ion-select-option *ngFor="let process of processtypeList" [value]="process.ID">{{process.Name}}</ion-select-option>
       </ion-select>
     </ion-col>
     <ion-col size="4">
       <ion-select class="btninfo" interface="popover">
-        <ion-select-option *ngFor="let process of phaseList" value="Name">{{process.Name}}</ion-select-option>
+        <ion-select-option *ngFor="let process of phaseList" [value]="process.ID">{{process.Name}}</ion-select-option>
       </ion-select>
     </ion-col>
     <ion-col size="3" class="text-right">
-      <ion-button (click)="ActionEditCommHub(1)" size="small" class="text-right fontbold">ADD</ion-button>
+      <ion-button (click)="ActionEditCommHub(0)" size="small" class="text-right fontbold">ADD</ion-button>
     </ion-col>
   </ion-row>
   <ion-card class="margin-bottom" style="margin-top: 0px;" *ngFor="let note of notesList">
     <ion-row class="no-padding paddzero">
       <ion-col size="1">
-        <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub(1)"></ion-icon>
+        <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub(note)"></ion-icon>
       </ion-col>
       <ion-col size="9">
         <ion-row class="marbot">
@@ -28,6 +32,9 @@
         </ion-row>
         <ion-row class="marbot">
           <ion-col class="paddzero text-left paddleft">{{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</ion-col>
+        </ion-row>
+        <ion-row class="marbot">
+          <ion-col class="paddzero text-left paddleft">{{note.Path}}</ion-col>
         </ion-row>
       </ion-col>
       <ion-col size="2" class="text-right">
@@ -47,15 +54,15 @@
     </ion-col>
     <ion-col size="3"></ion-col>
     <ion-col size="3" class="text-right">
-      <ion-button (click)="ActionEditCommHub(2)" size="small" class="text-right fontbold">Compose</ion-button>
+      <ion-button (click)="ActionEditCommHub(0)" size="small" class="text-right fontbold">Compose</ion-button>
     </ion-col>
   </ion-row>
   <ion-card class="margin-bottom" style="margin-top: 0px;">
     <ion-row class="no-padding paddzero">
-      <ion-col size="1">
-        <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub(2)"></ion-icon>
-      </ion-col>
-      <ion-col size="9">
+      <!-- <ion-col size="1">
+        <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub(1)"></ion-icon>
+      </ion-col> -->
+      <ion-col size="11">
         <ion-row class="marbot">
           <ion-col class="paddzero text-left textsty paddleft">175645 - Test Customer</ion-col>
         </ion-row>
@@ -66,10 +73,10 @@
           <ion-col class="paddzero text-left paddleft">11/15/2019 5.30pm</ion-col>
         </ion-row>
       </ion-col>
-      <ion-col size="2" class="text-right">
-        <ion-icon name="download" class="downloadsty"></ion-icon>
-        <ion-icon name="cloud-upload" class="uploadsty"></ion-icon>
-        <ion-icon name="mail" class="uploadsty"></ion-icon>
+      <ion-col size="1" class="text-right">
+        <ion-row><ion-icon name="download" class="downloadsty"></ion-icon></ion-row>
+        <ion-row><ion-icon name="cloud-upload" class="uploadsty"></ion-icon></ion-row>
+        <ion-row><ion-icon name="mail" class="uploadsty"></ion-icon></ion-row>
       </ion-col>
     </ion-row>
   </ion-card>
@@ -94,20 +101,23 @@
       </span>
     </ion-col>
   </ion-row>
-  <ion-card class="margin-bottom" style="margin-top: 0px;">
+  <ion-card class="margin-bottom" style="margin-top: 0px;" *ngFor="let note of notesList">
     <ion-row class="no-padding paddzero">
       <ion-col size="1">
-        <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub(2)"></ion-icon>
+        <ion-icon name="create" class="fontmedium" (click)="ActionEditCommEmail(note)"></ion-icon>
       </ion-col>
       <ion-col size="9">
         <ion-row class="marbot">
-          <ion-col class="paddzero text-left textsty paddleft">175645 - Test Customer</ion-col>
+          <ion-col class="paddzero text-left textsty paddleft">{{note.Subject}}</ion-col>
         </ion-row>
         <ion-row class="marbot">
-          <ion-col class="paddzero text-left paddleft">Alex David&nbsp;- &nbsp;Stoneapp</ion-col>
+          <ion-col class="paddzero text-left paddleft">{{note.User}}</ion-col>
         </ion-row>
         <ion-row class="marbot">
-          <ion-col class="paddzero text-left paddleft">11/15/2019 5.30pm</ion-col>
+          <ion-col class="paddzero text-left paddleft">{{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</ion-col>
+        </ion-row>
+        <ion-row class="marbot">
+          <ion-col class="paddzero text-left paddleft">{{note.Path}}</ion-col>
         </ion-row>
       </ion-col>
       <ion-col size="2" class="text-right">
@@ -119,7 +129,7 @@
   </ion-card>
 </ion-list>
 <ion-toolbar class="tab-btm">
-  <ion-tabs style="height:45px">
+  <ion-tabs>
     <ion-tab-bar slot="bottom" color="light">
       <ion-tab-button (click)="ActionLoadHubInfo(1)">
         <ion-icon name="book"></ion-icon>

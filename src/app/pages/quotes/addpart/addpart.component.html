@@ -7,70 +7,131 @@
 </ion-header>
 
 <ion-content>
-
   <ion-item>
     <ion-label class="labelfont" position="floating" color="primary">Part Name</ion-label>
     <ion-input type="text" class="labelfont"></ion-input>
   </ion-item>
+
   <ion-row>
-    <ion-col class="lablewid ion-padding-top"><b>Mat:</b></ion-col>
-    <ion-col size="7" class="labelfont">
-      <ion-select class="btninfo" interface="popover" class="border-btm">
-        <ion-select-option *ngFor="let material of MaterialList">{{material.StoneType}} - {{material.Color}} -
+    <ion-col class="lablewid" size="12" class="color-primary"><b>Material:</b></ion-col>
+  </ion-row>
+  <ion-row *ngFor="let mat of partinfo.PartMaterialList;let i = index">
+
+    <ion-col size="8" class="labelfont">
+      <ion-select [(ngModel)]="mat.MaterialID" name="MaterialID" (ngModelChange)="ActionPopulateMaterial($event,i)"
+        class="btninfo" interface="popover" class="border-btm">
+        <ion-select-option *ngFor="let material of MaterialList" [value]="material.ID">{{material.StoneType}} -
+          {{material.Color}} -
           {{material.Depth}} - {{material.Finish}}</ion-select-option>
       </ion-select>
+
+    </ion-col>
+    <ion-col size="1">
       <ion-icon name="add" class="font-medium" (click)="ActionAddMaterial()"></ion-icon>
     </ion-col>
     <ion-col size="3" class="flex">
-      <ion-input type="text" class="border-btm"></ion-input><span class="borderall"><span
-          style="vertical-align: -webkit-baseline-middle;">SF</span></span>
+      <ion-input type="text" readonly="readonly" [(ngModel)]="mat.Sqft" class="border-btm"></ion-input>SF
     </ion-col>
   </ion-row>
+
+  <div *ngFor="let fab of partinfo.PartFabList;let i=index;">
+    <ion-row>
+      <ion-col size="12" class="color-primary">Measurements:</ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let size of fab.MeasureList">
+      <ion-col size="5">
+        <ion-select class="btninfo" [(ngModel)]="size.CounterTypeID" interface="popover" class="border-btm">
+          <ion-select-option *ngFor="let c of CountertypeList" [value]="c.ID">{{c.Name}}</ion-select-option>
+        </ion-select>
+      </ion-col>
+      <ion-col size="7" class="paddzero">
+        <ion-row class="paddzero">
+          <ion-col size="3">
+            <ion-input type="text" [(ngModel)]="size.Width" (change)="ActionSetSqft(size,0,i)" class="border-btm"></ion-input>
+          </ion-col>
+          <ion-col size="1">X</ion-col>
+          <ion-col size="3">
+            <ion-input type="text" [(ngModel)]="size.Height" (change)="ActionSetSqft(size,0,i)" class="border-btm"></ion-input>
+          </ion-col>
+          <ion-col size="1">=</ion-col>
+          <ion-col size="4">
+            <ion-input type="text" [(ngModel)]="size.Sqft"(click)="ActionSetFabSqft(i)"  name="PartSqft" class="border-btm"></ion-input>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="9">
+        <ion-col class="fontbold color-blue" (click)="ActionAddSize(i)"><u>Add+</u></ion-col>
+      </ion-col>
+      <ion-col size="3" class="flex">
+        <ion-input type="text" [(ngModel)]="fab.PartSqft" name="PartSqft" class="border-btm"></ion-input>SF
+      </ion-col>
+
+    </ion-row>
+  </div>
   <ion-row>
-    <ion-col class="lablewid ion-padding-top"><b>Fab:</b></ion-col>
-    <ion-col size="7">
-      <ion-select class="btninfo" interface="popover" class="border-btm">
-        <ion-select-option *ngFor="let size of CountertypeList">{{size.Name}}</ion-select-option>
-      </ion-select>
-    </ion-col>
-    <ion-col size="3" class="flex">
-      <ion-input type="text" class="border-btm"></ion-input><span class="borderall" (click)="ActionAddSize()"><u
-          style="vertical-align: -webkit-baseline-middle;">SF</u></span>
-    </ion-col>
+    <ion-col class="lablewid" size="8" class="color-primary"><b>Splash:</b></ion-col>
+    <ion-col size="4" class="color-blue fontbold text-right" (click)="ActionAddSplash()"><u>Add+</u></ion-col>
   </ion-row>
-  <ion-row>
-    <ion-col class="lablewid ion-padding-top"><b>Spl:</b></ion-col>
-    <ion-col size="7">
-      <ion-select class="btninfo" interface="popover" class="border-btm">
+  <ion-row *ngFor="let splash of partinfo.SplashList;let i = index">
+    <ion-col size="9">
+      <ion-select [(ngModel)]="splash.SplashID" name="SplashID" class="btninfo" interface="popover" class="border-btm">
         <ion-select-option *ngFor="let spl of SplashList">{{spl.Description}}</ion-select-option>
       </ion-select>
     </ion-col>
     <ion-col size="3" class="flex">
-      <ion-input type="text" class="border-btm"></ion-input><span class="borderall"><u
-          style="vertical-align: -webkit-baseline-middle;">SF</u></span>
+      <ion-input type="text" [(ngModel)]="splash.Sqft" name="SplashSqft" (change)="ActionChangeSplash()" class="border-btm"></ion-input>SF
     </ion-col>
+   
   </ion-row>
   <ion-row>
-    <ion-col class="lablewid ion-padding-top"><b>Edg:</b></ion-col>
-    <ion-col size="7">
-      <ion-select class="btninfo" interface="popover" class="border-btm">
+    <ion-col class="lablewid" size="8" class="color-primary"><b>Edge:</b></ion-col>
+    <ion-col size="4" class="color-blue fontbold text-right" (click)="ActionAddEdge()"><u>Add+</u></ion-col>
+  </ion-row>
+  <ion-row *ngFor="let edge of partinfo.EdgeList;let i = index">
+    <ion-col size="9">
+      <ion-select [(ngModel)]="edge.EdgeProfileID" class="btninfo" interface="popover" class="border-btm">
         <ion-select-option *ngFor="let edg of EdgeList">{{edg.Description}}</ion-select-option>
       </ion-select>
     </ion-col>
     <ion-col size="3" class="flex">
-      <ion-input type="text" class="border-btm"></ion-input><span class="borderall"><u
-          style="vertical-align: -webkit-baseline-middle;">LF</u></span>
+      <ion-input type="text" [(ngModel)]="edge.LF" class="border-btm"></ion-input>LF
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col class="lablewid ion-padding-top"><b>Cut:</b></ion-col>
-    <ion-col size="7">
-      <ion-select class="btninfo" interface="popover" class="border-btm">
-        <ion-select-option *ngFor="let cutout of CutoutList">{{cutout.Description}}</ion-select-option>
+    <ion-col class="lablewid" size="8" class="color-primary"><b>Cutout:</b></ion-col>
+    <ion-col size="4" class="color-blue fontbold text-right" (click)="ActionAddCutOut()"><u>Add+</u></ion-col>
+  </ion-row>
+  <ion-row *ngFor="let cutout of partinfo.CutoutList;let i = index">
+    <ion-col size="9">
+      <ion-select [(ngModel)]="cutout.TypeID" class="btninfo" interface="popover" class="border-btm">
+        <ion-select-option *ngFor="let c of CutoutList">{{c.Description}}</ion-select-option>
       </ion-select>
     </ion-col>
     <ion-col size="3" class="flex">
-      <ion-input type="text" class="border-btm"></ion-input><span class="borderall">EA</span>
+      <ion-input type="text" [(ngModel)]="cutout.LF" class="border-btm"></ion-input>LF
     </ion-col>
   </ion-row>
+
+  <ion-row *ngFor="let fab of partinfo.PartFabList">
+    <ion-col size="9">
+      <ion-input readonly="readonly" [(ngModel)]="fab.Description" class="border-btm"></ion-input>
+    </ion-col>
+    <ion-col size="3" class="flex">
+      <ion-input type="text" readonly="readonly" [(ngModel)]="fab.Sqft" name="PartSqft" class="border-btm">
+      </ion-input>SF
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngFor="let labor of partinfo.LaborList;let i = index">
+    <ion-col size="9">
+      <ion-input readonly="readonly" [(ngModel)]="labor.Description" class="border-btm"></ion-input>
+    </ion-col>
+    <ion-col size="3" class="flex">
+      <ion-input type="text" readonly="readonly" [(ngModel)]="labor.Qty" class="border-btm"></ion-input>SF
+    </ion-col>
+  </ion-row>
+
 </ion-content>

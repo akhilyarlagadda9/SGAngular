@@ -13,7 +13,7 @@ import { QuoteService } from 'src/app/service/quote.service';
 })
 export class FaucetsComponent implements OnInit {
   faucet: any;
-  item: any;
+  faucetlist: any = [];
   priceListID: any;
   constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private navParams: NavParams, private service: QuoteService, private quoterep: QuoterepService, private formBuilder: FormBuilder) { }
   Description = "";
@@ -38,26 +38,19 @@ export class FaucetsComponent implements OnInit {
 
   ActionSaveFaucet(form:NgForm){
     if (form.valid) {
-    this.service.Actionsavepartfaucet(this.faucet).subscribe(data => {
+    this.service.ActionSaveFaucet(this.faucet).subscribe(data => {
+      this.faucetlist = data.faucetList.filter(x => x.PartID === this.faucet.PartID);
      // this.sinklist = data.sinkfaucetList;
-      this.ActionCloseFaucet(false);
+      this.ActionCloseFaucet(true);
     })
   }
   }
   ActionCloseFaucet(issave:boolean) {
-    if(issave == true){
-      let faucet = { Faucet : this.item}
-      this.Modalcntrl.dismiss({
-        'dismissed': true,
-        componentProps: faucet,
-        issave: issave
-      });
-    }else{
-      this.Modalcntrl.dismiss({
-        'dismissed': true,
-        issave: issave
-      });
-    }
+    this.Modalcntrl.dismiss({
+      'dismissed': true,
+      componentProps: this.faucetlist,
+      issave: issave
+    });
   }
 
   async ActionSearchSelect(ev: any, typeid, typeid2) {
@@ -72,7 +65,7 @@ export class FaucetsComponent implements OnInit {
     popover.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {
         if(detail.data.isselect == true){
-          this.faucet = this.quoterep.Resetsink(this.faucet,detail.data.componentProps);
+          this.faucet = this.quoterep.SetFaucet(this.faucet,detail.data.componentProps);
         }
       }
    });

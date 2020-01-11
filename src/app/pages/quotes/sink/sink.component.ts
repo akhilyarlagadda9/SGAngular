@@ -33,24 +33,22 @@ export class SinkComponent implements OnInit {
   }
   ActionSaveSink(form: NgForm) {
     if (form.valid) {
-      this.service.Actionsavepartsink(this.sinkfaucet).subscribe(data => {
-        // this.sinklist = data.sinkfaucetList;
-        this.ActionCloseSink(false);
+      this.service.ActionSaveSink(this.sinkfaucet).subscribe(data => {
+        this.sinklist = data.sinkfaucetList.filter(x => x.PartID === this.sinkfaucet.PartID);
+        this.ActionCloseSink(true);
       })
     }
   }
   ActionCloseSink(issave: boolean) {
-    let sink = { Sink: this.sinklist }
     this.Modalcntrl.dismiss({
       'dismissed': true,
-      componentProps: sink,
+      componentProps: this.sinklist,
       issave: issave
     });
   }
 
 
-  async ActionSearchSelect(ev: any, typeid, typeid2) {debugger;
-    debugger;
+  async ActionSearchSelect(ev: any, typeid, typeid2) {
     let obj = {
       pricelistId: this.priceListID, searchTypeId: typeid, producttypeId: typeid2, search: this.sinkinfo.Des == undefined ? "" : this.sinkinfo.Des
     }
@@ -64,7 +62,7 @@ export class SinkComponent implements OnInit {
     popover.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {
         if (detail.data.isselect == true) {
-          this.sinkfaucet = this.quoterep.Resetsink(this.sinkfaucet, detail.data.componentProps);
+          this.sinkfaucet = this.quoterep.Setsink(this.sinkfaucet, detail.data.componentProps);
         }
       }
     });

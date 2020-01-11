@@ -42,6 +42,7 @@ export class AreainfoComponent implements OnInit {
     this.InitLoad();
   }
   InitLoad() {
+    this.coId = this.Version.LatestCoID;this.coSrNo = this.Version.LatestCoSrNo;
     //this.Version = _qscope.quote.Version;
     this.arealist = _qscope.quote.Version.AreaList;
     if (_qscope.quote.Version.AreaID == 0) {
@@ -106,11 +107,13 @@ export class AreainfoComponent implements OnInit {
     });
     return await modal.present();
   }
-  async ActionAddPart() {
-    let VersionId = {VersionId : this.Version.ID, priceListID: Number (this.Version.PriceListID)}
+  /***** Add PART *****/
+  async ActionAddPart(Id) {
+    let info = {ID:Id,VersionID:this.Version.ID,AreaID:this.AreaID,Name:this.partinfo.Name}
+     let obj = {partinfo:info, priceListID: Number (this.Version.PriceListID),coId:this.coId, coSrNo:this.coSrNo, matPercent :this.Version.MatPercent}
     const modal = await this.Modalcntrl.create({
       component: AddpartComponent,
-      componentProps: VersionId
+      componentProps: obj
     });
     return await modal.present();
   }
@@ -195,7 +198,7 @@ export class AreainfoComponent implements OnInit {
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail.data.issave == true) {
-        this.partinfo.SinkList = detail.data.componentProps.Sink;
+        this.partinfo.SinkList = detail.data.componentProps;
       }
     });
     return await modal.present();
@@ -210,7 +213,7 @@ export class AreainfoComponent implements OnInit {
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail.data.issave == true) {
-        this.partinfo.FaucetList = detail.data.componentProps.Faucet;
+        this.partinfo.FaucetList = detail.data.componentProps;
       }
     });
     return await modal.present();
@@ -245,7 +248,7 @@ export class AreainfoComponent implements OnInit {
   }
   async ActionEditLabor(typeId: number, temp: any, viewtype: string) {
     let copyobj = JSON.parse(JSON.stringify(temp));
-    let labor = { labor: copyobj, TypeID: typeId, ViewType: viewtype }
+    let labor = { labor: copyobj, TypeID: typeId, ViewType: viewtype, }
     const modal = await this.Modalcntrl.create({
       component: LaborinfoComponent,
       componentProps: labor
@@ -266,7 +269,9 @@ export class AreainfoComponent implements OnInit {
       componentProps: other
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-      this.partinfo.OtherList = detail.data.componentProps.other;
+      if (detail.data.issave == true) {
+      this.partinfo.OtherList = detail.data.componentProps;
+      }
     });
     return await modal.present();
   }
@@ -280,15 +285,21 @@ export class AreainfoComponent implements OnInit {
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail.data.issave == true) {
-        this.partinfo.TileList = detail.data.componentProps.Tile;
-        this.partinfo.ApplianceList = detail.data.componentProps.Appliance;
-        this.partinfo.CabinetList = detail.data.componentProps.Cabinet;
-        this.partinfo.CarpetList = detail.data.componentProps.Carpet;
-        this.partinfo.ConsumableList = detail.data.componentProps.Consumable;
-        this.partinfo.ToolList = detail.data.componentProps.Tool;
+        this.RefreshtileList(tile.TypeID,detail.data.componentProps)
       }
     });
     return await modal.present();
+  }
+  RefreshtileList(typeId,list){
+    switch (typeId) {
+      case 12:this.partinfo.TileList = list; break;
+      case 13:this.partinfo.CabinetList = list;break;
+      case 14: this.partinfo.CarpetList =list;break;
+      case 16:this.partinfo.FloorList =list;break;
+      case 17:this.partinfo.ConsumableList = list; break;
+      case 18: this.partinfo.ApplianceList = list; break;
+      case 19: this.partinfo.ToolList = list; break;
+    }
   }
   /***** CUSTOMERITEM DETAILS *****/
   async ActionEditCustItems(res: any) {
@@ -309,67 +320,68 @@ export class AreainfoComponent implements OnInit {
   AddAreaItem(loadType: string, loadId: number, ViewType: string) {
     switch (loadType) {
       case "partmat": {
-        let partmat = this.quoterep.AddPartMatItem(this.AreaPartID, this.areaInfo.ID, this.areaInfo.VersionID, this.coId, this.coSrNo, this.Version.MatPercent);
+        let partmat = this.quoterep.AddPartMatItem(this.AreaPartID, this.AreaID, this.Version.ID, this.coId, this.coSrNo, this.Version.MatPercent);
         this.ActionEditMaterial(partmat);
         break;
       }
       case "size": {
-        let fab = this.quoterep.AddMeasurementItem(this.AreaPartID, this.areaInfo.ID, this.areaInfo.VersionID, this.coId, this.coSrNo, this.Version.MatPercent);
+        let fab = this.quoterep.AddMeasurementItem();
         this.ActionEditMeasurement(fab);
         break;
       }
       case "splash": {
-        let splash = this.quoterep.AddSplashItem(this.AreaPartID, this.areaInfo.ID, this.areaInfo.VersionID, this.coId, this.coSrNo, this.Version.MatPercent);
+        let splash = this.quoterep.AddSplashItem(this.AreaPartID, this.AreaID, this.Version.ID, this.coId, this.coSrNo, this.Version.MatPercent);
         this.ActionEditSplash(splash);
         break;
       }
       case "edge": {
-        let edge = this.quoterep.AddEdgeItem(this.AreaPartID, this.areaInfo.ID, this.areaInfo.VersionID, this.coId, this.coSrNo, this.Version.MatPercent);
+        let edge = this.quoterep.AddEdgeItem(this.AreaPartID, this.AreaID, this.Version.ID, this.coId, this.coSrNo, this.Version.MatPercent);
         this.ActionEditEdge(edge);
         break;
       }
       case "cutout": {
-        let cutout = this.quoterep.AddCutoutItem(this.AreaPartID, this.areaInfo.ID, this.areaInfo.VersionID, this.coId, this.coSrNo, this.Version.MatPercent, loadId);
+        let cutout = this.quoterep.AddCutoutItem(this.AreaPartID, this.AreaID, this.Version.ID, this.coId, this.coSrNo, this.Version.MatPercent, loadId);
         this.ActionCreateCutout(loadId, cutout);
         break;
       }
       case "sink": {
-        let sink = this.quoterep.AddSinkItem(this.AreaPartID, this.areaInfo.ID, this.areaInfo.VersionID, this.coId, this.coSrNo, this.Version.MatPercent);
+        let sink = this.quoterep.AddSinkItem(this.AreaPartID, this.AreaID, this.Version.ID, this.coId, this.coSrNo, this.Version.MatPercent);
         this.ActionEditSink(sink);
         break;
       }
       case "faucet": {
-        let faucet = this.quoterep.AddFaucetItem(this.AreaPartID, this.areaInfo.ID, this.areaInfo.VersionID, this.coId, this.coSrNo, this.Version.MatPercent);
+        let faucet = this.quoterep.AddFaucetItem(this.AreaPartID, this.AreaID, this.Version.ID, this.coId, this.coSrNo, this.Version.MatPercent);
         this.ActionEditFaucet(faucet);
         break;
       }
       case "other": {
-        let other = this.quoterep.AddOtherItem(this.AreaPartID, this.areaInfo.ID, this.areaInfo.VersionID, this.coId, this.coSrNo, this.Version.MatPercent);
+        let other = this.quoterep.AddOtherItem(this.AreaPartID, this.AreaID, this.Version.ID, this.coId, this.coSrNo, this.Version.MatPercent);
         this.ActionEditAddon(other);
         break;
       }
       case "fabrication": {
-        let fab = this.quoterep.AddFabricationItem(this.AreaPartID, this.areaInfo.ID, this.areaInfo.VersionID, this.coId, this.coSrNo, this.Version.MatPercent);
+        let fab = this.quoterep.AddFabricationItem(this.AreaPartID, this.AreaID, this.Version.ID, this.coId, this.coSrNo, this.Version.MatPercent);
         this.ActionEditFabrication(fab);
         break;
       }
       case "template": {
-        let labor = this.quoterep.AddTemplateItem(this.AreaPartID, this.areaInfo.ID, this.areaInfo.VersionID, this.coId, this.coSrNo, this.Version.MatPercent, loadId, ViewType);
-        this.ActionEditTemplate(loadId, labor, ViewType);
+        let labor = this.quoterep.AddLaborItem(this.AreaPartID, this.AreaID, this.Version.ID, this.coId, this.coSrNo, this.Version.MatPercent, loadId, ViewType);
+        let laborType = ViewType == "Standard Template" ? "Template" :"Install";
+        this.ActionEditTemplate(loadId, labor, laborType);
         break;
       }
       case "labor": {
-        let labor = this.quoterep.AddLaborItem(this.AreaPartID, this.areaInfo.ID, this.areaInfo.VersionID, this.coId, this.coSrNo, this.Version.MatPercent, loadId, ViewType);
+        let labor = this.quoterep.AddLaborItem(this.AreaPartID, this.Version.ID, this.Version.ID, this.coId, this.coSrNo, this.Version.MatPercent, 0, ViewType);
         this.ActionEditLabor(loadId, labor, ViewType);
         break;
       }
       case "tile": {
-        let tile = this.quoterep.AddTileItem(this.AreaPartID, this.areaInfo.ID, this.areaInfo.VersionID, this.coId, this.coSrNo, this.Version.MatPercent, loadId, ViewType);
+        let tile = this.quoterep.AddTileItem(this.AreaPartID, this.Version.ID, this.Version.ID, this.coId, this.coSrNo, this.Version.MatPercent, loadId, ViewType);
         this.ActionEditTile(loadId, ViewType, tile);
         break;
       }
       case "custitem": {
-        let cust = this.quoterep.AddCustomerItems(this.AreaPartID, this.areaInfo.ID, this.areaInfo.VersionID, this.coId, this.coSrNo);
+        let cust = this.quoterep.AddCustomerItems(this.AreaPartID, this.Version.ID, this.Version.ID, this.coId, this.coSrNo);
         this.ActionEditCustItems(cust);
         break;
       }
@@ -425,9 +437,9 @@ export class AreainfoComponent implements OnInit {
             <div class="li-list" *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('cutout',1,'Sink CutOut')">Sink Cutout</div>
             <div class="li-list" *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('cutout',2,'Outlet CutOut')">Outlet Cutout</div>
             <div class="li-list" *ngIf="navObj.Shape == null || navObj.Shape == ''" (click)="ActionLoadPopup('cutout',3, 'Appliance CutOut')">Appliance Cutout</div>
-            <div class="li-list" (click)="ActionLoadPopup('fabrication',0, 'Fabrication')">Fabrication</div>
-            <div class="li-list" (click)="ActionLoadPopup('template',1, 'Template')">Template</div>
-            <div class="li-list" (click)="ActionLoadPopup('template',1, 'Install')">Install</div>
+            <div class="li-list" (click)="ActionLoadPopup('fabrication',0, 'Standard Fabrication')">Fabrication</div>
+            <div class="li-list" (click)="ActionLoadPopup('template',1, 'Standard Template')">Template</div>
+            <div class="li-list" (click)="ActionLoadPopup('template',1, 'Standard Install')">Install</div>
           </ion-col>
           <ion-col size="6">
             <div class="li-list" (click)="ActionLoadPopup('sink', 0, 'Sink')">Sink</div>

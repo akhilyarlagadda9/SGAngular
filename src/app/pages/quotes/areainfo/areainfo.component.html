@@ -16,7 +16,7 @@
   <ion-col size="5" class="marge">
     <ion-row>
       <ion-col size="3" class="paddzero">
-        <ion-icon name="add-circle-outline" class="big" (click)="ActionAddPart()"></ion-icon>
+        <ion-icon name="add-circle-outline" class="big" (click)="ActionAddPart(0)"></ion-icon>
       </ion-col>
       <ion-col size="9" class="paddzero">
         <ion-select class="btninfo" interface="popover" [(ngModel)]="AreaPartID" name="AreaPartID"
@@ -37,6 +37,12 @@
   <ion-col>
     <div class="areasvg text-center"></div>    
   </ion-col>
+</ion-row>
+<ion-row class="rowlineitem" >
+  <ion-col (click)="ActionAddPart(material)"><u class="colorblue textfont14">P</u>:
+    {{partinfo.Name}}
+  </ion-col>
+ 
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let material of partinfo.PartMaterialList">
   <ion-col (click)="ActionEditMaterial(material)"><u class="colorblue textfont14">M</u>:
@@ -233,7 +239,7 @@
 <ion-row class="rowlineitem" *ngFor="let labor of partinfo.LaborList">
   <ion-col *ngIf="labor.ViewTypeID == 1 && labor.Description == 'Template'" class="paddzero">
     <ion-row>
-      <ion-col (click)="ActionEditTemplate(1, labor, 'Template')"><u class="colorblue textfont14">T</u>:
+      <ion-col (click)="ActionEditLabor(1, labor, 'Template')"><u class="colorblue textfont14">T</u>:
         <span>
           <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
           <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
@@ -255,7 +261,7 @@
   </ion-col>
   <ion-col *ngIf="labor.ViewTypeID == 1 && labor.Description == 'Install'" class="paddzero">
     <ion-row>
-      <ion-col (click)="ActionEditTemplate(1, labor, 'Install')"><u class="colorblue textfont14">I</u>:
+      <ion-col (click)="ActionEditLabor(1, labor, 'Install')"><u class="colorblue textfont14">I</u>:
         <span>
           <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
           <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>

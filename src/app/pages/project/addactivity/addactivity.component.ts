@@ -33,7 +33,7 @@ export class AddactivityComponent implements OnInit {
       this.ActionPhaseist();
     }
     if (this.actinfo.PhaseID > 0) {
-      this.ActionAreaList();
+      this.ActionPhasePartList();
     }
   }
   ActionActivityInfo() {
@@ -77,26 +77,35 @@ export class AddactivityComponent implements OnInit {
       this.actinfo.PhaseSrNo = phase.Code;
       this.actinfo.MatTypeID = phase.MatTypeID;
       this.actinfo.MaterialName = phase.Materials;
-      this.ActionAreaList();
+      this.ActionPhasePartList();
     }
   }
-  //Area List 
-  ActionAreaList() {
-    // this.schService.ActionAreaList(this.actinfo.VersionID, this.actinfo.PhaseID).subscribe(
-    //   data => { this.AreaList = data; }
-    // );
+  //Phase part List function
+  ActionPhasePartList() {
+    this.actinfo.ActPartIds = this.actinfo.ActPartIds == undefined ? null : this.actinfo.ActPartIds;
+    this.actinfo.Area = this.actinfo.Area == undefined ? null : this.actinfo.Area;
+    this.schService.ActionPhasePartList(this.actinfo.VersionID, this.actinfo.PhaseID,this.actinfo.ActTypeID,this.actinfo.ActPartIds,this.actinfo.Area).subscribe(
+      data => { this.PhasePartList = data; }
+    );
   }
 
   //Activitytype List Function
-  ActionActivityTypeList() {debugger;
+  ActionActivityTypeList() {
     this.schService.ActivityTypeList(4).subscribe(
       data => { 
         this.ActTypeList = data;
         this.GetResoucreList();
+        this.ActionGetSelectedActivityType();
        }
     );
   }
-  ActionGetStatusResourceList(Id) {
+  ActionGetSelectedActivityType() {debugger;
+    let actinfo = this.ActTypeList.find(s => s.ID == this.actinfo.ActTypeID);
+    if (actinfo != null) {
+      this.actinfo.ActTypeID = actinfo.Name;
+    }
+  }
+  ActionGetStatusResourceList(Id) {debugger;
     let sdate = this.datePipe.transform(this.actinfo.SchStartTime, "MM-dd-yyyy");
     this.schService.GetActTypeInfo(Id, sdate).subscribe(data => {
       this.PreapareActivity(data);

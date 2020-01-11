@@ -21,7 +21,7 @@ export class HomePage {
     this.navCtrl.navigateRoot('/login');
    }
 
-   showLoader() {
+   /* showLoader() {
     this.loaderToShow = this.loadingController.create({
       message: 'Please wait'
     }).then((res) => {
@@ -31,6 +31,6 @@ export class HomePage {
         console.log('Loading dismissed!');
       });
     });
-  }
+  } */
 
 }

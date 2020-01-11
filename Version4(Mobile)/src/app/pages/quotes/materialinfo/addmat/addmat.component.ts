@@ -37,13 +37,6 @@ export class AddmatComponent implements OnInit {
   }
 }
 
-/* ActionGetMatList() { debugger
-  let verId = []; 
-  this.getservice.QuotematerialList(verId).subscribe(
-    data => { this.MaterialList = data[0] ; console.log(this.MaterialList);},
-    error => console.log(error));
-} */
-
 
 
 

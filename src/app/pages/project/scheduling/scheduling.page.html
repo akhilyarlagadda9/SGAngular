@@ -45,8 +45,6 @@
   [currentDate]="calendar.currentDate"
   (onEventSelected)="ActionOnEventSelected($event)"
   (onTitleChanged)="ActionOnViewTitleChanged($event)"
-  
-  
   (onRangeChanged)="ActionOnRangeChanged($event)"
   startHour="6"
   endHour="20"
@@ -82,13 +80,16 @@
   </div>
 </ng-template>
 
-
-  <ion-fab id="mySidenav" horizontal="end" vertical="top" slot="fixed">
+<ion-fab id="mySidenav" horizontal="end" vertical="top" slot="fixed">
+  <div   id="resource"  class="verticalText" (click)="ActionFilterPopup($event,2)" >Resources</div>
+  <div   id="activity"  class="verticalText nowrap" (click)="ActionFilterPopup($event,1)" >{{calObj.ActivityType}}</div>
+</ion-fab>
+  <!-- <ion-fab id="mySidenav" horizontal="end" vertical="top" slot="fixed">
     <a (click)="ActionFilterPopup($event,2)" id="resource"  class="verticalText" >Resources</a>
     <a (click)="ActionFilterPopup($event,1)" id="activity" class="verticalText nowrap" >
       {{calObj.ActivityType}}
       </a>
-  </ion-fab>
+  </ion-fab> -->
 
 
 <ion-fab vertical="bottom" horizontal="end">
@@ -98,11 +99,12 @@
 
 <style>
 .eventAsGreen{
-  background-color:#32C671;
+  background-color:darkgreen;
   height: 100%;
-  
   text-align: left;
   color: white;
+  opacity: 0.8;
+ text-indent: 1px;
 } 
 .eventAsBlue{
   background-color:#3a87ad;
@@ -110,6 +112,27 @@
   opacity: 0.6;
   text-align: left;
   color: white;
+  text-indent: 1px;
 }
-
+#mySidenav div {
+  padding-bottom:3px;
+  padding-top:3px;
+  text-decoration: none;
+background-color:white;
+border:1px solid black;
+  color: #3489eb;
+  border-radius: 10px 0px 0px 10px;
+  position: fixed;
+    right: -1px;
+    padding: 5px;
+ }
+#mySidenav a:hover {
+  left: -80px;
+}
+#resource {
+  top:230px;
+ }
+.nowrap{
+  white-space: nowrap;
+}
 </style>

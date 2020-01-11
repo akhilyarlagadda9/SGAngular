@@ -125,13 +125,20 @@ export class SchedulingPage implements OnInit {
         allDay: this.calendar.mode == "week" ? true : item.AllDay,
         ID: item.ID,
         item: item,
-        color: item.StatusID == 5 ? 'success' : 'primary',
+        color: item.StatusID == 5 ? 'eventAsGreen' : 'eventAsBlue',
       });
     }
     console.log(this.activitylist);
     this.myCal.loadEvents();
     this.hideLoader();
 
+  }
+
+  
+  //Custom Event color
+  getEventClass(events) {
+    console.log(events);
+   return events.color;
   }
 
   async hideLoader() {
@@ -250,7 +257,7 @@ export class SchedulingPage implements OnInit {
       allDay: this.calendar.mode == "week" ? true : quickInfo.AllDay,
       ID: quickInfo.ID,
       item: quickInfo,
-      color: quickInfo.StatusID == 5 ? 'success' : 'primary',
+      color: quickInfo.StatusID == 5 ? 'eventAsGreen' : 'eventAsBlue',
     }
     if (info.ExtID == 0) {
       this.activitylist.push(obj);
@@ -261,6 +268,7 @@ export class SchedulingPage implements OnInit {
     console.log(this.activitylist);
     this.myCal.loadEvents();
   }
+
 
   PrepareActInfo(info) {
     let item: any;

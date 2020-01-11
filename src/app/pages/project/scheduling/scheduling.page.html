@@ -52,38 +52,36 @@
   endHour="20"
   [step]="30"
   startingDayWeek="1"
-  [monthviewDisplayEventTemplate]="template"
+  [dayviewNormalEventTemplate]="template"
+  [weekviewAllDayEventSectionTemplate]="weekEvents"
   >
  </calendar>
- <!--<ng-template #template let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
-   ... 
-   </ng-template>-->
-   <!-- <ng-template #template let-view="view" let-row="row" let-col="col">
-     {{view.dates[row*7+col].label}}
 
-     <div no-padding *ngFor="let event of view.dates[row*7+col].events">
-       <div *ngIf= "afterViewType == '';else usualProcess">
-         <ion-card no-padding
-          (click)="onEventSelected(event)"> <ion-label color="light" >{{event.title}}</ion-label>
-         </ion-card> 
-       </div>
-     </div>
-
-       <ng-template #usualProcess>
-         <div no-padding *ngFor = "let events of view.dates[row*7+col].events">
-         <div *ngIf = "afterViewType === events.eventType;else otherfilter">
-         <ion-card no-padding
-         (click)="onEventSelected(events)"> <ion-label color="danger" >{{events.eventType}}</ion-label>
-        </ion-card> 
-       </div>
-       <ng-template #otherfilter>
-           <ion-card no-padding
-       (click)="onEventSelected(events)"> <ion-label color="danger" >{{event.title}}</ion-label>
-          </ion-card>
-       </ng-template>
-        </div>
-       </ng-template>
+  <ng-template #template let-displayEvent="displayEvent">
+  <div class="{{getEventClass(displayEvent.event)}}">{{displayEvent.event.title}}</div>
+</ng-template>
+ 
+<!-- <ng-template #weekEvents let-displayEvent="displayEvent">
+  <div class="{{getEventClass(displayEvent.event)}}"
+  >{{displayEvent.event.title}}</div>
 </ng-template> -->
+
+<ng-template #weekEvents let-day="day" let-eventTemplate="eventTemplate">
+  <div [ngClass]="{'calendar-event-wrap': day.events}" *ngIf="day.events"
+       [ngStyle]="{height: 35*day.events.length+'px'}">
+      <div  *ngFor="let displayEvent of day.events" class="{{getEventClass(displayEvent.event)}}"
+           [ngStyle]="{top: 30*displayEvent.position+'px', width: 100*(displayEvent.endIndex-displayEvent.startIndex)+'%', height: '30px'}" style="margin-bottom:3px;"
+           
+           (click)="ActionOnEventSelected(displayEvent.event)"> 
+          
+          <ng-template [ngTemplateOutlet]="eventTemplate"
+                       [ngTemplateOutletContext]="{displayEvent:displayEvent}" >
+          </ng-template>
+        
+      </div>
+  </div>
+</ng-template>
+
 
   <ion-fab id="mySidenav" horizontal="end" vertical="top" slot="fixed">
     <a (click)="ActionFilterPopup($event,2)" id="resource"  class="verticalText" >Resources</a>
@@ -97,3 +95,21 @@
   <ion-button  color="primary" (click)="ActionAddActivity(0)"><ion-icon name="add"></ion-icon> </ion-button>
  </ion-fab>
 </ion-content>
+
+<style>
+.eventAsGreen{
+  background-color:#32C671;
+  height: 100%;
+  
+  text-align: left;
+  color: white;
+} 
+.eventAsBlue{
+  background-color:#3a87ad;
+  height: 100%;
+  opacity: 0.6;
+  text-align: left;
+  color: white;
+}
+
+</style>

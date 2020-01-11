@@ -40,8 +40,8 @@
     </div>
     <ion-item>
       <ion-label position="floating" color="primary" class="margin-zero">Activity Type:</ion-label>
-      <ion-select [(ngModel)]="actinfo.ActTypeID" name="ActTypeID" #nameField="ngModel"
-        (ionChange)="ActionGetStatusResourceList(actinfo.ActTypeID)" required>
+      <ion-select [(ngModel)]="actinfo.ActTypeID" name="ActTypeID"  [selectedText]="actinfo.ActTypeID" #nameField="ngModel"
+        (ngModelChange)="ActionGetStatusResourceList(actinfo.ActTypeID)" required>
         <ion-select-option *ngFor="let c of ActTypeList" [value]="c.ID">{{c.Name}}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -51,7 +51,7 @@
     <ion-item>
       <ion-label position="floating" color="primary" class="margin-zero">Areas:</ion-label>
       <ion-select [(ngModel)]="actinfo.itemSelected" name="itemSelected" #itemSelected="ngModel">
-        <ion-select-option *ngFor="let part of AreaList" [value]="part.ID">{{part.AreaName}} - Part{{part.NewSrNo}} -
+        <ion-select-option *ngFor="let part of PhasePartList" [value]="part.ID">{{part.AreaName}} - Part{{part.NewSrNo}} -
           {{part.JobSqft}} SF
         </ion-select-option>
       </ion-select>
@@ -66,14 +66,16 @@
       <ion-label position="floating" color="primary" class="margin-zero">Start Date & Time:</ion-label>
       <ion-row style="width:100%">
         <ion-col size="8">
-          <ion-datetime  class="paddzero" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm"
+          <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm"
             (ngModelChange)="ActionChangeDate($event,0,'sDate')" name="StartDate" [(ngModel)]="actinfo.SchStartTime">
           </ion-datetime><span class="select-icon ion-float-right"></span>
         </ion-col>
         <ion-col size="4">
           <ion-row>
             <ion-col size="8" class="paddzero">All Day</ion-col>
-            <ion-col size="4" class="paddzero"><ion-checkbox color="dark" name="Text" class="martb"></ion-checkbox></ion-col>
+            <ion-col size="4" class="paddzero">
+              <ion-checkbox color="dark" name="Text" class="martb"></ion-checkbox>
+            </ion-col>
           </ion-row>
         </ion-col>
         <!-- <ion-col size="6">
@@ -86,7 +88,7 @@
       <ion-label position="floating" color="primary" class="margin-zero">End Date & Time:</ion-label>
       <ion-row style="width:100%">
         <ion-col size="10">
-          <ion-datetime  class="paddzero" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm"
+          <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm"
             (ngModelChange)="ActionChangeDate($event,1,'eDate')" name="EndDate" [(ngModel)]="actinfo.SchEndTime">
           </ion-datetime><span class="select-icon ion-float-right"></span>
         </ion-col>
@@ -100,7 +102,7 @@
       <ion-label position="floating" color="primary" class="margin-zero">Act Start Date & Time:</ion-label>
       <ion-row style="width:100%">
         <ion-col size="6" style="border-right: 1px solid #ddd;">
-          <ion-datetime  class="paddzero" displayFormat="MM/DD/YYYY" pickerFormat="MM/DD/YYYY" name="ActStartDate"
+          <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" pickerFormat="MM/DD/YYYY" name="ActStartDate"
             [(ngModel)]="actinfo.ActualStartDate">
           </ion-datetime><span class="select-icon ion-float-right"></span>
         </ion-col>
@@ -115,7 +117,7 @@
       <ion-label position="floating" color="primary" class="margin-zero">Act End Date & Time:</ion-label>
       <ion-row style="width:100%">
         <ion-col size="6" style="border-right: 1px solid #ddd;">
-          <ion-datetime  class="paddzero" displayFormat="MM/DD/YYYY" pickerFormat="MM/DD/YYYY" name="ActEndDate"
+          <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" pickerFormat="MM/DD/YYYY" name="ActEndDate"
             [(ngModel)]="actinfo.ActualEndDate">
           </ion-datetime><span class="select-icon ion-float-right"></span>
         </ion-col>
@@ -132,53 +134,64 @@
     <ion-row class="padding5">
       <ion-textarea rows="4" cols="6" name="Memo" class="borderall"></ion-textarea>
     </ion-row>
-      <ion-row>
-        <ion-col size="3"><ion-label color="primary" class="paddleft5">Resources: </ion-label></ion-col>
-        <ion-col size="9" class="text-right color-primary"  (click)="ActionopenResourcePopup()"><u class="paddright10">Select</u></ion-col>
-      </ion-row>
-      <ion-row  class="paddleft5">
-        <ion-col size="8"><b>Name</b></ion-col>
-        <ion-col size="2"><b>Email</b></ion-col>
-        <ion-col size="2"><b>Text</b></ion-col>
-      </ion-row>
-      <ion-row *ngFor="let resource of ResourceList"  class="paddleft5">
-        <ion-col size="8"> {{resource.ResourceName}} <small>{{resource.EmpMail}}</small></ion-col>
-        <ion-col size="2">
-          <ion-checkbox color="dark" name="Email" [(ngModel)]="resource.Email" checked="resource.Email ==1"></ion-checkbox>
-        </ion-col>
-        <ion-col size="2">
-          <ion-checkbox color="dark" name="Text" [(ngModel)]="resource.Text"
-            checked="resource.Text ==1"></ion-checkbox>
-        </ion-col>
-      </ion-row>
+    <ion-row>
+      <ion-col size="3">
+        <ion-label color="primary" class="paddleft5">Resources: </ion-label>
+      </ion-col>
+      <ion-col size="9" class="text-right color-primary" (click)="ActionopenResourcePopup()"><u
+          class="paddright10">Select</u></ion-col>
+    </ion-row>
+    <ion-row class="paddleft5">
+      <ion-col size="8"><b>Name</b></ion-col>
+      <ion-col size="2"><b>Email</b></ion-col>
+      <ion-col size="2"><b>Text</b></ion-col>
+    </ion-row>
+    <ion-row *ngFor="let resource of ResourceList" class="paddleft5">
+      <ion-col size="8"> {{resource.ResourceName}}
+        <div> <small>{{resource.EmpMail}}</small></div>
+      </ion-col>
+      <ion-col size="2">
+        <ion-checkbox color="dark" name="Email" [(ngModel)]="resource.Email" checked="resource.Email ==1">
+        </ion-checkbox>
+      </ion-col>
+      <ion-col size="2">
+        <ion-checkbox color="dark" name="Text" [(ngModel)]="resource.Text" checked="resource.Text ==1"></ion-checkbox>
+      </ion-col>
+    </ion-row>
   </form>
-  
+
 </ion-content>
 
 <ion-row *ngIf="IsResource" class="popupCls">
-  <ion-row  style="width: 100%;">
-   <ion-col size="11"><ion-label color="primary" class="paddleft5 fontbold">Resources: </ion-label></ion-col>
-   <ion-col size="1" class="text-center" style="font-size: 18px;" (click)="ActionCloseResourcePopup()"><b>X</b> </ion-col>
+  <ion-row style="width: 100%;">
+    <ion-col size="11">
+      <ion-label color="primary" class="paddleft5 fontbold">Resources: </ion-label>
+    </ion-col>
+    <ion-col size="1" class="text-center" style="font-size: 18px;" (click)="ActionCloseResourcePopup()"><b>X</b>
+    </ion-col>
   </ion-row>
   <div style="width: 100%;height: 300px;overflow: auto;">
-  <ion-row *ngFor="let resource of ResourceList"  class="border-btm">
-  <ion-row style="width: 100%;">
-      <ion-col size="8" class="paddzero">
-        <span><ion-checkbox color="dark" name="Text" class="martb" style="width: 17px;height: 17px;"></ion-checkbox></span>&nbsp;
-        <span>{{resource.ResourceName}}</span>
-      </ion-col>
-      <ion-col class="paddzero text-right" size="4">
-         <span *ngIf="resource.IsLocked == 1"> <i class="fa fa-lock"></i>&nbsp;</span>
-         <span>{{resource.DayMaxSqft | number : '.2-2'}} | <span style="color:red">{{resource.DaySqft | number : '.2-2'}}</span> &nbsp;</span>
-      </ion-col>
-  </ion-row>
-  <ion-row style="width: 100%;">
-     <ion-col>
-      <span><small>{{resource.EmpMail}}</small></span>&nbsp;&nbsp;
-      <span>{{resource.EmpPhone}}</span>
-      <span class="color-red" *ngIf="resource.OffID == 1"><b> &nbsp; (DAY OFF)</b></span>
-     </ion-col>
-  </ion-row>
+    <ion-row *ngFor="let resource of ResourceList" class="border-btm">
+      <ion-row style="width: 100%;">
+        <ion-col size="8" class="paddzero">
+          <span>
+            <ion-checkbox color="dark" name="Text" class="martb" style="width: 17px;height: 17px;"></ion-checkbox>
+          </span>&nbsp;
+          <span>{{resource.ResourceName}}</span>
+        </ion-col>
+        <ion-col class="paddzero text-right" size="4">
+          <span *ngIf="resource.IsLocked == 1"> <i class="fa fa-lock"></i>&nbsp;</span>
+          <span>{{resource.DayMaxSqft | number : '.2-2'}} | <span
+              style="color:red">{{resource.DaySqft | number : '.2-2'}}</span> &nbsp;</span>
+        </ion-col>
+      </ion-row>
+      <ion-row style="width: 100%;">
+        <ion-col>
+          <span><small>{{resource.EmpMail}}</small></span>&nbsp;&nbsp;
+          <span>{{resource.EmpPhone}}</span>
+          <span class="color-red" *ngIf="resource.OffID == 1"><b> &nbsp; (DAY OFF)</b></span>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </div>
 </ion-row>
-</div>
- </ion-row>

@@ -22,6 +22,7 @@ export class CreatequoteComponent implements OnInit {
   accountId: any;
   parAccountId: any;
   loaderToShow: any;
+  form: any;
   constructor(private formBuilder: FormBuilder, private loadingController: LoadingController, public Modalcntrl: ModalController, private getservice: QuotegetService, private popoverCntrl: PopoverController, private postservice: QuotepostService) { }
   ngOnInit() {
     this.header = {
@@ -226,18 +227,18 @@ export class CreatequoteComponent implements OnInit {
     }
   }
   Getcustomercontacts() {
-    debugger;
     let model: any; let header = this.header; let customerContacts = [];
-    this.getservice.GetCustomerContacts(header.CustomerID).subscribe(data => { customerContacts = data ;
-    if (header.CustomerID > 0) {
-      model = customerContacts.find(s => s.CustomerID == header.CustomerID && s.IsDefault == 1);
-      if (model != "" && model != null && model != undefined) {
-        header.Version.CustContactID = model.ID;
-      }
-      //  customerContacts.map(function (elem) { if (elem.CustomerID == header.CustomerID && elem.IsDefault == 1) { model = elem; } });
+    this.getservice.GetCustomerContacts(header.CustomerID).subscribe(data => {
+      customerContacts = data;
+      if (header.CustomerID > 0) {
+        model = customerContacts.find(s => s.CustomerID == header.CustomerID && s.IsDefault == 1);
+        if (model != "" && model != null && model != undefined) {
+          header.Version.CustContactID = model.ID;
+        }
+        //  customerContacts.map(function (elem) { if (elem.CustomerID == header.CustomerID && elem.IsDefault == 1) { model = elem; } });
 
-    }
-  });
+      }
+    });
   }
   populateSalesPersonList(modelItem) {
     let salesperList = [];
@@ -297,8 +298,15 @@ export class CreatequoteComponent implements OnInit {
     return header;
   }
 
-  ActionNavigateToFro(loadtab: number) {
-    this.NavigateTab = loadtab;
+  ActionNavigateToFro(loadtab: number, form: any) {
+    if (loadtab == 2) {
+      form.submitted = true;
+      if (form.valid) {
+        this.NavigateTab = loadtab;
+      }
+    } else {
+      this.NavigateTab = loadtab;
+    }
   }
 
 

@@ -8,7 +8,7 @@
   </ion-toolbar>
 </ion-header> -->
 <ion-content>
-  <form name="form" (ngSubmit)="ActionSaveLabor(labor)" #f="ngForm">
+  <form  (ngSubmit)="ActionSaveLabor(f)" #f="ngForm">
     <ion-toolbar class="poss">
       <ion-title class="titleheader">
         {{ViewType}}
@@ -16,20 +16,28 @@
       <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
       <ion-button slot="end" color="danger" size="small" (click)="ActionCloseLabor(false)">X</ion-button>
     </ion-toolbar>
-    <ion-item>
+    <ion-item *ngIf="labor.ViewTypeID == 0">
       <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-      <ion-input type="text" class="labelfont" [(ngModel)]="labor.Description" name="Des"
+      <ion-input type="text" class="labelfont" [(ngModel)]="labor.Description" name="Description"
       #Des="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Des.invalid }" class="labelfont"
       required></ion-input>
       <ion-icon slot="end" class="marg2" name="arrow-dropdown"></ion-icon>
       <ion-icon slot="end" class="marg2" name="search"></ion-icon>
+    </ion-item>
+    <ion-item *ngIf="labor.ViewTypeID == 1">
+      <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="labor.Description" name="Description"
+      #Des="ngModel" readonly="readonly" [ngClass]="{ 'is-invalid': f.submitted && Des.invalid }" class="labelfont"
+      required></ion-input>
     </ion-item>
     <div *ngIf="f.submitted && Des.invalid" class="invalid-feedback padd-Left">
       <div *ngIf="Des.errors.required" class="error">Description is required</div>
     </div>
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
-      <ion-input type="text" class="labelfont" [(ngModel)]="labor.Qty" readonly="readonly" name="Qty" (change)="ActionSetAmount()">
+      <ion-input *ngIf="labor.ViewTypeID == 0" type="text" class="labelfont" [(ngModel)]="labor.Qty"  name="Qty" (change)="ActionSetAmount()">
+      </ion-input>
+      <ion-input *ngIf="labor.ViewTypeID == 1" type="text" class="labelfont" [(ngModel)]="labor.Qty" readonly="readonly" name="Qty" >
       </ion-input>
     </ion-item>
     <ion-item>

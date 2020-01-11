@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { QuoterepService } from 'src/app/service/quoterep.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
@@ -11,11 +11,8 @@ import { QuoteService } from 'src/app/service/quote.service';
 })
 export class LaborinfoComponent implements OnInit {
   labor: any;
-  Des = "";
-  item: any;
-
-  constructor(public Modalcntrl : ModalController, private quoterep : QuoterepService, private formBuilder: FormBuilder, private service : QuoteService ) { }
-
+  itemlist:any =[];
+  constructor(public Modalcntrl : ModalController, private quoterep : QuoterepService, private service : QuoteService ) { }
   ngOnInit() {
   }
   ActionSetMargin(typeId:number,model:any,type:string){
@@ -28,25 +25,21 @@ export class LaborinfoComponent implements OnInit {
     this.labor.Amt = this.labor.Amount;
    }
   
-  ActionSaveLabor(labor:any) {
-    this.service.Actionsavepartlabor(labor).subscribe(data => {
-      this.item = data.laborList;
+  ActionSaveLabor(form:NgForm) {
+    if (form.valid) {
+    this.service.Actionsavepartlabor(this.labor).subscribe(data => {
+      this.itemlist = data.laborList.filter(x => x.PartID === this.labor.PartID && x.ViewTypeID == this.labor.ViewTypeID);
       this.ActionCloseLabor(true);
     })
   }
+  }
   ActionCloseLabor(issave:boolean) {
-    if(issave == true){
-      let labor = { Labor : this.item}
-      this.Modalcntrl.dismiss({
-        'dismissed': true,
-        componentProps: labor,
-        issave: issave
-      });
-    }else{
-      this.Modalcntrl.dismiss({
-        'dismissed': true,
-        issave: issave
-      });
-    }
+    this.Modalcntrl.dismiss({
+      'dismissed': true,
+      componentProps: this.itemlist,
+      issave: issave
+    });
+
+   
   }
 }

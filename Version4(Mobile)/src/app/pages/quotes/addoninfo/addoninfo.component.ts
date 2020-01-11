@@ -13,7 +13,7 @@ import { QuoteService } from 'src/app/service/quote.service';
 })
 export class AddoninfoComponent implements OnInit {
   other: any;
-  item: any;
+  otherlist: any;
 
   constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private navParams: NavParams, private quoterep: QuoterepService, private formBuilder: FormBuilder, private service: QuoteService) { }
 
@@ -48,7 +48,7 @@ export class AddoninfoComponent implements OnInit {
     popover.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {
         if(detail.data.isselect == true){
-          this.other = this.quoterep.Resetsink(this.other,detail.data.componentProps);
+          this.other = this.quoterep.SetAddon(this.other,detail.data.componentProps);
         }
       }
    });
@@ -73,9 +73,9 @@ export class AddoninfoComponent implements OnInit {
 //Addon Save Function
 ActionSaveAddon(form:NgForm){
   if (form.valid) {
-  this.service.Actionsavepartaddon(this.other).subscribe(data => {
-   // this.sinklist = data.sinkfaucetList;
-    this.ActionCloseAddon(false);
+  this.service.ActionSaveAddon(this.other).subscribe(data => {
+    this.otherlist = data.otherList.filter(x => x.PartID === this.other.PartID);
+    this.ActionCloseAddon(true);
   })
 }
 }
@@ -84,10 +84,10 @@ ActionSaveAddon(form:NgForm){
 //Addon Close Function
 ActionCloseAddon(issave) {
   if(issave == true){
-    let oth = { other : this.item}
+   
     this.Modalcntrl.dismiss({
       'dismissed': true,
-      componentProps: oth,
+      componentProps: this.otherlist,
       issave: issave
     });
   }else{

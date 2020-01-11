@@ -33,7 +33,7 @@ export class AdditionalitemserachComponent implements OnInit {
     this.info = model;
     this.ActionToClosePop(true)
   }
-  ActionlistItems() {debugger;
+  ActionlistItems() {
    this.getservice.qsgetpricelistproductItems(this.searchobj.pricelistId,this.searchobj.producttypeId,this.searchobj.searchTypeId,this.searchobj.search).subscribe(data=>{
      this.listItems = data});
   }

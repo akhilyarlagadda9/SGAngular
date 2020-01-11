@@ -84,14 +84,14 @@
         </div>
        </ng-template>
 </ng-template> -->
-<div id="mySidenav" class="sidenav">
-  <ion-fab horizontal="end" vertical="center" slot="fixed">
+
+  <ion-fab id="mySidenav" horizontal="end" vertical="top" slot="fixed">
     <a (click)="ActionFilterPopup($event,2)" id="resource"  class="verticalText" >Resources</a>
-    <a (click)="ActionFilterPopup($event,1)" id="activity" class="verticalText " >
+    <a (click)="ActionFilterPopup($event,1)" id="activity" class="verticalText nowrap" >
       {{calObj.ActivityType}}
       </a>
   </ion-fab>
-</div>
+
 
 <ion-fab vertical="bottom" horizontal="end">
   <ion-button  color="primary" (click)="ActionAddActivity(0)"><ion-icon name="add"></ion-icon> </ion-button>

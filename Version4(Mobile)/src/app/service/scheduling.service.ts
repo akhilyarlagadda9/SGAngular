@@ -54,7 +54,7 @@ ActionAreaList(versionID:number,phaseID:number):Observable<any> {
   return this.http.get<any>(this.url +  'api/Project/AreaList?versionID=' + versionID + '&phaseID=' + phaseID)
 }
 //Phase Area List
-ActionPhasePartList(versionID:number, phaseID:number, actTypeId:any,partIds:any,areaIds:any):Observable<any> {
+ActionPhasePartList(versionID:number, phaseID:number, actTypeId:any,partIds:any,areaIds:any):Observable<any> {debugger;
   return this.http.get<any>(this.url +  'api/project3/ActionPhasePartList?versionID=' + versionID + '&phaseID=' + phaseID + "&actTypeId=" + actTypeId + "&partIds=" + partIds + "&areaIds=" + areaIds)
 }
 
@@ -64,6 +64,11 @@ GetActTypeInfo(actTypeId, startDate):Observable<any> {
 GetDuration(hrs, min,startDate,endDate,type):Observable<any> {
   return this.http.get<any>(this.url + 'api/Project/AddDuration?hrs=' + hrs + '&minutes=' + min + "&startDate=" + startDate + '&endDate=' + endDate + '&type=' + type)
 }
+//Resource List With Dates
+ActTypeResListWithDates(actTypeId:any, startDate:any, endDate:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/ActTypeResListWithDates?actTypeId=' + actTypeId + "&startDate=" + startDate + "&endDate=" + endDate)
+}
+
 
 
 //POST SERVICES

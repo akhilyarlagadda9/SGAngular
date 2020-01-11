@@ -89,12 +89,18 @@ getsalespersons(parentId:number,typeId:any):Observable<any> {
 }
 
 /*************** COMM.HUB LIST *****************/
+//Message List
+// CommunicationMessageList(versionId:any, catId:any, phaseId:any, typeId:any, customerId:any) {debugger;
+//   return this.http.get<any>(this.url +  'api/Quote/CommunicationMessageList?versionId=' + versionId + "&catagoryId=" + catId + "&phaseId=" + phaseId + "&typeId=" + typeId + "&customerId=" + customerId)
+// }
+
 //Quote Notes List
 QuoteNotes(Id:number, typeId:number) {
   return this.http.get<any>(this.url +  'api/Quote/QuoteNotes?Id=' + Id + "&typeId=" + typeId)
 }
 //Stages List
 processTypeList(typeId:number):Observable<any> {
+  console.log(typeId);
   return this.http.get<any>(this.url +  'api/Project/ProjectProcessList?typeId=' + typeId)
 }
 //Category List

@@ -150,6 +150,9 @@ ion-icon{
 .color-primary{
     color: #3880ff;
 }
+.color-red{
+    color: red;
+}
 /***** BORDERS *****/
 .borderall{
     border: 1px solid #ddd;
@@ -359,11 +362,6 @@ ion-icon{
     margin-top: -24px;
     margin-left: 33px;
 }
-
-.pad2 {
-    padding: 7px;
-  }
-  
   /* .popover-content {
     top: 147px !important;
     left: 255.5px !important;

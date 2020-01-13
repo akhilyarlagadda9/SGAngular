@@ -37,8 +37,6 @@ QuoteDictionaryLists(tIdList:any):Observable<any> {
   return this.http.get<any>(appUrl +  'api/QuoteAdmin/QuoteDictionaryLists?typeIdList=' + tIdList)
 }
 
-
-
 /*****************ACCOUNTS TAB LISTS*****************/
 ActionGetInvoiceList(custID:number, quoteID:number):Observable<any>{
   return this.http.get<any>(this.url +  'api/accReceivable/QuoteInvoiceList?custID=' + custID + "&quoteID=" + quoteID) 
@@ -80,9 +78,9 @@ ActionGetPaymentList(custID:number, quoteID:number):Observable<any>{
   return this.http.post<any>(this.url + 'api/QSave/ActionSaveFaucet', model, { headers: { 'Content-Type': 'application/json' } })
 }
  //Labor,Template,Install Save Function
- Actionsavepartlabor(item: any): Observable<any> {
+ ActionSaveLabor(item: any): Observable<any> {
   var model = JSON.stringify(item);
-  return this.http.post<any>(this.url + 'api/QSave/ActionSavePartLabor', model, { headers: { 'Content-Type': 'application/json' } })
+  return this.http.post<any>(this.url + 'api/QSave/ActionSaveLabor', model, { headers: { 'Content-Type': 'application/json' } })
 }
  //Other Save Function
  ActionSaveAddon(item: any): Observable<any> {

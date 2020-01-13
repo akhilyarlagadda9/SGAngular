@@ -90,7 +90,7 @@ getsalespersons(parentId:number,typeId:any):Observable<any> {
 
 /*************** COMM.HUB LIST *****************/
 //Message List
-// CommunicationMessageList(versionId:any, catId:any, phaseId:any, typeId:any, customerId:any) {debugger;
+// CommunicationMessageList(versionId:any, catId:any, phaseId:any, typeId:any, customerId:any) {
 //   return this.http.get<any>(this.url +  'api/Quote/CommunicationMessageList?versionId=' + versionId + "&catagoryId=" + catId + "&phaseId=" + phaseId + "&typeId=" + typeId + "&customerId=" + customerId)
 // }
 

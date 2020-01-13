@@ -14,9 +14,9 @@ export class EdgeinfoComponent implements OnInit {
   edge:any = "";
   priceListID: any;
   edgelist: any;
-  item: any;
+  
 
-  constructor(private formBuilder: FormBuilder,public Modalcntrl : ModalController,private quoterep: QuoterepService,private getservice: QuotegetService, private postservice : QuotepostService) { }
+  constructor(public Modalcntrl : ModalController,private quoterep: QuoterepService,private getservice: QuotegetService, private postservice : QuotepostService) { }
 
   ngOnInit() {
     this.ActionSelectEdge(); 
@@ -56,16 +56,16 @@ export class EdgeinfoComponent implements OnInit {
   ActionSaveEdge(form:NgForm){
     if (form.valid) {
     this.postservice.ActionsavepartEdge(this.edge).subscribe(data => {
-     // this.sinklist = data.sinkfaucetList;
+      this.edgelist = data.EdgeList.filter(x => x.PartID === this.edge.PartID);
       this.ActionCloseEdge(false);
     })
   }
   }
   ActionCloseEdge(issave:boolean) {
-    let edg = { edge : this.item}
+    
     this.Modalcntrl.dismiss({
       'dismissed': true,
-      componentProps: edg,
+      componentProps: this.edgelist,
       issave: issave
     });
     }

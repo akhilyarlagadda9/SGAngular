@@ -15,8 +15,6 @@ export class CutoutinfoComponent implements OnInit {
   cutout: any;
   priceListID: any;
   cutoutlist: any = [];
-  item: any;
-  cut: any;
   constructor(private formBuilder: FormBuilder,private navCntrl: NavParams, public Modalcntrl: ModalController, private getservice: QuotegetService, private quoterep: QuoterepService, private service : QuoteService) { }
   TypeID = this.navCntrl.data.TypeID;
   ngOnInit() {
@@ -50,26 +48,19 @@ export class CutoutinfoComponent implements OnInit {
 ActionSaveCutOut(form:NgForm){
   if (form.valid) {
   this.service.Actionsavepartcutout(this.cutout).subscribe(data => {
-   // this.sinklist = data.sinkfaucetList;
-    this.ActionCloseCutout(false);
+    this.cutoutlist = data.CutList.filter(x => x.PartID === this.cutout.PartID && x.TypeID == this.cutout.TypeID);
+    this.ActionCloseCutout(true);
   })
 }
 }
 
   ActionCloseCutout(issave : boolean) {
-    if(issave == true){
-      let cutout = { cutout : this.item}
-      this.Modalcntrl.dismiss({
-        'dismissed': true,
-        componentProps: cutout,
-        issave: issave
-      });
-    }else{
-      this.Modalcntrl.dismiss({
-        'dismissed': true,
-        issave: issave
-      });
-    }
+    this.Modalcntrl.dismiss({
+      'dismissed': true,
+      componentProps: this.cutoutlist,
+      issave: issave
+    });
+   
   }
   ActionSelectCutout() {
     let typeIdList = []; typeIdList.push(10);

@@ -91,6 +91,10 @@ ion-icon{
 .nomargin{
     margin: 0px;
 }
+.padding{
+    padding-left: 5px;
+    padding-right: 5px;
+}
  /***** FONTSTYLE *****/
  .labelfont{
     font-size: 14px !important;
@@ -186,6 +190,9 @@ ion-icon{
 }
 .borbottom {
     border-bottom: none;
+}
+.bdr-dashed{
+    border: 1px dashed;
 }
 /***** ALIGNMENT *****/
 .valignsup{

@@ -14,7 +14,7 @@ export class SplashComponent implements OnInit {
   splash: any;
   splashlist: any = [];
   priceListID: any;
-  item: any;
+
   constructor(public Modalcntrl: ModalController, private getservice: QuotegetService, private quoterep: QuoterepService, private service: QuoteService) { }
   ngOnInit() {
     this.ActionSplashTypes();
@@ -47,19 +47,18 @@ export class SplashComponent implements OnInit {
 
   ActionSaveSplash(form:NgForm){
     if (form.valid) {
-    this.service.Actionsavepartsplash(this.splash).subscribe(data => {
-     // this.sinklist = data.sinkfaucetList;
-      this.ActionCloseSplash(false);
+     this.service.Actionsavepartsplash(this.splash).subscribe(data => {
+      this.splashlist = data.SplashList.filter(x => x.PartID === this.splash.PartID);
+      this.ActionCloseSplash(true);
     })
   }
   }
   
 
   ActionCloseSplash(issave:boolean) {
-    let spl = { splash : this.item}
     this.Modalcntrl.dismiss({
       'dismissed': true,
-      componentProps: spl,
+      componentProps: this.splashlist,
       issave: issave
     });
   }

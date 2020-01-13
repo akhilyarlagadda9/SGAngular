@@ -155,7 +155,7 @@ export class AreainfoComponent implements OnInit {
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail.data.issave == true) {
-        this.partinfo.SplashList = detail.data.componentProps.splash;
+        this.partinfo.SplashList = detail.data.componentProps;
       }
     });
     return await modal.present();
@@ -170,7 +170,7 @@ export class AreainfoComponent implements OnInit {
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail.data.issave == true) {
-        this.partinfo.EdgeList = detail.data.componentProps.edge;
+        this.partinfo.EdgeList = detail.data.componentProps;
       }
     });
     return await modal.present();
@@ -185,7 +185,7 @@ export class AreainfoComponent implements OnInit {
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail.data.issave == true) {
-        this.partinfo.CutoutList = detail.data.componentProps.cutout;
+        this.partinfo.CutoutList = detail.data.componentProps;
       }
     });
     return await modal.present();

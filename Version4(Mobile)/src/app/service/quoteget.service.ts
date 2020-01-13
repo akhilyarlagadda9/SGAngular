@@ -126,10 +126,6 @@ NoteAttachements(Id:number):Observable<any> {
  QuotematerialList(verId:any):Observable<any> {
   return this.http.get<any>(this.url +  'api/QEdit/ActionVersionMaterialList?versionID=' + verId)
  }
- //Material Search Lists
- ActionSearchMaterials(search:any, typeId:any,pricelistIds:any, depthId:any, finishId:any, searchtypeId:any, proSubGroupId:any):Observable<any> {
-  return this.http.get<any>(this.url +  'api/Quote/ActionSearchMaterials?search=' + search + '&typeId=' + typeId + '&pricelistIds=' + pricelistIds + '&depthId=' + depthId + '&finishId=' + finishId + '&searchtypeId=' + searchtypeId + '&proSubGroupId=' + proSubGroupId)
- }
  //Quote SinkList
  QuotesinksList(verId:any):Observable<any> {
   return this.http.get<any>(this.url +  'api/QEdit/ActionVersionSinkList?versionID=' + verId)
@@ -237,5 +233,14 @@ getloginuserId(){
   return 0;
 }
 
+
+//Material Search Lists
+ActionSearchMaterials(search:any, typeId:any,pricelistIds:any, depthId:any, finishId:any, searchtypeId:any, proSubGroupId:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Quote/ActionSearchMaterials?search=' + search + '&typeId=' + typeId + '&pricelistIds=' + pricelistIds + '&depthId=' + depthId + '&finishId=' + finishId + '&searchtypeId=' + searchtypeId + '&proSubGroupId=' + proSubGroupId)
+ }
+ //Material Price group List
+ ActionPriceGroupList(pricelistId:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/QuoteAdmin/ActionPriceGroupList?pricebookID=' + pricelistId)
+ }
 
 }

@@ -7,44 +7,42 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-row>
-    <ion-col size="4" class="color-blue">Fabrication:</ion-col>
+  <ion-row class="mar-top5">
+    <ion-col size="4" class="color-blue"><b>Fabrication:</b></ion-col>
     <ion-col size="3" class="roundborder borderall flex fontbold">
       <ion-input type="text" [(ngModel)]="fab.PartSqft" class="text-center border-right color-green"
         name="PartSqft"></ion-input>
       <span class="color-primary">SF</span>
     </ion-col>
   </ion-row>
-  <ion-list class="ion-no-margin ion-no-padding" *ngFor="let sizeInfo of fab.MeasureList;let i = index">
-
-
+  <ion-list class="mar-top5 padding" *ngFor="let sizeInfo of fab.MeasureList;let i = index">
     <ion-row>
       <ion-col size="1" class="round bg-primary color-white text-center mar-top5">{{i + 1}}</ion-col>
       <ion-col size="8">
-        <ion-select [(ngModel)]="sizeInfo.CounterType" name="CounterType" [selectedText]="sizeInfo.CounterType">
+        <ion-select [(ngModel)]="sizeInfo.CounterType" name="CounterType" [selectedText]="sizeInfo.CounterType" class="color-blue labelfont2">
           <ion-select-option *ngFor="let c of countertypes"> <span>{{c.Name}}</span></ion-select-option>
         </ion-select>
         <!-- <ion-select class="btninfo" [(ngModel)]="size.CounterTypeID" interface="popover" class="border-btm">
           <ion-select-option *ngFor="let c of CountertypeList" [value]="c.ID">{{c.Name}}</ion-select-option>
         </ion-select> -->
       </ion-col>
-      <ion-col size="3" class="roundborder borderall flex fontbold">
+      <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
         <ion-input type="text" [(ngModel)]="sizeInfo.Sqft" class="text-center border-right color-primary" (click)="ActionSetFabSqft()" name="Sqft">
         </ion-input>
         <span class="color-primary">SF</span>
       </ion-col>
     </ion-row>
     <ion-row class="bg-primary bdr-radius20">
-      <ion-col size="4" class="fontbold flex"><span class="color-white">W:&nbsp;</span>
+      <ion-col size="5" class="fontbold labelfont2 flex mar-top5"><span class="color-white">W:&nbsp;</span>
         <ion-input type="text" [(ngModel)]="sizeInfo.Width" (change)="ActionSetSqft(sizeInfo,0)"
           class="roundborder borderall bg-white text-center"></ion-input>
       </ion-col>
-      <ion-col size="1" class="fontbold">X</ion-col>
-      <ion-col size="4" class="fontbold flex"><span class="color-white">H:&nbsp; </span>
+      <ion-col size="1" class="fontbold labelfont2 color-white mar-top5">X</ion-col>
+      <ion-col size="5" class="fontbold flex labelfont2 mar-top5"><span class="color-white">H:&nbsp; </span>
         <ion-input type="text" [(ngModel)]="sizeInfo.Height" (change)="ActionSetSqft(sizeInfo,0)"
           class="roundborder borderall bg-white text-center"></ion-input>
       </ion-col>
-      <ion-col size="1" class="color-white round bg-white text-center fontbold color-primary mar-top5" (click)="ActionDelete(index)">X</ion-col>
+      <ion-col size="1" class="color-primary round bg-white text-center mar-top5" (click)="ActionDelete(index)"><b>X</b></ion-col>
     </ion-row>
 
 
@@ -84,10 +82,18 @@
     </ion-row> -->
    
   </ion-list>
-  <ion-item>
+  <ion-list class="padding">
+    <ion-row class="bdr-radius20 bdr-dashed">
+      <ion-col size="12" class="text-center" (click)="ActionAddSize()">
+         <ion-icon name="add-circle" class="ion-float-left font-medium"></ion-icon>
+         <ion-label><b>ADD ANOTHER ENTRY</b></ion-label>  
+      </ion-col>
+      </ion-row>
+  </ion-list>
+  <!-- <ion-item>
     <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
     <ion-input type="text" readonly="readonly" class="labelfont" [(ngModel)]="fab.PartSqft" name="PartSqft">
     </ion-input>
-  </ion-item>
+  </ion-item> -->
 
 </ion-content>

@@ -6,6 +6,8 @@ import { CustomersearchComponent } from '../customersearch/customersearch.compon
 import { OverlayEventDetail } from '@ionic/core';
 import { QuotepostService } from 'src/app/service/quotepost.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { QuotePageModule } from '../quote/quote.module';
+import { QuoteeditComponent } from '../quoteedit/quoteedit.component';
 
 @Component({
   selector: 'app-createquote',
@@ -23,6 +25,11 @@ export class CreatequoteComponent implements OnInit {
   parAccountId: any;
   loaderToShow: any;
   form: any;
+  layId: 1;
+  qprmsobj: {
+    quoteid: number, quoteno: string, versionid: number, customerid: number,
+    accountid: number, childaccid: number, phaseid: number, viewtypeid: number, header: any, layoutId: 1
+  };
   constructor(private formBuilder: FormBuilder, private loadingController: LoadingController, public Modalcntrl: ModalController, private getservice: QuotegetService, private popoverCntrl: PopoverController, private postservice: QuotepostService) { }
   ngOnInit() {
     this.header = {
@@ -55,12 +62,19 @@ export class CreatequoteComponent implements OnInit {
 
   /******* Actions *******/
   ActionCloseCreateQuote(isSave) {
-    let obj = { QuoteId: this.header.ID }
-    this.Modalcntrl.dismiss({
-      'dismissed': true,
-      componentProps: obj,
-      isSave: isSave,
-    });
+    if (isSave == true) {
+      let obj = { ID: this.header.ID, QuoteNo : this.quoteNo, VersionID: this.verId, header : this.header, CustomerID : this.customerId, ParentAccID :this.parAccountId, ChildAccID : this.accountId }
+      this.Modalcntrl.dismiss({
+        'dismissed': true,
+        componentProps: obj,
+        isSave: isSave,
+      });
+    } else {
+      this.Modalcntrl.dismiss({
+        'dismissed': true,
+        isSave: isSave,
+      })
+    }
   }
 
   //get f() { return this.registerForm.controls; }
@@ -68,15 +82,13 @@ export class CreatequoteComponent implements OnInit {
   ActionQuoteSubmit(form: any) {
     if (form.valid) {
       //this.showLoader();
-      alert("call");
       this.ValidateHeader();
       this.postservice.ActionSaveQuote(this.header).subscribe(data => {
-        //this.hideLoader();
-        this.header.ID = data;
-        //this.verId = Ids[1], this.quoteNo = Ids[2], this.customerId = Ids[3],
+        let Ids = data.split(',');
+        this.header.ID = Ids[0];
+        this.verId = Ids[1], this.quoteNo = Ids[2], this.customerId = Ids[3],
         this.accountId = this.header.Version.ChildAccID, this.parAccountId = this.header.Version.ParentAccID;
         this.ActionCloseCreateQuote(true);
-        console.log(this.header);
       })
     }
   }

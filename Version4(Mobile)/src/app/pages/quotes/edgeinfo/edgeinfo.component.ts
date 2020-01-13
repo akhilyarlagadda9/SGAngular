@@ -3,7 +3,8 @@ import { ModalController } from '@ionic/angular';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { FormBuilder, Validators, FormGroup, NgForm } from '@angular/forms';
-import { QuotepostService } from 'src/app/service/quotepost.service';
+//import { QuotepostService } from 'src/app/service/quotepost.service';
+import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-edgeinfo',
@@ -16,7 +17,7 @@ export class EdgeinfoComponent implements OnInit {
   edgelist: any;
   
 
-  constructor(public Modalcntrl : ModalController,private quoterep: QuoterepService,private getservice: QuotegetService, private postservice : QuotepostService) { }
+  constructor(public Modalcntrl : ModalController,private quoterep: QuoterepService,private getservice: QuotegetService,  private service : QuoteService) { }
 
   ngOnInit() {
     this.ActionSelectEdge(); 
@@ -55,7 +56,7 @@ export class EdgeinfoComponent implements OnInit {
 
   ActionSaveEdge(form:NgForm){
     if (form.valid) {
-    this.postservice.ActionsavepartEdge(this.edge).subscribe(data => {
+    this.service.ActionSavePartEdge(this.edge).subscribe(data => {
       this.edgelist = data.EdgeList.filter(x => x.PartID === this.edge.PartID);
       this.ActionCloseEdge(false);
     })

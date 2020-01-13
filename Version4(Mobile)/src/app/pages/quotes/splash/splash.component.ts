@@ -47,7 +47,7 @@ export class SplashComponent implements OnInit {
 
   ActionSaveSplash(form:NgForm){
     if (form.valid) {
-     this.service.Actionsavepartsplash(this.splash).subscribe(data => {
+     this.service.ActionSavePartSplash(this.splash).subscribe(data => {
       this.splashlist = data.SplashList.filter(x => x.PartID === this.splash.PartID);
       this.ActionCloseSplash(true);
     })

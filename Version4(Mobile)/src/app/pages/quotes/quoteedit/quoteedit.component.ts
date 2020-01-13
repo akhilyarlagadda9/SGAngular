@@ -11,6 +11,7 @@ import { JobdesceditComponent } from '../jobdescedit/jobdescedit.component';
 import { ManagementsummaryComponent } from '../managementsummary/managementsummary.component';
 import { PoeditComponent } from '../poedit/poedit.component';
 import { ActionquoteComponent } from '../actionquote/actionquote.component';
+import { QuoterepService } from 'src/app/service/quoterep.service';
 //import { QuoterepService } from 'src/app/service/quoterep.service';
 
 declare var _qscope: any;
@@ -21,7 +22,7 @@ declare var _qscope: any;
   styleUrls: ['./quoteedit.component.scss'],
 })
 export class QuoteeditComponent implements OnInit {
-  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private service: QuoteService, private navCtrl: NavController, private popoverCntrl : PopoverController) { }
+  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private service: QuoteService, private navCtrl: NavController, private popoverCntrl: PopoverController) { }
   quoteId: number;
   quoteno: string;
   shownGroup = 1;
@@ -69,7 +70,7 @@ export class QuoteeditComponent implements OnInit {
     let result = this.service.ActionQuoteInfo(this.qprmsobj.quoteid, this.qprmsobj.quoteno, this.qprmsobj.versionid, 0, 0, 0).subscribe(
       data => {
         this.headerInfo = data; _qscope.quote = {};
-        this.headerInfo.Version = this.headerInfo.VersionList.filter(x => x.ID === this.qprmsobj.versionid)[0];
+        this.headerInfo.Version = this.headerInfo.VersionList.find(x => x.ID === this.qprmsobj.versionid);
         _qscope.quote = this.headerInfo;
       },
       error => console.log(error));
@@ -96,7 +97,7 @@ export class QuoteeditComponent implements OnInit {
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {
-        if (detail.data.issave == true) {
+        if (detail.data.isSave == true) {
           this.headerInfo = detail.data.componentProps;
           //this.contacts = detail.data.componentProps.ContactList;
         }
@@ -126,6 +127,7 @@ export class QuoteeditComponent implements OnInit {
     let custinfo = info;
     custinfo.ContactList = contactList;
     let copyobj = JSON.parse(JSON.stringify(custinfo))
+    //let obj = {version:this.headerInfo.Version,customerinfo:copyobj,SelectedTypeID:this.SelectedTypeID}
     let obj = { version: this.version, customerinfo: copyobj, SelectedTypeID: this.SelectedTypeID }
     const modal = await this.Modalcntrl.create({
       component: CustomereditComponent,
@@ -191,49 +193,75 @@ export class QuoteeditComponent implements OnInit {
     }
   }
   async ActionNewAction() {
+    let header = { header: this.headerInfo }
     const popover = await this.popoverCntrl.create({
       component: NewactionComponent,
+      componentProps: header,
       translucent: true,
-      showBackdrop: false,
+      showBackdrop: true,
       cssClass: "popover_class3"
     });
     return await popover.present();
   }
 }
-
+// <ion-row class="pad2" (click)="createaction(1,'Cancelled')"><span style="color:red"><b>Cancel Quote</b></span></ion-row>
+// <ion-row class="pad2" (click)="createaction(2,'a')"><span style="color:Blue"><b>Duplicate Version</b></span></ion-row>
+// <ion-row class="pad2" (click)="createaction(3,'Cancelled')"><span style="color:green"><b>Copy Quote</b></span></ion-row>
 
 @Component({
   template: `
-  <ion-grid class="acc-pop">
-    <ion-row class="pad2" (click)="createaction(1,'Cancelled')"><span style="color:red"><b>Cancel Quote</b></span></ion-row>
-    <ion-row class="pad2" (click)="createaction(2,'a')"><span style="color:Blue"><b>Duplicate Version</b></span></ion-row>
-    <ion-row class="pad2" (click)="createaction(3,'Cancelled')"><span style="color:green"><b>Copy Quote</b></span></ion-row>
-  </ion-grid>`,
+  <ion-list class="acc-pop no-margin">
+    <ion-item class="pad2 color-green fontbold" *ngIf="header.Version.StatusID != 6 && header.IsApproved == false && header.Version.IsLock == 0" (click)="ActionQuoteStatuses(6,'Approved')">Approve Quote</ion-item>
+    <ion-item class="pad2 fontbold" *ngIf="header.Version.StatusID != 2 &&  header.Version.StatusID != 6 && header.IsApproved == false &&  header.Version.IsLock == 0" style="color:#f8ac59" (click)="ActionQuoteStatuses(2,'Declined')">Decline Quote</ion-item>
+    <ion-item class="pad2 color-red fontbold" *ngIf="(header.Version.StatusID != 4 ||  header.Version.StatusID == 6) && header.Version.IsLock == 0" (click)="ActionQuoteStatuses(4,'Cancelled')">Cancel Quote</ion-item>
+    <ion-item class="pad2 fontbold" *ngIf="header.Version.StatusID == 2 ||  header.Version.StatusID == 4 && header.Version.IsLock == 0" style="color:#2E86C1" (click)="ActionQuoteStatuses(1,'Bidding')">Bidding Quote</ion-item>
+    <ion-item class="pad2 color-blue fontbold" *ngIf="header.Version.LatestCoID == 0" (click)="ActionDuplicateVersion(header.Version.ID, header.Version.CustomerID,header.Version.ChildAccID,header.Version.ParentAccID)">Duplicate Version</ion-item>
+    <ion-item class="pad2 color-green fontbold" *ngIf="header.Version.LatestCoID == 0" (click)="ActionCopyQuote()">Copy Quote</ion-item>
+    <ion-item class="pad2 fontbold" *ngIf="header.Version.StatusID == 6" style="color:#2E86C1" (click)="ActionCreateChangeOrder()">Create Change Order</ion-item>
+  </ion-list>`,
   styleUrls: ['./quoteedit.component.scss'],
 })
 export class NewactionComponent implements OnInit {
   navObj = this.navParams.data;
-  constructor(private alertCtrl: AlertController,private navParams: NavParams,public Modalcntrl: ModalController, private popoverCntrl: PopoverController) { }
+  header: any;
+  result: void;
+  constructor(private alertCtrl: AlertController, private navParams: NavParams, public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private quoterep: QuoterepService) { }
   obj: any;
   ngOnInit() { }
 
+  ActionQuoteStatuses(statusId, status) {
+    let result = false;
+    if (statusId == 6) {
+      result = this.quoterep.approvechecklist(this.header);
+    }
+    //s1:edit,isadmin
+    // if (this.header.reviewapproval == true) { /*searchobj.alertflag = false;*/ }
+    //s2:no
+    //if (this.reviewapproval == false && result == false) { searchobj.alertflag = false; }
+
+    //$scope.action = stageaction(statusId, status); $scope.searchobj2 = searchobj;
+    // $("#statusaction").show();
+  }
 
 
-  async createaction(viewtype2:number, viewtype: string, ) {
-    let act ={ViewType:viewtype, viewtype2:viewtype2}
+
+
+
+  async createaction(viewtype2: number, viewtype: string, ) {
+    let act = { ViewType: viewtype, viewtype2: viewtype2 }
     if (viewtype2 === 1) {
       const modal = await this.Modalcntrl.create({
         component: ActionquoteComponent,
         componentProps: act
       });
-      
-    this.ActionToClosePop(true);
-    return await modal.present();
+
+      this.ActionToClosePop(true);
+      return await modal.present();
     }
     if (viewtype2 === 2) {
       const alert = await this.alertCtrl.create({
         message: 'Are you sure you want to Duplicate the Version?',
-        buttons:[
+        buttons: [
           {
             text: 'Cancel',
             role: 'cancel',
@@ -246,7 +274,7 @@ export class NewactionComponent implements OnInit {
             text: 'Okay',
             handler: () => {
               console.log('Confirm Okay');
-              
+
             }
           }
         ]
@@ -256,7 +284,7 @@ export class NewactionComponent implements OnInit {
     if (viewtype2 === 3) {
       const alert = await this.alertCtrl.create({
         message: 'Are you sure you want to Copy Quote?',
-        buttons:[
+        buttons: [
           {
             text: 'Cancel',
             role: 'cancel',
@@ -269,11 +297,11 @@ export class NewactionComponent implements OnInit {
             text: 'Okay',
             handler: () => {
               console.log('Confirm Okay');
-              
+
             }
           }
         ]
-        
+
       });
       alert.present();
     }

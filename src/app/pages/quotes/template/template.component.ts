@@ -41,10 +41,10 @@ export class TemplateComponent implements OnInit {
 
   ActionSaveTemplate(form:NgForm){
     if (form.valid) {
-    this.service.Actionsavepartlabor(this.labor).subscribe(data => {
-     // this.sinklist = data.sinkfaucetList;
-      this.ActionCloseTemplate(false);
-    })
+    // this.service.Actionsavepartlabor(this.labor).subscribe(data => {
+    //  // this.sinklist = data.sinkfaucetList;
+    //   this.ActionCloseTemplate(false);
+    // })
   }
   }
 

@@ -192,7 +192,6 @@ export class AddpartComponent implements OnInit {
 
 
   ActionPartTabInfo(type: number) {
-    debugger;
     this.selectedcomponent = type;
   }
 

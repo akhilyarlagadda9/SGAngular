@@ -31,7 +31,6 @@ export class AddpartComponent implements OnInit {
   }
 
   PreparePart() {
-    debugger;
     this.partinfo.PartMaterialList = []; this.partinfo.PartFabList = [];
     this.partinfo.EdgeList = []; this.partinfo.SplashList = []; this.partinfo.CutoutList = [];
     this.partinfo.LaborList = [];

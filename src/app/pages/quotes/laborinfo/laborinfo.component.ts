@@ -27,7 +27,7 @@ export class LaborinfoComponent implements OnInit {
   
   ActionSaveLabor(form:NgForm) {
     if (form.valid) {
-    this.service.Actionsavepartlabor(this.labor).subscribe(data => {
+    this.service.ActionSaveLabor(this.labor).subscribe(data => {
       this.itemlist = data.laborList.filter(x => x.PartID === this.labor.PartID && x.ViewTypeID == this.labor.ViewTypeID);
       this.ActionCloseLabor(true);
     })

@@ -84,6 +84,10 @@ export class TileinfoComponent implements OnInit {
         issave: issave
       });
     }
+    this.Modalcntrl.dismiss({
+      'dismissed': true,
+      issave: issave
+    });
   }
 }
 

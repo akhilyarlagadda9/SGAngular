@@ -30,8 +30,8 @@
   <ion-row>
     <ion-col size="1" class="paddt0"><ion-icon name="calendar" class="font20"></ion-icon></ion-col>
     <ion-col size="11" class="paddzero">
-      <span class="text2">{{actInfo.SchStartTime  | date:'MM/dd'}} - {{actInfo.StartTime | date:'h:mm a '}} ,
-        {{actInfo.SchEndTime  | date:'MM/dd'}} - {{actInfo.EndTime | date:'h:mm a '}} -
+      <span class="text2">{{actInfo.SchStartTime  | date:'MM/dd'}} - <b>{{actInfo.SchStartTime | date:'h:mm a'}}</b> ,
+        {{actInfo.SchEndTime  | date:'MM/dd'}} - <b>{{actInfo.SchEndTime | date:'h:mm a'}}</b> -
         {{actInfo.Hrs}} Hrs:{{actInfo.Mins}} Min</span>
     </ion-col>
   </ion-row>

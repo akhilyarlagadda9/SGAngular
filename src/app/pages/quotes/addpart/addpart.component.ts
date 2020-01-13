@@ -16,6 +16,7 @@ export class AddpartComponent implements OnInit {
   coId: number; coSrNo: string;matPercent:any;
   MaterialList: any = []; CountertypeList: any = [];
   SplashList: any = []; EdgeList: any = []; CutoutList: any = [];
+  selectedcomponent: number = 2;
   constructor(public Modalcntrl: ModalController, public popoverCntrl: PopoverController, 
     private service: QuoteService, private getservice: QuotegetService,private quoterep:QuoterepService) { }
 
@@ -174,6 +175,19 @@ export class AddpartComponent implements OnInit {
     });
     return await modal.present();
   }
+
+
+
+/********************ADD PART EDIT FUNCTIONS ************************/
+
+
+ActionPartTabInfo(type:number){debugger;
+  this.selectedcomponent = type;
+}
+
+
+
+
 
 }
 

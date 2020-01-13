@@ -38,8 +38,8 @@
     <div class="areasvg text-center"></div>    
   </ion-col>
 </ion-row>
-<ion-row class="rowlineitem" >
-  <ion-col (click)="ActionAddPart(material)"><u class="colorblue textfont14">P</u>:
+<ion-row class="rowlineitem" *ngIf="partinfo.ID > 0" >
+  <ion-col (click)="ActionAddPart()"><u class="colorblue textfont14">P</u>:
     {{partinfo.Name}}
   </ion-col>
  

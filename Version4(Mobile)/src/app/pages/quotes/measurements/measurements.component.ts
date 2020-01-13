@@ -10,11 +10,8 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
   styleUrls: ['./measurements.component.scss'],
 })
 export class MeasurementsComponent implements OnInit {
-  registerForm: FormGroup; fab: any;
-  submitted = false;
-  fablist: any;
-  countertypes: any = [];
-  constructor(private formBuilder: FormBuilder, public Modalcntrl: ModalController, private service: QuoteService, private quoterep: QuoterepService) { }
+  fab:any;countertypes: any = [];fablist: any;
+  constructor(public Modalcntrl: ModalController, private service: QuoteService, private quoterep: QuoterepService) { }
   ngOnInit() {
     this.GetCounterTypes();
   }
@@ -35,21 +32,21 @@ export class MeasurementsComponent implements OnInit {
     this.fab.MeasureList.splice(index, 1);
     this.ActionSetFabSqft();
   }
-  ActionSaveMeasurement(fab: any) {
-    this.submitted = true;
-    //if (this.registerForm.valid) {
-      this.service.Actionsavepartfabrication(fab).subscribe(data => {
-        //this.fablist = data.TileList;
-        this.ActionToClose(false);
+  ActionSaveMeasurement() {
+      this.service.Actionsavepartfabrication(this.fab).subscribe(data => {
+        this.fablist = data.FabList.filter(x => x.PartID === this.fab.PartID);
+        this.ActionToClose(true);
       })
-    //}
-
   }
+  ActionAddSize(){
+    let size= this.quoterep.AddMeasurementItem();
+     this.fab.MeasureList.push(size);
+   }
+ 
   ActionToClose(issave: boolean) {
-    let sizes = { PartFab: this.fablist }
     this.Modalcntrl.dismiss({
       'dismissed': true,
-      componentProps: sizes,
+      componentProps: this.fablist,
       issave: issave
     });
   }

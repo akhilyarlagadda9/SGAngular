@@ -27,24 +27,6 @@ export class CommhubComponent implements OnInit {
     this.GetQuoteNoteList();
   }
 
-  // Actiontypefilter($event, type:any) {debugger;
-  //   this.typeId = type == null || undefined ? 0 : type.ID;
-  // }
-//   $scope.typefilter = function (type) {
-//     $scope.typeId = type == null || undefined ? 0 : type.ID;
-// }
-
-
-  //  InitLoad() {
-  //    if(this.processtypeList.ID == 0) {
-  //     const processststuses = [{ ID: 0, Name: "ALL" }];
-  //    }
-  //  }
-
-  //  onSelectMakert(data) {
-  //   this.processtypeList = this.selectedoption;
-  //  }
-
   //Tab selection Function
   ActionLoadHubInfo(componet: any){
     this.selectedhubtype = componet;

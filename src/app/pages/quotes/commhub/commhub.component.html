@@ -1,16 +1,14 @@
 <ion-list class="liststy" *ngIf="selectedhubtype == 1">
   <ion-row>
     <ion-col size="5">
-      <!-- <ion-select class="btninfo" interface="popover" [(ngModel)]="type.ID" name="type">
-        <ion-select-option [value]="0" selected="selected">ALL</ion-select-option>
-        <ion-select-option *ngFor="let process of processtypeList" [value]="process.ID">{{process.Name}}</ion-select-option>
-      </ion-select> -->
       <ion-select class="btninfo" interface="popover">
+        <ion-select-option [value]="0" selected="selected">ALL</ion-select-option>
         <ion-select-option *ngFor="let process of processtypeList" [value]="process.ID">{{process.Name}}</ion-select-option>
       </ion-select>
     </ion-col>
     <ion-col size="4">
       <ion-select class="btninfo" interface="popover">
+        <ion-select-option [value]="0" selected="selected">ALL</ion-select-option>
         <ion-select-option *ngFor="let process of phaseList" [value]="process.ID">{{process.Name}}</ion-select-option>
       </ion-select>
     </ion-col>
@@ -33,9 +31,9 @@
         <ion-row class="marbot">
           <ion-col class="paddzero text-left paddleft">{{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</ion-col>
         </ion-row>
-        <ion-row class="marbot">
+        <!-- <ion-row class="marbot">
           <ion-col class="paddzero text-left paddleft">{{note.Path}}</ion-col>
-        </ion-row>
+        </ion-row> -->
       </ion-col>
       <ion-col size="2" class="text-right">
         <ion-icon name="download" class="downloadsty"></ion-icon>
@@ -116,9 +114,9 @@
         <ion-row class="marbot">
           <ion-col class="paddzero text-left paddleft">{{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</ion-col>
         </ion-row>
-        <ion-row class="marbot">
+        <!-- <ion-row class="marbot">
           <ion-col class="paddzero text-left paddleft">{{note.Path}}</ion-col>
-        </ion-row>
+        </ion-row> -->
       </ion-col>
       <ion-col size="2" class="text-right">
         <ion-icon name="download" class="downloadsty"></ion-icon>

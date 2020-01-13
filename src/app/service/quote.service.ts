@@ -53,17 +53,17 @@ ActionGetPaymentList(custID:number, quoteID:number):Observable<any>{
   return this.http.post<any>(this.url + 'api/QSave/ActionSavePartFabrication', model, { headers: { 'Content-Type': 'application/json' } })
 }
  //Splash Save Function
- Actionsavepartsplash(item: any): Observable<any> {
+ ActionSavePartSplash(item: any): Observable<any> {
   var model = JSON.stringify(item);
   return this.http.post<any>(this.url + 'api/QSave/ActionSavePartSplash', model, { headers: { 'Content-Type': 'application/json' } })
 }
  //Edge Save Function
- ActionsavepartEdge(item: any): Observable<any> {
+ ActionSavePartEdge(item: any): Observable<any> {
   var model = JSON.stringify(item);
   return this.http.post<any>(this.url + 'api/QSave/ActionSavePartEdge', model, { headers: { 'Content-Type': 'application/json' } })
 }
  //Cutout Save Function
- Actionsavepartcutout(item: any): Observable<any> {
+ ActionSavePartCutout(item: any): Observable<any> {
   var model = JSON.stringify(item);
   return this.http.post<any>(this.url + 'api/QSave/ActionSavePartCutout', model, { headers: { 'Content-Type': 'application/json' } })
 }

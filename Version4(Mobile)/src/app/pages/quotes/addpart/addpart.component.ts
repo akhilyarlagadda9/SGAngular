@@ -13,17 +13,17 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
 })
 export class AddpartComponent implements OnInit {
   partinfo: any; priceListID: any;
-  coId: number; coSrNo: string;matPercent:any;
+  coId: number; coSrNo: string; matPercent: any;
   MaterialList: any = []; CountertypeList: any = [];
   SplashList: any = []; EdgeList: any = []; CutoutList: any = [];
   selectedcomponent: number = 2;
-  constructor(public Modalcntrl: ModalController, public popoverCntrl: PopoverController, 
-    private service: QuoteService, private getservice: QuotegetService,private quoterep:QuoterepService) { }
+  constructor(public Modalcntrl: ModalController, public popoverCntrl: PopoverController,
+    private service: QuoteService, private getservice: QuotegetService, private quoterep: QuoterepService) { }
 
   ngOnInit() {
-    console.log(this.partinfo);console.log(this.priceListID);
+    console.log(this.partinfo); console.log(this.priceListID);
     if (this.partinfo.ID == 0) {
-    this.PreparePart()
+      this.PreparePart()
     }
     this.GetMaterialList();
     this.GetCounterList();
@@ -32,30 +32,30 @@ export class AddpartComponent implements OnInit {
 
   PreparePart() {
     debugger;
-      this.partinfo.PartMaterialList = [];this.partinfo.PartFabList = [];
-      this.partinfo.EdgeList = [];this.partinfo.SplashList =[];this.partinfo.CutoutList =[];
-      this.partinfo.LaborList =[];
-      // Material
-      let partmat = this.quoterep.AddPartMatItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent);
-      this.partinfo.PartMaterialList.push(partmat);
-      //Fabrigation
-      let fab = this.quoterep.AddFabricationItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent);
-      let sizes = this.quoterep.AddMeasurementItem();
-      fab.MeasureList.push(sizes);
-      this.partinfo.PartFabList.push(fab);
-      //Splash
-      this.ActionAddSplash();
-      //Edge
-     this.ActionAddEdge();
-      //cutout
-     this.ActionAddCutOut();
-      //Template And install
-      let template = this.quoterep.AddLaborItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent, 1, "Template");
-      template.Description ="Template";
-      let install = this.quoterep.AddLaborItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent, 1, "Install");
-      install.Description ="Install";
-      this.partinfo.LaborList.push(template);this.partinfo.LaborList.push(install);
-    }
+    this.partinfo.PartMaterialList = []; this.partinfo.PartFabList = [];
+    this.partinfo.EdgeList = []; this.partinfo.SplashList = []; this.partinfo.CutoutList = [];
+    this.partinfo.LaborList = [];
+    // Material
+    let partmat = this.quoterep.AddPartMatItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent);
+    this.partinfo.PartMaterialList.push(partmat);
+    //Fabrigation
+    let fab = this.quoterep.AddFabricationItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent);
+    let sizes = this.quoterep.AddMeasurementItem();
+    fab.MeasureList.push(sizes);
+    this.partinfo.PartFabList.push(fab);
+    //Splash
+    this.ActionAddSplash();
+    //Edge
+    this.ActionAddEdge();
+    //cutout
+    this.ActionAddCutOut();
+    //Template And install
+    let template = this.quoterep.AddLaborItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent, 1, "Template");
+    template.Description = "Template";
+    let install = this.quoterep.AddLaborItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent, 1, "Install");
+    install.Description = "Install";
+    this.partinfo.LaborList.push(template); this.partinfo.LaborList.push(install);
+  }
   GetMaterialList() {
     let result = this.service.ActionGetMaterialList(this.partinfo.VersionID).subscribe(data => {
       this.MaterialList = data;
@@ -75,51 +75,50 @@ export class AddpartComponent implements OnInit {
       console.log(data);
     })
   }
-  ActionPopulateMaterial(Id,index){
-    let material = this.MaterialList.find(s=>s.ID == Id);
-    if(material != null && material != undefined){
-      this.partinfo.PartMaterialList[index] = this.quoterep.SetPartMaterial(this.partinfo.PartMaterialList[index],material);
+  ActionPopulateMaterial(Id, index) {
+    let material = this.MaterialList.find(s => s.ID == Id);
+    if (material != null && material != undefined) {
+      this.partinfo.PartMaterialList[index] = this.quoterep.SetPartMaterial(this.partinfo.PartMaterialList[index], material);
     }
   }
-  ActionPopulateSize(Id,index){
+  ActionPopulateSize(Id, index) {
     // let material = this.CountertypeList.find(s=>s.ID == Id);
     // if(material != null && material != undefined){
     //   this.partinfo.PartMaterialList[index] = this.quoterep.SetPartMaterial(this.partinfo.PartMaterialList[index],material);
     // }
   }
-  ActionPopulateSplash(Id,index){
-    let splash = this.SplashList.find(s=>s.ID == Id);
-    if(splash != null && splash != undefined){
-      this.partinfo.SplashList[index] = this.quoterep.Setsplash(this.partinfo.SplashList[index],splash);
+  ActionPopulateSplash(Id, index) {
+    let splash = this.SplashList.find(s => s.ID == Id);
+    if (splash != null && splash != undefined) {
+      this.partinfo.SplashList[index] = this.quoterep.Setsplash(this.partinfo.SplashList[index], splash);
     }
   }
-  ActionPopulateEdge(Id,index){
-    let edge = this.EdgeList.find(s=>s.ID == Id);
-    if(edge != null && edge != undefined){
-      this.partinfo.EdgeList[index] = this.quoterep.SetEdge(this.partinfo.EdgeList[index],edge);
+  ActionPopulateEdge(Id, index) {
+    let edge = this.EdgeList.find(s => s.ID == Id);
+    if (edge != null && edge != undefined) {
+      this.partinfo.EdgeList[index] = this.quoterep.SetEdge(this.partinfo.EdgeList[index], edge);
     }
   }
-  ActionPopulateCutout(Id,index){
-    let cutout = this.CutoutList.find(s=>s.ID == Id);
-    if(cutout != null && cutout != undefined){
-      this.partinfo.CutoutList[index] = this.quoterep.SetCutout(this.partinfo.CutoutList[index],cutout);
+  ActionPopulateCutout(Id, index) {
+    let cutout = this.CutoutList.find(s => s.ID == Id);
+    if (cutout != null && cutout != undefined) {
+      this.partinfo.CutoutList[index] = this.quoterep.SetCutout(this.partinfo.CutoutList[index], cutout);
     }
   }
-  ActionSetSqft(size, typeid,index) {
+  ActionSetSqft(size, typeid, index) {
     size.Sqft = this.quoterep.calcsqft(size.Width, size.Height);
     this.ActionSetFabSqft(index);
   }
   ActionSetFabSqft(index) {
-    debugger;
-    let sum:number = this.partinfo.PartFabList[index].MeasureList.reduce((sum, current) => sum + current.Sqft, 0);
-    this.partinfo.PartFabList[index].PartSqft = Number(sum) ;
-    this.partinfo.PartFabList[0].Sqft = this.quoterep.roundToTwo(this.partinfo.PartFabList[0].PartSqft+this.partinfo.PartFabList[0].SplashSqft);
+    let sum: number = this.partinfo.PartFabList[index].MeasureList.reduce((sum, current) => sum + current.Sqft, 0);
+    this.partinfo.PartFabList[index].PartSqft = Number(sum);
+    this.partinfo.PartFabList[0].Sqft = this.quoterep.roundToTwo(this.partinfo.PartFabList[0].PartSqft + this.partinfo.PartFabList[0].SplashSqft);
     this.PopulateSqfts();
   }
   ActionChangeSplash() {
-    let sum:number = this.partinfo.SplashList.reduce((sum, current) => sum + current.Sqft, 0);
+    let sum: number = this.partinfo.SplashList.reduce((sum, current) => sum + current.Sqft, 0);
     this.partinfo.PartFabList[0].SplashSqft = Number(sum);
-    this.partinfo.PartFabList[0].Sqft = this.quoterep.roundToTwo(this.partinfo.PartFabList[0].PartSqft+this.partinfo.PartFabList[0].SplashSqft);
+    this.partinfo.PartFabList[0].Sqft = this.quoterep.roundToTwo(this.partinfo.PartFabList[0].PartSqft + this.partinfo.PartFabList[0].SplashSqft);
     console.log(this.partinfo.PartFabList[0]);
     this.PopulateSqfts();
 
@@ -131,30 +130,42 @@ export class AddpartComponent implements OnInit {
     this.partinfo.LaborList[0].Qty = sum;
     this.partinfo.LaborList[1].Qty = sum;
   }
-  ActionCloseAddPart() {
+  ActionCloseAddPart(issave) {
+    let text = {Name:this.partinfo.Name,ID:this.partinfo.ID}
+    //let text = isbool == true ? this.partinfo.Name : "";
     this.Modalcntrl.dismiss({
       'dismissed': true,
+      componentProps: text,
+      issave:issave
     });
   }
 
-  ActionAddEdge(){
+  ActionAddEdge() {
     let edge = this.quoterep.AddEdgeItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent);
     this.partinfo.EdgeList.push(edge);
   }
 
-  ActionAddSplash(){
+  ActionAddSplash() {
     let splash = this.quoterep.AddSplashItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent);
     this.partinfo.SplashList.push(splash);
   }
-  ActionAddCutOut(){
+  ActionAddCutOut() {
     let cutout = this.quoterep.AddCutoutItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent, 1);
     this.partinfo.CutoutList.push(cutout);
   }
-  ActionAddSize(index){
-   let size= this.quoterep.AddMeasurementItem();
+  ActionAddSize(index) {
+    let size = this.quoterep.AddMeasurementItem();
     this.partinfo.PartFabList[index].MeasureList.push(size);
   }
+  ActionSavePart() {
+    if (this.partinfo.VersionID > 0) {
+      this.service.ActionSaveAreaLayout(this.partinfo.VersionID, this.partinfo).subscribe(data => {
+        this.ActionCloseAddPart(true);
+      })
+    }
 
+
+  }
   /***************POPOVERS ******************/
   // async ActionAddSize(ev: any) {
   //   let obj = {}
@@ -178,12 +189,13 @@ export class AddpartComponent implements OnInit {
 
 
 
-/********************ADD PART EDIT FUNCTIONS ************************/
+  /********************ADD PART EDIT FUNCTIONS ************************/
 
 
-ActionPartTabInfo(type:number){debugger;
-  this.selectedcomponent = type;
-}
+  ActionPartTabInfo(type: number) {
+    debugger;
+    this.selectedcomponent = type;
+  }
 
 
 

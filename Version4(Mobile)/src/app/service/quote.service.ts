@@ -104,7 +104,7 @@ ActionGetPaymentList(custID:number, quoteID:number):Observable<any>{
 ActionGetMaterialList(verId:number):Observable<any>{
   return this.http.get<any>(this.url + 'api/QEdit/ActionVersionMaterialList?versionID=' + verId) 
 }
-ActionGetCountertypeList():Observable<any>{debugger;
+ActionGetCountertypeList():Observable<any>{
   let typeIdList = []; typeIdList.push(5);
   return this.http.get<any>(this.url + 'api/QuoteAdmin/QuoteDictionaryLists?typeIdList=' + typeIdList,) 
 }

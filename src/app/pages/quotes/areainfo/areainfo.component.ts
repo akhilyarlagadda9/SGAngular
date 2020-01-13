@@ -70,14 +70,16 @@ export class AreainfoComponent implements OnInit {
   ActionPartsByArea(areaID: any, parttype: number) {
     this.service.ActionQuickPartList(this.Version.ID, areaID, 0, 0).subscribe(data => {
       this.areaInfo = data;
-      this.AreaPartID = data.PartInfo.ID;
-      this.partinfo = data.PartInfo;
-      if (this.areaInfo.PartList != null) {
-        let length = this.areaInfo.PartList.length;
-        if (length > 0) {
-          this.PartDrawing(this.AreaPartID);
-        }
+      this.areaInfo.PartList = this.areaInfo.PartList == null ? [] : this.areaInfo.PartList;
+      let length = this.areaInfo.PartList.length;
+      if(length > 0){
+        this.AreaPartID = data.PartInfo.ID;
+        this.partinfo = data.PartInfo;
+        //if (this.areaInfo.PartList != null) {
+            this.PartDrawing(this.AreaPartID);
+       // }
       }
+    
     })
   }
   getareaindexbyareaid(areaid) {
@@ -131,14 +133,14 @@ export class AreainfoComponent implements OnInit {
   /***** MEASUREMENT DETAILS *****/
   async ActionEditMeasurement(fab: any) {
     let copyobj = JSON.parse(JSON.stringify(fab));
-    let sizes = { sizes: copyobj, priceListID: Number(this.Version.PriceListID) }
+    let sizes = { fab: copyobj, priceListID: Number(this.Version.PriceListID) }
     const modal = await this.Modalcntrl.create({
       component: MeasurementsComponent,
       componentProps: sizes
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail.data.issave == true) {
-        this.partinfo.PartFabList = detail.data.componentProps.PartFab;
+        this.partinfo.PartFabList = detail.data.componentProps;
       }
     });
     return await modal.present();

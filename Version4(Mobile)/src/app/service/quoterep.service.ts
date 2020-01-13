@@ -4,6 +4,7 @@ import { Subject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class QuoterepService {
+  header: any;
   constructor() { }
   private _interfacesource = new Subject<any>();
   interface$ = this._interfacesource.asObservable();
@@ -359,7 +360,287 @@ export class QuoterepService {
   roundSqft(sqft: number) {
     return Math.sqrt(sqft);
   }
-
+/************************************ACTION CONTROLLER**********************************************/
+approvechecklist(data) {
+  let alertobj = { alert: false };
+  let checklists = JSON.parse(data.header.Version.JobScope);
+  if (checklists != null) {
+    this.checkheaderinfo(this.header, checklists, alertobj);
+    this.checkareasinfo(this.header.Version.AreaList, checklists, alertobj);
+  }
+  return alertobj.alert;
+}
+checkheaderinfo(header, checklists, alertobj) {
+  for (let i = 0; i < checklists.length; i++) {
+      let scopeobj = checklists[i];
+      if (scopeobj.IsCheck == 1) {
+          if (scopeobj.TypeID == 0) { this.checkjobinfo(header, scopeobj, alertobj); }
+          else if (scopeobj.TypeID == 1) { this.checkjobcontactinfo(header.QuoteContacts, scopeobj, alertobj); }
+      }
+  }
+}
+checkjobinfo(header, scopeobj, alertobj) {
+  let scopedesc = ''; header.CheckFlag = false;
+  if (scopeobj.AddressIsCheck == 1) { if (header.Address1 == null || header.Address1 == '') { header.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Address" } }
+  if (scopeobj.Address2IsCheck == 1) { if (header.Address2 == null || header.Address2 == '') { header.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Address2" } }
+  if (scopeobj.CityIsCheck == 1) { if (header.City == null || header.City == '') { header.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No City" } }
+  if (scopeobj.StateIsCheck == 1) { if (header.State == null || header.State == '') { header.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No State" } }
+  if (scopeobj.ZipcodeIsCheck == 1) { if (header.Zipcode == null || header.Zipcode == '') { header.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Zipcode" } }
+  header.scopedescription = scopedesc;
+}
+checkjobcontactinfo(contacts, scopeobj, alertobj) {
+  if (contacts != null) {
+      for (let i = 0; i < contacts.length; i++) {
+          let scopedesc = ''; contacts[i].CheckFlag = false;
+          if (scopeobj.NameIsCheck == 1) { if (contacts[i].Name == null || contacts[i].Name == '') { contacts[i].CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Name" } }
+          if (scopeobj.TitleIsCheck == 1) { if (contacts[i].Title == null || contacts[i].Title == '') { contacts[i].CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Title" } }
+          if (scopeobj.PhoneIsCheck == 1) { if (contacts[i].Phone == null || contacts[i].Phone == '') { contacts[i].CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Phone No" } }
+          if (scopeobj.FaxIsCheck == 1) { if (contacts[i].Fax == null || contacts[i].Fax == '') { contacts[i].CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Fax" } }
+          if (scopeobj.EmailIsCheck == 1) { if (contacts[i].Email == null || contacts[i].Email == '') { contacts[i].CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Email" } }
+          contacts[i].scopedescription = scopedesc;
+      }
+  }
+}
+checkareasinfo(areas, checklists, alertobj) {
+  for (let i = 0; i < areas.length; i++) {
+      let area = areas[i];
+      if (area.PartList == null || area.PartList.length == 0) {
+          alertobj.alert = true;
+      } else {
+          this.checkareainfo(area, checklists, alertobj);
+      }       
+  }
+}
+checkareainfo(area, checklists, alertobj) {
+  for (let i = 0; i < checklists.length; i++) {
+      let scopeobj = checklists[i];
+      if (scopeobj.IsCheck == 1 && scopeobj.TypeID > 1) {
+          if (scopeobj.IsCheck == 1 && scopeobj.TypeID == 2) { this.areachecklist(area, scopeobj, alertobj) }
+          this.partchecklist(area.PartList, scopeobj, alertobj);
+      }
+  }
+}
+areachecklist(area, scopeobj, alertobj) {
+  let scopedesc = ''; area.CheckFlag = false;
+  if (scopeobj.DefaultNameIsCheck == 1) { if (area.Name == "Area1" || area.Name == null) { area.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " - No Area Name" } }
+  if (scopeobj.NoofUnitsIsCheck == 1) { if (area.NoOfUnits == 0) { area.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No # of Units" } }
+  area.scopedescription = scopedesc;
+}
+partchecklist(partlist, scopeobj, alertobj) {
+  for (var i = 0; i < partlist.length; i++) {
+      if (scopeobj.TypeID == 3) { this.partitemscheck(partlist[i].PartMaterialList, 8, scopeobj, alertobj); }
+      if (scopeobj.TypeID == 4) { this.partitemscheck(partlist[i].PartFabList, 1, scopeobj, alertobj); }
+      if (scopeobj.TypeID == 5) { this.partitemscheck(partlist[i].SplashList, 2, scopeobj, alertobj); }
+      if (scopeobj.TypeID == 6) { this.partitemscheck(partlist[i].EdgeList, 3, scopeobj, alertobj); }
+      if (scopeobj.TypeID == 7) { this.partitemscheck(partlist[i].CutoutList, 4, scopeobj, alertobj); }
+      if (scopeobj.TypeID == 8) { this.partitemscheck(partlist[i].SinkList, 5, scopeobj, alertobj); }
+      if (scopeobj.TypeID == 9) { this.partitemscheck(partlist[i].FaucetList, 6, scopeobj, alertobj); }
+      if (scopeobj.TypeID == 10) { this.partitemscheck(partlist[i].ApplianceList, 7, scopeobj, alertobj); }
+  }
+}
+partitemscheck(itemlist, typeId, scopeobj, alertobj) {
+  if (itemlist.length > 0) {
+      for (var i = 0; i < itemlist.length; i++) {
+          this.itemcheck(itemlist[i], typeId, scopeobj, alertobj);
+      }
+  } else {
+      alertobj.alert = true;
+  }
+}
+itemcheck(item, typeId, scopeobj, alertobj) {
+  switch (typeId) {
+      case 1: //Fab  
+      this.validatepartfabscope(item, typeId, scopeobj, alertobj);
+          break;
+      case 2: //Splash
+      this.validatepartsplashscope(item, typeId, scopeobj, alertobj);
+          break;
+      case 3: //Edge
+      this.validatepartedgescope(item, typeId, scopeobj, alertobj);
+          break;
+      case 4: //Cutout
+      this.validatepartcutoutscope(item, typeId, scopeobj, alertobj);
+          break;
+      case 5: //Sink
+      this.validatepartsinkscope(item, typeId, scopeobj, alertobj);
+          break;
+      case 6: case 7://Faucet & Appliance
+      this.validatepartfaucetscope(item, typeId, scopeobj, alertobj);
+          break;
+      case 8://Material
+      this.validatepartmaterialscope(item, typeId, scopeobj, alertobj);
+          break;
+  }
+}
+validatepartmaterialscope(item, typeId, scopeobj, alertobj) {
+  let scopedesc = ''; item.CheckFlag = false;
+  if (scopeobj.ProductItemIsCheck == 1) {
+      if (item.ProSubGroupID == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Sub Group" }
+  }
+  if (scopeobj.DepthIsCheck == 1) {
+      if (item.DepthID == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Depth" }
+  }
+  if (scopeobj.FinishIsCheck == 1) {
+      if (item.FinishID == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Finish" }
+  }
+  if (scopeobj.ColorIsCheck == 1) {
+      if (item.MaterialName == '' || item.MaterialName == null) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Depth" }
+  }
+  if (scopeobj.PriceIsCheck == 1) {
+      if (item.UnitPrice == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Price" }
+  }
+  if (scopeobj.SupplierIsCheck == 1) {
+      if (item.SupplierID == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Supplier" }
+  }
+  if (scopeobj.SlabTypeIsCheck == 1) {
+      if (item.SlabTypeID == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Slab Type" }
+  }
+  if (scopeobj.PriceBySFIsCheck == 1) { //0-Sqft; 1-Slab; 2-Wgt.Avg.Sqft
+      if (item.PriceByID != 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , Price By SqFt" }
+  }  
+  if (scopeobj.TaxIsCheck == 1) {
+      if (item.Tax == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Tax" }
+  }
+  if (scopeobj.WFIsCheck == 1) {
+      if (item.WF == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Waste Factor" }
+  }
+  item.scopedescription = scopedesc;
+}
+validatepartfabscope(item, typeId, scopeobj, alertobj) {
+  let scopedesc = ''; item.CheckFlag = false;
+  if (scopeobj.FabSqftIsCheck == 1) {
+      if (item.PartSqft == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Sqft" }
+  }
+  if (scopeobj.PriceIsCheck == 1) {
+      if (item.LaborUnitPrice == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Price" }
+  }
+  if (scopeobj.TaxIsCheck == 1) {
+      if (item.Tax == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Tax" }
+  }
+  if (scopeobj.OptIsCheck == 1) {
+      if (item.IsOptional == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , Not Optional" }
+  }
+  item.scopedescription = scopedesc;
+}
+validatepartsplashscope(item, typeId, scopeobj, alertobj) {
+  let scopedesc = ''; item.CheckFlag = false;
+  if (scopeobj.NameIsCheck == 1) {
+      if (item.Splash == '' || item.Splash == null) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Splash" }
+  }
+  if (scopeobj.HeightIsCheck == 1) {
+      if (item.Height == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Height" }
+  }
+  if (scopeobj.SplashSqftIsCheck == 1) {
+      if (item.Sqft == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Sqft" }
+  }
+  if (scopeobj.PriceIsCheck == 1) {
+      if (item.SFPrice == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Price" }
+  }
+  if (scopeobj.TaxIsCheck == 1) {
+      if (item.Tax == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Tax" }
+  }
+  if (scopeobj.OptIsCheck == 1) {
+      if (item.IsOptional == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , Not Optional" }
+  }
+  item.scopedescription = scopedesc;
+}
+validatepartedgescope(item, typeId, scopeobj, alertobj) {
+  let scopedesc = ''; item.CheckFlag = false;
+  if (scopeobj.DescriptionIsCheck == 1) {
+      if (item.EdgeProfile == '' || item.EdgeProfile == null) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Edge" }
+  }
+  if (scopeobj.EdgeLnftIsCheck == 1) {
+      if (item.LF == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Lnft" }
+  }
+  if (scopeobj.PriceIsCheck == 1) {
+      if (item.UnitPrice == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Price" }
+  }
+  if (scopeobj.TaxIsCheck == 1) {
+      if (item.Tax == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Tax" }
+  }
+  if (scopeobj.OptIsCheck == 1) {
+      if (item.IsOptional == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , Not Optional" }
+  }
+  item.scopedescription = scopedesc;
+}
+validatepartcutoutscope(item, typeId, scopeobj, alertobj) {
+  let scopedesc = ''; item.CheckFlag = false;
+  if (scopeobj.DescriptionIsCheck == 1) {
+      if (item.Type == '' || item.Type == null) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Cut Out" }
+  }
+  if (scopeobj.CutoutLnftIsCheck == 1) {
+      if (item.LF == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Lnft" }
+  }
+  if (scopeobj.PriceIsCheck == 1) {
+      if (item.Unitprice == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Price" }
+  }
+  if (scopeobj.TaxIsCheck == 1) {
+      if (item.Tax == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Tax" }
+  }
+  if (scopeobj.OptIsCheck == 1) {
+      if (item.IsOptional == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , Not Optional" }
+  }
+  item.scopedescription = scopedesc;
+}
+validatepartsinkscope(item, typeId, scopeobj, alertobj) {
+  let scopedesc = ''; item.CheckFlag = false;
+  if (scopeobj.ProductIsCheck == 1) {
+      if (item.Description == null || item.Description == '') { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Sink" }
+  }
+  if (scopeobj.QtyIsCheck == 1) {
+      if (item.Qty == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Qty" }
+  }
+  if (scopeobj.MakeIsCheck == 1) {
+      if (item.Make == null || item.Make == '') { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Make" }
+  }
+  if (scopeobj.ModelIsCheck == 1) {
+      if (item.Model == null || item.Model == '') { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Model" }
+  }
+  if (scopeobj.CustomerSupplyIsCheck == 1) {
+      if (item.IsSupply == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , Customer Supply: No" }
+  }
+  if (scopeobj.IsAtShopIsCheck == 1) {
+      if (item.IsAtShop == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , Sink is at shop: No" }
+  }
+  if (scopeobj.PriceIsCheck == 1) {
+      if (item.UnitPrice == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Price" }
+  }
+  if (scopeobj.TaxIsCheck == 1) {
+      if (item.Tax == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Tax" }
+  }
+  if (scopeobj.OptIsCheck == 1) {
+      if (item.IsOptional == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , Not Optional" }
+  }
+  item.scopedescription = scopedesc;
+}
+validatepartfaucetscope(item, typeId, scopeobj, alertobj) {
+  let scopedesc = ''; item.CheckFlag = false;
+  if (scopeobj.ProductIsCheck == 1) {
+      if (item.Description == null || item.Description == '') { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Faucet" }
+  }
+  if (scopeobj.QtyIsCheck == 1) {
+      if (item.Qty == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Qty" }
+  }
+  if (scopeobj.MakeIsCheck == 1) {
+      if (item.Make == null || item.Make == '') { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Make" }
+  }
+  if (scopeobj.ModelIsCheck == 1) {
+      if (item.Model == null || item.Model == '') { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Model" }
+  }
+  if (scopeobj.NoofHolesIsCheck == 1 && typeId == 6) {
+      if (item.NoOfHoles == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No of Holes: No" }
+  }
+  if (scopeobj.PriceIsCheck == 1) {
+      if (item.UnitPrice == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Price" }
+  }
+  if (scopeobj.TaxIsCheck == 1) {
+      if (item.Tax == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , No Tax" }
+  }
+  if (scopeobj.OptIsCheck == 1) {
+      if (item.IsOptional == 0) { item.CheckFlag = true; alertobj.alert = true; scopedesc = scopedesc + " , Not Optional" }
+  }
+  item.scopedescription = scopedesc;
+}
 
 
 }

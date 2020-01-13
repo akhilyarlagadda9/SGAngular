@@ -7,6 +7,7 @@ import { QuoteeditComponent } from 'src/app/pages/quotes/quoteedit/quoteedit.com
 import { QuoteService } from 'src/app/service/quote.service'
 import { OverlayEventDetail } from '@ionic/core';
 import { QlayoutComponent } from '../qlayout/qlayout.component';
+import { version } from 'punycode';
 
 
 @Pipe({
@@ -83,12 +84,20 @@ export class QuotePage implements OnInit {
   }
   /***** QUOTEEDIT *****/
   async ActionQuoteEdit(header) {
-    let version = header.VersionList.filter(x => x.ID === header.VersionID)[0];
-    //let version = header.VersionList.filter(s => {if(header.VersionID == s.ID){return s;} });
-    this.qprmsobj = {
-      quoteid: header.ID, quoteno: header.QuoteNo, versionid: header.VersionID, customerid: version.CustomerID,
-      accountid: version.ParentAccID, childaccid: version.ChildAccID, phaseid: 0, viewtypeid: 0, header: header, layoutId: this.layId
-    };
+    if (header.VersionList != undefined) {
+      let version = header.VersionList.filter(x => x.ID === header.VersionID)[0];
+      //let version = header.VersionList.filter(s => {if(header.VersionID == s.ID){return s;} });
+      this.qprmsobj = {
+        quoteid: header.ID, quoteno: header.QuoteNo, versionid: header.VersionID, customerid: version.CustomerID,
+        accountid: version.ParentAccID, childaccid: version.ChildAccID, phaseid: 0, viewtypeid: 0, header: header, layoutId: this.layId
+      };
+    } else {
+     // let version = header.Version.filter(x => x.ID === header.VersionID)[0];
+      this.qprmsobj = {
+        quoteid: header.ID, quoteno: header.QuoteNo, versionid: header.VersionID, customerid: header.CustomerID,
+        accountid: header.ParentAccID, childaccid: header.ChildAccID, phaseid: 0, viewtypeid: 0, header: header, layoutId: this.layId
+      };
+    }
     const modal = await this.Modalcntrl.create({
       component: QuoteeditComponent,
       //component: QlayoutComponent,
@@ -103,10 +112,18 @@ export class QuotePage implements OnInit {
 
   /***** CREATE QUOTE *****/
   async ActionCreateQuote() {
-     let NavigateTab = {NavigateTab :  1};
+    let NavigateTab = { NavigateTab: 1 };
     const modal = await this.Modalcntrl.create({
       component: CreatequoteComponent,
       componentProps: NavigateTab
+    });
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null) {
+        if (detail.data.isSave == true) {
+          this.ActionQuoteEdit(detail.data.componentProps);
+          this.ActionQuoteList();
+        }
+      }
     });
     return await modal.present();
   }

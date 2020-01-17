@@ -14,6 +14,7 @@ import { QuoteService } from 'src/app/service/quote.service';
 export class TileinfoComponent implements OnInit {
   tile: any;
   itemlist: any = [];
+  priceListID: any;
   constructor(private formBuilder: FormBuilder, public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private navParams: NavParams, private quoterep: QuoterepService, private service: QuoteService) { }
 
 
@@ -31,8 +32,8 @@ export class TileinfoComponent implements OnInit {
     this.tile.Amount = this.quoterep.calcitemamt(this.tile.Qty, this.tile.UnitPrice);
     this.tile.Amt = this.tile.Amount;
   }
-  async ActionSearchSelect(ev: any, typeid, productId) {
-    let obj = { searchTypeId: typeid, producttypeId: productId, search: this.tile.Des == undefined ? "" : this.tile.Des }
+  async ActionSearchSelect(ev: any, typeid, productId) {debugger;
+    let obj = { pricelistId : this.priceListID, searchTypeId: typeid, producttypeId: productId, search: this.tile.Des == undefined ? "" : this.tile.Des, info : this.tile }
     const popover = await this.popoverCntrl.create({
       component: AdditionalitemserachComponent,
       event: ev,

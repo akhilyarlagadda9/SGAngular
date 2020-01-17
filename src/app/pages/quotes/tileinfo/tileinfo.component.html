@@ -35,9 +35,6 @@
       <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
         <div class="error">Description is required</div>
       </div>
-      <!-- <div *ngIf="submitted && f.add.errors"  class="invalid-feedback padd-Left">
-        <div *ngIf="f.add.errors.required" class="error">Description is required</div>
-    </div> -->
       <ion-item>
           <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
           <ion-input type="text" class="labelfont" [(ngModel)]="tile.Qty" (change)="ActionSetAmount()" name="Qty"></ion-input>

@@ -27,7 +27,7 @@ export class QuoterepService {
   }
   AddEdgeItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number) {
     let edge: any = {
-      PartID: partId, AreaID: areaId, VersionID: verId, CoID: coId, CoSrNo: coSrno, Tax: matcent, ID: Number, IsChgFlag: 1, ParentID: Number,
+      PartID: partId, AreaID: areaId, VersionID: verId, CoID: coId, CoSrNo: coSrno, Tax: matcent, ID: 0, IsChgFlag: 1, ParentID: Number,
       SaveFlag: 1, Isactive: 1, IsActive: 1, JobQty: Number, IsOptional: Number,
       EdgeProfileID: Number, EdgeProfile: Number, Description: 'Finished Edge', DiscAmt: 0, IsPrint: 1, IsChg: 0,
       Inches: Number, LF: 0, UnitPrice: 0, Margin: 0, UnitCost: 0, Amount: 0,Amt: 0
@@ -164,6 +164,7 @@ export class QuoterepService {
       cuttype.Unitprice = selcuttype.Price;
       cuttype.UnitCost = selcuttype.Cost;
       cuttype.Margin = selcuttype.Margin;
+      cuttype.Amt = selcuttype.Price;
     }
     return cuttype;
   }

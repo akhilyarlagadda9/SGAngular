@@ -329,6 +329,7 @@ export class AreainfoComponent implements OnInit {
   }
 
   AddAreaItem(loadType: string, loadId: number, ViewType: string) {
+    debugger;
     switch (loadType) {
       case "partmat": {
         let partmat = this.quoterep.AddPartMatItem(this.AreaPartID, this.AreaID, this.Version.ID, this.coId, this.coSrNo, this.Version.MatPercent);

@@ -55,10 +55,11 @@ export class EdgeinfoComponent implements OnInit {
   } */
 
   ActionSaveEdge(form:NgForm){
+    debugger;
     if (form.valid) {
     this.service.ActionSavePartEdge(this.edge).subscribe(data => {
       this.edgelist = data.EdgeList.filter(x => x.PartID === this.edge.PartID);
-      this.ActionCloseEdge(false);
+      this.ActionCloseEdge(true);
     })
   }
   }

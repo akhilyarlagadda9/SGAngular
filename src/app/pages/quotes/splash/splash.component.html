@@ -8,27 +8,19 @@
 
     <ion-item>
       <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-      <ion-select [(ngModel)]="splash.Splash" name="Splash" [selectedText]="splash.Splash" #nameField="ngModel" required>
-        <ion-select-option *ngFor="let splash of splashlist"> {{splash.Description}}</ion-select-option>
+      <ion-select [(ngModel)]="splash.Splash" name="Splash" [selectedText]="splash.Splash" (ngModelChange)="ActionPopulateSplash($event)" #nameField="ngModel" required>
+        <ion-select-option *ngFor="let splash of splashlist" [value]="splash.ID"> {{splash.Description}}</ion-select-option>
       </ion-select>
     </ion-item>
     <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
       <div class="error">Description is required</div>
     </div>
-    <!-- <ion-item>
-      <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-      <ion-input type="text" class="labelfont" [(ngModel)]="splash.Splash" name="Splash" #Spl="ngModel" 
-      [ngClass]="{ 'is-invalid': f.submitted && Spl.invalid }" required></ion-input>
-    </ion-item>
-    <div *ngIf="f.submitted && Spl.invalid" class="invalid-feedback padd-Left">
-      <div *ngIf="Spl.errors.required" class="error">Description is required</div>
-    </div> -->
     <ion-item style="margin-left: -6%;">
       <ion-row>
         <ion-col size="12" style="padding: 0px; margin-left: 12px;">
           <ion-row>
             <ion-col size="3">
-              <ion-input type="text" [(ngModel)]="splash.Width" name="Width"
+              <ion-input type="text" [(ngModel)]="splash.Width" name="Width" (ngModelChange)="ActionSetSqft()"
                 style="border-bottom: 1px solid black; border-top: none;border-right: none;border-left: none;">
               </ion-input>
             </ion-col>

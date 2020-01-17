@@ -5,40 +5,16 @@
       <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
       <ion-button slot="end" color="danger" size="small" (click)="ActionCloseEdge(false)">X</ion-button>
     </ion-toolbar>
-
-    <!-- <ion-item>
-      <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-      <ion-select [(ngModel)]="edge.EdgeProfile" name="EdgeProfile" 
-      #Edgeval="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Edgeval.invalid }" class="labelfont"
-      required>
-        <ion-select-option *ngFor="let edg of edgelist"> {{edg.Description}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <div *ngIf="f.submitted && EdgeProfile.invalid" class="invalid-feedback padd-Left">
-      <div *ngIf="EdgeProfile.errors.required" class="error">Description is required</div>
-    </div> -->
+    
     <ion-item>
       <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-      <ion-select [(ngModel)]="edge.EdgeProfile" name="EdgeProfile" [selectedText]="edge.EdgeProfile" #nameField="ngModel" required>
-        <ion-select-option *ngFor="let edg of edgelist"> {{edg.Description}}</ion-select-option>
+      <ion-select [(ngModel)]="edge.EdgeProfile" name="EdgeProfile" [selectedText]="edge.EdgeProfile" (ngModelChange)="ActionPopulateEdge($event)" #nameField="ngModel" required>
+        <ion-select-option *ngFor="let edg of edgelist" [value]="edg.ID"> {{edg.Description}}</ion-select-option>
       </ion-select>
     </ion-item>
      <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
       <div class="error">Description is required</div>
     </div>
-    
-    <!-- <div *ngIf="submitted && f.add.errors" class="invalid-feedback padd-Left">
-      <div *ngIf="f.add.errors.required" class="error">Description is required</div>
-    </div> -->
-    
-    <!-- <ion-item>
-      <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-      <ion-input type="text" class="labelfont" [(ngModel)]="edge.EdgeProfile" name="EdgeProfile"
-      formControlName="EdgeProfile" [ngClass]="{ 'is-invalid': submitted && f.EdgeProfile.errors }"></ion-input>
-    </ion-item>
-    <div *ngIf="submitted && f.add.errors" class="invalid-feedback padd-Left">
-      <div *ngIf="f.add.errors.required" class="error">Description is required</div>
-    </div> -->
       <ion-item>
           <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
           <ion-input type="text" class="labelfont" [(ngModel)]="edge.LF" name="LF" (change)="ActionSetAmount()"></ion-input>

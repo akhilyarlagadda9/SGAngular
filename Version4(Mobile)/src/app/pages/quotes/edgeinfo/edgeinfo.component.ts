@@ -15,6 +15,7 @@ export class EdgeinfoComponent implements OnInit {
   edge:any = "";
   priceListID: any;
   edgelist: any;
+  itemlist: any;
   
 
   constructor(public Modalcntrl : ModalController,private quoterep: QuoterepService,private getservice: QuotegetService,  private service : QuoteService) { }
@@ -39,36 +40,26 @@ export class EdgeinfoComponent implements OnInit {
       data => { this.edgelist = data[0] ; console.log(this.edgelist);},
       error => console.log(error));
   }
-
-  
-
-  /* ActionSaveEdge(edg:any){
-  ActionSaveEdge(){
-    this.submitted = true;
-    if (this.registerForm.valid) {
-      this.postservice.ActionsavepartEdge(this.edge).subscribe(data => {
-     // this.item = data.EdgeList;
-      this.ActionCloseEdge(false);
-    });
+  ActionPopulateEdge(Id:any){
+    let edge = this.edgelist.find(s => s.ID == Id);
+    if (edge != null && edge != undefined) {
+      this.edge = this.quoterep.SetEdge(this.edge, edge);
+    }
   }
-    
-  } */
-
+  
   ActionSaveEdge(form:NgForm){
-    debugger;
     if (form.valid) {
     this.service.ActionSavePartEdge(this.edge).subscribe(data => {
-      this.edgelist = data.EdgeList.filter(x => x.PartID === this.edge.PartID);
+      this.itemlist = data.EdgeList.filter(x => x.PartID === this.edge.PartID);
       this.ActionCloseEdge(true);
     })
   }
   }
   ActionCloseEdge(issave:boolean) {
-    
     this.Modalcntrl.dismiss({
       'dismissed': true,
-      componentProps: this.edgelist,
+      componentProps: this.itemlist,
       issave: issave
     });
-    }
+  }
 }

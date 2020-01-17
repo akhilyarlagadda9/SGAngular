@@ -259,7 +259,7 @@ export class AreainfoComponent implements OnInit {
   }
   async ActionEditLabor(typeId: number, temp: any, viewtype: string) {
     let copyobj = JSON.parse(JSON.stringify(temp));
-    let labor = { labor: copyobj, TypeID: typeId, ViewType: viewtype, }
+    let labor = { labor: copyobj, TypeID: typeId, ViewType: viewtype, priceListID: Number(this.Version.PriceListID) }
     const modal = await this.Modalcntrl.create({
       component: LaborinfoComponent,
       componentProps: labor
@@ -329,7 +329,6 @@ export class AreainfoComponent implements OnInit {
   }
 
   AddAreaItem(loadType: string, loadId: number, ViewType: string) {
-    debugger;
     switch (loadType) {
       case "partmat": {
         let partmat = this.quoterep.AddPartMatItem(this.AreaPartID, this.AreaID, this.Version.ID, this.coId, this.coSrNo, this.Version.MatPercent);

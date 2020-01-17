@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController, NavParams } from '@ionic/angular';
 import { QuotegetService } from 'src/app/service/quoteget.service';
+import { QuoterepService } from 'src/app/service/quoterep.service';
 
 @Component({
   selector: 'app-additionalitemserach',
@@ -10,11 +11,12 @@ import { QuotegetService } from 'src/app/service/quoteget.service';
 export class AdditionalitemserachComponent implements OnInit {
   searchobj= this.navParams.data;
   listItems = [];info:any;
-  constructor(private getservice:QuotegetService, private popoverCntrl :PopoverController, private navParams : NavParams,) { }
+  constructor(private getservice:QuotegetService, private popoverCntrl :PopoverController, private navParams : NavParams, private quoterep : QuoterepService) { }
   
 
   ngOnInit() {
-    this.ActionlistItems()}
+    this.ActionlistItems();
+  }
 
   
 
@@ -29,8 +31,12 @@ export class AdditionalitemserachComponent implements OnInit {
   }
 
 
-  ActionSelectItem(model:any){
-    this.info = model;
+  ActionSelectItem(Id:any){
+    let info = this.listItems.find(s => s.ID == Id);
+    if (info != null && info != undefined) {
+      this.info = this.quoterep.SetTile(this.info, info);
+     // this.partinfo.CutoutList[index] = this.quoterep.SetCutout(this.partinfo.CutoutList[index], cutout);
+    }
     this.ActionToClosePop(true)
   }
   ActionlistItems() {

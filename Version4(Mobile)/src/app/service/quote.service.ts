@@ -100,7 +100,7 @@ ActionGetPaymentList(custID:number, quoteID:number):Observable<any>{
 //Sve Part
 ActionSaveAreaLayout(versionId,item: any): Observable<any> {
   var model = JSON.stringify(item);
-  return this.http.post<any>(this.url + 'api/QSave/ActionSaveDrawingLayout?versionId=' + versionId, model, { headers: { 'Content-Type': 'application/json' } })
+  return this.http.post<any>(this.url + 'api/QSave/ActionSaveAreaLayout?versionId=' + versionId, model, { headers: { 'Content-Type': 'application/json' } })
 }
 
 /******************Material Lists******************/

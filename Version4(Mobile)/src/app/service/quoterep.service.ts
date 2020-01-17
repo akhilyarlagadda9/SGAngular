@@ -30,15 +30,15 @@ export class QuoterepService {
       PartID: partId, AreaID: areaId, VersionID: verId, CoID: coId, CoSrNo: coSrno, Tax: matcent, ID: Number, IsChgFlag: 1, ParentID: Number,
       SaveFlag: 1, Isactive: 1, IsActive: 1, JobQty: Number, IsOptional: Number,
       EdgeProfileID: Number, EdgeProfile: Number, Description: 'Finished Edge', DiscAmt: 0, IsPrint: 1, IsChg: 0,
-      Inches: Number, LF: 0, UnitPrice: Number, Margin: Number, UnitCost: Number, Amount: Number,
+      Inches: Number, LF: 0, UnitPrice: 0, Margin: 0, UnitCost: 0, Amount: 0,Amt: 0
     }
     return edge;
   }
   AddCutoutItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number, loadId: number) {
     let cutout: any = {
       JobDes: '', JobQty: 1,
-      AreaID: 0, VersionID: 0, CoID: 0, CoSrNo: 0, ID: 0, IsChgFlag: 1, ParentID: 0, SaveFlag: 1, LF: 1, IsPrint: 1, SrNo: 0, ProductItemID: 0,
-      Unitprice: 0, IsOptional: 0, Tax: 0, Isactive: 1, CutOutTypeID: 0, DiscAmt: 0, IsChg: 0, IsDefault: 1, Amt: 0, ShapeID: 0, SIndex: 0,
+      AreaID:areaId, VersionID: verId,PartID:partId, CoID: 0, CoSrNo: 0, ID: 0, IsChgFlag: 1, ParentID: 0, SaveFlag: 1, LF: 1, IsPrint: 1, SrNo: 0, ProductItemID: 0,
+      Unitprice: 0, IsOptional: 0, Tax: 0, Isactive: 1, CutOutTypeID: loadId, DiscAmt: 0, IsChg: 0, IsDefault: 1, Amt: 0, ShapeID: 0, SIndex: 0,
     }
     return cutout;
   }
@@ -251,7 +251,8 @@ export class QuoterepService {
   //************************************** ITEM CALC *********************************************/
   calcitemamt(qty, price) {
     let amount: any; if (qty != 0 && price != 0) { amount = (qty * price); }
-    amount = this.roundToTwo(amount); return amount;
+    amount = this.roundToTwo(amount); 
+    return amount;
   }
   calcsqft(w: number, h: number) {
     let sqft = 0;
@@ -355,7 +356,7 @@ export class QuoterepService {
     }
   }
   roundToTwo(num: any) {
-    return Math.round(num * 1e2) / 1e2;
+    return Number(Math.round(num * 1e2) / 1e2);
   }
   roundSqft(sqft: number) {
     return Math.sqrt(sqft);

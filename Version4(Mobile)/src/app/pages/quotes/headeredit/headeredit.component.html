@@ -28,68 +28,65 @@
             <ion-input required type="text" [(ngModel)]="headerinfo.Zipcode" class="inputheight"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label position="floating" color="primary" class="labelfont margin-zero">Country</ion-label>
-            <ion-input required type="text" class="inputheight"></ion-input>
+            <ion-label position="floating" color="primary" class="labelfont margin-zero">Year Built</ion-label>
+            <ion-input required type="text" [(ngModel)]="headerinfo.YearBuilt" class="inputheight"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label position="floating" color="primary" class="labelfont margin-zero">Quote Number</ion-label>
-            <ion-input required type="text" class="inputheight"></ion-input>
+            <ion-input required type="text" [(ngModel)]="headerinfo.QuoteNo" class="inputheight"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label position="floating" color="primary" class="labelfont margin-zero">Quote Date</ion-label>
-            <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="headerinfo.Quote"></ion-datetime>
+            <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="headerinfo.QuoteDate"></ion-datetime>
         </ion-item>
         <ion-item>
             <ion-label position="floating" color="primary" class="labelfont margin-zero">Expiry Date</ion-label>
-            <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="headerinfo.month"></ion-datetime>
+            <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="headerinfo.Version.ExpiryDate"></ion-datetime>
         </ion-item>
         <ion-item>
             <ion-label class="labelfont margin-zero" position="floating" color="primary">Sales Rep</ion-label>
-            <ion-select [(ngModel)]="salesrep" class="labelfont">
-                <ion-select-option value="Stonegrid">Stonegrid</ion-select-option>
-                <ion-select-option value="Daniel Finn">Daniel Finn</ion-select-option>
-                <ion-select-option value="Chris Morris">Chris Morris</ion-select-option>
-                <ion-select-option value="Glenn Maxwell">Glenn Maxwell</ion-select-option>
+            <ion-select [(ngModel)]="headerinfo.SalesPerson" name="SalesPersonID" [selectedText]="headerinfo.SalesPerson">
+              <ion-select-option *ngFor="let p of salesPersonsList" [value]="p.ResourceName">{{p.ResourceName}}</ion-select-option>
             </ion-select>
-        </ion-item>
+         </ion-item>
         <ion-item>
             <ion-label class="labelfont margin-zero" position="floating" color="primary">Estimator</ion-label>
-            <ion-select [(ngModel)]="estimator" class="labelfont">
-                <ion-select-option value="Abyu Preez">Abyu Preez</ion-select-option>
-                <ion-select-option value="Tom Moores">Tom Moores</ion-select-option>
+            <ion-select [(ngModel)]="headerinfo.Estimator" name="EstimatorID" class="labelfont" [selectedText]="headerinfo.Estimator">
+              <ion-select-option [value]="0" selected>--Select One--</ion-select-option>
+              <ion-select-option *ngFor="let p of estimatorsList" [value]="p.ResourceName">{{p.ResourceName}}
+              </ion-select-option>
             </ion-select>
-        </ion-item>
+          </ion-item>
         <ion-item>
             <ion-label class="labelfont margin-zero" position="floating" color="primary">Project Manager</ion-label>
-            <ion-select [(ngModel)]="projectmanager" class="labelfont">
-                <ion-select-option value="David Miller">David Miller</ion-select-option>
-                <ion-select-option value="Michael Clark">Michael Clark</ion-select-option>
-                <ion-select-option value="Philp Salt">Philp Salt</ion-select-option>
+            <ion-select [(ngModel)]="headerinfo.ProjectManager" name="ProjectManagerID" class="labelfont" [selectedText]="headerinfo.ProjectManager">
+                <ion-select-option [value]="0" selected>--Select One--</ion-select-option>
+              <ion-select-option *ngFor="let p of projectManagersList" [value]="p.ResourceName">{{p.ResourceName}}
+              </ion-select-option>
             </ion-select>
-        </ion-item>
+          </ion-item>
         <ion-item>
             <ion-label class="labelfont margin-zero" position="floating" color="primary">Production Type</ion-label>
-            <ion-select [(ngModel)]="productiontype" multiple="true" class="labelfont">
-                <ion-select-option value="Hard Surface">Hard Surface</ion-select-option>
-                <ion-select-option value="Solid Surface">Solid Surface</ion-select-option>
+            <ion-select [(ngModel)]="headerinfo.JobType" name="JobTypeID" class="labelfont" [selectedText]="headerinfo.JobType">
+              <ion-select-option *ngFor="let p of productionTypeList" [value]="p.Name">{{p.Name}}
+              </ion-select-option>
             </ion-select>
-        </ion-item>
+          </ion-item>
         <ion-item>
-            <ion-label class="labelfont margin-zero" position="floating" color="primary">Price List</ion-label>
-            <ion-select [(ngModel)]="pricelsit" class="labelfont">
-                <ion-select-option value="Retail">Retail</ion-select-option>
-                <ion-select-option value="Commercial">Commercial</ion-select-option>
+            <ion-label class="labelfont margin-zero" position="floating" color="primary">Price List</ion-label>      
+            <ion-select [(ngModel)]="headerinfo.Version.PriceListID" name="PriceListID" #PriceListID="ngModel"  class="labelfont">
+              <ion-select-option *ngFor="let p of priceList" [value]="p.RefID">{{p.Name}}</ion-select-option>
             </ion-select>
-        </ion-item>
+          </ion-item>
         <ion-item class="borbottom">
             <ion-label position="floating" color="primary" class="margin-zero">Lat & Long</ion-label>
             <ion-row>
                 <ion-col size="6">
-                    <ion-input required type="text" class="inputheight border-right">
+                    <ion-input required type="text" class="inputheight border-right" [(ngModel)]="headerinfo.Lat">
                     </ion-input>
                 </ion-col>
                 <ion-col size="6">
-                    <ion-input required type="text" class="inputheight"></ion-input>
+                    <ion-input required type="text" class="inputheight" [(ngModel)]="headerinfo.Long"></ion-input>
                 </ion-col>
             </ion-row>
         </ion-item>
@@ -98,7 +95,7 @@
                 <ion-label color="primary" class="isfinanacesty">Is Financed</ion-label>
             </ion-col>
             <ion-col size="1">
-                <ion-checkbox color="dark" [(ngModel)]="headerinfo.Financed" checked="headerinfo.Financed ==1">
+                <ion-checkbox color="dark" [(ngModel)]="headerinfo.Version.Financed" checked="headerinfo.Version.Financed ==1">
                 </ion-checkbox>
             </ion-col>
         </ion-row>

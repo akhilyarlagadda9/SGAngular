@@ -31,6 +31,7 @@ export class AddpartComponent implements OnInit {
   }
 
   PreparePart() {
+    this.partinfo.Name ="";
     this.partinfo.PartMaterialList = []; this.partinfo.PartFabList = [];
     this.partinfo.EdgeList = []; this.partinfo.SplashList = []; this.partinfo.CutoutList = [];
     this.partinfo.LaborList = [];
@@ -109,21 +110,26 @@ export class AddpartComponent implements OnInit {
     this.ActionSetFabSqft(index);
   }
   ActionSetFabSqft(index) {
-    let sum: number = this.partinfo.PartFabList[index].MeasureList.reduce((sum, current) => sum + current.Sqft, 0);
-    this.partinfo.PartFabList[index].PartSqft = Number(sum);
+    console.log(this.partinfo.PartFabList[index]);
+    const sum = this.partinfo.PartFabList[index].MeasureList.reduce((sum, current) => Number(sum) + current.Sqft, 0);
+    this.partinfo.PartFabList[index].PartSqft = sum;
     this.partinfo.PartFabList[0].Sqft = this.quoterep.roundToTwo(this.partinfo.PartFabList[0].PartSqft + this.partinfo.PartFabList[0].SplashSqft);
     this.PopulateSqfts();
   }
+  ActionSetSplashSqft(splash) {
+    splash.Sqft = this.quoterep.calcsqft(splash.Width, splash.Height);
+    this.ActionChangeSplash();
+  }
   ActionChangeSplash() {
-    let sum: number = this.partinfo.SplashList.reduce((sum, current) => sum + current.Sqft, 0);
-    this.partinfo.PartFabList[0].SplashSqft = Number(sum);
-    this.partinfo.PartFabList[0].Sqft = this.quoterep.roundToTwo(this.partinfo.PartFabList[0].PartSqft + this.partinfo.PartFabList[0].SplashSqft);
+    const sum = this.partinfo.SplashList.reduce((sum, current) => Number(sum) + current.Sqft, 0);
+    this.partinfo.PartFabList[0].SplashSqft = sum;
+    this.partinfo.PartFabList[0].Sqft =this.partinfo.PartFabList[0].PartSqft + this.partinfo.PartFabList[0].SplashSqft;
     console.log(this.partinfo.PartFabList[0]);
     this.PopulateSqfts();
 
   }
   PopulateSqfts() {
-    const sum = this.partinfo.PartFabList.reduce((sum, current) => sum + current.Sqft, 0);
+    const sum = this.partinfo.PartFabList.reduce((sum, current) => Number(sum) + current.Sqft, 0);
     this.partinfo.PartFabList[0].Sqft = sum;
     this.partinfo.PartMaterialList[0].Sqft = sum;
     this.partinfo.LaborList[0].Qty = sum;
@@ -157,6 +163,7 @@ export class AddpartComponent implements OnInit {
     this.partinfo.PartFabList[index].MeasureList.push(size);
   }
   ActionSavePart() {
+    debugger;
     if (this.partinfo.VersionID > 0) {
       this.service.ActionSaveAreaLayout(this.partinfo.VersionID, this.partinfo).subscribe(data => {
         this.ActionCloseAddPart(true);

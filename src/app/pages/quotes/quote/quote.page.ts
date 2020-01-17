@@ -120,7 +120,7 @@ export class QuotePage implements OnInit {
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {
         if (detail.data.isSave == true) {
-          this.ActionQuoteEdit(detail.data.componentProps);
+          //this.ActionQuoteEdit(detail.data.componentProps);
           this.ActionQuoteList();
         }
       }

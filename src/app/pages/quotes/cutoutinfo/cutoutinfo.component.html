@@ -11,8 +11,8 @@
     </ion-toolbar>
     <ion-item>
       <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-      <ion-select [(ngModel)]="cutout.Type" name="TypeID" [selectedText]="cutout.Type" #nameField="ngModel" required>
-        <ion-select-option *ngFor="let cut of cutoutlist"> <span>{{cut.Description}}</span></ion-select-option>
+      <ion-select [(ngModel)]="cutout.TypeID" name="TypeID" (ngModelChange)="ActionPopulateCutout($event)"  #nameField="ngModel" required>
+        <ion-select-option *ngFor="let cut of cutoutlist" [value]="cut.ID"> <span>{{cut.Description}}</span></ion-select-option>
       </ion-select>
     </ion-item>
     <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">

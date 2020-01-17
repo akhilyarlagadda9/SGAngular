@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title class="titleheader">PART DETAILS</ion-title>
-    <ion-button slot="end" color="success" size="small">Save</ion-button>
+    <ion-button slot="end" color="success" size="small" (click)="ActionSavePart()">Save</ion-button>
     <ion-button slot="end" color="danger" size="small" (click)="ActionCloseAddPart()">X</ion-button>
   </ion-toolbar>
   <ion-toolbar>
@@ -11,11 +11,11 @@
         <div class="mar-top5"><span style="font-size:11px;">Material</span></div>
       </ion-col>
       <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(2)">
-        <img src="assets/img/sqft1.png" alt="your image" class="imghw">
+        <img src="assets/img/sqft1.jpg" alt="your image" class="imghw">
         <div class="mar-top5"><span style="font-size:11px;">Sqft</span></div>
       </ion-col>
       <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(3)">
-        <img src="assets/img/edges2.png" alt="your image" class="imghw">
+        <img src="assets/img/edges2.jpg" alt="your image" class="imghw">
         <div class="mar-top5"><span style="font-size:11px;">Spl/Edg</span></div>
       </ion-col>
       <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(4)">
@@ -208,11 +208,11 @@
     </ion-col>
 
     <ion-col *ngSwitchCase="2">
-      <ion-list *ngFor="let fab of partinfo.PartFabList;let i=index;">
+      <ion-list *ngFor="let fab of partinfo.PartFabList;let j=index;">
         <ion-row>
           <ion-col size="4" class="color-blue"><b>Fabrication:</b></ion-col>
           <ion-col size="3" class="roundborder borderall flex fontbold">
-            <ion-input type="text" [(ngModel)]="fab.PartSqft" class="text-center border-right color-green"
+            <ion-input type="text" [(ngModel)]="fab.Sqft" class="text-center border-right color-green"
               name="PartSqft"></ion-input>
             <span class="color-primary">SF</span>
           </ion-col>
@@ -233,12 +233,12 @@
           </ion-row>
           <ion-row class="bg-primary bdr-radius20">
             <ion-col size="5" class="fontbold labelfont2 flex mar-top5"><span class="color-white">W:&nbsp;</span>
-              <ion-input type="text" [(ngModel)]="size.Width" (change)="ActionSetSqft(size,0,i)"
+              <ion-input type="text" [(ngModel)]="size.Width" (change)="ActionSetSqft(size,0,j)"
                 class="roundborder borderall bg-white text-center"></ion-input>
             </ion-col>
             <ion-col size="1" class="fontbold labelfont2 color-white mar-top5">X</ion-col>
             <ion-col size="5" class="fontbold flex labelfont2 mar-top5"><span class="color-white">H:&nbsp; </span>
-              <ion-input type="text" [(ngModel)]="size.Height" (change)="ActionSetSqft(size,0,i)"
+              <ion-input type="text" [(ngModel)]="size.Height" (change)="ActionSetSqft(size,0,j)"
                 class="roundborder borderall bg-white text-center"></ion-input>
             </ion-col>
             <ion-col size="1" class="color-primary round bg-white text-center mar-top5" (click)="ActionDelete(i)">
@@ -246,7 +246,7 @@
           </ion-row>
         </div>
         <ion-row class="bdr-radius20 bdr-dashed mar-top20">
-          <ion-col size="12" class="text-center" (click)="ActionAddSize(i)">
+          <ion-col size="12" class="text-center" (click)="ActionAddSize(j)">
             <ion-icon name="add-circle" class="ion-float-left font-medium"></ion-icon>
             <ion-label><b>ADD ANOTHER ENTRY</b></ion-label>
           </ion-col>
@@ -279,13 +279,13 @@
           </ion-row>
           <ion-row class="bg-primary bdr-radius20">
             <ion-col size="5" class="fontbold labelfont2 flex mar-top5"><span class="color-white">W:&nbsp;</span>
-              <ion-input type="text" [(ngModel)]="splash.Width" class="roundborder borderall bg-white text-center"></ion-input>
+              <ion-input type="text" [(ngModel)]="splash.Width" class="roundborder borderall bg-white text-center"(change)="ActionSetSplashSqft(splash)" ></ion-input>
             </ion-col>
             <ion-col size="1" class="fontbold labelfont2 color-white mar-top5">X</ion-col>
             <ion-col size="5" class="fontbold flex labelfont2 mar-top5"><span class="color-white">H:&nbsp; </span>
-              <ion-input type="text" [(ngModel)]="splash.Height" class="roundborder borderall bg-white text-center"></ion-input>
+              <ion-input type="text" [(ngModel)]="splash.Height" class="roundborder borderall bg-white text-center" (change)="ActionSetSplashSqft(splash)"></ion-input>
             </ion-col>
-            <ion-col size="1" class="color-primary round bg-white text-center mar-top5" (click)="ActionDelete(i)">
+            <ion-col size="1" class="color-primary round bg-white text-center mar-top5" >
               <b>X</b></ion-col>
           </ion-row>        
         </ion-col>

@@ -31,7 +31,16 @@ export class CutoutinfoComponent implements OnInit {
     this.cutout.Amount = this.quoterep.calcitemamt(this.cutout.LF, this.cutout.Unitprice);
     this.cutout.Amt = this.cutout.Amount;
   }
-
+  ActionPopulateCutout(Id) {
+    let cutout = this.cutoutlist.find(s => s.ID == Id);
+    if (cutout != null && cutout != undefined) {
+      this.cutout = this.quoterep.SetCutout(this.cutout, cutout);
+     // this.partinfo.CutoutList[index] = this.quoterep.SetCutout(this.partinfo.CutoutList[index], cutout);
+    }
+  
+    
+   
+  }
 
 /*   get f() { return this.registerForm.controls; }  
 
@@ -48,6 +57,8 @@ export class CutoutinfoComponent implements OnInit {
 ActionSaveCutOut(form:NgForm){
   if (form.valid) {
   this.service.ActionSavePartCutout(this.cutout).subscribe(data => {
+    debugger;
+    console.log(data);
     this.cutoutlist = data.CutList.filter(x => x.PartID === this.cutout.PartID && x.TypeID == this.cutout.TypeID);
     this.ActionCloseCutout(true);
   })

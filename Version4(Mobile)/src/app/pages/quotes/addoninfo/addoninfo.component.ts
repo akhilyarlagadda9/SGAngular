@@ -14,6 +14,7 @@ import { QuoteService } from 'src/app/service/quote.service';
 export class AddoninfoComponent implements OnInit {
   other: any;
   otherlist: any;
+  priceListID: any;
 
   constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private navParams: NavParams, private quoterep: QuoterepService, private formBuilder: FormBuilder, private service: QuoteService) { }
 
@@ -36,7 +37,7 @@ export class AddoninfoComponent implements OnInit {
  //Search Function
   async ActionSearchSelect(ev: any, typeid, typeid2) {
     let obj = {
-      searchTypeId: typeid, producttypeId: typeid2, search: this.addoninfo.Des == undefined ? "" : this.addoninfo.Des
+      pricelistId: this.priceListID, searchTypeId: typeid, producttypeId: typeid2, search: this.addoninfo.Des == undefined ? "" : this.addoninfo.Des, info : this.other
     }
     const popover = await this.popoverCntrl.create({
       component: AdditionalitemserachComponent,

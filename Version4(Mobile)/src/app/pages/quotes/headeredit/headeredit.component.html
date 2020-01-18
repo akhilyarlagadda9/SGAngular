@@ -45,13 +45,13 @@
         </ion-item>
         <ion-item>
             <ion-label class="labelfont margin-zero" position="floating" color="primary">Sales Rep</ion-label>
-            <ion-select [(ngModel)]="headerinfo.SalesPerson" name="SalesPersonID" [selectedText]="headerinfo.SalesPerson">
+            <ion-select [(ngModel)]="headerinfo.SalesPerson" name="SalesPerson" [selectedText]="headerinfo.SalesPerson">
               <ion-select-option *ngFor="let p of salesPersonsList" [value]="p.ResourceName">{{p.ResourceName}}</ion-select-option>
             </ion-select>
          </ion-item>
         <ion-item>
             <ion-label class="labelfont margin-zero" position="floating" color="primary">Estimator</ion-label>
-            <ion-select [(ngModel)]="headerinfo.Estimator" name="EstimatorID" class="labelfont" [selectedText]="headerinfo.Estimator">
+            <ion-select [(ngModel)]="headerinfo.Estimator" name="Estimator" class="labelfont" [selectedText]="headerinfo.Estimator">
               <ion-select-option [value]="0" selected>--Select One--</ion-select-option>
               <ion-select-option *ngFor="let p of estimatorsList" [value]="p.ResourceName">{{p.ResourceName}}
               </ion-select-option>
@@ -59,7 +59,7 @@
           </ion-item>
         <ion-item>
             <ion-label class="labelfont margin-zero" position="floating" color="primary">Project Manager</ion-label>
-            <ion-select [(ngModel)]="headerinfo.ProjectManager" name="ProjectManagerID" class="labelfont" [selectedText]="headerinfo.ProjectManager">
+            <ion-select [(ngModel)]="headerinfo.ProjectManager" name="ProjectManager" class="labelfont" [selectedText]="headerinfo.ProjectManager">
                 <ion-select-option [value]="0" selected>--Select One--</ion-select-option>
               <ion-select-option *ngFor="let p of projectManagersList" [value]="p.ResourceName">{{p.ResourceName}}
               </ion-select-option>
@@ -67,7 +67,7 @@
           </ion-item>
         <ion-item>
             <ion-label class="labelfont margin-zero" position="floating" color="primary">Production Type</ion-label>
-            <ion-select [(ngModel)]="headerinfo.JobType" name="JobTypeID" class="labelfont" [selectedText]="headerinfo.JobType">
+            <ion-select [(ngModel)]="headerinfo.JobType" name="JobType" class="labelfont" [selectedText]="headerinfo.JobType">
               <ion-select-option *ngFor="let p of productionTypeList" [value]="p.Name">{{p.Name}}
               </ion-select-option>
             </ion-select>

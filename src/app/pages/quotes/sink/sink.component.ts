@@ -50,7 +50,7 @@ export class SinkComponent implements OnInit {
 
   async ActionSearchSelect(ev: any, typeid, typeid2) {
     let obj = {
-      pricelistId: this.priceListID, searchTypeId: typeid, producttypeId: typeid2, search: this.sinkinfo.Des == undefined ? "" : this.sinkinfo.Des
+      pricelistId: this.priceListID, searchTypeId: typeid, producttypeId: typeid2, search: this.sinkinfo.Des == undefined ? "" : this.sinkinfo.Des, info : this.sinkfaucet
     }
     const popover = await this.popoverCntrl.create({
       component: AdditionalitemserachComponent,

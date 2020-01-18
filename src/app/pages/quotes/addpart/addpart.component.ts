@@ -12,7 +12,7 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
   styleUrls: ['./addpart.component.scss'],
 })
 export class AddpartComponent implements OnInit {
-  partinfo: any; priceListID: any;
+  partinfo: any; priceListID: any;pricebook:any;
   coId: number; coSrNo: string; matPercent: any;
   MaterialList: any = []; CountertypeList: any = [];
   SplashList: any = []; EdgeList: any = []; CutoutList: any = [];
@@ -21,17 +21,14 @@ export class AddpartComponent implements OnInit {
     private service: QuoteService, private getservice: QuotegetService, private quoterep: QuoterepService) { }
 
   ngOnInit() {
-    console.log(this.partinfo); console.log(this.priceListID);
-    if (this.partinfo.ID == 0) {
-      this.PreparePart()
-    }
+    this.GetPriceListItems();
     this.GetMaterialList();
     this.GetCounterList();
-    this.GetPriceListItems();
+    
   }
 
   PreparePart() {
-    this.partinfo.Name ="";
+    this.partinfo.Name ="";this.partinfo.IsActive =1;this.partinfo.IsActive =1;
     this.partinfo.PartMaterialList = []; this.partinfo.PartFabList = [];
     this.partinfo.EdgeList = []; this.partinfo.SplashList = []; this.partinfo.CutoutList = [];
     this.partinfo.LaborList = [];
@@ -42,6 +39,7 @@ export class AddpartComponent implements OnInit {
     let fab = this.quoterep.AddFabricationItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent);
     let sizes = this.quoterep.AddMeasurementItem();
     fab.MeasureList.push(sizes);
+    this.GetCostFromRiskLevels(fab,0);
     this.partinfo.PartFabList.push(fab);
     //Splash
     this.ActionAddSplash();
@@ -49,13 +47,29 @@ export class AddpartComponent implements OnInit {
     this.ActionAddEdge();
     //cutout
     this.ActionAddCutOut();
-    //Template And install
+    //Template 
     let template = this.quoterep.AddLaborItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent, 1, "Template");
     template.Description = "Template";
+    this.GetCostFromRiskLevels(template,1);
+    this.partinfo.LaborList.push(template);
+    //Install
     let install = this.quoterep.AddLaborItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent, 1, "Install");
     install.Description = "Install";
-    this.partinfo.LaborList.push(template); this.partinfo.LaborList.push(install);
+    this.GetCostFromRiskLevels(install,2);
+    this.partinfo.LaborList.push(install);
   }
+
+GetCostFromRiskLevels(model,typeId){
+ let obj = this.quoterep.getdefaultrisklevelprice1(this.pricebook,typeId);
+ model.UnitCost = obj.cost > 0 ? obj.cost : model.UnitCost;
+ model.Margin = obj.margin > 0 ? obj.margin : model.Margin;
+ if(typeId == 0){
+  model.LaborUnitPrice = obj.price > 0 ? obj.price : model.LaborUnitPrice;
+ }else{
+  model.UnitPrice = obj.price > 0 ? obj.price : model.UnitPrice;
+ }
+}
+
   GetMaterialList() {
     let result = this.service.ActionGetMaterialList(this.partinfo.VersionID).subscribe(data => {
       this.MaterialList = data;
@@ -74,7 +88,23 @@ export class AddpartComponent implements OnInit {
       this.CutoutList = data[2];
       console.log(data);
     })
+    this.FabricationRiskLevels();
   }
+  FabricationRiskLevels(){
+    let result = this.service.FabricationRiskLevels(this.priceListID).subscribe(data => {
+      if (data != undefined) {
+          this.pricebook  = data;
+        //this.getservice.getdefaultrisklevelprice1(data);
+      }
+      if (this.partinfo.ID == 0) {
+        this.PreparePart()
+      }
+    })
+  }
+  
+
+
+
   ActionPopulateMaterial(Id, index) {
     let material = this.MaterialList.find(s => s.ID == Id);
     if (material != null && material != undefined) {
@@ -110,10 +140,8 @@ export class AddpartComponent implements OnInit {
     this.ActionSetFabSqft(index);
   }
   ActionSetFabSqft(index) {
-    console.log(this.partinfo.PartFabList[index]);
     const sum = this.partinfo.PartFabList[index].MeasureList.reduce((sum, current) => Number(sum) + current.Sqft, 0);
     this.partinfo.PartFabList[index].PartSqft = sum;
-    this.partinfo.PartFabList[0].Sqft = this.quoterep.roundToTwo(this.partinfo.PartFabList[0].PartSqft + this.partinfo.PartFabList[0].SplashSqft);
     this.PopulateSqfts();
   }
   ActionSetSplashSqft(splash) {
@@ -123,18 +151,30 @@ export class AddpartComponent implements OnInit {
   ActionChangeSplash() {
     const sum = this.partinfo.SplashList.reduce((sum, current) => Number(sum) + current.Sqft, 0);
     this.partinfo.PartFabList[0].SplashSqft = sum;
-    this.partinfo.PartFabList[0].Sqft =this.partinfo.PartFabList[0].PartSqft + this.partinfo.PartFabList[0].SplashSqft;
-    console.log(this.partinfo.PartFabList[0]);
+    //this.partinfo.PartFabList[0].Sqft =this.partinfo.PartFabList[0].PartSqft + this.partinfo.PartFabList[0].SplashSqft;
+   // console.log(this.partinfo.PartFabList[0]);
     this.PopulateSqfts();
 
   }
   PopulateSqfts() {
-    const sum = this.partinfo.PartFabList.reduce((sum, current) => Number(sum) + current.Sqft, 0);
-    this.partinfo.PartFabList[0].Sqft = sum;
-    this.partinfo.PartMaterialList[0].Sqft = sum;
-    this.partinfo.LaborList[0].Qty = sum;
-    this.partinfo.LaborList[1].Qty = sum;
+    // Fab
+    this.partinfo.PartFabList[0].Sqft = Number(this.partinfo.PartFabList[0].PartSqft) + Number(this.partinfo.PartFabList[0].SplashSqft);
+    this.ActionSetAmount("Fab",this.partinfo.PartFabList[0]);
+    let sqft = this.partinfo.PartFabList[0].Sqft;
+    // Material
+    this.partinfo.PartMaterialList[0].Sqft = sqft;
+    this.partinfo.PartMaterialList[0].Qty =  sqft
+    this.ActionSetAmount("matfab",this.partinfo.PartMaterialList[0]);
+    //Template
+    this.partinfo.LaborList[0].Qty = sqft;
+    this.ActionSetAmount("labor",this.partinfo.LaborList[0]);
+    //Install
+    this.partinfo.LaborList[1].Qty = sqft;
+    this.ActionSetAmount("labor",this.partinfo.LaborList[1]);
   }
+
+
+
   ActionCloseAddPart(issave) {
     let text = {Name:this.partinfo.Name,ID:this.partinfo.ID}
     //let text = isbool == true ? this.partinfo.Name : "";
@@ -162,8 +202,30 @@ export class AddpartComponent implements OnInit {
     let size = this.quoterep.AddMeasurementItem();
     this.partinfo.PartFabList[index].MeasureList.push(size);
   }
+  ActionSetMargin(typeId:number,model:any,type:string){
+    model = this.quoterep.margincalculations(typeId,model,type);
+    this.ActionSetAmount(type,model);
+    
+  }
+  ActionSetAmount(type,model){
+    switch (type) {
+      case "Fab": case "matfab":
+        model.Amount = this.quoterep.calcitemamt(model.Sqft,model.LaborUnitPrice);
+        break;
+      case "labor": 
+        model.Amount = this.quoterep.calcitemamt(model.Qty,model.UnitPrice);
+        break;
+      case "cutout":
+        model.Amount = this.quoterep.calcitemamt(model.LF,model.Unitprice);
+        model.Amt = model.Amount;
+        break;
+      case "edge":
+        model.Amount = this.quoterep.calcitemamt(model.LF,model.UnitPrice);
+        model.Amt = model.Amount;
+        break;
+    }
+   }
   ActionSavePart() {
-    debugger;
     if (this.partinfo.VersionID > 0) {
       this.service.ActionSaveAreaLayout(this.partinfo.VersionID, this.partinfo).subscribe(data => {
         this.ActionCloseAddPart(true);

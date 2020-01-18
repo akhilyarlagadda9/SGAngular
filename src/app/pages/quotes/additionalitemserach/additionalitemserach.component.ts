@@ -31,10 +31,19 @@ export class AdditionalitemserachComponent implements OnInit {
   }
 
 
-  ActionSelectItem(Id:any){
+  ActionSelectItem(Id:any){debugger;
     let info = this.listItems.find(s => s.ID == Id);
     if (info != null && info != undefined) {
-      this.info = this.quoterep.SetTile(this.info, info);
+      if(this.searchobj.producttypeId == 8){
+        this.info = this.quoterep.Setsink(this.info, info);
+      }
+      else if(this.searchobj.producttypeId == 9){
+        this.info = this.quoterep.SetFaucet(this.info, info);
+      }
+      else{
+        this.info = this.quoterep.SetTile(this.info, info);
+      }
+      
      // this.partinfo.CutoutList[index] = this.quoterep.SetCutout(this.partinfo.CutoutList[index], cutout);
     }
     this.ActionToClosePop(true)

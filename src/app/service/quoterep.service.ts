@@ -13,14 +13,20 @@ export class QuoterepService {
   }
 
   //**************************************ADD ITEMS*********************************************/
-
+  SetInitMaterial(versionId){
+    let material = {
+      ID: 0, VersionID: versionId, CoID: 0, PriceByID: 0, FinishID: 0, DepthID: 0, UserID: 0, Tax: 0, ProductItemID: 0, ProSubGroupID: 0, DepthTypeID: 0, FinishTypeID: 0, SlabTypeID: 0, SupplierID: 0,Mstep:1,
+      Color: '', Finish: '', Depth: '', SlabType: '', ProSubGroup: '', TaxVal: 0, Cost: 0, CostDiscount: 0, UnitCost: 0, UnitPrice: 0, Margin: 0, Sqft: 0, DeliveryFee: 0, SupplierName: '', SlabList: [], SearchChkFlag: 1,
+      WF:'',RiskLevelID : 0, RiskLevel :'', RiskLevels: "",
+  }; return material;
+  }
   AddPartMatItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number) {
     let partmat: any = {
       PartID: partId, AreaID: areaId, VersionID: verId, CoID: coId, CoSrNo: coSrno, Tax: matcent, ID: Number, IsChgFlag: 1, ParentID: Number,
       SaveFlag: 1, Isactive: 1, IsActive: 1, JobQty: Number, IsOptional: Number, MaterialID: Number,
-      PriceByID: Number, SelfPriceBy: Number, Margin: Number, Sqft: 0, Qty: 0,
+      PriceByID: Number, SelfPriceBy: Number, Margin: 0, Sqft: 0, Qty: 0,
       WF: 0, DiscAmt: 0, IsPrint: 1, IsChg: 0, LaborTaxVal: Number,
-      LaborUnitCost: 0, LaborMargin: 0, LaborUnitPrice: 0, Amount: 0,
+      LaborUnitCost: 0, LaborMargin: 0, LaborUnitPrice: 0, Amount: 0, Amt: 0, UnitPrice: 0,UnitCost: 0,
 
     }
     return partmat;

@@ -102,7 +102,10 @@ ActionSaveAreaLayout(versionId,item: any): Observable<any> {
   var model = JSON.stringify(item);
   return this.http.post<any>(this.url + 'api/QSave/ActionSaveAreaLayout?versionId=' + versionId, model, { headers: { 'Content-Type': 'application/json' } })
 }
-
+ActionSaveMaterial(areaId,item: any): Observable<any> {
+  var model = JSON.stringify(item);
+  return this.http.post<any>(this.url + 'api/QSave/ActionSaveMaterial?areaId=' + areaId, model, { headers: { 'Content-Type': 'application/json' } })
+}
 /******************Material Lists******************/
 ActionGetMaterialList(verId:number):Observable<any>{
   return this.http.get<any>(this.url + 'api/QEdit/ActionVersionMaterialList?versionID=' + verId) 

@@ -243,4 +243,25 @@ ActionSearchMaterials(search:any, typeId:any,pricelistIds:any, depthId:any, fini
   return this.http.get<any>(this.url +  'api/QuoteAdmin/ActionPriceGroupList?pricebookID=' + pricelistId)
  }
 
+
+/**************SUPPLIERS LIST,INVENTORY DICS LIST *******************/
+ ActionGetSupplierList(typeId):Observable<any>{
+  return this.http.get<any>(this.url + 'api/accPayble/AccSupplierList?typeId=' + typeId) 
+}
+ActionInventoryDicLists(typeid:any):Observable<any> {
+  let typeIdList = [typeid];
+  return this.http.get<any>(this.url + 'api/admin/InventoryDicLists?typeIdList=' + typeIdList)
+}
+
+ActionGetsubproductgrouplist(typeid:any):Observable<any> {
+  return this.http.get<any>(this.url + 'api/product/productSubGroupList?typeID=' + typeid + '&groupId=0') 
+}
+
+
+
+
+
+
+
+
 }

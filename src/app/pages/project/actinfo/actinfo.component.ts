@@ -20,7 +20,6 @@ export class ActinfoComponent implements OnInit {
   constructor(public Modalcntrl: ModalController, private navParams: NavParams, private schService: SchedulingService, private datePipe: DatePipe) { }
 
   ngOnInit() {
-    console.log(this.obj);
     this.ActionActivityInfo();
   }
 
@@ -52,22 +51,24 @@ export class ActinfoComponent implements OnInit {
   }
 
   //Close Function
-  ActionCloseActivityEdit() {
+  ActionClose(issave) {
     this.Modalcntrl.dismiss({
-      'dismissed': true
+      'dismissed': true,
+      componentProps: this.actInfo,
+      issave: issave
     });
   }
 
-  //Edit Activity Function
-  async ActionEditActivity() {
-    let copyobj = JSON.parse(JSON.stringify(this.actInfo));
-    const modal = await this.Modalcntrl.create({
-      component: AddactivityComponent,
-      componentProps: copyobj
-    });
-    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+  // //Edit Activity Function
+  // async ActionEditActivity() {
+  //   let copyobj = JSON.parse(JSON.stringify(this.actInfo));
+  //   const modal = await this.Modalcntrl.create({
+  //     component: AddactivityComponent,
+  //     componentProps: copyobj
+  //   });
+  //   modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       
-    });
-    return await modal.present();
-  }
+  //   });
+  //   return await modal.present();
+  // }
 }

@@ -254,7 +254,7 @@ ion-icon{
     font-size: 10px;
 }
 .margin-top {
-    margin-top: 54px !important;
+    margin-top: 54px;
 }
 .testClass{
     color:black;
@@ -458,13 +458,33 @@ ion-icon{
 }
 
 .marg-check {
-    margin-top: 21px;
+    margin-top: 25px;
 }
 
 .acc-pop {
     border:1px solid lightgray;
     border-radius: 10px;
   }
+
+.pad2 {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.progbar-mat {
+    margin-top: 27px;
+    margin-left: 22px;
+    margin-right: -10px;
+}
+
+.pad-fix {
+    padding-top: 44px
+}
+
+.check-font {
+    font-size: 18px;
+}
+
   .imghw {
     width:30px;
     height:30px;

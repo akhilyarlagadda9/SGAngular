@@ -172,13 +172,15 @@
           <ion-icon name="list" class="font-medium"></ion-icon><b>Material Details:</b>
         </ion-col>
       </ion-row>
-      <ion-row *ngFor="let mat of partinfo.PartMaterialList;let i = index">
+      <div *ngFor="let mat of partinfo.PartMaterialList;let i = index">
+      <ion-row>
         <ion-col class="lablewid" size="1" class="color-primary"><b>M:</b></ion-col>
-        <ion-col size="8" class="labelfont">
+        <ion-col size="7" class="labelfont">
           <ion-select [(ngModel)]="mat.MaterialID" name="MaterialID" (ngModelChange)="ActionPopulateMaterial($event,i)" interface="popover" class="border-btm labelfont2 color-blue">
             <ion-select-option *ngFor="let material of MaterialList" [value]="material.ID">{{material.StoneType}} - {{material.Color}} - {{material.Depth}} - {{material.Finish}}</ion-select-option>
-          </ion-select>
+          </ion-select>         
         </ion-col>
+        <ion-col size="1"> <ion-icon name="add" (click)="ActionAddMaterial(0, 'QuotePart')"></ion-icon></ion-col>
         <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
           <ion-input type="text"  [(ngModel)]="mat.Sqft"  readonly="readonly" class="text-center border-right color-primary" name="Sqft">
           </ion-input>
@@ -189,22 +191,23 @@
         <ion-row>
           <ion-col size="3">
            <div class="color-primary"><b>Cost($)</b></div>
-           <div><ion-input type="text" class="labelfont border-btm" [(ngModel)]="mat.UnitCost" name="UnitCost" (change)="ActionSetMargin(1,mat,'mat')"></ion-input></div>
+           <div><ion-input type="text" class="labelfont border-btm" [(ngModel)]="mat.UnitCost" name="UnitCost" (change)="ActionSetMargin(1,mat,'matfab')"></ion-input></div>
           </ion-col>
           <ion-col size="3">
             <div class="color-primary"><b>M(%)</b></div>
-            <div><ion-input type="text" class="labelfont border-btm" [(ngModel)]="mat.Margin" name="Margin" (change)="ActionSetMargin(2,mat,'mat')"></ion-input></div>
+            <div><ion-input type="text" class="labelfont border-btm" [(ngModel)]="mat.Margin" name="Margin" (change)="ActionSetMargin(2,mat,'matfab')"></ion-input></div>
           </ion-col>
           <ion-col size="3">
             <div class="color-primary"><b>Price($)</b></div>
-            <div><ion-input type="text" class="labelfont border-btm" [(ngModel)]="mat.UnitPrice" name="UnitPrice" (change)="ActionSetMargin(3,mat,'mat')"></ion-input></div>
+            <div><ion-input type="text" class="labelfont border-btm" [(ngModel)]="mat.LaborUnitPrice" name="LaborUnitPrice" (change)="ActionSetMargin(3,mat,'matfab')"></ion-input></div>
           </ion-col>
           <ion-col size="3">
             <div class="color-primary"><b>Amt($)</b></div>
-            <div> <ion-input type="text" class="labelfont border-btm" [(ngModel)]="mat.Amt" name="Amount" readonly="readonly"></ion-input></div>
+            <div> <ion-input type="text" class="labelfont border-btm"  [(ngModel)]="mat.Amt" name="Amt" readonly="readonly"></ion-input></div>
           </ion-col>
          </ion-row>
       </ion-row>
+    </div>
     </ion-col>
 
     <ion-col *ngSwitchCase="2">
@@ -257,7 +260,8 @@
     <ion-col *ngSwitchCase="3">
       <ion-row>
         <ion-col class="lablewid" size="12" class="color-primary">
-          <ion-icon name="list" class="font-medium"></ion-icon><b>Splash/Edge:</b>
+          <ion-icon name="list" class="font-medium"></ion-icon><b>Splash:</b>&nbsp;
+          <ion-icon name="add-circle" class="font-medium"></ion-icon>
         </ion-col>
       </ion-row>
       <ion-list>
@@ -290,7 +294,12 @@
           </ion-row>        
         </ion-col>
       </ion-list>
+   
       <ion-list>
+        <ion-col class="lablewid" size="12" class="color-primary">
+          <ion-icon name="list" class="font-medium"></ion-icon><b>Edge:</b>&nbsp;
+          <ion-icon name="add-circle" class="font-medium"></ion-icon>
+        </ion-col>
         <ion-col *ngFor="let edge of partinfo.EdgeList;let i = index">
         <ion-row>
           <ion-col size="1" class="color-green"><b>E:</b></ion-col>

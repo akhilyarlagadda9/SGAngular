@@ -5,14 +5,14 @@ import { QuotegetService } from 'src/app/service/quoteget.service';
 import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
 import { prepareEventListenerParameters } from '@angular/compiler/src/render3/view/template';
 import { QuoterepService } from 'src/app/service/quoterep.service';
-
+import { OverlayEventDetail } from '@ionic/core';
 @Component({
   selector: 'app-addpart',
   templateUrl: './addpart.component.html',
   styleUrls: ['./addpart.component.scss'],
 })
 export class AddpartComponent implements OnInit {
-  partinfo: any; priceListID: any;pricebook:any;
+  partinfo: any; priceListID: any; pricebook: any;
   coId: number; coSrNo: string; matPercent: any;
   MaterialList: any = []; CountertypeList: any = [];
   SplashList: any = []; EdgeList: any = []; CutoutList: any = [];
@@ -24,11 +24,11 @@ export class AddpartComponent implements OnInit {
     this.GetPriceListItems();
     this.GetMaterialList();
     this.GetCounterList();
-    
+
   }
 
   PreparePart() {
-    this.partinfo.Name ="";this.partinfo.IsActive =1;this.partinfo.IsActive =1;
+    this.partinfo.Name = ""; this.partinfo.IsActive = 1; this.partinfo.IsActive = 1;
     this.partinfo.PartMaterialList = []; this.partinfo.PartFabList = [];
     this.partinfo.EdgeList = []; this.partinfo.SplashList = []; this.partinfo.CutoutList = [];
     this.partinfo.LaborList = [];
@@ -39,7 +39,7 @@ export class AddpartComponent implements OnInit {
     let fab = this.quoterep.AddFabricationItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent);
     let sizes = this.quoterep.AddMeasurementItem();
     fab.MeasureList.push(sizes);
-    this.GetCostFromRiskLevels(fab,0);
+    this.GetCostFromRiskLevels(fab, 0);
     this.partinfo.PartFabList.push(fab);
     //Splash
     this.ActionAddSplash();
@@ -50,25 +50,25 @@ export class AddpartComponent implements OnInit {
     //Template 
     let template = this.quoterep.AddLaborItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent, 1, "Template");
     template.Description = "Template";
-    this.GetCostFromRiskLevels(template,1);
+    this.GetCostFromRiskLevels(template, 1);
     this.partinfo.LaborList.push(template);
     //Install
     let install = this.quoterep.AddLaborItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent, 1, "Install");
     install.Description = "Install";
-    this.GetCostFromRiskLevels(install,2);
+    this.GetCostFromRiskLevels(install, 2);
     this.partinfo.LaborList.push(install);
   }
 
-GetCostFromRiskLevels(model,typeId){
- let obj = this.quoterep.getdefaultrisklevelprice1(this.pricebook,typeId);
- model.UnitCost = obj.cost > 0 ? obj.cost : model.UnitCost;
- model.Margin = obj.margin > 0 ? obj.margin : model.Margin;
- if(typeId == 0){
-  model.LaborUnitPrice = obj.price > 0 ? obj.price : model.LaborUnitPrice;
- }else{
-  model.UnitPrice = obj.price > 0 ? obj.price : model.UnitPrice;
- }
-}
+  GetCostFromRiskLevels(model, typeId) {
+    let obj = this.quoterep.getdefaultrisklevelprice1(this.pricebook, typeId);
+    model.UnitCost = obj.cost > 0 ? obj.cost : model.UnitCost;
+    model.Margin = obj.margin > 0 ? obj.margin : model.Margin;
+    if (typeId == 0) {
+      model.LaborUnitPrice = obj.price > 0 ? obj.price : model.LaborUnitPrice;
+    } else {
+      model.UnitPrice = obj.price > 0 ? obj.price : model.UnitPrice;
+    }
+  }
 
   GetMaterialList() {
     let result = this.service.ActionGetMaterialList(this.partinfo.VersionID).subscribe(data => {
@@ -90,10 +90,10 @@ GetCostFromRiskLevels(model,typeId){
     })
     this.FabricationRiskLevels();
   }
-  FabricationRiskLevels(){
+  FabricationRiskLevels() {
     let result = this.service.FabricationRiskLevels(this.priceListID).subscribe(data => {
       if (data != undefined) {
-          this.pricebook  = data;
+        this.pricebook = data;
         //this.getservice.getdefaultrisklevelprice1(data);
       }
       if (this.partinfo.ID == 0) {
@@ -101,7 +101,7 @@ GetCostFromRiskLevels(model,typeId){
       }
     })
   }
-  
+
 
 
 
@@ -152,36 +152,36 @@ GetCostFromRiskLevels(model,typeId){
     const sum = this.partinfo.SplashList.reduce((sum, current) => Number(sum) + current.Sqft, 0);
     this.partinfo.PartFabList[0].SplashSqft = sum;
     //this.partinfo.PartFabList[0].Sqft =this.partinfo.PartFabList[0].PartSqft + this.partinfo.PartFabList[0].SplashSqft;
-   // console.log(this.partinfo.PartFabList[0]);
+    // console.log(this.partinfo.PartFabList[0]);
     this.PopulateSqfts();
 
   }
   PopulateSqfts() {
     // Fab
     this.partinfo.PartFabList[0].Sqft = Number(this.partinfo.PartFabList[0].PartSqft) + Number(this.partinfo.PartFabList[0].SplashSqft);
-    this.ActionSetAmount("Fab",this.partinfo.PartFabList[0]);
+    this.ActionSetAmount("Fab", this.partinfo.PartFabList[0]);
     let sqft = this.partinfo.PartFabList[0].Sqft;
     // Material
     this.partinfo.PartMaterialList[0].Sqft = sqft;
-    this.partinfo.PartMaterialList[0].Qty =  sqft
-    this.ActionSetAmount("matfab",this.partinfo.PartMaterialList[0]);
+    this.partinfo.PartMaterialList[0].Qty = sqft
+    this.ActionSetAmount("matfab", this.partinfo.PartMaterialList[0]);
     //Template
     this.partinfo.LaborList[0].Qty = sqft;
-    this.ActionSetAmount("labor",this.partinfo.LaborList[0]);
+    this.ActionSetAmount("labor", this.partinfo.LaborList[0]);
     //Install
     this.partinfo.LaborList[1].Qty = sqft;
-    this.ActionSetAmount("labor",this.partinfo.LaborList[1]);
+    this.ActionSetAmount("labor", this.partinfo.LaborList[1]);
   }
 
 
 
   ActionCloseAddPart(issave) {
-    let text = {Name:this.partinfo.Name,ID:this.partinfo.ID}
+    let text = { Name: this.partinfo.Name, ID: this.partinfo.ID }
     //let text = isbool == true ? this.partinfo.Name : "";
     this.Modalcntrl.dismiss({
       'dismissed': true,
       componentProps: text,
-      issave:issave
+      issave: issave
     });
   }
 
@@ -202,29 +202,29 @@ GetCostFromRiskLevels(model,typeId){
     let size = this.quoterep.AddMeasurementItem();
     this.partinfo.PartFabList[index].MeasureList.push(size);
   }
-  ActionSetMargin(typeId:number,model:any,type:string){
-    model = this.quoterep.margincalculations(typeId,model,type);
-    this.ActionSetAmount(type,model);
-    
+  ActionSetMargin(typeId: number, model: any, type: string) {
+    model = this.quoterep.margincalculations(typeId, model, type);
+    this.ActionSetAmount(type, model);
+
   }
-  ActionSetAmount(type,model){
+  ActionSetAmount(type, model) {
     switch (type) {
       case "Fab": case "matfab":
-        model.Amount = this.quoterep.calcitemamt(model.Sqft,model.LaborUnitPrice);
+        model.Amount = this.quoterep.calcitemamt(model.Sqft, model.LaborUnitPrice);
         break;
-      case "labor": 
-        model.Amount = this.quoterep.calcitemamt(model.Qty,model.UnitPrice);
+      case "labor":
+        model.Amount = this.quoterep.calcitemamt(model.Qty, model.UnitPrice);
         break;
       case "cutout":
-        model.Amount = this.quoterep.calcitemamt(model.LF,model.Unitprice);
+        model.Amount = this.quoterep.calcitemamt(model.LF, model.Unitprice);
         model.Amt = model.Amount;
         break;
       case "edge":
-        model.Amount = this.quoterep.calcitemamt(model.LF,model.UnitPrice);
+        model.Amount = this.quoterep.calcitemamt(model.LF, model.UnitPrice);
         model.Amt = model.Amount;
         break;
     }
-   }
+  }
   ActionSavePart() {
     if (this.partinfo.VersionID > 0) {
       this.service.ActionSaveAreaLayout(this.partinfo.VersionID, this.partinfo).subscribe(data => {
@@ -248,13 +248,20 @@ GetCostFromRiskLevels(model,typeId){
   // }
 
 
-  async ActionAddMaterial() {
+
+  async ActionAddMaterial(materialId: any, source: string) {
+    let sel = { VersionId: this.partinfo.VersionID,AreaId:this.partinfo.AreaID,materialId:0 }
     const modal = await this.Modalcntrl.create({
-      component: AddmatComponent
+      component: AddmatComponent,
+      componentProps: sel
+    });
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail.data.issave == true) {
+        this.GetMaterialList();
+      }
     });
     return await modal.present();
   }
-
 
 
   /********************ADD PART EDIT FUNCTIONS ************************/

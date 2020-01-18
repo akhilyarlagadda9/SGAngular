@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, PopoverController, NavParams,AlertController } from '@ionic/angular';
+import { ModalController, PopoverController, NavParams, AlertController } from '@ionic/angular';
 import { SchedulingService } from 'src/app/service/scheduling.service';
 import { OverlayEventDetail } from '@ionic/core';
-import { DatePipe,formatDate } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-addactivity',
@@ -12,29 +12,30 @@ import { NgForm } from '@angular/forms';
 })
 export class AddactivityComponent implements OnInit {
 
-  actinfo: any = this.navParams.data; ApproveList: any; serObj: any; 
-  ActTypeList: any; statusList: any; phaseList: any;ResourceList: any[];PhasePartList: any;ResourceListWithDates: any[];
-  eventCopy :any;
+  actinfo: any = this.navParams.data; ApproveList: any; serObj: any;
+  ActTypeList: any; statusList: any; phaseList: any; ResourceList: any[]; PhasePartList: any; ResourceListWithDates: any[];
+  eventCopy: any;
   IsResource: boolean;
   constructor(public Modalcntrl: ModalController, private schService: SchedulingService,
-  public popoverCntrl: PopoverController, private navParams: NavParams, 
-  private datePipe: DatePipe,private alertCtrl:AlertController) { }
+    public popoverCntrl: PopoverController, private navParams: NavParams,
+    private datePipe: DatePipe, private alertCtrl: AlertController) { }
 
   ngOnInit() {
     if (this.actinfo.ID == 0) {
       this.ActionActivityInfo();
-    }else{
+    } else {
       this.statusList = this.actinfo.StatusList;
-      
+
     }
     this.ActionActivityTypeList();
-   
+
     if (this.actinfo.VersionID > 0) {
       this.ActionPhaseist();
     }
     if (this.actinfo.PhaseID > 0) {
       this.ActionPhasePartList();
     }
+    console.log(this.actinfo);
   }
   ActionActivityInfo() {
     let start = this.datePipe.transform(this.actinfo.SchStartTime, "MM-dd-yyyy");
@@ -45,7 +46,7 @@ export class AddactivityComponent implements OnInit {
         this.actinfo.PrevEndDate = data.SchEndTime;
         this.statusList = data.StatusList;
         this.PopulateActualDate();
-      
+
       },
       error => console.log(error));
   }
@@ -67,7 +68,7 @@ export class AddactivityComponent implements OnInit {
   ActionPhaseist() {
     this.schService.PhaseList(this.actinfo.VersionID).subscribe(
       data => {
-        this.phaseList = data; 
+        this.phaseList = data;
       });
   }
   ActionChangePhase() {
@@ -84,7 +85,7 @@ export class AddactivityComponent implements OnInit {
   ActionPhasePartList() {
     this.actinfo.ActPartIds = this.actinfo.ActPartIds == undefined ? null : this.actinfo.ActPartIds;
     this.actinfo.Area = this.actinfo.Area == undefined ? null : this.actinfo.Area;
-    this.schService.ActionPhasePartList(this.actinfo.VersionID, this.actinfo.PhaseID,this.actinfo.ActTypeID,this.actinfo.ActPartIds,this.actinfo.Area).subscribe(
+    this.schService.ActionPhasePartList(this.actinfo.VersionID, this.actinfo.PhaseID, this.actinfo.ActTypeID, this.actinfo.ActPartIds, this.actinfo.Area).subscribe(
       data => { this.PhasePartList = data; }
     );
   }
@@ -92,20 +93,20 @@ export class AddactivityComponent implements OnInit {
   //Activitytype List Function
   ActionActivityTypeList() {
     this.schService.ActivityTypeList(4).subscribe(
-      data => { 
+      data => {
         this.ActTypeList = data;
         this.GetResoucreList();
         this.ActionGetSelectedActivityType();
-       }
+      }
     );
   }
-  ActionGetSelectedActivityType() {debugger;
+  ActionGetSelectedActivityType() {
     let actinfo = this.ActTypeList.find(s => s.ID == this.actinfo.ActTypeID);
     if (actinfo != null) {
-      this.actinfo.ActTypeID = actinfo.Name;
+      this.actinfo.ActivityType = actinfo.Name;
     }
   }
-  ActionGetStatusResourceList(Id) {debugger;
+  ActionGetStatusResourceList(Id) {
     let sdate = this.datePipe.transform(this.actinfo.SchStartTime, "MM-dd-yyyy");
     this.schService.GetActTypeInfo(Id, sdate).subscribe(data => {
       this.PreapareActivity(data);
@@ -150,88 +151,87 @@ export class AddactivityComponent implements OnInit {
     });
     return await popover.present();
   }
-  ActionChangeDate(selctedDate,typeId,type){
-    let obj:any;
+  ActionChangeDate(selctedDate, typeId, type) {
+    let obj: any;
     let start = this.datePipe.transform(selctedDate, "MM-dd-yyyy");
-    let today = this.datePipe.transform( new Date(), "MM-dd-yyyy");
+    let today = this.datePipe.transform(new Date(), "MM-dd-yyyy");
     if (new Date(start) < new Date(today) || this.actinfo.StatusID == 5) {
       var alertMsg = this.actinfo.StatusID == 5 ? "Activity is Completed" : "Past Date(s)";
-     obj = {
-        Header:"Activity Schedule!",
-        ChangedDateType:type,
-        ShowCalFollowUp:1,
-        HolidayName:"PastDate",
-        Message:alertMsg + "Schedule Change is not allowed",
-        SubAlert:"Do you want to continue?",
-        ClickType:1,Type:type,StartDate:selctedDate,TypeID:typeId
+      obj = {
+        Header: "Activity Schedule!",
+        ChangedDateType: type,
+        ShowCalFollowUp: 1,
+        HolidayName: "PastDate",
+        Message: alertMsg + "Schedule Change is not allowed",
+        SubAlert: "Do you want to continue?",
+        ClickType: 1, Type: type, StartDate: selctedDate, TypeID: typeId
       }
       this.ShowConfirmAlert(obj);
-  } 
-else{
-  this.GetDuration(typeId);
-}
+    }
+    else {
+      this.GetDuration(typeId);
+    }
 
   }
-  ActionSaveActivity(form: NgForm){
+  ActionSaveActivity(form: NgForm) {
     if (form.valid) {
       if (this.actinfo.IsDateChange == true || this.actinfo.ID == 0) {
 
-this.schService.FollowUpStatus(this.actinfo).subscribe(data=>{
-  var follow = data;let obj :any;
-  // Sunaday and Company Holiday
-  if ((follow.SeletedDayOfWeek != null && follow.SeletedDayOfWeek != "") || follow.IsCompanyHoliday == "True") { // For Sunday
-    var alertMsg = follow.IsCompanyHoliday == "True" ? "Company holiday (" + follow.HolidayName + ") " : follow.SeletedDayOfWeek
-    obj = {
-      IsExistSunday:1,
-      ShowCalFollowUp:0,
-      Header:"Activity Schedule!",
-      ChangedDateType:"",
-      HolidayName:"PastDate",
-      Message:alertMsg + "Schedule Change is not allowed",
-      SubAlert:"Do you want to continue?",
-      ClickType:2,
-    }
-    this.ShowConfirmAlert(obj);
-}
-// For Resource and Company Events
-else if (follow.IsUserHoliday == "True") { 
-  var alertMsg1 = follow.IsCompanyHoliday == "True" ? "Company holiday" : "Resource";
-  obj = {
-    IsExistSunday:1,
-    ShowCalFollowUp:0,
-    Header:"Activity Schedule!",
-    ChangedDateType:"",
-    HolidayName:"",
-    Message:follow.HolidayName + " (OFF) Schedule Change is not allowed",
-  }
-  this.ShowAlert(obj);
-}
-//Duplicate Activites Timings
-else if (this.actinfo.ID == 0 && follow.DuplicateActs != null && follow.DuplicateActs != "") {
-  obj = {
-    IsExistSunday:1,
-    ShowCalFollowUp:0,
-    Header:"Resource Schedule!",
-    ChangedDateType:"",
-    HolidayName:"",
-    Message:follow.DuplicateActs + "Scheduled with same Resource same Time",
-    SubAlert:"Do you want to continue?",
-    ClickType:2,
-  }
-  this.ShowConfirmAlert(obj);
-}
-else {
-  this.ConfirmSaveActInfo();
-}
-})
-    } else {
+        this.schService.FollowUpStatus(this.actinfo).subscribe(data => {
+          var follow = data; let obj: any;
+          // Sunaday and Company Holiday
+          if ((follow.SeletedDayOfWeek != null && follow.SeletedDayOfWeek != "") || follow.IsCompanyHoliday == "True") { // For Sunday
+            var alertMsg = follow.IsCompanyHoliday == "True" ? "Company holiday (" + follow.HolidayName + ") " : follow.SeletedDayOfWeek
+            obj = {
+              IsExistSunday: 1,
+              ShowCalFollowUp: 0,
+              Header: "Activity Schedule!",
+              ChangedDateType: "",
+              HolidayName: "PastDate",
+              Message: alertMsg + "Schedule Change is not allowed",
+              SubAlert: "Do you want to continue?",
+              ClickType: 2,
+            }
+            this.ShowConfirmAlert(obj);
+          }
+          // For Resource and Company Events
+          else if (follow.IsUserHoliday == "True") {
+            var alertMsg1 = follow.IsCompanyHoliday == "True" ? "Company holiday" : "Resource";
+            obj = {
+              IsExistSunday: 1,
+              ShowCalFollowUp: 0,
+              Header: "Activity Schedule!",
+              ChangedDateType: "",
+              HolidayName: "",
+              Message: follow.HolidayName + " (OFF) Schedule Change is not allowed",
+            }
+            this.ShowAlert(obj);
+          }
+          //Duplicate Activites Timings
+          else if (this.actinfo.ID == 0 && follow.DuplicateActs != null && follow.DuplicateActs != "") {
+            obj = {
+              IsExistSunday: 1,
+              ShowCalFollowUp: 0,
+              Header: "Resource Schedule!",
+              ChangedDateType: "",
+              HolidayName: "",
+              Message: follow.DuplicateActs + "Scheduled with same Resource same Time",
+              SubAlert: "Do you want to continue?",
+              ClickType: 2,
+            }
+            this.ShowConfirmAlert(obj);
+          }
+          else {
+            this.ConfirmSaveActInfo();
+          }
+        })
+      } else {
         this.ConfirmSaveActInfo();
-    }
-     
+      }
+
     }
   }
   PopulateVersionInfo(version: any) {
-    debugger;
     this.actinfo.JobName = version.Header.QuoteName;
     this.actinfo.QuoteNo = version.Header.QuoteNo;
     this.actinfo.VersionID = version.ID;
@@ -254,16 +254,16 @@ else {
     this.GetJobAddress(version.Header);
     this.ActionPhaseist();
   }
-GetJobAddress(header){
-  this.actinfo.JobName = header.QuoteName;
-  this.actinfo.QuoteNo = header.QuoteNo;
-  header.Address1 = header.Address1 == null || header.Address1 == "" ? "" : header.Address1 + ",";
-  header.City = header.City == null || header.City == "" ? "" : header.City + ",";
-  header.State = header.State == null || header.State == "" ? "" : header.State;
-  header.Zipcode = header.Zipcode == null ? "" : header.Zipcode;
-  var zipcodeComma = header.Zipcode != "" && (header.State != "" || header.City != "") ? " - " : "";
-  this.actinfo.JobFullAddres = header.Address1 + header.City + header.State + zipcodeComma + header.Zipcode;
-}
+  GetJobAddress(header) {
+    this.actinfo.JobName = header.QuoteName;
+    this.actinfo.QuoteNo = header.QuoteNo;
+    header.Address1 = header.Address1 == null || header.Address1 == "" ? "" : header.Address1 + ",";
+    header.City = header.City == null || header.City == "" ? "" : header.City + ",";
+    header.State = header.State == null || header.State == "" ? "" : header.State;
+    header.Zipcode = header.Zipcode == null ? "" : header.Zipcode;
+    var zipcodeComma = header.Zipcode != "" && (header.State != "" || header.City != "") ? " - " : "";
+    this.actinfo.JobFullAddres = header.Address1 + header.City + header.State + zipcodeComma + header.Zipcode;
+  }
   PreapareActivity(result) {
     // ActType Info
     this.actinfo.ActTypeID = result.ActTypeID;
@@ -309,18 +309,18 @@ GetJobAddress(header){
       subHeader: event.Message,
       message: event.SubAlert,
       buttons: [{
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'danger',
-          handler: (blah) => {
-            this.ConfirmCancel(event);
-          }
-        }, {
-          text: 'Allow',
-          handler: () => {
-            this.ConfirmSuccess(event);
-          }
-        }]
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'danger',
+        handler: (blah) => {
+          this.ConfirmCancel(event);
+        }
+      }, {
+        text: 'Allow',
+        handler: () => {
+          this.ConfirmSuccess(event);
+        }
+      }]
     });
     alert.present();
   }
@@ -328,23 +328,23 @@ GetJobAddress(header){
     const alert = await this.alertCtrl.create({
       header: event.Header,
       subHeader: event.Message,
-     // message: event.SubAlert,
+      // message: event.SubAlert,
       buttons: [{
-          text: 'OK',
-          role: 'OK',
-          handler: (blah) => {
-          }
-        }]
+        text: 'OK',
+        role: 'OK',
+        handler: (blah) => {
+        }
+      }]
     });
     alert.present();
   }
-  
-  ConfirmCancel(event){
+
+  ConfirmCancel(event) {
     switch (event.ClickType) {
       case 1: {
-        if(event.Type == "sDate"){
+        if (event.Type == "sDate") {
           this.actinfo.SchStartTime = this.actinfo.PrevStartDate;
-        }else{
+        } else {
           this.actinfo.SchEndTime = this.actinfo.PrevEndDate;
         }
         break;
@@ -362,44 +362,44 @@ GetJobAddress(header){
         break;
       }
     }
-}
-ConfirmSaveActInfo(){
-  let id = this.actinfo.ID;
-  this.schService.ActionSaveActivityInfo(this.actinfo).subscribe(data=>{
-    this.actinfo = data;
-    this.actinfo.ExtID = id;
-    this.eventCopy = this.actinfo;
-this.ActionCloseActivity(true);
-  })
-}
+  }
+  ConfirmSaveActInfo() {
+    let id = this.actinfo.ID;
+    this.schService.ActionSaveActivityInfo(this.actinfo).subscribe(data => {
+      this.actinfo = data;
+      this.actinfo.ExtID = id;
+      this.eventCopy = this.actinfo;
+      this.ActionCloseActivity(true);
+    })
+  }
 
-GetDuration(type){
- var hrs = this.actinfo.Hrs;
- var mins = this.actinfo.Mins;
-let sDate = this.actinfo.SchStartTime;
-let edate = this.actinfo.SchEndTime;
-  this.schService.GetDuration(hrs,mins,sDate,edate,type).subscribe(results=>{
-    if (type == 1) {
-      this.actinfo.Hrs = results[0];
-      this.actinfo.Mins = results[1];
-    }
-  else {
-    let eDate = results[0] + " " +results[1];
-    this.actinfo.SchEndTime = eDate;
-   }
-   this.actinfo.PrevStartDate = this.actinfo.SchStartTime;
-   this.actinfo.PrevEndDate = this.actinfo.SchEndTime;
-  this.actinfo.Duration = Number(this.actinfo.Hrs * 60) + Number(this.actinfo.Mins);
-  })
-}
-//Resources function
-ActionopenResourcePopup() {
-  this.IsResource = true;
-}
-//Resources Close Function
-ActionCloseResourcePopup() {
-  this.IsResource = false;
-}
+  GetDuration(type) {
+    var hrs = this.actinfo.Hrs;
+    var mins = this.actinfo.Mins;
+    let sDate = this.actinfo.SchStartTime;
+    let edate = this.actinfo.SchEndTime;
+    this.schService.GetDuration(hrs, mins, sDate, edate, type).subscribe(results => {
+      if (type == 1) {
+        this.actinfo.Hrs = results[0];
+        this.actinfo.Mins = results[1];
+      }
+      else {
+        let eDate = results[0] + " " + results[1];
+        this.actinfo.SchEndTime = eDate;
+      }
+      this.actinfo.PrevStartDate = this.actinfo.SchStartTime;
+      this.actinfo.PrevEndDate = this.actinfo.SchEndTime;
+      this.actinfo.Duration = Number(this.actinfo.Hrs * 60) + Number(this.actinfo.Mins);
+    })
+  }
+  //Resources function
+  ActionopenResourcePopup() {
+    this.IsResource = true;
+  }
+  //Resources Close Function
+  ActionCloseResourcePopup() {
+    this.IsResource = false;
+  }
 
 
 }

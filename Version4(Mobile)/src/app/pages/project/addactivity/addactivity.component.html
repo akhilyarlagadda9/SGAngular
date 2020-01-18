@@ -40,7 +40,7 @@
     </div>
     <ion-item>
       <ion-label position="floating" color="primary" class="margin-zero">Activity Type:</ion-label>
-      <ion-select [(ngModel)]="actinfo.ActTypeID" name="ActTypeID"  [selectedText]="actinfo.ActTypeID" #nameField="ngModel"
+      <ion-select [(ngModel)]="actinfo.ActTypeID" name="ActTypeID"  [selectedText]="actinfo.ActivityType" #nameField="ngModel"
         (ngModelChange)="ActionGetStatusResourceList(actinfo.ActTypeID)" required>
         <ion-select-option *ngFor="let c of ActTypeList" [value]="c.ID">{{c.Name}}</ion-select-option>
       </ion-select>
@@ -146,7 +146,7 @@
       <ion-col size="2"><b>Email</b></ion-col>
       <ion-col size="2"><b>Text</b></ion-col>
     </ion-row>
-    <ion-row *ngFor="let resource of ResourceList" class="paddleft5">
+    <ion-row *ngFor="let resource of actinfo.ResourceList" class="paddleft5">
       <ion-col size="8"> {{resource.ResourceName}}
         <div> <small>{{resource.EmpMail}}</small></div>
       </ion-col>

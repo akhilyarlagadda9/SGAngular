@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AddmatComponent } from './addmat/addmat.component';
 import { NgForm } from '@angular/forms';
-import { debug } from 'util';
 
 @Component({
   selector: 'app-materialinfo',
@@ -15,6 +14,7 @@ export class MaterialinfoComponent implements OnInit {
   partinfo: any;
   material: any;
   Version:any;
+  areaInfo: any;
   constructor(public Modalcntrl: ModalController) { }
 
   ngOnInit() {
@@ -31,7 +31,7 @@ export class MaterialinfoComponent implements OnInit {
 
   /***** MATERIAL DETAILS *****/
   async ActionCreateAddMaterial(selName:string, ViewType:string) {
-    let sel= {selName:selName, material:this.material,partinfo: this.partinfo, ViewType:ViewType, Version:this.Version}
+    let sel= {selName:selName, material:this.material,partinfo: this.partinfo,areaInfo : this.areaInfo, ViewType:ViewType, Version:this.Version}
     const modal = await this.Modalcntrl.create({
       component: AddmatComponent,
       componentProps: sel

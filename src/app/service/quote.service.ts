@@ -111,16 +111,7 @@ ActionGetCountertypeList():Observable<any>{
   let typeIdList = []; typeIdList.push(5);
   return this.http.get<any>(this.url + 'api/QuoteAdmin/QuoteDictionaryLists?typeIdList=' + typeIdList,) 
 }
-
-// Material stock info function
-ActionGetProductInfo(productId:any, locId:any, search:any, finishId:any, depthId:any, prosubgroupId:any):Observable<any>{
-  return this.http.get<any>(this.url + 'api/inventory/ActionGetProductInfo?productId=' + productId + "&locId=" + locId + "&search=" + search + "&finishId=" + finishId + "&depthId=" + depthId + '&prosubgroupId=' + prosubgroupId) 
+FabricationRiskLevels(pricelistId):Observable<any>{
+  return this.http.get<any>(this.url + 'api/QuoteAdmin/FabricationRiskLevels?pricelistId=' + pricelistId) 
 }
-//Maretial stock info slab list function
-ActionInventoryDicLists(typeid:any):Observable<any> {
-  let typeIdList = [typeid];
-  return this.http.get<any>(this.url + 'api/admin/InventoryDicLists?typeIdList=' + typeIdList) 
-}
-
-
 }

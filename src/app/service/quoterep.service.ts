@@ -18,9 +18,9 @@ export class QuoterepService {
     let partmat: any = {
       PartID: partId, AreaID: areaId, VersionID: verId, CoID: coId, CoSrNo: coSrno, Tax: matcent, ID: Number, IsChgFlag: 1, ParentID: Number,
       SaveFlag: 1, Isactive: 1, IsActive: 1, JobQty: Number, IsOptional: Number, MaterialID: Number,
-      PriceByID: Number, SelfPriceBy: Number, Margin: Number, Sqft: 0, Qty: Number,
-      WF: Number, DiscAmt: 0, IsPrint: 1, IsChg: 0, LaborTaxVal: Number,
-      LaborUnitCost: Number, LaborMargin: Number, LaborUnitPrice: Number, Amount: Number,
+      PriceByID: Number, SelfPriceBy: Number, Margin: Number, Sqft: 0, Qty: 0,
+      WF: 0, DiscAmt: 0, IsPrint: 1, IsChg: 0, LaborTaxVal: Number,
+      LaborUnitCost: 0, LaborMargin: 0, LaborUnitPrice: 0, Amount: 0,
 
     }
     return partmat;
@@ -91,7 +91,7 @@ export class QuoterepService {
   AddFabricationItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number, ) {
     let fab: any = {
       AreaID: areaId, PartID: partId, VersionID: verId, CoID: coId, CoSrNo: coSrno, ID: 0, Tax: matcent, IsChgFlag: 1, ParentID: 0, SaveFlag: 1, IsActive: 1, Margin: 0, CopyQty: 0,
-      IsOptional: 0, DiscAmt: 0, PartSqft: 0, WF: 0, MaterialID: 0, MeasureList: [], IsChg: 0, Isactive: 1, LaborUnitPrice: 0, UnitCost: 0,
+      IsOptional: 0, DiscAmt: 0, PartSqft: 0, WF: 0, MaterialID: 0, MeasureList: [], IsChg: 0, Isactive: 1, LaborUnitPrice: 0, UnitCost: 0,Amount:0,
       SplashSqft: 0, IsPrint: 1, JobQty: 0, JobSplashSf: 0, Description: 'Standard Fabrication'
     };
     return fab;
@@ -149,7 +149,7 @@ export class QuoterepService {
     return edgetype;
   }
   Setsplash(splashtype, selsplashtype) {
-    splashtype.Splash = selsplashtype.Description; splashtype.JobDes = selsplashtype.Description;
+    splashtype.Splash = selsplashtype.Description; 
     splashtype.SplashID = selsplashtype.ID;
     //if (splashtype.ID == 0) {
     splashtype.Height = selsplashtype.Height;
@@ -247,11 +247,42 @@ export class QuoterepService {
     custitem.Show = 0;
     return custitem;
   }
-
-
+  getdefaultrisklevelprice1(pricebook, typeid) {
+    let obj = { cost: 0, margin: 0, price: 0 };
+    if (pricebook != undefined && pricebook != null) {
+      let risklevels = pricebook.RisklevelValues;
+        if (typeof (risklevels) == 'string') { risklevels = JSON.parse(pricebook.RisklevelValues); }
+        let RiskLevelID = pricebook.IsDefaultRiskLevel == 3 ? 79 : pricebook.IsDefaultRiskLevel == 2 ? 78 : 77;
+        if (risklevels != null && risklevels != "null" && risklevels != "") {
+            if (RiskLevelID == 77) {//low           
+                this.setfabdefaultLowcost(obj, risklevels, typeid);
+            } else if (RiskLevelID == 78) {//medium
+              this.setfabdefaultMedcost(obj, risklevels, typeid);
+            } else if (RiskLevelID == 79) {//high
+              this.setfabdefaultHighcost(obj, risklevels, typeid);
+            }
+        }
+    }
+    return obj;
+}
+ setfabdefaultLowcost(obj, risklevels, typeid) {
+  obj.cost = typeid == 0 ? risklevels.LowFabCost : typeid == 1 ? risklevels.LowTempCost : risklevels.LowInstallCost;
+  obj.margin = typeid == 0 ? risklevels.LowFabMargin : typeid == 1 ? risklevels.LowTempMargin : risklevels.LowInstallMargin;
+  obj.price = typeid == 0 ? this.roundToTwo(risklevels.LowFabPrice) : typeid == 1 ? this.roundToTwo(risklevels.LowTempPrice) : this.roundToTwo(risklevels.LowInstallPrice);
+}
+ setfabdefaultMedcost(obj, risklevels, typeid) {
+  obj.cost = typeid == 0 ? risklevels.MedFabCost : typeid == 1 ? risklevels.MedTempCost : risklevels.MedInstallCost;
+  obj.margin = typeid == 0 ? risklevels.MedFabMargin : typeid == 1 ? risklevels.MedTempMargin : risklevels.MedInstallMargin;
+  obj.price = typeid == 0 ? this.roundToTwo(risklevels.MedFabPrice) : typeid == 1 ? this.roundToTwo(risklevels.MedTempPrice) : this.roundToTwo(risklevels.MedInstallPrice);
+}
+ setfabdefaultHighcost(obj, risklevels, typeid) {
+  obj.cost = typeid == 0 ? risklevels.HighFabCost : typeid == 1 ? risklevels.HighTempCost : risklevels.HighInstallCost;
+  obj.margin = typeid == 0 ? risklevels.HighFabMargin : typeid == 1 ? risklevels.HighTempMargin : risklevels.HighInstallMargin;
+  obj.price = typeid == 0 ? this.roundToTwo(risklevels.HighFabPrice) : typeid == 1 ? this.roundToTwo(risklevels.HighTempPrice) : this.roundToTwo(risklevels.HighInstallPrice);
+}
   //************************************** ITEM CALC *********************************************/
   calcitemamt(qty, price) {
-    let amount: any; if (qty != 0 && price != 0) { amount = (qty * price); }
+    let amount: number = 0; if (qty != 0 && price != 0) { amount = (qty * price); }
     amount = this.roundToTwo(amount); 
     return amount;
   }

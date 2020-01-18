@@ -380,336 +380,274 @@
   </form>
 </ion-content> -->
 
-
 <!-- <ion-item class="marleft">
           <ion-checkbox class="marleft4"></ion-checkbox>
           <ion-label>tax</ion-label>
       </ion-item> -->
 
 
-<!-- <ion-content>
-        <form name="form" (ngSubmit)="ActionSubmit()" #f="ngForm">
-          <ion-toolbar class="poss">
-            <ion-title class="titleheader" color="primary">MATERIAL DETAILS</ion-title>
-            <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
-            <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
-          </ion-toolbar>
-          <ion-row class="pad-fix">
-            <ion-col size="1" *ngIf="Progress == 1 || Progress == 2 || Progress == 0"><ion-fab-button color="primary" (click)="changeProgress(0)">1</ion-fab-button></ion-col>
-            <ion-col size="3" class="progbar-mat" *ngIf="Progress == 0"><ion-progress-bar></ion-progress-bar></ion-col>
-            <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 2"><ion-progress-bar value="1"></ion-progress-bar></ion-col>
-            <ion-col size="1" *ngIf="Progress == 2 || Progress == 1" ><ion-fab-button color="primary" (click)="changeProgress(1)">2</ion-fab-button></ion-col>
-            <ion-col size="1" *ngIf="Progress == 0"><ion-fab-button color="light" (click)="changeProgress(1)">2</ion-fab-button></ion-col>
-            <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 0"><ion-progress-bar></ion-progress-bar></ion-col>
-            <ion-col size="3" class="progbar-mat" *ngIf="Progress == 2"><ion-progress-bar value="1"></ion-progress-bar></ion-col>
-            <ion-col size="1" *ngIf="Progress == 3 || Progress == 2"><ion-fab-button color="primary"  (click)="changeProgress(2)">3</ion-fab-button></ion-col>
-            <ion-col size="1"  *ngIf="Progress == 0 || Progress == 1"><ion-fab-button color="light" (click)="changeProgress(2)">3</ion-fab-button></ion-col>
+<ion-content>
+  <form (ngSubmit)="ActionSaveMaterial(f)" #f="ngForm">
+    <ion-toolbar class="poss">
+      <ion-title class="titleheader" color="primary">MATERIAL DETAILS</ion-title>
+      <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose(false)">X</ion-button>
+    </ion-toolbar>
+    <ion-row class="pad-fix">
+      <ion-col size="1" *ngIf="Progress == 1 || Progress == 2 || Progress == 0">
+        <ion-fab-button color="primary" (click)="changeProgress(0)">1</ion-fab-button>
+      </ion-col>
+      <ion-col size="3" class="progbar-mat" *ngIf="Progress == 0">
+        <ion-progress-bar></ion-progress-bar>
+      </ion-col>
+      <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 2">
+        <ion-progress-bar value="1"></ion-progress-bar>
+      </ion-col>
+      <ion-col size="1" *ngIf="Progress == 2 || Progress == 1">
+        <ion-fab-button color="primary" (click)="changeProgress(1)">2</ion-fab-button>
+      </ion-col>
+      <ion-col size="1" *ngIf="Progress == 0">
+        <ion-fab-button color="light" (click)="changeProgress(1)">2</ion-fab-button>
+      </ion-col>
+      <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 0">
+        <ion-progress-bar></ion-progress-bar>
+      </ion-col>
+      <ion-col size="3" class="progbar-mat" *ngIf="Progress == 2">
+        <ion-progress-bar value="1"></ion-progress-bar>
+      </ion-col>
+      <ion-col size="1" *ngIf="Progress == 3 || Progress == 2">
+        <ion-fab-button color="primary" (click)="changeProgress(2)">3</ion-fab-button>
+      </ion-col>
+      <ion-col size="1" *ngIf="Progress == 0 || Progress == 1">
+        <ion-fab-button color="light" (click)="changeProgress(2)">3</ion-fab-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-col *ngIf="Progress == 0">
+      <ion-item>
+        <ion-label class="labelfont2" position="floating" color="primary">Material*</ion-label>
+        <ion-input type="text" class="labelfont2" [(ngModel)]="material.Color" name="Color" #Color="ngModel"></ion-input>
+        <ion-icon slot="end" name="search" class="mar-top20" (click)="ActionSearchSelect()"></ion-icon>
+      </ion-item>
+      <div *ngIf="f.submitted && material.invalid" class="invalid-feedback padd-Left">
+        <div *ngIf="material.errors.required" class="error">Material Name is required</div>
+      </div>
+      <ion-row>
+        <ion-col size="4">
+          <ion-item>
+            <ion-label class="labelfont2" position="floating" color="primary">Product</ion-label>
+            <ion-input type="text" class="labelfont2" name="Vendor" value="Natural"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-item>
+            <ion-label class="labelfont2" position="floating" color="primary">Sub.Group</ion-label>
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.StoneType" name="StoneType"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-item>
+            <ion-label class="labelfont2" position="floating" color="primary">Type</ion-label>
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.SlabType" name="SlabType"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4">
+          <ion-item>
+            <ion-label position="floating" color="primary">Thickness</ion-label>
+            <ion-select [(ngModel)]="material.DepthID" name="DepthID" interface="popover" class="border-btm labelfont2 color-blue">
+              <ion-select-option *ngFor="let item of thicknessItems" [value]="item.ID">{{item.Name}}</ion-select-option>
+            </ion-select>   
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-item> 
+            <ion-label position="floating" color="primary">Finish</ion-label>
+            <ion-select [(ngModel)]="material.FinishID" name="FinishID" interface="popover" class="border-btm labelfont2 color-blue">
+              <ion-select-option *ngFor="let item of finishItems" [value]="item.ID">{{item.Name}}</ion-select-option>
+            </ion-select>   
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-item>
+            <ion-label class="labelfont2" position="floating" color="primary">Vendor</ion-label>
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.SupplierName" name="SupplierName"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4">
+          <ion-item>
+            <ion-label>Price by:</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="8">
+          <ion-row>
+            <ion-item>
+              <ion-radio value="biff"></ion-radio>
+              <ion-label>Sqft</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="biff"></ion-radio>
+              <ion-label>Slab</ion-label>
+            </ion-item>
           </ion-row>
-
-          <ion-col *ngIf="Progress == 0">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary">Material*</ion-label>
-              <ion-input type="text" class="labelfont2" [(ngModel)]="material.MaterialName" name="material"></ion-input>
-              <ion-icon slot="end" name="search" class="mar-top20" (click)="ActionSearchSelect()"></ion-icon>
-            </ion-item>
-            <div *ngIf="f.submitted && material.invalid" class="invalid-feedback padd-Left">
-              <div *ngIf="material.errors.required" class="error">Material Name is required</div>
-            </div>
-            <ion-row>
-              <ion-col size="4">
-                <ion-item>
-                  <ion-label class="labelfont2" position="floating" color="primary">Product</ion-label>
-                  <ion-input type="text" class="labelfont2" name="Vendor" value="Natural"></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col size="4">
-                <ion-item>
-                  <ion-label class="labelfont2" position="floating" color="primary">Sub.Group</ion-label>
-                  <ion-input type="text" class="labelfont2" name="Vendor" value="Granite"></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col size="4">
-                <ion-item>
-                  <ion-label class="labelfont2" position="floating" color="primary">Type</ion-label>
-                  <ion-input type="text" class="labelfont2" name="Vendor" value="Slab"></ion-input>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="4">
-                <ion-item>
-                  <ion-label position="floating" color="primary">Thickness</ion-label>
-                  <ion-select [(ngModel)]="Thickness" class="labelfont2">
-                    <ion-select-option value="25">1 CM</ion-select-option>
-                    <ion-select-option value="5059">1.2 CM</ion-select-option>
-                    <ion-select-option value="116">1.3 CM</ion-select-option>
-                    <ion-select-option value="5145">12mm</ion-select-option>
-                    <ion-select-option value="28">2 CM</ion-select-option>
-                    <ion-select-option value="24" selected="true">3 CM</ion-select-option>
-                    <ion-select-option value="29">4 CM</ion-select-option>
-                    <ion-select-option value="30">5 CM</ion-select-option>
-                    <ion-select-option value="5146">5mm</ion-select-option>
-                    <ion-select-option value="31">6 CM</ion-select-option>
-                    <ion-select-option value="5147">6mm</ion-select-option>
-                    <ion-select-option value="123">8 CM</ion-select-option>
-                  </ion-select>
-                </ion-item>
-              </ion-col>
-              <ion-col size="4">
-                <ion-item>
-                  <ion-label position="floating" color="primary">Finish</ion-label>
-                  <ion-select [(ngModel)]="Finish" class="labelfont2">
-                    <ion-select-option value="119">Antiqued</ion-select-option>
-                    <ion-select-option value="125">Brushed</ion-select-option>
-                    <ion-select-option value="5089">Caress</ion-select-option>
-                    <ion-select-option value="114">Concrete</ion-select-option>
-                    <ion-select-option value="5144">Flamed</ion-select-option>
-                    <ion-select-option value="34">Honed</ion-select-option>
-                    <ion-select-option value="5085">Honed/Leathered</ion-select-option>
-                    <ion-select-option value="115">Leathered</ion-select-option>
-                    <ion-select-option value="5057">Matte</ion-select-option>
-                    <ion-select-option value="5084">Natural Cleft</ion-select-option>
-                    <ion-select-option value="23" selected="true">Polished</ion-select-option>
-                    <ion-select-option value="5086">Polished/Antiqued</ion-select-option>
-                    <ion-select-option value="5087">Polished/Honed</ion-select-option>
-                    <ion-select-option value="5143">Polished/Leathered</ion-select-option>
-                    <ion-select-option value="5150">Rough</ion-select-option>
-                    <ion-select-option value="5122">Rugged</ion-select-option>
-                    <ion-select-option value="5055">Satin</ion-select-option>
-                    <ion-select-option value="5056">Suede</ion-select-option>
-                    <ion-select-option value="5073">Textured</ion-select-option>
-                    <ion-select-option value="5088">Thermal</ion-select-option>
-                    <ion-select-option value="5058">Velvet</ion-select-option>
-                  </ion-select>
-                </ion-item>
-              </ion-col>
-              <ion-col size="4">
-                <ion-item>
-                  <ion-label class="labelfont2" position="floating" color="primary">Vendor</ion-label>
-                  <ion-input type="text" class="labelfont2" name="Vendor" value="MSI"></ion-input>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="4">
-                <ion-item>
-                  <ion-label>Price by:</ion-label>
-                </ion-item>
-              </ion-col>
-              <ion-col size="6">
-                <ion-row>
-                  <ion-item>
-                    <ion-radio value="biff"></ion-radio>
-                    <ion-label>Sqft</ion-label>
-                  </ion-item>
-                  <ion-item>
-                    <ion-radio value="biff"></ion-radio>
-                    <ion-label>Slab</ion-label>
-                  </ion-item>
-                </ion-row>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="2">
-                <ion-item>
-                  <ion-label class="labelfont2" position="floating" color="primary">Cost</ion-label>
-                  <ion-input type="text" class="labelfont2" [(ngModel)]="material.Cost" 
-                  (change)="ActionSetDisc(material)"></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col size="2">
-                <ion-item>
-                  <ion-label class="labelfont2" position="floating" color="primary">D(%)</ion-label>
-                  <ion-input type="text" class="labelfont2" [(ngModel)]="material.CostDiscount" 
-                  (change)="ActionSetDisc(material)"></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col size="3">
-                <ion-item>
-                  <ion-label class="labelfont2" position="floating" color="primary">Cost</ion-label>
-                  <ion-input type="text" class="labelfont2" [(ngModel)]="material.UnitCost" name="UnitCost"
-                  (change)="ActionSetMargin(1,material,'mat')"></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col size="2">
-                <ion-item>
-                  <ion-label class="labelfont2" position="floating" color="primary">M(%)</ion-label>
-                  <ion-input type="text" class="labelfont2" [(ngModel)]="material.Margin" name="Margin"
-                  (change)="ActionSetMargin(2,material,'mat')"></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col size="2">
-                <ion-item>
-                  <ion-label class="labelfont2" position="floating" color="primary">Price</ion-label>
-                  <ion-input type="text" class="labelfont2" [(ngModel)]="material.Amount" name="Amount">$</ion-input>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-            <ion-footer>
-              <ion-row>
-                <ion-col size="12">
-                  <ion-button size="small" style="float: right;" color="primary" (click)="changeProgress(1)">Next</ion-button>
-                </ion-col>
-              </ion-row>
-            </ion-footer>
-          </ion-col>
-          <ion-col *ngIf="Progress == 1">
-            <ion-row>
-              <ion-col size="5">
-                <ion-item>
-                  <ion-label>Description</ion-label>
-                </ion-item>
-              </ion-col>
-              <ion-col size="7">
-                <ion-item>
-                  <ion-col size="4">Qty</ion-col>
-                <ion-col size="4">Price</ion-col>
-                <ion-col size="4">Amt</ion-col>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-            <ion-col  *ngFor="let area of Version.AreaList">
-              <ion-row>
-                <ion-col size="1" *ngIf="checkThis == 1 || checkThis == 0"><h3><ion-icon name="checkmark-circle-outline" class="check-font"></ion-icon></h3></ion-col>
-                <ion-col size="1" *ngIf="checkThis == 2"><h3><ion-icon name="checkmark-circle" class="check-font"></ion-icon></h3></ion-col>
-                <ion-col size="10" (click)=chngCheck(2)><h3>{{area.Name}}</h3></ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="5">
-                  <ion-item>
-                    <ion-radio value="biff"></ion-radio>
-                    <ion-label>Part{{Version.SrNo}}</ion-label>
-                  </ion-item>
-                </ion-col>
-                <ion-col size="7">
-                  <ion-item>
-                    <ion-col size="4">{{area.MaterialSqft}}</ion-col>
-                  <ion-col size="4">{{material.UnitPrice}}</ion-col>
-                  <ion-col size="4">{{area.MaterialAmount|number: '.2-2'}}</ion-col>
-                  </ion-item>
-                </ion-col>
-              </ion-row>
-            </ion-col>
-            <ion-footer>
-              <ion-row>
-                <ion-col size="12">
-                  <ion-button size="small" style="float: right;" color="primary" (click)="changeProgress(2)">Next</ion-button>
-                  <ion-button size="small" style="float: left;" color="primary" (click)="changeProgress(1)">Previous</ion-button>
-                </ion-col>
-              </ion-row>
-            </ion-footer>
-          </ion-col>
-          <ion-col *ngIf="Progress == 2">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary">Measurements*
-                <ion-icon name="add-circle" (click)="ActionAddMeas()"></ion-icon>
-                <ion-icon name="cart"></ion-icon>
-              </ion-label>
-            </ion-item>
-            <ion-row>
-              <ion-col size="2">
-                <ion-item>
-                  <ion-label class="labelfont2" position="floating" color="primary">W</ion-label>
-                  <ion-input type="text" class="labelfont2" name="Vendor"
-                  [(ngModel)]="material.Width" (change)="ActionSetSqft(material,0)"></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col size="2">
-                <ion-item>
-                  <ion-label class="labelfont2" position="floating" color="primary">H</ion-label>
-                  <ion-input type="text" class="labelfont2" name="Vendor" 
-                  [(ngModel)]="material.Height" (change)="ActionSetSqft(material,0)"></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col size="3">
-                <ion-item>
-                  <ion-label class="labelfont2" position="floating" color="primary">Sqft</ion-label>
-                  <ion-input type="text" class="labelfont2" name="Sqft" [(ngModel)]="material.Sqft"></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col size="2">
-                <ion-item>
-                  <ion-label class="labelfont2" position="floating" color="primary">Qty</ion-label>
-                  <ion-input type="text" class="labelfont2" [(ngModel)]="material.Qty" name="Qty" (change)="ActionSetAmount()"></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col size="3">
-                <ion-item>
-                  <ion-label class="labelfont2" position="floating" color="primary">Amt</ion-label>
-                  <ion-input type="text" class="labelfont2" [(ngModel)]="material.Amount" name="Amount"><ion-row class="mar-right3">$</ion-row></ion-input>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-            <ion-footer>
-              <ion-row>
-                <ion-col size="12">
-                  <ion-button size="small" style="float: left;" color="primary" (click)="changeProgress(1)">Previous</ion-button>
-                </ion-col>
-              </ion-row>
-            </ion-footer>
-          </ion-col>
-        </form>
-      </ion-content> -->
-
-      <ion-content>
-        <ion-item>
-          <ion-label class="labelfont2" position="floating" color="primary">Search</ion-label>
-          <ion-input type="text" class="labelfont2" name="Search"></ion-input>
-          <ion-icon slot="end" name="search" class="mar-top20"></ion-icon>
-          <ion-icon slot="end" name="refresh" class="mar-top20"></ion-icon>
-          <ion-icon slot="end" name="funnel" class="mar-top20"></ion-icon>
-        </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="2">
+          <ion-item>
+            <ion-label class="labelfont2" position="floating" color="primary">Cost</ion-label>
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.Cost" (change)="ActionSetDisc(material)">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-item>
+            <ion-label class="labelfont2" position="floating" color="primary">D(%)</ion-label>
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.CostDiscount"
+              (change)="ActionSetDisc(material)"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item>
+            <ion-label class="labelfont2" position="floating" color="primary">Cost</ion-label>
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.UnitCost" name="UnitCost"
+              (change)="ActionSetMargin(1,material,'mat')"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-item>
+            <ion-label class="labelfont2" position="floating" color="primary">M(%)</ion-label>
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.Margin" name="Margin"
+              (change)="ActionSetMargin(2,material,'mat')"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-item>
+            <ion-label class="labelfont2" position="floating" color="primary">Price</ion-label>
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.UnitPrice" name="UnitPrice">$</ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-footer>
         <ion-row>
-          <ion-col size="3">
+          <ion-col size="12">
+            <ion-button size="small" style="float: right;" color="primary" (click)="changeProgress(1)">Next</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-footer>
+    </ion-col>
+    <ion-col *ngIf="Progress == 1">
+      <ion-row>
+        <ion-col size="5">
+          <ion-item>
+            <ion-label>Description</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="7">
+          <ion-item>
+            <ion-col size="4">Qty</ion-col>
+            <ion-col size="4">Price</ion-col>
+            <ion-col size="4">Amt</ion-col>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-col *ngFor="let area of Version.AreaList">
+        <ion-row>
+          <ion-col size="1" *ngIf="checkThis == 1 || checkThis == 0">
+            <h3>
+              <ion-icon name="checkmark-circle-outline" class="check-font"></ion-icon>
+            </h3>
+          </ion-col>
+          <ion-col size="1" *ngIf="checkThis == 2">
+            <h3>
+              <ion-icon name="checkmark-circle" class="check-font"></ion-icon>
+            </h3>
+          </ion-col>
+          <ion-col size="10" (click)=chngCheck(2)>
+            <h3>{{area.Name}}</h3>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="5">
             <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"><u>Stock#</u></ion-label>
-              <ion-input type="text" class="labelfont2"></ion-input>
+              <ion-radio value="biff"></ion-radio>
+              <ion-label>Part{{Version.SrNo}}</ion-label>
             </ion-item>
           </ion-col>
-          <ion-col size="3">
+          <ion-col size="7">
             <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"><u>Material</u></ion-label>
-              <ion-input type="text" class="labelfont2"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="3">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"><u>Depth</u></ion-label>
-              <ion-input type="text" class="labelfont2" ></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="3">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"><u>Finish</u></ion-label>
-              <ion-input type="text" class="labelfont2" ></ion-input>
+              <ion-col size="4">{{area.MaterialSqft}}</ion-col>
+              <ion-col size="4">{{material.UnitPrice}}</ion-col>
+              <ion-col size="4">{{area.MaterialAmount|number: '.2-2'}}</ion-col>
             </ion-item>
           </ion-col>
         </ion-row>
-        <ion-row></ion-row>
+      </ion-col>
+      <ion-footer>
         <ion-row>
-          <ion-col size="3">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"><u>Stk Loc/ Lot#</u></ion-label>
-              <ion-input type="text" class="labelfont2"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="3">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"><u>Slab Type</u></ion-label>
-              <ion-input type="text" class="labelfont2"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="3">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"><u>Status</u></ion-label>
-              <ion-input type="text" class="labelfont2" ></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="3">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"><u>Price($) Remarks</u></ion-label>
-              <ion-input type="text" class="labelfont2" ></ion-input>
-            </ion-item>
+          <ion-col size="12">
+            <ion-button size="small" style="float: right;" color="primary" (click)="changeProgress(2)">Next</ion-button>
+            <ion-button size="small" style="float: left;" color="primary" (click)="changeProgress(1)">Previous
+            </ion-button>
           </ion-col>
         </ion-row>
-      </ion-content>
+      </ion-footer>
+    </ion-col>
+    <ion-col *ngIf="Progress == 2">
+      <ion-item>
+        <ion-label class="labelfont2" position="floating" color="primary">Measurements*
+          <ion-icon name="add-circle" (click)="ActionAddMeas()"></ion-icon>
+          <ion-icon name="cart"></ion-icon>
+        </ion-label>
+      </ion-item>
+      <ion-row>
+        <ion-col size="2">
+          <ion-item>
+            <ion-label class="labelfont2" position="floating" color="primary">W</ion-label>
+            <ion-input type="text" class="labelfont2" name="Vendor" [(ngModel)]="material.Width"
+              (change)="ActionSetSqft(material,0)"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-item>
+            <ion-label class="labelfont2" position="floating" color="primary">H</ion-label>
+            <ion-input type="text" class="labelfont2" name="Vendor" [(ngModel)]="material.Height"
+              (change)="ActionSetSqft(material,0)"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item>
+            <ion-label class="labelfont2" position="floating" color="primary">Sqft</ion-label>
+            <ion-input type="text" class="labelfont2" name="Sqft" [(ngModel)]="material.Sqft"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-item>
+            <ion-label class="labelfont2" position="floating" color="primary">Qty</ion-label>
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.Qty" name="Qty"
+              (change)="ActionSetAmount()"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item>
+            <ion-label class="labelfont2" position="floating" color="primary">Amt</ion-label>
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.Amount" name="Amount">
+              <ion-row class="mar-right3">$</ion-row>
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-footer>
+        <ion-row>
+          <ion-col size="12">
+            <ion-button size="small" style="float: left;" color="primary" (click)="changeProgress(1)">Previous
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-footer>
+    </ion-col>
+  </form>
+</ion-content>

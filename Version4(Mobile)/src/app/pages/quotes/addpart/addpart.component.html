@@ -180,7 +180,7 @@
           </ion-select>
         </ion-col>
         <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
-          <ion-input type="text"  [(ngModel)]="mat.Sqft"  class="text-center border-right color-primary" name="LF">
+          <ion-input type="text"  [(ngModel)]="mat.Sqft"  readonly="readonly" class="text-center border-right color-primary" name="Sqft">
           </ion-input>
           <span class="color-primary">SF</span>
         </ion-col>
@@ -226,7 +226,7 @@
               </ion-select>
             </ion-col>
             <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
-              <ion-input type="text" [(ngModel)]="size.Sqft" class="text-center border-right color-primary" name="Sqft">
+              <ion-input type="text" [(ngModel)]="size.Sqft" (change)="ActionSetFabSqft(j)" class="text-center border-right color-primary" name="Sqft">
               </ion-input>
               <span class="color-primary">SF</span>
             </ion-col>
@@ -266,12 +266,12 @@
             <ion-col size="1" class="color-green"><b>S:</b></ion-col>
             <ion-col size="8">
               <ion-select [(ngModel)]="splash.SplashID" name="SplashID" interface="popover"
-                class="border-btm labelfont2 color-blue">
-                <ion-select-option *ngFor="let spl of SplashList">{{spl.Description}}</ion-select-option>
+                class="border-btm labelfont2 color-blue" (ngModelChange)="ActionPopulateSplash($event,i)">
+                <ion-select-option *ngFor="let spl of SplashList" [value]="spl.ID">{{spl.Description}}</ion-select-option>
               </ion-select>
             </ion-col>
             <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
-              <ion-input type="text" [(ngModel)]="splash.Sqft" class="text-center border-right color-primary"
+              <ion-input type="text" [(ngModel)]="splash.Sqft"  class="text-center border-right color-primary"
                 name="Sqft" (change)="ActionChangeSplash()">
               </ion-input>
               <span class="color-primary">SF</span>
@@ -295,13 +295,13 @@
         <ion-row>
           <ion-col size="1" class="color-green"><b>E:</b></ion-col>
           <ion-col size="8">
-            <ion-select [(ngModel)]="edge.EdgeProfileID" class="btninfo" interface="popover"  class="border-btm labelfont2 color-blue">
-              <ion-select-option *ngFor="let edg of EdgeList">{{edg.Description}}</ion-select-option>
+            <ion-select [(ngModel)]="edge.EdgeProfileID" class="btninfo" interface="popover" (ngModelChange)="ActionPopulateEdge($event,i)" class="border-btm labelfont2 color-blue">
+              <ion-select-option *ngFor="let edg of EdgeList" [value]="edg.ID">{{edg.Description}}</ion-select-option>
             </ion-select>
           </ion-col>
           <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
-            <ion-input type="text" [(ngModel)]="edge.LF" class="text-center border-right color-primary"
-              name="LF" (change)="ActionChangeSplash()">
+            <ion-input type="text" [(ngModel)]="edge.LF" (change)="ActionSetAmount('edge',edge)" class="text-center border-right color-primary"
+              name="LF" >
             </ion-input>
             <span class="color-primary">LF</span>
           </ion-col>
@@ -339,12 +339,12 @@
           <ion-row>
             <ion-col size="1" class="color-green"><b>C:</b></ion-col>
             <ion-col size="8">
-              <ion-select [(ngModel)]="cutout.TypeID" interface="popover" class="border-btm labelfont2 color-blue">
-                <ion-select-option *ngFor="let c of CutoutList">{{c.Description}}</ion-select-option>
+              <ion-select [(ngModel)]="cutout.TypeID" interface="popover" (ngModelChange)="ActionPopulateCutout($event,i)" class="border-btm labelfont2 color-blue">
+                <ion-select-option *ngFor="let c of CutoutList" [value]="c.ID">{{c.Description}}</ion-select-option>
               </ion-select>
             </ion-col>
             <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
-              <ion-input type="text"  [(ngModel)]="cutout.LF" class="text-center border-right color-primary" name="LF">
+              <ion-input type="text"  [(ngModel)]="cutout.LF" (change)="ActionSetAmount('cutout',cutout)" class="text-center border-right color-primary" name="LF">
               </ion-input>
               <span class="color-primary">EA</span>
             </ion-col>
@@ -360,7 +360,7 @@
             </ion-col>
             <ion-col size="3">
               <div class="color-primary"><b>Price($)</b></div>
-              <div><ion-input type="text" class="labelfont border-btm" [(ngModel)]="cutout.UnitPrice" name="UnitPrice" (change)="ActionSetMargin(3,cutout,'cutout')"></ion-input></div>
+              <div><ion-input type="text" class="labelfont border-btm" [(ngModel)]="cutout.Unitprice" name="Unitprice" (change)="ActionSetMargin(3,cutout,'cutout')"></ion-input></div>
             </ion-col>
             <ion-col size="3">
               <div class="color-primary"><b>Amt($)</b></div>

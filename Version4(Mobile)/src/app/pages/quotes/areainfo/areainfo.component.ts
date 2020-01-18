@@ -111,7 +111,8 @@ export class AreainfoComponent implements OnInit {
   }
   /***** Add PART *****/
   async ActionAddPart(Id) {
-    let info = {ID:Id,VersionID:this.Version.ID,AreaID:this.AreaID,Name:this.partinfo.Name}
+    let info = {ID:Id,VersionID:this.Version.ID,AreaID:this.AreaID,Name:this.partinfo.Name,
+    SrNo: Id == 0 ? this.areaInfo.PartList.length + 1 :this.partinfo.SrNo }
      let obj = {partinfo:info, priceListID: Number (this.Version.PriceListID),coId:this.coId, coSrNo:this.coSrNo, matPercent :this.Version.MatPercent}
     const modal = await this.Modalcntrl.create({
       component: AddpartComponent,

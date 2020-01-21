@@ -456,7 +456,17 @@ ion-icon{
     color: black;
   
 }
-
+.popupCls1 { //For BIg popover
+    padding: 5px;
+    left: 35px;
+    background-color: #f3f3f4;
+    position: absolute;
+    z-index: 16000;
+    width: 300px;
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0,0.5);
+    color: black;
+}
 .marg-check {
     margin-top: 25px;
 }

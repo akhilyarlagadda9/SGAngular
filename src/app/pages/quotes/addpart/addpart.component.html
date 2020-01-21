@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar *ngIf="HideType != 0">
     <ion-title class="titleheader">PART DETAILS</ion-title>
     <ion-button slot="end" color="success" size="small" (click)="ActionSavePart()">Save</ion-button>
     <ion-button slot="end" color="danger" size="small" (click)="ActionCloseAddPart()">X</ion-button>
@@ -19,7 +19,7 @@
         <div class="mar-top5"><span style="font-size:11px;">Spl/Edg</span></div>
       </ion-col>
       <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(4)">
-        <img src="assets/img/kitchen-sink.png" alt="img" class="imghw">
+        <img src="assets/img/cutout.png" alt="img" class="imghw">
         <div class="mar-top5"><span style="font-size:11px;">Cutout</span></div>
       </ion-col>
       <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(5)">
@@ -169,12 +169,12 @@
     <ion-col *ngSwitchCase="1">
       <ion-row>
         <ion-col class="lablewid" size="12" class="color-primary">
-          <ion-icon name="list" class="fontmedium"></ion-icon><b>Material Details:</b>
+          <ion-icon name="list" class="fontmedium"></ion-icon><b class="fontver">Material Details:</b>
         </ion-col>
       </ion-row>
       <div *ngFor="let mat of partinfo.PartMaterialList;let i = index">
         <ion-row>
-          <ion-col class="lablewid" size="1" class="color-primary"><b>M:</b></ion-col>
+          <ion-col class="lablewid" size="1" class="color-primary martop10"><b>M:</b></ion-col>
           <ion-col size="7" class="labelfont">
             <ion-select [(ngModel)]="mat.MaterialID" name="MaterialID"
               (ngModelChange)="ActionPopulateMaterial($event,i)" interface="popover"
@@ -240,7 +240,7 @@
         </ion-row>
         <div *ngFor="let size of fab.MeasureList; let i = index">
           <ion-row>
-            <ion-col size="1" class="round bg-primary color-white text-center mar-top5">{{i + 1}}</ion-col>
+            <ion-col size="1" class="round color-img color-text text-center mar-top5">{{i + 1}}</ion-col>
             <ion-col size="8">
               <ion-select class="btninfo" [(ngModel)]="size.CounterTypeID" interface="popover"
                 class="color-blue labelfont2 border-btm">
@@ -254,13 +254,13 @@
               <span class="color-primary">SF</span>
             </ion-col>
           </ion-row>
-          <ion-row class="bg-primary bdr-radius20">
-            <ion-col size="5" class="fontbold labelfont2 flex mar-top5"><span class="color-white">W:&nbsp;</span>
+          <ion-row class="color-img bdr-radius20">
+            <ion-col size="5" class="fontbold labelfont2 flex mar-top5"><span class="color-text">W:&nbsp;</span>
               <ion-input type="text" [(ngModel)]="size.Width" (change)="ActionSetSqft(size,0,j)"
                 class="roundborder borderall bg-white text-center"></ion-input>
             </ion-col>
-            <ion-col size="1" class="fontbold labelfont2 color-white mar-top5">X</ion-col>
-            <ion-col size="5" class="fontbold flex labelfont2 mar-top5"><span class="color-white">H:&nbsp; </span>
+            <ion-col size="1" class="fontbold labelfont2 color-text mar-top5">X</ion-col>
+            <ion-col size="5" class="fontbold flex labelfont2 mar-top5"><span class="color-text">H:&nbsp; </span>
               <ion-input type="text" [(ngModel)]="size.Height" (change)="ActionSetSqft(size,0,j)"
                 class="roundborder borderall bg-white text-center"></ion-input>
             </ion-col>
@@ -278,16 +278,14 @@
     </ion-col>
 
     <ion-col *ngSwitchCase="3">
-      <ion-row>
+      <ion-list>
         <ion-col class="lablewid" size="12" class="color-primary">
-          <ion-icon name="list" class="fontmedium"></ion-icon><b>Splash:</b>&nbsp;
+          <ion-icon name="list" class="fontmedium"></ion-icon><b class="fontver">Splash:</b>&nbsp;
           <ion-icon name="add-circle" class="fontmedium"></ion-icon>
         </ion-col>
-      </ion-row>
-      <ion-list>
         <ion-col *ngFor="let splash of partinfo.SplashList;let i = index">
           <ion-row>
-            <ion-col size="1" class="color-green"><b>S:</b></ion-col>
+            <ion-col size="1" class="color-green martop10"><b>S:</b></ion-col>
             <ion-col size="8">
               <ion-select [(ngModel)]="splash.SplashID" name="SplashID" interface="popover"
                 class="border-btm labelfont2 color-blue" (ngModelChange)="ActionPopulateSplash($event,i)">
@@ -302,13 +300,13 @@
               <span class="color-primary">SF</span>
             </ion-col>
           </ion-row>
-          <ion-row class="bg-primary bdr-radius20">
-            <ion-col size="5" class="fontbold labelfont2 flex mar-top5"><span class="color-white">W:&nbsp;</span>
+          <ion-row class="color-img bdr-radius20">
+            <ion-col size="5" class="fontbold labelfont2 flex mar-top5"><span class="color-text">W:&nbsp;</span>
               <ion-input type="text" [(ngModel)]="splash.Width" class="roundborder borderall bg-white text-center"
                 (change)="ActionSetSplashSqft(splash)"></ion-input>
             </ion-col>
-            <ion-col size="1" class="fontbold labelfont2 color-white mar-top5">X</ion-col>
-            <ion-col size="5" class="fontbold flex labelfont2 mar-top5"><span class="color-white">H:&nbsp; </span>
+            <ion-col size="1" class="fontbold labelfont2 color-text mar-top5">X</ion-col>
+            <ion-col size="5" class="fontbold flex labelfont2 mar-top5"><span class="color-text">H:&nbsp; </span>
               <ion-input type="text" [(ngModel)]="splash.Height" class="roundborder borderall bg-white text-center"
                 (change)="ActionSetSplashSqft(splash)"></ion-input>
             </ion-col>
@@ -320,12 +318,12 @@
 
       <ion-list>
         <ion-col class="lablewid" size="12" class="color-primary">
-          <ion-icon name="list" class="fontmedium"></ion-icon><b>Edge:</b>&nbsp;
+          <ion-icon name="list" class="fontmedium"></ion-icon><b class="fontver">Edge:</b>&nbsp;
           <ion-icon name="add-circle" class="fontmedium"></ion-icon>
         </ion-col>
         <ion-col *ngFor="let edge of partinfo.EdgeList;let i = index">
           <ion-row>
-            <ion-col size="1" class="color-green"><b>E:</b></ion-col>
+            <ion-col size="1" class="color-green martop10"><b>E:</b></ion-col>
             <ion-col size="8">
               <ion-select [(ngModel)]="edge.EdgeProfileID" class="btninfo" interface="popover"
                 (ngModelChange)="ActionPopulateEdge($event,i)" class="border-btm labelfont2 color-blue">
@@ -375,14 +373,12 @@
 
     <ion-col *ngSwitchCase="4">
       <ion-list>
-        <ion-row>
-          <ion-col class="lablewid" size="12" class="color-primary">
-            <ion-icon name="list" class="fontmedium"></ion-icon><b>Cutout:</b>
-          </ion-col>
-        </ion-row>
+        <ion-col class="lablewid" size="12" class="color-primary">
+          <ion-icon name="list" class="fontmedium"></ion-icon><b class="fontver">Cutout:</b>
+        </ion-col>
         <ion-col *ngFor="let cutout of partinfo.CutoutList;let i = index">
           <ion-row>
-            <ion-col size="1" class="color-green"><b>C:</b></ion-col>
+            <ion-col size="1" class="color-green martop10"><b>C:</b></ion-col>
             <ion-col size="8">
               <ion-select [(ngModel)]="cutout.TypeID" interface="popover"
                 (ngModelChange)="ActionPopulateCutout($event,i)" class="border-btm labelfont2 color-blue">
@@ -433,17 +429,19 @@
     <ion-col *ngSwitchCase="5">
       <ion-list>
         <ion-col class="lablewid" size="12" class="color-primary">
-          <ion-icon name="list" class="fontmedium"></ion-icon><b>Sink:</b>&nbsp;
+          <ion-icon name="list" class="fontmedium"></ion-icon><b class="fontver">Sink:</b>&nbsp;
           <ion-icon name="add-circle" class="fontmedium"></ion-icon>
         </ion-col>
         <ion-col *ngFor="let sinkfaucet of partinfo.SinkList;let i = index">
           <ion-row>
-            <ion-col size="1" class="color-green"><b>S:</b></ion-col>
-            <ion-col size="8" class="border-btm">
-              <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Description" name="Description"
-                (keyup.enter)="ActionSearchSelect($event,2,8,sinkfaucet)" required></ion-input>
-              <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,8,sinkfaucet)"></ion-icon>
-              <ion-icon name="search" (click)="ActionSearchSelect($event,2,8,sinkfaucet)"></ion-icon>
+            <ion-col size="1" class="color-green martop10"><b>S:</b></ion-col>
+            <ion-col size="8" class="paddzero">
+              <ion-item>
+                <ion-input type="text" class="labelfont paddzero" [(ngModel)]="sinkfaucet.Description"
+                  name="Description" (keyup.enter)="ActionSearchSelect($event,2,8,sinkfaucet)" required></ion-input>
+                <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,8,sinkfaucet)"></ion-icon>
+                <ion-icon name="search" (click)="ActionSearchSelect($event,2,8,sinkfaucet)"></ion-icon>
+              </ion-item>
             </ion-col>
             <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
               <ion-input type="text" [(ngModel)]="sinkfaucet.Qty" class="text-center border-right color-primary"
@@ -487,17 +485,19 @@
 
       <ion-list>
         <ion-col class="lablewid" size="12" class="color-primary">
-          <ion-icon name="list" class="fontmedium"></ion-icon><b>Faucet:</b>&nbsp;
+          <ion-icon name="list" class="fontmedium"></ion-icon><b class="fontver">Faucet:</b>&nbsp;
           <ion-icon name="add-circle" class="fontmedium"></ion-icon>
         </ion-col>
         <ion-col *ngFor="let faucet of partinfo.FaucetList;let i = index">
           <ion-row>
-            <ion-col size="1" class="color-green"><b>F:</b></ion-col>
-            <ion-col size="8" class="border-btm">
-              <ion-input type="text" class="labelfont" [(ngModel)]="faucet.Description" name="Description"
-                (keyup.enter)="ActionSearchSelect($event,2,9,faucet)" required></ion-input>
-              <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,9,faucet)"></ion-icon>
-              <ion-icon name="search" (click)="ActionSearchSelect($event,2,9,faucet)"></ion-icon>
+            <ion-col size="1" class="color-green martop10"><b>F:</b></ion-col>
+            <ion-col size="8" class="paddzero">
+              <ion-item>
+                <ion-input type="text" class="labelfont paddzero" [(ngModel)]="faucet.Description" name="Description"
+                  (keyup.enter)="ActionSearchSelect($event,2,9,faucet)" required></ion-input>
+                <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,9,faucet)"></ion-icon>
+                <ion-icon name="search" (click)="ActionSearchSelect($event,2,9,faucet)"></ion-icon>
+              </ion-item>
             </ion-col>
             <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
               <ion-input type="text" [(ngModel)]="faucet.Qty" class="text-center border-right color-primary" name="Qty"
@@ -542,18 +542,20 @@
     <ion-col *ngSwitchCase="6">
       <ion-list>
         <ion-col class="lablewid" size="12" class="color-primary">
-          <ion-icon name="list" class="fontmedium"></ion-icon><b>Labor:</b>&nbsp;
+          <ion-icon name="list" class="fontmedium"></ion-icon><b class="fontver">Labor:</b>&nbsp;
           <ion-icon name="add-circle" class="fontmedium"></ion-icon>
         </ion-col>
         <ion-col *ngFor="let labor of partinfo.LaborList;let i = index">
           <span *ngIf="labor.ViewTypeID != 1">
             <ion-row>
-              <ion-col size="1" class="color-green"><b>L:</b></ion-col>
-              <ion-col size="8" class="border-btm">
-                <ion-input type="text" class="labelfont" [(ngModel)]="labor.Description" name="Description"
-                  (keyup.enter)="ActionSearchSelect($event,2,7,labor)" required></ion-input>
-                <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,7,labor)"></ion-icon>
-                <ion-icon name="search" (click)="ActionSearchSelect($event,2,7,labor)"></ion-icon>
+              <ion-col size="1" class="color-green martop10"><b>L:</b></ion-col>
+              <ion-col size="8" class="paddzero">
+                <ion-item>
+                  <ion-input type="text" class="labelfont paddzero" [(ngModel)]="labor.Description" name="Description"
+                    (keyup.enter)="ActionSearchSelect($event,2,7,labor)" required></ion-input>
+                  <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,7,labor)"></ion-icon>
+                  <ion-icon name="search" (click)="ActionSearchSelect($event,2,7,labor)"></ion-icon>
+                </ion-item>
               </ion-col>
               <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
                 <ion-input type="text" [(ngModel)]="labor.Qty" class="text-center border-right color-primary" name="Qty"
@@ -598,17 +600,19 @@
 
       <ion-list>
         <ion-col class="lablewid" size="12" class="color-primary">
-          <ion-icon name="list" class="fontmedium"></ion-icon><b>Addon:</b>&nbsp;
+          <ion-icon name="list" class="fontmedium"></ion-icon><b class="fontver">Addon:</b>&nbsp;
           <ion-icon name="add-circle" class="fontmedium"></ion-icon>
         </ion-col>
         <ion-col *ngFor="let other of partinfo.OtherList;let i = index">
           <ion-row>
-            <ion-col size="1" class="color-green"><b>A:</b></ion-col>
-            <ion-col size="8" class="border-btm">
-              <ion-input type="text" class="labelfont" [(ngModel)]="other.Description" name="Description"
-                (keyup.enter)="ActionSearchSelect($event,2,11,other)" required></ion-input>
-              <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,11,other)"></ion-icon>
-              <ion-icon name="search" (click)="ActionSearchSelect($event,2,11,other)"></ion-icon>
+            <ion-col size="1" class="color-green martop10"><b>A:</b></ion-col>
+            <ion-col size="8" class="paddzero">
+              <ion-item>
+                <ion-input type="text" class="labelfont paddzero" [(ngModel)]="other.Description" name="Description"
+                  (keyup.enter)="ActionSearchSelect($event,2,11,other)" required></ion-input>
+                <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,11,other)"></ion-icon>
+                <ion-icon name="search" (click)="ActionSearchSelect($event,2,11,other)"></ion-icon>
+              </ion-item>
             </ion-col>
             <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
               <ion-input type="text" [(ngModel)]="other.Qty" class="text-center border-right color-primary" name="Qty"

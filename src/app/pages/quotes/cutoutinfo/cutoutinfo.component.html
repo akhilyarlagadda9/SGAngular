@@ -1,18 +1,22 @@
 <ion-content>
   <form #form="ngForm" (ngSubmit)="ActionSaveCutOut(form)">
-    <ion-toolbar class="poss">
-      <ion-title class="titleheader">
-        <div *ngIf="TypeID == 1">Sink Cutout</div>
-        <div *ngIf="TypeID == 3">Appliance Cutout</div>
-        <div *ngIf="TypeID == 2">Outlet Cutout</div>
-      </ion-title>
-      <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCutout(false)">X</ion-button>
-    </ion-toolbar>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title class="titleheader">
+          <div *ngIf="TypeID == 1">Sink Cutout</div>
+          <div *ngIf="TypeID == 3">Appliance Cutout</div>
+          <div *ngIf="TypeID == 2">Outlet Cutout</div>
+        </ion-title>
+        <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
+        <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCutout(false)">X</ion-button>
+      </ion-toolbar>
+    </ion-header>
     <ion-item>
-      <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-      <ion-select [(ngModel)]="cutout.TypeID" name="TypeID" (ngModelChange)="ActionPopulateCutout($event)"  #nameField="ngModel" required>
-        <ion-select-option *ngFor="let cut of cutoutlist" [value]="cut.ID"> <span>{{cut.Description}}</span></ion-select-option>
+      <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
+      <ion-select [(ngModel)]="cutout.TypeID" name="TypeID" (ngModelChange)="ActionPopulateCutout($event)"
+        #nameField="ngModel" required>
+        <ion-select-option *ngFor="let cut of cutoutlist" [value]="cut.ID"> <span>{{cut.Description}}</span>
+        </ion-select-option>
       </ion-select>
     </ion-item>
     <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">

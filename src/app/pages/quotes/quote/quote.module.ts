@@ -53,6 +53,7 @@ import { TransactionComponent } from '../transaction/transaction.component';
 import { OtherComponent } from '../other/other.component';
 import { MaileditComponent } from '../mailedit/mailedit.component';
 import { ActionquoteComponent } from '../actionquote/actionquote.component';
+import { QuickquoteComponent } from '../quickquote/quickquote.component';
 
 @NgModule({
   imports: [
@@ -80,7 +81,8 @@ import { ActionquoteComponent } from '../actionquote/actionquote.component';
     JobdesceditComponent,CustomereditComponent,CommhubeditComponent,
     CustomerinfoComponent,AddareaComponent,CustomersearchComponent,
     ManagementsummaryComponent,additemComponent,ActivitiesComponent,AreasummaryComponent,
-    FabricationComponent,LaborinfoComponent,MapComponent,QlayoutComponent,ArealayoutComponent,QnavigationComponent,OtherComponent, AddpartComponent, AddSizesComponent,MaileditComponent],
+    FabricationComponent,LaborinfoComponent,MapComponent,QlayoutComponent,ArealayoutComponent,QnavigationComponent,OtherComponent,
+     AddpartComponent, AddSizesComponent,MaileditComponent, QuickquoteComponent],
     
 
   declarations: [QuotePage, ActionquoteComponent,NewactionComponent, TransactionComponent,AccountsComponent,NewtranComponent,PaymentScheduleComponent,AdditionalitemserachComponent,
@@ -94,6 +96,7 @@ import { ActionquoteComponent } from '../actionquote/actionquote.component';
     AreainfoComponent,PoeditComponent,JobdesceditComponent,
     CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,
     AddareaComponent,CustomersearchComponent,ManagementsummaryComponent,ActivitiesComponent,AreasummaryComponent,
-    additemComponent,additemComponent,FabricationComponent,LaborinfoComponent,MapComponent,QnavigationComponent,QlayoutComponent,ArealayoutComponent,OtherComponent,AddpartComponent,AddSizesComponent,MaileditComponent]
+    additemComponent,additemComponent,FabricationComponent,LaborinfoComponent,MapComponent,QnavigationComponent,
+    QlayoutComponent,ArealayoutComponent,OtherComponent,AddpartComponent,AddSizesComponent,MaileditComponent, QuickquoteComponent]
 })
 export class QuotePageModule {}

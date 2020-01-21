@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title><b>Calendar Settings</b></ion-title>
+    <ion-button slot="end" color="success" size="small" (click)="ActionCloseCalendarSett(true)">Save</ion-button>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCalendarSett(false)">X</ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-row class="martb5">
+    <ion-col size="4" class="text-left fontbold" (click)="ActionActivitiesPopup()"><u>Act Types:</u></ion-col>
+    <ion-col size="8">Template,Install</ion-col>
+  </ion-row>
+  <ion-row class="marbot2">
+    <ion-col size="4" class="text-left fontbold"><u>Assigned:</u></ion-col>
+    <ion-col size="8">Chad,Kay,Mark</ion-col>
+  </ion-row>
+  <ion-row class="marbot2">
+    <ion-col size="4" class="text-left fontbold"><u>Calendar Disp:</u></ion-col>
+    <ion-col size="8">Chad,Kay,Mark</ion-col>
+  </ion-row>
+  <ion-row class="marbot2">
+    <ion-col size="4" class="text-left fontbold"><u>Time Hrs:</u></ion-col>
+    <ion-col size="8">Chad,Kay,Mark</ion-col>
+  </ion-row>
+  <ion-row class="marbot2">
+    <ion-col size="6" class="paddzero">
+      <ion-col size="4" class="text-left fontbold">Start Date:</ion-col>
+      <ion-col size="8">
+        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
+      </ion-col>
+    </ion-col>
+    <ion-col size="6"  class="paddzero">
+      <ion-col size="4" class="text-left fontbold">Days:</ion-col>
+      <ion-col size="8">
+        <ion-select>
+          <ion-select-option value="1">1</ion-select-option>
+          <ion-select-option value="3">3</ion-select-option>
+          <ion-select-option value="10">10</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-col>
+  </ion-row>
+  <ion-row class="marbot2">
+    <ion-col size="4" class="text-left fontbold"><u>Act Fields:</u></ion-col>
+    <ion-col size="8">Chad,Kay,Mark</ion-col>
+  </ion-row>
+  <ion-row class="marbot2">
+    <ion-col size="4" class="text-left fontbold"><u>Act Status:</u></ion-col>
+    <ion-col size="8">Chad,Kay,Mark</ion-col>
+  </ion-row>
+</ion-content>

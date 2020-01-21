@@ -12,6 +12,7 @@ import { ActinfoComponent } from '../actinfo/actinfo.component';
 import { FilterPipe } from 'src/app/FilterPipe';
 import { AddactivityComponent, jobssearchComponent } from '../addactivity/addactivity.component';
 import { CalendarfilterComponent } from '../calendarfilter/calendarfilter.component';
+import { CalendarsettingComponent } from '../calendarsetting/calendarsetting.component';
 
 @NgModule({
   imports: [
@@ -20,8 +21,8 @@ import { CalendarfilterComponent } from '../calendarfilter/calendarfilter.compon
     IonicModule,
     SchedulingPageRoutingModule,NgCalendarModule,
   ],
-  declarations: [SchedulingPage,ActinfoComponent,FilterPipe,AddactivityComponent,jobssearchComponent,CalendarfilterComponent],
+  declarations: [SchedulingPage,ActinfoComponent,FilterPipe,AddactivityComponent,jobssearchComponent,CalendarfilterComponent,CalendarsettingComponent],
   entryComponents: [ActinfoComponent,AddactivityComponent,jobssearchComponent,
-  CalendarfilterComponent],
+  CalendarfilterComponent,CalendarsettingComponent],
 })
 export class SchedulingPageModule {}

@@ -296,6 +296,12 @@ export class QuoterepService {
     let sqft = 0;
     if (w != 0 && h != 0) { sqft = this.roundToTwo((w * h) / 144); } return sqft;
   }
+  calcslabsqft(slab) {
+    let slabsqft = 0; if (slab.Sqft != 0) { slabsqft += this.roundToTwo(slab.Sqft * slab.NoOfSlabs); } return this.roundToTwo(slabsqft);
+  }
+  calcsqftwithwastefactor(sqft, wf) {
+    let sqftwf = sqft; if (sqft != 0 && wf != 0) { sqftwf = Number(this.roundToTwo(sqft + (sqft * (wf / 100)))); } return sqftwf;
+  }
   calcmargin(cost, price) {
     let margin = 0;
     if (price > 0) { margin = this.roundToTwo(((price - cost) / price) * 100); } return margin;
@@ -399,6 +405,116 @@ export class QuoterepService {
   roundSqft(sqft: number) {
     return Math.sqrt(sqft);
   }
+
+
+
+/************MATERIAL SEARCH & POPULATION **************/
+  popultaesearchiteminfo(material, subproductgroups, productItem) {
+    material.ProductType = productItem.SlabType;
+    material.DepthID = productItem.ThicknessID == 0 ? 24 : productItem.ThicknessID;
+    material.FinishID = productItem.FinishID == 0 ? 23 : productItem.FinishID;
+    material.Depth = productItem.ThicknessID == 0 ? "3 CM" : productItem.Thickness;
+    material.Finish = productItem.FinishID == 0 ? "Polished" : productItem.Finish;
+    material.SupplierID = productItem.SupplierID;
+    material.SupplierName = productItem.SupplierName;
+    material.ItemNO = productItem.ItemNO;
+    material.StoneType = productItem.StoneType;
+    material.SlabTypeID = productItem.SlabTypeID == 0 ? 75 : productItem.SlabTypeID;
+    material.SlabType = productItem.SlabTypeID == 0 ? "Slab" : productItem.SlabType;
+    material.RiskLevelID = productItem.RiskLevelID == 0 ? 77 : productItem.RiskLevelID;
+    material.RiskLevel = material.RiskLevelID == 77 ? "LOW" : material.RiskLevelID == 78 ? "MEDIUM" : material.RiskLevelID == 79 ? "HIGH" : "LOW";
+    if (material.ID == 0) {        
+        material.UnitCost = productItem.Cost; material.Cost = productItem.Cost;
+        material.UnitPrice = productItem.Price;
+       //material.Margin = productItem.Margin;
+        material.TaxVal = productItem.Tax;
+        if (productItem.Margin == 0 && material.Margin != 0) {
+          this.margincalculations(2, material, 'mat');
+        } else {
+            material.Margin = productItem.Margin;
+        }
+        if (productItem.WF != 0) { material.WF = productItem.WF; }
+        //material.PriceByID = productItem.PriceByTypeID == 1 ? 2 : productItem.PriceByTypeID;
+        material.PriceByID = productItem.PriceByTypeID;
+        if (material.ID == 0) {
+            this.preparefabrisklevels(material);
+        }
+    } 
+    material.Cost = material.Cost != 0 ? Number(material.Cost).toFixed(2) : material.Cost;
+    material.UnitCost = material.UnitCost != 0 ? Number(material.UnitCost).toFixed(2) : material.UnitCost;
+    material.UnitPrice = material.UnitPrice != 0 ? Number(material.UnitPrice).toFixed(2) : material.UnitPrice;
+    material.Margin = material.Margin != 0 ? Number(material.Margin).toFixed(2) : material.Margin;
+    material.TaxVal = material.TaxVal != 0 ? Number(material.TaxVal).toFixed(2) : material.TaxVal;
+    material.MinPrice = productItem.MinPrice;
+    material.MaxPrice = productItem.MaxPrice;
+    material.DeliveryFee = productItem.DeliveryFee;
+    material.Color = productItem.Description;
+    material.ProductItemID = productItem.ProductItemID;
+    material.PriceGroupID = productItem.GroupID;
+    this.populateSlabSizes(material.SlabList, productItem);  
+    this.productselection(material, subproductgroups, productItem.ProSubGroupID);
+    this.calcmaterialwasteamt(material);
+    return material;
+}
+
+preparefabrisklevels(material) {
+  let cost = 0, margin = 0, price = 0;
+  if (material.RiskLevels != null) {
+      if (material.RiskLevelID == 77) {//low
+          cost += material.RiskLevels.LowTempCost + material.RiskLevels.LowFabCost + material.RiskLevels.LowInstallCost;
+          margin += material.RiskLevels.LowTempMargin + material.RiskLevels.LowFabMargin + material.RiskLevels.LowInstallMargin;
+          price += this.roundToTwo(material.RiskLevels.LowTempPrice) + this.roundToTwo(material.RiskLevels.LowFabPrice) + this.roundToTwo(material.RiskLevels.LowInstallPrice);
+      } else if (material.RiskLevelID == 78) {//medium
+          cost += material.RiskLevels.MedTempCost + material.RiskLevels.MedFabCost + material.RiskLevels.MedInstallCost;
+          margin += material.RiskLevels.MedTempMargin + material.RiskLevels.MedFabMargin + material.RiskLevels.MedInstallMargin;
+          price += this.roundToTwo(material.RiskLevels.MedTempPrice) + this.roundToTwo(material.RiskLevels.MedFabPrice) + this.roundToTwo(material.RiskLevels.MedInstallPrice);
+      } else if (material.RiskLevelID == 79) {//high
+          cost += material.RiskLevels.HighTempCost + material.RiskLevels.HighFabCost + material.RiskLevels.HighInstallCost;
+          margin += material.RiskLevels.HighTempMargin + material.RiskLevels.HighFabMargin + material.RiskLevels.HighInstallMargin;
+          price += this.roundToTwo(material.RiskLevels.HighTempPrice) + this.roundToTwo(material.RiskLevels.HighFabPrice) + this.roundToTwo(material.RiskLevels.HighInstallPrice);
+      }
+  }
+  material.LaborUnitCost = cost;
+  material.LaborMargin = margin;
+  material.LaborUnitPrice = price;
+}
+populateSlabSizes(slabs, productItem) {
+  for (let i = 0; i < slabs.length; i++) {
+      let item = slabs[i];
+      if (item.Width == 0 || item.Width == undefined) { item.Width = productItem.Width; }
+      if (item.Length == 0 || item.Length == undefined) { item.Length = productItem.Height; }
+      item.Sqft = this.calcsqft(item.Width, item.Length);
+  }
+}
+productselection(materialobj, subproductgroups, id) {
+  if (materialobj != undefined && subproductgroups != undefined && subproductgroups != null) {
+      var selectedIndex = subproductgroups.map(function (obj) { return obj.ID; }).indexOf(parseInt(id));
+      let productsubgroup = selectedIndex != -1 ? subproductgroups[selectedIndex] : 0;
+      materialobj.ProSubGroup = productsubgroup;
+      materialobj.ProSubGroupID = productsubgroup.ID;
+  }
+}
+calcmaterialwasteamt(material){
+  let slabobj = this.calcslabstotalsqft(material.SlabList);
+    material.SlabSqft = slabobj.slabsqft;
+    material.totalslabno = slabobj.slabcount;
+    let finishedwfsqft = this.calcsqftwithwastefactor(material.Sqft, material.WF);
+    let finishedwasteamt = this.roundToTwo((material.SlabSqft - finishedwfsqft) * material.UnitPrice);
+    material.finishedamt = this.roundToTwo(finishedwfsqft * material.UnitPrice);
+    material.finishedwasteamt =this. roundToTwo(finishedwasteamt);
+    material.totalslbAmt = this.roundToTwo(material.SlabSqft * material.UnitPrice)
+    material.totalslbSf = material.SlabSqft;
+}
+calcslabstotalsqft(slabs) {
+  let itemobj = { slabsqft: 0, slabcount: 0 };
+  if (slabs != null) {
+      let sf = 0, count = 0;
+      for (let i = 0; i < slabs.length; i++) { sf += this.calcslabsqft(slabs[i]); count += Number(slabs[i].NoOfSlabs); }
+      itemobj.slabsqft = sf; itemobj.slabcount = count;
+  }
+  return itemobj;
+}
+
 /************************************ACTION CONTROLLER**********************************************/
 approvechecklist(data) {
   let alertobj = { alert: false };

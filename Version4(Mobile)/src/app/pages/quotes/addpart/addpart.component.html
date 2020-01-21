@@ -7,29 +7,29 @@
   <ion-toolbar>
     <ion-row>
       <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(1)">
-        <img src="assets/img/MaterialY.jpg" alt="your image" class="imghw">
+        <img src="assets/img/MaterialY.jpg" alt="img" class="imghw">
         <div class="mar-top5"><span style="font-size:11px;">Material</span></div>
       </ion-col>
       <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(2)">
-        <img src="assets/img/sqft1.jpg" alt="your image" class="imghw">
+        <img src="assets/img/sqft1.jpg" alt="img" class="imghw">
         <div class="mar-top5"><span style="font-size:11px;">Sqft</span></div>
       </ion-col>
       <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(3)">
-        <img src="assets/img/edges2.jpg" alt="your image" class="imghw">
+        <img src="assets/img/edges2.jpg" alt="img" class="imghw">
         <div class="mar-top5"><span style="font-size:11px;">Spl/Edg</span></div>
       </ion-col>
       <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(4)">
-        <img src="assets/img/kitchen-sink.png" alt="your image" class="imghw">
+        <img src="assets/img/kitchen-sink.png" alt="img" class="imghw">
         <div class="mar-top5"><span style="font-size:11px;">Cutout</span></div>
       </ion-col>
-      <!-- <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(5)">
-        <img src="assets/img/marbles-icon.png" alt="img" style="width:35px;height:35px;">
+      <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(5)">
+        <img src="assets/img/marbles-icon.png" alt="img" class="imghw">
         <div class="mar-top5"><span style="font-size:11px;">Sink/Fau</span></div>
       </ion-col>
       <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(6)">
-        <img src="assets/img/coin-us-dollar-icon.png" alt="img" style="width:35px;height:35px;">
+        <img src="assets/img/addons.png" alt="img" class="imghw">
         <div class="mar-top5"><span style="font-size:11px;">Addons</span></div>
-      </ion-col> -->
+      </ion-col>
     </ion-row>
   </ion-toolbar>
 </ion-header>
@@ -54,7 +54,7 @@
 
     </ion-col>
     <ion-col size="1">
-      <ion-icon name="add" class="font-medium" (click)="ActionAddMaterial()"></ion-icon>
+      <ion-icon name="add" class="fontmedium" (click)="ActionAddMaterial()"></ion-icon>
     </ion-col>
     <ion-col size="3" class="flex">
       <ion-input type="text" readonly="readonly" [(ngModel)]="mat.Sqft" class="border-btm"></ion-input>SF
@@ -169,45 +169,63 @@
     <ion-col *ngSwitchCase="1">
       <ion-row>
         <ion-col class="lablewid" size="12" class="color-primary">
-          <ion-icon name="list" class="font-medium"></ion-icon><b>Material Details:</b>
+          <ion-icon name="list" class="fontmedium"></ion-icon><b>Material Details:</b>
         </ion-col>
       </ion-row>
       <div *ngFor="let mat of partinfo.PartMaterialList;let i = index">
-      <ion-row>
-        <ion-col class="lablewid" size="1" class="color-primary"><b>M:</b></ion-col>
-        <ion-col size="7" class="labelfont">
-          <ion-select [(ngModel)]="mat.MaterialID" name="MaterialID" (ngModelChange)="ActionPopulateMaterial($event,i)" interface="popover" class="border-btm labelfont2 color-blue">
-            <ion-select-option *ngFor="let material of MaterialList" [value]="material.ID">{{material.StoneType}} - {{material.Color}} - {{material.Depth}} - {{material.Finish}}</ion-select-option>
-          </ion-select>         
-        </ion-col>
-        <ion-col size="1"> <ion-icon name="add" (click)="ActionAddMaterial(0, 'QuotePart')"></ion-icon></ion-col>
-        <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
-          <ion-input type="text"  [(ngModel)]="mat.Sqft"  readonly="readonly" class="text-center border-right color-primary" name="Sqft">
-          </ion-input>
-          <span class="color-primary">SF</span>
-        </ion-col>
-      </ion-row>
-      <ion-row>
         <ion-row>
-          <ion-col size="3">
-           <div class="color-primary"><b>Cost($)</b></div>
-           <div><ion-input type="text" class="labelfont border-btm" [(ngModel)]="mat.UnitCost" name="UnitCost" (change)="ActionSetMargin(1,mat,'matfab')"></ion-input></div>
+          <ion-col class="lablewid" size="1" class="color-primary"><b>M:</b></ion-col>
+          <ion-col size="7" class="labelfont">
+            <ion-select [(ngModel)]="mat.MaterialID" name="MaterialID"
+              (ngModelChange)="ActionPopulateMaterial($event,i)" interface="popover"
+              class="border-btm labelfont2 color-blue">
+              <ion-select-option *ngFor="let material of MaterialList" [value]="material.ID">{{material.StoneType}} -
+                {{material.Color}} - {{material.Depth}} - {{material.Finish}}</ion-select-option>
+            </ion-select>
           </ion-col>
-          <ion-col size="3">
-            <div class="color-primary"><b>M(%)</b></div>
-            <div><ion-input type="text" class="labelfont border-btm" [(ngModel)]="mat.Margin" name="Margin" (change)="ActionSetMargin(2,mat,'matfab')"></ion-input></div>
+          <ion-col size="1">
+            <ion-icon name="add" (click)="ActionAddMaterial(0, 'QuotePart')"></ion-icon>
           </ion-col>
-          <ion-col size="3">
-            <div class="color-primary"><b>Price($)</b></div>
-            <div><ion-input type="text" class="labelfont border-btm" [(ngModel)]="mat.LaborUnitPrice" name="LaborUnitPrice" (change)="ActionSetMargin(3,mat,'matfab')"></ion-input></div>
+          <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
+            <ion-input type="text" [(ngModel)]="mat.Sqft" readonly="readonly"
+              class="text-center border-right color-primary" name="Sqft">
+            </ion-input>
+            <span class="color-primary">SF</span>
           </ion-col>
-          <ion-col size="3">
-            <div class="color-primary"><b>Amt($)</b></div>
-            <div> <ion-input type="text" class="labelfont border-btm"  [(ngModel)]="mat.Amt" name="Amt" readonly="readonly"></ion-input></div>
-          </ion-col>
-         </ion-row>
-      </ion-row>
-    </div>
+        </ion-row>
+        <ion-row>
+          <ion-row>
+            <ion-col size="3">
+              <div class="color-primary"><b>Cost($)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="mat.UnitCost" name="UnitCost"
+                  (change)="ActionSetMargin(1,mat,'matfab')"></ion-input>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="color-primary"><b>M(%)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="mat.Margin" name="Margin"
+                  (change)="ActionSetMargin(2,mat,'matfab')"></ion-input>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="color-primary"><b>Price($)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="mat.LaborUnitPrice"
+                  name="LaborUnitPrice" (change)="ActionSetMargin(3,mat,'matfab')"></ion-input>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="color-primary"><b>Amt($)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="mat.Amt" name="Amt"
+                  readonly="readonly"></ion-input>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+      </div>
     </ion-col>
 
     <ion-col *ngSwitchCase="2">
@@ -215,8 +233,8 @@
         <ion-row>
           <ion-col size="4" class="color-blue"><b>Fabrication:</b></ion-col>
           <ion-col size="3" class="roundborder borderall flex fontbold">
-            <ion-input type="text" [(ngModel)]="fab.Sqft" class="text-center border-right color-green"
-              name="PartSqft"></ion-input>
+            <ion-input type="text" [(ngModel)]="fab.Sqft" class="text-center border-right color-green" name="PartSqft">
+            </ion-input>
             <span class="color-primary">SF</span>
           </ion-col>
         </ion-row>
@@ -224,12 +242,14 @@
           <ion-row>
             <ion-col size="1" class="round bg-primary color-white text-center mar-top5">{{i + 1}}</ion-col>
             <ion-col size="8">
-              <ion-select class="btninfo" [(ngModel)]="size.CounterTypeID" interface="popover" class="color-blue labelfont2 border-btm">
+              <ion-select class="btninfo" [(ngModel)]="size.CounterTypeID" interface="popover"
+                class="color-blue labelfont2 border-btm">
                 <ion-select-option *ngFor="let c of CountertypeList" [value]="c.ID">{{c.Name}}</ion-select-option>
               </ion-select>
             </ion-col>
             <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
-              <ion-input type="text" [(ngModel)]="size.Sqft" (change)="ActionSetFabSqft(j)" class="text-center border-right color-primary" name="Sqft">
+              <ion-input type="text" [(ngModel)]="size.Sqft" (change)="ActionSetFabSqft(j)"
+                class="text-center border-right color-primary" name="Sqft">
               </ion-input>
               <span class="color-primary">SF</span>
             </ion-col>
@@ -250,7 +270,7 @@
         </div>
         <ion-row class="bdr-radius20 bdr-dashed mar-top20">
           <ion-col size="12" class="text-center" (click)="ActionAddSize(j)">
-            <ion-icon name="add-circle" class="ion-float-left font-medium"></ion-icon>
+            <ion-icon name="add-circle" class="ion-float-left fontmedium"></ion-icon>
             <ion-label><b>ADD ANOTHER ENTRY</b></ion-label>
           </ion-col>
         </ion-row>
@@ -260,8 +280,8 @@
     <ion-col *ngSwitchCase="3">
       <ion-row>
         <ion-col class="lablewid" size="12" class="color-primary">
-          <ion-icon name="list" class="font-medium"></ion-icon><b>Splash:</b>&nbsp;
-          <ion-icon name="add-circle" class="font-medium"></ion-icon>
+          <ion-icon name="list" class="fontmedium"></ion-icon><b>Splash:</b>&nbsp;
+          <ion-icon name="add-circle" class="fontmedium"></ion-icon>
         </ion-col>
       </ion-row>
       <ion-list>
@@ -271,11 +291,12 @@
             <ion-col size="8">
               <ion-select [(ngModel)]="splash.SplashID" name="SplashID" interface="popover"
                 class="border-btm labelfont2 color-blue" (ngModelChange)="ActionPopulateSplash($event,i)">
-                <ion-select-option *ngFor="let spl of SplashList" [value]="spl.ID">{{spl.Description}}</ion-select-option>
+                <ion-select-option *ngFor="let spl of SplashList" [value]="spl.ID">{{spl.Description}}
+                </ion-select-option>
               </ion-select>
             </ion-col>
             <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
-              <ion-input type="text" [(ngModel)]="splash.Sqft"  class="text-center border-right color-primary"
+              <ion-input type="text" [(ngModel)]="splash.Sqft" class="text-center border-right color-primary"
                 name="Sqft" (change)="ActionChangeSplash()">
               </ion-input>
               <span class="color-primary">SF</span>
@@ -283,64 +304,79 @@
           </ion-row>
           <ion-row class="bg-primary bdr-radius20">
             <ion-col size="5" class="fontbold labelfont2 flex mar-top5"><span class="color-white">W:&nbsp;</span>
-              <ion-input type="text" [(ngModel)]="splash.Width" class="roundborder borderall bg-white text-center"(change)="ActionSetSplashSqft(splash)" ></ion-input>
+              <ion-input type="text" [(ngModel)]="splash.Width" class="roundborder borderall bg-white text-center"
+                (change)="ActionSetSplashSqft(splash)"></ion-input>
             </ion-col>
             <ion-col size="1" class="fontbold labelfont2 color-white mar-top5">X</ion-col>
             <ion-col size="5" class="fontbold flex labelfont2 mar-top5"><span class="color-white">H:&nbsp; </span>
-              <ion-input type="text" [(ngModel)]="splash.Height" class="roundborder borderall bg-white text-center" (change)="ActionSetSplashSqft(splash)"></ion-input>
+              <ion-input type="text" [(ngModel)]="splash.Height" class="roundborder borderall bg-white text-center"
+                (change)="ActionSetSplashSqft(splash)"></ion-input>
             </ion-col>
-            <ion-col size="1" class="color-primary round bg-white text-center mar-top5" >
+            <ion-col size="1" class="color-primary round bg-white text-center mar-top5">
               <b>X</b></ion-col>
-          </ion-row>        
+          </ion-row>
         </ion-col>
       </ion-list>
-   
+
       <ion-list>
         <ion-col class="lablewid" size="12" class="color-primary">
-          <ion-icon name="list" class="font-medium"></ion-icon><b>Edge:</b>&nbsp;
-          <ion-icon name="add-circle" class="font-medium"></ion-icon>
+          <ion-icon name="list" class="fontmedium"></ion-icon><b>Edge:</b>&nbsp;
+          <ion-icon name="add-circle" class="fontmedium"></ion-icon>
         </ion-col>
         <ion-col *ngFor="let edge of partinfo.EdgeList;let i = index">
-        <ion-row>
-          <ion-col size="1" class="color-green"><b>E:</b></ion-col>
-          <ion-col size="8">
-            <ion-select [(ngModel)]="edge.EdgeProfileID" class="btninfo" interface="popover" (ngModelChange)="ActionPopulateEdge($event,i)" class="border-btm labelfont2 color-blue">
-              <ion-select-option *ngFor="let edg of EdgeList" [value]="edg.ID">{{edg.Description}}</ion-select-option>
-            </ion-select>
-          </ion-col>
-          <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
-            <ion-input type="text" [(ngModel)]="edge.LF" (change)="ActionSetAmount('edge',edge)" class="text-center border-right color-primary"
-              name="LF" >
-            </ion-input>
-            <span class="color-primary">LF</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="3">
-           <div class="color-primary"><b>Cost($)</b></div>
-           <div><ion-input type="text" class="labelfont border-btm" [(ngModel)]="edge.UnitCost" name="UnitCost" (change)="ActionSetMargin(1,edge,'edge')"></ion-input></div>
-          </ion-col>
-          <ion-col size="3">
-            <div class="color-primary"><b>M(%)</b></div>
-            <div><ion-input type="text" class="labelfont border-btm" [(ngModel)]="edge.Margin" name="Margin" (change)="ActionSetMargin(2,edge,'edge')"></ion-input></div>
-          </ion-col>
-          <ion-col size="3">
-            <div class="color-primary"><b>Price($)</b></div>
-            <div><ion-input type="text" class="labelfont border-btm" [(ngModel)]="edge.UnitPrice" name="UnitPrice" (change)="ActionSetMargin(3,edge,'edge')"></ion-input></div>
-          </ion-col>
-          <ion-col size="3">
-            <div class="color-primary"><b>Amt($)</b></div>
-            <div> <ion-input type="text" class="labelfont border-btm" [(ngModel)]="edge.Amt" name="Amount" readonly="readonly"></ion-input></div>
-          </ion-col>
-         </ion-row>
-      </ion-col>
+          <ion-row>
+            <ion-col size="1" class="color-green"><b>E:</b></ion-col>
+            <ion-col size="8">
+              <ion-select [(ngModel)]="edge.EdgeProfileID" class="btninfo" interface="popover"
+                (ngModelChange)="ActionPopulateEdge($event,i)" class="border-btm labelfont2 color-blue">
+                <ion-select-option *ngFor="let edg of EdgeList" [value]="edg.ID">{{edg.Description}}</ion-select-option>
+              </ion-select>
+            </ion-col>
+            <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
+              <ion-input type="text" [(ngModel)]="edge.LF" (change)="ActionSetAmount('edge',edge)"
+                class="text-center border-right color-primary" name="LF">
+              </ion-input>
+              <span class="color-primary">LF</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="3">
+              <div class="color-primary"><b>Cost($)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="edge.UnitCost" name="UnitCost"
+                  (change)="ActionSetMargin(1,edge,'edge')"></ion-input>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="color-primary"><b>M(%)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="edge.Margin" name="Margin"
+                  (change)="ActionSetMargin(2,edge,'edge')"></ion-input>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="color-primary"><b>Price($)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="edge.UnitPrice" name="UnitPrice"
+                  (change)="ActionSetMargin(3,edge,'edge')"></ion-input>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="color-primary"><b>Amt($)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="edge.Amt" name="Amount"
+                  readonly="readonly"></ion-input>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
       </ion-list>
     </ion-col>
 
     <ion-col *ngSwitchCase="4">
       <ion-row>
         <ion-col class="lablewid" size="12" class="color-primary">
-          <ion-icon name="list" class="font-medium"></ion-icon><b>Cutout:</b>
+          <ion-icon name="list" class="fontmedium"></ion-icon><b>Cutout:</b>
         </ion-col>
       </ion-row>
       <ion-list>
@@ -348,44 +384,272 @@
           <ion-row>
             <ion-col size="1" class="color-green"><b>C:</b></ion-col>
             <ion-col size="8">
-              <ion-select [(ngModel)]="cutout.TypeID" interface="popover" (ngModelChange)="ActionPopulateCutout($event,i)" class="border-btm labelfont2 color-blue">
+              <ion-select [(ngModel)]="cutout.TypeID" interface="popover"
+                (ngModelChange)="ActionPopulateCutout($event,i)" class="border-btm labelfont2 color-blue">
                 <ion-select-option *ngFor="let c of CutoutList" [value]="c.ID">{{c.Description}}</ion-select-option>
               </ion-select>
             </ion-col>
             <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
-              <ion-input type="text"  [(ngModel)]="cutout.LF" (change)="ActionSetAmount('cutout',cutout)" class="text-center border-right color-primary" name="LF">
+              <ion-input type="text" [(ngModel)]="cutout.LF" (change)="ActionSetAmount('cutout',cutout)"
+                class="text-center border-right color-primary" name="LF">
               </ion-input>
               <span class="color-primary">EA</span>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col size="3">
-             <div class="color-primary"><b>Cost($)</b></div>
-             <div><ion-input type="text" class="labelfont border-btm" [(ngModel)]="cutout.UnitCost" name="UnitCost" (change)="ActionSetMargin(1,cutout,'cutout')"></ion-input></div>
+              <div class="color-primary"><b>Cost($)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="cutout.UnitCost" name="UnitCost"
+                  (change)="ActionSetMargin(1,cutout,'cutout')"></ion-input>
+              </div>
             </ion-col>
             <ion-col size="3">
               <div class="color-primary"><b>M(%)</b></div>
-              <div><ion-input type="text" class="labelfont border-btm" [(ngModel)]="cutout.Margin" name="Margin" (change)="ActionSetMargin(2,cutout,'cutout')"></ion-input></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="cutout.Margin" name="Margin"
+                  (change)="ActionSetMargin(2,cutout,'cutout')"></ion-input>
+              </div>
             </ion-col>
             <ion-col size="3">
               <div class="color-primary"><b>Price($)</b></div>
-              <div><ion-input type="text" class="labelfont border-btm" [(ngModel)]="cutout.Unitprice" name="Unitprice" (change)="ActionSetMargin(3,cutout,'cutout')"></ion-input></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="cutout.Unitprice" name="Unitprice"
+                  (change)="ActionSetMargin(3,cutout,'cutout')"></ion-input>
+              </div>
             </ion-col>
             <ion-col size="3">
               <div class="color-primary"><b>Amt($)</b></div>
-              <div> <ion-input type="text" class="labelfont border-btm" [(ngModel)]="cutout.Amt" name="Amount" readonly="readonly"></ion-input></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="cutout.Amt" name="Amount"
+                  readonly="readonly"></ion-input>
+              </div>
             </ion-col>
-           </ion-row>
+          </ion-row>
         </ion-col>
       </ion-list>
     </ion-col>
 
-    <!-- <ion-col *ngSwitchCase="5">
+    <ion-col *ngSwitchCase="5">
+      <ion-list>
+        <ion-col class="lablewid" size="12" class="color-primary">
+          <ion-icon name="list" class="fontmedium"></ion-icon><b>Sink:</b>&nbsp;
+          <ion-icon name="add-circle" class="fontmedium"></ion-icon>
+        </ion-col>
+        <ion-col *ngFor="let sinkfaucet of partinfo.SinkList;let i = index">
+          <ion-row>
+            <ion-col size="1" class="color-green"><b>S:</b></ion-col>
+            <ion-col size="8" class="border-btm">
+              <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Description" name="Description"
+                (keyup.enter)="ActionSearchSelect($event,2,8,sinkfaucet)" required></ion-input>
+              <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,8,sinkfaucet)"></ion-icon>
+              <ion-icon name="search" (click)="ActionSearchSelect($event,2,8,sinkfaucet)"></ion-icon>
+            </ion-col>
+            <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
+              <ion-input type="text" [(ngModel)]="sinkfaucet.Qty" class="text-center border-right color-primary"
+                name="Qty" (change)="ActionSetAmount('sink', sinkfaucet)">
+              </ion-input>
+              <span class="color-primary">SF</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="3">
+              <div class="color-primary"><b>Cost($)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="sinkfaucet.UnitCost" name="UnitCost"
+                  (change)="ActionSetMargin(1,sinkfaucet,'sink')"></ion-input>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="color-primary"><b>M(%)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="sinkfaucet.Margin" name="Margin"
+                  (change)="ActionSetMargin(2,sinkfaucet,'sink')"></ion-input>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="color-primary"><b>Price($)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="sinkfaucet.UnitPrice" name="UnitPrice"
+                  (change)="ActionSetMargin(3,sinkfaucet,'sink')"></ion-input>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="color-primary"><b>Amt($)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="sinkfaucet.Amount" name="Amount"
+                  readonly="readonly"></ion-input>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-list>
 
+      <ion-list>
+        <ion-col class="lablewid" size="12" class="color-primary">
+          <ion-icon name="list" class="fontmedium"></ion-icon><b>Faucet:</b>&nbsp;
+          <ion-icon name="add-circle" class="fontmedium"></ion-icon>
+        </ion-col>
+        <ion-col *ngFor="let faucet of partinfo.FaucetList;let i = index">
+          <ion-row>
+            <ion-col size="1" class="color-green"><b>F:</b></ion-col>
+            <ion-col size="8" class="border-btm">
+              <ion-input type="text" class="labelfont" [(ngModel)]="faucet.Description" name="Description"
+                (keyup.enter)="ActionSearchSelect($event,2,9,faucet)" required></ion-input>
+              <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,9,faucet)"></ion-icon>
+              <ion-icon name="search" (click)="ActionSearchSelect($event,2,9,faucet)"></ion-icon>
+            </ion-col>
+            <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
+              <ion-input type="text" [(ngModel)]="faucet.Qty" class="text-center border-right color-primary" name="Qty"
+                (change)="ActionSetAmount('faucet', faucet)">
+              </ion-input>
+              <span class="color-primary">SF</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="3">
+              <div class="color-primary"><b>Cost($)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="faucet.UnitCost" name="UnitCost"
+                  (change)="ActionSetMargin(1,faucet,'faucet')"></ion-input>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="color-primary"><b>M(%)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="faucet.Margin" name="Margin"
+                  (change)="ActionSetMargin(2,faucet,'faucet')"></ion-input>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="color-primary"><b>Price($)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="faucet.UnitPrice" name="UnitPrice"
+                  (change)="ActionSetMargin(3,faucet,'faucet')"></ion-input>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="color-primary"><b>Amt($)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="faucet.Amount" name="Amount"
+                  readonly="readonly"></ion-input>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-list>
     </ion-col>
     <ion-col *ngSwitchCase="6">
+      <ion-list>
+        <ion-col class="lablewid" size="12" class="color-primary">
+          <ion-icon name="list" class="fontmedium"></ion-icon><b>Labor:</b>&nbsp;
+          <ion-icon name="add-circle" class="fontmedium"></ion-icon>
+        </ion-col>
+        <ion-col *ngFor="let labor of partinfo.LaborList;let i = index">
+          <span *ngIf="labor.ViewTypeID != 1">
+            <ion-row>
+              <ion-col size="1" class="color-green"><b>L:</b></ion-col>
+              <ion-col size="8" class="border-btm">
+                <ion-input type="text" class="labelfont" [(ngModel)]="labor.Description" name="Description"
+                  (keyup.enter)="ActionSearchSelect($event,2,7,labor)" required></ion-input>
+                <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,7,labor)"></ion-icon>
+                <ion-icon name="search" (click)="ActionSearchSelect($event,2,7,labor)"></ion-icon>
+              </ion-col>
+              <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
+                <ion-input type="text" [(ngModel)]="labor.Qty" class="text-center border-right color-primary" name="Qty"
+                  (change)="ActionSetAmount('labor', labor)">
+                </ion-input>
+                <span class="color-primary">EA</span>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3">
+                <div class="color-primary"><b>Cost($)</b></div>
+                <div>
+                  <ion-input type="text" class="labelfont border-btm" [(ngModel)]="labor.UnitCost" name="UnitCost"
+                    (change)="ActionSetMargin(1,labor,'labor')"></ion-input>
+                </div>
+              </ion-col>
+              <ion-col size="3">
+                <div class="color-primary"><b>M(%)</b></div>
+                <div>
+                  <ion-input type="text" class="labelfont border-btm" [(ngModel)]="labor.Margin" name="Margin"
+                    (change)="ActionSetMargin(2,labor,'labor')"></ion-input>
+                </div>
+              </ion-col>
+              <ion-col size="3">
+                <div class="color-primary"><b>Price($)</b></div>
+                <div>
+                  <ion-input type="text" class="labelfont border-btm" [(ngModel)]="labor.UnitPrice" name="UnitPrice"
+                    (change)="ActionSetMargin(3,labor,'labor')"></ion-input>
+                </div>
+              </ion-col>
+              <ion-col size="3">
+                <div class="color-primary"><b>Amt($)</b></div>
+                <div>
+                  <ion-input type="text" class="labelfont border-btm" [(ngModel)]="labor.Amount" name="Amount"
+                    readonly="readonly"></ion-input>
+                </div>
+              </ion-col>
+            </ion-row>
+          </span>
+        </ion-col>
+      </ion-list>
 
-    </ion-col> -->
+      <ion-list>
+        <ion-col class="lablewid" size="12" class="color-primary">
+          <ion-icon name="list" class="fontmedium"></ion-icon><b>Addon:</b>&nbsp;
+          <ion-icon name="add-circle" class="fontmedium"></ion-icon>
+        </ion-col>
+        <ion-col *ngFor="let other of partinfo.OtherList;let i = index">
+          <ion-row>
+            <ion-col size="1" class="color-green"><b>A:</b></ion-col>
+            <ion-col size="8" class="border-btm">
+              <ion-input type="text" class="labelfont" [(ngModel)]="other.Description" name="Description"
+                (keyup.enter)="ActionSearchSelect($event,2,11,other)" required></ion-input>
+              <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,11,other)"></ion-icon>
+              <ion-icon name="search" (click)="ActionSearchSelect($event,2,11,other)"></ion-icon>
+            </ion-col>
+            <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
+              <ion-input type="text" [(ngModel)]="other.Qty" class="text-center border-right color-primary" name="Qty"
+                (change)="ActionSetAmount('other', other)">
+              </ion-input>
+              <span class="color-primary">EA</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="3">
+              <div class="color-primary"><b>Cost($)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="other.UnitCost" name="UnitCost"
+                  (change)="ActionSetMargin(1,other,'other')"></ion-input>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="color-primary"><b>M(%)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="other.Margin" name="Margin"
+                  (change)="ActionSetMargin(2,other,'other')"></ion-input>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="color-primary"><b>Price($)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="other.UnitPrice" name="UnitPrice"
+                  (change)="ActionSetMargin(3,other,'other')"></ion-input>
+              </div>
+            </ion-col>
+            <ion-col size="3">
+              <div class="color-primary"><b>Amt($)</b></div>
+              <div>
+                <ion-input type="text" class="labelfont border-btm" [(ngModel)]="other.Amount" name="Amount"
+                  readonly="readonly"></ion-input>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-list>
+    </ion-col>
   </ion-row>
 </ion-content>
 

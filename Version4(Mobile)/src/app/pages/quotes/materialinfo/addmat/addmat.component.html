@@ -1,393 +1,5 @@
-<!-- <ion-header>
-    <ion-toolbar>
-      <ion-title class="titleheader">MATERIAL DETAILS</ion-title>
-      <ion-button slot="end" color="success" size="small">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
-    </ion-toolbar>
-  </ion-header> -->
-
-<!-- <ion-content *ngIf="selName == 1">
-  <form name="form" (ngSubmit)="ActionSubmit()" #f="ngForm">
-    <ion-toolbar>
-      <ion-title class="titleheader" color="primary">MATERIAL DETAILS</ion-title>
-      <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
-    </ion-toolbar>
-
-
-    <ion-item>
-      <ion-label class="labelfont2" position="floating" color="primary">Material*</ion-label>
-      <ion-input type="text" class="labelfont2" [(ngModel)]="material.MaterialName" name="material"></ion-input>
-      <ion-icon slot="end" name="search" class="mar-top20" (click)="ActionSelectMat()"></ion-icon>
-    </ion-item>
-    <div *ngIf="f.submitted && material.invalid" class="invalid-feedback padd-Left">
-      <div *ngIf="material.errors.required" class="error">Material Name is required</div>
-    </div>
-    <ion-row>
-      <ion-col size="6">
-        <ion-item>
-          <ion-label position="floating" color="primary">Thickness</ion-label>
-          <ion-select [(ngModel)]="Thickness" class="labelfont2">
-            <ion-select-option value="25">1 CM</ion-select-option>
-            <ion-select-option value="5059">1.2 CM</ion-select-option>
-            <ion-select-option value="116">1.3 CM</ion-select-option>
-            <ion-select-option value="5145">12mm</ion-select-option>
-            <ion-select-option value="28">2 CM</ion-select-option>
-            <ion-select-option value="24" selected="true">3 CM</ion-select-option>
-            <ion-select-option value="29">4 CM</ion-select-option>
-            <ion-select-option value="30">5 CM</ion-select-option>
-            <ion-select-option value="5146">5mm</ion-select-option>
-            <ion-select-option value="31">6 CM</ion-select-option>
-            <ion-select-option value="5147">6mm</ion-select-option>
-            <ion-select-option value="123">8 CM</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-      <ion-col size="6">
-        <ion-item>
-          <ion-label position="floating" color="primary">Finish</ion-label>
-          <ion-select [(ngModel)]="Finish" class="labelfont2">
-            <ion-select-option value="119">Antiqued</ion-select-option>
-            <ion-select-option value="125">Brushed</ion-select-option>
-            <ion-select-option value="5089">Caress</ion-select-option>
-            <ion-select-option value="114">Concrete</ion-select-option>
-            <ion-select-option value="5144">Flamed</ion-select-option>
-            <ion-select-option value="34">Honed</ion-select-option>
-            <ion-select-option value="5085">Honed/Leathered</ion-select-option>
-            <ion-select-option value="115">Leathered</ion-select-option>
-            <ion-select-option value="5057">Matte</ion-select-option>
-            <ion-select-option value="5084">Natural Cleft</ion-select-option>
-            <ion-select-option value="23" selected="true">Polished</ion-select-option>
-            <ion-select-option value="5086">Polished/Antiqued</ion-select-option>
-            <ion-select-option value="5087">Polished/Honed</ion-select-option>
-            <ion-select-option value="5143">Polished/Leathered</ion-select-option>
-            <ion-select-option value="5150">Rough</ion-select-option>
-            <ion-select-option value="5122">Rugged</ion-select-option>
-            <ion-select-option value="5055">Satin</ion-select-option>
-            <ion-select-option value="5056">Suede</ion-select-option>
-            <ion-select-option value="5073">Textured</ion-select-option>
-            <ion-select-option value="5088">Thermal</ion-select-option>
-            <ion-select-option value="5058">Velvet</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="6">
-        <ion-item>
-          <ion-label class="labelfont2" position="floating" color="primary">WF</ion-label>
-          <ion-input type="text" class="labelfont2" value="0"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col size="6">
-        <ion-item class="marg-check marleft">
-          <ion-checkbox class="marleft4"></ion-checkbox>
-          <ion-label class="colred">Save Remnant</ion-label>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="6">
-        <ion-item>
-          <ion-label class="labelfont2" position="floating" color="primary">Price By</ion-label>
-          <ion-select [(ngModel)]="Price" class="labelfont2">
-            <ion-select-option value="number:25" selected="true">Sqft</ion-select-option>
-            <ion-select-option value="number:5059">Slab</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-      <ion-col size="6">
-        <ion-item>
-          <ion-label class="labelfont2" position="floating" color="primary"><b>Risk Level:</b></ion-label>
-          <ion-input type="text" class="labelfont2" value="LOW" readonly="readonly" style="color: blue;"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-        <ion-row>
-          <ion-col size="4"></ion-col>
-          <ion-col size="4" class="text-center ion-no-padding">
-            <h4><b>Mat Pricing</b></h4>
-          </ion-col>
-          <ion-col size="4"></ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="stacked" color="primary">Cost</ion-label>
-              <ion-input type="text" class="labelfont2" value="0"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="stacked" color="primary">Discount(%)</ion-label>
-              <ion-input type="text" class="labelfont2" value="0">
-                <ion-row class="margin-right3">%</ion-row>
-              </ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="stacked" color="primary">Cost/Sqft</ion-label>
-              <ion-input type="text" class="labelfont2" value="0">
-                <ion-row class="margin-right3">$</ion-row>
-              </ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="stacked" color="primary">Margin</ion-label>
-              <ion-input type="text" class="labelfont2" value="0">
-                <ion-row class="margin-right3">%</ion-row>
-              </ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="stacked" color="primary">Price/Sqft</ion-label>
-              <ion-input type="text" class="labelfont2" value="0">
-                <ion-row class="margin-right3">$</ion-row>
-              </ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="stacked" color="primary">Net Price/Sqft</ion-label>
-              <ion-input type="text" class="labelfont2" value="0">
-                <ion-row class="margin-right3">$</ion-row>
-              </ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="4"></ion-col>
-          <ion-col size="4" class="text-center ion-no-padding">
-            <h4><b>Discount</b></h4>
-          </ion-col>
-          <ion-col size="4"></ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="12">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary">Discount</ion-label>
-              <ion-select [(ngModel)]="Thickness" class="labelfont2">
-                <ion-select-option value="number:25">Select</ion-select-option>
-                <ion-select-option value="number:5059" selected="true">Material Discount</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"></ion-label>
-              <ion-input type="text" class="labelfont2" value="0"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"></ion-label>
-              <ion-select [(ngModel)]="pricelsit" class="labelfont2">
-                <ion-select-option value="Retail">%</ion-select-option>
-                <ion-select-option value="Commercial" selected="true">$</ion-select-option>
-                <ion-select-option value="Commercial">EA</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item class="marleft marg-check">
-              <ion-checkbox class="marleft4"></ion-checkbox>
-              <ion-label class="colred">Tax</ion-label>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-    <ion-row>
-      <ion-item>
-        <ion-label class="labelfont2" position="floating" color="primary">Note</ion-label>
-        <ion-textarea type="text" class="labelfont2" value="Note"></ion-textarea>
-      </ion-item>
-    </ion-row>
-  </form>
-</ion-content>
-
-
-<ion-content *ngIf="selName == 2">
-  <form name="form" (ngSubmit)="ActionSubmit()" #f="ngForm">
-    <ion-toolbar>
-      <ion-title class="titleheader" color="primary">MATERIAL DETAILS</ion-title>
-      <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
-    </ion-toolbar>
-
-    <ion-row>
-      <ion-col  class="no-margin border-btm ion-no-padding">
-        <ion-row >
-          <ion-col size="9"><h5><u>{{material.MaterialName}}</u></h5></ion-col>
-          <ion-col size="3" class="text-right"><h5><u>{{material.Amt}}</u></h5></ion-col>
-        </ion-row>
-        <ion-row style="font-size:12px">
-          <ion-col>
-            <span *ngIf="material.FinishedSqft != null">Finished SF : <b>{{material.FinishedSqft}}</b></span>,
-            <span *ngIf="Version.MaterialSqft != null">Material SF : <b>{{Version.MaterialSqft}}</b></span>,
-            <span *ngIf="material.SlabSqft != null">Reserved SF : <b>{{material.SlabSqft}}</b></span>
-          </ion-col>
-        </ion-row>
-        <ion-row style="font-size:12px">
-          <ion-col>
-            <span  *ngIf="material.UnitPrice != null">Price/Unit : <b>{{material.UnitPrice}}</b></span>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-
-        <ion-row (click)="toggleGroup(1)">
-          <ion-col size="1" class="text-right ion-no-padding"><h3><ion-icon name="menu"></ion-icon></h3></ion-col>
-          <ion-col size="11" class="text-left ion-no-padding">
-            <h4><b>Part</b></h4>
-          </ion-col>
-        </ion-row>
-        <ion-row *ngIf="isGroupShown(1)">
-          <ion-col size="12">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary">Part NAme</ion-label>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row *ngIf="isGroupShown(1)">
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"></ion-label>
-              <ion-input type="text" class="labelfont2" value="23.32"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"></ion-label>
-              <ion-input type="text" class="labelfont2" value="23.32"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"></ion-label>
-              <ion-input type="text" class="labelfont2" value="23.32"></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-        <ion-row (click)="toggleGroup(2)">
-          <ion-col size="1" class="text-right ion-no-padding"><h3><ion-icon name="menu"></ion-icon></h3></ion-col>
-          <ion-col size="11" class="text-left ion-no-padding">
-            <h4><b>Measurements</b></h4>
-          </ion-col>
-        </ion-row>
-        <ion-row *ngIf="isGroupShown(2)">
-          <ion-col size="12">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary">Measurements</ion-label>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row *ngIf="isGroupShown(2)">
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"></ion-label>
-              <ion-input type="text" class="labelfont2" value="23.32"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"></ion-label>
-              <ion-input type="text" class="labelfont2" value="23.32"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"></ion-label>
-              <ion-input type="text" class="labelfont2" value="23.32"></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-        <ion-row (click)="toggleGroup(3)">
-          <ion-col size="1" class="text-right ion-no-padding"><h3><ion-icon name="menu"></ion-icon></h3></ion-col>
-          <ion-col size="11" class="text-left ion-no-padding">
-            <h4><b>Stock Info</b></h4>
-          </ion-col>
-        </ion-row>
-        <ion-row *ngIf="isGroupShown(3)">
-          <ion-col size="12">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary">Stock Information</ion-label>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row *ngIf="isGroupShown(3)">
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"></ion-label>
-              <ion-input type="text" class="labelfont2" value="23.32"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"></ion-label>
-              <ion-input type="text" class="labelfont2" value="23.32"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"></ion-label>
-              <ion-input type="text" class="labelfont2" value="23.32"></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-        <ion-row (click)="toggleGroup(4)">
-          <ion-col size="1" class="text-right ion-no-padding"><h3><ion-icon name="menu"></ion-icon></h3></ion-col>
-          <ion-col size="11" class="text-left ion-no-padding">
-            <h4><b>Price Group</b></h4>
-          </ion-col>
-        </ion-row>
-        <ion-row *ngIf="isGroupShown(4)">
-          <ion-col size="12" class="ion-no-padding">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary">Price Lists</ion-label>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row *ngIf="isGroupShown(4)">
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"></ion-label>
-              <ion-input type="text" class="labelfont2" value="23.32"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"></ion-label>
-              <ion-input type="text" class="labelfont2" value="23.32"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label class="labelfont2" position="floating" color="primary"></ion-label>
-              <ion-input type="text" class="labelfont2" value="23.32"></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-  </form>
-</ion-content> -->
-
-<!-- <ion-item class="marleft">
-          <ion-checkbox class="marleft4"></ion-checkbox>
-          <ion-label>tax</ion-label>
-      </ion-item> -->
-
-
 <ion-content>
-  <form (ngSubmit)="ActionSaveMaterial(f)" #f="ngForm">
+  <form (ngSubmit)="ActionSaveMaterial(form)" #form="ngForm">
     <ion-toolbar class="poss">
       <ion-title class="titleheader" color="primary">MATERIAL DETAILS</ion-title>
       <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
@@ -426,11 +38,52 @@
     <ion-col *ngIf="Progress == 0">
       <ion-item>
         <ion-label class="labelfont2" position="floating" color="primary">Material*</ion-label>
-        <ion-input type="text" class="labelfont2" [(ngModel)]="material.Color" name="Color" #Color="ngModel"></ion-input>
-        <ion-icon slot="end" name="search" class="mar-top20" (click)="ActionSearchSelect()"></ion-icon>
+        <ion-input type="text" class="labelfont2" [(ngModel)]="material.Color" name="Color" #Color="ngModel"
+          (keyup.enter)="ActionSearchProductItems(material, 2,material.ProSubGroup,1)"></ion-input>
+        <ion-icon slot="end" name="search" class="mar-top20"
+          (click)="ActionSearchProductItems(material, 2,material.ProSubGroup,1)"></ion-icon>
       </ion-item>
-      <div *ngIf="f.submitted && material.invalid" class="invalid-feedback padd-Left">
-        <div *ngIf="material.errors.required" class="error">Material Name is required</div>
+      <div [hidden]="!form.submitted  || Color.valid" class="invalid-feedback padd-Left">
+        <div class="error">Material Name is required</div>
+      </div>
+      <div *ngIf="material.showProducts == true" class="popupCls1">
+        <ion-row style="width: 100%;">
+          <ion-col size="11">
+            <ion-label color="primary" class="paddleft5 fontbold">Material Search: </ion-label>
+          </ion-col>
+          <ion-col size="1" class="text-center" style="font-size: 18px;" (click)="ActionClosePopup()"><b>X</b>
+          </ion-col>
+        </ion-row>
+        <div style="width: 100%;height: 300px;overflow: auto;background-color: white;">
+          <ion-row *ngFor="let product of productItems" class="paddzero border-btm smallfont2">
+            <ion-col class="paddzero" (click)="ActionPopulateMaterialSearch(product)">
+              <ion-row>
+                <ion-col size="10" class="fontbold"> {{product.Description}} - {{product.Thickness}} -
+                  {{product.Finish}}&nbsp;<span class="color-blue">({{product.SlabType}})</span></ion-col>
+                <ion-col size="2" class="text-right">{{product.Price  | number : '.2-2'}}</ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="11">
+                  <small class="color-blue fontbold">
+                    {{product.ItemNO}} - {{product.StoneType}}
+                    <span ng-if="product.SupplierName != '' && product.SupplierID > 0"> {{product.SupplierName}}</span>
+                    <span
+                      ng-if="product.GroupID > 0 && product.Group != '' &&  product.Group != null && product.Group != 'Select--One'">
+                      - {{product.Group}}</span>
+                    <span ng-if="product.RiskLevelID > 0"> - {{product.RiskLevel}}</span>
+                    <span ng-if="product.PriceByTypeID == 2"> - Slab Wgt. Avg.</span>
+                    <span ng-if="product.PriceByTypeID == 0"> - Sqft</span>
+                    <span ng-if="product.PriceByTypeID == 1"> - Price By Slab</span>
+                  </small>
+                </ion-col>
+                <ion-col size="1" class="text-right">{{product.InStock}}</ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="productItems.length == 0" class="color-red font-bold">
+            <ion-col class=" text-center">--NO RECORDS FOUND--</ion-col>
+          </ion-row>
+        </div>
       </div>
       <ion-row>
         <ion-col size="4">
@@ -456,57 +109,59 @@
         <ion-col size="4">
           <ion-item>
             <ion-label position="floating" color="primary">Thickness</ion-label>
-            <ion-select [(ngModel)]="material.DepthID" name="DepthID" interface="popover" class="border-btm labelfont2 color-blue">
+            <ion-select [(ngModel)]="material.DepthID" name="DepthID" #DepthID="ngModel" interface="popover"
+              class="border-btm labelfont2">
               <ion-select-option *ngFor="let item of thicknessItems" [value]="item.ID">{{item.Name}}</ion-select-option>
-            </ion-select>   
+            </ion-select>
           </ion-item>
+          <div [hidden]="!form.submitted  || DepthID.valid" class="invalid-feedback padd-Left">
+            <div class="error">!Required</div>
+          </div>
         </ion-col>
         <ion-col size="4">
-          <ion-item> 
+          <ion-item>
             <ion-label position="floating" color="primary">Finish</ion-label>
-            <ion-select [(ngModel)]="material.FinishID" name="FinishID" interface="popover" class="border-btm labelfont2 color-blue">
+            <ion-select [(ngModel)]="material.FinishID" name="FinishID" #FinishID="ngModel" interface="popover"
+              class="border-btm labelfont2">
               <ion-select-option *ngFor="let item of finishItems" [value]="item.ID">{{item.Name}}</ion-select-option>
-            </ion-select>   
+            </ion-select>
           </ion-item>
+          <div [hidden]="!form.submitted  || FinishID.valid" class="invalid-feedback padd-Left">
+            <div class="error">!Required</div>
+          </div>
         </ion-col>
         <ion-col size="4">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Vendor</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material.SupplierName" name="SupplierName"></ion-input>
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.SupplierName" name="SupplierName">
+            </ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="4">
-          <ion-item>
-            <ion-label>Price by:</ion-label>
-          </ion-item>
+          <ion-label>Price by:</ion-label>
         </ion-col>
         <ion-col size="8">
-          <ion-row>
-            <ion-item>
-              <ion-radio value="biff"></ion-radio>
-              <ion-label>Sqft</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-radio value="biff"></ion-radio>
-              <ion-label>Slab</ion-label>
-            </ion-item>
-          </ion-row>
+          <ion-radio-group allow-empty-selection="true" name="radio-group" (ionChange)="radioGroupChange($event)">
+            <ion-radio slot="start" [color]="primary" name="PriceByID" [value]="material.PriceByID == 0"></ion-radio>Sqft&nbsp;&nbsp;
+            <ion-radio slot="start" [color]="primary" name="PriceByID" [value]="material.PriceByID == 1"></ion-radio>Slab
+          </ion-radio-group>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="2">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Cost</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material.Cost" (change)="ActionSetDisc(material)">
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.Cost" name="Cost"
+              (change)="ActionCalculateMaterialCost(material)">
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="2">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">D(%)</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material.CostDiscount"
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.CostDiscount" name="CostDiscount"
               (change)="ActionSetDisc(material)"></ion-input>
           </ion-item>
         </ion-col>
@@ -514,20 +169,24 @@
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Cost</ion-label>
             <ion-input type="text" class="labelfont2" [(ngModel)]="material.UnitCost" name="UnitCost"
-              (change)="ActionSetMargin(1,material,'mat')"></ion-input>
+              (change)="ActionCalculeteMargin(1,material,'mat');ActionCalculateMaterialSummary(material)"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="2">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">M(%)</ion-label>
             <ion-input type="text" class="labelfont2" [(ngModel)]="material.Margin" name="Margin"
-              (change)="ActionSetMargin(2,material,'mat')"></ion-input>
+              (change)="ActionCalculeteMargin(2,material,'mat');ActionCalculateMaterialSummary(material)"></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col size="2">
+        <ion-col size="3">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Price</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material.UnitPrice" name="UnitPrice">$</ion-input>
+            <ion-input type="text" class="labelfont2" *ngIf="material.PriceByID != 2" [(ngModel)]="material.UnitPrice"
+              name="UnitPrice"
+              (change)="ActionCalculeteMargin(3,material,'mat');ActionCalculateMaterialSummary(material)">$</ion-input>
+            <ion-input type="text" class="labelfont2" *ngIf="material.PriceByID == 2" [(ngModel)]="material.WagPrice"
+              name="WagPrice">$</ion-input>
           </ion-item>
         </ion-col>
       </ion-row>

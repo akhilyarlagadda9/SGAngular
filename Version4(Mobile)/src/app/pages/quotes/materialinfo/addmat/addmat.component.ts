@@ -6,7 +6,6 @@ import { QuoteService } from 'src/app/service/quote.service';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { OverlayEventDetail } from '@ionic/core';
 import { AddmeasComponent } from '../addmeas/addmeas.component';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 declare var _qscope: any;
 
@@ -16,24 +15,21 @@ declare var _qscope: any;
   styleUrls: ['./addmat.component.scss'],
 })
 export class AddmatComponent implements OnInit {
-  registerForm: FormGroup;
-  submitted = false;
-  shownGroup: any;
-  public verId: any;
   MaterialList: any = [];
   Progress: number = 0;
-  checkThis: number = 1;
-  VersionId: number;materialId: number;AreaId:number;
-  areaId: number;
-  partId: number;
-  mode: number;
+  VersionId: number;materialId: number;AreaId:number;priceListID:number
   partList: any = [];
-  Matcost: any;
   material: any;
   partinfo: any;
   areaInfo: any;
   Version: any;
   finishItems: any = []; thicknessItems: any = []; riskLevels: any = []; supplierList: any = []; slabtypes: any = []; subproductgroups: any = [];
+  productItems: any = []; pricegroups: any = []; suppliers: any = [];
+  prosubgroupId: number;
+  searchtypeId: number;
+  showProductinventory: boolean;
+  showProducts: boolean;
+  showProductinventory1: boolean;
   //dictionaryObj: any;
   //arrObj: any;
 
@@ -41,8 +37,6 @@ export class AddmatComponent implements OnInit {
   constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private quoterep: QuoterepService, private getservice: QuotegetService, private navParams: NavParams, private service: QuoteService) { }
 
   ngOnInit() { 
-    console.log(this.VersionId + "mat" + this.materialId);
-    this.GetPartList()
     this.preparediclists();
     this.InitMaterial();   
   }
@@ -56,8 +50,8 @@ export class AddmatComponent implements OnInit {
       this.thicknessItems = data[1];
       this.riskLevels = data[2];
     })    
-    // this.getservice.ActionGetSupplierList(0).subscribe(data => { this.supplierList = data }); 
-    // this.getservice.ActionInventoryDicLists(9).subscribe(data => { this.slabtypes = data[0] });  
+    this.getservice.ActionGetSupplierList(0).subscribe(data => { this.supplierList = data }); 
+    this.getservice.ActionInventoryDicLists(9).subscribe(data => { this.slabtypes = data[0] });  
   }  
   productgroups() {
     this.getservice.ActionGetsubproductgrouplist(2).subscribe(data => { this.subproductgroups = data });//typeId
@@ -80,21 +74,9 @@ export class AddmatComponent implements OnInit {
       issave:issave
     });
   }
+  
 
-  /*  ActionSelectMat() {
-     let typeIdList = []; typeIdList.push(5); 
-     this.getservice.qsgetpricelistitems(this.priceListID,typeIdList).subscribe(
-       data => { this.edgelist = data[0] ; console.log(this.edgelist);},
-       error => console.log(error));
-   } */
-
-  GetPartList() {
-    this.service.ActionQuickPartList(this.VersionId, this.areaId, this.partId, this.mode).subscribe(
-      data => { this.partList = data; console.log(this.partList); }
-    );
-  }
-
-  ActionSaveMaterial(form:NgForm) {
+  ActionSaveMaterial(form: any) {
     if (form.valid) {
     this.material.UserID = 0;
     if (typeof (this.material.RiskLevels) == 'object') { this.riskLevels = JSON.stringify(this.riskLevels) };
@@ -108,7 +90,7 @@ export class AddmatComponent implements OnInit {
   ActionSetMargin(typeId: number, model: any, type: string) {
     this.material = this.quoterep.margincalculations(typeId, model, type);
     this.material.Amount = this.quoterep.calcmargin(this.material.UnitCost, this.material.Margin);
-    this.material.Amt = this.Matcost.Amount;
+    this.material.Amt = this.material.Amount;
   }
 
   ActionSetAmount() {
@@ -130,19 +112,6 @@ export class AddmatComponent implements OnInit {
   }
 
 
-  toggleGroup(group) {
-    if (this.isGroupShown(group)) {
-      this.shownGroup = 0;
-    } else {
-      this.shownGroup = group;
-    }
-  };
-
-  isGroupShown(group) {
-    return this.shownGroup === group;
-  };
-
-
   changeProgress(value) {
     if (this.showProgress(value)) {
       this.Progress = 0;
@@ -155,20 +124,67 @@ export class AddmatComponent implements OnInit {
     return this.Progress === value;
   };
 
+  /*********Material Search************/
+  ActionSearchProductItems = function (material, searchtypeId, productsubgroup, searchType) {debugger;
+    this.material.searchType = searchType; this.material.showProducts = true;
+    let searchobj = material;
+    let prosubgroupId = (productsubgroup == null || productsubgroup == undefined || productsubgroup == 0) ? 0 : productsubgroup.ID;
+    let color = (this.material.Color == null || this.material.Color == "" || this.material.Color == undefined) ? "" : this.material.Color;
+    if (prosubgroupId == 0 && color == "") { return; }
+    else if (prosubgroupId > 0 && color == "") { this.searchtypeId = 1; }
+    else if (prosubgroupId == 0 && color != "") { this.searchtypeId = 2; }
+    else if (prosubgroupId > 0 && color != "") { this.searchtypeId = 3; }
+    this.preparematerialsearch(material, searchtypeId, prosubgroupId, color, searchobj, this.priceListID);
+}
+preparematerialsearch(material, searchtypeId, prosubgroupId, color, searchobj, pricelistId) {
+  this.material.SearchChkFlag = material.SearchChkFlag == undefined ? 0 : material.SearchChkFlag;
+  this.material.DepthTypeID = material.DepthTypeID == undefined ? 0 : material.DepthTypeID;
+  this.material.FinishTypeID = material.FinishTypeID == undefined ? 0 : material.FinishTypeID;
+  if (this.material.SearchChkFlag != 0) {
+      this.prosubgroupId = 0; this.searchtypeId = 2;
+  }
+  this.service.ActionGetmaterialsearchrecords(color, material.SearchChkFlag, pricelistId, material.DepthTypeID, material.FinishTypeID, searchtypeId, prosubgroupId).subscribe(data=>{this.productItems = data});
+  this.service.Actionpricegrouplists(pricelistId).subscribe(data=>{this.pricegroups = data});
+  this.preparesuppliersfromresults(this.productItems);
+  this.showProductinventory = false; this.showProducts = true;
+}
+ActionClosePopup(){
+  this.material.showProducts = false;this.showProducts = false;this.showProductinventory = false;this.showProductinventory1 = false;
+}
+preparesuppliersfromresults(productItems:any) {
+  let supplierList = [];
+  if (productItems.length > 0) {
+      productItems.map(function (elem) {
+          if (elem.SupplierID > 0) {
+              let item = {ID:"", Name:''}; item.ID = elem.SupplierID; item.Name = elem.SupplierName; supplierList.push(item);
+          }
+      });
+  }
+}
 
-  chngCheck(Check) {
-    if (this.isCheck(Check)) {
-      this.checkThis = 0;
-    } else {
-      this.checkThis = Check;
-    }
-  };
+ActionPopulateMaterialSearch(productItem:any){
+  this.material = this.quoterep.popultaesearchiteminfo(this.material, this.subproductgroups, productItem);
+  this.ActionClosePopup();
+}
 
-  isCheck(Check) {
-    return this.checkThis === Check;
-  };
-
-  /* async ActionAddMeas() {
+ActionCalculateMaterialCost(material) {
+  if (material.Cost != 0 && material.CostDiscount != 0) {
+      let cost = this.quoterep.roundToTwo(Number(material.Cost * (material.CostDiscount / 100)));
+      this.material.UnitCost = this.quoterep.roundToTwo(material.Cost - cost);
+  } else {
+      this.material.UnitCost = material.Cost;
+  }
+  this.material = this.quoterep.margincalculations('1', material, 'mat');
+  //calcmaterialnetprice(material);
+  this.material = this.quoterep.calcmaterialwasteamt(material);
+}
+ActionCalculeteMargin = function (typeId, item, type) {
+  this.material = this.quoterep.margincalculations(typeId, item, type);
+}
+ActionCalculateMaterialSummary = function (material) {
+  this.material = this.quoterep.calcmaterialwasteamt(material);
+}
+ /* async ActionAddMeas() {
     const popover = await this.popoverCntrl.create({
       component: AddMeasComponent,
       translucent: true,

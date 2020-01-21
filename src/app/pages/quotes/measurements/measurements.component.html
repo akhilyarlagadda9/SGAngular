@@ -17,7 +17,7 @@
   </ion-row>
   <ion-list class="mar-top5 padding" *ngFor="let sizeInfo of fab.MeasureList;let i = index">
     <ion-row>
-      <ion-col size="1" class="round bg-primary color-white text-center mar-top5">{{i + 1}}</ion-col>
+      <ion-col size="1" class="round color-img color-text text-center mar-top5">{{i + 1}}</ion-col>
       <ion-col size="8">
         <ion-select [(ngModel)]="sizeInfo.CounterType" name="CounterType" [selectedText]="sizeInfo.CounterType" class="color-blue labelfont2">
           <ion-select-option *ngFor="let c of countertypes"> <span>{{c.Name}}</span></ion-select-option>
@@ -32,13 +32,13 @@
         <span class="color-primary">SF</span>
       </ion-col>
     </ion-row>
-    <ion-row class="bg-primary bdr-radius20">
-      <ion-col size="5" class="fontbold labelfont2 flex mar-top5"><span class="color-white">W:&nbsp;</span>
+    <ion-row class="color-img bdr-radius20">
+      <ion-col size="5" class="fontbold labelfont2 flex mar-top5"><span class="color-text">W:&nbsp;</span>
         <ion-input type="text" [(ngModel)]="sizeInfo.Width" (change)="ActionSetSqft(sizeInfo,0)"
           class="roundborder borderall bg-white text-center"></ion-input>
       </ion-col>
-      <ion-col size="1" class="fontbold labelfont2 color-white mar-top5">X</ion-col>
-      <ion-col size="5" class="fontbold flex labelfont2 mar-top5"><span class="color-white">H:&nbsp; </span>
+      <ion-col size="1" class="fontbold labelfont2 color-text mar-top5">X</ion-col>
+      <ion-col size="5" class="fontbold flex labelfont2 mar-top5"><span class="color-text">H:&nbsp; </span>
         <ion-input type="text" [(ngModel)]="sizeInfo.Height" (change)="ActionSetSqft(sizeInfo,0)"
           class="roundborder borderall bg-white text-center"></ion-input>
       </ion-col>

@@ -6,6 +6,7 @@ import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
 import { prepareEventListenerParameters } from '@angular/compiler/src/render3/view/template';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { OverlayEventDetail } from '@ionic/core';
+import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 @Component({
   selector: 'app-addpart',
   templateUrl: './addpart.component.html',
@@ -17,6 +18,10 @@ export class AddpartComponent implements OnInit {
   MaterialList: any = []; CountertypeList: any = [];
   SplashList: any = []; EdgeList: any = []; CutoutList: any = [];
   selectedcomponent: number = 2;
+  sinkfaucet: any;
+  faucet: any;
+  labor: any;
+  other: any;
   constructor(public Modalcntrl: ModalController, public popoverCntrl: PopoverController,
     private service: QuoteService, private getservice: QuotegetService, private quoterep: QuoterepService) { }
 
@@ -31,7 +36,7 @@ export class AddpartComponent implements OnInit {
     this.partinfo.Name = ""; this.partinfo.IsActive = 1; this.partinfo.IsActive = 1;
     this.partinfo.PartMaterialList = []; this.partinfo.PartFabList = [];
     this.partinfo.EdgeList = []; this.partinfo.SplashList = []; this.partinfo.CutoutList = [];
-    this.partinfo.LaborList = [];
+    this.partinfo.LaborList = []; this.partinfo.SinkList = []; this.partinfo.FaucetList = []; this.partinfo.OtherList = [];
     // Material
     let partmat = this.quoterep.AddPartMatItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent);
     this.partinfo.PartMaterialList.push(partmat);
@@ -57,6 +62,15 @@ export class AddpartComponent implements OnInit {
     install.Description = "Install";
     this.GetCostFromRiskLevels(install, 2);
     this.partinfo.LaborList.push(install);
+    //Sink
+    this.ActionAddSink();
+    //Faucet
+    this.ActionAddFaucet();
+    //Others
+    this.ActionAddOther();
+    //labor
+    let labor = this.quoterep.AddLaborItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent, 0, "Labor");
+    this.partinfo.LaborList.push(labor);
   }
 
   GetCostFromRiskLevels(model, typeId) {
@@ -89,6 +103,34 @@ export class AddpartComponent implements OnInit {
       console.log(data);
     })
     this.FabricationRiskLevels();
+  }
+  async ActionSearchSelect(ev: any, typeid, protypeId, info) {
+    let obj = {
+      pricelistId: this.priceListID, searchTypeId: typeid, producttypeId: protypeId, search: info.Description == undefined ? "" : info.Description, info: info
+    }
+    const popover = await this.popoverCntrl.create({
+      component: AdditionalitemserachComponent,
+      event: ev,
+      translucent: true,
+      componentProps: obj,
+      cssClass: "popover_class"
+    });
+    popover.onDidDismiss().then((detail: OverlayEventDetail) => {debugger;
+      if (detail !== null) {
+        if (detail.data.isselect == true) {
+          if (protypeId == 8) {
+            this.sinkfaucet = detail.data.componentProps;
+          } else if (protypeId == 9) {
+            this.faucet = detail.data.componentProps;
+          } else if (protypeId == 7) {
+            this.labor = detail.data.componentProps;
+          } else if (protypeId == 11) {
+            this.other = detail.data.componentProps;
+          }
+        }
+      }
+    });
+    return await popover.present();
   }
   FabricationRiskLevels() {
     let result = this.service.FabricationRiskLevels(this.priceListID).subscribe(data => {
@@ -135,6 +177,7 @@ export class AddpartComponent implements OnInit {
       this.partinfo.CutoutList[index] = this.quoterep.SetCutout(this.partinfo.CutoutList[index], cutout);
     }
   }
+
   ActionSetSqft(size, typeid, index) {
     size.Sqft = this.quoterep.calcsqft(size.Width, size.Height);
     this.ActionSetFabSqft(index);
@@ -202,6 +245,18 @@ export class AddpartComponent implements OnInit {
     let size = this.quoterep.AddMeasurementItem();
     this.partinfo.PartFabList[index].MeasureList.push(size);
   }
+  ActionAddSink() {
+    let sinkfaucet = this.quoterep.AddSinkItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent);
+    this.partinfo.SinkList.push(sinkfaucet);
+  }
+  ActionAddFaucet() {
+    let faucet = this.quoterep.AddFaucetItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent);
+    this.partinfo.FaucetList.push(faucet);
+  }
+  ActionAddOther() {
+    let other = this.quoterep.AddOtherItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent);
+    this.partinfo.OtherList.push(other);
+  }
   ActionSetMargin(typeId: number, model: any, type: string) {
     model = this.quoterep.margincalculations(typeId, model, type);
     this.ActionSetAmount(type, model);
@@ -221,6 +276,18 @@ export class AddpartComponent implements OnInit {
         break;
       case "edge":
         model.Amount = this.quoterep.calcitemamt(model.LF, model.UnitPrice);
+        model.Amt = model.Amount;
+        break;
+      case "sink":
+        model.Amount = this.quoterep.calcitemamt(model.Qty, model.UnitPrice);
+        model.Amt = model.Amount;
+        break;
+      case "faucet":
+        model.Amount = this.quoterep.calcitemamt(model.Qty, model.UnitPrice);
+        model.Amt = model.Amount;
+        break;
+      case "other":
+        model.Amount = this.quoterep.calcitemamt(model.Qty, model.UnitPrice);
         model.Amt = model.Amount;
         break;
     }
@@ -250,7 +317,7 @@ export class AddpartComponent implements OnInit {
 
 
   async ActionAddMaterial(materialId: any, source: string) {
-    let sel = { VersionId: this.partinfo.VersionID,AreaId:this.partinfo.AreaID,materialId:0 }
+    let sel = { VersionId: this.partinfo.VersionID, AreaId: this.partinfo.AreaID, materialId: materialId, priceListID: this.priceListID }
     const modal = await this.Modalcntrl.create({
       component: AddmatComponent,
       componentProps: sel

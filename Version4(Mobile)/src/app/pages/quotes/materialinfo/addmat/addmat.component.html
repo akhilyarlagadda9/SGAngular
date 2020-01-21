@@ -1,11 +1,13 @@
 <ion-content>
   <form (ngSubmit)="ActionSaveMaterial(form)" #form="ngForm">
-    <ion-toolbar class="poss">
-      <ion-title class="titleheader" color="primary">MATERIAL DETAILS</ion-title>
+    <ion-header>
+    <ion-toolbar>
+      <ion-title class="titleheader">Material Details</ion-title>
       <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
       <ion-button slot="end" color="danger" size="small" (click)="ActionToClose(false)">X</ion-button>
     </ion-toolbar>
-    <ion-row class="pad-fix">
+  </ion-header>
+    <ion-row>
       <ion-col size="1" *ngIf="Progress == 1 || Progress == 2 || Progress == 0">
         <ion-fab-button color="primary" (click)="changeProgress(0)">1</ion-fab-button>
       </ion-col>

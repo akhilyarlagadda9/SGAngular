@@ -1,41 +1,53 @@
 <ion-content>
   <form #form="ngForm" (ngSubmit)="ActionSaveEdge(form)">
-    <ion-toolbar class="poss">
-      <ion-title class="titleheader">Edge</ion-title>
-      <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionCloseEdge(false)">X</ion-button>
-    </ion-toolbar>
-    
+    <ion-header>
+      <ion-toolbar>
+        <ion-title class="titleheader">Edge</ion-title>
+        <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
+        <ion-button slot="end" color="danger" size="small" (click)="ActionCloseEdge(false)">X</ion-button>
+      </ion-toolbar>
+    </ion-header>
+
     <ion-item>
-      <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-      <ion-select [(ngModel)]="edge.EdgeProfile" name="EdgeProfile" [selectedText]="edge.EdgeProfile" (ngModelChange)="ActionPopulateEdge($event)" #nameField="ngModel" required>
+      <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
+      <ion-select [(ngModel)]="edge.EdgeProfile" name="EdgeProfile" [selectedText]="edge.EdgeProfile"
+        (ngModelChange)="ActionPopulateEdge($event)" #nameField="ngModel" required>
         <ion-select-option *ngFor="let edg of edgelist" [value]="edg.ID"> {{edg.Description}}</ion-select-option>
       </ion-select>
     </ion-item>
-     <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
+    <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
       <div class="error">Description is required</div>
     </div>
-      <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="edge.LF" name="LF" (change)="ActionSetAmount()"></ion-input>
-        </ion-item>
-      <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
-        <ion-input type="text" class="labelfont" [(ngModel)]="edge.UnitCost" name="UnitCost" (change)="ActionSetMargin(1,edge,'edge')"><ion-row class="mar-right3">$</ion-row></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
-        <ion-input type="text" class="labelfont" [(ngModel)]="edge.Margin" name="Margin" (change)="ActionSetMargin(2,edge,'edge')"><ion-row class="mar-right3">%</ion-row></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
-        <ion-input type="text" class="labelfont" [(ngModel)]="edge.UnitPrice" name="UnitPrice" (change)="ActionSetMargin(3,edge,'edge')"><ion-row class="mar-right3">$</ion-row></ion-input>
-      </ion-item>
-      <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="edge.Amt" name="Amount" readonly="readonly"><ion-row class="mar-right3">$</ion-row></ion-input>
-        </ion-item>
-    </form>
-  </ion-content>
-
-
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="edge.LF" name="LF" (change)="ActionSetAmount()"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="edge.UnitCost" name="UnitCost"
+        (change)="ActionSetMargin(1,edge,'edge')">
+        <ion-row class="mar-right3">$</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="edge.Margin" name="Margin"
+        (change)="ActionSetMargin(2,edge,'edge')">
+        <ion-row class="mar-right3">%</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="edge.UnitPrice" name="UnitPrice"
+        (change)="ActionSetMargin(3,edge,'edge')">
+        <ion-row class="mar-right3">$</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="edge.Amt" name="Amount" readonly="readonly">
+        <ion-row class="mar-right3">$</ion-row>
+      </ion-input>
+    </ion-item>
+  </form>
+</ion-content>

@@ -14,46 +14,58 @@
       <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
     </ion-toolbar>
   </ion-header> -->
-  
-  <ion-content>
-    <form #form="ngForm" (ngSubmit)="ActionSaveTile(form)">
-      <ion-toolbar class="poss">
-        <ion-title class="titleheader">
-          <div>{{selName}}</div>
-        </ion-title>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="ActionSaveTile(form)">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title class="titleheader"><div>{{selName}}</div></ion-title>
         <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
         <ion-button slot="end" color="danger" size="small" (click)="ActionCloseTile(false)">X</ion-button>
       </ion-toolbar>
-      <ion-item>
+    </ion-header>
+    <ion-item>
 
-        <ion-label class="labelfont margin-top" position="floating" color="primary">Description</ion-label>
-        <ion-input type="text" class="labelfont" [(ngModel)]="tile.Description" name="Description" 
-        #nameField="ngModel" (keyup.enter)="ActionSearchSelect($event,2,TypeID)" required></ion-input>
-        <ion-icon slot="end" class="marg2" name="arrow-dropdown" (click)="ActionSearchSelect($event,2,TypeID)"></ion-icon>
-        <ion-icon slot="end" class="marg2" name="search" (click)="ActionSearchSelect($event,2,TypeID)"></ion-icon>
-      </ion-item>
-      <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
-        <div class="error">Description is required</div>
-      </div>
-      <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="tile.Qty" (change)="ActionSetAmount()" name="Qty"></ion-input>
-        </ion-item>
-      <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
-        <ion-input type="text" class="labelfont" [(ngModel)]="tile.UnitCost" (change)="ActionSetMargin(1,tile,'tile')" name="UnitCost"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
-        <ion-input type="text" class="labelfont" [(ngModel)]="tile.Margin" (change)="ActionSetMargin(2,tile,'tile')" name="Margin"><ion-row style="margin-right: 3px;">%</ion-row></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
-        <ion-input type="text" class="labelfont" [(ngModel)]="tile.UnitPrice"  (change)="ActionSetMargin(3,tile,'tile')"name="UnitPrice"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
-      </ion-item>
-      <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="tile.Amount" name="Amount"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
-        </ion-item>
-    </form>
-  </ion-content>
+      <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="tile.Description" name="Description" #nameField="ngModel"
+        (keyup.enter)="ActionSearchSelect($event,2,TypeID)" required></ion-input>
+      <ion-icon slot="end" class="marg18" name="arrow-dropdown" (click)="ActionSearchSelect($event,2,TypeID)"></ion-icon>
+      <ion-icon slot="end" class="marg18" name="search" (click)="ActionSearchSelect($event,2,TypeID)"></ion-icon>
+    </ion-item>
+    <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
+      <div class="error">Description is required</div>
+    </div>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="tile.Qty" (change)="ActionSetAmount()" name="Qty">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="tile.UnitCost" (change)="ActionSetMargin(1,tile,'tile')"
+        name="UnitCost">
+        <ion-row style="margin-right: 3px;">$</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="tile.Margin" (change)="ActionSetMargin(2,tile,'tile')"
+        name="Margin">
+        <ion-row style="margin-right: 3px;">%</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="tile.UnitPrice" (change)="ActionSetMargin(3,tile,'tile')"
+        name="UnitPrice">
+        <ion-row style="margin-right: 3px;">$</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
+      <ion-input type="text" class="labelfont" [(ngModel)]="tile.Amount" name="Amount">
+        <ion-row style="margin-right: 3px;">$</ion-row>
+      </ion-input>
+    </ion-item>
+  </form>
+</ion-content>

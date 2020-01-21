@@ -9,13 +9,13 @@
 </ion-header> -->
 <ion-content>
   <form #form="ngForm" (ngSubmit)="ActionSaveFabrication(form)">
-    <ion-toolbar >
-      <ion-title class="titleheader">
-        <div>Fabrication</div>
-      </ion-title>
+    <ion-header>
+    <ion-toolbar>
+      <ion-title class="titleheader">Fabrication</ion-title>
       <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
       <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
     </ion-toolbar>
+  </ion-header>
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
       <ion-input type="text" class="labelfont" value="Standard Fabrication"

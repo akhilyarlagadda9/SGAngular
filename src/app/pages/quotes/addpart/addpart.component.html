@@ -374,12 +374,12 @@
     </ion-col>
 
     <ion-col *ngSwitchCase="4">
-      <ion-row>
-        <ion-col class="lablewid" size="12" class="color-primary">
-          <ion-icon name="list" class="fontmedium"></ion-icon><b>Cutout:</b>
-        </ion-col>
-      </ion-row>
       <ion-list>
+        <ion-row>
+          <ion-col class="lablewid" size="12" class="color-primary">
+            <ion-icon name="list" class="fontmedium"></ion-icon><b>Cutout:</b>
+          </ion-col>
+        </ion-row>
         <ion-col *ngFor="let cutout of partinfo.CutoutList;let i = index">
           <ion-row>
             <ion-col size="1" class="color-green"><b>C:</b></ion-col>

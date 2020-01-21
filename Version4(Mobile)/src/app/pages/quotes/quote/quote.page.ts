@@ -8,6 +8,7 @@ import { QuoteService } from 'src/app/service/quote.service'
 import { OverlayEventDetail } from '@ionic/core';
 import { QlayoutComponent } from '../qlayout/qlayout.component';
 import { version } from 'punycode';
+import { QuickquoteComponent } from '../quickquote/quickquote.component';
 
 
 @Pipe({
@@ -45,7 +46,7 @@ export class QuotePage implements OnInit {
   /***** QUOTELIST-INDEFINITE, SEARCHQUOTE *****/
   ActionQuoteList() {
     // set obj
-    this.setquoteobj("", 0, 0, 25, 0);
+    this.setquoteobj("", 0, 0, 25, 1);
     this.GetQuoteList(undefined);
   }
   ActionSearch(q: string) {
@@ -139,6 +140,28 @@ export class QuotePage implements OnInit {
       });
     });
   }
+
+
+/******QUICK QUOTE *******/
+async ActionQuickQuote(){
+  const modal = await this.Modalcntrl.create({
+    component: QuickquoteComponent,
+  });
+  modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+    if (detail !== null) {
+      if (detail.data.isSave == true) {
+      }
+    }
+  });
+  return await modal.present();
+}
+
+
+
+
+
+
+
 }
 
 

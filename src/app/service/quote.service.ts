@@ -128,4 +128,17 @@ ActionInventoryDicLists(typeid:any):Observable<any> {
   return this.http.get<any>(this.url + 'api/admin/InventoryDicLists?typeIdList=' + typeIdList) 
 }
 
+/********** Material ************/
+ActionGetmaterialsearchrecords(search:any, typeId:any, pricelistIds:any, depthId:any, finishId:any, searchtypeId:any,proSubGroupId:any):Observable<any>{
+  return this.http.get<any>(this.url + 'api/Quote/ActionSearchMaterials?search=' + search + '&typeId=' + typeId + '&pricelistIds=' + pricelistIds + '&depthId=' + depthId + '&finishId=' + finishId + '&searchtypeId=' + searchtypeId + '&proSubGroupId=' + proSubGroupId) 
+}
+
+Actionpricegrouplists(pricelistId:any):Observable<any> {
+  return this.http.get<any>(this.url + 'api/QuoteAdmin/ActionPriceGroupList?pricebookID=' + pricelistId) 
+}
+
+
+
+
+
 }

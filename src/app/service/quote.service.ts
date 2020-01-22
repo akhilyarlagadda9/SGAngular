@@ -137,6 +137,10 @@ Actionpricegrouplists(pricelistId:any):Observable<any> {
   return this.http.get<any>(this.url + 'api/QuoteAdmin/ActionPriceGroupList?pricebookID=' + pricelistId) 
 }
 
+//Supplier list
+ActionGetSupplierAddDetails(supID:any):Observable<any> {
+  return this.http.get<any>(this.url + 'api/purchase/GetSupplierAddDetails?supplierID=' + supID) 
+}
 
 
 

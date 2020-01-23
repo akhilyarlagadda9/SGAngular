@@ -1,19 +1,21 @@
-<ion-content>
-  <form #form="ngForm" (ngSubmit)="ActionSaveActivity(form)">
-    <ion-toolbar class="poss">
-      <ion-title class="titleheader">Activity Details</ion-title>
-      <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionCloseActivity(false)">X</ion-button>
-    </ion-toolbar>
 
+  <form #form="ngForm" (ngSubmit)="ActionSaveActivity(form)" class="dis-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title class="titleheader">Activity Details</ion-title>
+        <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
+        <ion-button slot="end" color="danger" size="small" (click)="ActionCloseActivity(false)">X</ion-button>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
     <ion-item *ngIf="actinfo.ID == 0">
-      <ion-label class="labelfont margin-top" position="floating" color="primary">Job# & Name<span
+      <ion-label class="labelfont" position="floating" color="primary">Job# & Name<span
           class="requiredField">*</span>
       </ion-label>
       <ion-input [(ngModel)]="actinfo.JobName" name="JobName" type="text" #nameField="ngModel"
         (keyup.enter)="ActionApprovedJobList(actinfo.JobName,1)" required></ion-input>
-      <ion-icon slot="end" class="marg2" name="arrow-dropdown" (click)="ActionApprovedJobList('',2)"></ion-icon>
-      <ion-icon slot="end" class="marg2" name="search" (click)="ActionApprovedJobList(actinfo.JobName,1)"></ion-icon>
+      <ion-icon slot="end" class="mart25" name="arrow-dropdown" (click)="ActionApprovedJobList('',2)"></ion-icon>
+      <ion-icon slot="end" class="mart25" name="search" (click)="ActionApprovedJobList(actinfo.JobName,1)"></ion-icon>
     </ion-item>
     <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
       <div class="error">Select Job</div>
@@ -40,8 +42,8 @@
     </div>
     <ion-item>
       <ion-label position="floating" color="primary" class="margin-zero">Activity Type:</ion-label>
-      <ion-select [(ngModel)]="actinfo.ActTypeID" name="ActTypeID"  [selectedText]="actinfo.ActivityType" #nameField="ngModel"
-        (ngModelChange)="ActionGetStatusResourceList(actinfo.ActTypeID)" required>
+      <ion-select [(ngModel)]="actinfo.ActTypeID" name="ActTypeID" [selectedText]="actinfo.ActivityType"
+        #nameField="ngModel" (ngModelChange)="ActionGetStatusResourceList(actinfo.ActTypeID)" required>
         <ion-select-option *ngFor="let c of ActTypeList" [value]="c.ID">{{c.Name}}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -51,7 +53,8 @@
     <ion-item>
       <ion-label position="floating" color="primary" class="margin-zero">Areas:</ion-label>
       <ion-select [(ngModel)]="actinfo.itemSelected" name="itemSelected" #itemSelected="ngModel">
-        <ion-select-option *ngFor="let part of PhasePartList" [value]="part.ID">{{part.AreaName}} - Part{{part.NewSrNo}} -
+        <ion-select-option *ngFor="let part of PhasePartList" [value]="part.ID">{{part.AreaName}} - Part{{part.NewSrNo}}
+          -
           {{part.JobSqft}} SF
         </ion-select-option>
       </ion-select>
@@ -158,24 +161,27 @@
         <ion-checkbox color="dark" name="Text" [(ngModel)]="resource.Text" checked="resource.Text ==1"></ion-checkbox>
       </ion-col>
     </ion-row>
-  </form>
-
 </ion-content>
+</form>
 
 <ion-row *ngIf="IsResource" class="popupCls">
-  <ion-row style="width: 100%;">
-    <ion-col size="11">
-      <ion-label color="primary" class="paddleft5 fontbold">Resources: </ion-label>
-    </ion-col>
-    <ion-col size="1" class="text-center" style="font-size: 18px;" (click)="ActionCloseResourcePopup()"><b>X</b>
-    </ion-col>
-  </ion-row>
+  <ion-toolbar>
+    <ion-title class="titleheader resoucesty">Resources</ion-title>
+    <ion-button slot="end" color="success" size="small" type="submit" class="font11" (click)="ActionSaveResourceInfo()">
+      Save</ion-button>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionCloseResourcePopup()" class="font11">X
+    </ion-button>
+  </ion-toolbar>
   <div style="width: 100%;height: 300px;overflow: auto;">
-    <ion-row *ngFor="let resource of ResourceList" class="border-btm">
+    <ion-row *ngFor="let resource of resourceList" class="border-btm">
       <ion-row style="width: 100%;">
         <ion-col size="8" class="paddzero">
           <span>
-            <ion-checkbox color="dark" name="Text" class="martb" style="width: 17px;height: 17px;"></ion-checkbox>
+            <ion-checkbox color="dark" name="Text" class="martb checksty" *ngIf="resource.CheckStatusID == 1"
+              [(ngModel)]="resource.Check" checked="resource.Check == 1"></ion-checkbox>
+            <ion-checkbox color="dark" name="Text" class="martb checksty" *ngIf="resource.CheckStatusID == 0"
+              (click)="ActionPushResource(resource)" [(ngModel)]="resource.Check" checked="resource.Check == 1">
+            </ion-checkbox>
           </span>&nbsp;
           <span>{{resource.ResourceName}}</span>
         </ion-col>

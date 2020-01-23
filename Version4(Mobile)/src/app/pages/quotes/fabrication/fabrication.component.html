@@ -7,8 +7,8 @@
     <ion-button slot="end" color="danger" size="small" (click)="ActionCloseFabrication(false)">X</ion-button>
   </ion-toolbar>
 </ion-header> -->
-<ion-content>
-  <form #form="ngForm" (ngSubmit)="ActionSaveFabrication(form)">
+
+  <form #form="ngForm" (ngSubmit)="ActionSaveFabrication(form)" class="dis-content">
     <ion-header>
     <ion-toolbar>
       <ion-title class="titleheader">Fabrication</ion-title>
@@ -16,6 +16,7 @@
       <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
     </ion-toolbar>
   </ion-header>
+  <ion-content>
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
       <ion-input type="text" class="labelfont" value="Standard Fabrication"
@@ -60,5 +61,5 @@
         <span *ngIf="fabrication.SplashSqft == 0">{{fabrication.LaborUnitPrice * fabrication.PartSqft}}</span>
       </ion-row>
     </ion-item>
+  </ion-content>
   </form>
-</ion-content>

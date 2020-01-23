@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Inject, LOCALE_ID, Input } from '@angular/core';
-import { CalendarComponent } from 'ionic2-calendar/calendar';
+//import { CalendarComponent } from 'ionic2-calendar/calendar';
 import { ModalController, LoadingController, PopoverController, NavParams } from '@ionic/angular';
 import { formatDate } from '@angular/common';
 import { ActinfoComponent } from '../actinfo/actinfo.component';
@@ -11,291 +11,232 @@ import { DatePipe } from '@angular/common';
 
 import { AddactivityComponent } from '../addactivity/addactivity.component';
 import { CalendarfilterComponent } from '../calendarfilter/calendarfilter.component';
-import { prepareEventListenerParameters } from '@angular/compiler/src/render3/view/template';
+import * as moment from 'moment';
+
+// Calendar Components
+import { OptionsInput } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
+import interactionPlugin from '@fullcalendar/interaction';
+import { FullCalendarComponent } from '@fullcalendar/angular';
+import { CalendarsettingComponent } from '../calendarsetting/calendarsetting.component';
+
+
+
+
+
 
 @Component({
   selector: 'app-scheduling',
-  templateUrl: './scheduling.page.html',
+  // template: `<div id="calendar"></div>`,
+  template: `
+  <ion-toolbar color="primary">
+  <ion-icon name="menu" class="fontlarge"  slot="start" (click)="ActionCalendarSetting()"></ion-icon>
+  <ion-title class="headersty">
+{{calObj.ActTypes}}
+  </ion-title>
+  <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
+  </ion-toolbar>
+   <full-calendar
+#calendar
+schedulerLicenseKey ="GPL-My-Project-Is-Open-Source"
+defaultView="resourceTimeline"
+[header]="{
+  left: 'prev',
+  center: 'title',
+  right: 'next'
+}"
+[height]="options.height"
+[views]="options.views"
+[plugins]="options.plugins"
+(datesRender)="call($event)"
+[events]="actlist"
+[resources]="resources"
+(eventRender)="ActionRenderEvent($event)"
+></full-calendar>`,
   styleUrls: ['./scheduling.page.scss'],
   providers: [DatePipe]
 })
 export class SchedulingPage implements OnInit {
-  calObj: any;
-  viewTitle: string = '';
-  activitylist: any = [];
-  ActTypeList: any;
-  loaderToShow: any;
-  //todaydate = new Date().toISOString();
-  @ViewChild(CalendarComponent, { static: true }) myCal: CalendarComponent;
-  calendar = {
-    mode: 'day',
-    queryMode: 'remote',
-    currentDate: new Date(),
-  };
-  constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) private locale: string, public loadingController: LoadingController,
-    private schService: SchedulingService, private navCtrl: NavController, public actionSheetCtrl: ActionSheetController,
-    public datePipe: DatePipe, private popoverCntrl: PopoverController) {
-    this.calObj = {
-      StartDate: '', EndDate: '', ActTypeID: 11, Search: '', ResourceIds: '', UserId: 0,
-      ActivityType: '', ResourceNames: ''
-    };
+  calendar: any; actlist: any = []; resources: any = []; options: OptionsInput
+  @ViewChild('calendar', { static: false }) fullcalendar: FullCalendarComponent;
+ calObj: any = {
+    StartDate: Date, EndDate: Date, ActTypeIDs: "11",ActTypes: "Template", ResourceIDs: "",ResourceNames: "", StatusIDs: "",StatusNames:"",
+    CalendarView: "", CalendarDays: 3, CalFields: "", Search: "", UserId: 0
   }
+  constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) private locale: string, public loadingController: LoadingController,
+    private schService: SchedulingService, private navCtrl: NavController) { }
 
   ngOnInit() {
-    this.ActionActivityTypeList();
+    let height = window.innerHeight-20;
+   // setTimeout(function () {
+    var _dafaultDate = new Date();
+    this.options = {
+      plugins: [interactionPlugin, dayGridPlugin, resourceTimelinePlugin],
+      height:height,
+      views: {
+        timelineDay: { type: 'timeline', duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00", },
+        resourceTimeline: {
+          type: 'resourceTimeline', slotDuration: { days: 1 }, buttonText: "resource",
+          duration: { days: this.calObj.CalendarDays }
+        },
+       
+      },
+    }
+  //});
   }
-  ActionOnRangeChanged(ev) {
-    this.calObj.StartDate = this.datePipe.transform(ev.startTime, "MM-dd-yyyy");
-    this.calObj.EndDate = this.datePipe.transform(ev.endTime, "MM-dd-yyyy");
-    console.log(this.calObj.StartDate + "end" + this.calObj.EndDate);
-    this.ActionLoadEvents();
 
+  ngAfterViewInit(){
+    
+    this.resources = [
+      {
+        id: "0",
+        groupId: '0',
+        title: 'Un-Assigned'
+      }]
+  }
+
+  call(info) {
+    let start = moment(info.view.activeStart).utc().format("MM/DD/YYYY");
+    let today = moment(info.view.activeEnd).utc().format("MM/DD/YYYY");
+    this.calObj.CalendarView = info.view.view;
+    this.calObj.StartDate = start;
+    this.calObj.EndDate = today;
+    this.ActionGetResList();
+    this.ActionLoadEvents();
+  }
+
+  ActionRenderEvent(evnt){
+    var stime = moment(evnt.event.start).utc().format('h:mm a');
+    var etime = moment(evnt.event.end).utc().format('h:mm a');
+    var htmlstring = '';
+    htmlstring = "<div style='font-size: 13px;' class='fc-title-wrap' >";
+    htmlstring += "<div>" + evnt.event.extendedProps.ActivityType + "</div>";
+    htmlstring += "<div style='font-size: 10px;'>" + stime + " - " + etime + "</div>";
+    htmlstring += "<div>" + evnt.event.extendedProps.QuoteNo + "-" + evnt.event.extendedProps.QuoteName  + "</div>";
+    htmlstring +="</div>"
+    evnt.el.innerHTML =htmlstring; 
+
+  }
+
+  ActionResourceRender(info){
+
+
+   // info.el.innerHTML =htmlstring; 
   }
   ActionLoadEvents() {
-    //this.showLoader()
-    this.schService.ActionQuickActList(this.calObj.StartDate, this.calObj.EndDate, this.calObj.Search, this.calObj.ActTypeID, this.calObj.UserId, this.calObj.ResourceIds).subscribe(data => {
-      this.PrepareEvents(data);
-    });
-  }
-
-  showLoader() {
-    this.loaderToShow = this.loadingController.create({
-      message: 'Please wait'
-    }).then((res) => {
-      res.present();
-
-      res.onDidDismiss().then((dis) => {
-        console.log('Loading dismissed!');
-      });
-    });
-  }
-  // Change current month/week/day
-  ActionOnMove(navtype: string) {
-    var swiper = document.querySelector('.swiper-container')['swiper'];
-    if (navtype == "prev") {
-      swiper.slidePrev();
-    } else {
-      swiper.slideNext();
-    }
-
-  }
-  // Change between month/week/day
-  ActionOnChangeMode(mode) {
-    this.calendar.mode = mode;
-  }
-  ActionOnViewTitleChanged(title) {
-    this.viewTitle = title;
-  }
-  // Focus today
-  ActionOnToday() {
-    this.calendar.currentDate = new Date();
-  }
-  async ActionOnEventSelected(ev) {
-    let obj = { actId: ev.ID, actTypeID: ev.item.ActivityTypeID, StartDate: ev.startTime, EndDate: ev.endTime }
-    const modal = await this.Modalcntrl.create({
-      component: ActinfoComponent,
-      componentProps: obj
-    });
-    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-      if (detail.data != null) {
-        if (detail.data.issave) {
-          //this.beforeViewType = detail.data.componentProps.eventType;
-          //detail.data.componentProps.eventType = ""; //blanking out as we do not want to bind it beforehand
-          // this.eventSource.push(detail.data.componentProps);
-          // this.myCal.loadEvents();
-          // this.resetEvent();
-
+    if (this.calObj.CalendarView != "" && this.calObj.CalendarView != undefined) {
+      let resids = "";
+      //var parameter = JSON.stringify(calObj);
+      this.schService.ActionQuickActList(this.calObj.StartDate, this.calObj.EndDate, this.calObj.Search, 11, 0, resids).subscribe(data => {
+        this.actlist = [];
+        for (let j in data) {
+          let item = data[j];
+          var id = (item.ResourceIDs != null && item.ResourceIDs != "") ? item.ResourceIDs.split(',') : "0";
+          for (var s = 0; s < id.length; s++) {
+            let isexist = true;
+            if (this.calObj.ResourceIDs.length > 0) {
+              isexist = false;
+              this.calObj.ResourceIDs.map(function (elem) { if (elem == id[s]) { isexist = true; } });
+            }
+            if (isexist == true) {
+              this.actlist.push({ title: item.QuoteNo, start: item.StartTime, end: item.EndTime, id: item.ID, resourceIds: [id[s]], DragResId: id[s],backgroundColor:item.ActBgColor,textColor:item.ActTextColor,borderColor:item.ActTextColor, extendedProps: item });
+            }
+          }
+          console.log(this.actlist);
         }
-        else {
-          //hopefully do nothing
-        }
-      }
-    });
-    return await modal.present();
-  }
-  PrepareEvents(list: any) {
-    let offset = -5.0;
-    this.activitylist = [];
-    for (let j in list) {
-      let item = list[j];
-      this.activitylist.push({
-        title: item.QuoteNo + " - P" + item.PhaseSrNo,
-        startTime: new Date((new Date(item.StartTime)).getTime() + (new Date(item.StartTime).getTimezoneOffset() * 60000) + (3600000 * offset)),
-        endTime: new Date((new Date(item.EndTime)).getTime() + (new Date(item.EndTime).getTimezoneOffset() * 60000) + (3600000 * offset)),
-        allDay: this.calendar.mode == "week" ? true : item.AllDay,
-        ID: item.ID,
-        item: item,
-        color: item.StatusID == 5 ? 'eventAsGreen' : 'eventAsBlue',
       });
     }
-    console.log(this.activitylist);
-    this.myCal.loadEvents();
-    this.hideLoader();
 
   }
 
-  
-  //Custom Event color
-  getEventClass(events) {
-    console.log(events);
-   return events.color;
-  }
 
-  async hideLoader() {
-    this.loadingController.dismiss();
-  }
-
-
-  ActionGoToHome() {
-    this.navCtrl.navigateRoot('/home');
-  }
-  ActionActivityTypeList() {
-    this.schService.ActivityTypeList(4).subscribe(
-      data => {
-        this.ActTypeList = data;
-        this.GetSelectedActTypeName();
-      });
-
-  }
-  GetSelectedActTypeName() {
-    let obj = this.ActTypeList.find(s => s.ID == this.calObj.ActTypeID);
-    if (obj != null) {
-      this.calObj.ActivityType = obj.Name;
-    }
-  }
-  async ActionOnOpenSheet() {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header: 'Calendar',
-      buttons: [{
-        text: 'Day',
-        icon: 'list',
-        handler: () => {
-          this.ActionOnChangeMode('day');
-        }
-      }, {
-        text: 'Week',
-        icon: 'grid',
-        handler: () => {
-          this.ActionOnChangeMode('week');
-        }
-      }, {
-        text: 'Cancel',
-        icon: 'close',
-        role: 'cancel',
-        handler: () => {
-          //console.log('Cancel clicked');
-        }
-      }]
-    });
-    await actionSheet.present();
-  }
-
-  async ActionFilterPopup(ev: any,filterTypeId) {
-    let obj = {
-      ActTypeId: this.calObj.ActTypeID, ResourceIds: this.calObj.ResourceIds,
-      ResourceNames: this.calObj.ResourceNames, ActTypeTypeList: this.ActTypeList,
-      ActivityType: this.calObj.ActivityType,FiterTypeID:filterTypeId,
-    };
-    const popover = await this.popoverCntrl.create({
-      component: CalendarfilterComponent,
-      event: ev,
-      translucent: true,
-      componentProps: obj,
-      cssClass: "popover_class"
-    });
-    popover.onDidDismiss().then((result: OverlayEventDetail) => {
-      console.log(result);
-      if (result.data !== null && result.data != undefined) {
-        this.calObj.ActTypeID = result.data.ActTypeId;
-        this.calObj.ResourceIds = result.data.ResourceIds;
-        this.calObj.ResourceNames = result.data.ResourceNames;
-        this.calObj.ActivityType = result.data.ActivityType
-        this.ActionLoadEvents();
+  ActionGetResList() {
+    this.schService.GetResourcesAndHolidays(this.calObj.StartDate, this.calObj.EndDate, this.calObj.ActTypeIDs, 1, this.calObj.ResourceIDs).subscribe(data => {
+      this.resources = [];
+      for (let j in data.ActTypeResList) {
+        let item = data.ActTypeResList[j];
+        this.resources.push({ id: item.ResourceID, groupId: 0, title: item.ResourceName });
       }
     });
-    return await popover.present();
-  }
-  async ActionAddActivity(viewId: any) {
-
-    let actinfo = {
-      ID: 0, VersionID: 0, PhaseID: 0, ActTypeID: this.calObj.ActTypeID, ResourceList: [], SchStartTime: new Date(), SchEndTime: new Date(),
-      ProjectID: 0, JobName: "", TypeID: 0
-    }
-    let viewtypeId = { viewtypeId: viewId }
-    const modal = await this.Modalcntrl.create({
-      component: AddactivityComponent,
-      componentProps: actinfo,
-    });
-
-    modal.onDidDismiss().then((result: OverlayEventDetail) => {
-
-      if (result.data !== null && result.data != undefined) {
-        if (result.data.componentProps != null && result.data.componentProps != undefined) {
-          this.UpdateActivty(result.data.componentProps);
-
-
-        }
-        //this.calObj.ActTypeID = result.data.ActTypeId;
-        // this.calObj.ResourceIds = result.data.ResourceIds;
-        // this.calObj.ResourceNames = result.data.ResourceNames;
-        // this.calObj.ActivityType = result.data.ActivityType
-        //this.ActionLoadEvents();
-      }
-    });
-
-    return await modal.present();
-
-  }
-
-  UpdateActivty(info) {
-    let obj: any;  let offset = -5.0;
-    let quickInfo = this.PrepareActInfo(info);
-    obj = {
-      title: quickInfo.QuoteNo + " - P" + quickInfo.PhaseSrNo,
-      startTime: new Date((new Date(quickInfo.StartTime)).getTime() + (new Date(quickInfo.StartTime).getTimezoneOffset() * 60000) + (3600000 * offset)),
-      endTime: new Date((new Date(quickInfo.EndTime)).getTime() + (new Date(quickInfo.EndTime).getTimezoneOffset() * 60000) + (3600000 * offset)),
-      allDay: this.calendar.mode == "week" ? true : quickInfo.AllDay,
-      ID: quickInfo.ID,
-      item: quickInfo,
-      color: quickInfo.StatusID == 5 ? 'eventAsGreen' : 'eventAsBlue',
-    }
-    if (info.ExtID == 0) {
-      this.activitylist.push(obj);
-    }else{
-      let index = this.activitylist.findIndex(s => { return s.ID == info.ID;});
-      this.activitylist[index] = quickInfo;
-    }
-    console.log(this.activitylist);
-    this.myCal.loadEvents();
   }
 
 
-  PrepareActInfo(info) {
-    let item: any;
-    item = {
-      ID: info.ID,
-      PhaseID: info.PhaseID,
-      ProjectID: info.ProjectID,
-      VersionID: info.VersionID,
-      PhaseSrNo: (info.PhaseSrNo == null || info.PhaseSrNo == "") ? "0" : info.PhaseSrNo,
-      StartTime: info.SchStartTime,
-      EndTime: info.SchEndTime,
-      ActivityType: info.ActTypeName,
-      ActivityTypeID: info.ActTypeID,
-      StatusID: info.StatusID,
-      StatusName: info.StatusName,
-      StatusIcon: info.IconPath,
-      PhaseSF: info.PhaseSF,
-      ResourceNames: info.ResourceName,
-      ResourceIDs: info.ResourceIDs,
-      QuoteName: info.JobName,
-      QuoteNo: info.QuoteNO,
-      AllDay: info.AllDay == 1 ? true : false,
-    }
-    return item;
+  PrepareEvents(list) {
+
   }
+ //Calendar Settings Function
+ async ActionCalendarSetting() {
+  let obj={calObj: this.calObj};
+//  let copyobj = JSON.parse(JSON.stringify(this.calObj));
+  const modal = await this.Modalcntrl.create({
+    component: CalendarsettingComponent,
+    componentProps:obj
+  });
+  modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+    
+  });
+  return await modal.present();
+}
+
+
+
 }
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // ngOnInit() {
+    //  let calendarEl: HTMLElement = document.getElementById('calendar')!;
+    //   var _dafaultDate = new Date();
+    //   this.calendar = new Calendar(calendarEl, {
+    //     schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+    //     plugins: [interactionPlugin, dayGridPlugin, resourceTimelinePlugin],
+    //     editable: true,
+    //     droppable: true,
+    //     defaultDate: _dafaultDate,
+    //     header: {
+    //       left: 'prev',
+    //       center: '',
+    //       right: 'next'
+    //     },
+    //     views: {
+    //       timelineDay: { type: 'timeline', duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00", },
+    //       resourceTimeline3Days: {
+    //         type: 'resourceTimeline', slotDuration: { days: 1 }, buttonText: "resource",
+    //         duration: { days: 3 }
+    //       }
+    //     },
+    //     defaultView: "resourceTimeline3Days",
+
+    //     resources:reslistssss,
+    //     datesRender: function name(info) {
+    //       let start = moment(info.view.activeStart).utc().format("MM/DD/YYYY");
+    //       let today = moment(info.view.activeEnd).utc().format("MM/DD/YYYY");
+    //       calObj.CalendarView = info.view.view;
+    //       calObj.StartDate = start;
+    //       calObj.EndDate = today;
+    //      // this.ActionGetResList();
+    //     },
+    //     events: this.actlist,
+    //   }
+    //   );
+
+    //   this.calendar.render();
+    //   this.ActionGetResList();
+    //  // this.ActionGetResList();
+    //   //this.ActionLoadEvents();
+    // }

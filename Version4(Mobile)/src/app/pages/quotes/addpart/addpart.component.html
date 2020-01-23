@@ -56,8 +56,8 @@
                   {{material.Color}} - {{material.Depth}} - {{material.Finish}}</ion-select-option>
               </ion-select>
             </ion-col>
-            <ion-col size="1">
-              <ion-icon name="add" (click)="ActionAddMaterial(0, 'QuotePart')"></ion-icon>
+            <ion-col size="1" class="paddzero mar-top5 color-primary">
+              <ion-icon name="add-circle" class="fontmedium" (click)="ActionAddMaterial(0, 'QuotePart')"></ion-icon>
             </ion-col>
             <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
               <ion-input type="text" [(ngModel)]="mat.Sqft" readonly="readonly"

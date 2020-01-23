@@ -15,8 +15,8 @@
     </ion-toolbar>
   </ion-header> -->
 
-<ion-content>
-  <form #form="ngForm" (ngSubmit)="ActionSaveTile(form)">
+
+  <form #form="ngForm" (ngSubmit)="ActionSaveTile(form)" class="dis-content">
     <ion-header>
       <ion-toolbar>
         <ion-title class="titleheader"><div>{{selName}}</div></ion-title>
@@ -24,6 +24,7 @@
         <ion-button slot="end" color="danger" size="small" (click)="ActionCloseTile(false)">X</ion-button>
       </ion-toolbar>
     </ion-header>
+    <ion-content>
     <ion-item>
 
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
@@ -67,5 +68,5 @@
         <ion-row style="margin-right: 3px;">$</ion-row>
       </ion-input>
     </ion-item>
+  </ion-content>
   </form>
-</ion-content>

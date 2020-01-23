@@ -7,16 +7,20 @@
 </ion-header>
 <ion-content>
   <ion-row class="martb5">
-    <ion-col size="4" class="text-left fontbold" (click)="ActionFilterPopup($event,1)" ><u>Act Types:</u></ion-col>
+    <ion-col size="4" class="text-left fontbold" (click)="ActionFilterPopup($event,1,calObj.ActTypeIDs,calObj.ActTypes)" ><u>Act Types:</u></ion-col>
     <ion-col size="8">{{calObj.ActTypes}}</ion-col>
   </ion-row>
   <ion-row class="marbot2">
-    <ion-col size="4" class="text-left fontbold" (click)="ActionFilterPopup($event,2)"><u>Assigned:</u></ion-col>
+    <ion-col size="4" class="text-left fontbold" (click)="ActionFilterPopup($event,2,calObj.ResourceIDs,calObj.ResourceNames)"><u>Assigned:</u></ion-col>
     <ion-col size="8">{{calObj.ResourceNames}}</ion-col>
   </ion-row>
   <ion-row class="marbot2">
     <ion-col size="4" class="text-left fontbold"><u>Calendar Disp:</u></ion-col>
-    <ion-col size="8">Chad,Kay,Mark</ion-col>
+    <ion-col size="8">
+      <ion-select [(ngModel)]="calObj.CalendarView" name="CalendarView" [selectedText]="CalendarView" >
+        <ion-select-option *ngFor="let c of calViews" [value]="c.name"> {{c.name}}</ion-select-option>
+      </ion-select>
+    </ion-col>
   </ion-row>
   <ion-row class="marbot2">
     <ion-col size="4" class="text-left fontbold"><u>Time Hrs:</u></ion-col>
@@ -31,8 +35,8 @@
     </ion-col>
     <ion-col size="6"  class="paddzero">
       <ion-col size="4" class="text-left fontbold">Days:</ion-col>
-      <ion-col size="8" [(ngModel)]="calObj.CalendarDays">
-        <ion-select >
+      <ion-col size="8" >
+        <ion-select [(ngModel)]="calObj.CalendarDays" name="CalendarDays" [selectedText]="CalendarDays">
           <ion-select-option value="1">1</ion-select-option>
           <ion-select-option value="3">3</ion-select-option>
           <ion-select-option value="5">5</ion-select-option>
@@ -45,49 +49,13 @@
     <ion-col size="8">Chad,Kay,Mark</ion-col>
   </ion-row> -->
   <ion-row class="marbot2">
-    <ion-col size="4" class="text-left fontbold"><u>Act Status:</u></ion-col>
-    <ion-col size="8">{{calObj.ResourceNames}}</ion-col>
+    <ion-col size="4" class="text-left fontbold" (click)="ActionFilterPopup($event,3,calObj.StatusIDs,calObj.StatusNames)"><u>Act Status:</u></ion-col>
+    <ion-col size="8">{{calObj.StatusNames}}</ion-col>
   </ion-row>
 
 
 
-  <ion-row *ngIf="IsShowPopup" class="popupCls">
-    <ion-row style="width: 100%;">
-      <ion-col size="11">
-        <ion-label color="primary" class="paddleft5 fontbold">Resources: </ion-label>
-      </ion-col>
-      <ion-col size="1" class="text-center" style="font-size: 18px;" (click)="ActionCloseResourcePopup()"><b>X</b>
-      </ion-col>
-    </ion-row>
-    <div style="width: 100%;height: 300px;overflow: auto;">
-
-
-
-      <ion-row *ngFor="let resource of ResourceList" class="border-btm">
-        <ion-row style="width: 100%;">
-          <ion-col size="8" class="paddzero">
-            <span>
-              <ion-checkbox color="dark" name="Text" class="martb" style="width: 17px;height: 17px;"></ion-checkbox>
-            </span>&nbsp;
-            <span>{{resource.ResourceName}}</span>
-          </ion-col>
-          <ion-col class="paddzero text-right" size="4">
-            <span *ngIf="resource.IsLocked == 1"> <i class="fa fa-lock"></i>&nbsp;</span>
-            <span>{{resource.DayMaxSqft | number : '.2-2'}} | <span
-                style="color:red">{{resource.DaySqft | number : '.2-2'}}</span> &nbsp;</span>
-          </ion-col>
-        </ion-row>
-        <ion-row style="width: 100%;">
-          <ion-col>
-            <span><small>{{resource.EmpMail}}</small></span>&nbsp;&nbsp;
-            <span>{{resource.EmpPhone}}</span>
-            <span class="color-red" *ngIf="resource.OffID == 1"><b> &nbsp; (DAY OFF)</b></span>
-          </ion-col>
-        </ion-row>
-      </ion-row>
-    </div>
-  </ion-row>
-
+ 
 
 
 

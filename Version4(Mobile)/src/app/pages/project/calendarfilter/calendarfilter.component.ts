@@ -11,37 +11,56 @@ import { SchedulingService } from 'src/app/service/scheduling.service';
 })
 export class CalendarfilterComponent implements OnInit {
 
-  filterObj = this.navParams.data; searchableList: any;
-  ActTypeTypeList: any; ResourceList: any = [];result:any;
+   searchableList: any;
+   result:any = this.navParams.data;
+   ActTypeList: any;StatusList:any;ResourceList: any;
   constructor(private schService: SchedulingService, private navParams: NavParams,
     private popoverCntrl: PopoverController, private FilterPipe: FilterPipe) {
     this.searchableList = ['Name'];
   }
   ngOnInit() {
-    this.result = {
-      ActTypeId: this.filterObj.ActTypeId, ResourceIds: this.filterObj.ResourceIds,
-      ResourceNames: this.filterObj.ResourceNames,ActivityType:this.filterObj.ActivityType
-    };
-    this.ActTypeTypeList = this.filterObj.ActTypeTypeList;
-    this.GetResourceList();
+    this.ActionLoadList();
   }
-  ActivityTypeResourceList(Id: number,name:string) {
-    this.result.ActTypeId = Id;
-    this.result.ActivityType = name;
-    this.GetResourceList();
+  ActionLoadList(){
+    switch (this.result.FiterTypeID) {
+      case 1: {this.ActivityTypeList(); break; }
+      case 2: {this.ActionGetResoucreList(); break; }
+      case 3: {this.ActionStatusList(); break; }
+    }
   }
-  GetResourceList(){
-    this.schService.ActivityTypeResourceList( this.result.ActTypeId).subscribe(data => {
+ //Activity Type List Service
+ ActivityTypeList() {
+  this.schService.ActivityTypeList(4).subscribe(data => {
+    this.ActTypeList = data;
+    this.PrepareItems(this.ActTypeList);
+  })
+}
+ActionStatusList() {
+  this.schService.ActivityStatusList().subscribe(data => {
+    this.StatusList = data;
+    this.PrepareItems(this.StatusList);
+  })
+}
+//Resource List Service
+ActionGetResoucreList() {
+  if(this.result.ActTypeIDs != "" && this.result.ActTypeIDs != null && this.result.ActTypeIDs != undefined){
+    this.schService.ActionResourcesByAccTypes(this.result.ActTypeIDs).subscribe(data => {
       this.ResourceList = data;
       this.PrepareResources();
-    });
+    })
   }
+}
+
+
+
+  //Resources
   PrepareResources() {
-    let check = this.filterObj.ResourceIds == "" || this.filterObj.ResourceIds == null ? 1 : 0;
-    let array = check == 0 ? this.filterObj.ResourceIds.split(",") : [];
+    let check = this.result.SelIDs == "" || this.result.SelIDs == null ? 1 : 0;
+    let array = check == 0 ? this.result.SelIDs.split(",") : [];
    // console.log(array);
     for (let i in this.ResourceList) {
       let resource = this.ResourceList[i];
+      this.ResourceList[i].Name = this.ResourceList[i].ResourceName;
       let res = array.find(s => s == resource.ResourceID);
       if (check == 1 || (res != null && res != undefined)) {
         this.ResourceList[i].Check = 1;
@@ -49,21 +68,47 @@ export class CalendarfilterComponent implements OnInit {
     }
   }
   ActionRunFilter() {
-    let resIds = ""; let resNames = "";
-    //  let filterList = this.ResourceList.filter(function(item) {
-    //   return  item.Check == 1;
-    // });
-    for (let j in this.ResourceList) {
-      let obj = this.ResourceList[j];
-      if (obj.Check == 1) {
-        resIds += obj.ResourceID + ",";
-        resNames += obj.ResourceName + ",";
+    let Ids = ""; let names = "";
+    if(this.result.FiterTypeID == 2){
+      for (let j in this.ResourceList) {
+        let obj = this.ResourceList[j];
+        if (obj.Check == 1) {
+          Ids += obj.ResourceID + ",";
+          names += obj.ResourceName + ",";
+        }
+      }
+    }else{
+      let list = this.result.FiterTypeID == 1 ? this.ActTypeList : this.StatusList;
+      for (let j in list) {
+        let obj = list[j];
+        if (obj.Check == 1) {
+          Ids += obj.ID + ",";
+          names += obj.Name + ",";
+        }
       }
     }
-    this.result.ResourceIds = resIds.replace(/(^[,\s]+)|([,\s]+$)/g, '');
-    this.result.ResourceNames = resNames.replace(/(^[,\s]+)|([,\s]+$)/g, '');
+    
+    this.result.SelIDs = Ids.replace(/(^[,\s]+)|([,\s]+$)/g, '');
+    this.result.SelNames = names.replace(/(^[,\s]+)|([,\s]+$)/g, '');
     this.ActionToClosePop(true);
   }
+
+  // ActTypes and StatusNames
+  PrepareItems(list:any) {
+    let check = this.result.SelIDs == "" || this.result.SelIDs == null ? 1 : 0;
+    let array = check == 0 ? this.result.SelIDs.split(",") : [];
+   // console.log(array);
+    for (let i in list) {
+      let item = list[i];
+      let selItem = array.find(s => s == item.ID);
+      if (check == 1 || (selItem != null && selItem != undefined)) {
+        list[i].Check = 1;
+      }
+    }
+  }
+
+
+
   ActionToClosePop(isselect) {
      if(isselect == true){
       this.popoverCntrl.dismiss(this.result);
@@ -72,4 +117,15 @@ export class CalendarfilterComponent implements OnInit {
     }
   }
 
+  // ActivityTypeResourceList(Id: number,name:string) {
+  //   this.result.ActTypeId = Id;
+  //   this.result.ActivityType = name;
+  //   this.GetResourceList();
+  // }
+  // GetResourceList(){
+  //   this.schService.ActivityTypeResourceList( this.result.ActTypeId).subscribe(data => {
+  //     this.ResourceList = data;
+  //     this.PrepareResources();
+  //   });
+  // }
 }

@@ -12,10 +12,7 @@ import { OverlayEventDetail } from '@ionic/core';
 export class CalendarsettingComponent implements OnInit {
   
   calObj: any;IsShowPopup:boolean= false;
-  ActTypeList: any;StatusList:any;ResourceList: any;
-  
-  
-
+  calViews = [{Id: 1,name:'Resource By Day'}, {Id: 2,name:'Day By Activity Type'}, {Id: 3,name:'Day By Resource'},{Id: 4,name:'Day By Time'},{Id: 5,name:'Day By Resource By Time'},];
   constructor(public Modalcntrl: ModalController,private schService: SchedulingService, private popoverCntrl: PopoverController) { }
 
   ngOnInit() { 
@@ -29,31 +26,16 @@ export class CalendarsettingComponent implements OnInit {
       issave: issave
     });
   }
-  //Activity Type List Service
-  ActionActivityTypeList() {
-    this.schService.ActivityTypeList(4).subscribe(
-      data => {
-        this.ActTypeList = data;
-      });
-  }
-  //Resource List Service
-  ActionGetResoucreList() {
-    // this.schService.ActivityTypeResourceList(this.ActTypeID).subscribe(data => {
-    //   this.ResourceList = data;
-    // })
-  }
+ 
 
 
 
 
 
 
-
-  async ActionFilterPopup(ev: any,filterTypeId) {
+  async ActionFilterPopup(ev: any,filterTypeId,selIds,selNames) {
     let obj = {
-      ActTypeId: this.calObj.ActTypeID, ResourceIds: this.calObj.ResourceIds,
-      ResourceNames: this.calObj.ResourceNames, ActTypeTypeList: this.ActTypeList,
-      ActivityType: this.calObj.ActivityType,FiterTypeID:filterTypeId,
+      FiterTypeID:filterTypeId,SelIDs:selIds,SelNames:selNames,ActTypeIDs:this.calObj.ActTypeIDs
     };
     const popover = await this.popoverCntrl.create({
       component: CalendarfilterComponent,
@@ -63,7 +45,8 @@ export class CalendarsettingComponent implements OnInit {
       cssClass: "popover_class"
     });
     popover.onDidDismiss().then((result: OverlayEventDetail) => {
-      console.log(result);
+      
+     // console.log(result);
     });
     return await popover.present();
   }

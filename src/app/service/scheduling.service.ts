@@ -74,9 +74,14 @@ GetResourcesAndHolidays(startDate:any, endDate:any,actTypeIds:string,typeId:numb
   let stageId =0;
   return this.http.get<any>(this.url +  'api/Project/GetResourcesAndHolidays?startDate=' + startDate + "&endDate=" + endDate + "&actTypeIds=" + actTypeIds + "&stageId=" + stageId + "&typeId=" + typeId + "&resIDs=" + resIDs)
 }
+//Resources check function
+ActionCheckIsExistSameRes(Id:any, resId:any, sDate:any, eDate:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/CheckIsExistSameRes?Id=' + Id + "&resId=" + resId + "&sDate=" + sDate + "&eDate=" + eDate)
+}
 
 
-//POST SERVICES
+/**************************** POST SERVICES *********************************************/
+
 // ActionQuickActList(obj:any):Observable<any> {
 //   var parameter = JSON.stringify(obj);
 //   return this.http.post<any>(this.url + 'api/Project/ActionQuickActList3', parameter, { headers: { 'Content-Type': 'application/json' } })
@@ -91,5 +96,11 @@ ActionSaveActivityInfo(model:any):Observable<any> {
   var parameter = JSON.stringify(model);
   return this.http.post<any>(this.url + 'api/Project/SaveActivityInfo', parameter, { headers: { 'Content-Type': 'application/json' } })
 }
+//Resource info save function
+ActionSaveResourceInfo(model:any, activityId:any) {
+  var parameter = JSON.stringify(model);
+  return this.http.post<any>(this.url + 'api/Project/SaveResourceInfo?activityId=' + activityId, parameter, { headers: { 'Content-Type': 'application/json' } })
+}
+
 
 }

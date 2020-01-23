@@ -1,5 +1,5 @@
-<ion-content>
-  <form #form="ngForm" (ngSubmit)="ActionSaveSink(form)">
+
+  <form #form="ngForm" (ngSubmit)="ActionSaveSink(form)" class="dis-content">
     <ion-header>
       <ion-toolbar>
         <ion-title class="titleheader">Sink</ion-title>
@@ -7,6 +7,7 @@
         <ion-button slot="end" color="danger" size="small" (click)="ActionCloseSink(false)">X</ion-button>
       </ion-toolbar>
     </ion-header>
+    <ion-content>
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
       <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.Description" name="Description"
@@ -15,7 +16,7 @@
       <ion-icon slot="end" class="marg18" name="search" (click)="ActionSearchSelect($event,2,8)"></ion-icon>
     </ion-item>
     <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
-      <div class="error">Description is required</div>
+      <div class="error">Select Job</div>
     </div>
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
@@ -82,5 +83,5 @@
       <ion-input type="text" class="labelfont" [(ngModel)]="sinkfaucet.NoOfHoles" name="NoOfHoles">
       </ion-input>
     </ion-item>
+  </ion-content>
   </form>
-</ion-content>

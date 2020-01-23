@@ -15,8 +15,8 @@ export class SchedulingService {
  /*************  GET SERVICES ***************/
 
 //Activity List
-ActionQuickActList(startDate:any, endDate:string, search:string, actTypeId:number, userId:number, resIds:string):Observable<any> {
-  return this.http.get<any>(this.url +  'api/Project/ActionQuickActList?startDate=' + startDate + "&endDate=" + endDate + "&search=" + search + '&actTypeId=' + actTypeId + "&userId=" + userId + "&resIds=" + resIds)
+ActionQuickActList(startDate:any, endDate:string, search:string, actTypeIds:number, userId:number, resIds:string,statusIds:string):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/ActionQuickActList?startDate=' + startDate + "&endDate=" + endDate + "&search=" + search + '&actTypeIds=' + actTypeIds + "&userId=" + userId + "&resIds=" + resIds + "&statusIds=" + statusIds)
 }
 
 //ActivityType List
@@ -83,9 +83,9 @@ ActionCheckIsExistSameRes(Id:any, resId:any, sDate:any, eDate:any):Observable<an
 
 /**************************** POST SERVICES *********************************************/
 
-// ActionQuickActList(obj:any):Observable<any> {
-//   var parameter = JSON.stringify(obj);
-//   return this.http.post<any>(this.url + 'api/Project/ActionQuickActList3', parameter, { headers: { 'Content-Type': 'application/json' } })
+// ActionQuickActList3(obj:any):Observable<any> {
+//   //var parameter = JSON.stringify(obj);
+//   return this.http.post<any>(this.url + 'api/Project/ActionQuickActList3', obj, { headers: { 'Content-Type': 'application/json' } })
 // }
 //Activity Save Function
 FollowUpStatus(model:any):Observable<any> {

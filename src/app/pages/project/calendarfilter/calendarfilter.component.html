@@ -13,7 +13,7 @@
 Activity Types
 </ion-item>  -->
 <!-- [ngClass]="{ 'activeBgColor': item.ID == result.ActTypeId }" -->
-<ion-item *ngFor="let item of ActTypeList | FilterPipe: queryString : searchableList"  (click)="ActivityTypeResourceList(item.ID,item.Name)">
+<ion-item *ngFor="let item of ActTypeList | FilterPipe: queryString : searchableList"  >
   <ion-label style="margin: 0px;padding: 10px 0px 10px 0px;" >
   <ion-checkbox style="width:30px" color="dark"  [(ngModel)]="item.Check" checked="item.Check ==1"></ion-checkbox> 
   {{item.Name}}

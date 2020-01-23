@@ -110,11 +110,11 @@ ActionGetResoucreList() {
 
 
   ActionToClosePop(isselect) {
-     if(isselect == true){
-      this.popoverCntrl.dismiss(this.result);
-    }else{
-      this.popoverCntrl.dismiss();
-    }
+    this.popoverCntrl.dismiss({
+      'dismissed': true,
+      componentProps: this.result,
+      isSelect: isselect
+    });
   }
 
   // ActivityTypeResourceList(Id: number,name:string) {

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams, PopoverController } from '@ionic/angular';
 import { SchedulingService } from 'src/app/service/scheduling.service';
+import { CalendarfilterComponent } from '../calendarfilter/calendarfilter.component';
+import { OverlayEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-calendarsetting',
@@ -11,7 +13,8 @@ export class CalendarsettingComponent implements OnInit {
   ActTypeList: any;
   ActTypeID: number;
   ResourceList: any;
-  constructor(public Modalcntrl: ModalController,private schService: SchedulingService) { }
+  calObj: any;
+  constructor(public Modalcntrl: ModalController,private schService: SchedulingService, private popoverCntrl: PopoverController) { }
 
   ngOnInit() {}
 
@@ -35,5 +38,24 @@ export class CalendarsettingComponent implements OnInit {
       this.ResourceList = data;
     })
   }
+  async ActionFilterPopup(ev: any,filterTypeId) {
+    let obj = {
+      ActTypeId: this.calObj.ActTypeID, ResourceIds: this.calObj.ResourceIds,
+      ResourceNames: this.calObj.ResourceNames, ActTypeTypeList: this.ActTypeList,
+      ActivityType: this.calObj.ActivityType,FiterTypeID:filterTypeId,
+    };
+    const popover = await this.popoverCntrl.create({
+      component: CalendarfilterComponent,
+      event: ev,
+      translucent: true,
+      componentProps: obj,
+      cssClass: "popover_class"
+    });
+    popover.onDidDismiss().then((result: OverlayEventDetail) => {
+      console.log(result);
+    });
+    return await popover.present();
+  }
+  
 
 }

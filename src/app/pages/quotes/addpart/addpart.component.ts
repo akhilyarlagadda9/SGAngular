@@ -22,6 +22,9 @@ export class AddpartComponent implements OnInit {
   faucet: any;
   labor: any;
   other: any;
+  areaInfo: any;
+  shownGroup: number = 1;
+  shownGroup4: any = 2;
   constructor(public Modalcntrl: ModalController, public popoverCntrl: PopoverController,
     private service: QuoteService, private getservice: QuotegetService, private quoterep: QuoterepService) { }
 
@@ -85,18 +88,18 @@ export class AddpartComponent implements OnInit {
   }
 
   GetMaterialList() {
-    let result = this.service.ActionGetMaterialList(this.partinfo.VersionID).subscribe(data => {
+    this.service.ActionGetMaterialList(this.partinfo.VersionID).subscribe(data => {
       this.MaterialList = data;
     })
   }
   GetCounterList() {
-    let result = this.service.ActionGetCountertypeList().subscribe(data => {
+    this.service.ActionGetCountertypeList().subscribe(data => {
       this.CountertypeList = data[0];
     })
   }
   GetPriceListItems() {
     let typeIdList = []; typeIdList.push(5); typeIdList.push(6); typeIdList.push(10); typeIdList.push(7);
-    let result = this.getservice.qsgetpricelistitems(this.priceListID, typeIdList).subscribe(data => {
+    this.getservice.qsgetpricelistitems(this.priceListID, typeIdList).subscribe(data => {
       this.SplashList = data[1];
       this.EdgeList = data[0];
       this.CutoutList = data[2];
@@ -115,7 +118,7 @@ export class AddpartComponent implements OnInit {
       componentProps: obj,
       cssClass: "popover_class"
     });
-    popover.onDidDismiss().then((detail: OverlayEventDetail) => {debugger;
+    popover.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {
         if (detail.data.isselect == true) {
           if (protypeId == 8) {
@@ -257,6 +260,36 @@ export class AddpartComponent implements OnInit {
     let other = this.quoterep.AddOtherItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent);
     this.partinfo.OtherList.push(other);
   }
+  ActionAddLabor() {
+    let other = this.quoterep.AddLaborItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent, 0, 'Labor');
+    this.partinfo.LaborList.push(other);
+  }
+  ActionRemoveSizes(indx:number, jndx:number){
+    this.partinfo.PartFabList[jndx].MeasureList.splice(indx, 1);
+    this.ActionSetFabSqft(jndx);
+  }
+  ActionRemoveSplash(index:number){
+    this.partinfo.SplashList.splice(index);
+  }
+  ActionRemoveEdge(index:number){
+    this.partinfo.EdgeList.splice(index);
+  }
+  ActionRemoveCutout(index:number){
+    this.partinfo.CutoutList.splice(index);
+  }
+  ActionRemoveSink(index:number){
+    this.partinfo.SinkList.splice(index);
+  }
+  ActionRemoveFaucet(index:number){
+    this.partinfo.FaucetList.splice(index);
+  }
+  ActionRemoveLabor(index:number){
+    this.partinfo.LaborList.splice(index);
+  }
+  ActionRemoveOther(index:number){
+    this.partinfo.OtherList.splice(index);
+  }
+
   ActionSetMargin(typeId: number, model: any, type: string) {
     model = this.quoterep.margincalculations(typeId, model, type);
     this.ActionSetAmount(type, model);
@@ -265,7 +298,9 @@ export class AddpartComponent implements OnInit {
   ActionSetAmount(type, model) {
     switch (type) {
       case "Fab": case "matfab":
-        model.Amount = this.quoterep.calcitemamt(model.Sqft, model.LaborUnitPrice);
+        //model.Amount = this.quoterep.calcitemamt(model.Sqft, model.LaborUnitPrice);
+        model.Amount = this.quoterep.calcitemamt(model.Sqft, model.UnitPrice);
+        model.Amt = model.Amount;
         break;
       case "labor":
         model.Amount = this.quoterep.calcitemamt(model.Qty, model.UnitPrice);
@@ -317,7 +352,7 @@ export class AddpartComponent implements OnInit {
 
 
   async ActionAddMaterial(materialId: any, source: string) {
-    let sel = { VersionId: this.partinfo.VersionID, AreaId: this.partinfo.AreaID, materialId: materialId, priceListID: this.priceListID }
+    let sel = { VersionId: this.partinfo.VersionID, AreaId: this.partinfo.AreaID, materialId: materialId, priceListID: this.priceListID, areainfo : this.areaInfo }
     const modal = await this.Modalcntrl.create({
       component: AddmatComponent,
       componentProps: sel
@@ -338,7 +373,28 @@ export class AddpartComponent implements OnInit {
     this.selectedcomponent = type;
   }
 
-
+  toggleGroup(group) {
+    if(group == 1){
+      if (this.isGroupShown(group)) {
+        this.shownGroup = 0;
+    } else {
+        this.shownGroup = group;
+    }
+    }else{
+      if (this.isGroupShown4(group)) {
+        this.shownGroup4 = 0;
+    } else {
+        this.shownGroup4 = group;
+    }
+    }
+   
+  };
+  isGroupShown(group) {
+    return this.shownGroup === group;
+  };
+  isGroupShown4(group) {
+    return this.shownGroup4 === group;
+  };
 
 
 

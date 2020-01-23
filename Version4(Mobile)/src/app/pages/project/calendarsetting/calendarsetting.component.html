@@ -1,66 +1,61 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title><b>Calendar Settings</b></ion-title>
+    <ion-title class="titleheader">Calendar Settings</ion-title>
     <ion-button slot="end" color="success" size="small" (click)="ActionCloseCalendarSett(true)">Run</ion-button>
     <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCalendarSett(false)">X</ion-button>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-row class="martb5">
-    <ion-col size="4" class="text-left fontbold" (click)="ActionFilterPopup($event,1,calObj.ActTypeIDs,calObj.ActTypes)" ><u>Act Types:</u></ion-col>
-    <ion-col size="8">{{calObj.ActTypes}}</ion-col>
+  <ion-row class="martb5 paddrght5">
+    <ion-col size="4" class="text-left fontbold font-size15" (click)="ActionFilterPopup($event,1,calObj.ActTypeIDs,calObj.ActTypes)"><u>Act Types:</u></ion-col>
+    <ion-col size="8" class="btninfo">{{calObj.ActTypes}}</ion-col>
+  </ion-row>
+  <ion-row class="marbot2 paddrght5">
+    <ion-col size="4" class="text-left fontbold font-size15" (click)="ActionFilterPopup($event,2,calObj.ResourceIDs,calObj.ResourceNames)"><u>Assigned:</u></ion-col>
+    <ion-col size="8" class="btninfo">{{calObj.ResourceNames}}</ion-col>
   </ion-row>
   <ion-row class="marbot2">
-    <ion-col size="4" class="text-left fontbold" (click)="ActionFilterPopup($event,2,calObj.ResourceIDs,calObj.ResourceNames)"><u>Assigned:</u></ion-col>
-    <ion-col size="8">{{calObj.ResourceNames}}</ion-col>
-  </ion-row>
-  <ion-row class="marbot2">
-    <ion-col size="4" class="text-left fontbold"><u>Calendar Disp:</u></ion-col>
-    <ion-col size="8">
-      <ion-select [(ngModel)]="calObj.CalendarView" name="CalendarView" [selectedText]="CalendarView" >
+    <ion-col size="4" class="text-left fontbold font-size15">Calendar Disp:</ion-col>
+    <ion-col size="8" class="paddlef0">
+      <ion-select [(ngModel)]="calObj.CalendarView" name="CalendarView" [selectedText]="calObj.CalendarView" class="btninfo" interface="popover">
         <ion-select-option *ngFor="let c of calViews" [value]="c.name"> {{c.name}}</ion-select-option>
       </ion-select>
     </ion-col>
   </ion-row>
   <ion-row class="marbot2">
-    <ion-col size="4" class="text-left fontbold"><u>Time Hrs:</u></ion-col>
-    <ion-col size="8">Chad,Kay,Mark</ion-col>
+    <ion-col size="4" class="text-left fontbold font-size15">Time Hrs From:</ion-col>
+    <ion-col size="3" class="paddlef0">
+      <ion-select class="btninfo" interface="popover" [(ngModel)]="calObj.starttime" name="starttime" [selectedText]="calObj.starttime">
+        <ion-select-option *ngFor="let time of timings" [value]="time.name">{{time}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col size="1" class="text-right fontbold font-size15" style="padding-right: 0px;">To:</ion-col>
+    <ion-col size="3">
+      <ion-select class="btninfo" interface="popover" [(ngModel)]="calObj.endtime" name="endtime" [selectedText]="calObj.endtime">
+        <ion-select-option *ngFor="let time of timings" [value]="time.name">{{time}}</ion-select-option>
+      </ion-select>
+    </ion-col>
   </ion-row>
   <ion-row class="marbot2">
-    <ion-col size="6" class="paddzero">
-      <ion-col size="4" class="text-left fontbold">Start Date:</ion-col>
-      <ion-col size="8">
-        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
-      </ion-col>
+    <ion-col size="4" class="text-left fontbold font-size15">Start Date:</ion-col>
+    <ion-col size="4" class="paddlef0">
+      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="calObj.StartDate" class="btninfo"  name="StartDate">{{calObj.StartDate}}</ion-datetime>
     </ion-col>
-    <ion-col size="6"  class="paddzero">
-      <ion-col size="4" class="text-left fontbold">Days:</ion-col>
-      <ion-col size="8" >
-        <ion-select [(ngModel)]="calObj.CalendarDays" name="CalendarDays" [selectedText]="CalendarDays">
-          <ion-select-option value="1">1</ion-select-option>
-          <ion-select-option value="3">3</ion-select-option>
-          <ion-select-option value="5">5</ion-select-option>
-        </ion-select>
-      </ion-col>
+    <ion-col size="2" class="text-right fontbold">Days:</ion-col>
+    <ion-col size="2">
+      <ion-select [(ngModel)]="calObj.CalendarDays" name="CalendarDays" [selectedText]="calObj.CalendarDays" class="btninfo">
+        <ion-select-option value="1">1</ion-select-option>
+        <ion-select-option value="3">3</ion-select-option>
+        <ion-select-option value="5">5</ion-select-option>
+      </ion-select>
     </ion-col>
   </ion-row>
-  <!-- <ion-row class="marbot2">
+   <!-- <ion-row class="marbot2">
     <ion-col size="4" class="text-left fontbold"><u>Act Fields:</u></ion-col>
     <ion-col size="8">Chad,Kay,Mark</ion-col>
   </ion-row> -->
-  <ion-row class="marbot2">
-    <ion-col size="4" class="text-left fontbold" (click)="ActionFilterPopup($event,3,calObj.StatusIDs,calObj.StatusNames)"><u>Act Status:</u></ion-col>
-    <ion-col size="8">{{calObj.StatusNames}}</ion-col>
+  <ion-row class="marbot2 paddrght5">
+    <ion-col size="4" class="text-left fontbold font-size15" (click)="ActionFilterPopup($event,3,calObj.StatusIDs,calObj.StatusNames)"><u>Act Status:</u></ion-col>
+    <ion-col size="8" class="btninfo">{{calObj.StatusNames}}</ion-col>
   </ion-row>
-
-
-
- 
-
-
-
-
-
-
-
 </ion-content>

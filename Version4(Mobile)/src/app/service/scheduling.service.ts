@@ -18,6 +18,7 @@ export class SchedulingService {
 ActionQuickActList(startDate:any, endDate:string, search:string, actTypeId:number, userId:number, resIds:string):Observable<any> {
   return this.http.get<any>(this.url +  'api/Project/ActionQuickActList?startDate=' + startDate + "&endDate=" + endDate + "&search=" + search + '&actTypeId=' + actTypeId + "&userId=" + userId + "&resIds=" + resIds)
 }
+
 //ActivityType List
 ActivityTypeList(moduleID:number):Observable<any> {
   return this.http.get<any>(this.url +  'api/Project/ActivityTypeList?moduleID=' + moduleID)
@@ -68,11 +69,18 @@ GetDuration(hrs, min,startDate,endDate,type):Observable<any> {
 ActTypeResListWithDates(actTypeId:any, startDate:any, endDate:any):Observable<any> {
   return this.http.get<any>(this.url +  'api/Project/ActTypeResListWithDates?actTypeId=' + actTypeId + "&startDate=" + startDate + "&endDate=" + endDate)
 }
-
+//Resource List With Dates
+GetResourcesAndHolidays(startDate:any, endDate:any,actTypeIds:string,typeId:number,resIDs:string):Observable<any> {
+  let stageId =0;
+  return this.http.get<any>(this.url +  'api/Project/GetResourcesAndHolidays?startDate=' + startDate + "&endDate=" + endDate + "&actTypeIds=" + actTypeIds + "&stageId=" + stageId + "&typeId=" + typeId + "&resIDs=" + resIDs)
+}
 
 
 //POST SERVICES
-
+// ActionQuickActList(obj:any):Observable<any> {
+//   var parameter = JSON.stringify(obj);
+//   return this.http.post<any>(this.url + 'api/Project/ActionQuickActList3', parameter, { headers: { 'Content-Type': 'application/json' } })
+// }
 //Activity Save Function
 FollowUpStatus(model:any):Observable<any> {
   var parameter = JSON.stringify(model);

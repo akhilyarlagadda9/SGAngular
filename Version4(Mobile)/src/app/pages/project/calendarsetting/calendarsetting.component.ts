@@ -20,10 +20,11 @@ export class CalendarsettingComponent implements OnInit {
   }
    
   //Close Function
-  ActionCloseCalendarSett(issave) {
+  ActionCloseCalendarSett(isfilter) {
     this.Modalcntrl.dismiss({
       'dismissed': true,
-      issave: issave
+      isfilter: isfilter,
+      componentProps: this.calObj,
     });
   }
  
@@ -45,14 +46,21 @@ export class CalendarsettingComponent implements OnInit {
       cssClass: "popover_class"
     });
     popover.onDidDismiss().then((result: OverlayEventDetail) => {
-      
+      if (result !== null) {
+        if (result.data.isSelect == true) {
+           this.PopulateFilterInfo(filterTypeId,result.data.componentProps);
+        }
+      }
      // console.log(result);
     });
     return await popover.present();
   }
   
-  ActionopenFilterPopup() {
-    this.IsShowPopup = true;
+  PopulateFilterInfo(filterId,info:any) {
+    switch (filterId) {
+      case 1: {this.calObj.ActTypeIDs =info.SelIDs;this.calObj.ActTypes =info.SelNames;  break; }
+      case 2: { this.calObj.ResourceIDs =info.SelIDs;this.calObj.ResourceNames =info.SelNames;break; }
+      case 3: {this.calObj.StatusIDs =info.SelIDs;this.calObj.StatusNames =info.SelNames; break; }
+    }
   }
-
 }

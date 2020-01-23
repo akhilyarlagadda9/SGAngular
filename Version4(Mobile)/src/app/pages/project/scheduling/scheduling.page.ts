@@ -127,8 +127,7 @@ export class SchedulingPage implements OnInit {
   ActionLoadEvents() {
     if (this.calObj.CalendarView != "" && this.calObj.CalendarView != undefined) {
       let resids = "";
-      //var parameter = JSON.stringify(calObj);
-      this.schService.ActionQuickActList(this.calObj.StartDate, this.calObj.EndDate, this.calObj.Search, 11, 0, resids).subscribe(data => {
+      this.schService.ActionQuickActList(this.calObj.StartDate, this.calObj.EndDate, this.calObj.Search, this.calObj.ActTypeIDs, 0, this.calObj.ResourceIDs,this.calObj.StatusIDs).subscribe(data => {
         this.actlist = [];
         for (let j in data) {
           let item = data[j];
@@ -174,7 +173,12 @@ export class SchedulingPage implements OnInit {
     componentProps:obj
   });
   modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-    
+    if (detail !== null) {
+      if (detail.data.isfilter == true) {
+        this.calObj = detail.data.componentProps;
+        this.ActionLoadEvents();
+      }
+    }
   });
   return await modal.present();
 }

@@ -128,7 +128,7 @@ export class QuoterepService {
     partmat.MaterialID = material.ID;
     let price = (material.PriceByID == 0 || material.PriceByID == 1) ? material.UnitPrice : material.WagPrice;
     // partMat.IsPriceChg = material.Unitprice != material.Price ? true : false;
-    partmat.Unitprice = price;
+    partmat.UnitPrice = price;
     partmat.UnitCost = material.UnitCost;
     partmat.Margin = material.Margin;
     partmat.WF = material.WF;
@@ -314,7 +314,7 @@ export class QuoterepService {
     let price = cost;
     let temp = (1 - (margin / 100)); if (temp > 0) { price = this.roundToTwo(cost / temp); } return price;
   }
-  margincalculations(typeId, details, type) {
+  margincalculations(typeId, details, type) {debugger;
     let cost = 0, price = 0, margin = 0;
     switch (type) {
       case "Fab":
@@ -477,6 +477,7 @@ preparefabrisklevels(material) {
   material.LaborUnitCost = cost;
   material.LaborMargin = margin;
   material.LaborUnitPrice = price;
+  return material;
 }
 populateSlabSizes(slabs, productItem) {
   for (let i = 0; i < slabs.length; i++) {
@@ -493,6 +494,7 @@ productselection(materialobj, subproductgroups, id) {
       materialobj.ProSubGroup = productsubgroup;
       materialobj.ProSubGroupID = productsubgroup.ID;
   }
+  return materialobj;
 }
 calcmaterialwasteamt(material){
   let slabobj = this.calcslabstotalsqft(material.SlabList);
@@ -504,6 +506,7 @@ calcmaterialwasteamt(material){
     material.finishedwasteamt =this. roundToTwo(finishedwasteamt);
     material.totalslbAmt = this.roundToTwo(material.SlabSqft * material.UnitPrice)
     material.totalslbSf = material.SlabSqft;
+    return material;
 }
 calcslabstotalsqft(slabs) {
   let itemobj = { slabsqft: 0, slabcount: 0 };

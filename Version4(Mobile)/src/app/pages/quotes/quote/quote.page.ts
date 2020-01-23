@@ -21,6 +21,7 @@ import { QuickquoteComponent } from '../quickquote/quickquote.component';
 })
 export class QuotePage implements OnInit {
   NavigateTab: number;
+  selectedtabtype: number;
 
   constructor(private service: QuoteService, public Modalcntrl: ModalController, private navCtrl: NavController, private loadingController: LoadingController) { }
   loaderToShow: any;
@@ -38,15 +39,19 @@ export class QuotePage implements OnInit {
 
 
   ngOnInit() {
-    this.ActionQuoteList();
+    this.ActionQuoteList(0);
   }
   ActionGoToHome() {
     this.navCtrl.navigateRoot('/home');
   }
   /***** QUOTELIST-INDEFINITE, SEARCHQUOTE *****/
-  ActionQuoteList() {
+  ActionQuoteList(typeId) {
     // set obj
-    this.setquoteobj("", 0, 0, 25, 1);
+    if(typeId == 1){
+      this.setquoteobj("", 0, 0, 25, 1);
+    }else {
+      this.setquoteobj("", 0, 0, 25, 0);
+    }
     this.GetQuoteList(undefined);
   }
   ActionSearch(q: string) {
@@ -122,7 +127,8 @@ export class QuotePage implements OnInit {
       if (detail !== null) {
         if (detail.data.isSave == true) {
           //this.ActionQuoteEdit(detail.data.componentProps);
-          this.ActionQuoteList();
+          //this.selectedtabtype = 2;
+          this.ActionQuoteList(1);
         }
       }
     });

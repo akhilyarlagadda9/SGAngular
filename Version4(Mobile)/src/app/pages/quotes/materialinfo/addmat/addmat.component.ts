@@ -125,7 +125,7 @@ export class AddmatComponent implements OnInit {
   };
 
   /*********Material Search************/
-  ActionSearchProductItems = function (material, searchtypeId, productsubgroup, searchType) {debugger;
+  ActionSearchProductItems = function (material, searchtypeId, productsubgroup, searchType) {
     this.material.searchType = searchType; this.material.showProducts = true;
     let searchobj = material;
     let prosubgroupId = (productsubgroup == null || productsubgroup == undefined || productsubgroup == 0) ? 0 : productsubgroup.ID;

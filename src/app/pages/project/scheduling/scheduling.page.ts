@@ -62,7 +62,7 @@ export class SchedulingPage implements OnInit {
   @ViewChild('calendar', { static: false }) fullcalendar: FullCalendarComponent;
  calObj: any = {
     StartDate: Date, EndDate: Date, ActTypeIDs: "11",ActTypes: "Template", ResourceIDs: "",ResourceNames: "", StatusIDs: "",StatusNames:"",
-    CalendarView: "", CalendarDays: 3, CalFields: "", Search: "", UserId: 0
+    CalendarView: "Resource By Day", CalendarDays: 3, CalFields: "", Search: "", UserId: 0
   }
   constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) private locale: string, public loadingController: LoadingController,
     private schService: SchedulingService, private navCtrl: NavController) { }

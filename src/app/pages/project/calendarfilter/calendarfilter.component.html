@@ -1,64 +1,45 @@
-<!-- <ion-header>
-  <ion-toolbar style="top:5px;">
-  <ion-searchbar [(ngModel)]="queryString" id="search" placeholder="Search Activity Type"></ion-searchbar>
-  <ion-button slot="end"  size="small" (click)="ActionRunFilter()" ><ul>Run</ul></ion-button>
-    <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop(false)" >X</ion-button>
-  </ion-toolbar>
-</ion-header>
-<ion-content>
-<ion-row style="height:360px">
-<ion-col size="6" >
-<ion-item style="color: darkblue;font-weight:bold">
-Activity Types
-</ion-item>
-<ion-item *ngFor="let item of ActTypeTypeList | FilterPipe: queryString : searchableList" (click)="ActivityTypeResourceList(item.ID,item.Name)">
-<ion-label>
-<h3 >
-    {{item.Name}}
-</h3>
-</ion-label>
-</ion-item>
-</ion-col>
-<ion-col size="6" >
-<ion-item style="color: darkblue;font-weight:bold">
-Resources
-</ion-item>
-<ion-item *ngFor="let resource of ResourceList">
-<ion-checkbox style="width:30px" color="dark"  [(ngModel)]="resource.Check" checked="resource.Check ==1"></ion-checkbox> 
-<small>{{resource.ResourceName}}</small>
-</ion-item>
-</ion-col>
-</ion-row>
-</ion-content> -->
+
 <ion-header>
   <ion-toolbar style="top:5px;">
-  <ion-searchbar [(ngModel)]="queryString" id="search" placeholder="Search Activity Type"></ion-searchbar>
-  <ion-button slot="end"  size="small" (click)="ActionRunFilter()" >Run</ion-button>
+  <ion-searchbar [(ngModel)]="queryString" id="search" placeholder="Search by Name"></ion-searchbar>
+  <ion-button slot="end"  size="small" (click)="ActionRunFilter()" >Select</ion-button>
     <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop(false)" >X</ion-button>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-<ion-row style="height:360px">
-<ion-col size="12" *ngIf="filterObj.FiterTypeID == 1">
-<ion-item style="color: darkblue;font-weight:bold">
+ <ion-row style="height:360px">
+<ion-col size="12" *ngIf="result.FiterTypeID == 1">
+<!-- <ion-item style="color: darkblue;font-weight:bold">
 Activity Types
-</ion-item>
-<ion-item *ngFor="let item of ActTypeTypeList | FilterPipe: queryString : searchableList"  (click)="ActivityTypeResourceList(item.ID,item.Name)">
-<ion-label style="margin: 0px;padding: 10px 0px 10px 0px;" [ngClass]="{ 'activeBgColor': item.ID == result.ActTypeId }">
-<h3 >
-    {{item.Name}}
-</h3>
+</ion-item>  -->
+<!-- [ngClass]="{ 'activeBgColor': item.ID == result.ActTypeId }" -->
+<ion-item *ngFor="let item of ActTypeList | FilterPipe: queryString : searchableList"  (click)="ActivityTypeResourceList(item.ID,item.Name)">
+  <ion-label style="margin: 0px;padding: 10px 0px 10px 0px;" >
+  <ion-checkbox style="width:30px" color="dark"  [(ngModel)]="item.Check" checked="item.Check ==1"></ion-checkbox> 
+  {{item.Name}}
 </ion-label>
 </ion-item>
 </ion-col>
-<ion-col size="12" *ngIf ="filterObj.FiterTypeID == 2">
+<ion-col size="12" *ngIf ="result.FiterTypeID == 2">
 <ion-item style="color: darkblue;font-weight:bold">
 Resources
 </ion-item>
-<ion-item *ngFor="let resource of ResourceList">
+<ion-item *ngFor="let resource of ResourceList | FilterPipe: queryString : searchableList">
 <ion-checkbox style="width:30px" color="dark"  [(ngModel)]="resource.Check" checked="resource.Check ==1"></ion-checkbox> 
-<small>{{resource.ResourceName}}</small>
+{{resource.ResourceName}}
 </ion-item>
 </ion-col>
+
+
+
+<ion-col size="12" *ngIf ="result.FiterTypeID == 3">
+  <ion-item style="color: darkblue;font-weight:bold">
+  Resources
+  </ion-item>
+  <ion-item *ngFor="let status of StatusList | FilterPipe: queryString : searchableList">
+  <ion-checkbox style="width:30px" color="dark"  [(ngModel)]="status.Check" checked="status.Check ==1"></ion-checkbox> 
+  {{status.Name}}
+  </ion-item>
+  </ion-col>
 </ion-row>
 </ion-content>

@@ -3,6 +3,7 @@ import { ModalController, NavParams, PopoverController } from '@ionic/angular';
 import { SchedulingService } from 'src/app/service/scheduling.service';
 import { CalendarfilterComponent } from '../calendarfilter/calendarfilter.component';
 import { OverlayEventDetail } from '@ionic/core';
+import { flatten } from '@angular/compiler';
 
 @Component({
   selector: 'app-calendarsetting',
@@ -18,13 +19,23 @@ export class CalendarsettingComponent implements OnInit {
   '4:00 AM', '4:15 AM', '4:30 AM', '4:45 AM', '5:00 AM', '5:15 AM', '5:30 AM', '5:45 AM', '6:00 AM', '6:15 AM', '6:30 AM', '6:45 AM'
    ];
   calObj: any;IsShowPopup:boolean= false;
-  calViews = [{Id: 1,name:'Resource By Day'}, {Id: 2,name:'Day By Activity Type'}, {Id: 3,name:'Day By Resource'},{Id: 4,name:'Day By Time'},{Id: 5,name:'Day By Resource By Time'},];
+  calViews = [{Id: 1,name:'Resource By Day',Type:"resourceTimeline"}, {Id: 2,name:'Day By Activity Type',Type:"resourcegridView"}, 
+  {Id: 3,name:'Day By Resource',Type:"resourcegridView"},{Id: 4,name:'Day By Time',Type:"timelineDay"},{Id: 5,name:'Day By Resource By Time',Type:"resourceTimeGrid"},];
   constructor(public Modalcntrl: ModalController,private schService: SchedulingService, private popoverCntrl: PopoverController) { }
 
   ngOnInit() { 
     
+    this.ActionPopulateView(this.calObj.CalID);
+    this.calObj.IsViewChange = false;
   }
-   
+  ActionPopulateView(Id){
+   let model = this.calViews.find(s=>s.Id == Id);
+   if(model != undefined && model != null){
+    this.calObj.ViewName = model.name;
+    this.calObj.CalendarView =model.Type;
+    this.calObj.IsViewChange = true;
+   }
+  }
   //Close Function
   ActionCloseCalendarSett(isfilter) {
     this.Modalcntrl.dismiss({

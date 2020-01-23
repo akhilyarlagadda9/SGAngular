@@ -20,7 +20,7 @@ import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
 import interactionPlugin from '@fullcalendar/interaction';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { CalendarsettingComponent } from '../calendarsetting/calendarsetting.component';
-
+import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 
 
 
@@ -35,12 +35,18 @@ import { CalendarsettingComponent } from '../calendarsetting/calendarsetting.com
   <ion-title class="headersty">
 {{calObj.ActTypes}}
   </ion-title>
+  <ion-icon name="refresh" class="fontsmall"  slot="start" (click)="ActionGetResList()"></ion-icon>
   <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
   </ion-toolbar>
+  <ion-fab vertical="bottom" horizontal="end">
+  <ion-button  color="primary" (click)="ActionAddActivity(0)"><ion-icon name="add"></ion-icon> </ion-button>
+ </ion-fab>
    <full-calendar
 #calendar
 schedulerLicenseKey ="GPL-My-Project-Is-Open-Source"
+timeZone= 'UTC'
 defaultView="resourceTimeline"
+slotWidth="100"
 [header]="{
   left: 'prev',
   center: 'title',
@@ -53,6 +59,7 @@ defaultView="resourceTimeline"
 [events]="actlist"
 [resources]="resources"
 (eventRender)="ActionRenderEvent($event)"
+(eventClick)="ActionOnEventSelected($event)"
 ></full-calendar>`,
   styleUrls: ['./scheduling.page.scss'],
   providers: [DatePipe]
@@ -62,25 +69,30 @@ export class SchedulingPage implements OnInit {
   @ViewChild('calendar', { static: false }) fullcalendar: FullCalendarComponent;
  calObj: any = {
     StartDate: Date, EndDate: Date, ActTypeIDs: "11",ActTypes: "Template", ResourceIDs: "",ResourceNames: "", StatusIDs: "",StatusNames:"",
-    CalendarView: "Resource By Day", CalendarDays: 3, CalFields: "", Search: "", UserId: 0,starttime: "7.00 AM",endtime: "7.30 AM"
+  CalID:1,  CalendarView: "resourceTimeline", CalendarDays: 3, CalFields: "", Search: "", UserId: 0,IsViewChange:false,starttime:"7:00 AM",endtime:"8:00 PM"
   }
   constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) private locale: string, public loadingController: LoadingController,
-    private schService: SchedulingService, private navCtrl: NavController) { }
+    private schService: SchedulingService, private navCtrl: NavController,private datePipe:DatePipe) { }
 
   ngOnInit() {
     let height = window.innerHeight-20;
    // setTimeout(function () {
     var _dafaultDate = new Date();
     this.options = {
-      plugins: [interactionPlugin, dayGridPlugin, resourceTimelinePlugin],
+      plugins: [interactionPlugin, dayGridPlugin, resourceTimelinePlugin,resourceTimeGridPlugin ],
       height:height,
+      resourceAreaWidth:150,
+      resourceColumns:6,
       views: {
         timelineDay: { type: 'timeline', duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00", },
         resourceTimeline: {
           type: 'resourceTimeline', slotDuration: { days: 1 }, buttonText: "resource",
           duration: { days: this.calObj.CalendarDays }
         },
-       
+        resourcegridView: {
+          type: 'resourceTimeGrid',  slotDuration: "00:15:00",
+         buttonText: "resource",
+        },
       },
     }
   //});
@@ -99,29 +111,27 @@ export class SchedulingPage implements OnInit {
   call(info) {
     let start = moment(info.view.activeStart).utc().format("MM/DD/YYYY");
     let today = moment(info.view.activeEnd).utc().format("MM/DD/YYYY");
-    this.calObj.CalendarView = info.view.view;
+    this.calObj.CalendarView = info.view.type;
     this.calObj.StartDate = start;
     this.calObj.EndDate = today;
     this.ActionGetResList();
-    this.ActionLoadEvents();
+    //this.ActionLoadEvents();
   }
 
   ActionRenderEvent(evnt){
-    var stime = moment(evnt.event.start).utc().format('h:mm a');
-    var etime = moment(evnt.event.end).utc().format('h:mm a');
+    console.log();
+    var stime =  this.datePipe.transform(evnt.event.start, "h:mm a");
+    var etime =  this.datePipe.transform(evnt.event.end, "h:mm a");
     var htmlstring = '';
-    htmlstring = "<div style='font-size: 13px;' class='fc-title-wrap' >";
+    htmlstring = "<div style='font-size: 13px;white-space: normal' >";
     htmlstring += "<div>" + evnt.event.extendedProps.ActivityType + "</div>";
     htmlstring += "<div style='font-size: 10px;'>" + stime + " - " + etime + "</div>";
     htmlstring += "<div>" + evnt.event.extendedProps.QuoteNo + "-" + evnt.event.extendedProps.QuoteName  + "</div>";
     htmlstring +="</div>"
     evnt.el.innerHTML =htmlstring; 
-
   }
 
   ActionResourceRender(info){
-
-
    // info.el.innerHTML =htmlstring; 
   }
   ActionLoadEvents() {
@@ -142,7 +152,6 @@ export class SchedulingPage implements OnInit {
               this.actlist.push({ title: item.QuoteNo, start: item.StartTime, end: item.EndTime, id: item.ID, resourceIds: [id[s]], DragResId: id[s],backgroundColor:item.ActBgColor,textColor:item.ActTextColor,borderColor:item.ActTextColor, extendedProps: item });
             }
           }
-          console.log(this.actlist);
         }
       });
     }
@@ -152,6 +161,7 @@ export class SchedulingPage implements OnInit {
 
   ActionGetResList() {
     this.schService.GetResourcesAndHolidays(this.calObj.StartDate, this.calObj.EndDate, this.calObj.ActTypeIDs, 1, this.calObj.ResourceIDs).subscribe(data => {
+      this.ActionLoadEvents();
       this.resources = [];
       for (let j in data.ActTypeResList) {
         let item = data.ActTypeResList[j];
@@ -176,14 +186,104 @@ export class SchedulingPage implements OnInit {
     if (detail !== null) {
       if (detail.data.isfilter == true) {
         this.calObj = detail.data.componentProps;
-        this.ActionLoadEvents();
+        this.LoadFilterView();
       }
     }
   });
   return await modal.present();
 }
 
+LoadFilterView(){
+  if(this.calObj.IsViewChange == true){
+    let calendarApi = this.fullcalendar.getApi();
+    calendarApi.changeView(this.calObj.CalendarView);
+  }
+  else{
+    this.ActionGetResList();
+  }
+  
+}
+//Onclick event Info
+  async ActionOnEventSelected(ev) {
+    console.log(ev);
+    console.log(ev.ID);
+    let obj = { actId: ev.event._def.extendedProps.ID, actTypeID: ev.event._def.extendedProps.ActivityTypeID, StartDate: ev.event._def.extendedProps.StartTime, EndDate:ev.event._def.extendedProps.EndTime }
+    const modal = await this.Modalcntrl.create({
+      component: ActinfoComponent,
+      componentProps: obj
+    });
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail.data != null) {
+        if (detail.data.issave) {
+          //this.beforeViewType = detail.data.componentProps.eventType;
+          //detail.data.componentProps.eventType = ""; //blanking out as we do not want to bind it beforehand
+          // this.eventSource.push(detail.data.componentProps);
+          // this.myCal.loadEvents();
+          // this.resetEvent();
 
+        }
+        else {
+          //hopefully do nothing
+        }
+      }
+    });
+    return await modal.present();
+  }
+
+//Add events
+  async ActionAddActivity(viewId: any) {
+
+    let actinfo = {
+      ID: 0, VersionID: 0, PhaseID: 0, ActTypeID: 11, ResourceList: [], SchStartTime: new Date(), SchEndTime: new Date(),
+      ProjectID: 0, JobName: "", TypeID: 0
+    }
+    let viewtypeId = { viewtypeId: viewId }
+    const modal = await this.Modalcntrl.create({
+      component: AddactivityComponent,
+      componentProps: actinfo,
+    });
+
+    modal.onDidDismiss().then((result: OverlayEventDetail) => {
+
+      if (result.data !== null && result.data != undefined) {
+        if (result.data.componentProps != null && result.data.componentProps != undefined) {
+         // this.UpdateActivty(result.data.componentProps);
+        }
+        //this.calObj.ActTypeID = result.data.ActTypeId;
+        // this.calObj.ResourceIds = result.data.ResourceIds;
+        // this.calObj.ResourceNames = result.data.ResourceNames;
+        // this.calObj.ActivityType = result.data.ActivityType
+        //this.ActionLoadEvents();
+      }
+    });
+
+    return await modal.present();
+
+  }
+ PrepareActInfo(info) {
+    let item: any;
+    item = {
+      ID: info.ID,
+      PhaseID: info.PhaseID,
+      ProjectID: info.ProjectID,
+      VersionID: info.VersionID,
+      PhaseSrNo: (info.PhaseSrNo == null || info.PhaseSrNo == "") ? "0" : info.PhaseSrNo,
+      StartTime: info.SchStartTime,
+      EndTime: info.SchEndTime,
+      ActivityType: info.ActTypeName,
+      ActivityTypeID: info.ActTypeID,
+      StatusID: info.StatusID,
+      StatusName: info.StatusName,
+      StatusIcon: info.IconPath,
+      PhaseSF: info.PhaseSF,
+      ResourceNames: info.ResourceName,
+      ResourceIDs: info.ResourceIDs,
+      QuoteName: info.JobName,
+      QuoteNo: info.QuoteNO,
+      AllDay: info.AllDay == 1 ? true : false,
+    }
+    return item;
+  }
 
 }
 

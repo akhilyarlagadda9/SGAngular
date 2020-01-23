@@ -1,5 +1,35 @@
-
 <ion-row>
+  <ion-col size="12">
+    <ion-row>
+      <ion-col size="1" class="paddzero text-right">
+      </ion-col>
+      <ion-col size="10" class="paddzero">
+        <ion-select class="btninfo" interface="popover" [(ngModel)]="AreaID" name="AreaID"
+          (ionChange)="ActionPartsByArea(AreaID, 1)">
+          <ion-select-option *ngFor="let area of arealist" [value]="area.ID">{{area.Name}}</ion-select-option>
+        </ion-select>
+      </ion-col>
+      <ion-col size="1" class="paddzero text-right">
+        <ion-icon name="add-circle-outline" (click)="ActionAddArea()" class="big"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-col>
+</ion-row>
+<ion-row class="rowlineitem">
+  <ion-col size="1" (click)="ActionAddPart(partinfo.ID)"><u class="colorblue textfont14">P</u>  </ion-col>
+  <ion-col size="10" class="text-left">
+    <ion-select class="btninfo" interface="popover" [(ngModel)]="AreaPartID" name="AreaPartID"
+      (ionChange)="ActionGetPartInfo(AreaPartID)">
+      <ion-select-option *ngFor="let part of areaInfo.PartList" [value]="part.ID"><span
+          *ngIf="part.Name == '' || part.Name == null">Part{{part.SrNo}}</span>{{part.Name}}</ion-select-option>
+    </ion-select>
+  </ion-col>
+  <ion-col size="1" class="text-right">
+    <ion-icon name="add-circle-outline" class="big" (click)="ActionAddPart(0)"></ion-icon>
+  </ion-col>
+</ion-row>
+
+<!-- <ion-row>
   <ion-col size="5">
     <ion-row>
       <ion-col size="3" class="paddzero">
@@ -32,18 +62,14 @@
       + Item
     </ion-button>
   </ion-col>
-</ion-row>
+</ion-row> -->
+
 <ion-row>
   <ion-col>
-    <div class="areasvg text-center"></div>    
+    <div class="areasvg text-center"></div>
   </ion-col>
 </ion-row>
-<ion-row class="rowlineitem" *ngIf="partinfo.ID > 0" >
-  <ion-col (click)="ActionAddPart()"><u class="colorblue textfont14">P</u>:
-    {{partinfo.Name}}
-  </ion-col>
- 
-</ion-row>
+
 <ion-row class="rowlineitem" *ngFor="let material of partinfo.PartMaterialList">
   <ion-col (click)="ActionEditMaterial(material)"><u class="colorblue textfont14">M</u>:
     <span *ngIf="material.IsChg == '2' && material.ID > 0">{{material.MaterialName }}</span>
@@ -61,9 +87,10 @@
     <span *ngIf="material.IsChg == '0'">{{ (material.Qty * material.UnitPrice) | number : '.2-2'}}&nbsp;</span>
   </ion-col>
 </ion-row>
-<ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList" (click)="ActionEditMeasurement(fabrication)">
+<ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList"
+  (click)="ActionEditMeasurement(fabrication)">
   <ion-col><u class="colorblue textfont14">Siz</u>:
-    <span *ngFor="let size of fabrication.MeasureList" >
+    <span *ngFor="let size of fabrication.MeasureList">
       <span *ngIf="size.Sqft != 0">
         <span *ngIf="size.CounterType != '' && size.CounterType != null">({{size.CounterType}})</span>
         <span *ngIf="fabrication.IsChg == '2'">({{size.Width}} * {{size.Height}})</span>
@@ -154,23 +181,23 @@
 <ion-row class="rowlineitem" *ngFor="let coutout of partinfo.CutoutList">
   <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 1">
     <ion-row>
-    <ion-col (click)="ActionCreateCutout(1, coutout)"><u class="colorblue textfont14">SC</u>:
-      <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
-      <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
-      <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
-      &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
-      <span>@
-        <u class="colorgreen">
-          <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
-          <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
-        </u>
-      </span>
-    </ion-col>
-    <ion-col size="3" class="text-right">$
-      <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
-      <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
-    </ion-col>
-  </ion-row>
+      <ion-col (click)="ActionCreateCutout(1, coutout)"><u class="colorblue textfont14">SC</u>:
+        <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
+        <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
+        <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
+        &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
+        <span>@
+          <u class="colorgreen">
+            <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
+            <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
+          </u>
+        </span>
+      </ion-col>
+      <ion-col size="3" class="text-right">$
+        <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+        <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+      </ion-col>
+    </ion-row>
   </ion-col>
   <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 3">
     <ion-row>
@@ -459,4 +486,3 @@
     </ion-row>
   </ion-col>
 </ion-row>
-

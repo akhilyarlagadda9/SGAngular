@@ -104,16 +104,18 @@ export class AreainfoComponent implements OnInit {
   }
   /***** Addarea DETAILS *****/
   async ActionAddArea() {
+    let info = {areas : this.arealist, Version : this.Version, quote : _qscope.quote}
     const modal = await this.Modalcntrl.create({
-      component: AddareaComponent
+      component: AddareaComponent,
+      componentProps : info
     });
     return await modal.present();
   }
   /***** Add PART *****/
   async ActionAddPart(Id) {
-    let info = {ID:Id,VersionID:this.Version.ID,AreaID:this.AreaID,Name:this.partinfo.Name,
-    SrNo: Id == 0 ? this.areaInfo.PartList.length + 1 :this.partinfo.SrNo }
-     let obj = {partinfo:info, priceListID: Number (this.Version.PriceListID),coId:this.coId, coSrNo:this.coSrNo, matPercent :this.Version.MatPercent}
+    this.partinfo.VersionID = this.Version.ID, this.partinfo.AreaID = this.AreaID
+    let info = {ID:Id, VersionID:this.Version.ID,AreaID:this.AreaID,Name:this.partinfo.Name, SrNo: Id == 0 ? this.areaInfo.PartList.length + 1 :this.partinfo.SrNo }
+    let obj = {partinfo: Id == 0 ? info : this.partinfo, priceListID: Number (this.Version.PriceListID),coId:this.coId, coSrNo:this.coSrNo, matPercent :this.Version.MatPercent, areaInfo : this.areaInfo }
     const modal = await this.Modalcntrl.create({
       component: AddpartComponent,
       componentProps: obj
@@ -131,9 +133,18 @@ export class AreainfoComponent implements OnInit {
   }
   
   /***** MATERIAL DETAILS *****/
+  // async ActionEditMaterial(mat: any) {
+  //   let copyobj = JSON.parse(JSON.stringify(mat));
+  //   let material = { material: copyobj, priceListID: Number(this.Version.PriceListID) }
+  //   const modal = await this.Modalcntrl.create({
+  //     component: MaterialinfoComponent,
+  //     componentProps: material
+  //   });
+  //   return await modal.present();
+  // }
   async ActionEditMaterial(mat: any) {
     let copyobj = JSON.parse(JSON.stringify(mat));
-    let material = { material: copyobj, priceListID: Number(this.Version.PriceListID) }
+    let material = { material: copyobj, priceListID: Number(this.Version.PriceListID),areaInfo : this.areaInfo, partinfo : this.partinfo,Version:this.Version }
     const modal = await this.Modalcntrl.create({
       component: MaterialinfoComponent,
       componentProps: material

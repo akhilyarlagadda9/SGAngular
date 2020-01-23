@@ -139,14 +139,18 @@ export class SchedulingPage implements OnInit {
       let resids = "";
       this.schService.ActionQuickActList(this.calObj.StartDate, this.calObj.EndDate, this.calObj.Search, this.calObj.ActTypeIDs, 0, this.calObj.ResourceIDs,this.calObj.StatusIDs).subscribe(data => {
         this.actlist = [];
+        let filterIds = this.calObj.ResourceIDs;
+        if(filterIds != "" && filterIds.length > 1){
+            filterIds = filterIds.split(',');
+        }
         for (let j in data) {
           let item = data[j];
           var id = (item.ResourceIDs != null && item.ResourceIDs != "") ? item.ResourceIDs.split(',') : "0";
           for (var s = 0; s < id.length; s++) {
             let isexist = true;
-            if (this.calObj.ResourceIDs.length > 0) {
+            if (filterIds.length > 0) {
               isexist = false;
-              this.calObj.ResourceIDs.map(function (elem) { if (elem == id[s]) { isexist = true; } });
+              filterIds.map(function (elem) { if (elem == id[s]) { isexist = true; } });
             }
             if (isexist == true) {
               this.actlist.push({ title: item.QuoteNo, start: item.StartTime, end: item.EndTime, id: item.ID, resourceIds: [id[s]], DragResId: id[s],backgroundColor:item.ActBgColor,textColor:item.ActTextColor,borderColor:item.ActTextColor, extendedProps: item });

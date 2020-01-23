@@ -1,12 +1,12 @@
-<ion-content *ngIf="TypeID == 1">
-  <form #form="ngForm" (ngSubmit)="ActionSaveTemplate(form)">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title class="titleheader">{{ViewType}}</ion-title>
-        <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
-        <ion-button slot="end" color="danger" size="small" (click)="ActionCloseTemplate(false)">X</ion-button>
-      </ion-toolbar>
-    </ion-header>
+<form #form="ngForm" (ngSubmit)="ActionSaveTemplate(form)" class="dis-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title class="titleheader">{{ViewType}}</ion-title>
+      <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionCloseTemplate(false)">X</ion-button>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content *ngIf="TypeID == 1">
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
       <ion-input type="text" class="labelfont" [(ngModel)]="labor.Description" name="Description" #nameField="ngModel"
@@ -54,5 +54,5 @@
         <ion-row style="margin-right: 3px;">$</ion-row>
       </ion-input>
     </ion-item>
-  </form>
-</ion-content>
+  </ion-content>
+</form>

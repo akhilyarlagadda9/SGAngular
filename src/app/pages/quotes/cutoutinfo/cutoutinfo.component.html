@@ -1,5 +1,5 @@
-<ion-content>
-  <form #form="ngForm" (ngSubmit)="ActionSaveCutOut(form)">
+
+  <form #form="ngForm" (ngSubmit)="ActionSaveCutOut(form)" class="dis-content">
     <ion-header>
       <ion-toolbar>
         <ion-title class="titleheader">
@@ -11,6 +11,7 @@
         <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCutout(false)">X</ion-button>
       </ion-toolbar>
     </ion-header>
+    <ion-content>
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
       <ion-select [(ngModel)]="cutout.TypeID" name="TypeID" (ngModelChange)="ActionPopulateCutout($event)"
@@ -58,8 +59,9 @@
         <ion-row class="mar-right3">$</ion-row>
       </ion-input>
     </ion-item>
+  </ion-content>
   </form>
-</ion-content>
+
 
 
 

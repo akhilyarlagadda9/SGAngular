@@ -32,10 +32,8 @@ import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
   template: `
   <ion-toolbar color="primary">
   <ion-icon name="menu" class="fontlarge"  slot="start" (click)="ActionCalendarSetting()"></ion-icon>
-  <ion-title class="headersty">
-{{calObj.ActTypes}}
-  </ion-title>
-  <ion-icon name="refresh" class="fontsmall"  slot="start" (click)="ActionGetResList()"></ion-icon>
+  <ion-icon name="refresh" class="fontmedium"  slot="start" (click)="ActionGetResList()"></ion-icon>
+  <ion-title class="headersty">{{calObj.ActTypes}}</ion-title>
   <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
   </ion-toolbar>
   <ion-fab vertical="bottom" horizontal="end">

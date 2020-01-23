@@ -1,5 +1,5 @@
-<ion-content>
-  <form #form="ngForm" (ngSubmit)="ActionSaveFaucet(form)">
+
+  <form #form="ngForm" (ngSubmit)="ActionSaveFaucet(form)" class="dis-content">
     <ion-header>
     <ion-toolbar>
       <ion-title class="titleheader">Faucet</ion-title>
@@ -7,6 +7,7 @@
       <ion-button slot="end" color="danger" size="small" (click)="ActionCloseFaucet(false)">X</ion-button>
     </ion-toolbar>
   </ion-header>
+  <ion-content>
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
       <ion-input type="text" class="labelfont" [(ngModel)]="faucet.Description" name="Description"
@@ -70,5 +71,5 @@
       <ion-checkbox class="marlft-rht"></ion-checkbox>
       <ion-label>Faucet is at shop</ion-label>
     </ion-item>
+  </ion-content>
   </form>
-</ion-content>

@@ -15,7 +15,7 @@ import { QuoteeditComponent } from '../quoteedit/quoteedit.component';
   styleUrls: ['./createquote.component.scss'],
 })
 export class CreatequoteComponent implements OnInit {
-  quoteId: number = 0; header: any; NavigateTab: number; CustTypeID: number = 4;
+  quoteId: number = 0; header: any; NavigateTab: number; CustTypeID: number = 4; Progress: number = 0;
   salesPersonsList: any = []; estimatorsList: any = []; projectManagersList: any = []; customerTypes: any = []; leadTypes: any = []; leadHearAbout: any = [];
   priceList: any = []; productionTypeList: any = [];
   verId: any;
@@ -320,7 +320,17 @@ export class CreatequoteComponent implements OnInit {
       this.NavigateTab = loadtab;
     }
   }
+  changeProgress(value) {
+    if (this.showProgress(value)) {
+      this.Progress = 0;
+    } else {
+      this.Progress = value;
+    }
+  };
 
+  showProgress(value) {
+    return this.Progress === value;
+  };
 
   showLoader() {
     this.loaderToShow = this.loadingController.create({

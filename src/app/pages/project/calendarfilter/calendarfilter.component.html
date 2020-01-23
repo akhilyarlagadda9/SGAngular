@@ -33,7 +33,7 @@ Resources
 <ion-header>
   <ion-toolbar style="top:5px;">
   <ion-searchbar [(ngModel)]="queryString" id="search" placeholder="Search Activity Type"></ion-searchbar>
-  <ion-button slot="end"  size="small" (click)="ActionRunFilter()" ><ul>Run</ul></ion-button>
+  <ion-button slot="end"  size="small" (click)="ActionRunFilter()" >Run</ion-button>
     <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop(false)" >X</ion-button>
   </ion-toolbar>
 </ion-header>
@@ -43,8 +43,8 @@ Resources
 <ion-item style="color: darkblue;font-weight:bold">
 Activity Types
 </ion-item>
-<ion-item *ngFor="let item of ActTypeTypeList | FilterPipe: queryString : searchableList" (click)="ActivityTypeResourceList(item.ID,item.Name)">
-<ion-label>
+<ion-item *ngFor="let item of ActTypeTypeList | FilterPipe: queryString : searchableList"  (click)="ActivityTypeResourceList(item.ID,item.Name)">
+<ion-label style="margin: 0px;padding: 10px 0px 10px 0px;" [ngClass]="{ 'activeBgColor': item.ID == result.ActTypeId }">
 <h3 >
     {{item.Name}}
 </h3>

@@ -10,14 +10,18 @@ import { OverlayEventDetail } from '@ionic/core';
   styleUrls: ['./calendarsetting.component.scss'],
 })
 export class CalendarsettingComponent implements OnInit {
-  ActTypeList: any;
-  ActTypeID: number;
-  ResourceList: any;
-  calObj: any;
+  
+  calObj: any;IsShowPopup:boolean= false;
+  ActTypeList: any;StatusList:any;ResourceList: any;
+  
+  
+
   constructor(public Modalcntrl: ModalController,private schService: SchedulingService, private popoverCntrl: PopoverController) { }
 
-  ngOnInit() {}
-
+  ngOnInit() { 
+    
+  }
+   
   //Close Function
   ActionCloseCalendarSett(issave) {
     this.Modalcntrl.dismiss({
@@ -34,10 +38,17 @@ export class CalendarsettingComponent implements OnInit {
   }
   //Resource List Service
   ActionGetResoucreList() {
-    this.schService.ActivityTypeResourceList(this.ActTypeID).subscribe(data => {
-      this.ResourceList = data;
-    })
+    // this.schService.ActivityTypeResourceList(this.ActTypeID).subscribe(data => {
+    //   this.ResourceList = data;
+    // })
   }
+
+
+
+
+
+
+
   async ActionFilterPopup(ev: any,filterTypeId) {
     let obj = {
       ActTypeId: this.calObj.ActTypeID, ResourceIds: this.calObj.ResourceIds,
@@ -57,5 +68,8 @@ export class CalendarsettingComponent implements OnInit {
     return await popover.present();
   }
   
+  ActionopenFilterPopup() {
+    this.IsShowPopup = true;
+  }
 
 }

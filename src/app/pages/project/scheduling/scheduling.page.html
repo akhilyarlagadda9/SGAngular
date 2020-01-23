@@ -1,138 +1,22 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-icon name="menu" class="fontlarge"  slot="start" (click)="ActionOnOpenSheet()"></ion-icon>
-
-    <ion-icon name="arrow-back" class="fontlarge"  slot="start" (click)="ActionOnMove('prev')"></ion-icon>
-    
-    <ion-title>
-      {{ viewTitle }}
-    </ion-title>
-    <!-- <ion-buttons slot="end">
-      <ion-button (click)="today()">Today</ion-button>
-    </ion-buttons> -->
-    <ion-icon name="arrow-forward" class="fontlarge" slot="end" (click)="ActionOnMove('next')"></ion-icon>
-    <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
-  </ion-toolbar>
-
-  <!-- <ion-toolbar>
-    <ion-row style="color:darkblue;">
-      <ion-col (click)="ActionFilterPopup()">
-     <h3 class="no-margin" style="font-weight: bold;">{{calObj.ActivityType}} </h3>
-      <p  *ngIf="calObj.ResourceNames != '' && calObj.ResourceNames != null">
-        -  {{calObj.ResourceNames}}
-      </p>
-    </ion-col>
-    </ion-row>
-</ion-toolbar> -->
+  
 </ion-header>
 <ion-content>
   
-  <!-- Card for adding a new event -->
-  <!-- <ion-card>
-     <ion-item>
-         <ion-label>Event Type</ion-label>
-         <ion-select #C (ionChange)="onChangeOfModelEvent(C.value)" interface="popover">
-         <ion-select-option *ngFor="let i of arrChangeFilter">{{i}}</ion-select-option>
-         </ion-select>
-     </ion-item>
-  </ion-card> -->
+  <!-- <div id="calendar"></div> -->
  
+  <!-- <full-calendar #calendar 
+  schedulerLicenseKey= "GPL-My-Project-Is-Open-Source"
+   [views]="options.views"
+   [header]="options.header"
+   defaultView="resourceTimeline3Days"
+   [plugins]="options.plugins"
+   [resources]="resources"
+   [events]="events"
+   ></full-calendar> -->
+    
  
-  <calendar 
-  [eventSource]="activitylist" 
-  [calendarMode]="calendar.mode" 
-  [queryMode]="calendar.queryMode"
-  [currentDate]="calendar.currentDate"
-  (onEventSelected)="ActionOnEventSelected($event)"
-  (onTitleChanged)="ActionOnViewTitleChanged($event)"
-  (onRangeChanged)="ActionOnRangeChanged($event)"
-  startHour="6"
-  endHour="20"
-  [step]="30"
-  startingDayWeek="1"
-  [dayviewNormalEventTemplate]="template"
-  [weekviewAllDayEventSectionTemplate]="weekEvents"
-  >
- </calendar>
 
-  <ng-template #template let-displayEvent="displayEvent">
-  <div class="{{getEventClass(displayEvent.event)}}">{{displayEvent.event.title}}</div>
-</ng-template>
- 
-<!-- <ng-template #weekEvents let-displayEvent="displayEvent">
-  <div class="{{getEventClass(displayEvent.event)}}"
-  >{{displayEvent.event.title}}</div>
-</ng-template> -->
-
-<ng-template #weekEvents let-day="day" let-eventTemplate="eventTemplate">
-  <div [ngClass]="{'calendar-event-wrap': day.events}" *ngIf="day.events"
-       [ngStyle]="{height: 35*day.events.length+'px'}">
-      <div  *ngFor="let displayEvent of day.events" class="{{getEventClass(displayEvent.event)}}"
-           [ngStyle]="{top: 30*displayEvent.position+'px', width: 100*(displayEvent.endIndex-displayEvent.startIndex)+'%', height: '30px'}" style="margin-bottom:3px;"
-           
-           (click)="ActionOnEventSelected(displayEvent.event)"> 
-          
-          <ng-template [ngTemplateOutlet]="eventTemplate"
-                       [ngTemplateOutletContext]="{displayEvent:displayEvent}" >
-          </ng-template>
-        
-      </div>
-  </div>
-</ng-template>
-
-<ion-fab id="mySidenav" horizontal="end" vertical="top" slot="fixed">
-  <div   id="resource"  class="verticalText" (click)="ActionFilterPopup($event,2)" >Resources</div>
-  <div   id="activity"  class="verticalText nowrap" (click)="ActionFilterPopup($event,1)" >{{calObj.ActivityType}}</div>
-</ion-fab>
-  <!-- <ion-fab id="mySidenav" horizontal="end" vertical="top" slot="fixed">
-    <a (click)="ActionFilterPopup($event,2)" id="resource"  class="verticalText" >Resources</a>
-    <a (click)="ActionFilterPopup($event,1)" id="activity" class="verticalText nowrap" >
-      {{calObj.ActivityType}}
-      </a>
-  </ion-fab> -->
-
-
-<ion-fab vertical="bottom" horizontal="end">
-  <ion-button  color="primary" (click)="ActionAddActivity(0)"><ion-icon name="add"></ion-icon> </ion-button>
- </ion-fab>
 </ion-content>
 
-<style>
-.eventAsGreen{
-  background-color:darkgreen;
-  height: 100%;
-  text-align: left;
-  color: white;
-  opacity: 0.8;
- text-indent: 1px;
-} 
-.eventAsBlue{
-  background-color:#3a87ad;
-  height: 100%;
-  opacity: 0.6;
-  text-align: left;
-  color: white;
-  text-indent: 1px;
-}
-#mySidenav div {
-  padding-bottom:3px;
-  padding-top:3px;
-  text-decoration: none;
-background-color:white;
-border:1px solid black;
-  color: #3489eb;
-  border-radius: 10px 0px 0px 10px;
-  position: fixed;
-    right: -1px;
-    padding: 5px;
- }
-#mySidenav a:hover {
-  left: -80px;
-}
-#resource {
-  top:230px;
- }
-.nowrap{
-  white-space: nowrap;
-}
-</style>
+

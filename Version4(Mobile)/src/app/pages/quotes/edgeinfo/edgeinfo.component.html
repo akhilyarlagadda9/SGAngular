@@ -1,5 +1,5 @@
-<ion-content>
-  <form #form="ngForm" (ngSubmit)="ActionSaveEdge(form)">
+
+  <form #form="ngForm" (ngSubmit)="ActionSaveEdge(form)" class="dis-content">
     <ion-header>
       <ion-toolbar>
         <ion-title class="titleheader">Edge</ion-title>
@@ -7,7 +7,7 @@
         <ion-button slot="end" color="danger" size="small" (click)="ActionCloseEdge(false)">X</ion-button>
       </ion-toolbar>
     </ion-header>
-
+    <ion-content>
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
       <ion-select [(ngModel)]="edge.EdgeProfile" name="EdgeProfile" [selectedText]="edge.EdgeProfile"
@@ -49,5 +49,5 @@
         <ion-row class="mar-right3">$</ion-row>
       </ion-input>
     </ion-item>
+  </ion-content>
   </form>
-</ion-content>

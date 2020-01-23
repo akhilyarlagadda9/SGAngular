@@ -1,5 +1,5 @@
-<ion-content>
-  <form #form="ngForm" (ngSubmit)="ActionSaveSplash(form)">
+
+  <form #form="ngForm" (ngSubmit)="ActionSaveSplash(form)" class="dis-content">
     <ion-header>
       <ion-toolbar>
         <ion-title class="titleheader">Splash</ion-title>
@@ -7,7 +7,7 @@
         <ion-button slot="end" color="danger" size="small" (click)="ActionCloseSplash()">X</ion-button>
       </ion-toolbar>
     </ion-header>
-
+    <ion-content>
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
       <ion-select [(ngModel)]="splash.Splash" name="Splash" [selectedText]="splash.Splash"
@@ -48,6 +48,5 @@
       <ion-label class="labelfont" position="floating" color="primary">Quantity</ion-label>
       <ion-input type="text" class="labelfont" [(ngModel)]="splash.Sqft" name="Sqft"></ion-input>
     </ion-item>
-
+  </ion-content>
   </form>
-</ion-content>

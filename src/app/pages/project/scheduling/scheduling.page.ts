@@ -286,7 +286,9 @@ LoadFilterView(){
     }
     return item;
   }
-
+  ActionGoToHome() {
+    this.navCtrl.navigateRoot('/home');
+  }
 }
 
 

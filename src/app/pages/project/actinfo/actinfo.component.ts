@@ -59,16 +59,16 @@ export class ActinfoComponent implements OnInit {
     });
   }
 
-  // //Edit Activity Function
-  // async ActionEditActivity() {
-  //   let copyobj = JSON.parse(JSON.stringify(this.actInfo));
-  //   const modal = await this.Modalcntrl.create({
-  //     component: AddactivityComponent,
-  //     componentProps: copyobj
-  //   });
-  //   modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+  //Edit Activity Function
+  async ActionEditActivity() {
+    let copyobj = JSON.parse(JSON.stringify(this.actInfo));
+    const modal = await this.Modalcntrl.create({
+      component: AddactivityComponent,
+      componentProps: copyobj
+    });
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       
-  //   });
-  //   return await modal.present();
-  // }
+    });
+    return await modal.present();
+  }
 }

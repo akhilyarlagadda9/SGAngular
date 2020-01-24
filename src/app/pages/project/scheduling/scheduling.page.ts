@@ -63,24 +63,24 @@ slotWidth="100"
   providers: [DatePipe]
 })
 export class SchedulingPage implements OnInit {
-  calendar: any; actlist: any = []; resources: any = []; options: OptionsInput
+  calendar: any; actlist: any = []; resources: any = []; options: OptionsInput;eventinfo:any;
   @ViewChild('calendar', { static: false }) fullcalendar: FullCalendarComponent;
- calObj: any = {
-    StartDate: Date, EndDate: Date, ActTypeIDs: "11",ActTypes: "Template", ResourceIDs: "",ResourceNames: "", StatusIDs: "",StatusNames:"",
-  CalID:1,  CalendarView: "resourceTimeline", CalendarDays: 3, CalFields: "", Search: "", UserId: 0,IsViewChange:false,starttime:"7:00 AM",endtime:"8:00 PM"
+  calObj: any = {
+    StartDate: Date, EndDate: Date, ActTypeIDs: "11", ActTypes: "Template", ResourceIDs: "", ResourceNames: "", StatusIDs: "", StatusNames: "",
+    CalID: 1, CalendarView: "resourceTimeline", CalendarDays: 3, CalFields: "", Search: "", UserId: 0, IsViewChange: false, starttime: "7:00 AM", endtime: "8:00 PM"
   }
   constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) private locale: string, public loadingController: LoadingController,
-    private schService: SchedulingService, private navCtrl: NavController,private datePipe:DatePipe) { }
+    private schService: SchedulingService, private navCtrl: NavController, private datePipe: DatePipe) { }
 
   ngOnInit() {
-    let height = window.innerHeight-20;
-   // setTimeout(function () {
+    let height = window.innerHeight - 20;
+    // setTimeout(function () {
     var _dafaultDate = new Date();
     this.options = {
-      plugins: [interactionPlugin, dayGridPlugin, resourceTimelinePlugin,resourceTimeGridPlugin ],
-      height:height,
-      resourceAreaWidth:150,
-      resourceColumns:6,
+      plugins: [interactionPlugin, dayGridPlugin, resourceTimelinePlugin, resourceTimeGridPlugin],
+      height: height,
+      resourceAreaWidth: 150,
+      resourceColumns: 6,
       views: {
         timelineDay: { type: 'timeline', duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00", },
         resourceTimeline: {
@@ -88,16 +88,16 @@ export class SchedulingPage implements OnInit {
           duration: { days: this.calObj.CalendarDays }
         },
         resourcegridView: {
-          type: 'resourceTimeGrid',  slotDuration: "00:15:00",
-         buttonText: "resource",
+          type: 'resourceTimeGrid', slotDuration: "00:15:00",
+          buttonText: "resource",
         },
       },
     }
-  //});
+    //});
   }
 
-  ngAfterViewInit(){
-    
+  ngAfterViewInit() {
+
     this.resources = [
       {
         id: "0",
@@ -116,50 +116,54 @@ export class SchedulingPage implements OnInit {
     //this.ActionLoadEvents();
   }
 
-  ActionRenderEvent(evnt){
+  ActionRenderEvent(evnt) {
     console.log();
-    var stime =  this.datePipe.transform(evnt.event.start, "h:mm a");
-    var etime =  this.datePipe.transform(evnt.event.end, "h:mm a");
+    var stime = this.datePipe.transform(evnt.event.start, "h:mm a");
+    var etime = this.datePipe.transform(evnt.event.end, "h:mm a");
     var htmlstring = '';
     htmlstring = "<div style='font-size: 13px;white-space: normal' >";
     htmlstring += "<div>" + evnt.event.extendedProps.ActivityType + "</div>";
     htmlstring += "<div style='font-size: 10px;'>" + stime + " - " + etime + "</div>";
-    htmlstring += "<div>" + evnt.event.extendedProps.QuoteNo + "-" + evnt.event.extendedProps.QuoteName  + "</div>";
-    htmlstring +="</div>"
-    evnt.el.innerHTML =htmlstring; 
+    htmlstring += "<div>" + evnt.event.extendedProps.QuoteNo + "-" + evnt.event.extendedProps.QuoteName + "</div>";
+    htmlstring += "</div>"
+    evnt.el.innerHTML = htmlstring;
   }
 
-  ActionResourceRender(info){
-   // info.el.innerHTML =htmlstring; 
+  ActionResourceRender(info) {
+    // info.el.innerHTML =htmlstring; 
   }
   ActionLoadEvents() {
     if (this.calObj.CalendarView != "" && this.calObj.CalendarView != undefined) {
       let resids = "";
-      this.schService.ActionQuickActList(this.calObj.StartDate, this.calObj.EndDate, this.calObj.Search, this.calObj.ActTypeIDs, 0, this.calObj.ResourceIDs,this.calObj.StatusIDs).subscribe(data => {
+      this.schService.ActionQuickActList(this.calObj.StartDate, this.calObj.EndDate, this.calObj.Search, this.calObj.ActTypeIDs, 0, this.calObj.ResourceIDs, this.calObj.StatusIDs).subscribe(data => {
         this.actlist = [];
         let filterIds = this.calObj.ResourceIDs;
-        if(filterIds != "" && filterIds.length > 1){
-            filterIds = filterIds.split(',');
+        if (filterIds != "" && filterIds.length > 1) {
+          filterIds = filterIds.split(',');
         }
         for (let j in data) {
           let item = data[j];
-          var id = (item.ResourceIDs != null && item.ResourceIDs != "") ? item.ResourceIDs.split(',') : "0";
-          for (var s = 0; s < id.length; s++) {
-            let isexist = true;
-            if (filterIds.length > 0) {
-              isexist = false;
-              filterIds.map(function (elem) { if (elem == id[s]) { isexist = true; } });
-            }
-            if (isexist == true) {
-              this.actlist.push({ title: item.QuoteNo, start: item.StartTime, end: item.EndTime, id: item.ID, resourceIds: [id[s]], DragResId: id[s],backgroundColor:item.ActBgColor,textColor:item.ActTextColor,borderColor:item.ActTextColor, extendedProps: item });
-            }
-          }
+          this.ActionPushEvents(item, filterIds);
         }
       });
     }
 
   }
 
+
+  ActionPushEvents(item, filterIds) {
+    var id = (item.ResourceIDs != null && item.ResourceIDs != "") ? item.ResourceIDs.split(',') : "0";
+    for (var s = 0; s < id.length; s++) {
+      let isexist = true;
+      if (filterIds.length > 0) {
+        isexist = false;
+        filterIds.map(function (elem) { if (elem == id[s]) { isexist = true; } });
+      }
+      if (isexist == true) {
+        this.actlist.push({ title: item.QuoteNo, start: item.StartTime, end: item.EndTime, id: item.ID,resourceId: id[s],resourceIds: [id[s]], DragResId: id[s], backgroundColor: item.ActBgColor, textColor: item.ActTextColor, borderColor: item.ActTextColor, extendedProps: item });
+      }
+    }
+  }
 
   ActionGetResList() {
     this.schService.GetResourcesAndHolidays(this.calObj.StartDate, this.calObj.EndDate, this.calObj.ActTypeIDs, 1, this.calObj.ResourceIDs).subscribe(data => {
@@ -176,40 +180,41 @@ export class SchedulingPage implements OnInit {
   PrepareEvents(list) {
 
   }
- //Calendar Settings Function
- async ActionCalendarSetting() {
-  let obj={calObj: this.calObj};
-//  let copyobj = JSON.parse(JSON.stringify(this.calObj));
-  const modal = await this.Modalcntrl.create({
-    component: CalendarsettingComponent,
-    componentProps:obj
-  });
-  modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-    if (detail !== null) {
-      if (detail.data.isfilter == true) {
-        this.calObj = detail.data.componentProps;
-        this.LoadFilterView();
+  //Calendar Settings Function
+  async ActionCalendarSetting() {
+    let obj = { calObj: this.calObj };
+    //  let copyobj = JSON.parse(JSON.stringify(this.calObj));
+    const modal = await this.Modalcntrl.create({
+      component: CalendarsettingComponent,
+      componentProps: obj
+    });
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null) {
+        if (detail.data.isfilter == true) {
+          this.calObj = detail.data.componentProps;
+          this.LoadFilterView();
+        }
       }
-    }
-  });
-  return await modal.present();
-}
+    });
+    return await modal.present();
+  }
 
-LoadFilterView(){
-  if(this.calObj.IsViewChange == true){
-    let calendarApi = this.fullcalendar.getApi();
-    calendarApi.changeView(this.calObj.CalendarView);
+  LoadFilterView() {
+    if (this.calObj.IsViewChange == true) {
+      let calendarApi = this.fullcalendar.getApi();
+      calendarApi.changeView(this.calObj.CalendarView);
+    }
+    else {
+      this.ActionGetResList();
+    }
+
   }
-  else{
-    this.ActionGetResList();
-  }
-  
-}
-//Onclick event Info
+  //Onclick event Info
   async ActionOnEventSelected(ev) {
+    debugger;
     console.log(ev);
     console.log(ev.ID);
-    let obj = { actId: ev.event._def.extendedProps.ID, actTypeID: ev.event._def.extendedProps.ActivityTypeID, StartDate: ev.event._def.extendedProps.StartTime, EndDate:ev.event._def.extendedProps.EndTime }
+    let obj = { actId: ev.event._def.extendedProps.ID, actTypeID: ev.event._def.extendedProps.ActivityTypeID, StartDate: ev.event._def.extendedProps.StartTime, EndDate: ev.event._def.extendedProps.EndTime }
     const modal = await this.Modalcntrl.create({
       component: ActinfoComponent,
       componentProps: obj
@@ -217,6 +222,9 @@ LoadFilterView(){
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail.data != null) {
         if (detail.data.issave) {
+          this.eventinfo = detail.data.componentProps
+          this.ActionAddActivity(ev.event.id);
+          //  this.actlist.push(detail.data.componentProps);
           //this.beforeViewType = detail.data.componentProps.eventType;
           //detail.data.componentProps.eventType = ""; //blanking out as we do not want to bind it beforehand
           // this.eventSource.push(detail.data.componentProps);
@@ -224,32 +232,29 @@ LoadFilterView(){
           // this.resetEvent();
 
         }
-        else {
-          //hopefully do nothing
-        }
       }
     });
     return await modal.present();
   }
 
-//Add events
-  async ActionAddActivity(viewId: any) {
+  //Add events
+  async ActionAddActivity(Id: number) {
 
     let actinfo = {
-      ID: 0, VersionID: 0, PhaseID: 0, ActTypeID: 11, ResourceList: [], SchStartTime: new Date(), SchEndTime: new Date(),
+      ID: Id, VersionID: 0, PhaseID: 0, ActTypeID: 11, ResourceList: [], SchStartTime: new Date(), SchEndTime: new Date(),
       ProjectID: 0, JobName: "", TypeID: 0
     }
-    let viewtypeId = { viewtypeId: viewId }
+    actinfo = Id > 0 ?  this.eventinfo : actinfo
+    //let viewtypeId = { viewtypeId: viewId }
     const modal = await this.Modalcntrl.create({
       component: AddactivityComponent,
       componentProps: actinfo,
     });
 
     modal.onDidDismiss().then((result: OverlayEventDetail) => {
-
       if (result.data !== null && result.data != undefined) {
-        if (result.data.componentProps != null && result.data.componentProps != undefined) {
-         // this.UpdateActivty(result.data.componentProps);
+        if (result.data.issave == true) {
+          this.UpdateActivty(result.data.componentProps);
         }
         //this.calObj.ActTypeID = result.data.ActTypeId;
         // this.calObj.ResourceIds = result.data.ResourceIds;
@@ -262,7 +267,25 @@ LoadFilterView(){
     return await modal.present();
 
   }
- PrepareActInfo(info) {
+  UpdateActivty(info) {
+
+     debugger;
+    let filterIds = this.calObj.ResourceIDs;
+    if (filterIds != "" && filterIds.length > 1) {
+      filterIds = filterIds.split(',');
+    }
+    let quickInfo = this.PrepareActInfo(info);
+
+    if (info.ExtID > 0) {
+      let calendarApi = this.fullcalendar.getApi();
+      var event = calendarApi.getEventById('a') 
+
+      
+      
+    }
+    this.ActionPushEvents(quickInfo, filterIds);
+  }
+  PrepareActInfo(info) {
     let item: any;
     item = {
       ID: info.ID,
@@ -283,6 +306,9 @@ LoadFilterView(){
       QuoteName: info.JobName,
       QuoteNo: info.QuoteNO,
       AllDay: info.AllDay == 1 ? true : false,
+      ActBgColor: info.ActColorCode,
+      ActTextColor: info.ActTxtColor,
+
     }
     return item;
   }

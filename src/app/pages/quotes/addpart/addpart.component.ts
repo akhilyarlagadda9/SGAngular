@@ -269,25 +269,25 @@ export class AddpartComponent implements OnInit {
     this.ActionSetFabSqft(jndx);
   }
   ActionRemoveSplash(index:number){
-    this.partinfo.SplashList.splice(index);
+    this.partinfo.SplashList.splice(index, 1);
   }
   ActionRemoveEdge(index:number){
-    this.partinfo.EdgeList.splice(index);
+    this.partinfo.EdgeList.splice(index, 1);
   }
   ActionRemoveCutout(index:number){
-    this.partinfo.CutoutList.splice(index);
+    this.partinfo.CutoutList.splice(index, 1);
   }
   ActionRemoveSink(index:number){
-    this.partinfo.SinkList.splice(index);
+    this.partinfo.SinkList.splice(index, 1);
   }
   ActionRemoveFaucet(index:number){
-    this.partinfo.FaucetList.splice(index);
+    this.partinfo.FaucetList.splice(index, 1);
   }
   ActionRemoveLabor(index:number){
-    this.partinfo.LaborList.splice(index);
+    this.partinfo.LaborList.splice(index, 1);
   }
   ActionRemoveOther(index:number){
-    this.partinfo.OtherList.splice(index);
+    this.partinfo.OtherList.splice(index, 1);
   }
 
   ActionSetMargin(typeId: number, model: any, type: string) {

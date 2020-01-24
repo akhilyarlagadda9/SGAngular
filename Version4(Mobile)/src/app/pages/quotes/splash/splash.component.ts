@@ -20,7 +20,7 @@ export class SplashComponent implements OnInit {
   ngOnInit() {
     this.ActionSplashTypes();
   }
-  ActionSetSqft() {debugger;
+  ActionSetSqft() {
     this.splash.Sqft = this.quoterep.calcsqft(this.splash.Width, this.splash.Height);
   }
   ActionSetMargin(typeId: number, model: any, type: string) {
@@ -38,7 +38,7 @@ export class SplashComponent implements OnInit {
       data => { this.splashlist = data[0]; console.log(this.splashlist) },
       error => console.log(error));
   }
-  ActionPopulateSplash(Id:any){debugger;
+  ActionPopulateSplash(Id:any){
     let splash = this.splashlist.find(s => s.ID == Id);
     if (splash != null && splash != undefined) {
       this.splash = this.quoterep.Setsplash(this.splash, splash);

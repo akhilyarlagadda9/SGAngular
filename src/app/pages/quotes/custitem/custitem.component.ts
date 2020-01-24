@@ -31,7 +31,7 @@ export class CustitemComponent implements OnInit {
 
   ngOnInit() { }
  /*  ActionSaveCustomerItems(response:any) {
-    this.postservice.Actionsavepartcustitem(response).subscribe(data => {debugger;
+    this.postservice.Actionsavepartcustitem(response).subscribe(data => {
       this.response = data.responseList;
       this.ActionCloseCustomerItems(true);
     })

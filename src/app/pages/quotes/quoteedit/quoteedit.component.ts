@@ -28,7 +28,7 @@ export class QuoteeditComponent implements OnInit {
   shownGroup = 1;
   qprmsobj = this.navParams.data;
   headerInfo: any;
-  selectedtabtype: number = 1;
+  selectedtabtype: number;
   QuoteVersionID: number = this.qprmsobj.versionid;
   expanded = false;
   public customer: any;
@@ -54,10 +54,19 @@ export class QuoteeditComponent implements OnInit {
 
 
   ngOnInit() {
+    if(this.navParams.data.layoutId == 1){
+      this.selectedtabtype = this.navParams.data.layoutId;
+    }
     this.ActionQuoteInfo();
   }
 
-
+  ActionAreaList(){
+    this.service.ActionQuoteAreaList(this.qprmsobj.versionid).subscribe(data => { data;
+      _qscope.quote.Version.AreaList = data;
+      _qscope.quote.Version.AreaID = 0;
+      this.selectedtabtype = 2;
+    })
+  }
 
   ActionGoToHome() {
     this.ActionCloseQuoteInfo();
@@ -72,6 +81,9 @@ export class QuoteeditComponent implements OnInit {
         this.headerInfo = data; _qscope.quote = {};
         this.headerInfo.Version = this.headerInfo.VersionList.find(x => x.ID === this.qprmsobj.versionid);
         _qscope.quote = this.headerInfo;
+        if(this.navParams.data.layoutId == 2){
+          this.ActionAreaList();
+        }
       },
       error => console.log(error));
   }

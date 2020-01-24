@@ -33,7 +33,7 @@ export class QuotePage implements OnInit {
   };
   qprmsobj: {
     quoteid: number, quoteno: string, versionid: number, customerid: number,
-    accountid: number, childaccid: number, phaseid: number, viewtypeid: number, header: any, layoutId: 1
+    accountid: number, childaccid: number, phaseid: number, viewtypeid: number, layoutId: 1
   };
   layId: 1;
 
@@ -90,20 +90,13 @@ export class QuotePage implements OnInit {
   }
   /***** QUOTEEDIT *****/
   async ActionQuoteEdit(header) {
-    if (header.VersionList != undefined) {
+    if (header != 0) {
       let version = header.VersionList.filter(x => x.ID === header.VersionID)[0];
-      //let version = header.VersionList.filter(s => {if(header.VersionID == s.ID){return s;} });
       this.qprmsobj = {
         quoteid: header.ID, quoteno: header.QuoteNo, versionid: header.VersionID, customerid: version.CustomerID,
-        accountid: version.ParentAccID, childaccid: version.ChildAccID, phaseid: 0, viewtypeid: 0, header: header, layoutId: this.layId
+        accountid: version.ParentAccID, childaccid: version.ChildAccID, phaseid: 0, viewtypeid: 0, layoutId: 1
       };
-    } else {
-     // let version = header.Version.filter(x => x.ID === header.VersionID)[0];
-      this.qprmsobj = {
-        quoteid: header.ID, quoteno: header.QuoteNo, versionid: header.VersionID, customerid: header.CustomerID,
-        accountid: header.ParentAccID, childaccid: header.ChildAccID, phaseid: 0, viewtypeid: 0, header: header, layoutId: this.layId
-      };
-    }
+    } 
     const modal = await this.Modalcntrl.create({
       component: QuoteeditComponent,
       //component: QlayoutComponent,
@@ -126,7 +119,8 @@ export class QuotePage implements OnInit {
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {
         if (detail.data.isSave == true) {
-          //this.ActionQuoteEdit(detail.data.componentProps);
+          this.qprmsobj= detail.data.componentProps;
+          this.ActionQuoteEdit(0);
           //this.selectedtabtype = 2;
           this.ActionQuoteList(1);
         }

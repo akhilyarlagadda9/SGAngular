@@ -18,17 +18,12 @@ export class CreatequoteComponent implements OnInit {
   quoteId: number = 0; header: any; NavigateTab: number; CustTypeID: number = 4; Progress: number = 0;
   salesPersonsList: any = []; estimatorsList: any = []; projectManagersList: any = []; customerTypes: any = []; leadTypes: any = []; leadHearAbout: any = [];
   priceList: any = []; productionTypeList: any = [];
-  verId: any;
-  quoteNo: any;
-  customerId: any;
-  accountId: any;
-  parAccountId: any;
   loaderToShow: any;
   form: any;
   layId: 1;
   qprmsobj: {
     quoteid: number, quoteno: string, versionid: number, customerid: number,
-    accountid: number, childaccid: number, phaseid: number, viewtypeid: number, header: any, layoutId: 1
+    accountid: number, childaccid: number, phaseid: number, viewtypeid: number, layoutId: 2
   };
   constructor(private formBuilder: FormBuilder, private loadingController: LoadingController, public Modalcntrl: ModalController, private getservice: QuotegetService, private popoverCntrl: PopoverController, private postservice: QuotepostService) { }
   ngOnInit() {
@@ -63,10 +58,10 @@ export class CreatequoteComponent implements OnInit {
   /******* Actions *******/
   ActionCloseCreateQuote(isSave) {
     if (isSave == true) {
-      let obj = { ID: this.header.ID, QuoteNo : this.quoteNo, VersionID: this.verId, header : this.header, CustomerID : this.customerId, ParentAccID :this.parAccountId, ChildAccID : this.accountId }
+    //  let obj = { ID: this.header.ID, QuoteNo : this.quoteNo, VersionID: this.verId, header : this.header, CustomerID : this.customerId, ParentAccID :this.parAccountId, ChildAccID : this.accountId }
       this.Modalcntrl.dismiss({
         'dismissed': true,
-        componentProps: obj,
+        componentProps: this.qprmsobj,
         isSave: isSave,
       });
     } else {
@@ -86,8 +81,11 @@ export class CreatequoteComponent implements OnInit {
       this.postservice.ActionSaveQuote(this.header).subscribe(data => {
         let Ids = data.split(',');
         this.header.ID = Ids[0];
-        this.verId = Ids[1], this.quoteNo = Ids[2], this.customerId = Ids[3],
-        this.accountId = this.header.Version.ChildAccID, this.parAccountId = this.header.Version.ParentAccID;
+        this.qprmsobj = {
+          quoteid: Number(Ids[0]), quoteno: Ids[2], versionid: Number(Ids[1]), customerid: Ids[3],
+          accountid: this.header.Version.ParentAccID, childaccid: this.header.Version.ChildAccID,
+           phaseid: 0, viewtypeid: 0, layoutId: 2
+        };
         this.ActionCloseCreateQuote(true);
       })
     }

@@ -329,7 +329,7 @@ export class AddpartComponent implements OnInit {
   }
   ActionSavePart() {
     if (this.partinfo.VersionID > 0) {
-      this.service.ActionSaveAreaLayout(this.partinfo.VersionID, this.partinfo).subscribe(data => {
+      this.service.ActionSavePartItems(this.partinfo).subscribe(data => {
         this.ActionCloseAddPart(true);
       })
     }

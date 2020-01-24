@@ -121,7 +121,9 @@ export class AddactivityComponent implements OnInit {
   //Close add activity function
   ActionCloseActivity(issave) {
     this.Modalcntrl.dismiss({
+      'dismissed': true,
       componentProps: this.eventCopy,
+      issave:issave
     });
   }
   ActionPushResources = function (data) {

@@ -98,10 +98,17 @@ ActionGetPaymentList(custID:number, quoteID:number):Observable<any>{
   return this.http.post<any>(this.url + 'api/QSave/ActionSavePartCustItem', model, { headers: { 'Content-Type': 'application/json' } })
 }
 //Sve Part
-ActionSaveAreaLayout(versionId,item: any): Observable<any> {
+// ActionSaveAreaLayout(versionId,item: any): Observable<any> {
+//   var model = JSON.stringify(item);
+//   return this.http.post<any>(this.url + 'api/QSave/ActionSaveAreaLayout?versionId=' + versionId, model, { headers: { 'Content-Type': 'application/json' } })
+// }
+
+ActionSavePartItems(item: any): Observable<any> {
   var model = JSON.stringify(item);
-  return this.http.post<any>(this.url + 'api/QSave/ActionSaveAreaLayout?versionId=' + versionId, model, { headers: { 'Content-Type': 'application/json' } })
+  return this.http.post<any>(this.url + 'api/QSave/ActionSavePartItems', model, { headers: { 'Content-Type': 'application/json' } })
 }
+
+
 ActionSaveMaterial(areaId,item: any): Observable<any> {
   var model = JSON.stringify(item);
   return this.http.post<any>(this.url + 'api/QSave/ActionSaveMaterial?areaId=' + areaId, model, { headers: { 'Content-Type': 'application/json' } })

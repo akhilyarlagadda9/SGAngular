@@ -17,7 +17,7 @@ export class MaterialinfoComponent implements OnInit {
   areaInfo: any;
   constructor(public Modalcntrl: ModalController) { }
 
-  ngOnInit() {debugger;
+  ngOnInit() {
 
   }
 

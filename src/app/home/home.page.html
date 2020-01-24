@@ -1,11 +1,16 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start" >
+    <!-- <ion-buttons slot="start" >
         <img src="assets/img/companylogo.png" alt="your image" style="width:25px;height:25px;">
+      </ion-buttons> -->
+      <ion-title slot="start" class="titleheader"><h1> {{CompanyInfo.Name}} </h1></ion-title>
+      <ion-buttons slot="end">
+        <ion-icon slot="end"  name="person" (click)="ActionLogout()"></ion-icon>
+        <div class="check-font">
+          {{UserInfo.loginUserName}}
+        </div>
+        <ion-icon slot="end" class="btn-logout" name="power" (click)="ActionLogout()"></ion-icon>
       </ion-buttons>
-      <ion-title><h1>StoneApp</h1></ion-title>
-      
-      <ion-icon slot="end" class="btn-logout" name="power" (click)="ActionLogout()"></ion-icon>
   </ion-toolbar>
 </ion-header>
 

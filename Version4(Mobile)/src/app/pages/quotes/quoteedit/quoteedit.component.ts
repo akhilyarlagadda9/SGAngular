@@ -91,6 +91,9 @@ export class QuoteeditComponent implements OnInit {
   /*****tabs****** */
   ActionLoadTabInfo(componet: any) {
     this.selectedtabtype = componet;
+    if(componet == 1){
+      this.ActionLoadVersion(this.QuoteVersionID);
+    }
   }
   /***** Quote Header *****/
   async ActionQuoteHeader() {
@@ -199,11 +202,11 @@ export class QuoteeditComponent implements OnInit {
       this.headerInfo.Version = data;
     })
   }
-  AreaSummarySelect(ev) {
-    if (ev == "success") {
-      this.ActionLoadTabInfo(2);
-    }
-  }
+  // AreaSummarySelect(ev) {
+  //   if (ev == "success") {
+  //     this.ActionLoadTabInfo(2);
+  //   }
+  // }
   async ActionNewAction() {
     let header = { header: this.headerInfo }
     const popover = await this.popoverCntrl.create({

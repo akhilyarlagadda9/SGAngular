@@ -12,9 +12,12 @@ export class HomePage {
   loaderToShow: any;CompanyInfo:any={ID:0,Name:""};UserInfo:any = {logInUserID:0,loginUserName:""}
 
   constructor(private navCtrl:NavController, public loadingController: LoadingController,private authservise:AuthService) {
+   
+  }
+  ngOnInit() {
     this.LoadCompanyAndUser();
   }
-
+  
   ActionLoadModule(path:string){
     this.navCtrl.navigateRoot(path);
    }

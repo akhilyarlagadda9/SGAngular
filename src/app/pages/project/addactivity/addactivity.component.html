@@ -149,8 +149,10 @@
       <ion-col size="2"><b>Email</b></ion-col>
       <ion-col size="2"><b>Text</b></ion-col>
     </ion-row>
-    <ion-row *ngFor="let resource of actinfo.ResourceList" class="paddleft5">
-      <ion-col size="8"> {{resource.ResourceName}}
+    <ion-row *ngFor="let resource of actinfo.ResourceList; let i = index" class="paddleft5">
+      <ion-col size="8">
+        <span (click)="ActionDeleteSelectedItems(resource.ID,i)"><ion-icon name="trash" class="delsty"></ion-icon></span>&nbsp;
+         {{resource.ResourceName}}
         <div> <small>{{resource.EmpMail}}</small></div>
       </ion-col>
       <ion-col size="2">

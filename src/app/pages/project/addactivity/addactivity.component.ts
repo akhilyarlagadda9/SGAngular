@@ -4,6 +4,7 @@ import { SchedulingService } from 'src/app/service/scheduling.service';
 import { OverlayEventDetail } from '@ionic/core';
 import { DatePipe, formatDate } from '@angular/common';
 import { NgForm } from '@angular/forms';
+import { ActinfoComponent } from '../actinfo/actinfo.component';
 @Component({
   selector: 'app-addactivity',
   templateUrl: './addactivity.component.html',
@@ -16,6 +17,8 @@ export class AddactivityComponent implements OnInit {
   ActTypeList: any; statusList: any; phaseList: any; ResourceList: any[]; PhasePartList: any; ResourceListWithDates: any[];
   eventCopy: any;
   IsResource: boolean;
+  IsSelectedPopulate: number;
+  resourceList: any;
   constructor(public Modalcntrl: ModalController, private schService: SchedulingService,
     public popoverCntrl: PopoverController, private navParams: NavParams,
     private datePipe: DatePipe, private alertCtrl: AlertController) { }
@@ -24,6 +27,7 @@ export class AddactivityComponent implements OnInit {
     if (this.actinfo.ID == 0) {
       this.ActionActivityInfo();
     } else {
+      this.ActionActivityInfoWithDates();
       this.statusList = this.actinfo.StatusList;
 
     }
@@ -403,7 +407,62 @@ export class AddactivityComponent implements OnInit {
     this.IsResource = false;
   }
 
+ /******* Resource Check Functionality *************/
 
+  //Activity info with dates Function
+   ActionActivityInfoWithDates() {
+    let start = this.actinfo.PrevStartDate;
+    let end = this.actinfo.PrevEndDate;
+    this.schService.ActTypeResListWithDates(this.actinfo.ActTypeID, start, end).subscribe(
+      data => {
+        this.resourceList = data;
+        console.log(data);
+        this.selectedResourceHeighlited(this.actinfo);
+      },
+      error => console.log(error));
+  }
+  selectedResourceHeighlited(actInfo) {
+    for(let i in this.resourceList) {
+      let reslistId = this.resourceList[i].ResourceID;
+      for(let j in this.ResourceList){
+        let selectResourceId = this.ResourceList[j].ResourceID;
+        if(reslistId == selectResourceId){
+          this.resourceList[i].Check = 1;
+        }
+      }
+    }
+  }
+  //Save Resource Function
+  ActionSaveResourceInfo() {
+    let resList =[]
+    let chkList = this.ResourceList.map(function (elem) { if (elem.Check == 1) { return elem } { return 0 } });
+   this.schService.ActionSaveResourceInfo(chkList, this.actinfo.ActivityID).subscribe(data => {
+    this.ResourceList = data;
+     })
+   }
+ //Resources check function
+ ActionPushResource(data:any) {
+  this.IsSelectedPopulate = 0;
+  if (data.Check == 1) {
+      let sDate = this.actinfo.PrevStartDate;
+      let eDate = this.actinfo.PrevEndDate;
+     this.schService.ActionCheckIsExistSameRes(this.actinfo.id, data.ResourceID, sDate, eDate).subscribe(data => {
+      let success = data;
+     })
+    }
+   }
+ // Delete resource function
+  ActionDeleteSelectedItems(Id, index, list) {
+    if(Id > 0){
+      this.schService.ActionDeleteResource(Id).subscribe(data => {
+        let success = data;
+       })
+    }
+    this.actinfo.ResourceList.splice(index,1);
+   }
+
+
+  
 }
 
 @Component({

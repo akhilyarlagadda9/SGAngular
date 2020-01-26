@@ -330,6 +330,7 @@ export class CreatequoteComponent implements OnInit {
     return this.Progress === value;
   };
 
+  
   showLoader() {
     this.loaderToShow = this.loadingController.create({
       message: 'please wait while saving'

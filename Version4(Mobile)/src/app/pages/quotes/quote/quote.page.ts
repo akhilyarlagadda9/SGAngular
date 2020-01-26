@@ -157,7 +157,9 @@ async ActionQuickQuote(){
 }
 
 
-
+onCancel(event:any){
+  this.ActionQuoteList(1);
+}
 
 
 

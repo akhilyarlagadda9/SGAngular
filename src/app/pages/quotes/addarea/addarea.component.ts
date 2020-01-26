@@ -12,10 +12,8 @@ export class AddareaComponent implements OnInit {
   areasaveStatus: string;
   constructor(public Modalcntrl: ModalController) { }
   ngOnInit() {
-    debugger;
   }
   ActionAddArea() {
-    debugger;
     let jobTypeId = 0
     var ids = this.Version.JobTypeID != null ? this.Version.JobTypeID.split(',') : 0;
     if (ids != 0) { jobTypeId = ids[0]; }

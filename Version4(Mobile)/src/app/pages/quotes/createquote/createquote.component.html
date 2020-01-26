@@ -7,38 +7,38 @@
     </ion-toolbar>
   </ion-header>
   <ion-row>
-    <ion-col size="1" *ngIf="Progress == 1 || Progress == 2 || Progress == 0">
+    <ion-col size="1" *ngIf="Progress == 1 || Progress == 0" style="padding-left: 13px;">
       <ion-fab-button color="primary" class="fabbtn" (click)="changeProgress(0)">1</ion-fab-button>
     </ion-col>
     <ion-col size="3" class="progbar-mat" *ngIf="Progress == 0">
       <ion-progress-bar></ion-progress-bar>
     </ion-col>
-    <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 2">
+    <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1">
       <ion-progress-bar value="1"></ion-progress-bar>
     </ion-col>
-    <ion-col size="1" *ngIf="Progress == 2 || Progress == 1">
+    <ion-col size="1" *ngIf="Progress == 1">
       <ion-fab-button color="primary" class="fabbtn" (click)="changeProgress(1)">2</ion-fab-button>
     </ion-col>
     <ion-col size="1" *ngIf="Progress == 0">
       <ion-fab-button color="light" class="fabbtn" (click)="changeProgress(1)">2</ion-fab-button>
     </ion-col>
-    <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 0">
+    <!-- <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 0">
       <ion-progress-bar></ion-progress-bar>
     </ion-col>
-    <ion-col size="3" class="progbar-mat" *ngIf="Progress == 2">
+    <ion-col size="3" class="progbar-mat">
       <ion-progress-bar value="1"></ion-progress-bar>
     </ion-col>
-    <ion-col size="1" *ngIf="Progress == 3 || Progress == 2">
+    <ion-col size="1" *ngIf="Progress == 3">
       <ion-fab-button color="primary" class="fabbtn" (click)="changeProgress(2)">3</ion-fab-button>
     </ion-col>
     <ion-col size="1" *ngIf="Progress == 0 || Progress == 1">
       <ion-fab-button color="light" class="fabbtn" (click)="changeProgress(2)">3</ion-fab-button>
-    </ion-col>
+    </ion-col> -->
   </ion-row>
   <ion-row>
-    <ion-col size="4"><span [ngClass]="{'txt-color' : Progress == 0 }">Account</span></ion-col>
-    <ion-col size="4"><span [ngClass]="{'txt-color' : Progress == 1 }">Customer</span></ion-col>
-    <ion-col size="4"><span [ngClass]="{'txt-color' : Progress == 2 }">Job</span></ion-col>
+    <ion-col size="5" style="padding-left: 13px;"><span [ngClass]="{'txt-color' : Progress == 0 }">Account/Customer</span></ion-col>
+    <ion-col size="5"><span [ngClass]="{'txt-color' : Progress == 1 }">Job Add</span></ion-col>
+    <!-- <ion-col size="4"><span [ngClass]="{'txt-color' : Progress == 2 }">Job</span></ion-col> -->
   </ion-row>
   <ion-content>
     <div *ngIf="Progress == 0">
@@ -59,6 +59,18 @@
           <ion-select-option *ngFor="let p of leadHearAbout" [value]="p.ID">{{p.Name}}</ion-select-option>
         </ion-select>
       </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Project Type<span
+            class="requiredField">*</span>
+        </ion-label>
+        <ion-select [(ngModel)]="header.Version.CustTypeID" name="CustTypeID" #CustTypeID="ngModel" class="labelfont" required>
+          <ion-select-option *ngFor="let p of customerTypes" [value]="p.ID">{{p.Name}}</ion-select-option>
+        </ion-select>
+        <!-- <ion-input type="text" [(ngModel)]="header.Version.CustTypeID" name="CustTypeID" #CustTypeID="ngModel" class="labelfont" required readonly="readonly"></ion-input> -->
+      </ion-item>
+      <div [hidden]="!form.submitted  || CustTypeID.valid" class="invalid-feedback padd-Left">
+        <div class="error">Project Type is required</div>
+      </div>
       <div *ngIf="header.Version.CustTypeID != 4 && header.Version.CustTypeID > 0">
         <ion-item>
           <ion-label class="labelfont" position="floating" color="primary">Customer/Account<span
@@ -117,18 +129,7 @@
           <ion-input type="text" [(ngModel)]="header.Version.Customer.Email" name="Email" class="labelfont"></ion-input>
         </ion-item>
       </div>
-      <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Project Type<span
-            class="requiredField">*</span>
-        </ion-label>
-        <ion-select [(ngModel)]="header.Version.CustTypeID" name="CustTypeID" #CustTypeID="ngModel" class="labelfont"
-          required>
-          <ion-select-option *ngFor="let p of customerTypes" [value]="p.ID">{{p.Name}}</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <div [hidden]="!form.submitted  || CustTypeID.valid" class="invalid-feedback padd-Left">
-        <div class="error">Project Type is required</div>
-      </div>
+      
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Sales Rep<span class="requiredField">*</span>
         </ion-label>
@@ -141,8 +142,6 @@
       <div [hidden]="!form.submitted  || SalesPersonID.valid" class="invalid-feedback padd-Left">
         <div class="error">Sales Person is required</div>
       </div>
-    </div>
-    <div *ngIf="Progress == 1">
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Price List<span class="requiredField">*</span>
         </ion-label>
@@ -176,8 +175,6 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
-    </div>
-    <div *ngIf="Progress == 2">
       <ion-item>
         <ion-row>
           <ion-col size="5" class="paddzero flex">
@@ -193,6 +190,8 @@
           </ion-col>
         </ion-row>
       </ion-item>
+    </div>
+    <div *ngIf="Progress == 1">
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Job Name<span class="requiredField">*</span>
         </ion-label>
@@ -238,24 +237,18 @@
         <ion-label class="labelfont" position="floating" color="primary">Year Built</ion-label>
         <ion-input type="text" [(ngModel)]="header.YearBuilt" name="YearBuilt" class="labelfont"></ion-input>
       </ion-item>
-    </div>
+    </div> 
+    <!-- <div *ngIf="Progress == 2">
+     
+    </div> -->
   </ion-content>
-
-  <!-- <ion-footer>
-  <ion-row *ngIf="Progress == 0">
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="btn-fixed">
-      <ion-fab-button (click)="ActionNavigateToFro(2, form)">Next
-      </ion-fab-button>
-    </ion-fab>
-  </ion-row>
- <ion-row *ngIf="Progress == 2">
-  <div class="ion-padding-top">
-    <ion-button class="ion-float-left ion-padding-start" color="primary" size="small"
-      (click)="ActionNavigateToFro(1)">Back</ion-button>
-    <ion-button class="ion-float-right ion-padding-end" color="success" size="small" type="submit">Save
-    </ion-button>
-  </div>
- </ion-row>
-</ion-footer> -->
-
+<ion-footer>
+  <ion-col *ngIf="Progress == 0">
+      <ion-button size="small" class="ion-float-right" color="primary" (click)="changeProgress(1)">Next</ion-button>
+  </ion-col>
+  <ion-col *ngIf="Progress == 1">
+        <ion-button size="small" class="ion-float-left" color="primary" (click)="changeProgress(0)">Back</ion-button>
+        <ion-button size="small" class="ion-float-right" color="success" type="submit">Save</ion-button>
+  </ion-col>
+</ion-footer>
 </form>

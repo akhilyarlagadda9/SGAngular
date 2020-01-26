@@ -6,29 +6,53 @@
   </ion-toolbar>
   <ion-toolbar>
     <ion-row>
-      <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(1)">
-        <img src="assets/img/MaterialY.jpg" alt="img" class="imghw">
-        <div class="mar-top5"><span style="font-size:11px;">Material</span></div>
-      </ion-col>
-      <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(2)">
+      <!-- <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(2)">
         <img src="assets/img/sqft1.jpg" alt="img" class="imghw">
-        <div class="mar-top5"><span style="font-size:11px;">Sqft</span></div>
+        <div class="mar-top5"><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedcomponent == 2 }">Sqft</span></div>
       </ion-col>
       <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(3)">
         <img src="assets/img/edges2.jpg" alt="img" class="imghw">
-        <div class="mar-top5"><span style="font-size:11px;">Spl/Edg</span></div>
+        <div class="mar-top5"><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedcomponent == 3 }">Spl/Edg</span></div>
       </ion-col>
       <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(4)">
         <img src="assets/img/cutout.png" alt="img" class="imghw">
-        <div class="mar-top5"><span style="font-size:11px;">Cutout</span></div>
+        <div class="mar-top5"><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedcomponent == 4 }">Cutout</span></div>
       </ion-col>
       <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(5)">
         <img src="assets/img/kitchen-sink.png" alt="img" class="imghw">
-        <div class="mar-top5"><span style="font-size:11px;">Sink/Fau</span></div>
+        <div class="mar-top5"><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedcomponent == 5 }">Sink/Fau</span></div>
+      </ion-col>
+      <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(1)">
+        <img src="assets/img/MaterialY.jpg" alt="img" class="imghw">
+        <div class="mar-top5"><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedcomponent == 1 }">Material</span></div>
       </ion-col>
       <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(6)">
         <img src="assets/img/addons.png" alt="img" class="imghw">
-        <div class="mar-top5"><span style="font-size:11px;">Addons</span></div>
+        <div class="mar-top5"><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedcomponent == 6 }">Addons</span></div>
+      </ion-col> -->
+      <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(2)">
+        <img src="assets/img/Sqft5.png" alt="img" class="imghgt">
+        <div class="mar-top5"><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedcomponent == 2 }">Sqft</span></div>
+      </ion-col>
+      <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(3)">
+        <img src="assets/img/edge2.png" alt="img" class="imghgt">
+        <div class="mar-top5"><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedcomponent == 3 }">Spl/Edg</span></div>
+      </ion-col>
+      <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(4)">
+        <img src="assets/img/cutout2.png" alt="img" class="imghgt">
+        <div class="mar-top5"><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedcomponent == 4 }">Cutout</span></div>
+      </ion-col>
+      <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(5)">
+        <img src="assets/img/sinks2.png" alt="img" class="imghgt">
+        <div class="mar-top5"><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedcomponent == 5 }">Sink/Fau</span></div>
+      </ion-col>
+      <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(1)">
+        <img src="assets/img/material2.png" alt="img" class="imghgt">
+        <div class="mar-top5"><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedcomponent == 1 }">Material</span></div>
+      </ion-col>
+      <ion-col class="paddtopzero text-center" (click)="ActionPartTabInfo(6)">
+        <img src="assets/img/addon3.png" alt="img" class="imghgt">
+        <div class="mar-top5"><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedcomponent == 6 }">Addons</span></div>
       </ion-col>
     </ion-row>
   </ion-toolbar>
@@ -103,10 +127,10 @@
     </ion-col>
 
     <ion-col *ngSwitchCase="2">
-      <ion-item>
+      <!-- <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Part Name</ion-label>
         <ion-input type="text" [(ngModel)]="partinfo.Name" name="Name" class="labelfont"></ion-input>
-      </ion-item>
+      </ion-item> -->
 
       <ion-list *ngFor="let fab of partinfo.PartFabList;let j=index;">
         <ion-row>
@@ -212,8 +236,7 @@
         <ion-col *ngFor="let edge of partinfo.EdgeList;let i = index">
           <span *ngIf="isGroupShown4(2)">
             <ion-row>
-              <ion-col size="1" class="color-green martop10 paddzero" (click)="ActionRemoveEdge(i)"><b><span
-                    class="color-red">X</span> E:</b></ion-col>
+              <ion-col size="1" class="color-green martop10 paddzero"><b>E:</b></ion-col>
               <ion-col size="8">
                 <ion-select [(ngModel)]="edge.EdgeProfileID" class="btninfo" interface="popover"
                   (ngModelChange)="ActionPopulateEdge($event,i)" class="border-btm labelfont2 color-blue">
@@ -221,12 +244,13 @@
                   </ion-select-option>
                 </ion-select>
               </ion-col>
-              <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
+              <ion-col size="2" class="roundborder borderall flex fontbold mar-top5">
                 <ion-input type="text" [(ngModel)]="edge.LF" (change)="ActionSetAmount('edge',edge)"
                   class="text-center border-right color-primary" name="LF">
                 </ion-input>
                 <span class="color-primary">LF</span>
               </ion-col>
+              <ion-col size="1" (click)="ActionRemoveEdge(i)"><ion-icon name="trash" class="fontmedium color-red"></ion-icon></ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="3">
@@ -272,20 +296,20 @@
         <ion-col *ngFor="let cutout of partinfo.CutoutList;let i = index">
           <span *ngIf="isGroupShown(1)">
             <ion-row>
-              <ion-col size="1" class="color-green martop10 paddzero" (click)="ActionRemoveCutout(i)"><b><span
-                    class="color-red">X</span> C:</b></ion-col>
+              <ion-col size="1" class="color-green martop10 paddzero"><b>C:</b></ion-col>
               <ion-col size="8">
                 <ion-select [(ngModel)]="cutout.TypeID" interface="popover"
                   (ngModelChange)="ActionPopulateCutout($event,i)" class="border-btm labelfont2 color-blue">
                   <ion-select-option *ngFor="let c of CutoutList" [value]="c.ID">{{c.Description}}</ion-select-option>
                 </ion-select>
               </ion-col>
-              <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
+              <ion-col size="2" class="roundborder borderall flex fontbold mar-top5">
                 <ion-input type="text" [(ngModel)]="cutout.LF" (change)="ActionSetAmount('cutout',cutout)"
                   class="text-center border-right color-primary" name="LF">
                 </ion-input>
                 <span class="color-primary">EA</span>
               </ion-col>
+              <ion-col size="1" (click)="ActionRemoveCutout(i)"><ion-icon name="trash" class="fontmedium color-red"></ion-icon></ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="3">
@@ -320,6 +344,65 @@
           </span>
         </ion-col>
       </ion-list>
+
+      <ion-list>
+        <ion-col class="lablewid" size="12" class="color-primary">
+          <ion-icon name="list" class="fontmedium" (click)="toggleGroup(2)"></ion-icon><b class="fontver">Appliance:</b>
+          <ion-icon name="add-circle" class="fontmedium" (click)="ActionAddAppliance()"></ion-icon>
+        </ion-col>
+        <ion-col *ngFor="let appliance of partinfo.ApplianceList;let i = index">
+          <span *ngIf="isGroupShown4(2)">
+            <ion-row>
+              <ion-col size="1" class="color-green martop10 paddzero"><b>A:</b></ion-col>
+              <ion-col size="8" class="paddzero">
+                <ion-item>
+                  <ion-input type="text" class="labelfont paddzero" [(ngModel)]="appliance.Description"
+                    name="Description" (keyup.enter)="ActionSearchSelect($event,2,18,appliance)" required></ion-input>
+                  <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,18,appliance)"></ion-icon>
+                  <ion-icon name="search" (click)="ActionSearchSelect($event,2,18,appliance)"></ion-icon>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2" class="roundborder borderall flex fontbold mar-top5">
+                <ion-input type="text" [(ngModel)]="appliance.Qty" class="text-center border-right color-primary"
+                  name="Qty" (change)="ActionSetAmount('appliance', appliance)">
+                </ion-input>
+                <span class="color-primary">EA</span>
+              </ion-col>
+              <ion-col size="1" (click)="ActionRemoveAppliance(i)"><ion-icon name="trash" class="fontmedium color-red"></ion-icon></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3">
+                <div class="color-primary"><b>Cost($)</b></div>
+                <div>
+                  <ion-input type="text" class="labelfont border-btm" [(ngModel)]="appliance.UnitCost" name="UnitCost"
+                    (change)="ActionSetMargin(1,appliance,'appliance')"></ion-input>
+                </div>
+              </ion-col>
+              <ion-col size="3">
+                <div class="color-primary"><b>M(%)</b></div>
+                <div>
+                  <ion-input type="text" class="labelfont border-btm" [(ngModel)]="appliance.Margin" name="Margin"
+                    (change)="ActionSetMargin(2,appliance,'appliance')"></ion-input>
+                </div>
+              </ion-col>
+              <ion-col size="3">
+                <div class="color-primary"><b>Price($)</b></div>
+                <div>
+                  <ion-input type="text" class="labelfont border-btm" [(ngModel)]="appliance.UnitPrice" name="UnitPrice"
+                    (change)="ActionSetMargin(3,appliance,'appliance')"></ion-input>
+                </div>
+              </ion-col>
+              <ion-col size="3">
+                <div class="color-primary"><b>Amt($)</b></div>
+                <div>
+                  <ion-input type="text" class="labelfont border-btm" [(ngModel)]="appliance.Amount" name="Amount"
+                    readonly="readonly"></ion-input>
+                </div>
+              </ion-col>
+            </ion-row>
+          </span>
+        </ion-col>
+      </ion-list>
     </ion-col>
 
     <ion-col *ngSwitchCase="5">
@@ -332,8 +415,7 @@
         <ion-col *ngFor="let sinkfaucet of partinfo.SinkList;let i = index">
           <span *ngIf="isGroupShown(1)">
             <ion-row>
-              <ion-col size="1" class="color-green martop10 paddzero" (click)="ActionRemoveSink(i)"><b><span
-                    class="color-red">X</span> S:</b></ion-col>
+              <ion-col size="1" class="color-green martop10 paddzero"><b>S:</b></ion-col>
               <ion-col size="8" class="paddzero">
                 <ion-item>
                   <ion-input type="text" class="labelfont paddzero" [(ngModel)]="sinkfaucet.Description"
@@ -342,12 +424,13 @@
                   <ion-icon name="search" (click)="ActionSearchSelect($event,2,8,sinkfaucet)"></ion-icon>
                 </ion-item>
               </ion-col>
-              <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
+              <ion-col size="2" class="roundborder borderall flex fontbold mar-top5">
                 <ion-input type="text" [(ngModel)]="sinkfaucet.Qty" class="text-center border-right color-primary"
                   name="Qty" (change)="ActionSetAmount('sink', sinkfaucet)">
                 </ion-input>
-                <span class="color-primary">SF</span>
+                <span class="color-primary">EA</span>
               </ion-col>
+              <ion-col size="1" (click)="ActionRemoveSink(i)"><ion-icon name="trash" class="fontmedium color-red"></ion-icon></ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="3">
@@ -392,8 +475,7 @@
         <ion-col *ngFor="let faucet of partinfo.FaucetList;let i = index">
           <span *ngIf="isGroupShown4(2)">
             <ion-row>
-              <ion-col size="1" class="color-green martop10" (click)="ActionRemoveFaucet(i)"><b><span
-                    class="color-red">X</span> F:</b></ion-col>
+              <ion-col size="1" class="color-green martop10"><b>F:</b></ion-col>
               <ion-col size="8" class="paddzero">
                 <ion-item>
                   <ion-input type="text" class="labelfont paddzero" [(ngModel)]="faucet.Description" name="Description"
@@ -402,12 +484,13 @@
                   <ion-icon name="search" (click)="ActionSearchSelect($event,2,9,faucet)"></ion-icon>
                 </ion-item>
               </ion-col>
-              <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
+              <ion-col size="2" class="roundborder borderall flex fontbold mar-top5">
                 <ion-input type="text" [(ngModel)]="faucet.Qty" class="text-center border-right color-primary"
                   name="Qty" (change)="ActionSetAmount('faucet', faucet)">
                 </ion-input>
-                <span class="color-primary">SF</span>
+                <span class="color-primary">EA</span>
               </ion-col>
+              <ion-col size="1" (click)="ActionRemoveFaucet(i)"><ion-icon name="trash" class="fontmedium color-red"></ion-icon></ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="3">
@@ -454,8 +537,7 @@
         <ion-col *ngFor="let labor of partinfo.LaborList;let i = index">
           <span *ngIf="labor.ViewTypeID != 1 && isGroupShown(1)">
             <ion-row>
-              <ion-col size="1" class="color-green martop10 paddzero" (click)="ActionRemoveLabor(i)"><b><span
-                    class="color-red">X</span> L:</b></ion-col>
+              <ion-col size="1" class="color-green martop10 paddzero"><b>L:</b></ion-col>
               <ion-col size="8" class="paddzero">
                 <ion-item>
                   <ion-input type="text" class="labelfont paddzero" [(ngModel)]="labor.Description" name="Description"
@@ -464,12 +546,13 @@
                   <ion-icon name="search" (click)="ActionSearchSelect($event,2,7,labor)"></ion-icon>
                 </ion-item>
               </ion-col>
-              <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
+              <ion-col size="2" class="roundborder borderall flex fontbold mar-top5">
                 <ion-input type="text" [(ngModel)]="labor.Qty" class="text-center border-right color-primary" name="Qty"
                   (change)="ActionSetAmount('labor', labor)">
                 </ion-input>
                 <span class="color-primary">EA</span>
               </ion-col>
+              <ion-col size="1" (click)="ActionRemoveLabor(i)"><ion-icon name="trash" class="fontmedium color-red"></ion-icon></ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="3">
@@ -514,8 +597,7 @@
         <ion-col *ngFor="let other of partinfo.OtherList;let i = index">
           <span *ngIf="isGroupShown4(2)">
             <ion-row>
-              <ion-col size="1" class="color-green martop10 paddzero" (click)="ActionRemoveOther(i)"><b><span
-                    class="color-red">X</span> A:</b></ion-col>
+              <ion-col size="1" class="color-green martop10 paddzero"><b>A:</b></ion-col>
               <ion-col size="8" class="paddzero">
                 <ion-item>
                   <ion-input type="text" class="labelfont paddzero" [(ngModel)]="other.Description" name="Description"
@@ -524,12 +606,13 @@
                   <ion-icon name="search" (click)="ActionSearchSelect($event,2,11,other)"></ion-icon>
                 </ion-item>
               </ion-col>
-              <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
+              <ion-col size="2" class="roundborder borderall flex fontbold mar-top5">
                 <ion-input type="text" [(ngModel)]="other.Qty" class="text-center border-right color-primary" name="Qty"
                   (change)="ActionSetAmount('other', other)">
                 </ion-input>
                 <span class="color-primary">EA</span>
               </ion-col>
+              <ion-col size="1" (click)="ActionRemoveOther(i)"><ion-icon name="trash" class="fontmedium color-red"></ion-icon></ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="3">
@@ -568,7 +651,34 @@
 
   </ion-row>
 </ion-content>
-
+<ion-footer>
+  <ion-row [ngSwitch]="selectedcomponent">
+  <ion-col *ngSwitchCase="2">
+    <!-- <ion-button slot="start" color="primary" size="small" (click)="">Back</ion-button> -->
+    <ion-button color="success" size="small" class="ion-float-right" (click)="ActionPartTabInfo(3)">Next</ion-button>
+  </ion-col>
+  <ion-col *ngSwitchCase="3">
+    <ion-button color="primary" size="small" class="ion-float-left" (click)="ActionPartTabInfo(2)">Back</ion-button>
+    <ion-button color="success" size="small" class="ion-float-right" (click)="ActionPartTabInfo(4)">Next</ion-button>
+  </ion-col>
+  <ion-col *ngSwitchCase="4">
+    <ion-button color="primary" size="small" class="ion-float-left" (click)="ActionPartTabInfo(3)">Back</ion-button>
+    <ion-button color="success" size="small" class="ion-float-right" (click)="ActionPartTabInfo(5)">Next</ion-button>
+  </ion-col>
+  <ion-col *ngSwitchCase="5">
+    <ion-button color="primary" size="small" class="ion-float-left" (click)="ActionPartTabInfo(4)">Back</ion-button>
+    <ion-button color="success" size="small" class="ion-float-right" (click)="ActionPartTabInfo(1)">Next</ion-button>
+  </ion-col>
+  <ion-col *ngSwitchCase="1">
+    <ion-button color="primary" size="small" class="ion-float-left" (click)="ActionPartTabInfo(5)">Back</ion-button>
+    <ion-button color="success" size="small" class="ion-float-right" (click)="ActionPartTabInfo(6)">Next</ion-button>
+  </ion-col>
+  <ion-col *ngSwitchCase="6">
+    <ion-button color="primary" size="small" class="ion-float-left" (click)="ActionPartTabInfo(1)">Back</ion-button>
+    <ion-button color="success" size="small" class="ion-float-right" (click)="ActionSavePart()">Save</ion-button>
+  </ion-col>
+</ion-row>
+</ion-footer>
 
 
 

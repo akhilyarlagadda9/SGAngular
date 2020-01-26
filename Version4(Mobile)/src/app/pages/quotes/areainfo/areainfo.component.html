@@ -9,8 +9,8 @@
           <ion-select-option *ngFor="let area of arealist" [value]="area.ID">{{area.Name}}</ion-select-option>
         </ion-select>
       </ion-col>
-      <ion-col size="1" class="text-right">
-        <ion-icon name="add-circle-outline" (click)="ActionAddArea()" class="big"></ion-icon>
+      <ion-col size="1" class="paddzero mar-top5 color-primary text-right">
+        <ion-icon name="add-circle" class="fontmedium" (click)="ActionAddArea()"></ion-icon>
       </ion-col>
     </ion-row>
 
@@ -25,8 +25,8 @@
           *ngIf="part.Name == '' || part.Name == null">Part{{part.SrNo}}</span>{{part.Name}}</ion-select-option>
     </ion-select>
   </ion-col>
-  <ion-col size="1" class="text-right">
-    <ion-icon name="add-circle-outline" class="big" (click)="ActionAddPart(0)"></ion-icon>
+  <ion-col size="1" class="paddzero mar-top5 color-primary text-right">
+    <ion-icon name="add-circle" class="fontmedium" (click)="ActionAddPart(0)"></ion-icon>
   </ion-col>
 </ion-row>
 

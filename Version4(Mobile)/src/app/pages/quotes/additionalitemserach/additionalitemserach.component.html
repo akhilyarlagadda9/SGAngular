@@ -1,3 +1,4 @@
+<div style="height: 300px;">
 <ion-header>
   <ion-toolbar class="toolsty">
     <ion-title class="titleheader2"><b>Description</b></ion-title>
@@ -5,7 +6,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-list>
   <ion-item >
     <ion-row>
     <ion-col size="12" *ngFor="let item of listItems" (click)="ActionSelectItem(item.ID)" class="border-btm">
@@ -16,5 +17,6 @@
     </ion-col>
   </ion-row>
   </ion-item>
-</ion-content>
+</ion-list>
+</div>
 

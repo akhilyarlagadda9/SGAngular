@@ -21,27 +21,27 @@
         <ion-row>
             <ion-col class="paddtopzero text-center" (click)="ActionLoadTabInfo(1)">
                 <img src="assets/img/Checklist-icon.png" alt="your image" style="width:35px;height:35px;">
-                <div class="mar-top5"><span style="font-size:11px;">summary</span></div>
+                <div class="mar-top5"><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 1 }">summary</span></div>
             </ion-col>
             <ion-col class="paddtopzero text-center" (click)="ActionLoadTabInfo(2)">
                 <img src="assets/img/Drawing-icon.png" alt="your image" style="width:35px;height:35px;">
-                <div class="mar-top5"><span style="font-size:11px;">Area Info</span></div>
+                <div class="mar-top5"><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 2 }">Area Info</span></div>
             </ion-col>
             <ion-col class="paddtopzero text-center" (click)="ActionLoadTabInfo(3)">
                 <img src="assets/img/email-icon.png" alt="your image" style="width:35px;height:35px;">
-                <div class="mar-top5"><span style="font-size:11px;">Comm Hub</span></div>
+                <div class="mar-top5"><span style="font-size:11px;white-space: nowrap;" [ngClass]="{'txt-color' : selectedtabtype == 3 }">Comm Hub</span></div>
             </ion-col>
             <ion-col class="paddtopzero text-center" *ngIf="headerInfo.Version.StatusID == 6" (click)="ActionLoadTabInfo(4)">
                 <img src="assets/img/calendar-icon.png" alt="your image" style="width:35px;height:35px;">
-                <div class="mar-top5"><span style="font-size:11px;">Activities</span></div>
+                <div class="mar-top5"><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 4 }">Activities</span></div>
             </ion-col>
             <ion-col class="paddtopzero text-center" (click)="ActionLoadTabInfo(5)">
                 <img src="assets/img/marbles-icon.png" alt="your image" style="width:35px;height:35px;">
-                <div class="mar-top5"><span style="font-size:11px;">Other</span></div>
+                <div class="mar-top5"><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 5 }">Other</span></div>
             </ion-col>
             <ion-col class="paddtopzero text-center"  *ngIf="headerInfo.Version.StatusID == 6" (click)="ActionLoadTabInfo(6)">
                 <img src="assets/img/coin-us-dollar-icon.png" alt="your image" style="width:35px;height:35px;">
-                <div class="mar-top5"><span style="font-size:11px;">Accounts</span></div>
+                <div class="mar-top5"><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 6 }">Accounts</span></div>
             </ion-col>
         </ion-row>
     </ion-toolbar>

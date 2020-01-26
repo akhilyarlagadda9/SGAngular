@@ -211,7 +211,6 @@ export class SchedulingPage implements OnInit {
   }
   //Onclick event Info
   async ActionOnEventSelected(ev) {
-    debugger;
     console.log(ev);
     console.log(ev.ID);
     let obj = { actId: ev.event._def.extendedProps.ID, actTypeID: ev.event._def.extendedProps.ActivityTypeID, StartDate: ev.event._def.extendedProps.StartTime, EndDate: ev.event._def.extendedProps.EndTime }
@@ -268,8 +267,6 @@ export class SchedulingPage implements OnInit {
 
   }
   UpdateActivty(info) {
-
-     debugger;
     let filterIds = this.calObj.ResourceIDs;
     if (filterIds != "" && filterIds.length > 1) {
       filterIds = filterIds.split(',');

@@ -14,6 +14,9 @@
     <div *ngIf="customer.TypeID == 4">
       <b class="labelfont">{{customer.Name}}</b>
       <div class="smallfont2 color-blue">{{customer.CustType}}</div>
-    </div>
+    </div>   
   </ion-item>
+  <div *ngIf="customerList.length == 0" class="color-red text-center">
+    --NO RECORDS FOUND--
+  </div>
 </ion-list>

@@ -217,9 +217,8 @@ export class taxComponent implements OnInit {
   ActionSearchParentAccount() { }
 
   ActionChangeQuoteTax() {
-    debugger;
     let result = this.service.Accounttaxlist(3, this.Version.CustTypeID).subscribe(
-      data => { debugger; this.TaxTypeList = data },
+      data => { this.TaxTypeList = data },
       error => console.log(error));
   }
 

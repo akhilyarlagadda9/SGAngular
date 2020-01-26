@@ -54,6 +54,7 @@ import { OtherComponent } from '../other/other.component';
 import { MaileditComponent } from '../mailedit/mailedit.component';
 import { ActionquoteComponent } from '../actionquote/actionquote.component';
 import { QuickquoteComponent } from '../quickquote/quickquote.component';
+import { AddmeasComponent } from '../materialinfo/addmeas/addmeas.component';
 
 @NgModule({
   imports: [
@@ -82,7 +83,7 @@ import { QuickquoteComponent } from '../quickquote/quickquote.component';
     CustomerinfoComponent,AddareaComponent,CustomersearchComponent,
     ManagementsummaryComponent,additemComponent,ActivitiesComponent,AreasummaryComponent,
     FabricationComponent,LaborinfoComponent,MapComponent,QlayoutComponent,ArealayoutComponent,QnavigationComponent,OtherComponent,
-     AddpartComponent, AddSizesComponent,MaileditComponent, QuickquoteComponent],
+     AddpartComponent, AddSizesComponent,MaileditComponent, QuickquoteComponent,AddmeasComponent],
     
 
   declarations: [QuotePage, ActionquoteComponent,NewactionComponent, TransactionComponent,AccountsComponent,NewtranComponent,PaymentScheduleComponent,AdditionalitemserachComponent,
@@ -97,6 +98,6 @@ import { QuickquoteComponent } from '../quickquote/quickquote.component';
     CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,
     AddareaComponent,CustomersearchComponent,ManagementsummaryComponent,ActivitiesComponent,AreasummaryComponent,
     additemComponent,additemComponent,FabricationComponent,LaborinfoComponent,MapComponent,QnavigationComponent,
-    QlayoutComponent,ArealayoutComponent,OtherComponent,AddpartComponent,AddSizesComponent,MaileditComponent, QuickquoteComponent]
+    QlayoutComponent,ArealayoutComponent,OtherComponent,AddpartComponent,AddSizesComponent,MaileditComponent, QuickquoteComponent,AddmeasComponent]
 })
 export class QuotePageModule {}

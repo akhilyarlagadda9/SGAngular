@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-searchbar #quotesearch (keyup.enter)="ActionSearch(quotesearch.value)" placeholder="Enter Customer Name/Job#"></ion-searchbar>
+  <ion-searchbar #quotesearch (keyup.enter)="ActionSearch(quotesearch.value)" placeholder="Enter Customer Name/Job#" (ionClear)="onCancel($event)"></ion-searchbar>
 <ion-card *ngFor="let header of quotelist" class="margin-bottom">
   <ion-item (click)="ActionQuoteEdit(header)"><ion-label>
    <h2># {{header.QuoteNo}} - {{header.QuoteName}}</h2>

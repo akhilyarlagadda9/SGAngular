@@ -22,9 +22,11 @@ export class AddpartComponent implements OnInit {
   faucet: any;
   labor: any;
   other: any;
+  appliance: any;
   areaInfo: any;
   shownGroup: number = 1;
   shownGroup4: any = 2;
+  
   constructor(public Modalcntrl: ModalController, public popoverCntrl: PopoverController,
     private service: QuoteService, private getservice: QuotegetService, private quoterep: QuoterepService) { }
 
@@ -39,7 +41,7 @@ export class AddpartComponent implements OnInit {
     this.partinfo.Name = ""; this.partinfo.IsActive = 1; this.partinfo.IsActive = 1;
     this.partinfo.PartMaterialList = []; this.partinfo.PartFabList = [];
     this.partinfo.EdgeList = []; this.partinfo.SplashList = []; this.partinfo.CutoutList = [];
-    this.partinfo.LaborList = []; this.partinfo.SinkList = []; this.partinfo.FaucetList = []; this.partinfo.OtherList = [];
+    this.partinfo.LaborList = []; this.partinfo.SinkList = []; this.partinfo.FaucetList = []; this.partinfo.OtherList = [];this.partinfo.ApplianceList = [];
     // Material
     let partmat = this.quoterep.AddPartMatItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent);
     this.partinfo.PartMaterialList.push(partmat);
@@ -74,6 +76,8 @@ export class AddpartComponent implements OnInit {
     //labor
     let labor = this.quoterep.AddLaborItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent, 0, "Labor");
     this.partinfo.LaborList.push(labor);
+    let appliance = this.quoterep.AddTileItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent, 18, "Appliance");
+    this.partinfo.ApplianceList.push(appliance);
   }
 
   GetCostFromRiskLevels(model, typeId) {
@@ -129,6 +133,8 @@ export class AddpartComponent implements OnInit {
             this.labor = detail.data.componentProps;
           } else if (protypeId == 11) {
             this.other = detail.data.componentProps;
+          } else if (protypeId == 18){
+            this.appliance = detail.data.componentProps;
           }
         }
       }
@@ -264,6 +270,10 @@ export class AddpartComponent implements OnInit {
     let other = this.quoterep.AddLaborItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent, 0, 'Labor');
     this.partinfo.LaborList.push(other);
   }
+  ActionAddAppliance() {
+    let appliance = this.quoterep.AddTileItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent, 18, 'Appliance');
+    this.partinfo.ApplianceList.push(appliance);
+  }
   ActionRemoveSizes(indx:number, jndx:number){
     this.partinfo.PartFabList[jndx].MeasureList.splice(indx, 1);
     this.ActionSetFabSqft(jndx);
@@ -289,7 +299,9 @@ export class AddpartComponent implements OnInit {
   ActionRemoveOther(index:number){
     this.partinfo.OtherList.splice(index, 1);
   }
-
+  ActionRemoveAppliance(index:number){
+    this.partinfo.ApplianceList.splice(index, 1);
+  }
   ActionSetMargin(typeId: number, model: any, type: string) {
     model = this.quoterep.margincalculations(typeId, model, type);
     this.ActionSetAmount(type, model);
@@ -322,6 +334,10 @@ export class AddpartComponent implements OnInit {
         model.Amt = model.Amount;
         break;
       case "other":
+        model.Amount = this.quoterep.calcitemamt(model.Qty, model.UnitPrice);
+        model.Amt = model.Amount;
+        break;
+        case "appliance":
         model.Amount = this.quoterep.calcitemamt(model.Qty, model.UnitPrice);
         model.Amt = model.Amount;
         break;

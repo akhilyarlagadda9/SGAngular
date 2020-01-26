@@ -23,7 +23,7 @@
     <ion-col size="1" *ngIf="Progress == 0">
       <ion-fab-button color="light" (click)="changeProgress(1)">2</ion-fab-button>
     </ion-col>
-    <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 0">
+    <!-- <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 0">
       <ion-progress-bar></ion-progress-bar>
     </ion-col>
     <ion-col size="3" class="progbar-mat" *ngIf="Progress == 2">
@@ -34,7 +34,7 @@
     </ion-col>
     <ion-col size="1" *ngIf="Progress == 0 || Progress == 1">
       <ion-fab-button color="light" (click)="changeProgress(2)">3</ion-fab-button>
-    </ion-col>
+    </ion-col> -->
   </ion-row>
   <ion-content>
     <div *ngIf="Progress == 0">
@@ -148,9 +148,9 @@
         </ion-col>
         <ion-col size="8">
           <ion-radio-group allow-empty-selection="true" name="radio-group">
-            <ion-radio slot="start" [color]="primary" name="PriceByID" checked="material.PriceByID == 0"></ion-radio>
+            <ion-radio slot="start" [color]="primary" name="PriceByID" checked="material.PriceByID == 0" class="radio-icon"></ion-radio>
             Sqft&nbsp;&nbsp;
-            <ion-radio slot="start" [color]="primary" name="PriceByID" checked="material.PriceByID == 1"></ion-radio>
+            <ion-radio slot="start" [color]="primary" name="PriceByID" checked="material.PriceByID == 1" class="radio-icon"></ion-radio>
             Slab
           </ion-radio-group>
         </ion-col>
@@ -206,7 +206,7 @@
     </div>
     <div *ngIf="Progress == 1">
       <ion-row class="bgcolor-gray">
-        <span class="fontbold text-font">Measurements:</span>
+        <span class="fontbold text-font mar-top5">Measurements:</span>
         <ion-icon name="add-circle" (click)="ActionAddMeas()" class="fontmedium"></ion-icon>
         <ion-icon name="cart" class="fontmedium"></ion-icon>
       </ion-row>
@@ -259,7 +259,7 @@
           <ion-item>
             <ion-col size="4">Qty</ion-col>
             <ion-col size="4">Price</ion-col>
-            <ion-col size="4">Amt</ion-col>
+            <ion-col size="4">Price/SF</ion-col>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -298,24 +298,13 @@
     </div>
 
   </ion-content>
-  <!-- <ion-footer>
-    <ion-row *ngIf="Progress == 0">
-      <ion-col size="12">
-        <ion-button size="small" style="float: right;" color="primary" (click)="changeProgress(1)">Next</ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row *ngIf="Progress == 1">
-      <ion-col size="12">
-        <ion-button size="small" style="float: right;" color="primary" (click)="changeProgress(2)">Next</ion-button>
-        <ion-button size="small" style="float: left;" color="primary" (click)="changeProgress(1)">Previous
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row *ngIf="Progress == 2">
-      <ion-col size="12">
-        <ion-button size="small" style="float: left;" color="primary" (click)="changeProgress(1)">Previous
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-footer> -->
+  <ion-footer>
+    <ion-col *ngIf="Progress == 0">
+        <ion-button size="small" class="ion-float-right" color="primary" (click)="changeProgress(1)">Next</ion-button>
+    </ion-col>
+    <ion-col *ngIf="Progress == 1">
+          <ion-button size="small" class="ion-float-left" color="primary" (click)="changeProgress(0)">Back</ion-button>
+          <ion-button size="small" class="ion-float-right" color="success" type="submit">Save</ion-button>
+    </ion-col>
+  </ion-footer>
 </form>

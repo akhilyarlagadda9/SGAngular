@@ -78,6 +78,8 @@ export class AreainfoComponent implements OnInit {
         //if (this.areaInfo.PartList != null) {
             this.PartDrawing(this.AreaPartID);
        // }
+      }else{
+        this.partinfo = '';this.partinfo.ID = 0;
       }
     
     })
@@ -103,8 +105,8 @@ export class AreainfoComponent implements OnInit {
     QBRinitdrawarea(areaindex, 'quote');
   }
   /***** Addarea DETAILS *****/
-  async ActionAddArea() {
-    let info = {areas : this.arealist, Version : this.Version, quote : _qscope.quote}
+  async ActionAddArea(areaId:any) {
+    let info = {arealists : this.arealist, Version : this.Version, quote : _qscope.quote, selectedareaId : areaId}
     const modal = await this.Modalcntrl.create({
       component: AddareaComponent,
       componentProps : info

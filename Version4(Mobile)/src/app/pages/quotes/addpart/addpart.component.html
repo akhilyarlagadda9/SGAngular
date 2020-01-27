@@ -201,12 +201,13 @@
                   </ion-select-option>
                 </ion-select>
               </ion-col>
-              <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
+              <ion-col size="2" class="roundborder borderall flex fontbold mar-top5">
                 <ion-input type="text" [(ngModel)]="splash.Sqft" class="text-center border-right color-primary"
                   name="Sqft" (change)="ActionChangeSplash()">
                 </ion-input>
                 <span class="color-primary">SF</span>
               </ion-col>
+              <ion-col size="1" (click)="ActionRemoveSplash(i)"><ion-icon name="trash" class="fontmedium color-red"></ion-icon></ion-col>
             </ion-row>
             <ion-row class="color-img bdr-radius20">
               <ion-col size="5" class="fontbold labelfont2 flex mar-top5"><span class="color-text">W:&nbsp;</span>

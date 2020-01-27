@@ -79,7 +79,7 @@ export class AreainfoComponent implements OnInit {
             this.PartDrawing(this.AreaPartID);
        // }
       }else{
-        this.partinfo = '';this.partinfo.ID = 0;
+        this.partinfo = {};this.partinfo.ID = 0;
       }
     
     })

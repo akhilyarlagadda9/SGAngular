@@ -30,8 +30,17 @@ export class CommhubeditComponent implements OnInit {
   //Category List Function
   GetcategoryList() {
     this.getservice.NotecategoryList(0).subscribe(
-      data => { this.categoryList = data; }
+      data => { 
+        this.categoryList = data; 
+        this.GetSelectedCategoryName();
+      }
     );
+  }
+  GetSelectedCategoryName() {
+    let commDetails = this.categoryList.find(s => s.ID == this.commDetails.categoryID);
+    if (commDetails != null) {
+      this.commDetails.category = commDetails.Name;
+    }
   }
   //Phase List Function
   GetphaseList() {
@@ -45,14 +54,23 @@ export class CommhubeditComponent implements OnInit {
   GetSelectedPhaseName() {
     let commDetails = this.phaseList.find(s => s.ID == this.commDetails.PhaseID);
     if (commDetails != null) {
-      this.commDetails.PhaseID = commDetails.Name;
+      this.commDetails.Phase = commDetails.Name;
     }
   }
   //Document Forms List Function
   GetformsList() {
     this.getservice.formsList(1).subscribe(
-      data => {this.docFormList = data;}
+      data => {
+        this.docFormList = data;
+        this.GetSelectedFormName();
+      }
     );
+  }
+  GetSelectedFormName() {
+    let commDetails = this.docFormList.find(s => s.ID == this.commDetails.FromTypeID);
+    if (commDetails != null) {
+      this.commDetails.formtype = commDetails.Name;
+    }
   }
   //Status List Function
   GetstatusList() {
@@ -66,7 +84,7 @@ export class CommhubeditComponent implements OnInit {
   GetSelectedStatusName() {
     let commDetails = this.msgStatusList.find(s => s.ID == this.commDetails.StatusID);
     if (commDetails != null) {
-      this.commDetails.StatusID = commDetails.Name;
+      this.commDetails.Status = commDetails.Name;
     }
   }
   //Attachments Function

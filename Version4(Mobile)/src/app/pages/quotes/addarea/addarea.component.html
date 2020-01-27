@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title><b>Area Details</b></ion-title>
+    <ion-title class="titleheader">Area Details</ion-title>
     <ion-button slot="end" color="success" size="small" (click)="ActionSaveBatchAreas()">Save</ion-button>
     <ion-button slot="end" color="danger" size="small" (click)="ActionCloseAddArea()">X</ion-button>
   </ion-toolbar>
@@ -13,8 +13,8 @@
   </ion-row>
   <ion-row *ngFor="let area of arealists">
     <ion-col size="2" class="flex">
-      <ion-icon name="reorder" class="fontlarge" (click)="ActionRemoveArea()"></ion-icon>&nbsp;&nbsp;<ion-icon name="trash" class="fontlarge"
-        color="danger"></ion-icon>
+      <ion-icon name="reorder" class="fontlarge" (click)="ActionRemoveArea()"></ion-icon>
+      <!-- <ion-icon name="trash" class="fontlarge" color="danger"></ion-icon> -->
     </ion-col>
     <ion-col size="7">
       <ion-input type="text" class="border-btm" style="width:100%" [(ngModel)]="area.Name" name="Name"></ion-input>

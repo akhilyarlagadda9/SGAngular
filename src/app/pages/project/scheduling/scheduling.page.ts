@@ -32,7 +32,7 @@ import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
   template: `
   <ion-toolbar color="primary">
   <ion-icon name="menu" class="fontlarge"  slot="start" (click)="ActionCalendarSetting()"></ion-icon>
-  <ion-icon name="refresh" class="fontmedium"  slot="start" (click)="ActionGetResList()"></ion-icon>
+  <ion-icon name="refresh" class="fontmedium"  slot="start" (click)="ActionRefreshCalendar()"></ion-icon>
   <ion-title class="headersty">{{calObj.ActTypes}}</ion-title>
   <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
   </ion-toolbar>
@@ -84,7 +84,7 @@ export class SchedulingPage implements OnInit {
         timelineDay: { type: 'timeline', duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00", },
         resourceTimeline: {
           type: 'resourceTimeline', slotDuration: { days: 1 }, buttonText: "resource",
-          duration: { days: this.calObj.CalendarDays }
+          dayCount: this.calObj.CalendarDays
         },
         resourcegridView: {
           type: 'resourceTimeGrid', slotDuration: "00:15:00",
@@ -108,6 +108,7 @@ export class SchedulingPage implements OnInit {
   call(info) {
     let start = moment(info.view.activeStart).utc().format("MM/DD/YYYY");
     let today = moment(info.view.activeEnd).utc().format("MM/DD/YYYY");
+    this.calObj.FilterDate = start;
     this.calObj.CalendarView = info.view.type;
     this.calObj.StartDate = start;
     this.calObj.EndDate = today;
@@ -116,7 +117,6 @@ export class SchedulingPage implements OnInit {
   }
 
   ActionRenderEvent(evnt) {
-    console.log();
     var stime = this.datePipe.transform(evnt.event.start, "h:mm a");
     var etime = this.datePipe.transform(evnt.event.end, "h:mm a");
     var htmlstring = '';
@@ -164,6 +164,16 @@ export class SchedulingPage implements OnInit {
     }
   }
 
+  ActionRefreshCalendar(){
+    this.calObj.ActTypeIDs= "11"; this.calObj.ActTypes= "Template";
+    this.calObj.ResourceIDs= "";this.calObj.ResourceNames=""; 
+    this.calObj.StatusIDs= ""; this.calObj.StatusNames= ""
+    this.calObj.CalID= 1,
+    // this.calObj.CalendarView= "resourceTimeline";
+    this.calObj.CalendarDays= 3, this.calObj.CalFields= ""; this.calObj.Search= ""; this.calObj.UserId= 0;
+    this.calObj.IsViewChange = false;
+    this.ActionGetResList();
+  }
   ActionGetResList() {
     this.schService.GetResourcesAndHolidays(this.calObj.StartDate, this.calObj.EndDate, this.calObj.ActTypeIDs, 1, this.calObj.ResourceIDs).subscribe(data => {
       this.ActionLoadEvents();
@@ -200,8 +210,7 @@ export class SchedulingPage implements OnInit {
 
   LoadFilterView() {
     if (this.calObj.IsViewChange == true) {
-      let calendarApi = this.fullcalendar.getApi();
-      calendarApi.changeView(this.calObj.CalendarView);
+      this.SetCalendarOptions();
     }
     else {
       this.ActionGetResList();
@@ -308,6 +317,16 @@ export class SchedulingPage implements OnInit {
   }
   ActionGoToHome() {
     this.navCtrl.navigateRoot('/home');
+  }
+
+  SetCalendarOptions(){
+    this.calObj.IsViewChange = false;
+    let calendarApi = this.fullcalendar.getApi();
+    if(this.calObj.CalendarDays == 5){
+      //calendarApi.setOption('slotWidth', 90);
+    }
+    //this.calObj.EndDate= this.calObj.StartDate.setDate(new Date(this.calObj.StartDate).getDate() + this.calObj.CalendarDays);
+    calendarApi.changeView(this.calObj.CalendarView,this.calObj.StartDate);
   }
 }
 

@@ -38,6 +38,7 @@ export class CalendarsettingComponent implements OnInit {
   }
   //Close Function
   ActionCloseCalendarSett(isfilter) {
+    this.calObj.CalendarDays = Number(this.calObj.CalendarDays);
     this.Modalcntrl.dismiss({
       'dismissed': true,
       isfilter: isfilter,

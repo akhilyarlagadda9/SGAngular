@@ -299,6 +299,7 @@ export class AddactivityComponent implements OnInit {
       this.statusList = result.StatusList;
     }
     this.PopulateActualDate();
+    console.log(this.actinfo);
   }
   PopulateActualDate() {
     let actStartYear = this.datePipe.transform(this.actinfo.ActualStartDate, "yyyy");

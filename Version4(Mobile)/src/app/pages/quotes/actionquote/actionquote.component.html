@@ -1,3 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="titleheader">
+      <span *ngIf="action.IsConfirmView" class="color-primary">{{action.ActionName}} ! {{action.StatusID}}</span>
+      <span *ngIf="action.IsMaterialView">MATERIAL ALLOCATION</span>
+    </ion-title>
+    <ion-button slot="end" color="success" size="small" *ngIf="action.IsConfirmView && searchobj2.alertflag == false"
+      class="fontbold" (click)="ActionSaveQuoteStatuses(action)">Save</ion-button>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionClosestatus(false)">X</ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-row>
+    <b class="text-font"># {{header.QuoteNo}}<span>&nbsp;V</span> {{header.Version.SrNo}} - {{header.QuoteName}}</b>
+    &nbsp;
+    <!-- <blink *ngIf="MFlag == 0 && IsMaterialView" style="color: red;">Material Required..</blink> -->
+  </ion-row>
+  <ion-row *ngIf="action.IsConfirmView">
+    <ion-col size="12" *ngIf="action.showjobReady">
+      <ion-radio-group allow-empty-selection="true" name="radio-group">
+        <ion-item>
+          <ion-radio slot="start" [color]="primary" name="PriceByID" checked="action.PreferID == 0"></ion-radio>
+          <ion-label class="labelfont" position="floating" color="primary"> Job Ready</ion-label>
+          <ion-input type="text" [(ngModel)]="action.Name" name="PPhone" class="labelfont" readonly="readonly">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-radio slot="start" [color]="primary" name="PriceByID" checked="action.PreferID == 1"></ion-radio>
+          <ion-label class="labelfont" position="floating" color="primary"> Hold Until</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="action.HoldDate">
+          </ion-datetime>
+        </ion-item>
+      </ion-radio-group>
+      <ion-row>
+        <ion-col size="12">
+          <ion-checkbox color="dark" name="IsCustRetail" [(ngModel)]="action.LayApproval"
+            checked="action.LayApproval ==1"></ion-checkbox>
+          <ion-label>Layout Approval</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-checkbox color="dark" name="IsCustRetail" [(ngModel)]="action.CustPickup"
+            checked="action.CustPickup ==1"></ion-checkbox>
+          <ion-label>Customer Pickup</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="12" *ngIf="showjobReady">
+      <ion-item>
+        <ion-radio slot="start" [color]="primary" name="PriceByID" checked="action.PreferID == 2"></ion-radio>
+        <ion-label class="labelfont" position="floating" color="primary"> Hold Until</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="action.FollowUpDate">
+        </ion-datetime>
+      </ion-item>
+    </ion-col>
+    <ion-col size="12">
+      <ion-label class="labelfont" position="floating" color="primary">Reason</ion-label>
+      <ion-textarea rows="4" cols="10" [(ngModel)]="action.Description" name="Body" class="borderall"></ion-textarea>
+    </ion-col>
+  </ion-row>
+</ion-content>
+
+
+
+
+
+
+
+
+
+
+
 <!-- <ion-header>
   <ion-toolbar>
     <ion-title class="titleheader">{{ViewType}}</ion-title>
@@ -6,7 +79,7 @@
   </ion-toolbar>
 </ion-header> -->
 
-<ion-content *ngIf="viewtype2 === 1">
+<!-- <ion-content *ngIf="viewtype2 === 1">
   <ion-toolbar class="poss">
     <ion-title class="titleheader">{{ViewType}}</ion-title>
     <ion-button slot="end" color="success" size="small" (click)="ActionCloseCustomer(true)">Save</ion-button>
@@ -30,4 +103,4 @@
 </ion-content>
 <ion-content *ngIf="viewtype2 === 3">
   <h4>Copy Quote</h4>
-</ion-content>
+</ion-content> -->

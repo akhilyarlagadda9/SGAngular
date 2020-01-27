@@ -124,8 +124,9 @@ export class CreatequoteComponent implements OnInit {
       component: CustomersearchComponent,
       event: ev,
       translucent: true,
+      showBackdrop: true,
       componentProps: obj,
-      cssClass: "popover_class"
+      cssClass: "popover_class4"
     })
     popover.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {

@@ -44,7 +44,6 @@ import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 schedulerLicenseKey ="GPL-My-Project-Is-Open-Source"
 timeZone= 'UTC'
 defaultView="resourceTimeline"
-slotWidth="100"
 [header]="{
   left: 'prev',
   center: 'title',
@@ -253,7 +252,8 @@ export class SchedulingPage implements OnInit {
     modal.onDidDismiss().then((result: OverlayEventDetail) => {
       if (result.data !== null && result.data != undefined) {
         if (result.data.issave == true) {
-          this.UpdateActivty(result.data.componentProps);
+         // this.UpdateActivty(result.data.componentProps);
+         this.ActionLoadEvents();
         }
         //this.calObj.ActTypeID = result.data.ActTypeId;
         // this.calObj.ResourceIds = result.data.ResourceIds;
@@ -272,13 +272,10 @@ export class SchedulingPage implements OnInit {
       filterIds = filterIds.split(',');
     }
     let quickInfo = this.PrepareActInfo(info);
-
     if (info.ExtID > 0) {
       let calendarApi = this.fullcalendar.getApi();
-      var event = calendarApi.getEventById('a') 
-
-      
-      
+      var event = calendarApi.getEventById(info.ID) 
+      event.remove();
     }
     this.ActionPushEvents(quickInfo, filterIds);
   }

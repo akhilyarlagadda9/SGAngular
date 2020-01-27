@@ -20,10 +20,10 @@
     <ion-item *ngIf="labor.ViewTypeID == 0">
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
       <ion-input type="text" class="labelfont" [(ngModel)]="labor.Description" name="Description"
-        (keyup.enter)="ActionSearchSelect($event,2,7)" #Des="ngModel"
+        (keyup.enter)="ActionSearchSelect($event,1,7)" #Des="ngModel"
         [ngClass]="{ 'is-invalid': f.submitted && Des.invalid }" class="labelfont" required></ion-input>
       <ion-icon slot="end" class="marg18" name="arrow-dropdown" (click)="ActionSearchSelect($event,2,7)"></ion-icon>
-      <ion-icon slot="end" class="marg18" name="search" (click)="ActionSearchSelect($event,2,7)"></ion-icon>
+      <ion-icon slot="end" class="marg18" name="search" (click)="ActionSearchSelect($event,1,7)"></ion-icon>
     </ion-item>
     <ion-item *ngIf="labor.ViewTypeID == 1">
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>

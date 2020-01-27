@@ -33,7 +33,7 @@ export class TileinfoComponent implements OnInit {
     this.tile.Amt = this.tile.Amount;
   }
   async ActionSearchSelect(ev: any, typeid, productId) {
-    let obj = { pricelistId : this.priceListID, searchTypeId: typeid, producttypeId: productId, search: this.tile.Des == undefined ? "" : this.tile.Des, info : this.tile }
+    let obj = { pricelistId : this.priceListID, searchTypeId: typeid, producttypeId: productId, search: this.tile.Description == undefined ? "" : this.tile.Description, info : this.tile }
     const popover = await this.popoverCntrl.create({
       component: AdditionalitemserachComponent,
       event: ev,

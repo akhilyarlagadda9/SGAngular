@@ -29,8 +29,8 @@ export class AddactivityComponent implements OnInit {
     } else {
       this.ActionActivityInfoWithDates();
       this.statusList = this.actinfo.StatusList;
-
     }
+    
     this.ActionActivityTypeList();
 
     if (this.actinfo.VersionID > 0) {
@@ -39,6 +39,7 @@ export class AddactivityComponent implements OnInit {
     if (this.actinfo.PhaseID > 0) {
       this.ActionPhasePartList();
     }
+    
     console.log(this.actinfo);
   }
   ActionActivityInfo() {
@@ -50,7 +51,7 @@ export class AddactivityComponent implements OnInit {
         this.actinfo.PrevEndDate = data.SchEndTime;
         this.statusList = data.StatusList;
         this.PopulateActualDate();
-
+        this.ActionActivityInfoWithDates();
       },
       error => console.log(error));
   }
@@ -99,7 +100,7 @@ export class AddactivityComponent implements OnInit {
     this.schService.ActivityTypeList(4).subscribe(
       data => {
         this.ActTypeList = data;
-        this.GetResoucreList();
+        //this.GetResoucreList();
         this.ActionGetSelectedActivityType();
       }
     );

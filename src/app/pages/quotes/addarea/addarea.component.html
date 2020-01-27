@@ -11,9 +11,9 @@
     <ion-col size="7" class="fontbold">Name</ion-col>
     <ion-col size="2" class="fontbold">#Units</ion-col>
   </ion-row>
-  <ion-row *ngFor="let area of areas">
+  <ion-row *ngFor="let area of arealists">
     <ion-col size="2" class="flex">
-      <ion-icon name="reorder" class="fontlarge"></ion-icon>&nbsp;&nbsp;<ion-icon name="trash" class="fontlarge"
+      <ion-icon name="reorder" class="fontlarge" (click)="ActionRemoveArea()"></ion-icon>&nbsp;&nbsp;<ion-icon name="trash" class="fontlarge"
         color="danger"></ion-icon>
     </ion-col>
     <ion-col size="7">

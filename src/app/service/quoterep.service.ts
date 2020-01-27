@@ -314,7 +314,7 @@ export class QuoterepService {
     let price = cost;
     let temp = (1 - (margin / 100)); if (temp > 0) { price = this.roundToTwo(cost / temp); } return price;
   }
-  margincalculations(typeId, details, type) {debugger;
+  margincalculations(typeId, details, type) {
     let cost = 0, price = 0, margin = 0;
     switch (type) {
       case "Fab":

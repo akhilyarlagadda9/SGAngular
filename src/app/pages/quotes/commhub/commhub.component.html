@@ -51,8 +51,8 @@
         <ion-select-option *ngFor="let process of processtypeList" value="Name">{{process.Name}}</ion-select-option>
       </ion-select>
     </ion-col>
-    <ion-col size="3"></ion-col>
-    <ion-col size="3" class="text-right">
+    <ion-col size="2"></ion-col>
+    <ion-col size="4" class="text-right">
       <ion-button (click)="ActionEditCommHub(0)" size="small" class="text-right fontbold">Compose</ion-button>
     </ion-col>
   </ion-row>
@@ -100,10 +100,7 @@
   </ion-row>
   <ion-card class="margin-bottom" style="margin-top: 0px;" *ngFor="let note of notesList">
     <ion-row class="no-padding paddzero">
-      <ion-col size="1">
-        <ion-icon name="create" class="fontmedium" (click)="ActionEditCommEmail(note)"></ion-icon>
-      </ion-col>
-      <ion-col size="9">
+      <ion-col size="12">
         <ion-row class="marbot">
           <ion-col class="paddzero text-left textsty paddleft">{{note.Subject}}</ion-col>
         </ion-row>
@@ -117,11 +114,6 @@
           <ion-col class="paddzero text-left paddleft">{{note.Path}}</ion-col>
         </ion-row> -->
       </ion-col>
-      <ion-col size="2" class="text-right">
-        <ion-icon name="download" class="downloadsty"></ion-icon>
-        <ion-icon name="cloud-upload" class="uploadsty"></ion-icon>
-        <ion-icon name="mail" class="uploadsty"></ion-icon>
-      </ion-col>
     </ion-row>
   </ion-card>
 </ion-list>
@@ -130,15 +122,15 @@
     <ion-tab-bar slot="bottom" color="light">
       <ion-tab-button (click)="ActionLoadHubInfo(1)">
         <ion-icon name="book"></ion-icon>
-        <ion-label class="iconsty">Notes</ion-label>
+        <ion-label class="iconsty" [ngClass]="{'txt-color' : selectedhubtype == 1 }">Notes</ion-label>
       </ion-tab-button>
       <ion-tab-button (click)="ActionLoadHubInfo(2)">
         <ion-icon name="mail"></ion-icon>
-        <ion-label class="iconsty">Mail</ion-label>
+        <ion-label class="iconsty" [ngClass]="{'txt-color' : selectedhubtype == 2 }">Mail</ion-label>
       </ion-tab-button>
       <ion-tab-button (click)="ActionLoadHubInfo(3)">
         <ion-icon name="document"></ion-icon>
-        <ion-label class="iconsty">Files</ion-label>
+        <ion-label class="iconsty" [ngClass]="{'txt-color' : selectedhubtype == 3 }">Files</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

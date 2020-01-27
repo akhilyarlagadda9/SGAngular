@@ -19,13 +19,13 @@
     <ion-col size="12" *ngIf="action.showjobReady">
       <ion-radio-group allow-empty-selection="true" name="radio-group">
         <ion-item>
-          <ion-radio slot="start" [color]="primary" name="PriceByID" checked="action.PreferID == 0"></ion-radio>
+          <ion-radio slot="start" mode="md" [color]="primary" name="PriceByID" checked="action.PreferID == 0"></ion-radio>
           <ion-label class="labelfont" position="floating" color="primary"> Job Ready</ion-label>
           <ion-input type="text" [(ngModel)]="action.Name" name="PPhone" class="labelfont" readonly="readonly">
           </ion-input>
         </ion-item>
         <ion-item>
-          <ion-radio slot="start" [color]="primary" name="PriceByID" checked="action.PreferID == 1"></ion-radio>
+          <ion-radio slot="start" mode="md" [color]="primary" name="PriceByID" checked="action.PreferID == 1"></ion-radio>
           <ion-label class="labelfont" position="floating" color="primary"> Hold Until</ion-label>
           <ion-datetime displayFormat="MM/DD/YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="action.HoldDate">
           </ion-datetime>

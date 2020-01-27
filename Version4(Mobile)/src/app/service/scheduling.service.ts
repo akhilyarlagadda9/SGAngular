@@ -79,7 +79,10 @@ GetResourcesAndHolidays(startDate:any, endDate:any,actTypeIds:string,typeId:numb
 ActionCheckIsExistSameRes(Id:any, resId:any, sDate:any, eDate:any):Observable<any> {
   return this.http.get<any>(this.url +  'api/Project/CheckIsExistSameRes?Id=' + Id + "&resId=" + resId + "&sDate=" + sDate + "&eDate=" + eDate)
 }
-
+//Delete resource function
+ActionDeleteResource(resourceId:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/DeleteResource?resourceId=' + resourceId)
+}
 
 /**************************** POST SERVICES *********************************************/
 

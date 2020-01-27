@@ -219,7 +219,6 @@ export class QuoteeditComponent implements OnInit {
     return await popover.present();
   }
 }
-// <ion-row class="pad2" (click)="createaction(1,'Cancelled')"><span style="color:red"><b>Cancel Quote</b></span></ion-row>
 // <ion-row class="pad2" (click)="createaction(2,'a')"><span style="color:Blue"><b>Duplicate Version</b></span></ion-row>
 // <ion-row class="pad2" (click)="createaction(3,'Cancelled')"><span style="color:green"><b>Copy Quote</b></span></ion-row>
 
@@ -240,7 +239,11 @@ export class NewactionComponent implements OnInit {
   navObj = this.navParams.data;
   header: any;
   result: void;
-  constructor(private alertCtrl: AlertController, private navParams: NavParams, public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private quoterep: QuoterepService) { }
+  action: any = {};
+  searchobj2: any = {};
+  searchobj: any = {};
+  firststage: any = [];
+  constructor(private alertCtrl: AlertController, private navParams: NavParams,private service : QuoteService, public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private quoterep: QuoterepService) { }
   obj: any;
   ngOnInit() { }
 
@@ -250,19 +253,48 @@ export class NewactionComponent implements OnInit {
       result = this.quoterep.approvechecklist(this.header);
     }
     //s1:edit,isadmin
-    // if (this.header.reviewapproval == true) { /*searchobj.alertflag = false;*/ }
+    // if (this.header.reviewapproval == true) { this.searchobj.alertflag = false; }
     //s2:no
-    //if (this.reviewapproval == false && result == false) { searchobj.alertflag = false; }
+    //if (this.header.reviewapproval == false && result == false) { this.searchobj.alertflag = false; }
+    this.searchobj.alertflag = false;
+    this.action = this.stageaction(statusId, status); this.searchobj2 = this.searchobj;
+    this.StatusAlertAction();this.ActionToClosePop(true);
+  }
 
-    //$scope.action = stageaction(statusId, status); $scope.searchobj2 = searchobj;
-    // $("#statusaction").show();
+  stageaction(statusId, status) {
+    if (statusId == 6) {
+        this.service.ActionGetProjectTypes(1).subscribe(data => { 
+          this.firststage = data;
+          this.action.StageID = this.firststage[0].ID;
+          this.action.Name = this.firststage[0].Name;
+        })
+    }
+    this.action.PreferID = 0;
+    this.action.HoldDate = "01/24/2020"
+    this.action.FollowUpDate = new Date();
+    this.action.ActionName = status;
+    this.action.Description = "";
+    this.action.LayApproval = 0;
+    this.action.CustPickup = 0;
+    this.action.StatusId = statusId;
+    this.action.MFlag = 0;
+    this.action.IsMaterialView = false;
+    this.action.IsConfirmView = true;
+    this.action.showjobReady = statusId == 6 ? true : false;
+    this.action.Coview = false;
+    return this.action;
+  }
+  async StatusAlertAction(){
+    let info = { action : this.action, searchobj2 : this.searchobj2, header : this.header }
+    const modal = await this.Modalcntrl.create({
+      component: ActionquoteComponent,
+      componentProps: info
+    });
+    return await modal.present();
   }
 
 
-
-
-
-  async createaction(viewtype2: number, viewtype: string, ) {
+  async SaveQuoteStatues(viewtype2: number, viewtype: string, ) {
     let act = { ViewType: viewtype, viewtype2: viewtype2 }
     if (viewtype2 === 1) {
       const modal = await this.Modalcntrl.create({
@@ -274,27 +306,7 @@ export class NewactionComponent implements OnInit {
       return await modal.present();
     }
     if (viewtype2 === 2) {
-      const alert = await this.alertCtrl.create({
-        message: 'Are you sure you want to Duplicate the Version?',
-        buttons: [
-          {
-            text: 'Cancel',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: blah => {
-              console.log('Confirm Cancel: Cancelled');
-            }
-          },
-          {
-            text: 'Okay',
-            handler: () => {
-              console.log('Confirm Okay');
-
-            }
-          }
-        ]
-      });
-      alert.present();
+      
     }
     if (viewtype2 === 3) {
       const alert = await this.alertCtrl.create({

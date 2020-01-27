@@ -519,12 +519,12 @@ calcslabstotalsqft(slabs) {
 }
 
 /************************************ACTION CONTROLLER**********************************************/
-approvechecklist(data) {
+approvechecklist(header) {
   let alertobj = { alert: false };
-  let checklists = JSON.parse(data.header.Version.JobScope);
+  let checklists = JSON.parse(header.Version.JobScope);
   if (checklists != null) {
-    this.checkheaderinfo(this.header, checklists, alertobj);
-    this.checkareasinfo(this.header.Version.AreaList, checklists, alertobj);
+    this.checkheaderinfo(header, checklists, alertobj);
+    this.checkareasinfo(header.Version.AreaList, checklists, alertobj);
   }
   return alertobj.alert;
 }
@@ -800,5 +800,28 @@ validatepartfaucetscope(item, typeId, scopeobj, alertobj) {
   item.scopedescription = scopedesc;
 }
 
-
+pushquoteversionvalues(version, action){
+  version.StatusID = action.StatusId;
+  version.Status = action.ActionName;
+  version.StatusColor = "Green";
+  //version.UserID = getloginuserId();
+  version.UserID = 1;
+  version.LayApproval = action.LayApproval;
+  version.CustPickup = action.CustPickup;
+  version.Reason = action.Description;
+  version.HoldDate = action.PreferID == 2 ? action.FollowUpDate : action.HoldDate;
+  version.JobStatusID = action.PreferID == 0 ? 6 : 8;//3 for open Stage,8 for hold
+  version.HoldFlag = action.PreferID;
+  version.PhStatusID = action.PreferID == 0 ? action.StageID : 8;//8 for hold
+  return version;
+}
+preparematerials(materials) {
+  if (materials != null) {
+      for (let i = 0; i < materials.length; i++) {
+          let material = materials[i];
+          if (typeof (material.RiskLevels) != 'string') { material.RiskLevels = JSON.stringify(material.RiskLevels); }
+      }
+      return materials;
+  }
+}
 }

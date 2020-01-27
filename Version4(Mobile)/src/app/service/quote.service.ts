@@ -149,6 +149,45 @@ ActionGetSupplierAddDetails(supID:any):Observable<any> {
   return this.http.get<any>(this.url + 'api/purchase/GetSupplierAddDetails?supplierID=' + supID) 
 }
 
+/************PROJECT PROCESS LIST *************/
+
+ActionGetProjectTypes(typeId:any):Observable<any> {
+  return this.http.get<any>(this.url + 'api/Project/ProjectProcessList?typeId=' + typeId,) 
+}
+
+
+/*******ACTIONS APPROVE< BIDDING< DECLINE< *********/
+
+ //Fabrication,Measurements Save Function
+ ActionSaveQuoteApproved(version: any): Observable<any> {
+  var model = JSON.stringify(version);
+  return this.http.post<any>(this.url + 'api/Review/ActionSaveQuoteApproved', model, { headers: { 'Content-Type': 'application/json' } })
+}
+ActionSendMessage(header: any): Observable<any> {
+  var model = JSON.stringify(header);
+  return this.http.post<any>(this.url + 'api/Review/SendMessage', model, { headers: { 'Content-Type': 'application/json' } })
+}
+ActionSaveQuoteDeclined(version: any): Observable<any> {
+  var model = JSON.stringify(version);
+  return this.http.post<any>(this.url + 'api/Review/ActionSaveQuoteDeclined', model, { headers: { 'Content-Type': 'application/json' } })
+}
+ActionSaveQuoteCancelled(version: any): Observable<any> {
+  var model = JSON.stringify(version);
+  return this.http.post<any>(this.url +  'api/Review/ActionSaveQuoteCancelled', model, { headers: { 'Content-Type': 'application/json' } })
+}
+ActionSaveQuoteBidding(version: any): Observable<any> {
+  var model = JSON.stringify(version);
+  return this.http.post<any>(this.url +   'api/Review/ActionSaveQuoteBidding', model, { headers: { 'Content-Type': 'application/json' } })
+}
+/**********SAVE AREASLIST**********/
+ActionSaveAreaList(versionid: any,areaId:any,userId:any,arealist:any): Observable<any> {
+  let parameter = JSON.stringify(arealist);
+  return this.http.post<any>(this.url +  'api/QSave/ActionSaveAreaList?versionId=' + versionid + '&areaId=' + areaId + '&userId=' + userId + "&areaIds=" + '', parameter, { headers: { 'Content-Type': 'application/json' } })
+}
+ActionGetQuoteAreas(verId: any, mode:any): Observable<any> {
+  return this.http.get<any>(this.url + 'api/QEdit/ActionVersionAreaList?versionID=' + verId + "&mode=" + mode)
+}
+
 
 
 

@@ -11,10 +11,10 @@
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
       <ion-input type="text" class="labelfont" [(ngModel)]="faucet.Description" name="Description"
-      #nameField="ngModel" required (keyup.enter)="ActionSearchSelect($event,2,9)"></ion-input>
+      #nameField="ngModel" required (keyup.enter)="ActionSearchSelect($event,1,9)"></ion-input>
       <ion-icon slot="end" class="marg18" name="arrow-dropdown" (click)="ActionSearchSelect($event,2,9)">
       </ion-icon>
-      <ion-icon slot="end" class="marg18" name="search" (click)="ActionSearchSelect($event,2,9)"></ion-icon>
+      <ion-icon slot="end" class="marg18" name="search" (click)="ActionSearchSelect($event,1,9)"></ion-icon>
     </ion-item>
     <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
       <div class="error">Description is required</div>

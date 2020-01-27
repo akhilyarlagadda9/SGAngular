@@ -37,7 +37,7 @@ export class AddoninfoComponent implements OnInit {
  //Search Function
   async ActionSearchSelect(ev: any, typeid, typeid2) {
     let obj = {
-      pricelistId: this.priceListID, searchTypeId: typeid, producttypeId: typeid2, search: this.addoninfo.Des == undefined ? "" : this.addoninfo.Des, info : this.other
+      pricelistId: this.priceListID, searchTypeId: typeid, producttypeId: typeid2, search: this.other.Description == undefined ? "" : this.other.Description, info : this.other
     }
     const popover = await this.popoverCntrl.create({
       component: AdditionalitemserachComponent,

@@ -13,19 +13,19 @@
       <ion-item>
         <ion-label position="floating" color="primary" class="margin-zero">Category:</ion-label>
         <ion-select [(ngModel)]="commDetails.category" name="category" [selectedText]="commDetails.category">
-           <ion-select-option *ngFor="let category of categoryList" [value]="">{{category.Name}}</ion-select-option>
+           <ion-select-option *ngFor="let category of categoryList" [value]="category.Name">{{category.Name}}</ion-select-option>
        </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating" color="primary" class="margin-zero">Phase:</ion-label>
-        <ion-select [(ngModel)]="commDetails.PhaseID" name="PhaseID" [selectedText]="commDetails.PhaseID">
-           <ion-select-option *ngFor="let category of phaseList" [value]="category.ID">{{category.Name}}</ion-select-option>
+        <ion-select [(ngModel)]="commDetails.Phase" name="PhaseID" [selectedText]="commDetails.Phase">
+           <ion-select-option *ngFor="let category of phaseList" [value]="category.Name">{{category.Name}}</ion-select-option>
        </ion-select>
       </ion-item>
       <ion-item>
         <ion-label class="margin-zero" position="floating" color="primary">Type:</ion-label>
-        <ion-select [(ngModel)]="commDetails.Type" name="Type" [selectedText]="commDetails.Type" #nameField="ngModel">
-          <ion-select-option *ngFor="let category of docFormList" [value]="">{{category.Name}}</ion-select-option>
+        <ion-select [(ngModel)]="commDetails.formtype" name="formtype" [selectedText]="commDetails.formtype">
+          <ion-select-option *ngFor="let category of docFormList" [value]="category.Name">{{category.Name}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
@@ -34,7 +34,7 @@
       </ion-item>
       <ion-item>
         <ion-label class="margin-zero" position="floating" color="primary">Status:</ion-label>
-        <ion-select [(ngModel)]="commDetails.StatusID" name="StatusID" [selectedText]="commDetails.StatusID" #nameField="ngModel">
+        <ion-select [(ngModel)]="commDetails.Status" name="StatusID" [selectedText]="commDetails.Status">
           <ion-select-option *ngFor="let category of msgStatusList" [value]="">{{category.Name}}</ion-select-option>
         </ion-select>
       </ion-item>

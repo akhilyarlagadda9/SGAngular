@@ -75,14 +75,21 @@ export class ActionquoteComponent implements OnInit {
   }
   async ApprovedAlertPopup(action:any){
     let name = action.StatusId == 6 ? 'Approved' : action.StatusId == 1 ? 'Bid' : action.StatusId == 2 ? 'Declined' : action.StatusId == 4 ? 'Canceled' : action.ActionName;
-    let alerttext = " " + name + " " + "Successfully";
+    let alerttext = name + " " + "Successfully";
     const alert = await this.alertCtrl.create({
-      header: `<img src="assets/img/Checklist-icon.png" alt="g-maps">`,
-      subHeader: alerttext,
-      buttons:['OK']
+      header: alerttext,
+      buttons:[
+        {
+        text: 'OK',
+        handler: () => {
+          this.ActionClosestatus(true);
+
+        },
+      }
+      ]
     });
     alert.present();
-    this.ActionClosestatus(true);
   }
+
 
 }

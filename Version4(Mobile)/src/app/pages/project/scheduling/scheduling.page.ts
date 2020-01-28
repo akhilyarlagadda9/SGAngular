@@ -84,7 +84,7 @@ export class SchedulingPage implements OnInit {
         timelineDay: { type: 'timeline', duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00", },
         resourceTimeline: {
           type: 'resourceTimeline', slotDuration: { days: 1 }, buttonText: "resource",
-          dayCount: this.calObj.CalendarDays
+          duration: { days: this.calObj.CalendarDays }
         },
         resourcegridView: {
           type: 'resourceTimeGrid', slotDuration: "00:15:00",

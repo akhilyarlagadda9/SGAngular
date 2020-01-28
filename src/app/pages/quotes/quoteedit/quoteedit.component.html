@@ -210,14 +210,14 @@
         <ion-col *ngSwitchCase="2">
             <app-areainfo [Version]="headerInfo.Version"></app-areainfo>
         </ion-col>
-        <ion-col *ngSwitchCase="3">
+        <ion-col *ngSwitchCase="3" style="padding-bottom: 70px;">
           <app-commhub [VersionId]="headerInfo.Version.ID"></app-commhub>
         </ion-col>
         <ion-col *ngSwitchCase="4">
             <app-activities [VersionId]="headerInfo.Version.ID" [PhaseId]="0"></app-activities>
         </ion-col>
         
-        <ion-col *ngSwitchCase="5">
+        <ion-col *ngSwitchCase="5" style="padding-bottom: 70px;">
             <app-other [VersionId]="headerInfo.Version.ID"></app-other>
         </ion-col>
         <ion-col *ngSwitchCase="6">

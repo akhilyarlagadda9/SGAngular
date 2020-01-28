@@ -47,6 +47,14 @@ ActionGetPaymentList(custID:number, quoteID:number):Observable<any>{
 }
 
 /***********************************************Part Save Methods************************************/
+ActionSaveQuoteInfo(header: any): Observable<any> {
+  var model = JSON.stringify(header);
+  return this.http.post<any>(this.url + 'api/QSave/ActionSaveQuoteInfo', model, { headers: { 'Content-Type': 'application/json' } })
+}
+ActionSaveQuoteCustomer(header: any): Observable<any> {
+  var model = JSON.stringify(header);
+  return this.http.post<any>(this.url + 'api/QSave/ActionSaveQuoteCustomer', model, { headers: { 'Content-Type': 'application/json' } })
+}
  //Fabrication,Measurements Save Function
  Actionsavepartfabrication(item: any): Observable<any> {
   var model = JSON.stringify(item);

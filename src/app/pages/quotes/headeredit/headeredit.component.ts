@@ -5,6 +5,7 @@ import { QuotegetService } from 'src/app/service/quoteget.service';
 import { QuotepostService } from 'src/app/service/quotepost.service';
 import { PoeditComponent } from '../poedit/poedit.component';
 import { OverlayEventDetail } from '@ionic/core';
+import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-headeredit',
@@ -16,7 +17,7 @@ export class HeadereditComponent implements OnInit {
   navObj = this.navParams.data;
   PoItemList: any;
 
-  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private getservice: QuotegetService) {
+  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private getservice: QuotegetService,private service:QuoteService) {
     this.PopulateDropDownList(this.navParams.data.Version.CustTypeID);
    }
   headerinfo:any;
@@ -118,6 +119,10 @@ export class HeadereditComponent implements OnInit {
   });
   return await modal.present();
 }
-
+ActionSaveHeader(){
+  this.service.ActionSaveQuoteInfo(this.headerinfo).subscribe(data=>{
+    this.ActionCloseJobEdit(true);
+  })
+}
 
 }

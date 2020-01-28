@@ -46,6 +46,7 @@ export class AddareaComponent implements OnInit {
           this.preapreareas(currentareas, resultareas);
           this.preapreareas(this.Version.VersionAreaList, resultareas);
           _qscope.quote.Version.AreaList = currentareas;
+          this.ActionCloseAddArea();
           //this.saveareasummary(unitschgareaIds, versionid, userId);
         });
     } 

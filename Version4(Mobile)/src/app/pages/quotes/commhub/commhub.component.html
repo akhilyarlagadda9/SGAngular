@@ -3,7 +3,8 @@
     <ion-col size="5">
       <ion-select class="btninfo" interface="popover">
         <ion-select-option [value]="0" selected="selected">ALL</ion-select-option>
-        <ion-select-option *ngFor="let process of processtypeList" [value]="process.ID">{{process.Name}}</ion-select-option>
+        <ion-select-option *ngFor="let process of processtypeList" [value]="process.ID">{{process.Name}}
+        </ion-select-option>
       </ion-select>
     </ion-col>
     <ion-col size="4">
@@ -36,9 +37,15 @@
         </ion-row> -->
       </ion-col>
       <ion-col size="2" class="text-right">
-        <div><ion-icon name="download" class="downloadsty"></ion-icon></div>
-        <div><ion-icon name="cloud-upload" class="uploadsty"></ion-icon></div>
-        <div><ion-icon name="mail" class="uploadsty"></ion-icon></div>
+        <div>
+          <ion-icon name="download" class="downloadsty"></ion-icon>
+        </div>
+        <div>
+          <ion-icon name="cloud-upload" class="uploadsty"></ion-icon>
+        </div>
+        <div>
+          <ion-icon name="mail" class="uploadsty"></ion-icon>
+        </div>
       </ion-col>
     </ion-row>
   </ion-card>
@@ -56,7 +63,7 @@
       <ion-button (click)="ActionEditCommHub(0)" size="small" class="text-right fontbold">Compose</ion-button>
     </ion-col>
   </ion-row>
-  <ion-card class="margin-bottom" style="margin-top: 0px;"  *ngFor="let note of notesList">
+  <ion-card class="margin-bottom" style="margin-top: 0px;" *ngFor="let note of notesList">
     <ion-row class="no-padding paddzero">
       <ion-col size="10">
         <ion-row class="marbot">
@@ -117,7 +124,7 @@
     </ion-row>
   </ion-card>
 </ion-list>
-<ion-toolbar class="tab-btm">
+<!-- <ion-toolbar class="tab-btm">
   <ion-tabs>
     <ion-tab-bar slot="bottom" color="light">
       <ion-tab-button (click)="ActionLoadHubInfo(1)">
@@ -134,4 +141,20 @@
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
-</ion-toolbar>
+</ion-toolbar> -->
+<ion-footer class="tab-btm" style="padding-right: 5px;background: aliceblue;">
+  <ion-segment>
+    <ion-segment-button checked layout="icon-bottom" (click)="ActionLoadHubInfo(1)">
+      <ion-icon name="book"></ion-icon>
+      <ion-label [ngClass]="{'txt-color' : selectedhubtype == 1 }">Notes</ion-label>
+    </ion-segment-button>
+    <ion-segment-button layout="icon-bottom" (click)="ActionLoadHubInfo(2)">
+      <ion-icon name="mail"></ion-icon>
+      <ion-label [ngClass]="{'txt-color' : selectedhubtype == 2 }">Mail</ion-label>
+    </ion-segment-button>
+    <ion-segment-button layout="icon-bottom" (click)="ActionLoadHubInfo(3)">
+      <ion-icon name="document"></ion-icon>
+      <ion-label [ngClass]="{'txt-color' : selectedhubtype == 3 }">Files</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-footer>

@@ -59,18 +59,7 @@
           <ion-select-option *ngFor="let p of leadHearAbout" [value]="p.ID">{{p.Name}}</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Project Type<span
-            class="requiredField">*</span>
-        </ion-label>
-        <ion-select [(ngModel)]="header.Version.CustTypeID" name="CustTypeID" #CustTypeID="ngModel" class="labelfont" required>
-          <ion-select-option *ngFor="let p of customerTypes" [value]="p.ID">{{p.Name}}</ion-select-option>
-        </ion-select>
-        <!-- <ion-input type="text" [(ngModel)]="header.Version.CustTypeID" name="CustTypeID" #CustTypeID="ngModel" class="labelfont" required readonly="readonly"></ion-input> -->
-      </ion-item>
-      <div [hidden]="!form.submitted  || CustTypeID.valid" class="invalid-feedback padd-Left">
-        <div class="error">Project Type is required</div>
-      </div>
+     
       <div *ngIf="header.Version.CustTypeID != 4 && header.Version.CustTypeID > 0">
         <ion-item>
           <ion-label class="labelfont" position="floating" color="primary">Customer/Account<span
@@ -129,7 +118,18 @@
           <ion-input type="text" [(ngModel)]="header.Version.Customer.Email" name="Email" class="labelfont"></ion-input>
         </ion-item>
       </div>
-      
+      <ion-item>
+        <ion-label class="labelfont" position="stacked" color="primary">Project Type<span
+            class="requiredField">*</span>
+        </ion-label>
+        <ion-select [(ngModel)]="header.Version.CustTypeID" name="CustTypeID" #CustTypeID="ngModel" class="labelfont" required>
+          <ion-select-option *ngFor="let p of customerTypes" [value]="p.ID">{{p.Name}}</ion-select-option>
+        </ion-select>
+        <!-- <ion-input type="text" [(ngModel)]="header.Version.CustTypeID" name="CustTypeID" #CustTypeID="ngModel" class="labelfont" required readonly="readonly"></ion-input> -->
+      </ion-item>
+      <div [hidden]="!form.submitted  || CustTypeID.valid" class="invalid-feedback padd-Left">
+        <div class="error">Project Type is required</div>
+      </div>
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Sales Rep<span class="requiredField">*</span>
         </ion-label>

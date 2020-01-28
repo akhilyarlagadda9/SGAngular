@@ -70,7 +70,33 @@
     <div class="areasvg text-center"></div>
   </ion-col>
 </ion-row>
-
+<ion-row class="rowlineitem" *ngFor="let mat of areaInfo.AreaUnassignedMaterialList" class="color-red paddzero">
+  <ion-col *ngIf="mat.IsActive == 1 && mat.AreaID == areaInfo.ID && mat.Qty > 0" class="paddzero">
+    <ion-row>
+    <ion-col>
+      <span class="colorblue textfont14">UM:</span>
+      <span *ngIf="mat.IsChg == '2' && mat.MaterialID > 0">{{ mat.MaterialName }}
+          <span *ngIf="(mat.ProductItemNo != '' && mat.ProductItemNo != null) || (mat.ProSubGroup !=null && mat.ProSubGroup !='')">[# {{mat.ProductItemNo}} - {{mat.ProSubGroup}}]
+          </span>&nbsp;
+        </span>
+      <span *ngIf="mat.IsChg == '0' && mat.MaterialID > 0">{{ mat.MaterialName }}
+      <span *ngIf="(mat.ProductItemNo != '' && mat.ProductItemNo != null) || (mat.ProSubGroup !=null && mat.ProSubGroup !='')">[# {{mat.ProductItemNo}} - {{mat.ProSubGroup}}]</span></span>
+      <span *ngIf="mat.CoSrNo > 0 && mat.MaterialID > 0">&nbsp;C{{mat.CoSrNo}}&nbsp;</span>
+      <span *ngIf="mat.PriceByID == '1' && mat.Qty != 0 && mat.MaterialID > 0">(Price By Slab)</span>
+      <span *ngIf="mat.PriceByID == '1' && mat.Qty == 0 && mat.MaterialID > 0">(Price By Slab)</span>
+      <span *ngIf="mat.PriceByID == '2' && mat.MaterialID > 0">(Slab Wgt. Avg.)</span>
+      <span *ngIf="(mat.ProductItemNo == null || mat.ProductItemNo == '')">(No Match)</span>
+      &nbsp;<span *ngIf="mat.IsOptional == 1">&nbsp;Optional&nbsp;</span>@
+      <span *ngIf="mat.IsChg == '2'">{{mat.Qty | number:'.2-2'}}</span>
+      <span *ngIf="mat.IsChg == '0'">{{mat.Qty | number:'.2-2'}}</span>
+    </ion-col>
+    <ion-col size="3" class="text-right">$&nbsp;
+      <span *ngIf="mat.IsChg == '2'">{{(mat.Qty * mat.UnitPrice) | number:'.2-2'}}&nbsp;</span>
+      <span *ngIf="mat.IsChg == '0'">{{(mat.Qty * mat.UnitPrice) | number:'.2-2'}}&nbsp;</span>
+    </ion-col>
+  </ion-row>
+  </ion-col>
+</ion-row>
 <ion-row class="rowlineitem" *ngFor="let material of partinfo.PartMaterialList">
   <ion-col (click)="ActionEditMaterial(material)"><u class="colorblue textfont14">M</u>:
     <span *ngIf="material.IsChg == '2' && material.ID > 0">{{material.MaterialName }}</span>

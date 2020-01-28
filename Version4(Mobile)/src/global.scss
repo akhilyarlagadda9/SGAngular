@@ -567,4 +567,15 @@ ion-icon{
    margin-right: 5px;
  }
  
- 
+ .sc-ion-segment-ios-h {
+    --background: transparent;
+    --background-hover: rgba(var(--ion-color-primary-rgb,56,128,255),0.1);
+    --background-activated: rgba(var(--ion-color-primary-rgb,56,128,255),0.16);
+    --background-checked: none !important;
+    --color: black;
+    --color-checked: none;
+    --color-disabled: rgba(var(--ion-color-primary-rgb,56,128,255),0.3);
+    --color-checked-disabled: rgba(var(--ion-color-primary-contrast-rgb,255,255,255),0.3);
+    --border-color: aliceblue;
+    --indicator-color: transparent;
+  }

@@ -169,7 +169,7 @@
    </ion-row>
 </ion-list>
 
-<ion-toolbar class="tab-btm">
+<!-- <ion-toolbar class="tab-btm">
   <ion-tabs>
     <ion-tab-bar slot="bottom" color="light">
       <ion-tab-button (click)="ActionLoadTabInfo(1)">
@@ -189,4 +189,20 @@
 
     </ion-tab-bar>
   </ion-tabs>
-</ion-toolbar>
+</ion-toolbar> -->
+<ion-footer class="tab-btm" style="padding-right: 5px;background: aliceblue;">
+  <ion-segment>
+    <ion-segment-button checked (click)="ActionLoadTabInfo(1)">
+      <img src="assets/img/material2.png" alt="your image" class="imghw">
+      <ion-label [ngClass]="{'txt-color' : selectedtabtype == 1 }">Material</ion-label>
+    </ion-segment-button>
+    <ion-segment-button (click)="ActionLoadTabInfo(2)">
+      <img src="assets/img/sinks2.png" alt="your image" class="imghw">
+      <ion-label [ngClass]="{'txt-color' : selectedtabtype == 2 }">Sinks</ion-label>
+    </ion-segment-button>
+    <ion-segment-button (click)="ActionLoadTabInfo(3)">
+      <img src="assets/img/addon3.png" alt="your image" class="imghw">
+      <ion-label [ngClass]="{'txt-color' : selectedtabtype == 3 }">Addons</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-footer>

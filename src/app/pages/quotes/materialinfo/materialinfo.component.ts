@@ -15,6 +15,7 @@ export class MaterialinfoComponent implements OnInit {
   material: any;
   Version:any;
   areaInfo: any;
+  priceListID: any;
   constructor(public Modalcntrl: ModalController) { }
 
   ngOnInit() {
@@ -31,13 +32,10 @@ export class MaterialinfoComponent implements OnInit {
 
   /***** MATERIAL DETAILS *****/
   async ActionCreateAddMaterial(materialId:any, source:string) {
-    if(materialId != 0){
-      var sel= { material : this.material, partinfo: this.partinfo, areaInfo : this.areaInfo, Version:this.Version}
-    }
-    
+    let sel= { material : this.material, partinfo: this.partinfo, areaInfo : this.areaInfo, Version:this.Version, priceListID : this.priceListID}
     const modal = await this.Modalcntrl.create({
       component: AddmatComponent,
-      componentProps: sel
+      componentProps: sel,
     });
     return await modal.present();
   }

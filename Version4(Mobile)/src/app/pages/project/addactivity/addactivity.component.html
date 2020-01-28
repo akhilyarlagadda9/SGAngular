@@ -41,7 +41,7 @@
       <div class="error">Activity Phase is required</div>
     </div>
     <ion-item>
-      <ion-label position="floating" color="primary" class="margin-zero">Activity Type:</ion-label>
+      <ion-label position="stacked" color="primary" class="margin-zero">Activity Type:</ion-label>
       <ion-select [(ngModel)]="actinfo.ActTypeID" name="ActTypeID" [selectedText]="actinfo.ActivityType"
         #nameField="ngModel" (ngModelChange)="ActionGetStatusResourceList(actinfo.ActTypeID)" required>
         <ion-select-option *ngFor="let c of ActTypeList" [value]="c.ID">{{c.Name}}</ion-select-option>
@@ -170,7 +170,7 @@
   <ion-toolbar>
     <ion-title class="titleheader resoucesty">Resources</ion-title>
     <ion-button slot="end" color="success" size="small" type="submit" class="font11" (click)="ActionSaveResourceInfo()">
-      Save</ion-button>
+      Select</ion-button>
     <ion-button slot="end" color="danger" size="small" (click)="ActionCloseResourcePopup()" class="font11">X
     </ion-button>
   </ion-toolbar>

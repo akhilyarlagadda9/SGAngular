@@ -6,15 +6,15 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-row>
-    <ion-col size="2">&nbsp;</ion-col>
+  <ion-row class="paddzero">
+    <ion-col size="1">&nbsp;</ion-col>
     <ion-col size="7" class="fontbold">Name</ion-col>
     <ion-col size="2" class="fontbold">#Units</ion-col>
   </ion-row>
-  <ion-row *ngFor="let area of arealists">
-    <ion-col size="2" class="flex">
-      <ion-icon name="reorder" class="fontlarge" (click)="ActionRemoveArea()"></ion-icon>
-      <!-- <ion-icon name="trash" class="fontlarge" color="danger"></ion-icon> -->
+  <ion-row *ngFor="let area of arealists" class="paddzero">
+    <ion-col size="1" class="flex">
+      <!-- <ion-icon name="reorder" class="fontlarge" (click)="ActionRemoveArea()"></ion-icon>
+      <ion-icon name="trash" class="fontlarge" color="danger"></ion-icon> -->
     </ion-col>
     <ion-col size="7">
       <ion-input type="text" class="border-btm" style="width:100%" [(ngModel)]="area.Name" name="Name"></ion-input>

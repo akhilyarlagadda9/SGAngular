@@ -1,6 +1,6 @@
 import { Component, OnInit,EventEmitter } from '@angular/core';
 import { ModalController ,NavParams } from '@ionic/angular';
-
+declare var _qscope;
 @Component({
   selector: 'app-customeredit',
   templateUrl: './customeredit.component.html',
@@ -33,6 +33,11 @@ export class CustomereditComponent implements OnInit {
     //   componentProps:obj,
     // });
     // return await popover.present();
+  }
+
+
+  ActionSaveCustomer(){
+
   }
 
 }

@@ -221,7 +221,9 @@ export class QuoteeditComponent implements OnInit {
 }
 // <ion-row class="pad2" (click)="createaction(2,'a')"><span style="color:Blue"><b>Duplicate Version</b></span></ion-row>
 // <ion-row class="pad2" (click)="createaction(3,'Cancelled')"><span style="color:green"><b>Copy Quote</b></span></ion-row>
-
+// <ion-item class="pad2 color-blue fontbold" *ngIf="header.Version.LatestCoID == 0" (click)="ActionDuplicateVersion(header.Version.ID, header.Version.CustomerID,header.Version.ChildAccID,header.Version.ParentAccID)">Duplicate Version</ion-item>
+// <ion-item class="pad2 color-green fontbold" *ngIf="header.Version.LatestCoID == 0" (click)="ActionCopyQuote()">Copy Quote</ion-item>
+// <ion-item class="pad2 fontbold" *ngIf="header.Version.StatusID == 6" style="color:#2E86C1" (click)="ActionCreateChangeOrder()">Create Change Order</ion-item>
 @Component({
   template: `
   <ion-list class="acc-pop no-margin">
@@ -229,9 +231,6 @@ export class QuoteeditComponent implements OnInit {
     <ion-item class="pad2 fontbold" *ngIf="header.Version.StatusID != 2 &&  header.Version.StatusID != 6 && header.IsApproved == false &&  header.Version.IsLock == 0" style="color:#f8ac59" (click)="ActionQuoteStatuses(2,'Declined')">Decline Quote</ion-item>
     <ion-item class="pad2 color-red fontbold" *ngIf="(header.Version.StatusID != 4 ||  header.Version.StatusID == 6) && header.Version.IsLock == 0" (click)="ActionQuoteStatuses(4,'Cancelled')">Cancel Quote</ion-item>
     <ion-item class="pad2 fontbold" *ngIf="header.Version.StatusID == 2 ||  header.Version.StatusID == 4 && header.Version.IsLock == 0" style="color:#2E86C1" (click)="ActionQuoteStatuses(1,'Bidding')">Bidding Quote</ion-item>
-    <ion-item class="pad2 color-blue fontbold" *ngIf="header.Version.LatestCoID == 0" (click)="ActionDuplicateVersion(header.Version.ID, header.Version.CustomerID,header.Version.ChildAccID,header.Version.ParentAccID)">Duplicate Version</ion-item>
-    <ion-item class="pad2 color-green fontbold" *ngIf="header.Version.LatestCoID == 0" (click)="ActionCopyQuote()">Copy Quote</ion-item>
-    <ion-item class="pad2 fontbold" *ngIf="header.Version.StatusID == 6" style="color:#2E86C1" (click)="ActionCreateChangeOrder()">Create Change Order</ion-item>
   </ion-list>`,
   styleUrls: ['./quoteedit.component.scss'],
 })

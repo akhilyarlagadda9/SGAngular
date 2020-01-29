@@ -31,9 +31,8 @@
       </ion-label>
     </ion-item>
     <ion-item>
-      <ion-label position="floating" color="primary" class="margin-zero">Activity Phase:</ion-label>
-      <ion-select (ionChange)="ActionChangePhase()" [(ngModel)]="actinfo.PhaseID" name="PhaseID" #nameField="ngModel"
-        required>
+      <ion-label position="stacked" color="primary" class="margin-zero">Activity Phase:</ion-label>
+      <ion-select (ionChange)="ActionChangePhase()" [(ngModel)]="actinfo.PhaseID" name="PhaseID" #nameField="ngModel" required [selectedText]="actinfo.PhaseName">
         <ion-select-option *ngFor="let c of phaseList" [value]="c.ID">{{c.Name}}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -51,12 +50,10 @@
       <div class="error">Activity Type is required</div>
     </div>
     <ion-item>
-      <ion-label position="floating" color="primary" class="margin-zero">Areas:</ion-label>
-      <ion-select [(ngModel)]="actinfo.itemSelected" name="itemSelected" #itemSelected="ngModel">
-        <ion-select-option *ngFor="let part of PhasePartList" [value]="part.ID">{{part.AreaName}} - Part{{part.NewSrNo}}
-          -
-          {{part.JobSqft}} SF
-        </ion-select-option>
+      <ion-label position="stacked" color="primary" class="margin-zero">Areas:</ion-label>
+      <ion-select [(ngModel)]="actinfo.AreasName" name="AreasName" #itemSelected="ngModel" [selectedText]="actinfo.AreasName" multiple="true" (ngModelChange)="ActionGetSelectedAreas($event)">
+        <ion-select-option [value]="0" selected="selected">ALL</ion-select-option>
+        <ion-select-option *ngFor="let part of QuotePartList" [value]="part.ID">{{part.AreaName}} - Part{{part.NewSrNo}} - {{part.JobSqft}} SF</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
@@ -174,7 +171,7 @@
     <ion-button slot="end" color="danger" size="small" (click)="ActionCloseResourcePopup()" class="font11">X
     </ion-button>
   </ion-toolbar>
-  <div style="width: 100%;height: 300px;overflow: auto;">
+  <div class="paddtop0 isresourecesty">
     <ion-row *ngFor="let resource of resourceList" class="border-btm">
       <ion-row style="width: 100%;">
         <ion-col size="8" class="paddzero">
@@ -193,11 +190,11 @@
               style="color:red">{{resource.DaySqft | number : '.2-2'}}</span> &nbsp;</span>
         </ion-col>
       </ion-row>
-      <ion-row style="width: 100%;">
-        <ion-col>
+      <ion-row style="width: 100%;margin-bottom: 5px;">
+        <ion-col *ngIf="resource.EmpMail != '' && resource.EmpMail != null">
           <span><small>{{resource.EmpMail}}</small></span>&nbsp;&nbsp;
           <span>{{resource.EmpPhone}}</span>
-          <span class="color-red" *ngIf="resource.OffID == 1"><b> &nbsp; (DAY OFF)</b></span>
+          <!-- <span class="color-red" *ngIf="resource.OffID == 1"><b> &nbsp; (DAY OFF)</b></span> -->
         </ion-col>
       </ion-row>
     </ion-row>

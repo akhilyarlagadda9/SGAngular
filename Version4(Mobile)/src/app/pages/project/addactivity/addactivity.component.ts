@@ -19,6 +19,7 @@ export class AddactivityComponent implements OnInit {
   IsResource: boolean;
   IsSelectedPopulate: number;
   resourceList: any;
+  QuotePartList: any;
   constructor(public Modalcntrl: ModalController, private schService: SchedulingService,
     public popoverCntrl: PopoverController, private navParams: NavParams,
     private datePipe: DatePipe, private alertCtrl: AlertController) { }
@@ -69,12 +70,29 @@ export class AddactivityComponent implements OnInit {
       }
     );
   }
+  //Selected Area Populated Function
+  ActionGetSelectedAreas(ev:any) {
+    for(let i = 0; i <= ev.length; i++){
+      let actinfo = this.QuotePartList.find(s => s.ID == i[0]);
+      if (actinfo != null) {
+        this.QuotePartList.AreasName = this.QuotePartList.AreaName;
+      }
+    }
+   
+  }
   //Phase List Function
   ActionPhaseist() {
     this.schService.PhaseList(this.actinfo.VersionID).subscribe(
       data => {
         this.phaseList = data;
+        this.ActionGetSelectedPhase();
       });
+  }
+  ActionGetSelectedPhase() {
+    let actinfo = this.phaseList.find(s => s.ID == this.actinfo.PhaseID);
+    if (actinfo != null) {
+      this.actinfo.PhaseName = actinfo.Name;
+    }
   }
   ActionChangePhase() {
     let phase = this.phaseList.find(s => s.ID == this.actinfo.PhaseID);

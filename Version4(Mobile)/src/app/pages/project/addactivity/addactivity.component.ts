@@ -27,10 +27,10 @@ export class AddactivityComponent implements OnInit {
     if (this.actinfo.ID == 0) {
       this.ActionActivityInfo();
     } else {
-      this.ActionActivityInfoWithDates();
+      // this.ActionActivityInfoWithDates();
       this.statusList = this.actinfo.StatusList;
     }
-    
+
     this.ActionActivityTypeList();
 
     if (this.actinfo.VersionID > 0) {
@@ -39,7 +39,7 @@ export class AddactivityComponent implements OnInit {
     if (this.actinfo.PhaseID > 0) {
       this.ActionPhasePartList();
     }
-    
+
     console.log(this.actinfo);
   }
   ActionActivityInfo() {
@@ -128,7 +128,7 @@ export class AddactivityComponent implements OnInit {
     this.Modalcntrl.dismiss({
       'dismissed': true,
       componentProps: this.eventCopy,
-      issave:issave
+      issave: issave
     });
   }
   ActionPushResources = function (data) {
@@ -402,6 +402,7 @@ export class AddactivityComponent implements OnInit {
   }
   //Resources function
   ActionopenResourcePopup() {
+    this.ActionActivityInfoWithDates();
     this.IsResource = true;
   }
   //Resources Close Function
@@ -409,62 +410,59 @@ export class AddactivityComponent implements OnInit {
     this.IsResource = false;
   }
 
- /******* Resource Check Functionality *************/
+  /******* Resource Check Functionality *************/
 
   //Activity info with dates Function
-   ActionActivityInfoWithDates() {
-    let start = this.actinfo.PrevStartDate;
-    let end = this.actinfo.PrevEndDate;
+  ActionActivityInfoWithDates() {
+    let start = this.datePipe.transform(this.actinfo.PrevStartDate, "MM/dd/yyyy h:mm a");
+    let end = this.datePipe.transform(this.actinfo.PrevEndDate, "MM/dd/yyyy h:mm a");
     this.schService.ActTypeResListWithDates(this.actinfo.ActTypeID, start, end).subscribe(
       data => {
         this.resourceList = data;
-        console.log(data);
-        this.selectedResourceHeighlited(this.actinfo);
+        this.selectedResourceHeighlited();
       },
       error => console.log(error));
   }
-  selectedResourceHeighlited(actInfo) {
-    for(let i in this.resourceList) {
+  selectedResourceHeighlited() {
+    for (let i in this.resourceList) {
       let reslistId = this.resourceList[i].ResourceID;
-      for(let j in this.ResourceList){
-        let selectResourceId = this.ResourceList[j].ResourceID;
-        if(reslistId == selectResourceId){
-          this.resourceList[i].Check = 1;
-        }
+      let resInfo = this.actinfo.ResourceList.find(s => s.ResourceID == reslistId);
+      if (resInfo != null) {
+        this.resourceList[i].Check = 1;
       }
     }
   }
   //Save Resource Function
   ActionSaveResourceInfo() {
-    let resList =[]
+    let resList = []
     let chkList = this.ResourceList.map(function (elem) { if (elem.Check == 1) { return elem } { return 0 } });
-   this.schService.ActionSaveResourceInfo(chkList, this.actinfo.ActivityID).subscribe(data => {
-    this.ResourceList = data;
-     })
-   }
- //Resources check function
- ActionPushResource(data:any) {
-  this.IsSelectedPopulate = 0;
-  if (data.Check == 1) {
+    this.schService.ActionSaveResourceInfo(chkList, this.actinfo.ActivityID).subscribe(data => {
+      this.ResourceList = data;
+    })
+  }
+  //Resources check function
+  ActionPushResource(data: any) {
+    this.IsSelectedPopulate = 0;
+    if (data.Check == 1) {
       let sDate = this.actinfo.PrevStartDate;
       let eDate = this.actinfo.PrevEndDate;
-     this.schService.ActionCheckIsExistSameRes(this.actinfo.id, data.ResourceID, sDate, eDate).subscribe(data => {
-      let success = data;
-     })
+      this.schService.ActionCheckIsExistSameRes(this.actinfo.id, data.ResourceID, sDate, eDate).subscribe(data => {
+        let success = data;
+      })
     }
-   }
- // Delete resource function
+  }
+  // Delete resource function
   ActionDeleteSelectedItems(Id, index, list) {
-    if(Id > 0){
+    if (Id > 0) {
       this.schService.ActionDeleteResource(Id).subscribe(data => {
         let success = data;
-       })
+      })
     }
-    this.actinfo.ResourceList.splice(index,1);
-   }
+    this.actinfo.ResourceList.splice(index, 1);
+  }
 
 
-  
+
 }
 
 @Component({

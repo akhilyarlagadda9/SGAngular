@@ -8,17 +8,20 @@
 <ion-content>
   <ion-row style="height:360px">
     <ion-col size="12" *ngIf="result.FiterTypeID == 1">
-      <ion-item style="color: darkblue;font-weight:bold">Activity Types</ion-item>
+      <ion-item style="color: #00008b;font-weight:bold">Activity Types</ion-item>
+      <!-- <input type="checkbox" [(ngModel)]="masterSelected" (change)="checkMaster()"/> <strong>Select/ Unselect All</strong> -->
+    <ion-item>  <ion-checkbox style="width:30px" color="dark" [(ngModel)]="flagtoCheckResStatus" (click)="ActionAll()"></ion-checkbox><font size="4">ALL</font></ion-item>
       <!-- [ngClass]="{ 'activeBgColor': item.ID == result.ActTypeId }" -->
       <ion-item *ngFor="let item of ActTypeList | FilterPipe: queryString : searchableList">
-          <ion-checkbox style="width:30px" color="dark" [(ngModel)]="item.Check" checked="item.Check ==1"></ion-checkbox>
+          <ion-checkbox style="width:30px" color="dark" [(ngModel)]="item.Check" (ngModelChange)="ActionIsselectAll()"></ion-checkbox>
           {{item.Name}}
       </ion-item>
     </ion-col>
     <ion-col size="12" *ngIf="result.FiterTypeID == 2">
       <ion-item style="color: darkblue;font-weight:bold">Resources</ion-item>
+    <ion-item> <ion-checkbox style="width:30px" color="dark" [(ngModel)]="flagtoCheckResStatus" (click)="ActionAll()"></ion-checkbox><font size="4">ALL</font></ion-item>
       <ion-item *ngFor="let resource of ResourceList | FilterPipe: queryString : searchableList">
-        <ion-checkbox style="width:30px" color="dark" [(ngModel)]="resource.Check" checked="resource.Check ==1"></ion-checkbox>
+        <ion-checkbox style="width:30px" color="dark" [(ngModel)]="resource.Check" (ngModelChange)="ActionIsselectAll()"></ion-checkbox>
         {{resource.ResourceName}}
       </ion-item>
     </ion-col>
@@ -26,8 +29,10 @@
       <ion-item style="color: darkblue;font-weight:bold">
         Resources
       </ion-item>
+      <ion-item>
+      <ion-checkbox style="width:30px" color="dark" [(ngModel)]="flagtoCheckResStatus" (click)="ActionAll()"></ion-checkbox><font size="4">ALL</font></ion-item>
       <ion-item *ngFor="let status of StatusList | FilterPipe: queryString : searchableList">
-        <ion-checkbox style="width:30px" color="dark" [(ngModel)]="status.Check" checked="status.Check ==1">
+        <ion-checkbox style="width:30px" color="dark" [(ngModel)]="status.Check" (ngModelChange)="ActionIsselectAll()">
         </ion-checkbox>
         {{status.Name}}
       </ion-item>

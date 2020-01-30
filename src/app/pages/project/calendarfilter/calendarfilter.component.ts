@@ -10,17 +10,52 @@ import { SchedulingService } from 'src/app/service/scheduling.service';
   providers: [FilterPipe]
 })
 export class CalendarfilterComponent implements OnInit {
-
+  flagtoCheckResStatus:boolean;
+  queryString :any;
    searchableList: any;
    result:any = this.navParams.data;
    ActTypeList: any;StatusList:any;ResourceList: any;
   constructor(private schService: SchedulingService, private navParams: NavParams,
     private popoverCntrl: PopoverController, private FilterPipe: FilterPipe) {
     this.searchableList = ['Name'];
+    this.flagtoCheckResStatus=true;
+    if(this.result.FiterTypeID ==1){
+      this.flagtoCheckResStatus = false;
+    }
   }
   ngOnInit() {
     this.ActionLoadList();
   }
+  ActionAll(){
+   let arrList = this.checkForLists(this.result.FiterTypeID);
+   this.flagtoCheckResStatus = !this.flagtoCheckResStatus;
+   for (var i = 0; i < arrList.length; i++) {
+    arrList[i].Check = this.flagtoCheckResStatus;
+  }
+  this.flagtoCheckResStatus = !this.flagtoCheckResStatus;
+  }
+  ActionIsselectAll(){
+    let arrList = this.checkForLists(this.result.FiterTypeID);
+    let count = 0;
+    arrList.forEach(element => {
+     if(element.Check == true){
+       count++;
+     }
+    });
+     this.flagtoCheckResStatus = count==arrList.length?true:false;
+  }
+  checkForLists(intID){
+     if(intID ==1){
+       return this.ActTypeList;
+     }
+     else if(intID ==2){
+       return this.ResourceList;
+     }
+     else{
+       return this.StatusList;
+     }
+  }
+
   ActionLoadList(){
     switch (this.result.FiterTypeID) {
       case 1: {this.ActivityTypeList(); break; }

@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams, PopoverController } from '@ionic/angular';
-import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { QuoteService } from 'src/app/service/quote.service';
 import { QuoterepService } from 'src/app/service/quoterep.service';
-import { OverlayEventDetail } from '@ionic/core';
 import { AddmeasComponent } from '../addmeas/addmeas.component';
 
 declare var _qscope: any;
@@ -17,7 +15,7 @@ declare var _qscope: any;
 export class AddmatComponent implements OnInit {
   MaterialList: any = [];
   Progress: number = 0;
-  VersionId: number;materialId: number;AreaId:number;priceListID:number
+  VersionId: number; materialId: number; AreaId: number; priceListID: number
   partList: any = [];
   material: any;
   partinfo: any;
@@ -30,29 +28,44 @@ export class AddmatComponent implements OnInit {
   showProductinventory: boolean;
   showProducts: boolean;
   showProductinventory1: boolean;
+  SlabList: any;
+  size: any;
+  verId: any;
   //dictionaryObj: any;
   //arrObj: any;
 
 
-  constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private quoterep: QuoterepService, private getservice: QuotegetService, private navParams: NavParams, private service: QuoteService) { }
+  constructor(public popoverController: PopoverController, public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private quoterep: QuoterepService, private getservice: QuotegetService, private navParams: NavParams, private service: QuoteService) { }
 
-  ngOnInit() { 
+  ngOnInit() {
+    this.GetMaterialVer();
     this.preparediclists();
-    this.InitMaterial();   
+
+    if (this.material.ID == 0) {
+      this.InitMaterial();
+
+    }
+
   }
-  preparediclists(){
+
+  GetMaterialVer() {
+    this.service.ActionGetMaterialList(this.verId).subscribe(
+      data => { this.material = data; console.log(this.material); }
+    );
+  }
+  preparediclists() {
     this.initdictlists();
     //this.productgroups();
-  }   
+  }
   initdictlists() {
     this.getservice.qsgetinventorydictlist(6, 7, 12).subscribe(data => {
       this.finishItems = data[0];
       this.thicknessItems = data[1];
       this.riskLevels = data[2];
-    })    
-    this.getservice.ActionGetSupplierList(0).subscribe(data => { this.supplierList = data }); 
-    this.getservice.ActionInventoryDicLists(9).subscribe(data => { this.slabtypes = data[0] });  
-  }  
+    })
+    this.getservice.ActionGetSupplierList(0).subscribe(data => { this.supplierList = data });
+    this.getservice.ActionInventoryDicLists(9).subscribe(data => { this.slabtypes = data[0] });
+  }
   productgroups() {
     this.getservice.ActionGetsubproductgrouplist(2).subscribe(data => { this.subproductgroups = data });//typeId
     this.preparesubproductgroups(this.subproductgroups);
@@ -62,27 +75,34 @@ export class AddmatComponent implements OnInit {
       g[i].ParentGroup = g[i].ParentGroupId == 1 ? "Natural Stone" : g[i].ParentGroupId == 2 ? "Engineered Stone" : g[i].ParentGroupId == 3 ? "Solid Surface" : "Misc Stone";
     }
   }
-  InitMaterial(){
-  this.material = this.quoterep.SetInitMaterial(this.VersionId);
+  InitMaterial() {
+    this.material.SlabList = [];
+    this.material = this.quoterep.SetInitMaterial(this.VersionId);
   }
-
+  ActionAddSlab() {
+    if (this.material.ID != 0) {
+      this.material.SlabList = [];
+    }
+    let SlabList = this.quoterep.SetInitSlabs();
+    this.material.SlabList.push(SlabList);
+  }
   ActionToClose(issave) {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
     this.Modalcntrl.dismiss({
       'dismissed': true,
-      issave:issave
+      issave: issave
     });
   }
-  
+
 
   ActionSaveMaterial(form: any) {
     if (form.valid) {
-    this.material.UserID = 0;
-    if (typeof (this.material.RiskLevels) == 'object') { this.riskLevels = JSON.stringify(this.riskLevels) };
-    this.service.ActionSaveMaterial(this.AreaId,this.material).subscribe(data=>{
-      this.ActionToClose(true);
-    });
+      this.material.UserID = 0;
+      if (typeof (this.material.RiskLevels) == 'object') { this.riskLevels = JSON.stringify(this.riskLevels) };
+      this.service.ActionSaveMaterial(this.AreaId, this.material).subscribe(data => {
+        this.ActionToClose(true);
+      });
     }
   }
 
@@ -102,7 +122,9 @@ export class AddmatComponent implements OnInit {
     size.Sqft = this.quoterep.calcsqft(size.Width, size.Height);
   }
 
-  ActionSetDisc(model: any, ) {
+
+
+  ActionSetDisc(model: any) {
     if (this.material.Cost != 0 && this.material.CostDiscount != 0) {
       let cost = Number((this.material.UnitCost * (this.material.CostDiscount / 100)));
       this.material.UnitCost = Number(this.material.Cost - cost);
@@ -135,73 +157,78 @@ export class AddmatComponent implements OnInit {
     else if (prosubgroupId == 0 && color != "") { this.searchtypeId = 2; }
     else if (prosubgroupId > 0 && color != "") { this.searchtypeId = 3; }
     this.preparematerialsearch(material, searchtypeId, prosubgroupId, color, searchobj, this.priceListID);
-}
-preparematerialsearch(material, searchtypeId, prosubgroupId, color, searchobj, pricelistId) {
-  this.material.SearchChkFlag = material.SearchChkFlag == undefined ? 0 : material.SearchChkFlag;
-  this.material.DepthTypeID = material.DepthTypeID == undefined ? 0 : material.DepthTypeID;
-  this.material.FinishTypeID = material.FinishTypeID == undefined ? 0 : material.FinishTypeID;
-  if (this.material.SearchChkFlag != 0) {
+  }
+  preparematerialsearch(material, searchtypeId, prosubgroupId, color, searchobj, pricelistId) {
+    this.material.SearchChkFlag = material.SearchChkFlag == undefined ? 0 : material.SearchChkFlag;
+    this.material.DepthTypeID = material.DepthTypeID == undefined ? 0 : material.DepthTypeID;
+    this.material.FinishTypeID = material.FinishTypeID == undefined ? 0 : material.FinishTypeID;
+    if (this.material.SearchChkFlag != 0) {
       this.prosubgroupId = 0; this.searchtypeId = 2;
+    }
+    this.service.ActionGetmaterialsearchrecords(color, material.SearchChkFlag, pricelistId, material.DepthTypeID, material.FinishTypeID, searchtypeId, prosubgroupId).subscribe(data => { this.productItems = data });
+    this.service.Actionpricegrouplists(pricelistId).subscribe(data => { this.pricegroups = data });
+    this.preparesuppliersfromresults(this.productItems);
+    this.showProductinventory = false; this.showProducts = true;
   }
-  this.service.ActionGetmaterialsearchrecords(color, material.SearchChkFlag, pricelistId, material.DepthTypeID, material.FinishTypeID, searchtypeId, prosubgroupId).subscribe(data=>{this.productItems = data});
-  this.service.Actionpricegrouplists(pricelistId).subscribe(data=>{this.pricegroups = data});
-  this.preparesuppliersfromresults(this.productItems);
-  this.showProductinventory = false; this.showProducts = true;
-}
-ActionClosePopup(){
-  this.material.showProducts = false;this.showProducts = false;this.showProductinventory = false;this.showProductinventory1 = false;
-}
-preparesuppliersfromresults(productItems:any) {
-  let supplierList = [];
-  if (productItems.length > 0) {
+  ActionClosePopup() {
+    this.material.showProducts = false; this.showProducts = false; this.showProductinventory = false; this.showProductinventory1 = false;
+  }
+  preparesuppliersfromresults(productItems: any) {
+    let supplierList = [];
+    if (productItems.length > 0) {
       productItems.map(function (elem) {
-          if (elem.SupplierID > 0) {
-              let item = {ID:"", Name:''}; item.ID = elem.SupplierID; item.Name = elem.SupplierName; supplierList.push(item);
-          }
+        if (elem.SupplierID > 0) {
+          let item = { ID: "", Name: '' }; item.ID = elem.SupplierID; item.Name = elem.SupplierName; supplierList.push(item);
+        }
       });
+    }
   }
-}
 
-ActionPopulateMaterialSearch(productItem:any){
-  this.material = this.quoterep.popultaesearchiteminfo(this.material, this.subproductgroups, productItem);
-  this.ActionClosePopup();
-}
+  ActionPopulateMaterialSearch(productItem: any) {
+    this.material = this.quoterep.popultaesearchiteminfo(this.material, this.subproductgroups, productItem);
+    this.ActionClosePopup();
+  }
 
-ActionCalculateMaterialCost(material) {
-  if (material.Cost != 0 && material.CostDiscount != 0) {
+  
+
+  ActionCalculateMaterialCost(material) {
+    if (material.Cost != 0 && material.CostDiscount != 0) {
       let cost = this.quoterep.roundToTwo(Number(material.Cost * (material.CostDiscount / 100)));
       this.material.UnitCost = this.quoterep.roundToTwo(material.Cost - cost);
-  } else {
+    } else {
       this.material.UnitCost = material.Cost;
+    }
+    this.material = this.quoterep.margincalculations('1', material, 'mat');
+    //calcmaterialnetprice(material);
+    this.material = this.quoterep.calcmaterialwasteamt(material);
   }
-  this.material = this.quoterep.margincalculations('1', material, 'mat');
-  //calcmaterialnetprice(material);
-  this.material = this.quoterep.calcmaterialwasteamt(material);
-}
-ActionCalculeteMargin = function (typeId, item, type) {
-  this.material = this.quoterep.margincalculations(typeId, item, type);
-}
-ActionCalculateMaterialSummary = function (material) {
-  this.material = this.quoterep.calcmaterialwasteamt(material);
-}
- /* async ActionAddMeas() {
-    const popover = await this.popoverCntrl.create({
-      component: AddMeasComponent,
-      translucent: true,
-      showBackdrop: false,
-      cssClass: "opover_class"
-    });
-    return await popover.present();
-  } */
+  ActionCalculeteMargin = function (typeId, item, type) {
+    this.material = this.quoterep.margincalculations(typeId, item, type);
+  }
+  ActionCalculateMaterialSummary = function (material) {
+    this.material = this.quoterep.calcmaterialwasteamt(material);
+  }
+  /* async ActionAddMeas() {
+     const popover = await this.popoverCntrl.create({
+       component: AddMeasComponent,
+       translucent: true,
+       showBackdrop: false,
+       cssClass: "opover_class"
+     });
+     return await popover.present();
+   } */
 
   /***** MATERIAL DETAILS *****/
-  async ActionAddMeas(selName: string, ViewType: string) {
-    let sel = { selName: selName, material: this.material, partinfo: this.partinfo, areaInfo: this.areaInfo, ViewType: ViewType, Version: this.Version }
-    const modal = await this.Modalcntrl.create({
+  async ActionAddMeas(selName: string, ViewType: string, ev: any) {
+    let sel = { selName: selName, material: this.material, finishItems: this.finishItems, thicknessItems: this.thicknessItems, partinfo: this.partinfo, areaInfo: this.areaInfo, ViewType: ViewType, Version: this.Version }
+    const popover = await this.popoverController.create({
       component: AddmeasComponent,
-      componentProps: sel
+      componentProps: sel,
+      event: ev,
+      translucent: true,
+      cssClass: "popover_class4"
     });
-    return await modal.present();
+    return await popover.present();
   }
 
   async ActionSearchSelect(typeid, typeid2) {

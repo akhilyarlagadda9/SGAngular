@@ -32,10 +32,15 @@ export class MaterialinfoComponent implements OnInit {
 
   /***** MATERIAL DETAILS *****/
   async ActionCreateAddMaterial(materialId:any, source:string) {
-    let sel= { material : materialId == 0 ? {ID : 0} : this.material, partinfo: this.partinfo, areaInfo : this.areaInfo, Version:this.Version, priceListID : this.priceListID}
+
+    let matinfo = {ID:materialId,VersionID:this.Version.ID};
+
+   let info = {material:matinfo, priceListID : this.priceListID,AreaID:this.areaInfo.ID};
+
+   // let sel= { material : materialId == 0 ? {ID : 0} :  this.material, partinfo: this.partinfo, areaInfo : this.areaInfo, Version:this.Version, priceListID : this.priceListID}
     const modal = await this.Modalcntrl.create({
       component: AddmatComponent,
-      componentProps: sel,
+      componentProps: info,
     });
     return await modal.present();
   }

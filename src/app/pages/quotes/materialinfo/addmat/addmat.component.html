@@ -42,10 +42,10 @@
     <div *ngIf="Progress == 0">
       <ion-item>
         <ion-label class="labelfont2" position="floating" color="primary">Material*</ion-label>
-        <ion-input type="text" class="labelfont2" [(ngModel)]="material.Color" name="Color" #Color="ngModel"
-          (keyup.enter)="ActionSearchProductItems(material, 2,material.ProSubGroup,1)" required></ion-input>
+        <ion-input type="text" class="labelfont2" [(ngModel)]="material[0].Description" name="Color" #Color="ngModel"
+          (keyup.enter)="ActionSearchProductItems(material[0], 2,material.ProSubGroup,1)" required></ion-input>
         <ion-icon slot="end" name="search" class="mar-top20"
-          (click)="ActionSearchProductItems(material, 2,material.ProSubGroup,1)"></ion-icon>
+          (click)="ActionSearchProductItems(material[0], 2,material.ProSubGroup,1)"></ion-icon>
       </ion-item>
       <div [hidden]="!form.submitted || Color.valid" class="invalid-feedback padd-Left">
         <div class="error">Material Name is required</div>
@@ -99,13 +99,13 @@
         <ion-col size="4">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Sub.Group</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material.StoneType" name="StoneType"></ion-input>
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material[0].StoneType" name="StoneType"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="4">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Type</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material.SlabType" name="SlabType"></ion-input>
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material[0].SlabType" name="SlabType"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -113,7 +113,7 @@
         <ion-col size="6">
           <ion-item>
             <ion-label position="floating" color="primary">Thickness</ion-label>
-            <ion-select [(ngModel)]="material.DepthID" name="DepthID" #DepthID="ngModel" interface="popover"
+            <ion-select [(ngModel)]="material[0].DepthID" name="DepthID" #DepthID="ngModel" interface="popover"
               class="labelfont2" required>
               <ion-select-option *ngFor="let item of thicknessItems" [value]="item.ID">{{item.Name}}</ion-select-option>
             </ion-select>
@@ -125,7 +125,7 @@
         <ion-col size="6">
           <ion-item>
             <ion-label position="floating" color="primary">Finish</ion-label>
-            <ion-select [(ngModel)]="material.FinishID" name="FinishID" #FinishID="ngModel" interface="popover"
+            <ion-select [(ngModel)]="material[0].FinishID" name="FinishID" #FinishID="ngModel" interface="popover"
               class="labelfont2" required>
               <ion-select-option *ngFor="let item of finishItems" [value]="item.ID">{{item.Name}}</ion-select-option>
             </ion-select>
@@ -139,7 +139,7 @@
         <ion-col>
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Vendor</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material.SupplierName" name="SupplierName">
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material[0].SupplierName" name="SupplierName">
             </ion-input>
           </ion-item>
         </ion-col>
@@ -159,7 +159,7 @@
         <ion-col size="4">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Cost</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material.Cost" name="Cost"
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material[0].Cost" name="Cost"
               (change)="ActionCalculateMaterialCost(material)">
             </ion-input>
           </ion-item>
@@ -167,14 +167,14 @@
         <ion-col size="4">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">D(%)</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material.CostDiscount" name="CostDiscount"
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material[0].CostDiscount" name="CostDiscount"
               (change)="ActionCalculateMaterialCost(material)"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="4">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Cost/SF</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material.UnitCost" readonly="readonly"
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material[0].UnitCost" readonly="readonly"
               name="UnitCost"
               (change)="ActionCalculeteMargin(1,material,'mat');ActionCalculateMaterialSummary(material)"></ion-input>
           </ion-item>
@@ -182,7 +182,7 @@
         <ion-col size="4">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">M(%)</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material.Margin" name="Margin"
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material[0].Margin" name="Margin"
               (change)="ActionCalculeteMargin(2,material,'mat');ActionCalculateMaterialSummary(material)"></ion-input>
           </ion-item>
         </ion-col>
@@ -197,9 +197,9 @@
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Price/SF</ion-label>
             <ion-input type="text" class="labelfont2" *ngIf="material.PriceByID != 2" readonly="readonly"
-              [(ngModel)]="material.UnitPrice" name="UnitPrice">$</ion-input>
+              [(ngModel)]="material[0].UnitPrice" name="UnitPrice">$</ion-input>
             <ion-input type="text" class="labelfont2" *ngIf="material.PriceByID == 2" readonly="readonly"
-              [(ngModel)]="material.WagPrice" name="WagPrice">$</ion-input>
+              [(ngModel)]="material[0].WagPrice" name="WagPrice">$</ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -211,7 +211,7 @@
         <ion-icon name="cart" (click)="ActionAddMeas()" class="fontmedium"></ion-icon>
       </ion-row>
 
-      <ion-row *ngFor="let size of material.SlabList;let i = index">
+      <ion-row *ngFor="let size of material[0].SlabList;let i = index">
         <ion-col size="3">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">W</ion-label>

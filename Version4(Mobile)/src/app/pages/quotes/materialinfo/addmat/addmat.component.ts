@@ -13,14 +13,15 @@ declare var _qscope: any;
   styleUrls: ['./addmat.component.scss'],
 })
 export class AddmatComponent implements OnInit {
-  MaterialList: any = [];
+  //MaterialList: any = [];
   Progress: number = 0;
-  VersionId: number; materialId: number; AreaId: number; priceListID: number
-  partList: any = [];
+  priceListID: number;AreaID:number
   material: any;
-  partinfo: any;
-  areaInfo: any;
-  Version: any;
+ // VersionId: number; materialId: number; AreaId: number; priceListID: number
+ //partList: any = [];
+ // partinfo: any;
+  //areaInfo: any;
+  //Version: any;
   finishItems: any = []; thicknessItems: any = []; riskLevels: any = []; supplierList: any = []; slabtypes: any = []; subproductgroups: any = [];
   productItems: any = []; pricegroups: any = []; suppliers: any = [];
   prosubgroupId: number;
@@ -30,7 +31,7 @@ export class AddmatComponent implements OnInit {
   showProductinventory1: boolean;
   SlabList: any;
   size: any;
-  verId: any;
+  //verId: any;
   //dictionaryObj: any;
   //arrObj: any;
 
@@ -38,25 +39,26 @@ export class AddmatComponent implements OnInit {
   constructor(public popoverController: PopoverController, public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private quoterep: QuoterepService, private getservice: QuotegetService, private navParams: NavParams, private service: QuoteService) { }
 
   ngOnInit() {
+    if(this.material.ID !=0){
     this.GetMaterialVer();
-    this.preparediclists();
-
+    }
+    //this.preparediclists();
+    this.initdictlists();
     if (this.material.ID == 0) {
       this.InitMaterial();
-
     }
-
+  
   }
 
   GetMaterialVer() {
-    this.service.ActionGetMaterialList(this.verId).subscribe(
+    this.service.ActionGetMaterialList(this.material.VersionID).subscribe(
       data => { this.material = data; console.log(this.material); }
     );
   }
-  preparediclists() {
-    this.initdictlists();
-    //this.productgroups();
-  }
+  // preparediclists() {
+  //   this.initdictlists();
+  //   //this.productgroups();
+  // }
   initdictlists() {
     this.getservice.qsgetinventorydictlist(6, 7, 12).subscribe(data => {
       this.finishItems = data[0];
@@ -77,7 +79,7 @@ export class AddmatComponent implements OnInit {
   }
   InitMaterial() {
     this.material.SlabList = [];
-    this.material = this.quoterep.SetInitMaterial(this.VersionId);
+    this.material = this.quoterep.SetInitMaterial(this.material.VersionID);
   }
   ActionAddSlab() {
     if (this.material.ID != 0) {
@@ -100,7 +102,7 @@ export class AddmatComponent implements OnInit {
     if (form.valid) {
       this.material.UserID = 0;
       if (typeof (this.material.RiskLevels) == 'object') { this.riskLevels = JSON.stringify(this.riskLevels) };
-      this.service.ActionSaveMaterial(this.AreaId, this.material).subscribe(data => {
+      this.service.ActionSaveMaterial(this.AreaID, this.material).subscribe(data => {
         this.ActionToClose(true);
       });
     }
@@ -148,10 +150,12 @@ export class AddmatComponent implements OnInit {
 
   /*********Material Search************/
   ActionSearchProductItems = function (material, searchtypeId, productsubgroup, searchType) {
+    debugger;
+    console.log(material);
     this.material.searchType = searchType; this.material.showProducts = true;
     let searchobj = material;
     let prosubgroupId = (productsubgroup == null || productsubgroup == undefined || productsubgroup == 0) ? 0 : productsubgroup.ID;
-    let color = (this.material.Color == null || this.material.Color == "" || this.material.Color == undefined) ? "" : this.material.Color;
+    let color = (this.material[0].Description == null || this.material[0].Description == "" || this.material[0].Description == undefined) ? "" : this.material[0].Description;
     if (prosubgroupId == 0 && color == "") { return; }
     else if (prosubgroupId > 0 && color == "") { this.searchtypeId = 1; }
     else if (prosubgroupId == 0 && color != "") { this.searchtypeId = 2; }
@@ -159,13 +163,14 @@ export class AddmatComponent implements OnInit {
     this.preparematerialsearch(material, searchtypeId, prosubgroupId, color, searchobj, this.priceListID);
   }
   preparematerialsearch(material, searchtypeId, prosubgroupId, color, searchobj, pricelistId) {
+    debugger;
     this.material.SearchChkFlag = material.SearchChkFlag == undefined ? 0 : material.SearchChkFlag;
     this.material.DepthTypeID = material.DepthTypeID == undefined ? 0 : material.DepthTypeID;
     this.material.FinishTypeID = material.FinishTypeID == undefined ? 0 : material.FinishTypeID;
     if (this.material.SearchChkFlag != 0) {
       this.prosubgroupId = 0; this.searchtypeId = 2;
     }
-    this.service.ActionGetmaterialsearchrecords(color, material.SearchChkFlag, pricelistId, material.DepthTypeID, material.FinishTypeID, searchtypeId, prosubgroupId).subscribe(data => { this.productItems = data });
+    this.service.ActionGetmaterialsearchrecords(color, this.material.SearchChkFlag, pricelistId, this.material.DepthTypeID, this.material.FinishTypeID, searchtypeId, prosubgroupId).subscribe(data => { this.productItems = data });
     this.service.Actionpricegrouplists(pricelistId).subscribe(data => { this.pricegroups = data });
     this.preparesuppliersfromresults(this.productItems);
     this.showProductinventory = false; this.showProducts = true;
@@ -208,22 +213,22 @@ export class AddmatComponent implements OnInit {
   ActionCalculateMaterialSummary = function (material) {
     this.material = this.quoterep.calcmaterialwasteamt(material);
   }
-  /* async ActionAddMeas() {
-     const popover = await this.popoverCntrl.create({
-       component: AddMeasComponent,
-       translucent: true,
-       showBackdrop: false,
-       cssClass: "opover_class"
-     });
-     return await popover.present();
-   } */
+  //  async ActionAddMeas() {
+  //    const popover = await this.popoverCntrl.create({
+  //      component: AddMeasComponent,
+  //      translucent: true,
+  //      showBackdrop: false,
+  //      cssClass: "opover_class"
+  //    });
+  //    return await popover.present();
+  //  }
 
   /***** MATERIAL DETAILS *****/
   async ActionAddMeas(selName: string, ViewType: string, ev: any) {
-    let sel = { selName: selName, material: this.material, finishItems: this.finishItems, thicknessItems: this.thicknessItems, partinfo: this.partinfo, areaInfo: this.areaInfo, ViewType: ViewType, Version: this.Version }
+   // let sel = { selName: selName, material: this.material, finishItems: this.finishItems, thicknessItems: this.thicknessItems, partinfo: this.partinfo, areaInfo: this.areaInfo, ViewType: ViewType, Version: this.Version }
     const popover = await this.popoverController.create({
       component: AddmeasComponent,
-      componentProps: sel,
+     // componentProps: sel,
       event: ev,
       translucent: true,
       cssClass: "popover_class4"

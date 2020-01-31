@@ -20,6 +20,14 @@ export class QuoterepService {
       WF:'',RiskLevelID : 0, RiskLevel :'', RiskLevels: "",
   }; return material;
   }
+
+  SetInitSlabs() {
+    let slab = {
+        ID: 0,   MaterialID: 0, ReferanceID: 0, Height: 0, Length: 0, Width: 0, Sf: 0, IsChg: 0, Sqft: 0, SlabID: 0, LocationID: 0, IsActive: 1, RevID: 0, VersionID: 0,
+        ProjectID: 0, CoID: 0, CoSrNo: 0, SlabNo: '', ProjectName: '', ProjectNO: '', NoOfSlabs: 1, UnitCost: 0, Margin: 0, UnitPrice: 0, PriceBy: 0, Color: '', StockNo: '', BlockNo: ''
+    }; return slab;
+}
+
   AddPartMatItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number) {
     let partmat: any = {
       PartID: partId, AreaID: areaId, VersionID: verId, CoID: coId, CoSrNo: coSrno, Tax: matcent, ID: Number, IsChgFlag: 1, ParentID: Number,
@@ -479,7 +487,7 @@ preparefabrisklevels(material) {
   material.LaborUnitPrice = price;
   return material;
 }
-populateSlabSizes(slabs, productItem) {
+populateSlabSizes(slabs, productItem) {debugger
   for (let i = 0; i < slabs.length; i++) {
       let item = slabs[i];
       if (item.Width == 0 || item.Width == undefined) { item.Width = productItem.Width; }

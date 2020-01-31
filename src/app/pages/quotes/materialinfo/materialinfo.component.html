@@ -1,5 +1,5 @@
-<ion-content>
-  <form (ngSubmit)="ActionSubmit(material)">
+
+  <form (ngSubmit)="ActionSubmit(material)" class="dis-content">
     <ion-header>
       <ion-toolbar>
         <ion-title class="titleheader">Material</ion-title>
@@ -7,6 +7,7 @@
         <ion-button slot="end" color="danger" size="small" (click)="ActionToClose()">X</ion-button>
       </ion-toolbar>
     </ion-header>
+    <ion-content>
     <ion-item>
       <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
       <ion-input type="text" class="labelfont" [(ngModel)]="material.MaterialName" name="MaterialName"
@@ -45,5 +46,5 @@
         <ion-row class="margin-right3">$</ion-row>
       </ion-input>
     </ion-item>
+  </ion-content>
   </form>
-</ion-content>

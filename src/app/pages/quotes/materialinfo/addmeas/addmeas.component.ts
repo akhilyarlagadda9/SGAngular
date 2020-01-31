@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-addmeas',
@@ -9,7 +9,7 @@ import { ModalController } from '@ionic/angular';
 export class AddmeasComponent implements OnInit {
 
   shownGroup:number=0;
-  constructor(public Modalcntrl: ModalController) { }
+  constructor(public Modalcntrl: ModalController,private popoverCntrl: PopoverController) { }
 
   ngOnInit() {
   }
@@ -17,7 +17,7 @@ export class AddmeasComponent implements OnInit {
   ActionToClose() {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
-    this.Modalcntrl.dismiss({
+    this.popoverCntrl.dismiss({
       'dismissed': true
     });
   }

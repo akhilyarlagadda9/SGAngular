@@ -198,6 +198,7 @@ ActionGetQuoteAreas(verId: any, mode:any): Observable<any> {
   return this.http.get<any>(this.url + 'api/QEdit/ActionVersionAreaList?versionID=' + verId + "&mode=" + mode)
 }
 
+
 /***************************** Comm.Hub Lists *******************************/
 ActionTemplateList(typeId:any):Observable<any> {
   return this.http.get<any>(this.url + 'api/messageCenter/TemplateList?typeId=' + typeId) 
@@ -207,6 +208,12 @@ ActionNoteInfo(Id:any):Observable<any> {
 }
 ActionCustomerContactList(versionid:any):Observable<any> {
   return this.http.get<any>(this.url + 'api/Quote/CustomerContactList?versionid=' + versionid) 
+}
+
+/****************** Material Stock Info Select Function *********************/
+ActionSaveMaterialInvSlabList(slabList: any): Observable<any> {
+  var model = JSON.stringify(slabList);
+  return this.http.post<any>(this.url + 'api/Quote/SaveMaterialInvSlabList', model, { headers: { 'Content-Type': 'application/json' } })
 }
 
 

@@ -7,47 +7,48 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-row>
-    <ion-col size="1" *ngIf="Progress == 1 || Progress == 2 || Progress == 0">
-      <ion-fab-button color="primary" (click)="changeProgress(0)">1</ion-fab-button>
-    </ion-col>
-    <ion-col size="3" class="progbar-mat" *ngIf="Progress == 0">
-      <ion-progress-bar></ion-progress-bar>
-    </ion-col>
-    <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 2">
-      <ion-progress-bar value="1"></ion-progress-bar>
-    </ion-col>
-    <ion-col size="1" *ngIf="Progress == 2 || Progress == 1">
-      <ion-fab-button color="primary" (click)="changeProgress(1)">2</ion-fab-button>
-    </ion-col>
-    <ion-col size="1" *ngIf="Progress == 0">
-      <ion-fab-button color="light" (click)="changeProgress(1)">2</ion-fab-button>
-    </ion-col>
-   <!--  <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 0">
-    <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 0">
-    <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 0">
-      <ion-progress-bar></ion-progress-bar>
-    </ion-col>
-    <ion-col size="3" class="progbar-mat" *ngIf="Progress == 2">
-      <ion-progress-bar value="1"></ion-progress-bar>
-    </ion-col>
-    <ion-col size="1" *ngIf="Progress == 3 || Progress == 2">
-      <ion-fab-button color="primary" (click)="changeProgress(2)">3</ion-fab-button>
-    </ion-col>
-    <ion-col size="1" *ngIf="Progress == 0 || Progress == 1">
-      <ion-fab-button color="light" (click)="changeProgress(2)">3</ion-fab-button>
-    </ion-col> -->
-  </ion-row>
+  
   <ion-content>
+    <ion-row>
+      <ion-col size="1" *ngIf="Progress == 1 || Progress == 2 || Progress == 0">
+        <ion-fab-button color="primary" (click)="changeProgress(0)">1</ion-fab-button>
+      </ion-col>
+      <ion-col size="3" class="progbar-mat" *ngIf="Progress == 0">
+        <ion-progress-bar></ion-progress-bar>
+      </ion-col>
+      <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 2">
+        <ion-progress-bar value="1"></ion-progress-bar>
+      </ion-col>
+      <ion-col size="1" *ngIf="Progress == 2 || Progress == 1">
+        <ion-fab-button color="primary" (click)="changeProgress(1)">2</ion-fab-button>
+      </ion-col>
+      <ion-col size="1" *ngIf="Progress == 0">
+        <ion-fab-button color="light" (click)="changeProgress(1)">2</ion-fab-button>
+      </ion-col>
+     <!--  <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 0">
+      <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 0">
+      <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 0">
+        <ion-progress-bar></ion-progress-bar>
+      </ion-col>
+      <ion-col size="3" class="progbar-mat" *ngIf="Progress == 2">
+        <ion-progress-bar value="1"></ion-progress-bar>
+      </ion-col>
+      <ion-col size="1" *ngIf="Progress == 3 || Progress == 2">
+        <ion-fab-button color="primary" (click)="changeProgress(2)">3</ion-fab-button>
+      </ion-col>
+      <ion-col size="1" *ngIf="Progress == 0 || Progress == 1">
+        <ion-fab-button color="light" (click)="changeProgress(2)">3</ion-fab-button>
+      </ion-col> -->
+    </ion-row>
     <div *ngIf="Progress == 0">
       <ion-item>
         <ion-label class="labelfont2" position="floating" color="primary">Material*</ion-label>
-        <ion-input type="text" class="labelfont2" [(ngModel)]="material[0].Description" name="Color" #Color="ngModel"
-          (keyup.enter)="ActionSearchProductItems(material[0], 2,material.ProSubGroup,1)" required></ion-input>
+        <ion-input type="text" class="labelfont2" [(ngModel)]="material.Description" name="Description" #nameField="ngModel"
+          (keyup.enter)="ActionSearchProductItems(material, 2,material.ProSubGroup,1)" (keyup.enter)="showLoader(0)" required></ion-input>
         <ion-icon slot="end" name="search" class="mar-top20"
-          (click)="ActionSearchProductItems(material[0], 2,material.ProSubGroup,1)"></ion-icon>
+          (click)="ActionSearchProductItems(material, 2,material.ProSubGroup,1)" (click)="showLoader(0)"></ion-icon>
       </ion-item>
-      <div [hidden]="!form.submitted || Color.valid" class="invalid-feedback padd-Left">
+      <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
         <div class="error">Material Name is required</div>
       </div>
       <div *ngIf="material.showProducts == true" class="popupCls1">
@@ -59,36 +60,42 @@
           </ion-col>
         </ion-row>
         <div style="width: 100%;height: 300px;overflow: auto;background-color: white;">
-          <ion-row *ngFor="let product of productItems" class="paddzero border-btm smallfont2">
-            <ion-col class="paddzero" (click)="ActionPopulateMaterialSearch(product)">
-              <ion-row>
-                <ion-col size="10" class="fontbold"> {{product.Description}} - {{product.Thickness}} -
-                  {{product.Finish}}&nbsp;<span class="color-blue">({{product.SlabType}})</span></ion-col>
-                <ion-col size="2" class="text-right">{{product.Price  | number : '.2-2'}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="11">
-                  <small class="color-blue fontbold">
-                    {{product.ItemNO}} - {{product.StoneType}}
-                    <span ng-if="product.SupplierName != '' && product.SupplierID > 0"> {{product.SupplierName}}</span>
-                    <span
-                      ng-if="product.GroupID > 0 && product.Group != '' &&  product.Group != null && product.Group != 'Select--One'">
-                      - {{product.Group}}</span>
-                    <span ng-if="product.RiskLevelID > 0"> - {{product.RiskLevel}}</span>
-                    <span ng-if="product.PriceByTypeID == 2"> - Slab Wgt. Avg.</span>
-                    <span ng-if="product.PriceByTypeID == 0"> - Sqft</span>
-                    <span ng-if="product.PriceByTypeID == 1"> - Price By Slab</span>
-                  </small>
-                </ion-col>
-                <ion-col size="1" class="text-right">{{product.InStock}}</ion-col>
-              </ion-row>
-            </ion-col>
+          <div *ngIf="productItems.length != 0 && loaderToShow == 1" >
+            <ion-row *ngFor="let product of productItems" class="paddzero border-btm smallfont2">
+              <ion-col class="paddzero" (click)="ActionPopulateMaterialSearch(product)">
+                <ion-row>
+                  <ion-col size="10" class="fontbold"> {{product.Description}} - {{product.Thickness}} -
+                    {{product.Finish}}&nbsp;<span class="color-blue">({{product.SlabType}})</span></ion-col>
+                  <ion-col size="2" class="text-right">{{product.Price  | number : '.2-2'}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="11">
+                    <small class="color-blue fontbold">
+                      {{product.ItemNO}} - {{product.StoneType}}
+                      <span ng-if="product.SupplierName != '' && product.SupplierID > 0"> {{product.SupplierName}}</span>
+                      <span
+                        ng-if="product.GroupID > 0 && product.Group != '' &&  product.Group != null && product.Group != 'Select--One'">
+                        - {{product.Group}}</span>
+                      <span ng-if="product.RiskLevelID > 0"> - {{product.RiskLevel}}</span>
+                      <span ng-if="product.PriceByTypeID == 2"> - Slab Wgt. Avg.</span>
+                      <span ng-if="product.PriceByTypeID == 0"> - Sqft</span>
+                      <span ng-if="product.PriceByTypeID == 1"> - Price By Slab</span>
+                    </small>
+                  </ion-col>
+                  <ion-col size="1" class="text-right">{{product.InStock}}</ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </div>
+          <ion-row *ngIf="productItems.length == 0 && loaderToShow == 1" class="color-red font-bold">
+            <ion-col class=" text-center">--NO RECORD FOUND--</ion-col>
           </ion-row>
-          <ion-row *ngIf="productItems.length == 0" class="color-red font-bold">
-            <ion-col class=" text-center">--NO RECORDS FOUND--</ion-col>
+          <ion-row *ngIf="loaderToShow == 0" class="color-red font-bold">
+            <ion-col class=" text-center"><ion-spinner name="dots" color="primary"></ion-spinner></ion-col>
           </ion-row>
         </div>
       </div>
+      
       <ion-row>
         <ion-col size="4">
           <ion-item>
@@ -99,13 +106,13 @@
         <ion-col size="4">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Sub.Group</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material[0].StoneType" name="StoneType"></ion-input>
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.StoneType" name="StoneType"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="4">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Type</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material[0].SlabType" name="SlabType"></ion-input>
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.SlabType" name="SlabType"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -113,24 +120,24 @@
         <ion-col size="6">
           <ion-item>
             <ion-label position="floating" color="primary">Thickness</ion-label>
-            <ion-select [(ngModel)]="material[0].DepthID" name="DepthID" #DepthID="ngModel" interface="popover"
+            <ion-select [(ngModel)]="material.DepthID" name="DepthID" #DepthID="ngModel" interface="popover"
               class="labelfont2" required>
               <ion-select-option *ngFor="let item of thicknessItems" [value]="item.ID">{{item.Name}}</ion-select-option>
             </ion-select>
           </ion-item>
-          <div [hidden]="!form.submitted  || DepthID.valid" class="invalid-feedback padd-Left">
+          <div [hidden]="!form.submitted  || (DepthID.valid && FinishID.touched)" class="invalid-feedback padd-Left">
             <div class="error">!Required</div>
           </div>
         </ion-col>
         <ion-col size="6">
           <ion-item>
             <ion-label position="floating" color="primary">Finish</ion-label>
-            <ion-select [(ngModel)]="material[0].FinishID" name="FinishID" #FinishID="ngModel" interface="popover"
+            <ion-select [(ngModel)]="material.FinishID" name="FinishID" #FinishID="ngModel" interface="popover"
               class="labelfont2" required>
               <ion-select-option *ngFor="let item of finishItems" [value]="item.ID">{{item.Name}}</ion-select-option>
             </ion-select>
           </ion-item>
-          <div [hidden]="!form.submitted  || FinishID.valid" class="invalid-feedback padd-Left">
+          <div [hidden]="!form.submitted  || (FinishID.valid && FinishID.touched)" class="invalid-feedback padd-Left">
             <div class="error">!Required</div>
           </div>
         </ion-col>
@@ -139,7 +146,7 @@
         <ion-col>
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Vendor</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material[0].SupplierName" name="SupplierName">
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.SupplierName" name="SupplierName">
             </ion-input>
           </ion-item>
         </ion-col>
@@ -159,7 +166,7 @@
         <ion-col size="4">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Cost</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material[0].Cost" name="Cost"
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.Cost" name="Cost"
               (change)="ActionCalculateMaterialCost(material)">
             </ion-input>
           </ion-item>
@@ -167,14 +174,14 @@
         <ion-col size="4">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">D(%)</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material[0].CostDiscount" name="CostDiscount"
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.CostDiscount" name="CostDiscount"
               (change)="ActionCalculateMaterialCost(material)"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="4">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Cost/SF</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material[0].UnitCost" readonly="readonly"
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.UnitCost" readonly="readonly"
               name="UnitCost"
               (change)="ActionCalculeteMargin(1,material,'mat');ActionCalculateMaterialSummary(material)"></ion-input>
           </ion-item>
@@ -182,7 +189,7 @@
         <ion-col size="4">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">M(%)</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="material[0].Margin" name="Margin"
+            <ion-input type="text" class="labelfont2" [(ngModel)]="material.Margin" name="Margin"
               (change)="ActionCalculeteMargin(2,material,'mat');ActionCalculateMaterialSummary(material)"></ion-input>
           </ion-item>
         </ion-col>
@@ -197,9 +204,9 @@
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Price/SF</ion-label>
             <ion-input type="text" class="labelfont2" *ngIf="material.PriceByID != 2" readonly="readonly"
-              [(ngModel)]="material[0].UnitPrice" name="UnitPrice">$</ion-input>
+              [(ngModel)]="material.UnitPrice" name="UnitPrice">$</ion-input>
             <ion-input type="text" class="labelfont2" *ngIf="material.PriceByID == 2" readonly="readonly"
-              [(ngModel)]="material[0].WagPrice" name="WagPrice">$</ion-input>
+              [(ngModel)]="material.WagPrice" name="WagPrice">$</ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -211,7 +218,7 @@
         <ion-icon name="cart" (click)="ActionAddMeas()" class="fontmedium"></ion-icon>
       </ion-row>
 
-      <ion-row *ngFor="let size of material[0].SlabList;let i = index">
+      <ion-row *ngFor="let size of material.SlabList;let i = index">
         <ion-col size="3">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">W</ion-label>

@@ -198,6 +198,17 @@ ActionGetQuoteAreas(verId: any, mode:any): Observable<any> {
   return this.http.get<any>(this.url + 'api/QEdit/ActionVersionAreaList?versionID=' + verId + "&mode=" + mode)
 }
 
+/***************************** Comm.Hub Lists *******************************/
+ActionTemplateList(typeId:any):Observable<any> {
+  return this.http.get<any>(this.url + 'api/messageCenter/TemplateList?typeId=' + typeId) 
+}
+ActionNoteInfo(Id:any):Observable<any> {
+  return this.http.get<any>(this.url + 'api/Quote/NoteInfo?Id=' + Id) 
+}
+ActionCustomerContactList(versionid:any):Observable<any> {
+  return this.http.get<any>(this.url + 'api/Quote/CustomerContactList?versionid=' + versionid) 
+}
+
 
 
 

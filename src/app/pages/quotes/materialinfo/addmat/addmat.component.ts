@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams, PopoverController } from '@ionic/angular';
+import { ModalController, NavParams, PopoverController, LoadingController } from '@ionic/angular';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { QuoteService } from 'src/app/service/quote.service';
 import { QuoterepService } from 'src/app/service/quoterep.service';
@@ -15,11 +15,12 @@ declare var _qscope: any;
 export class AddmatComponent implements OnInit {
   //MaterialList: any = [];
   Progress: number = 0;
-  priceListID: number;AreaID:number
+  priceListID: number; AreaID: number
   material: any;
- // VersionId: number; materialId: number; AreaId: number; priceListID: number
- //partList: any = [];
- // partinfo: any;
+  loaderToShow: any;
+  // VersionId: number; materialId: number; AreaId: number; priceListID: number
+  //partList: any = [];
+  // partinfo: any;
   //areaInfo: any;
   //Version: any;
   finishItems: any = []; thicknessItems: any = []; riskLevels: any = []; supplierList: any = []; slabtypes: any = []; subproductgroups: any = [];
@@ -31,30 +32,42 @@ export class AddmatComponent implements OnInit {
   showProductinventory1: boolean;
   SlabList: any;
   size: any;
+  materialId: any;
   //verId: any;
   //dictionaryObj: any;
   //arrObj: any;
 
 
-  constructor(public popoverController: PopoverController, public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private quoterep: QuoterepService, private getservice: QuotegetService, private navParams: NavParams, private service: QuoteService) { }
+  constructor(public loadingController: LoadingController, public popoverController: PopoverController, public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private quoterep: QuoterepService, private getservice: QuotegetService, private navParams: NavParams, private service: QuoteService) { }
 
   ngOnInit() {
-    if(this.material.ID !=0){
-    this.GetMaterialVer();
-    }
-    //this.preparediclists();
-    this.initdictlists();
     if (this.material.ID == 0) {
-      this.InitMaterial();
+      this.GetMaterialVer(this.materialId);
     }
-  
+    else {
+      this.GetMaterialVer(this.material.ID);
+    }
+    this.initdictlists();
+    this.InitMaterial();
+
   }
 
-  GetMaterialVer() {
-    this.service.ActionGetMaterialList(this.material.VersionID).subscribe(
+  GetMaterialVer(materialId) {
+    this.service.ActionVersionMaterial(materialId).subscribe(
+
       data => { this.material = data; console.log(this.material); }
     );
   }
+
+  showLoader(value) {
+    if (value == 0)
+    {this.loaderToShow = 0 }
+    else 
+    {this.loaderToShow = 1}
+  }
+
+
+
   // preparediclists() {
   //   this.initdictlists();
   //   //this.productgroups();
@@ -82,11 +95,10 @@ export class AddmatComponent implements OnInit {
     this.material = this.quoterep.SetInitMaterial(this.material.VersionID);
   }
   ActionAddSlab() {
-    if (this.material.ID != 0) {
-      this.material.SlabList = [];
-    }
-    let SlabList = this.quoterep.SetInitSlabs();
-    this.material.SlabList.push(SlabList);
+    this.material.SlabList = this.material.SlabList == null ? [] : this.material.SlabList;
+
+    let slab = this.quoterep.SetInitSlabs();
+    this.material.SlabList.push(slab);
   }
   ActionToClose(issave) {
     // using the injected ModalController this page
@@ -99,11 +111,12 @@ export class AddmatComponent implements OnInit {
 
 
   ActionSaveMaterial(form: any) {
-    if (form.valid) {
+    if (form.valid && form.touched) {
       this.material.UserID = 0;
       if (typeof (this.material.RiskLevels) == 'object') { this.riskLevels = JSON.stringify(this.riskLevels) };
       this.service.ActionSaveMaterial(this.AreaID, this.material).subscribe(data => {
         this.ActionToClose(true);
+        debugger
       });
     }
   }
@@ -150,28 +163,26 @@ export class AddmatComponent implements OnInit {
 
   /*********Material Search************/
   ActionSearchProductItems = function (material, searchtypeId, productsubgroup, searchType) {
-    debugger;
-    console.log(material);
     this.material.searchType = searchType; this.material.showProducts = true;
     let searchobj = material;
     let prosubgroupId = (productsubgroup == null || productsubgroup == undefined || productsubgroup == 0) ? 0 : productsubgroup.ID;
-    let color = (this.material[0].Description == null || this.material[0].Description == "" || this.material[0].Description == undefined) ? "" : this.material[0].Description;
+    let color = (this.material.Description == null || this.material.Description == "" || this.material.Description == undefined) ? "" : this.material.Description;
     if (prosubgroupId == 0 && color == "") { return; }
     else if (prosubgroupId > 0 && color == "") { this.searchtypeId = 1; }
     else if (prosubgroupId == 0 && color != "") { this.searchtypeId = 2; }
     else if (prosubgroupId > 0 && color != "") { this.searchtypeId = 3; }
     this.preparematerialsearch(material, searchtypeId, prosubgroupId, color, searchobj, this.priceListID);
+    
   }
   preparematerialsearch(material, searchtypeId, prosubgroupId, color, searchobj, pricelistId) {
-    debugger;
     this.material.SearchChkFlag = material.SearchChkFlag == undefined ? 0 : material.SearchChkFlag;
     this.material.DepthTypeID = material.DepthTypeID == undefined ? 0 : material.DepthTypeID;
     this.material.FinishTypeID = material.FinishTypeID == undefined ? 0 : material.FinishTypeID;
     if (this.material.SearchChkFlag != 0) {
       this.prosubgroupId = 0; this.searchtypeId = 2;
     }
-    this.service.ActionGetmaterialsearchrecords(color, this.material.SearchChkFlag, pricelistId, this.material.DepthTypeID, this.material.FinishTypeID, searchtypeId, prosubgroupId).subscribe(data => { this.productItems = data });
-    this.service.Actionpricegrouplists(pricelistId).subscribe(data => { this.pricegroups = data });
+    this.service.ActionGetmaterialsearchrecords(color, this.material.SearchChkFlag, pricelistId, this.material.DepthTypeID, this.material.FinishTypeID, searchtypeId, prosubgroupId).subscribe(data => { this.productItems = data;this.showLoader(1);  });
+    this.service.Actionpricegrouplists(pricelistId).subscribe(data => { this.pricegroups = data});
     this.preparesuppliersfromresults(this.productItems);
     this.showProductinventory = false; this.showProducts = true;
   }
@@ -189,12 +200,13 @@ export class AddmatComponent implements OnInit {
     }
   }
 
-  ActionPopulateMaterialSearch(productItem: any) {
+  ActionPopulateMaterialSearch(productItem: any) {debugger
     this.material = this.quoterep.popultaesearchiteminfo(this.material, this.subproductgroups, productItem);
     this.ActionClosePopup();
+    console.log(this.material)
   }
 
-  
+
 
   ActionCalculateMaterialCost(material) {
     if (material.Cost != 0 && material.CostDiscount != 0) {
@@ -207,7 +219,7 @@ export class AddmatComponent implements OnInit {
     //calcmaterialnetprice(material);
     this.material = this.quoterep.calcmaterialwasteamt(material);
   }
-  ActionCalculeteMargin = function (typeId, item, type) {
+  ActionCalculeteMargin = function (typeId, item, type) {debugger
     this.material = this.quoterep.margincalculations(typeId, item, type);
   }
   ActionCalculateMaterialSummary = function (material) {
@@ -225,10 +237,10 @@ export class AddmatComponent implements OnInit {
 
   /***** MATERIAL DETAILS *****/
   async ActionAddMeas(selName: string, ViewType: string, ev: any) {
-   // let sel = { selName: selName, material: this.material, finishItems: this.finishItems, thicknessItems: this.thicknessItems, partinfo: this.partinfo, areaInfo: this.areaInfo, ViewType: ViewType, Version: this.Version }
+    // let sel = { selName: selName, material: this.material, finishItems: this.finishItems, thicknessItems: this.thicknessItems, partinfo: this.partinfo, areaInfo: this.areaInfo, ViewType: ViewType, Version: this.Version }
     const popover = await this.popoverController.create({
       component: AddmeasComponent,
-     // componentProps: sel,
+      // componentProps: sel,
       event: ev,
       translucent: true,
       cssClass: "popover_class4"

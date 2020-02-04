@@ -12,14 +12,15 @@
       <ion-label class="labelfont" position="floating" color="primary">Job# & Name<span
           class="requiredField">*</span>
       </ion-label>
-      <ion-input [(ngModel)]="actinfo.JobName" name="JobName" type="text" #nameField="ngModel"
+      <ion-input [(ngModel)]="actinfo.JobName" name="JobName" type="text" #JobName="ngModel"
         (keyup.enter)="ActionApprovedJobList(actinfo.JobName,1)" required></ion-input>
       <ion-icon slot="end" class="mart25" name="arrow-dropdown" (click)="ActionApprovedJobList('',2)"></ion-icon>
       <ion-icon slot="end" class="mart25" name="search" (click)="ActionApprovedJobList(actinfo.JobName,1)"></ion-icon>
+      <div [hidden]="!form.submitted || JobName.valid" class="invalid-feedback padd-Left">
+        <div class="error">Select Job</div>
+      </div>
     </ion-item>
-    <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
-      <div class="error">Select Job</div>
-    </div>
+   
     <ion-item *ngIf="actinfo.ID > 0">
       <ion-label>
         <h2>{{actinfo.QuoteNo}} - {{actinfo.JobName}} -
@@ -31,24 +32,28 @@
       </ion-label>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked" color="primary" class="margin-zero">Activity Phase:</ion-label>
-      <ion-select (ionChange)="ActionChangePhase()" [(ngModel)]="actinfo.PhaseID" name="PhaseID" #nameField="ngModel" required [selectedText]="actinfo.PhaseName">
+      <ion-label position="stacked" color="primary" class="margin-zero">Activity Phase:<span
+        class="requiredField">*</span></ion-label>
+      <ion-select (ngModelChange)="ActionChangePhase($event)" [(ngModel)]="actinfo.PhaseID" name="PhaseID" #PhaseID="ngModel" required [selectedText]="actinfo.PhaseName">
         <ion-select-option *ngFor="let c of phaseList" [value]="c.ID">{{c.Name}}</ion-select-option>
       </ion-select>
+      <div [hidden]="!form.submitted  || (PhaseID.valid && PhaseID.touched)" class="invalid-feedback padd-Left">
+        <div class="error">Activity Phase is required</div>
+      </div>
     </ion-item>
-    <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
-      <div class="error">Activity Phase is required</div>
-    </div>
+  
     <ion-item>
-      <ion-label position="stacked" color="primary" class="margin-zero">Activity Type:</ion-label>
+      <ion-label position="stacked" color="primary" class="margin-zero">Activity Type:<span
+        class="requiredField">*</span></ion-label>
       <ion-select [(ngModel)]="actinfo.ActTypeID" name="ActTypeID" [selectedText]="actinfo.ActivityType"
-        #nameField="ngModel" (ngModelChange)="ActionGetStatusResourceList(actinfo.ActTypeID)" required>
+        #ActTypeID="ngModel" (ngModelChange)="ActionGetStatusResourceList($event)" required>
         <ion-select-option *ngFor="let c of ActTypeList" [value]="c.ID">{{c.Name}}</ion-select-option>
       </ion-select>
+      <div [hidden]="!form.submitted  || (ActTypeID.valid && ActTypeID.touched)" class="invalid-feedback padd-Left">
+        <div class="error">Activity Type is required</div>
+      </div>
     </ion-item>
-    <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
-      <div class="error">Activity Type is required</div>
-    </div>
+    
     <ion-item>
       <ion-label position="stacked" color="primary" class="margin-zero">Areas:</ion-label>
       <ion-select [(ngModel)]="actinfo.AreasName" name="AreasName" #itemSelected="ngModel" [selectedText]="actinfo.AreasName" multiple="true" (ngModelChange)="ActionGetSelectedAreas($event)">
@@ -166,8 +171,8 @@
 <ion-row *ngIf="IsResource" class="popupCls">
   <ion-toolbar>
     <ion-title class="titleheader resoucesty">Resources</ion-title>
-    <ion-button slot="end" color="success" size="small" type="submit" class="font11" (click)="ActionSaveResourceInfo()">
-      Select</ion-button>
+    <!-- <ion-button slot="end" color="success" size="small" type="submit" class="font11" (click)="ActionSaveResourceInfo()">
+      Select</ion-button> -->
     <ion-button slot="end" color="danger" size="small" (click)="ActionCloseResourcePopup()" class="font11">X
     </ion-button>
   </ion-toolbar>
@@ -176,7 +181,7 @@
       <ion-row style="width: 100%;">
         <ion-col size="8" class="paddzero">
           <span>
-            <ion-checkbox color="dark" name="Text" class="martb checksty" *ngIf="resource.CheckStatusID == 1"
+            <ion-checkbox color="dark" name="Text" class="martb checksty" disabled="disabled" *ngIf="resource.CheckStatusID == 1"
               [(ngModel)]="resource.Check" checked="resource.Check == 1"></ion-checkbox>
             <ion-checkbox color="dark" name="Text" class="martb checksty" *ngIf="resource.CheckStatusID == 0"
               (click)="ActionPushResource(resource)" [(ngModel)]="resource.Check" checked="resource.Check == 1">

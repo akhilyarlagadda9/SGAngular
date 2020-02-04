@@ -19,7 +19,7 @@ export class CalendarsettingComponent implements OnInit {
   '4:00 AM', '4:15 AM', '4:30 AM', '4:45 AM', '5:00 AM', '5:15 AM', '5:30 AM', '5:45 AM', '6:00 AM', '6:15 AM', '6:30 AM', '6:45 AM'
    ];
   calObj: any;IsShowPopup:boolean= false;
-  calViews = [{Id: 1,name:'Resource By Day',Type:"resourceTimeline"},{Id: 2,name:'Day By Resource',Type:"resourcegridView"}];
+  calViews = [{Id: 1,name:'Resource By Day',Type:"resourceTimeline"},{Id: 2,name:'Day By Resource',Type:"resourcegridView"},{Id: 3,name:'Day By Activity Type',Type:"resourcegridView"}];
   // calViews = [{Id: 1,name:'Resource By Day',Type:"resourceTimeline"},{Id: 2,name:'Day By Resource',Type:"resourcegridView"},{Id: 3,name:'Day By Time',Type:"timelineDay"},{Id: 4,name:'Day By Resource By Time',Type:"resourceTimeGrid"},];
   constructor(public Modalcntrl: ModalController,private schService: SchedulingService, private popoverCntrl: PopoverController) { }
 
@@ -32,8 +32,8 @@ export class CalendarsettingComponent implements OnInit {
    let model = this.calViews.find(s=>s.Id == Id);
    if(model != undefined && model != null){
     this.calObj.ViewName = model.name;
-    this.calObj.CalendarView =model.Type;
-    this.calObj.IsViewChange = true;
+    this.calObj.CalendarType =model.Type;
+    this.calObj.IsViewType = true;
    }
   }
   //Close Function
@@ -48,7 +48,8 @@ export class CalendarsettingComponent implements OnInit {
  
   async ActionFilterPopup(ev: any,filterTypeId,selIds,selNames) {
     let obj = {
-      FiterTypeID:filterTypeId,SelIDs:selIds,SelNames:selNames,ActTypeIDs:this.calObj.ActTypeIDs
+      FiterTypeID:filterTypeId,SelIDs:selIds,SelNames:selNames,ActTypeIDs:this.calObj.ActTypeIDs,
+      CheckedActTypeList:[]
     };
     const popover = await this.popoverCntrl.create({
       component: CalendarfilterComponent,
@@ -69,7 +70,9 @@ export class CalendarsettingComponent implements OnInit {
   }
   PopulateFilterInfo(filterId,info:any) {
     switch (filterId) {
-      case 1: {this.calObj.ActTypeIDs =info.SelIDs;this.calObj.ActTypes =info.SelNames;  break; }
+      case 1: {this.calObj.ActTypeIDs =info.SelIDs;this.calObj.ActTypes =info.SelNames;
+        this.calObj.ActTypeList = info.CheckedActTypeList;
+          break; }
       case 2: { this.calObj.ResourceIDs =info.SelIDs;this.calObj.ResourceNames =info.SelNames;break; }
       case 3: {this.calObj.StatusIDs =info.SelIDs;this.calObj.StatusNames =info.SelNames; break; }
     }

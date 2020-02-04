@@ -77,7 +77,7 @@ export class SchedulingPage implements OnInit {
     private schService: SchedulingService, private navCtrl: NavController, private datePipe: DatePipe) { }
 
   ngOnInit() {
-    let height = window.innerHeight - 20;
+    let height = window.innerHeight - 30;
     var _dafaultDate = new Date();
     this.options = {
       plugins: [interactionPlugin, dayGridPlugin, resourceTimelinePlugin, resourceTimeGridPlugin,resourceDayGridPlugin],
@@ -116,11 +116,13 @@ export class SchedulingPage implements OnInit {
 
   call(info) {
     console.log(info);
-    let start = moment(info.view.activeStart).utc().format("MM/DD/YYYY");
-    let today = moment(info.view.activeEnd).utc().format("MM/DD/YYYY");
+  //  let start = moment(info.view.activeStart).utc().format("MM/DD/YYYY");
+   // let today = moment(info.view.activeEnd).utc().format("MM/DD/YYYY");
+   let start = this.datePipe.transform(info.view.activeStart, "MM/dd/yyyy");
+   let end = this.datePipe.transform(info.view.activeEnd, "MM/dd/yyyy");
     this.calObj.CalendarView = info.view.type;
     this.calObj.StartDate = start;
-    this.calObj.EndDate = today;
+    this.calObj.EndDate = end;
     this.ActionEventsByFilterSettings();
     //this.ActionLoadEvents();
   }
@@ -175,7 +177,6 @@ export class SchedulingPage implements OnInit {
 
   }
   SetResouceEvents(item, filterIds) {
-    console.log(item.StartTime + "end---" + item.EndTime);
     var id = (item.ResourceIDs != null && item.ResourceIDs != "") ? item.ResourceIDs.split(',') : "0";
     for (var s = 0; s < id.length; s++) {
       let isexist = true;
@@ -249,9 +250,7 @@ export class SchedulingPage implements OnInit {
     this.SetResourceGridViewWith();
   }
   //Onclick event Info
-  async ActionOnEventSelected(ev) {
-    console.log(ev);
-    console.log(ev.ID);
+  async ActionOnEventSelected(ev) {  
     let obj = { actId: ev.event._def.extendedProps.ID, actTypeID: ev.event._def.extendedProps.ActivityTypeID, StartDate: ev.event._def.extendedProps.StartTime, EndDate: ev.event._def.extendedProps.EndTime }
     const modal = await this.Modalcntrl.create({
       component: ActinfoComponent,

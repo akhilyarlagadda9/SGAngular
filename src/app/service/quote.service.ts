@@ -139,6 +139,7 @@ ActionVersionMaterial(materialId:any):Observable<any>{
 ActionGetProductInfo(productId:any, locId:any, search:any, finishId:any, depthId:any, prosubgroupId:any):Observable<any>{
   return this.http.get<any>(this.url + 'api/inventory/ActionGetProductInfo?productId=' + productId + "&locId=" + locId + "&search=" + search + "&finishId=" + finishId + "&depthId=" + depthId + '&prosubgroupId=' + prosubgroupId) 
 }
+
 //Maretial stock info slab list function
 ActionInventoryDicLists(typeid:any):Observable<any> {
   let typeIdList = [typeid];

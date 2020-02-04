@@ -33,6 +33,12 @@ export class AddmatComponent implements OnInit {
   SlabList: any;
   size: any;
   materialId: any;
+  stockList: any;
+  productId: any;
+  locId: any;
+  search: any;
+  finishId: any;
+  depthId: any;
   //verId: any;
   //dictionaryObj: any;
   //arrObj: any;
@@ -49,6 +55,7 @@ export class AddmatComponent implements OnInit {
     }
     this.initdictlists();
     this.InitMaterial();
+    this.GetStockInfo();
 
   }
 
@@ -99,6 +106,7 @@ export class AddmatComponent implements OnInit {
 
     let slab = this.quoterep.SetInitSlabs();
     this.material.SlabList.push(slab);
+    
   }
   ActionToClose(issave) {
     // using the injected ModalController this page
@@ -116,7 +124,6 @@ export class AddmatComponent implements OnInit {
       if (typeof (this.material.RiskLevels) == 'object') { this.riskLevels = JSON.stringify(this.riskLevels) };
       this.service.ActionSaveMaterial(this.AreaID, this.material).subscribe(data => {
         this.ActionToClose(true);
-        debugger
       });
     }
   }
@@ -131,6 +138,11 @@ export class AddmatComponent implements OnInit {
   ActionSetAmount() {
     this.material.Amount = this.quoterep.calcitemamt(this.material.Qty, this.material.UnitPrice);
     this.material.Amt = this.material.Amount;
+  }
+
+  GetStockInfo() {
+    this.stockList = this.service.ActionGetProductInfo(this.productId,this.locId, this.search, this.finishId, this.depthId, this.prosubgroupId);
+    console.log(this.stockList);
   }
 
   ActionSetSqft(size, typeid) {
@@ -200,7 +212,7 @@ export class AddmatComponent implements OnInit {
     }
   }
 
-  ActionPopulateMaterialSearch(productItem: any) {debugger
+  ActionPopulateMaterialSearch(productItem: any) {
     this.material = this.quoterep.popultaesearchiteminfo(this.material, this.subproductgroups, productItem);
     this.ActionClosePopup();
     console.log(this.material)
@@ -219,7 +231,7 @@ export class AddmatComponent implements OnInit {
     //calcmaterialnetprice(material);
     this.material = this.quoterep.calcmaterialwasteamt(material);
   }
-  ActionCalculeteMargin = function (typeId, item, type) {debugger
+  ActionCalculeteMargin = function (typeId, item, type) {
     this.material = this.quoterep.margincalculations(typeId, item, type);
   }
   ActionCalculateMaterialSummary = function (material) {
@@ -235,17 +247,14 @@ export class AddmatComponent implements OnInit {
   //    return await popover.present();
   //  }
 
-  /***** MATERIAL DETAILS *****/
+  /***** STOCKIFO DETAILS *****/
   async ActionAddMeas(selName: string, ViewType: string, ev: any) {
-    // let sel = { selName: selName, material: this.material, finishItems: this.finishItems, thicknessItems: this.thicknessItems, partinfo: this.partinfo, areaInfo: this.areaInfo, ViewType: ViewType, Version: this.Version }
-    const popover = await this.popoverController.create({
+    let sel = { selName: selName, material: this.material, finishItems: this.finishItems, thicknessItems: this.thicknessItems,ViewType: ViewType,}
+    const modal = await this.Modalcntrl.create({
       component: AddmeasComponent,
-      // componentProps: sel,
-      event: ev,
-      translucent: true,
-      cssClass: "popover_class4"
+      componentProps: sel,
     });
-    return await popover.present();
+    return await modal.present();
   }
 
   async ActionSearchSelect(typeid, typeid2) {

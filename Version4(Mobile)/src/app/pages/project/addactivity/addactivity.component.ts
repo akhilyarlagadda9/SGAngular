@@ -94,8 +94,8 @@ export class AddactivityComponent implements OnInit {
       this.actinfo.PhaseName = actinfo.Name;
     }
   }
-  ActionChangePhase() {
-    let phase = this.phaseList.find(s => s.ID == this.actinfo.PhaseID);
+  ActionChangePhase(Id) {
+    let phase = this.phaseList.find(s => s.ID == Id);
     if (phase != null) {
       this.actinfo.PhaseID = phase.ID;
       this.actinfo.PhaseSrNo = phase.Code;
@@ -199,9 +199,8 @@ export class AddactivityComponent implements OnInit {
 
   }
   ActionSaveActivity(form: NgForm) {
-    if (form.valid) {
+    if (form.valid && form.touched) {
       if (this.actinfo.IsDateChange == true || this.actinfo.ID == 0) {
-
         this.schService.FollowUpStatus(this.actinfo).subscribe(data => {
           var follow = data; let obj: any;
           // Sunaday and Company Holiday
@@ -432,8 +431,8 @@ export class AddactivityComponent implements OnInit {
 
   //Activity info with dates Function
   ActionActivityInfoWithDates() {
-    let start = this.datePipe.transform(this.actinfo.PrevStartDate, "MM/dd/yyyy h:mm a");
-    let end = this.datePipe.transform(this.actinfo.PrevEndDate, "MM/dd/yyyy h:mm a");
+    let start = this.datePipe.transform(this.actinfo.SchStartTime, "MM/dd/yyyy h:mm a");
+    let end = this.datePipe.transform(this.actinfo.SchEndTime, "MM/dd/yyyy h:mm a");
     this.schService.ActTypeResListWithDates(this.actinfo.ActTypeID, start, end).subscribe(
       data => {
         this.resourceList = data;
@@ -451,21 +450,39 @@ export class AddactivityComponent implements OnInit {
     }
   }
   //Save Resource Function
-  ActionSaveResourceInfo() {
-    let resList = []
-    let chkList = this.ResourceList.map(function (elem) { if (elem.Check == 1) { return elem } { return 0 } });
-    this.schService.ActionSaveResourceInfo(chkList, this.actinfo.ActivityID).subscribe(data => {
-      this.ResourceList = data;
-    })
-  }
+
+
+
+  // ActionSaveResourceInfo() {
+  //   let resList = []
+  //   let chkList = this.ResourceList.map(function (elem) { if (elem.Check == 1) { return elem } { return 0 } });
+  //   this.schService.ActionSaveResourceInfo(chkList, this.actinfo.ActivityID).subscribe(data => {
+  //     this.ResourceList = data;
+  //   })
+  // }
   //Resources check function
   ActionPushResource(data: any) {
     this.IsSelectedPopulate = 0;
     if (data.Check == 1) {
-      let sDate = this.actinfo.PrevStartDate;
-      let eDate = this.actinfo.PrevEndDate;
-      this.schService.ActionCheckIsExistSameRes(this.actinfo.id, data.ResourceID, sDate, eDate).subscribe(data => {
+      let start = this.datePipe.transform(this.actinfo.SchStartTime, "MM/dd/yyyy h:mm a");
+      let end = this.datePipe.transform(this.actinfo.SchEndTime, "MM/dd/yyyy h:mm a");
+      this.schService.ActionCheckIsExistSameRes(this.actinfo.id, data.ResourceID, start, end).subscribe(data => {
         let success = data;
+        if (success != null && success != "") {
+        let obj = {
+            IsExistSunday: 1,
+            ShowCalFollowUp: 0,
+            Header: "Resource Schedule!",
+            ChangedDateType: "",
+            HolidayName: "",
+            Message: success + "Scheduled with same Resource same Time",
+            SubAlert: "Do you want to continue?",
+            ClickType: 2,
+          }
+          this.ShowConfirmAlert(obj);
+      } else {
+        
+      }
       })
     }
   }
@@ -478,9 +495,6 @@ export class AddactivityComponent implements OnInit {
     }
     this.actinfo.ResourceList.splice(index, 1);
   }
-
-
-
 }
 
 @Component({
@@ -493,8 +507,8 @@ export class AddactivityComponent implements OnInit {
     </ion-toolbar>
   </ion-header>
   <ion-list>
-    <ion-item *ngFor="let job of ApproveList" (click)="ActionJobSelect(job)" class="smallfont2">
-    <ion-row style="width:100%">
+   
+    <ion-row *ngFor="let job of ApproveList" (click)="ActionJobSelect(job)" class="smallfont2 paddall border-btm">
     <ion-col size="9">
       <b>{{job.Header.QuoteNo}} - V{{job.SrNo}} - {{job.Header.QuoteName}} </b>
       </ion-col>
@@ -502,7 +516,7 @@ export class AddactivityComponent implements OnInit {
       {{job.AcceptedDate | date:'MM/dd/yyyy'}}
       </ion-col>
       </ion-row>
-      </ion-item>
+     
   </ion-list>`,
   styleUrls: ['./addactivity.component.scss'],
 })

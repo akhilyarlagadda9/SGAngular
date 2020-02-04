@@ -117,6 +117,9 @@ ActionGetResoucreList() {
       for (let j in list) {
         let obj = list[j];
         if (obj.Check == 1) {
+          if(this.result.FiterTypeID == 1){
+            this.result.CheckedActTypeList.push({id:obj.ID,groupId: 0,title:obj.Name})
+          }
           Ids += obj.ID + ",";
           names += obj.Name + ",";
         }

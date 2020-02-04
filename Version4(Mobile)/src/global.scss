@@ -595,3 +595,24 @@ ion-icon{
       padding-right: 5px;
       padding-bottom: 5px;
   }
+   .fc-view-container .fc-resourcegridView_5days-view,
+   .fc-view-container .fc-resourcegridView_3days-view,
+   .fc-view-container .fc-resourcegridView-view {
+     overflow-x: scroll;
+   }
+   :root{
+       --reswidth : 400px;
+   }
+   .fc-resourcegridView_5days-view table,
+   .fc-resourcegridView_3days-view table,
+   .fc-resourcegridView-view table{
+       min-width: var(--reswidth);
+   }
+  
+//   .fc-resourcegridView-view .fc-axis{
+//       position: fixed;
+//   }
+//   .fc-resourcegridView-view .fc-resource-cell, 
+//   .fc-resourcegridView-view .fc-day{
+//     width:120px;
+//    }

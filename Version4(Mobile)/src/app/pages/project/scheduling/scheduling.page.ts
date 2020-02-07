@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Inject, LOCALE_ID, Input } from '@angular/core';
 //import { CalendarComponent } from 'ionic2-calendar/calendar';
 import { ModalController, LoadingController, PopoverController, NavParams } from '@ionic/angular';
-import { formatDate } from '@angular/common';
+//import { formatDate } from '@angular/common';
 import { ActinfoComponent } from '../actinfo/actinfo.component';
 import { OverlayEventDetail } from '@ionic/core';
 import { SchedulingService } from 'src/app/service/scheduling.service';
@@ -11,7 +11,7 @@ import { DatePipe } from '@angular/common';
 
 import { AddactivityComponent } from '../addactivity/addactivity.component';
 import { CalendarfilterComponent } from '../calendarfilter/calendarfilter.component';
-import * as moment from 'moment';
+//import * as moment from 'moment';
 
 // Calendar Components
 import { OptionsInput } from '@fullcalendar/core';
@@ -22,6 +22,8 @@ import { FullCalendarComponent } from '@fullcalendar/angular';
 import { CalendarsettingComponent } from '../calendarsetting/calendarsetting.component';
 import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
+
+import momentTimezonePlugin from '@fullcalendar/moment-timezone';
 
 
 
@@ -44,12 +46,14 @@ import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
 schedulerLicenseKey ="GPL-My-Project-Is-Open-Source"
 defaultView="resourceTimeline_3days"
 themeSystem= 'cerulean'
+[timeZone]="UTC"
 [header]="{
   left: 'prev',
   center: 'title',
   right: 'next'
 }"
-[lazyFetching]="false"
+minTime = "06:00:00"
+maxTime = "22:00:00"
 [height]="options.height"
 [views]="options.views"
 [plugins]="options.plugins"
@@ -80,13 +84,13 @@ export class SchedulingPage implements OnInit {
     let height = window.innerHeight - 30;
     var _dafaultDate = new Date();
     this.options = {
-      plugins: [interactionPlugin, dayGridPlugin, resourceTimelinePlugin, resourceTimeGridPlugin,resourceDayGridPlugin],
+      plugins: [interactionPlugin, dayGridPlugin, resourceTimelinePlugin, resourceTimeGridPlugin,resourceDayGridPlugin,momentTimezonePlugin],
       height: height,
       views: {
         //resource by day
         resourceTimeline: { type: 'timeline', duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00", },
         resourceTimeline_3days: {
-          type: 'resourceTimeline', slotDuration: { days: 1 }, buttonText: "resource",duration: { days: 3 }
+          type: 'resourceTimeline', slotDuration: { days: 1 }, buttonText: "resource",duration: { days: 3 },dayCount:1,
         },
         resourceTimeline_5days: {
           type: 'resourceTimeline', slotDuration: { days: 1 },buttonText: "resource", duration: { days: 5 }
@@ -101,6 +105,12 @@ export class SchedulingPage implements OnInit {
         resourcegridView: {
           type: 'resourceDayGrid',duration: { days: 1 },buttonText: "resource",
         },
+        resourceTimeGrid_3days: {
+          type: 'resourceTimeGrid',duration: { days: 3 },buttonText: "resource",
+        },
+        
+        // Day by Timeline
+        restimelineDay: { type: 'resourceTimeline', duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00", },
       },
     }
   }
@@ -115,20 +125,21 @@ export class SchedulingPage implements OnInit {
   }
 
   call(info) {
+    debugger;
     console.log(info);
-  //  let start = moment(info.view.activeStart).utc().format("MM/DD/YYYY");
-   // let today = moment(info.view.activeEnd).utc().format("MM/DD/YYYY");
-   let start = this.datePipe.transform(info.view.activeStart, "MM/dd/yyyy");
-   let end = this.datePipe.transform(info.view.activeEnd, "MM/dd/yyyy");
-    this.calObj.CalendarView = info.view.type;
+    if(info.view.type != "restimelineDay"){
+      let start = this.datePipe.transform(info.view.activeStart, "MM/dd/yyyy");
+      let end = this.datePipe.transform(info.view.activeEnd, "MM/dd/yyyy");
     this.calObj.StartDate = start;
     this.calObj.EndDate = end;
+    }
+    this.calObj.CalendarView = info.view.type;
     this.ActionEventsByFilterSettings();
     //this.ActionLoadEvents();
   }
   
   ActionEventsByFilterSettings(){
-    if(this.calObj.CalID == 3){
+    if(this.calObj.CalID == 3 || this.calObj.CalendarView == "restimelineDay"){
       this.ActionLoadEvents();
     }else{
       this.ActionGetResList();
@@ -137,13 +148,13 @@ export class SchedulingPage implements OnInit {
 
 
   ActionRenderEvent(evnt) {
-    var stime = this.datePipe.transform(evnt.event.start, "h:mm a");
-    var etime = this.datePipe.transform(evnt.event.end, "h:mm a");
+    let event = evnt.event.extendedProps;
     var htmlstring = '';
     htmlstring = "<div style='font-size: 13px;white-space: normal' >";
-    htmlstring += "<div>" + evnt.event.extendedProps.ActivityType + "</div>";
-    htmlstring += "<div style='font-size: 10px;'>" + stime + " - " + etime + "</div>";
-    htmlstring += "<div>" + evnt.event.extendedProps.QuoteNo + "-" + evnt.event.extendedProps.QuoteName + "</div>";
+    htmlstring += "<div>" + event.ActivityType + 
+    "<img class='ico' src='" + event.Imageurl + "' width='20' height='20'>" + "</div>";
+    htmlstring += "<div style='font-size: 10px;'>" + event.StartTime + " - " + event.EndTime + "</div>";
+    htmlstring += "<div>" +event.QuoteNo + "-" + event.QuoteName + "</div>";
     htmlstring += "</div>"
     evnt.el.innerHTML = htmlstring;
   }
@@ -156,9 +167,10 @@ export class SchedulingPage implements OnInit {
       let resids = "";
       this.schService.ActionQuickActList(this.calObj.StartDate, this.calObj.EndDate, this.calObj.Search, this.calObj.ActTypeIDs, 0, this.calObj.ResourceIDs, this.calObj.StatusIDs).subscribe(data => {
         this.actlist = [];
-        if(this.calObj.CalID == 3){
+        if(this.calObj.CalID == 3 || this.calObj.CalendarView == "restimelineDay"){
           for (let j in data) {
             let item = data[j];
+            item.Imageurl = '/StoneApp.App/DigitalContent/Status/' + item.StatusIcon;
             this.SetActTypeEvents(item);
           }
         }else{
@@ -168,6 +180,7 @@ export class SchedulingPage implements OnInit {
           }
           for (let j in data) {
             let item = data[j];
+            item.Imageurl = '/StoneApp.App/DigitalContent/Status/' + item.StatusIcon;
             this.SetResouceEvents(item, filterIds);
           }
         }
@@ -177,6 +190,8 @@ export class SchedulingPage implements OnInit {
 
   }
   SetResouceEvents(item, filterIds) {
+    let sDate = new Date(item.StartDate);
+    let eDate = new Date(item.EndDate);
     var id = (item.ResourceIDs != null && item.ResourceIDs != "") ? item.ResourceIDs.split(',') : "0";
     for (var s = 0; s < id.length; s++) {
       let isexist = true;
@@ -185,12 +200,23 @@ export class SchedulingPage implements OnInit {
         filterIds.map(function (elem) { if (elem == id[s]) { isexist = true; } });
       }
       if (isexist == true) {
-        this.actlist.push({ title: item.QuoteNo, start: item.StartTime, end: item.EndTime, id: item.ID,resourceId: id[s],resourceIds: [id[s]], DragResId: id[s], backgroundColor: item.ActBgColor, textColor: item.ActTextColor, borderColor: item.ActTextColor, extendedProps: item });
+        this.actlist.push({ title: item.QuoteNo, start: sDate, end: eDate, id: item.ID,resourceId: id[s],resourceIds: [id[s]], DragResId: id[s], backgroundColor: item.ActBgColor, textColor: item.ActTextColor, borderColor: item.ActTextColor, extendedProps: item });
       }
     }
   }
   SetActTypeEvents(item) {
-  this.actlist.push({ title: item.QuoteNo, start: item.StartTime, end: item.EndTime, id: item.ID,resourceId: item.ActivityTypeID,resourceIds: [item.ActivityTypeID],backgroundColor: item.ActBgColor, textColor: item.ActTextColor, borderColor: item.ActTextColor, extendedProps: item });
+    let sDate= new Date(item.StartDate);
+    let eDate = new Date(item.EndDate);
+    let extid= item.ActivityTypeID;
+    if(this.calObj.CalendarView == "restimelineDay"){
+
+     // sTime = this.datePipe.transform(sDate, "MM/dd/yyyy")
+      extid = this.datePipe.transform(sDate, "MM/dd/yyyy");
+    }
+    //let sDate = this.calObj.CalendarView == "restimelineDay" ? new Date(item.StartDate): new Date(item.StartDate);
+   // let eDate = this.calObj.CalendarView == "restimelineDay" ? new Date(item.StartDate): new Date(item.EndDate);
+  // let extid =  this.calObj.CalendarView == "restimelineDay" ? this.datePipe.transform(sDate, "MM/dd/yyyy") : item.ActivityTypeID;
+  this.actlist.push({ title: item.QuoteNo, start: sDate, end: eDate, id: item.ID,resourceId: extid,resourceIds: [extid],backgroundColor: item.ActBgColor, textColor: item.ActTextColor, borderColor: item.ActTextColor, extendedProps: item });
   }
 
   ActionRefreshCalendar(){
@@ -240,6 +266,8 @@ export class SchedulingPage implements OnInit {
   }
 
   LoadFilterView() {
+debugger;
+    //this.PrepareDays();
     this.resources = this.calObj.CalID == 3 ? this.calObj.ActTypeList:this.actResources;
     if (this.calObj.IsViewChange == true || this.calObj.IsViewType == true) {
       this.SetCalendarOptions();
@@ -349,11 +377,15 @@ export class SchedulingPage implements OnInit {
   }
 
   SetCalendarOptions(){
-    if(this.calObj.CalendarDays == "1"){ // day view
+    debugger;
+    if(this.calObj.CalendarDays == "1" || this.calObj.CalendarType == "restimelineDay"){ // day view
       this.calObj.CalendarView =this.calObj.CalendarType; 
     }
     else{ // for multi day view
       this.calObj.CalendarView = this.calObj.CalendarType +  "_" + this.calObj.CalendarDays + "days";
+    }
+    if(this.calObj.CalendarView == "restimelineDay"){
+       this.PrepareDays();
     }
     let calendarApi = this.fullcalendar.getApi();
    // calendarApi.changeView(this.calObj.CalendarView);
@@ -367,8 +399,9 @@ export class SchedulingPage implements OnInit {
 ChangedViewEvents(){
   let sdate =  new Date(this.calObj.StartDate);
   sdate.setDate(sdate.getDate() + Number(this.calObj.CalendarDays));
-  this.calObj.StartDate = moment(this.calObj.StartDate).utc().format("MM/DD/YYYY");;
-  this.calObj.EndDate = moment(sdate).utc().format("MM/DD/YYYY");
+  this.calObj.StartDate = this.datePipe.transform(this.calObj.StartDate, "MM/dd/yyyy");
+ // this.calObj.StartDate = moment(this.calObj.StartDate).utc().format("MM/DD/YYYY");;
+  this.calObj.EndDate = this.datePipe.transform(sdate,"MM/dd/yyyy");
   this.ActionEventsByFilterSettings();
 }
 
@@ -382,6 +415,20 @@ ChangedViewEvents(){
     }
     document.documentElement.style.setProperty("--reswidth",width)
   }
+
+ PrepareDays(){
+   this.resources = [];
+   var startDate = new Date(this.calObj.StartDate.valueOf());
+   let start = startDate;
+   for (var s = 0; s < this.calObj.CalendarDays; s++) {
+    start.setDate(startDate.getDate() + s);
+   let start4 = this.datePipe.transform(start, "MM/dd/yyyy");
+   this.calObj.EndDate = start4;
+    this.resources.push({id:start4,title:start4});
+   }
+ }
+
+
 }
 
 

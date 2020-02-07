@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar style="top:5px;"><ion-title>Areas:</ion-title>
+    <ion-button slot="end" size="small" (click)="ActionRunFilter()">Select</ion-button>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop(false)">X</ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-row style="height:360px">
+    <ion-col size="12">
+      <ion-item>  <ion-checkbox style="width:30px" color="dark" [(ngModel)]="flagtoCheckResStatus" (click)="ActionAll()"></ion-checkbox><font size="4">ALL</font></ion-item>
+      <div *ngIf="arrAreaInfo!='undefined'">
+      <ion-item  *ngFor="let item of arrAreaInfo">
+        <ion-checkbox style="width:30px" color="dark" [(ngModel)]="item.IsChgFlag" (ngModelChange)="ActionIsselectAll()"></ion-checkbox>
+        {{item.Area.Name}}
+    </ion-item>
+    </div>
+    </ion-col>
+    
+  </ion-row>
+</ion-content>

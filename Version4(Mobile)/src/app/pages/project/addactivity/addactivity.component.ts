@@ -5,6 +5,7 @@ import { OverlayEventDetail } from '@ionic/core';
 import { DatePipe, formatDate } from '@angular/common';
 import { NgForm } from '@angular/forms';
 import { ActinfoComponent } from '../actinfo/actinfo.component';
+import {AreaPartsComponent} from '../area-parts/area-parts.component';
 @Component({
   selector: 'app-addactivity',
   templateUrl: './addactivity.component.html',
@@ -20,6 +21,7 @@ export class AddactivityComponent implements OnInit {
   IsSelectedPopulate: number;
   resourceList: any;
   QuotePartList: any;
+  arrShowItems:any;
   constructor(public Modalcntrl: ModalController, private schService: SchedulingService,
     public popoverCntrl: PopoverController, private navParams: NavParams,
     private datePipe: DatePipe, private alertCtrl: AlertController) { }
@@ -43,6 +45,26 @@ export class AddactivityComponent implements OnInit {
 
     console.log(this.actinfo);
   }
+ //Areas popup
+  async ActionOpenAreaPart(){
+    let objAreaInfo = {PhasePartList:this.PhasePartList, ActPartIds:this.actinfo.ActPartIds, ActAreaParts:this.actinfo.ActAreaParts};
+    const popover = await this.popoverCntrl.create({
+      component: AreaPartsComponent,
+      componentProps: objAreaInfo,
+    });
+
+    popover.onDidDismiss().then((result: OverlayEventDetail) => {
+      console.log(result);
+      if (result.data.componentProps !== null && result.data.componentProps != undefined) {
+        if (result.data.isSelect == true) {
+        this.arrShowItems = (result.data.componentProps);
+        }
+        //do something may be
+      }
+    });
+    return await popover.present();
+}
+
   ActionActivityInfo() {
     let start = this.datePipe.transform(this.actinfo.SchStartTime, "MM-dd-yyyy");
     let result = this.schService.ActivityInfo(this.actinfo.ID, this.actinfo.ActTypeID, start, start).subscribe(

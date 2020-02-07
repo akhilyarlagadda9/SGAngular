@@ -55,11 +55,14 @@
     </ion-item>
     
     <ion-item>
-      <ion-label position="stacked" color="primary" class="margin-zero">Areas:</ion-label>
-      <ion-select [(ngModel)]="actinfo.AreasName" name="AreasName" #itemSelected="ngModel" [selectedText]="actinfo.AreasName" multiple="true" (ngModelChange)="ActionGetSelectedAreas($event)">
+      <ion-label position="stacked" color="primary" class="margin-zero" (click)="ActionOpenAreaPart()">Areas:</ion-label>
+    <div *ngFor="let item of arrShowItems" (click)="ActionOpenAreaPart()"> 
+      {{item.Area.ID}} - {{item.Area.Name}}
+    </div>
+      <!-- <ion-select [(ngModel)]="actinfo.AreasName" name="AreasName" #itemSelected="ngModel" [selectedText]="actinfo.AreasName" multiple="true" (ngModelChange)="ActionGetSelectedAreas($event)">
         <ion-select-option [value]="0" selected="selected">ALL</ion-select-option>
         <ion-select-option *ngFor="let part of QuotePartList" [value]="part.ID">{{part.AreaName}} - Part{{part.NewSrNo}} - {{part.JobSqft}} SF</ion-select-option>
-      </ion-select>
+      </ion-select> -->
     </ion-item>
     <ion-item>
       <ion-label position="floating" color="primary" class="margin-zero">Activity Status:</ion-label>

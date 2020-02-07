@@ -32,13 +32,13 @@ export class AddmatComponent implements OnInit {
   showProductinventory1: boolean;
   SlabList: any;
   size: any;
-  materialId: any;
+  materialId: number;
   stockList: any;
-  productId: any;
-  locId: any;
+  productId: number;
+  locId: number;
   search: any;
-  finishId: any;
-  depthId: any;
+  finishId: number;
+  depthId: number;
   //verId: any;
   //dictionaryObj: any;
   //arrObj: any;
@@ -55,7 +55,7 @@ export class AddmatComponent implements OnInit {
     }
     this.initdictlists();
     this.InitMaterial();
-    this.GetStockInfo();
+    //this.GetStockInfo();
 
   }
 
@@ -140,10 +140,17 @@ export class AddmatComponent implements OnInit {
     this.material.Amt = this.material.Amount;
   }
 
-  GetStockInfo() {
-    this.stockList = this.service.ActionGetProductInfo(this.productId,this.locId, this.search, this.finishId, this.depthId, this.prosubgroupId);
+  /* GetStockInfo() {
+    this.stockList = this.service.ActionGetProductInfo(this.prosubgroupId);
     console.log(this.stockList);
-  }
+  } */
+
+ /*  GetStockInfo() {debugger
+    this.service.ActionGetProductInfo(this.material.ProductItemID,1, this.material.Description, this.material.FinishID, this.material.DepthID, this.material.ProSubGroupID).subscribe(
+
+      data => { this.stockList = data; console.log(this.stockList); }
+    );
+  } */
 
   ActionSetSqft(size, typeid) {
     size.Sqft = this.quoterep.calcsqft(size.Width, size.Height);
@@ -248,8 +255,8 @@ export class AddmatComponent implements OnInit {
   //  }
 
   /***** STOCKIFO DETAILS *****/
-  async ActionAddMeas(selName: string, ViewType: string, ev: any) {
-    let sel = { selName: selName, material: this.material, finishItems: this.finishItems, thicknessItems: this.thicknessItems,ViewType: ViewType,}
+  async ActionAddMeas() {
+    let sel = {material: this.material, finishItems: this.finishItems, thicknessItems: this.thicknessItems}
     const modal = await this.Modalcntrl.create({
       component: AddmeasComponent,
       componentProps: sel,

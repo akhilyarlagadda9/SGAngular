@@ -21,7 +21,7 @@ export class AddactivityComponent implements OnInit {
   IsSelectedPopulate: number;
   resourceList: any;
   QuotePartList: any;
-  arrShowItems:any;
+  //arrShowItems:any;
   constructor(public Modalcntrl: ModalController, private schService: SchedulingService,
     public popoverCntrl: PopoverController, private navParams: NavParams,
     private datePipe: DatePipe, private alertCtrl: AlertController) { }
@@ -40,7 +40,7 @@ export class AddactivityComponent implements OnInit {
       this.ActionPhaseist();
     }
     if (this.actinfo.PhaseID > 0) {
-      this.ActionPhasePartList();
+      this.ActionPhasePartList(0);
     }
 
     console.log(this.actinfo);
@@ -57,12 +57,23 @@ export class AddactivityComponent implements OnInit {
       console.log(result);
       if (result.data.componentProps !== null && result.data.componentProps != undefined) {
         if (result.data.isSelect == true) {
-        this.arrShowItems = (result.data.componentProps);
+        this.actinfo.QuotePartList = (result.data.componentProps);
+        this.SetAreaPartIDs();
         }
         //do something may be
       }
     });
     return await popover.present();
+}
+SetAreaPartIDs(){
+  let Ids = ""; let sqft = 0;
+  for (let j in this.actinfo.QuotePartList) {
+    let obj = this.actinfo.QuotePartList[j];
+      Ids += obj.ID + ",";
+      sqft += obj.JobSqft;
+  }
+  this.actinfo.ActPartIds = Ids.replace(/(^,)|(,$)/g, "");
+  this.actinfo.PhaseSF = sqft; 
 }
 
   ActionActivityInfo() {
@@ -123,15 +134,20 @@ export class AddactivityComponent implements OnInit {
       this.actinfo.PhaseSrNo = phase.Code;
       this.actinfo.MatTypeID = phase.MatTypeID;
       this.actinfo.MaterialName = phase.Materials;
-      this.ActionPhasePartList();
+      this.ActionPhasePartList(1);
     }
   }
   //Phase part List function
-  ActionPhasePartList() {
+  ActionPhasePartList(ischange) {
     this.actinfo.ActPartIds = this.actinfo.ActPartIds == undefined ? null : this.actinfo.ActPartIds;
     this.actinfo.Area = this.actinfo.Area == undefined ? null : this.actinfo.Area;
     this.schService.ActionPhasePartList(this.actinfo.VersionID, this.actinfo.PhaseID, this.actinfo.ActTypeID, this.actinfo.ActPartIds, this.actinfo.Area).subscribe(
-      data => { this.PhasePartList = data; }
+      data => { this.PhasePartList = data; 
+        if(ischange == 1){
+          this.actinfo.QuotePartList =this.PhasePartList;
+          this.SetAreaPartIDs();
+        }
+       }
     );
   }
 
@@ -157,11 +173,32 @@ export class AddactivityComponent implements OnInit {
       this.PreapareActivity(data);
     });
   }
+
   //Status List Function
   ActionStatusList() {
     this.schService.ActionStatusList().subscribe(data => {
       this.statusList = data;
     });
+  }
+  ActionSetStatus(id){
+   let statusinfo = this.statusList.find(s=>s.ID == id);
+   if(statusinfo != undefined &&  statusinfo != null){
+     if(id == 5){
+    let currDate = this.datePipe.transform(new Date(), "MM-dd-yyyy");
+    let actStartYear = this.datePipe.transform(this.actinfo.ActualStartDate, "yyyy");
+    let actEndYear = this.datePipe.transform(this.actinfo.ActualEndDate, "yyyy");
+    if ((actStartYear == "0001" || actStartYear == "0000")) {
+      this.actinfo.ActualStartDate = currDate + " " + this.actinfo.STime;
+    }
+    if ((actEndYear == "0001" || actEndYear == "0000")) {
+      this.actinfo.ActualEndDate = currDate + " " + this.actinfo.ETime;
+    }
+  }
+    this.actinfo.StatusName = statusinfo.Name;
+    this.actinfo.IconPath = statusinfo.IconPath;
+   }
+    
+
   }
   //Close add activity function
   ActionCloseActivity(issave) {
@@ -408,6 +445,10 @@ export class AddactivityComponent implements OnInit {
         this.ConfirmSaveActInfo();
         break;
       }
+      case 3: {
+        this.ConfirmResPopulate(event.model);
+        break;
+      }
     }
   }
   ConfirmSaveActInfo() {
@@ -419,7 +460,37 @@ export class AddactivityComponent implements OnInit {
       this.ActionCloseActivity(true);
     })
   }
-
+  ConfirmResPopulate(data){
+    var addToArray = true;
+    var model = {
+    ResourceName:data.ResourceName,
+    ResourceID:data.ResourceID,
+    ActivityID:this.actinfo.ID,
+    IsActive:data.IsActive,
+    EmpMail:data.EmpMail,
+    EmpPinNo:data.EmpPin,
+    EmpPhone:data.EmpPhone,
+    Provider:data.Provider,
+    }   
+    if (this.actinfo.ResourceList == null) {
+      this.actinfo.ResourceList = [];
+    }
+    addToArray = this.isCheck(this.actinfo.ResourceList, data.ResourceID);
+    if (addToArray) {
+      this.actinfo.ResourceList.push(model);
+    }
+  }
+   isCheck(list, id) {
+    var addToArray = true;
+    if (list != null && list != undefined) {
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].ResourceID === id) {
+                addToArray = false;
+            }
+        }
+    }
+    return addToArray;
+}
   GetDuration(type) {
     var hrs = this.actinfo.Hrs;
     var mins = this.actinfo.Mins;
@@ -483,12 +554,12 @@ export class AddactivityComponent implements OnInit {
   //   })
   // }
   //Resources check function
-  ActionPushResource(data: any) {
+  ActionPushResource(ev,resource) {
     this.IsSelectedPopulate = 0;
-    if (data.Check == 1) {
+    if (ev == true) {
       let start = this.datePipe.transform(this.actinfo.SchStartTime, "MM/dd/yyyy h:mm a");
       let end = this.datePipe.transform(this.actinfo.SchEndTime, "MM/dd/yyyy h:mm a");
-      this.schService.ActionCheckIsExistSameRes(this.actinfo.id, data.ResourceID, start, end).subscribe(data => {
+      this.schService.ActionCheckIsExistSameRes(this.actinfo.ID, resource.ResourceID, start, end).subscribe(data => {
         let success = data;
         if (success != null && success != "") {
         let obj = {
@@ -499,11 +570,12 @@ export class AddactivityComponent implements OnInit {
             HolidayName: "",
             Message: success + "Scheduled with same Resource same Time",
             SubAlert: "Do you want to continue?",
-            ClickType: 2,
+            ClickType: 3,
+            model: resource,
           }
           this.ShowConfirmAlert(obj);
       } else {
-        
+        this.ConfirmResPopulate(resource);
       }
       })
     }

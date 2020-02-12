@@ -10,48 +10,58 @@ export class AreaPartsComponent implements OnInit {
   objAreaInfo: any=this.navParams.data;
   arrChekedItems:any=[];
   arrAreaInfo:any;
-  flagtoCheckResStatus:boolean = false;
+  AllCheck:boolean = false;
   constructor(public Modalcntrl: ModalController,
     public popoverCntrl: PopoverController, private navParams: NavParams,private alertCtrl: AlertController) { }
 
   ngOnInit() {
+    let check = this.objAreaInfo.ActPartIds == "" || this.objAreaInfo.ActPartIds == null ? 1 : 0;
+    let array = check == 0 ? this.objAreaInfo.ActPartIds.split(",") : [];
     if(this.objAreaInfo.PhasePartList.length>0){
+
+     
       this.arrAreaInfo = this.objAreaInfo.PhasePartList;
       let checkCount = 0;
       this.arrAreaInfo.forEach(element => {
-      if(element.IsChgFlag == true){
-        checkCount++;
-      }
+        element.AreaName = element.Area.Name;
+        let res = array.find(s => s == element.ID);
+        if ((res != null && res != undefined)) {
+          element.Check = 1;
+          checkCount++;
+        }
+      // if(element.Check == true){
+      //   checkCount++;
+      // }
     });
-    this.flagtoCheckResStatus = checkCount==this.arrAreaInfo.length?true:false;
+    this.AllCheck = checkCount==this.arrAreaInfo.length?true:false;
     }
     else{
-      this.flagtoCheckResStatus= false;
+      this.AllCheck= false;
     }
   }
 
   ActionAll(){
     let arrList = this.objAreaInfo.PhasePartList;
-    this.flagtoCheckResStatus = !this.flagtoCheckResStatus;
+    this.AllCheck = !this.AllCheck;
     for (var i = 0; i < arrList.length; i++) {
-     arrList[i].IsChgFlag = this.flagtoCheckResStatus;
+     arrList[i].Check = this.AllCheck;
    }
-   this.flagtoCheckResStatus = !this.flagtoCheckResStatus;
+   this.AllCheck = !this.AllCheck;
    }
    ActionIsselectAll(){
      let arrList = this.objAreaInfo.PhasePartList;
      let count = 0;
      arrList.forEach(element => {
-      if(element.IsChgFlag == true){
+      if(element.Check == true){
         count++;
       }
      });
-      this.flagtoCheckResStatus = count==arrList.length?true:false;
+      this.AllCheck = count==arrList.length?true:false;
    }
 //Saving operation
     ActionRunFilter() {
      for(let i in this.objAreaInfo.PhasePartList){
-        if(this.objAreaInfo.PhasePartList[i].IsChgFlag == true){
+        if(this.objAreaInfo.PhasePartList[i].Check == true){
           this.arrChekedItems.push(this.objAreaInfo.PhasePartList[i]);
         }
      }

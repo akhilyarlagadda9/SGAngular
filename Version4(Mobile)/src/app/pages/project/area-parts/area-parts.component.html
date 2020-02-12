@@ -7,10 +7,10 @@
 <ion-content>
   <ion-row style="height:360px">
     <ion-col size="12">
-      <ion-item>  <ion-checkbox style="width:30px" color="dark" [(ngModel)]="flagtoCheckResStatus" (click)="ActionAll()"></ion-checkbox><font size="4">ALL</font></ion-item>
+      <ion-item>  <ion-checkbox style="width:30px" color="dark" [(ngModel)]="AllCheck" (click)="ActionAll()"></ion-checkbox><font size="4">ALL</font></ion-item>
       <div *ngIf="arrAreaInfo!='undefined'">
       <ion-item  *ngFor="let item of arrAreaInfo">
-        <ion-checkbox style="width:30px" color="dark" [(ngModel)]="item.IsChgFlag" (ngModelChange)="ActionIsselectAll()"></ion-checkbox>
+        <ion-checkbox style="width:30px" color="dark" [(ngModel)]="item.Check" (ngModelChange)="ActionIsselectAll()"></ion-checkbox>
         {{item.Area.Name}}
     </ion-item>
     </div>

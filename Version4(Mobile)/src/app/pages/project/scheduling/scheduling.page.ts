@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Inject, LOCALE_ID, Input } from '@angular/core';
 //import { CalendarComponent } from 'ionic2-calendar/calendar';
-import { ModalController, LoadingController, PopoverController, NavParams } from '@ionic/angular';
+import { ModalController, LoadingController, PopoverController, NavParams, Platform } from '@ionic/angular';
 //import { formatDate } from '@angular/common';
 import { ActinfoComponent } from '../actinfo/actinfo.component';
 import { OverlayEventDetail } from '@ionic/core';
@@ -23,11 +23,11 @@ import { CalendarsettingComponent } from '../calendarsetting/calendarsetting.com
 import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
 
-import momentTimezonePlugin from '@fullcalendar/moment-timezone';
+//import momentTimezonePlugin from '@fullcalendar/moment-timezone';
 
 
 
-
+declare var thisObj: any;
 @Component({
   selector: 'app-scheduling',
   // template: `<div id="calendar"></div>`,
@@ -41,20 +41,29 @@ import momentTimezonePlugin from '@fullcalendar/moment-timezone';
   <ion-fab vertical="bottom" horizontal="end">
   <ion-button  color="primary" (click)="ActionAddActivity(0)"><ion-icon name="add"></ion-icon> </ion-button>
  </ion-fab>
+  <ion-content>
+  <ion-list class="paddzero no-margin">
+  <ion-row>
+  <ion-col size="2">
+  <button type="button" class="fc-prev-button fc-button fc-button-primary" aria-label="prev" (click)="ActionNavigateView('prev')"><span class="fc-icon fc-icon-chevron-left"></span></button>
+  </ion-col>
+  <ion-col size="8" class="text-center"><h2 class="nomargin fontsmall">{{CalendarTitle}}</h2></ion-col>
+  <ion-col size="2" class="text-right">
+  <button type="button" class="fc-next-button fc-button fc-button-primary" aria-label="next" (click)="ActionNavigateView('next')"><span class="fc-icon fc-icon-chevron-right"></span></button>
+  </ion-col>
+  </ion-row>
+  </ion-list>
    <full-calendar
 #calendar
 schedulerLicenseKey ="GPL-My-Project-Is-Open-Source"
 defaultView="resourceTimeline_3days"
 themeSystem= 'cerulean'
-[timeZone]="UTC"
-[header]="{
-  left: 'prev',
-  center: 'title',
-  right: 'next'
-}"
+[height]="options.height"
+[header]="false"
+[resourceAreaWidth]="options.resourceAreaWidth"
 minTime = "06:00:00"
 maxTime = "22:00:00"
-[height]="options.height"
+
 [views]="options.views"
 [plugins]="options.plugins"
 (datesRender)="call($event)"
@@ -62,58 +71,62 @@ maxTime = "22:00:00"
 [resources]="resources"
 (eventRender)="ActionRenderEvent($event)"
 (eventClick)="ActionOnEventSelected($event)"
-></full-calendar>`,
+></full-calendar> </ion-content>`,
 
   //styleUrls: ['./scheduling.page.scss'],
   providers: [DatePipe]
 })
 export class SchedulingPage implements OnInit {
-  calendar: any; actlist: any = []; resources: any = []; options: OptionsInput;eventinfo:any;
-  actResources:any = [];
+  calendar: any; actlist: any = []; resources: any = []; options: OptionsInput; eventinfo: any;
+  actResources: any = []; width: number;
   @ViewChild('calendar', { static: false }) fullcalendar: FullCalendarComponent;
+  CalendarTitle: any;ActiveDate:Date;
   calObj: any = {
     StartDate: Date, EndDate: Date, ActTypeIDs: "11", ActTypes: "Template", ResourceIDs: "", ResourceNames: "ALL", StatusIDs: "", StatusNames: "ALL",
-    CalID: 1,CalendarType:"resourceTimeline", CalendarView: "resourceTimeline_3days", CalendarDays: 3, CalFields: "", Search: "", UserId: 0,
+    CalID: 1, CalendarType: "resourceTimeline", CalendarView: "resourceTimeline_3days", CalendarDays: 3, CalFields: "", Search: "", UserId: 0,
     IsViewType: false, IsViewChange: false, starttime: "7:00 AM", endtime: "8:00 PM",
-    ActTypeList:[{id:11,groupId: 0,title:"Template"}]
+    ActTypeList: [{ id: 11, groupId: 0, title: "Template" }]
   }
   constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) private locale: string, public loadingController: LoadingController,
-    private schService: SchedulingService, private navCtrl: NavController, private datePipe: DatePipe) { }
+    private schService: SchedulingService, private navCtrl: NavController, private datePipe: DatePipe, private plt: Platform) { }
 
   ngOnInit() {
-    let height = window.innerHeight - 30;
+    let height = window.innerHeight - 110; this.width = window.innerWidth;
     var _dafaultDate = new Date();
     this.options = {
-      plugins: [interactionPlugin, dayGridPlugin, resourceTimelinePlugin, resourceTimeGridPlugin,resourceDayGridPlugin,momentTimezonePlugin],
+      plugins: [interactionPlugin, dayGridPlugin, resourceTimelinePlugin, resourceTimeGridPlugin, resourceDayGridPlugin],
       height: height,
+      resourceAreaWidth: this.plt.is('desktop') ? 180 : 100,
       views: {
         //resource by day
-        resourceTimeline: { type: 'timeline', duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00", },
+        resourceTimeline: { type: 'timeline', editable: true, duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00", },
         resourceTimeline_3days: {
-          type: 'resourceTimeline', slotDuration: { days: 1 }, buttonText: "resource",duration: { days: 3 },dayCount:1,
+          type: 'resourceTimeline', slotDuration: { days: 1 }, buttonText: "resource", duration: { days: 3 }, dayCount: 1,
         },
         resourceTimeline_5days: {
-          type: 'resourceTimeline', slotDuration: { days: 1 },buttonText: "resource", duration: { days: 5 }
+          type: 'resourceTimeline', slotDuration: { days: 1 }, buttonText: "resource", duration: { days: 5 }
         },
         //day by resource
         resourcegridView_5days: {
-          type: 'resourceDayGrid',duration: { days: 5 }, buttonText: "resource",
+          type: 'resourceDayGrid', duration: { days: 5 }, buttonText: "resource",
         },
         resourcegridView_3days: {
-          type: 'resourceDayGrid',duration: { days: 3 },buttonText: "resource",
+          type: 'resourceDayGrid', duration: { days: 3 }, buttonText: "resource",
         },
         resourcegridView: {
-          type: 'resourceDayGrid',duration: { days: 1 },buttonText: "resource",
+          type: 'resourceDayGrid', duration: { days: 1 }, buttonText: "resource",
         },
         resourceTimeGrid_3days: {
-          type: 'resourceTimeGrid',duration: { days: 3 },buttonText: "resource",
+          type: 'resourceTimeGrid', duration: { days: 3 }, buttonText: "resource",
         },
-        
         // Day by Timeline
         restimelineDay: { type: 'resourceTimeline', duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00", },
       },
     }
+    ///thisObj = this;
   }
+
+
 
   ngAfterViewInit() {
     this.resources = [
@@ -125,55 +138,130 @@ export class SchedulingPage implements OnInit {
   }
 
   call(info) {
-    debugger;
-    console.log(info);
-    if(info.view.type != "restimelineDay"){
+    this.ActiveDate = info.view.activeStart;
+    if(info.view.type == "restimelineDay"){
+      this.calObj.StartDate = this.datePipe.transform(this.calObj.StartDate, "MM/dd/yyyy");
+      this.calObj.EndDate = this.datePipe.transform(this.calObj.EndDate, "MM/dd/yyyy");
+    }
+    if (info.view.type != "restimelineDay") {
+      this.CalendarTitle = info.view.title;
       let start = this.datePipe.transform(info.view.activeStart, "MM/dd/yyyy");
       let end = this.datePipe.transform(info.view.activeEnd, "MM/dd/yyyy");
-    this.calObj.StartDate = start;
-    this.calObj.EndDate = end;
+      this.calObj.StartDate = start;
+      this.calObj.EndDate = end;
     }
     this.calObj.CalendarView = info.view.type;
     this.ActionEventsByFilterSettings();
     //this.ActionLoadEvents();
   }
-  
-  ActionEventsByFilterSettings(){
-    if(this.calObj.CalID == 3 || this.calObj.CalendarView == "restimelineDay"){
+
+  ActionNavigateView(navtype) {
+    let calendarApi = this.fullcalendar.getApi();
+    if (this.calObj.CalendarView == "restimelineDay") {
+      let sDate = new Date(this.calObj.StartDate);
+      let daycount = navtype == "prev" ? -this.calObj.CalendarDays: this.calObj.CalendarDays; 
+      sDate.setDate(sDate.getDate() + daycount);
+      this.calObj.StartDate = sDate;
+      this.PrepareDays(navtype);
+    }
+    if (navtype == "prev") {
+      calendarApi.prev();
+    } else {
+      calendarApi.next();
+    }
+   
+  }
+
+  GetNavDates(view) {
+    console.log(view);
+    let start = this.datePipe.transform(view.activeStart, "MM/dd/yyyy");
+    // For Prev
+    let prevbutton = <HTMLElement>document.body.querySelector(".fc-prev-button");
+    prevbutton.addEventListener("click", () => { this.calObj.StartDate = start; this.PrepareDays("prev") });
+    //For Next
+    let nextbutton = <HTMLElement>document.body.querySelector(".fc-next-button");
+    nextbutton.addEventListener("click", () => { this.calObj.StartDate = start; this.PrepareDays("next") });
+  }
+
+  ActionEventsByFilterSettings() {
+    if (this.calObj.CalID == 3 || this.calObj.CalendarView == "restimelineDay") {
       this.ActionLoadEvents();
-    }else{
+    } else {
       this.ActionGetResList();
     }
   }
 
 
   ActionRenderEvent(evnt) {
+    this.PrepareEventHtml(evnt);
+    // if (this.plt.is('desktop')){
+    //   this.PrepareEventForDesktop(evnt);
+    // }else{
+    //   this.PrepareEventHtml(evnt);
+    // }
+
+
+
+
+  }
+  PrepareEventHtml(evnt) {
     let event = evnt.event.extendedProps;
     var htmlstring = '';
     htmlstring = "<div style='font-size: 13px;white-space: normal' >";
-    htmlstring += "<div>" + event.ActivityType + 
-    "<img class='ico' src='" + event.Imageurl + "' width='20' height='20'>" + "</div>";
+    htmlstring += "<div>" + event.ActivityType + "</div>";
+    // "<img class='ico' src='" + event.Imageurl + "' width='20' height='20'>" + "</div>";
     htmlstring += "<div style='font-size: 10px;'>" + event.StartTime + " - " + event.EndTime + "</div>";
-    htmlstring += "<div>" +event.QuoteNo + "-" + event.QuoteName + "</div>";
+    htmlstring += "<div>" + event.QuoteNo + "-" + event.QuoteName + "</div>";
     htmlstring += "</div>"
     evnt.el.innerHTML = htmlstring;
   }
-
-  ActionResourceRender(info) {
-    // info.el.innerHTML =htmlstring; 
+  PrepareEventForDesktop(evnt) {
+    let event = evnt.event.extendedProps; var htmlstring = '';
+    htmlstring = "<table style='margin-top:2px'>";
+    htmlstring += "<tr><td valign='middle' width='90%' class='editact' style='font-size: 13px;border:0;color:" + event.ActTextColor + ";background:" + event.ActBgColor + "'>" + "&nbsp;" + event.ActivityType + "</td>";
+    htmlstring += "<td style='border:0' valign='top' width='10%' align='center'>" + "<span>" + "<img class='ico' src='" + event.Imageurl + "' width='20' height='20'>" + "</span>" + "</td></tr>";
+    htmlstring += "<tr><td style='border:0' colspan='2'><table width='100%' style='color: gray;font-size: 10px;'>";
+    if (this.width < 1600) {
+      htmlstring += "<tr><td style='border:0' valign='top' width='100%' align='left'>" + "<div class='timeCls' style='color:orangered;font-size: 12px;'>" + event.sTime + " - " + event.eTime + "</div>" + "</td></tr>";
+      htmlstring += "<tr><td style='border:0' valign='top' width='100%' align='left'>" + "<div align='right'>" + event.salPerson + "</div>" + "</td></tr>";
+      htmlstring += "</table></td></tr>";
+    } else {
+      htmlstring += "<tr>";
+      htmlstring += "<td style='border:0' valign='top' width='30%' align='left'>" + "<div class='timeCls' style='color:orangered;font-size: 12px;'>" + event.sTime + " - " + event.eTime + "</div>" + "</td>";
+      htmlstring += "<td style='border:0' valign='top' width='70%' align='left'>" + "<div align='right'>" + event.salPerson + "</div>" + "</td>";
+      htmlstring += "</tr></table></td></tr>";
+    }
+    if (event.ProjectManagerID > 0) {
+      htmlstring += "<tr><td style='border:0;color: grey;' colspan='2' valign='top' width='70%' align='left'>" + "<div align='left'>" + event.ProjectManager + "</div>" + "</td></tr>";
+    }
+    // var qno = (event != undefined && event.QuoteNo != "") ? '#' + event.QuoteNo : "";
+    var jobname = (event != undefined && event.QuoteName != "") ? " - " + event.QuoteName : "";
+    htmlstring += "<tr><td style='border:0' colspan='2' valign='top' align='left'><div style='color:black;font-size: 13px' class='actdiv font-bold'>" + "<span style='color:blue;font-size: 14px'>" + event.QuoteNo + "</span>" + (event.PhaseSrNo > 0 ? " - P " + event.PhaseSrNo : "");
+    htmlstring += jobname;
+    htmlstring += "</div><td></tr>"
+    //htmlstring += "<tr><td style='border:0' align='right' colspan='2' style='border:0;' ><table  width='100%'><tr><td style='border:0' valign='top' width='50%'>" + layApp + "</td>";
+    //var buttonText = event.LayApproval == 1 || event.actTypeId == 45 ? "Send" : "Notes";
+    htmlstring += "<td align='right' style='border:0;color:blue;text-decoration:underline' width='50%' class='notecls' >" + "Notes" + "</td></tr></table></td></tr>";
+    event.ResourceNames = (event.ResourceNames == null || event.ResourceNames == "") ? "resource+" : event.ResourceNames;
+    var rcolor = event.ResourceNames == "resource+" ? "Red" : "Blue";
+    var resourceString = "<tr><td style='border:0;background:#ddd;' colspan='2' valign='top' align='left'>" + "<div class='col-xs-2 pleft pright' style='line-height: 22px;width: 10%'>" + "<img src='/StoneApp.App/DigitalContent/resources.PNG' width='19' height='19'>" + "</div>" + "<div style='text-align:left;border-bottom:none;color:" + rcolor + "' width='90%' class='resCls actdiv wordwrap col-xs-10 pleft pright' title='" + event.ResourceNames + "'>" + event.ResourceNames + "</div>" + "</div></td></tr>";
+    htmlstring += "<div style='float:right'>" + resourceString + "</div>";
+    htmlstring += "</td></tr>" + + "</table>";
+    evnt.el.innerHTML = htmlstring;
   }
+
   ActionLoadEvents() {
     if (this.calObj.CalendarView != "" && this.calObj.CalendarView != undefined) {
       let resids = "";
       this.schService.ActionQuickActList(this.calObj.StartDate, this.calObj.EndDate, this.calObj.Search, this.calObj.ActTypeIDs, 0, this.calObj.ResourceIDs, this.calObj.StatusIDs).subscribe(data => {
         this.actlist = [];
-        if(this.calObj.CalID == 3 || this.calObj.CalendarView == "restimelineDay"){
+        if (this.calObj.CalID == 3 || this.calObj.CalendarView == "restimelineDay") {
           for (let j in data) {
             let item = data[j];
             item.Imageurl = '/StoneApp.App/DigitalContent/Status/' + item.StatusIcon;
             this.SetActTypeEvents(item);
           }
-        }else{
+        } else {
           let filterIds = this.calObj.ResourceIDs;
           if (filterIds != "" && filterIds.length > 1) {
             filterIds = filterIds.split(',');
@@ -184,7 +272,7 @@ export class SchedulingPage implements OnInit {
             this.SetResouceEvents(item, filterIds);
           }
         }
-        
+
       });
     }
 
@@ -200,32 +288,29 @@ export class SchedulingPage implements OnInit {
         filterIds.map(function (elem) { if (elem == id[s]) { isexist = true; } });
       }
       if (isexist == true) {
-        this.actlist.push({ title: item.QuoteNo, start: sDate, end: eDate, id: item.ID,resourceId: id[s],resourceIds: [id[s]], DragResId: id[s], backgroundColor: item.ActBgColor, textColor: item.ActTextColor, borderColor: item.ActTextColor, extendedProps: item });
+        this.actlist.push({ title: item.QuoteNo, start: sDate, end: eDate, id: item.ID, resourceId: id[s], resourceIds: [id[s]], DragResId: id[s], backgroundColor: item.ActBgColor, textColor: item.ActTextColor, borderColor: item.ActTextColor, extendedProps: item });
       }
     }
   }
   SetActTypeEvents(item) {
-    let sDate= new Date(item.StartDate);
+    let sDate = new Date(item.StartDate);
     let eDate = new Date(item.EndDate);
-    let extid= item.ActivityTypeID;
-    if(this.calObj.CalendarView == "restimelineDay"){
-
-     // sTime = this.datePipe.transform(sDate, "MM/dd/yyyy")
+    let extid = item.ActivityTypeID;
+    if (this.calObj.CalendarView == "restimelineDay") {
       extid = this.datePipe.transform(sDate, "MM/dd/yyyy");
+      sDate = new Date(this.datePipe.transform(this.ActiveDate, "MM/dd/yyyy") + " " + item.StartTime);
+      eDate = new Date(this.datePipe.transform(this.ActiveDate, "MM/dd/yyyy") + " " + item.EndTime);
     }
-    //let sDate = this.calObj.CalendarView == "restimelineDay" ? new Date(item.StartDate): new Date(item.StartDate);
-   // let eDate = this.calObj.CalendarView == "restimelineDay" ? new Date(item.StartDate): new Date(item.EndDate);
-  // let extid =  this.calObj.CalendarView == "restimelineDay" ? this.datePipe.transform(sDate, "MM/dd/yyyy") : item.ActivityTypeID;
-  this.actlist.push({ title: item.QuoteNo, start: sDate, end: eDate, id: item.ID,resourceId: extid,resourceIds: [extid],backgroundColor: item.ActBgColor, textColor: item.ActTextColor, borderColor: item.ActTextColor, extendedProps: item });
+    this.actlist.push({ title: item.QuoteNo, start: sDate, end: eDate, id: item.ID, resourceId: extid, resourceIds: [extid], backgroundColor: item.ActBgColor, textColor: item.ActTextColor, borderColor: item.ActTextColor, extendedProps: item });
   }
 
-  ActionRefreshCalendar(){
-    this.calObj.ActTypeIDs= "11,24"; this.calObj.ActTypes= "Template,Install";
-    this.calObj.ResourceIDs= "";this.calObj.ResourceNames="ALL"; 
-    this.calObj.StatusIDs= ""; this.calObj.StatusNames= "ALL"
-    this.calObj.CalID= 1,
-    // this.calObj.CalendarView= "resourceTimeline";
-    this.calObj.CalendarDays= 3, this.calObj.CalFields= ""; this.calObj.Search= ""; this.calObj.UserId= 0;
+  ActionRefreshCalendar() {
+    this.calObj.ActTypeIDs = "11"; this.calObj.ActTypes = "Template";
+    this.calObj.ResourceIDs = ""; this.calObj.ResourceNames = "ALL";
+    this.calObj.StatusIDs = ""; this.calObj.StatusNames = "ALL"
+    this.calObj.CalID = 1,
+      // this.calObj.CalendarView= "resourceTimeline";
+      this.calObj.CalendarDays = 3, this.calObj.CalFields = ""; this.calObj.Search = ""; this.calObj.UserId = 0;
     this.calObj.IsViewChange = false;
     this.ActionEventsByFilterSettings();
     //this.ActionGetResList();
@@ -264,22 +349,11 @@ export class SchedulingPage implements OnInit {
     });
     return await modal.present();
   }
-
-  LoadFilterView() {
-debugger;
-    //this.PrepareDays();
-    this.resources = this.calObj.CalID == 3 ? this.calObj.ActTypeList:this.actResources;
-    if (this.calObj.IsViewChange == true || this.calObj.IsViewType == true) {
-      this.SetCalendarOptions();
-    }
-    else {
-      this.ActionEventsByFilterSettings();
-    }
-    this.SetResourceGridViewWith();
-  }
   //Onclick event Info
-  async ActionOnEventSelected(ev) {  
-    let obj = { actId: ev.event._def.extendedProps.ID, actTypeID: ev.event._def.extendedProps.ActivityTypeID, StartDate: ev.event._def.extendedProps.StartTime, EndDate: ev.event._def.extendedProps.EndTime }
+  async ActionOnEventSelected(ev) {
+    let sDate = new Date(ev.event._def.extendedProps.StartDate);
+    let eDate = new Date(ev.event._def.extendedProps.EndDate);
+    let obj = { actId: ev.event._def.extendedProps.ID, actTypeID: ev.event._def.extendedProps.ActivityTypeID, StartDate: sDate, EndDate: eDate }
     const modal = await this.Modalcntrl.create({
       component: ActinfoComponent,
       componentProps: obj
@@ -301,15 +375,13 @@ debugger;
     });
     return await modal.present();
   }
-
   //Add events
   async ActionAddActivity(Id: number) {
-
     let actinfo = {
       ID: Id, VersionID: 0, PhaseID: 0, ActTypeID: 11, ResourceList: [], SchStartTime: new Date(), SchEndTime: new Date(),
       ProjectID: 0, JobName: "", TypeID: 0
     }
-    actinfo = Id > 0 ?  this.eventinfo : actinfo
+    actinfo = Id > 0 ? this.eventinfo : actinfo
     //let viewtypeId = { viewtypeId: viewId }
     const modal = await this.Modalcntrl.create({
       component: AddactivityComponent,
@@ -319,8 +391,8 @@ debugger;
     modal.onDidDismiss().then((result: OverlayEventDetail) => {
       if (result.data !== null && result.data != undefined) {
         if (result.data.issave == true) {
-         // this.UpdateActivty(result.data.componentProps);
-         this.ActionLoadEvents();
+          // this.UpdateActivty(result.data.componentProps);
+          this.ActionLoadEvents();
         }
         //this.calObj.ActTypeID = result.data.ActTypeId;
         // this.calObj.ResourceIds = result.data.ResourceIds;
@@ -341,10 +413,10 @@ debugger;
     let quickInfo = this.PrepareActInfo(info);
     if (info.ExtID > 0) {
       let calendarApi = this.fullcalendar.getApi();
-      var event = calendarApi.getEventById(info.ID) 
+      var event = calendarApi.getEventById(info.ID)
       event.remove();
     }
-  //  this.ActionPushEvents(quickInfo, filterIds);
+    //  this.ActionPushEvents(quickInfo, filterIds);
   }
   PrepareActInfo(info) {
     let item: any;
@@ -375,58 +447,73 @@ debugger;
   ActionGoToHome() {
     this.navCtrl.navigateRoot('/home');
   }
-
-  SetCalendarOptions(){
-    debugger;
-    if(this.calObj.CalendarDays == "1" || this.calObj.CalendarType == "restimelineDay"){ // day view
-      this.calObj.CalendarView =this.calObj.CalendarType; 
+  LoadFilterView() {
+    this.resources = this.calObj.CalID == 3 ? this.calObj.ActTypeList : this.actResources;
+    if (this.calObj.IsViewChange == true || this.calObj.IsViewType == true) {
+      this.SetCalendarOptions();
     }
-    else{ // for multi day view
-      this.calObj.CalendarView = this.calObj.CalendarType +  "_" + this.calObj.CalendarDays + "days";
+    else {
+      this.ActionEventsByFilterSettings();
     }
-    if(this.calObj.CalendarView == "restimelineDay"){
-       this.PrepareDays();
+    this.SetResourceGridViewWith();
+  }
+  SetCalendarOptions() {
+    if (this.calObj.CalendarDays == "1" || this.calObj.CalendarType == "restimelineDay" || this.calObj.CalendarType == "dayGridWeek") { // day view
+      this.calObj.CalendarView = this.calObj.CalendarType;
+    }
+    else { // for multi day view
+      this.calObj.CalendarView = this.calObj.CalendarType + "_" + this.calObj.CalendarDays + "days";
+    }
+    if (this.calObj.CalendarView == "restimelineDay") {
+      this.PrepareDays("curr");
     }
     let calendarApi = this.fullcalendar.getApi();
-   // calendarApi.changeView(this.calObj.CalendarView);
     calendarApi.changeView(this.calObj.CalendarView, this.calObj.StartDate);
-    if(this.calObj.IsViewChange == false && this.calObj.IsViewType == true){
+    if (this.calObj.IsViewChange == false && this.calObj.IsViewType == true && this.calObj.CalendarType != "dayGridWeek") {
       this.ChangedViewEvents();
     }
     this.calObj.IsViewChange = false;
-   
-  }
-ChangedViewEvents(){
-  let sdate =  new Date(this.calObj.StartDate);
-  sdate.setDate(sdate.getDate() + Number(this.calObj.CalendarDays));
-  this.calObj.StartDate = this.datePipe.transform(this.calObj.StartDate, "MM/dd/yyyy");
- // this.calObj.StartDate = moment(this.calObj.StartDate).utc().format("MM/DD/YYYY");;
-  this.calObj.EndDate = this.datePipe.transform(sdate,"MM/dd/yyyy");
-  this.ActionEventsByFilterSettings();
-}
 
-  SetResourceGridViewWith(){
+  }
+  ChangedViewEvents() {
+    let sdate = new Date(this.calObj.StartDate);
+    sdate.setDate(sdate.getDate() + Number(this.calObj.CalendarDays));
+    this.calObj.StartDate = this.datePipe.transform(this.calObj.StartDate, "MM/dd/yyyy");
+    // this.calObj.StartDate = moment(this.calObj.StartDate).utc().format("MM/DD/YYYY");;
+    this.calObj.EndDate = this.datePipe.transform(sdate, "MM/dd/yyyy");
+    this.ActionEventsByFilterSettings();
+  }
+
+  SetResourceGridViewWith() {
     let width = window.innerWidth + "px";
-    if(this.calObj.ResourceIDs != "" && this.calObj.ResourceIDs != null && this.calObj.CalID == 1){
-    let array = this.calObj.ResourceIDs.split(",");
-    width = array.length * 100 * Number(this.calObj.CalendarDays)  + "px";
-    }else{
-      width = this.resources.length * 100 * Number(this.calObj.CalendarDays)  + "px";
+    if (this.calObj.ResourceIDs != "" && this.calObj.ResourceIDs != null && this.calObj.CalID == 1) {
+      let array = this.calObj.ResourceIDs.split(",");
+      width = array.length * 100 * Number(this.calObj.CalendarDays) + "px";
+    } else {
+      width = this.resources.length * 100 * Number(this.calObj.CalendarDays) + "px";
     }
-    document.documentElement.style.setProperty("--reswidth",width)
+    document.documentElement.style.setProperty("--reswidth", width)
   }
 
- PrepareDays(){
-   this.resources = [];
-   var startDate = new Date(this.calObj.StartDate.valueOf());
-   let start = startDate;
-   for (var s = 0; s < this.calObj.CalendarDays; s++) {
-    start.setDate(startDate.getDate() + s);
-   let start4 = this.datePipe.transform(start, "MM/dd/yyyy");
-   this.calObj.EndDate = start4;
-    this.resources.push({id:start4,title:start4});
-   }
- }
+  PrepareDays(navtype) {
+    this.resources = [];
+    var startDate = new Date(this.calObj.StartDate.valueOf());
+    for (var s = 0; s < this.calObj.CalendarDays; s++) {
+      let start = startDate;
+      if (s > 0) {
+        start.setDate(startDate.getDate() + 1);
+      }
+      let start4 = this.datePipe.transform(start, "MM/dd/yyyy");
+      
+      this.resources.push({ id: start4, title: start4 });
+    }
+    
+    let stitle = this.datePipe.transform(this.calObj.StartDate, "MMM dd");
+    let title = stitle + " - " + this.datePipe.transform(startDate, "MMM dd, yyyy");
+    this.CalendarTitle = title;
+    startDate.setDate(startDate.getDate() + 1);
+    this.calObj.EndDate =  startDate;
+  }
 
 
 }
@@ -488,4 +575,3 @@ ChangedViewEvents(){
     //  // this.ActionGetResList();
     //   //this.ActionLoadEvents();
     // }
-    

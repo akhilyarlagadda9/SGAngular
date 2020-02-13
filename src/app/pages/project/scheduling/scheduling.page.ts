@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Inject, LOCALE_ID, Input } from '@angular/core';
 //import { CalendarComponent } from 'ionic2-calendar/calendar';
-import { ModalController, LoadingController, PopoverController, NavParams, Platform } from '@ionic/angular';
+import { ModalController, LoadingController, PopoverController, NavParams } from '@ionic/angular';
 //import { formatDate } from '@angular/common';
 import { ActinfoComponent } from '../actinfo/actinfo.component';
 import { OverlayEventDetail } from '@ionic/core';
@@ -26,8 +26,7 @@ import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
 //import momentTimezonePlugin from '@fullcalendar/moment-timezone';
 
 
-
-declare var thisObj: any;
+declare var platform: string;
 @Component({
   selector: 'app-scheduling',
   // template: `<div id="calendar"></div>`,
@@ -58,6 +57,7 @@ declare var thisObj: any;
 schedulerLicenseKey ="GPL-My-Project-Is-Open-Source"
 defaultView="resourceTimeline_3days"
 themeSystem= 'cerulean'
+resourceLabelText= " "
 [height]="options.height"
 [header]="false"
 [resourceAreaWidth]="options.resourceAreaWidth"
@@ -88,7 +88,7 @@ export class SchedulingPage implements OnInit {
     ActTypeList: [{ id: 11, groupId: 0, title: "Template" }]
   }
   constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) private locale: string, public loadingController: LoadingController,
-    private schService: SchedulingService, private navCtrl: NavController, private datePipe: DatePipe, private plt: Platform) { }
+    private schService: SchedulingService, private navCtrl: NavController, private datePipe: DatePipe) { }
 
   ngOnInit() {
     let height = window.innerHeight - 110; this.width = window.innerWidth;
@@ -96,7 +96,7 @@ export class SchedulingPage implements OnInit {
     this.options = {
       plugins: [interactionPlugin, dayGridPlugin, resourceTimelinePlugin, resourceTimeGridPlugin, resourceDayGridPlugin],
       height: height,
-      resourceAreaWidth: this.plt.is('desktop') ? 180 : 100,
+      resourceAreaWidth: platform == 'desktop' ? 180 : 100,
       views: {
         //resource by day
         resourceTimeline: { type: 'timeline', editable: true, duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00", },
@@ -193,12 +193,12 @@ export class SchedulingPage implements OnInit {
 
 
   ActionRenderEvent(evnt) {
-    this.PrepareEventHtml(evnt);
-    // if (this.plt.is('desktop')){
-    //   this.PrepareEventForDesktop(evnt);
-    // }else{
-    //   this.PrepareEventHtml(evnt);
-    // }
+   // this.PrepareEventHtml(evnt);
+    if (platform == 'desktop'){
+      this.PrepareEventForDesktop(evnt);
+    }else{
+      this.PrepareEventHtml(evnt);
+    }
 
 
 
@@ -217,36 +217,41 @@ export class SchedulingPage implements OnInit {
   }
   PrepareEventForDesktop(evnt) {
     let event = evnt.event.extendedProps; var htmlstring = '';
-    htmlstring = "<table style='margin-top:2px'>";
+    if(event.ResourceNames == null || event.ResourceNames == ""){
+      event.ResourceNames = "resource+";
+    }
+    var rcolor = event.ResourceNames == "resource+" ? "Red" : "Blue";
+    var qno = (event != undefined && event.QuoteNo != "") ? '#' + event.QuoteNo : "";
+    var jobname = (event != undefined && event.QuoteName != "") ? " - " + event.QuoteName : "";
+    var CustType = (event.CustType == null || event.CustType == "") ? "" : " - " + event.CustType;
+    var Zipcode = event.Zipcode != null && event.Zipcode != "" ? "-" + event.Zipcode : "";
+    var addressString = "<div class='actdiv'  style='font-size:13px' title='" + '' + "'>" + event.City + "," + event.State + Zipcode + "</div>";
+    var resourceString = "<tr><td style='border:0;background:#ddd;' colspan='2' valign='top' align='left'><div style='text-align:left;border-bottom:none;white-space: pre-wrap;color:" + rcolor + "' width='90%' class='resCls wrap' title='" + event.ResourceNames + "'>" + event.ResourceNames + "</div>" + "</td></tr>";
+    htmlstring = "<table width='100%'>";
     htmlstring += "<tr><td valign='middle' width='90%' class='editact' style='font-size: 13px;border:0;color:" + event.ActTextColor + ";background:" + event.ActBgColor + "'>" + "&nbsp;" + event.ActivityType + "</td>";
     htmlstring += "<td style='border:0' valign='top' width='10%' align='center'>" + "<span>" + "<img class='ico' src='" + event.Imageurl + "' width='20' height='20'>" + "</span>" + "</td></tr>";
     htmlstring += "<tr><td style='border:0' colspan='2'><table width='100%' style='color: gray;font-size: 10px;'>";
     if (this.width < 1600) {
-      htmlstring += "<tr><td style='border:0' valign='top' width='100%' align='left'>" + "<div class='timeCls' style='color:orangered;font-size: 12px;'>" + event.sTime + " - " + event.eTime + "</div>" + "</td></tr>";
-      htmlstring += "<tr><td style='border:0' valign='top' width='100%' align='left'>" + "<div align='right'>" + event.salPerson + "</div>" + "</td></tr>";
+      htmlstring += "<tr><td style='border:0' valign='top' width='100%' align='left'>" + "<div class='timeCls' style='color:orangered;font-size: 12px;'>" + event.StartTime + " - " + event.EndTime + "</div>" + "</td></tr>";
+      htmlstring += "<tr><td style='border:0' valign='top' width='100%' align='left'>" + "<div align='right'>" + event.SalesPerson + "</div>" + "</td></tr>";
       htmlstring += "</table></td></tr>";
     } else {
       htmlstring += "<tr>";
       htmlstring += "<td style='border:0' valign='top' width='30%' align='left'>" + "<div class='timeCls' style='color:orangered;font-size: 12px;'>" + event.sTime + " - " + event.eTime + "</div>" + "</td>";
-      htmlstring += "<td style='border:0' valign='top' width='70%' align='left'>" + "<div align='right'>" + event.salPerson + "</div>" + "</td>";
+      htmlstring += "<td style='border:0' valign='top' width='70%' align='left'>" + "<div align='right'>" + event.SalesPerson + "</div>" + "</td>";
       htmlstring += "</tr></table></td></tr>";
     }
     if (event.ProjectManagerID > 0) {
       htmlstring += "<tr><td style='border:0;color: grey;' colspan='2' valign='top' width='70%' align='left'>" + "<div align='left'>" + event.ProjectManager + "</div>" + "</td></tr>";
     }
-    // var qno = (event != undefined && event.QuoteNo != "") ? '#' + event.QuoteNo : "";
-    var jobname = (event != undefined && event.QuoteName != "") ? " - " + event.QuoteName : "";
-    htmlstring += "<tr><td style='border:0' colspan='2' valign='top' align='left'><div style='color:black;font-size: 13px' class='actdiv font-bold'>" + "<span style='color:blue;font-size: 14px'>" + event.QuoteNo + "</span>" + (event.PhaseSrNo > 0 ? " - P " + event.PhaseSrNo : "");
-    htmlstring += jobname;
-    htmlstring += "</div><td></tr>"
-    //htmlstring += "<tr><td style='border:0' align='right' colspan='2' style='border:0;' ><table  width='100%'><tr><td style='border:0' valign='top' width='50%'>" + layApp + "</td>";
-    //var buttonText = event.LayApproval == 1 || event.actTypeId == 45 ? "Send" : "Notes";
-    htmlstring += "<td align='right' style='border:0;color:blue;text-decoration:underline' width='50%' class='notecls' >" + "Notes" + "</td></tr></table></td></tr>";
-    event.ResourceNames = (event.ResourceNames == null || event.ResourceNames == "") ? "resource+" : event.ResourceNames;
-    var rcolor = event.ResourceNames == "resource+" ? "Red" : "Blue";
-    var resourceString = "<tr><td style='border:0;background:#ddd;' colspan='2' valign='top' align='left'>" + "<div class='col-xs-2 pleft pright' style='line-height: 22px;width: 10%'>" + "<img src='/StoneApp.App/DigitalContent/resources.PNG' width='19' height='19'>" + "</div>" + "<div style='text-align:left;border-bottom:none;color:" + rcolor + "' width='90%' class='resCls actdiv wordwrap col-xs-10 pleft pright' title='" + event.ResourceNames + "'>" + event.ResourceNames + "</div>" + "</div></td></tr>";
-    htmlstring += "<div style='float:right'>" + resourceString + "</div>";
-    htmlstring += "</td></tr>" + + "</table>";
+
+    htmlstring += "<tr><td style='border:0' colspan='2' valign='top' align='left'><div style='color:black;font-size: 13px' class='actdiv font-bold'>" + "<span style='color:blue;font-size: 14px'>" + event.QuoteNo + "</span>" + (event.PhaseSrNo > 0 ? " - P " + event.PhaseSrNo : "") + "</div><td></tr>";
+    htmlstring += "<tr><td style='border:0' colspan='2' valign='top' align='left'><div  style='color:black;font-size: 13px' class='wordwrap'>" + event.CustName + CustType + "</div></td></tr>";
+   
+    htmlstring += "<tr><td colspan='2' style='border:0;color:orangered;font-size:13px;' valign='top' align='right'>";
+    htmlstring += "<div style='float:left'>" + event.PhaseSF + "</div>";
+    htmlstring += "<div style='float:right'>" + addressString + "</div>";
+     htmlstring +=  "</td></tr>" + resourceString + "</table>";
     evnt.el.innerHTML = htmlstring;
   }
 
@@ -288,7 +293,9 @@ export class SchedulingPage implements OnInit {
         filterIds.map(function (elem) { if (elem == id[s]) { isexist = true; } });
       }
       if (isexist == true) {
-        this.actlist.push({ title: item.QuoteNo, start: sDate, end: eDate, id: item.ID, resourceId: id[s], resourceIds: [id[s]], DragResId: id[s], backgroundColor: item.ActBgColor, textColor: item.ActTextColor, borderColor: item.ActTextColor, extendedProps: item });
+        let bgColor = platform == 'desktop' ? "#FFFFFF" : item.ActBgColor;
+        let textColor = platform == 'desktop' ? "black" : item.ActTextColor;
+        this.actlist.push({ title: item.QuoteNo, start: sDate, end: eDate, id: item.ID, resourceId: id[s], resourceIds: [id[s]], DragResId: id[s], backgroundColor: bgColor, textColor: item.ActTextColor, borderColor: textColor, extendedProps: item });
       }
     }
   }
@@ -301,7 +308,9 @@ export class SchedulingPage implements OnInit {
       sDate = new Date(this.datePipe.transform(this.ActiveDate, "MM/dd/yyyy") + " " + item.StartTime);
       eDate = new Date(this.datePipe.transform(this.ActiveDate, "MM/dd/yyyy") + " " + item.EndTime);
     }
-    this.actlist.push({ title: item.QuoteNo, start: sDate, end: eDate, id: item.ID, resourceId: extid, resourceIds: [extid], backgroundColor: item.ActBgColor, textColor: item.ActTextColor, borderColor: item.ActTextColor, extendedProps: item });
+    let bgColor = platform == 'desktop' ? "#FFFFFF" : item.ActBgColor;
+    let textColor = platform == 'desktop' ? "black" : item.ActTextColor;
+    this.actlist.push({ title: item.QuoteNo, start: sDate, end: eDate, id: item.ID, resourceId: extid, resourceIds: [extid], backgroundColor: bgColor, textColor: textColor, borderColor: textColor, extendedProps: item });
   }
 
   ActionRefreshCalendar() {
@@ -504,10 +513,8 @@ export class SchedulingPage implements OnInit {
         start.setDate(startDate.getDate() + 1);
       }
       let start4 = this.datePipe.transform(start, "MM/dd/yyyy");
-      
       this.resources.push({ id: start4, title: start4 });
     }
-    
     let stitle = this.datePipe.transform(this.calObj.StartDate, "MMM dd");
     let title = stitle + " - " + this.datePipe.transform(startDate, "MMM dd, yyyy");
     this.CalendarTitle = title;

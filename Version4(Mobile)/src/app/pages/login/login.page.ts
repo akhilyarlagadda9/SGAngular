@@ -3,6 +3,7 @@ import { NavController, Platform } from '@ionic/angular';
 
 import { AuthService } from 'src/app/service/auth.service';
 
+declare var platform: string;
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -13,9 +14,12 @@ export class LoginPage implements OnInit {
     UserName: string, PasswordHash: string
   };
   ErrorMsg: string;
-  constructor(private navCtrl: NavController, private authservise: AuthService, private plt: Platform) { }
+  constructor(private navCtrl: NavController, private authservise: AuthService, private plt: Platform) {
+
+  }
   ngOnInit() {
     this.user = { UserName: "", PasswordHash: "" };
+    this.FildPlatform();
     // if (this.plt.is('android')) {
     //   alert("android");
     // } else if (this.plt.is('ios')) {
@@ -29,18 +33,30 @@ export class LoginPage implements OnInit {
     // }
 
   }
-
+  FildPlatform() {
+    if (this.plt.is('desktop')) {
+      platform = "desktop";
+    } else if (this.plt.is('tablet')) {
+      platform = "tablet";
+    }
+    else if (this.plt.is('ipad')) {
+      platform = "tablet";
+    }
+    else {
+      platform = "mobile";
+    }
+  }
   ActionLogin() {
-   // this.navCtrl.navigateRoot('/home');
-     this.authservise.ActionLogin(this.user).subscribe(data=>{
-       if(data != null){
-        this.authservise.SetUserModel(data);
+    // this.navCtrl.navigateRoot('/home');
+    this.authservise.ActionLogin(this.user).subscribe(data => {
+      if (data != null) {
         this.ActionCompanyInfo();
+        this.authservise.SetUserModel(data);
         this.navCtrl.navigateRoot('/home');
-       }else{
-          this.ErrorMsg = "Incorrect UserName and Password!";
-       }
-     })
+      } else {
+        this.ErrorMsg = "Incorrect UserName and Password!";
+      }
+    })
 
   }
 

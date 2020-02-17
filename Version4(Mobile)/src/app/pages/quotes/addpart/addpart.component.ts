@@ -21,11 +21,13 @@ export class AddpartComponent implements OnInit {
   sinkfaucet: any;
   faucet: any;
   labor: any;
+  Version:any;
   other: any;
   appliance: any;
   areaInfo: any;
   shownGroup: number = 1;
   shownGroup4: any = 2;
+  material: any;
   
   constructor(public Modalcntrl: ModalController, public popoverCntrl: PopoverController,
     private service: QuoteService, private getservice: QuotegetService, private quoterep: QuoterepService) { }
@@ -368,10 +370,13 @@ export class AddpartComponent implements OnInit {
 
 
   async ActionAddMaterial(materialId: any, source: string) {
-    let sel = { VersionId: this.partinfo.VersionID, AreaId: this.partinfo.AreaID, materialId: materialId, priceListID: this.priceListID, areainfo : this.areaInfo }
+    let matinfo = {ID:materialId};
+
+   let info = {material:matinfo, priceListID : this.priceListID,AreaID:this.areaInfo.ID};
+    //let sel = { material : materialId == 0 ? {ID : 0} : this.material, VersionId: this.partinfo.VersionID, AreaId: this.partinfo.AreaID, materialId: materialId, priceListID: this.priceListID, areainfo : this.areaInfo }
     const modal = await this.Modalcntrl.create({
       component: AddmatComponent,
-      componentProps: sel
+      componentProps: info
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail.data.issave == true) {

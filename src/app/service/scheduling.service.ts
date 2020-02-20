@@ -13,6 +13,10 @@ export class SchedulingService {
   constructor(private http: HttpClient) { }
   
  /*************  GET SERVICES ***************/
+ParseDateString(date){
+  date = date.replace('T', ' ').slice(0, -6);
+return  new Date(date);
+}
 
 //Activity List
 ActionQuickActList(startDate:any, endDate:string, search:string, actTypeIds:number, userId:number, resIds:string,statusIds:string):Observable<any> {

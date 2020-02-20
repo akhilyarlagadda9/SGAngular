@@ -5,16 +5,23 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-row style="height:360px">
+  <ion-list style="height:360px">
+    <ion-row  class="smallfont2 paddall border-btm">
+      <ion-col size="12">
+      <ion-checkbox style="width:30px" color="dark" [(ngModel)]="AllCheck" (click)="ActionAll()"></ion-checkbox><font size="4">ALL</font>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let item of arrAreaInfo" class="smallfont2 paddall border-btm">
     <ion-col size="12">
-      <ion-item>  <ion-checkbox style="width:30px" color="dark" [(ngModel)]="AllCheck" (click)="ActionAll()"></ion-checkbox><font size="4">ALL</font></ion-item>
+     
+       
       <div *ngIf="arrAreaInfo!='undefined'">
-      <ion-item  *ngFor="let item of arrAreaInfo">
+      
         <ion-checkbox style="width:30px" color="dark" [(ngModel)]="item.Check" (ngModelChange)="ActionIsselectAll()"></ion-checkbox>
-        {{item.Area.Name}}
-    </ion-item>
+        <span style="color:blue">{{item.Area.Name}} - </span>Part {{item.NewSrNo}} - {{item.JobSqft}} <!--- <span>{{part.JobPartName}}</span>-->
+   
     </div>
     </ion-col>
-    
-  </ion-row>
+    </ion-row>
+  </ion-list>
 </ion-content>

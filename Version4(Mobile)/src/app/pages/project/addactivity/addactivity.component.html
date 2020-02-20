@@ -37,7 +37,7 @@
       <ion-select (ngModelChange)="ActionChangePhase($event)" [(ngModel)]="actinfo.PhaseID" name="PhaseID" #PhaseID="ngModel" required [selectedText]="actinfo.PhaseName">
         <ion-select-option *ngFor="let c of phaseList" [value]="c.ID">{{c.Name}}</ion-select-option>
       </ion-select>
-      <div [hidden]="!form.submitted  || (PhaseID.valid && PhaseID.touched)" class="invalid-feedback padd-Left">
+      <div [hidden]="!form.submitted  || PhaseID.valid" class="invalid-feedback padd-Left">
         <div class="error">Activity Phase is required</div>
       </div>
     </ion-item>
@@ -49,7 +49,7 @@
         #ActTypeID="ngModel" (ngModelChange)="ActionGetStatusResourceList($event)" required>
         <ion-select-option *ngFor="let c of ActTypeList" [value]="c.ID">{{c.Name}}</ion-select-option>
       </ion-select>
-      <div [hidden]="!form.submitted  || (ActTypeID.valid && ActTypeID.touched)" class="invalid-feedback padd-Left">
+      <div [hidden]="!form.submitted  || ActTypeID.valid" class="invalid-feedback padd-Left">
         <div class="error">Activity Type is required</div>
       </div>
     </ion-item>
@@ -73,10 +73,65 @@
     <ion-item>
       <ion-label position="floating" color="primary" class="margin-zero">Start Date & Time:</ion-label>
       <ion-row style="width:100%">
-        <ion-col size="8">
-          <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm"
-            (ngModelChange)="ActionChangeDate($event,0,'sDate')" name="StartDate" [(ngModel)]="actinfo.SchStartTime">
+        <ion-col size="6">
+          <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" 
+            (ngModelChange)="actinfo.IsDateChange = true;ActionChangeDate($event,0,'sDate')" name="SchStartTime" [(ngModel)]="actinfo.SchStartTime">
           </ion-datetime><span class="select-icon ion-float-right"></span>
+        </ion-col>
+        <!-- <ion-col size="4">
+          <ion-row>
+            <ion-col size="8" class="paddzero">All Day</ion-col>
+            <ion-col size="4" class="paddzero">
+              <ion-checkbox color="dark" name="Text" class="martb"></ion-checkbox>
+            </ion-col>
+          </ion-row>
+        </ion-col> -->
+        <ion-col size="6">
+
+          <ion-select class="btninfo" interface="popover" [(ngModel)]="actinfo.STime" name="STime" (ngModelChange)="ActionChangeDate($event,0,'')"  [selectedText]="actinfo.STime">
+            <ion-select-option *ngFor="let time of timings" [value]="time">{{time}}</ion-select-option>
+          </ion-select>
+
+          <!-- <ion-datetime  pickerFormat="h:mm A" name="STime" [(ngModel)]="actinfo.STime"></ion-datetime>
+          <span class="select-icon ion-float-right"></span> -->
+        </ion-col>
+      </ion-row>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary" class="margin-zero">End Date & Time:</ion-label>
+      <ion-row style="width:100%">
+        <ion-col size="6">
+          <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" 
+            (ngModelChange)="actinfo.IsDateChange = true;ActionChangeDate($event,1,'eDate')" name="SchEndTime" [(ngModel)]="actinfo.SchEndTime">
+          </ion-datetime><span class="select-icon ion-float-right"></span>
+        </ion-col>
+        <ion-col size="6">
+          <ion-select class="btninfo" interface="popover" [(ngModel)]="actinfo.ETime" name="ETime" (ngModelChange)="ActionChangeDate($event,1,'')"  [selectedText]="actinfo.ETime">
+            <ion-select-option *ngFor="let time of timings" [value]="time">{{time}}</ion-select-option>
+          </ion-select>
+          <!-- <ion-datetime displayFormat="h:mm a" pickerFormat="h:mm A" name="ETime" [(ngModel)]="actinfo.ETime">
+          </ion-datetime><span class="select-icon ion-float-right"></span> -->
+        </ion-col>
+      </ion-row>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="primary" class="margin-zero">Dration:</ion-label>
+      <ion-row style="width:100%">
+        <ion-col size="8">
+          <ion-row>
+            <ion-col size="4" class="paddzero">
+              <ion-input type="text" [(ngModel)]="actinfo.Hrs"  name="Hrs" class="labelfont"></ion-input>
+            </ion-col>
+            <ion-col size="2" class="paddzero">
+              Hrs
+            </ion-col>
+            <ion-col size="4" class="paddzero">
+              <ion-input type="text" [(ngModel)]="actinfo.Mins"  name="Mins" class="labelfont"></ion-input>
+            </ion-col>
+            <ion-col size="2" class="paddzero">
+              Min
+            </ion-col>
+          </ion-row>
         </ion-col>
         <ion-col size="4">
           <ion-row>
@@ -85,27 +140,12 @@
               <ion-checkbox color="dark" name="Text" class="martb"></ion-checkbox>
             </ion-col>
           </ion-row>
+        
         </ion-col>
-        <!-- <ion-col size="6">
-          <ion-datetime  pickerFormat="h:mm A" name="StartTime" [(ngModel)]="actinfo.StartTime"></ion-datetime>
-          <span class="select-icon ion-float-right"></span>
-        </ion-col> -->
       </ion-row>
     </ion-item>
-    <ion-item>
-      <ion-label position="floating" color="primary" class="margin-zero">End Date & Time:</ion-label>
-      <ion-row style="width:100%">
-        <ion-col size="10">
-          <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm"
-            (ngModelChange)="ActionChangeDate($event,1,'eDate')" name="EndDate" [(ngModel)]="actinfo.SchEndTime">
-          </ion-datetime><span class="select-icon ion-float-right"></span>
-        </ion-col>
-        <!-- <ion-col size="6">
-          <ion-datetime displayFormat="h:mm a" pickerFormat="h:mm A" name="EndTime" [(ngModel)]="actinfo.EndTime">
-          </ion-datetime><span class="select-icon ion-float-right"></span>
-        </ion-col> -->
-      </ion-row>
-    </ion-item>
+
+
     <ion-item *ngIf="actinfo.StatusID ==5">
       <ion-label position="floating" color="primary" class="margin-zero">Act Start Date & Time:</ion-label>
       <ion-row style="width:100%">

@@ -62,7 +62,8 @@ export class AreaPartsComponent implements OnInit {
     ActionRunFilter() {
      for(let i in this.objAreaInfo.PhasePartList){
         if(this.objAreaInfo.PhasePartList[i].Check == true){
-          this.arrChekedItems.push(this.objAreaInfo.PhasePartList[i]);
+          let item = this.objAreaInfo.PhasePartList[i];
+          this.arrChekedItems.push(item);
         }
      }
      this.ActionToClosePop(true);

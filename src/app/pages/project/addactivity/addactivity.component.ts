@@ -5,6 +5,7 @@ import { OverlayEventDetail } from '@ionic/core';
 import { DatePipe, formatDate } from '@angular/common';
 import { NgForm } from '@angular/forms';
 import { ActinfoComponent } from '../actinfo/actinfo.component';
+declare var timings :any;
 import {AreaPartsComponent} from '../area-parts/area-parts.component';
 @Component({
   selector: 'app-addactivity',
@@ -20,7 +21,7 @@ export class AddactivityComponent implements OnInit {
   IsResource: boolean;
   IsSelectedPopulate: number;
   resourceList: any;
-  QuotePartList: any;
+  QuotePartList: any;timings:any = timings;
   //arrShowItems:any;
   constructor(public Modalcntrl: ModalController, private schService: SchedulingService,
     public popoverCntrl: PopoverController, private navParams: NavParams,
@@ -57,20 +58,30 @@ export class AddactivityComponent implements OnInit {
       console.log(result);
       if (result.data.componentProps !== null && result.data.componentProps != undefined) {
         if (result.data.isSelect == true) {
-        this.actinfo.QuotePartList = (result.data.componentProps);
-        this.SetAreaPartIDs();
+        //this.actinfo.QuotePartList = (result.data.componentProps);
+        this.SetAreaPartIDs(result.data.componentProps);
         }
         //do something may be
       }
     });
     return await popover.present();
 }
-SetAreaPartIDs(){
+SetAreaPartIDs(list){
+  this.actinfo.QuotePartList = [];
   let Ids = ""; let sqft = 0;
-  for (let j in this.actinfo.QuotePartList) {
-    let obj = this.actinfo.QuotePartList[j];
+  for (let j in list) {
+    let obj = list[j];
       Ids += obj.ID + ",";
       sqft += obj.JobSqft;
+      let part = {
+        ID :obj.ID,
+        AreaID:obj.AreaID,
+        AreaName:obj.Area.Name,
+        JobPartName:obj.JobPartName,
+        NewSrNo:obj.NewSrNo,
+        JobSqft:obj.JobSqft,
+      };
+      this.actinfo.QuotePartList.push(part);     
   }
   this.actinfo.ActPartIds = Ids.replace(/(^,)|(,$)/g, "");
   this.actinfo.PhaseSF = sqft; 
@@ -80,7 +91,7 @@ SetAreaPartIDs(){
     let start = this.datePipe.transform(this.actinfo.SchStartTime, "MM-dd-yyyy");
     let result = this.schService.ActivityInfo(this.actinfo.ID, this.actinfo.ActTypeID, start, start).subscribe(
       data => {
-        this.actinfo = data;
+       this.actinfo = data;
         this.actinfo.PrevStartDate = data.SchStartTime;
         this.actinfo.PrevEndDate = data.SchEndTime;
         this.statusList = data.StatusList;
@@ -111,7 +122,6 @@ SetAreaPartIDs(){
         this.QuotePartList.AreasName = this.QuotePartList.AreaName;
       }
     }
-   
   }
   //Phase List Function
   ActionPhaseist() {
@@ -144,8 +154,8 @@ SetAreaPartIDs(){
     this.schService.ActionPhasePartList(this.actinfo.VersionID, this.actinfo.PhaseID, this.actinfo.ActTypeID, this.actinfo.ActPartIds, this.actinfo.Area).subscribe(
       data => { this.PhasePartList = data; 
         if(ischange == 1){
-          this.actinfo.QuotePartList =this.PhasePartList;
-          this.SetAreaPartIDs();
+         // this.actinfo.QuotePartList =this.PhasePartList;
+          this.SetAreaPartIDs(this.PhasePartList);
         }
        }
     );
@@ -237,7 +247,12 @@ SetAreaPartIDs(){
   }
   ActionChangeDate(selctedDate, typeId, type) {
     let obj: any;
-    let start = this.datePipe.transform(selctedDate, "MM-dd-yyyy");
+    if(type == "sDate"){
+      this.actinfo.SchStartTime = selctedDate; 
+    }else if(type == "eDate"){
+      this.actinfo.SchEndTime = selctedDate; 
+    }
+    let start = type == "" ? "" : this.datePipe.transform(selctedDate, "MM-dd-yyyy");
     let today = this.datePipe.transform(new Date(), "MM-dd-yyyy");
     if (new Date(start) < new Date(today) || this.actinfo.StatusID == 5) {
       var alertMsg = this.actinfo.StatusID == 5 ? "Activity is Completed" : "Past Date(s)";
@@ -258,7 +273,9 @@ SetAreaPartIDs(){
 
   }
   ActionSaveActivity(form: NgForm) {
-    if (form.valid && form.touched) {
+    if (form.valid) {
+      this.actinfo.SchStartTime = new Date(this.actinfo.SchStartTime).toDateString() + " " + this.actinfo.STime;
+      this.actinfo.SchEndTime= new Date(this.actinfo.SchEndTime).toDateString() + " " + this.actinfo.ETime;
       if (this.actinfo.IsDateChange == true || this.actinfo.ID == 0) {
         this.schService.FollowUpStatus(this.actinfo).subscribe(data => {
           var follow = data; let obj: any;
@@ -366,8 +383,12 @@ SetAreaPartIDs(){
     this.actinfo.SchEndTime = result.SchEndTime;
     this.actinfo.StartTime = result.SchStartTime;
     this.actinfo.EndTime = result.EndTime;
+    this.actinfo.STime = result.STime;
+    this.actinfo.ETime = result.ETime;
     this.actinfo.ActualStartDate = result.ActualStartDate;
     this.actinfo.ActualEndDate = result.ActualEndDate;
+    this.actinfo.ActStart = result.ActStart;
+    this.actinfo.ActEnd = result.ActEnd;
     this.actinfo.ResourceList = this.actinfo.ResourceList == null ? [] : this.actinfo.ResourceList;
     this.actinfo.ResourceList = result.ResourceList;
     this.actinfo.ResourceIDs = result.ResourceIDs;
@@ -454,9 +475,11 @@ SetAreaPartIDs(){
   ConfirmSaveActInfo() {
     let id = this.actinfo.ID;
     this.schService.ActionSaveActivityInfo(this.actinfo).subscribe(data => {
-      this.actinfo = data;
-      this.actinfo.ExtID = id;
-      this.eventCopy = this.actinfo;
+      if(data != null){
+        this.actinfo = data;
+        this.actinfo.ExtID = id;
+        this.eventCopy = this.actinfo;
+      }
       this.ActionCloseActivity(true);
     })
   }
@@ -471,6 +494,7 @@ SetAreaPartIDs(){
     EmpPinNo:data.EmpPin,
     EmpPhone:data.EmpPhone,
     Provider:data.Provider,
+    AssignTypeID:1,
     }   
     if (this.actinfo.ResourceList == null) {
       this.actinfo.ResourceList = [];
@@ -494,8 +518,8 @@ SetAreaPartIDs(){
   GetDuration(type) {
     var hrs = this.actinfo.Hrs;
     var mins = this.actinfo.Mins;
-    let sDate = this.actinfo.SchStartTime;
-    let edate = this.actinfo.SchEndTime;
+    let sDate = new Date(this.actinfo.SchStartTime).toDateString() + " " + this.actinfo.STime;
+    let edate = new Date(this.actinfo.SchEndTime).toDateString() + " " + this.actinfo.ETime;
     this.schService.GetDuration(hrs, mins, sDate, edate, type).subscribe(results => {
       if (type == 1) {
         this.actinfo.Hrs = results[0];
@@ -503,7 +527,7 @@ SetAreaPartIDs(){
       }
       else {
         let eDate = results[0] + " " + results[1];
-        this.actinfo.SchEndTime = eDate;
+        this.actinfo.SchEndTime = eDate;this.actinfo.ETime =  results[1];
       }
       this.actinfo.PrevStartDate = this.actinfo.SchStartTime;
       this.actinfo.PrevEndDate = this.actinfo.SchEndTime;
@@ -524,8 +548,8 @@ SetAreaPartIDs(){
 
   //Activity info with dates Function
   ActionActivityInfoWithDates() {
-    let start = this.datePipe.transform(this.actinfo.SchStartTime, "MM/dd/yyyy h:mm a");
-    let end = this.datePipe.transform(this.actinfo.SchEndTime, "MM/dd/yyyy h:mm a");
+    let start = new Date(this.actinfo.SchStartTime).toDateString() + " " + this.actinfo.STime;
+    let end = new Date(this.actinfo.SchEndTime).toDateString() + " " + this.actinfo.ETime;
     this.schService.ActTypeResListWithDates(this.actinfo.ActTypeID, start, end).subscribe(
       data => {
         this.resourceList = data;

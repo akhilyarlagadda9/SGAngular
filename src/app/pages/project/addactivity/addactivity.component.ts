@@ -613,6 +613,13 @@ SetAreaPartIDs(list){
     }
     this.actinfo.ResourceList.splice(index, 1);
   }
+  isChecked(event){
+    if(!event.target.checked){
+      this.actinfo.STime = "7:00AM";
+      this.actinfo.ETime = "8:00PM";
+      this.actinfo.Hrs = "13";
+    }
+  }
 }
 
 @Component({

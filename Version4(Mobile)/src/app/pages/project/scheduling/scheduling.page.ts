@@ -59,8 +59,8 @@ defaultView="resourceTimeline_3days"
 themeSystem= 'cerulean'
 resourceLabelText= " "
 [height]="options.height"
+[slotWidth]="options.slotWidth"
 [header]="false"
-[resourceAreaWidth]="options.resourceAreaWidth"
 minTime = "06:00:00"
 maxTime = "22:00:00"
 
@@ -71,7 +71,8 @@ maxTime = "22:00:00"
 [resources]="resources"
 (eventRender)="ActionRenderEvent($event)"
 (eventClick)="ActionOnEventSelected($event)"
-></full-calendar> </ion-content>`,
+></full-calendar></ion-content>
+`,
 
   //styleUrls: ['./scheduling.page.scss'],
   providers: [DatePipe]
@@ -91,12 +92,13 @@ export class SchedulingPage implements OnInit {
     private schService: SchedulingService, private navCtrl: NavController, private datePipe: DatePipe) { }
 
   ngOnInit() {
-    let height = window.innerHeight - 110; this.width = window.innerWidth;
+    let height = window.innerHeight - 110; this.width = 85;
     var _dafaultDate = new Date();
     this.options = {
       plugins: [interactionPlugin, dayGridPlugin, resourceTimelinePlugin, resourceTimeGridPlugin, resourceDayGridPlugin],
       height: height,
-      resourceAreaWidth: platform == 'desktop' ? 180 : 100,
+      slotWidth: this.width,
+    //  resourceAreaWidth: platform == 'desktop' ? 180 : 100,
       views: {
         //resource by day
         resourceTimeline: { type: 'timeline', editable: true, duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00", },
@@ -258,7 +260,11 @@ export class SchedulingPage implements OnInit {
   ActionLoadEvents() {
     if (this.calObj.CalendarView != "" && this.calObj.CalendarView != undefined) {
       let resids = "";
-      this.schService.ActionQuickActList(this.calObj.StartDate, this.calObj.EndDate, this.calObj.Search, this.calObj.ActTypeIDs, 0, this.calObj.ResourceIDs, this.calObj.StatusIDs).subscribe(data => {
+      let sDate = this.calObj.StartDate + " " + this.calObj.starttime;
+      let eDate= this.calObj.EndDate + " " + this.calObj.endtime;
+      
+      this.schService.ActionQuickActList(sDate, eDate, this.calObj.Search, this.calObj.ActTypeIDs, 0, this.calObj.ResourceIDs, this.calObj.StatusIDs).subscribe(data => {
+        console.log(data);
         this.actlist = [];
         if (this.calObj.CalID == 3 || this.calObj.CalendarView == "restimelineDay") {
           for (let j in data) {
@@ -360,9 +366,10 @@ export class SchedulingPage implements OnInit {
   }
   //Onclick event Info
   async ActionOnEventSelected(ev) {
+    //console.log(ev);
     let sDate = new Date(ev.event._def.extendedProps.StartDate);
     let eDate = new Date(ev.event._def.extendedProps.EndDate);
-    let obj = { actId: ev.event._def.extendedProps.ID, actTypeID: ev.event._def.extendedProps.ActivityTypeID, StartDate: sDate, EndDate: eDate }
+    let obj = { actId: ev.event._def.extendedProps.ID, actTypeID: ev.event._def.extendedProps.ActivityTypeID, StartDate: sDate, EndDate: eDate}
     const modal = await this.Modalcntrl.create({
       component: ActinfoComponent,
       componentProps: obj

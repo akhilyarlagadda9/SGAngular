@@ -142,19 +142,19 @@
     </ion-tab-bar>
   </ion-tabs>
 </ion-toolbar> -->
-<ion-footer class="tab-btm" style="padding-right: 5px;background: aliceblue;margin-bottom: -4px;">
-  <ion-segment>
+<ion-footer class="tab-btm" style="padding-right: 5px;background: aliceblue;">
+  <ion-segment style="height: 44px;">
     <ion-segment-button checked (click)="ActionLoadHubInfo(1)">
-      <ion-icon name="book" class="imghw1"></ion-icon>
-      <ion-label [ngClass]="{'txt-color' : selectedhubtype == 1 }" class="font10">Notes</ion-label>
+      <ion-icon name="book" class="imghw1 paddzero"></ion-icon>
+      <ion-label [ngClass]="{'txt-color' : selectedhubtype == 1 }" class="font10 paddzero">Notes</ion-label>
     </ion-segment-button>
     <ion-segment-button (click)="ActionLoadHubInfo(2)">
-      <ion-icon name="mail" class="imghw1"></ion-icon>
-      <ion-label [ngClass]="{'txt-color' : selectedhubtype == 2 }" class="font10">Mail</ion-label>
+      <ion-icon name="mail" class="imghw1 paddzero"></ion-icon>
+      <ion-label [ngClass]="{'txt-color' : selectedhubtype == 2 }" class="font10 paddzero">Mail</ion-label>
     </ion-segment-button>
     <ion-segment-button (click)="ActionLoadHubInfo(3)">
-      <ion-icon name="document" class="imghw1"></ion-icon>
-      <ion-label [ngClass]="{'txt-color' : selectedhubtype == 3 }" class="font10">Files</ion-label>
+      <ion-icon name="document" class="imghw1 paddzero"></ion-icon>
+      <ion-label [ngClass]="{'txt-color' : selectedhubtype == 3 }" class="font10 paddzero">Files</ion-label>
     </ion-segment-button>
   </ion-segment>
 </ion-footer>

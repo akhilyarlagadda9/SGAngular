@@ -21,6 +21,7 @@ export class ActinfoComponent implements OnInit {
 
   ngOnInit() {
     this.ActionActivityInfo();
+  
   }
 
   ActionActivityInfo() {

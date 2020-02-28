@@ -145,7 +145,7 @@ export class AddmatComponent implements OnInit {
     console.log(this.stockList);
   } */
 
- /*  GetStockInfo() {debugger
+ /*  GetStockInfo() {
     this.service.ActionGetProductInfo(this.material.ProductItemID,1, this.material.Description, this.material.FinishID, this.material.DepthID, this.material.ProSubGroupID).subscribe(
 
       data => { this.stockList = data; console.log(this.stockList); }

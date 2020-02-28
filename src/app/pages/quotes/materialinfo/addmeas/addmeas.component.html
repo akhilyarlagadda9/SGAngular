@@ -46,7 +46,7 @@
     <ion-row *ngFor="let slab of stockList.SlabList">
       <ion-col size="1">
         <div *ngIf="slab.ProjectID == 0">
-          <ion-checkbox color="primary" [(ngModel)]="slab.Check" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+          <ion-checkbox color="primary" [(ngModel)]="slab.Check" [ngModelOptions]="{standalone: true}" ></ion-checkbox>
         </div>
       </ion-col>
       <ion-col size="4" (click)="ActionEditInvSlab(slab.ID, slabInventory.material)">

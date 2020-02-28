@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { QuoteService } from 'src/app/service/quote.service';
+import { QuoterepService } from 'src/app/service/quoterep.service';
+declare var _qscope :any;
 
 @Component({
   selector: 'app-addmeas',
@@ -14,7 +16,7 @@ export class AddmeasComponent implements OnInit {
   stockList: any;
   typeIdList: any;
   stockinfo: any;
-  constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private service: QuoteService) { }
+  constructor(public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private service: QuoteService, private quoterep: QuoterepService) { }
 
   ngOnInit() {
     this.GetStockInfo()
@@ -66,7 +68,7 @@ export class AddmeasComponent implements OnInit {
     );
   }
 
-  ActionAssignSlabs = function () {debugger;
+  /* ActionAssignSlabs = function () {;
     let chkdList = []; let invSlabList = [];
     this.stockList.SlabList.map(function (elem) { if (elem.Check == 1 && (elem.StatusID == 7 || elem.StatusID == 17)) { chkdList.push(elem); return elem } { return 0 } });
     
@@ -74,6 +76,38 @@ export class AddmeasComponent implements OnInit {
       this.SaveStockLisk(invSlabList);
     }
     this.ActionAssignOnOrderItems();
-} 
+} */ 
+
+ActionAssignSlabs = function () {
+    var chkdList = []; let invSlabList = [];
+    this.stockList.SlabList.map(function (elem) { if (elem.Check == 1 && (elem.StatusID == 7 || elem.StatusID == 17)) { chkdList.push(elem); return elem } { return 0 } });
+    for (let j = 0; j <= chkdList.length; j++) {
+        var model = new this.quoterep.invslabModel(_qscope, this.material.ID, j);
+        invSlabList.push(model);
+        this.material.InvSlabList.push(model);
+        this.material.stkShow = true;
+    };
+    if (invSlabList.length > 0) {
+        this.savematinventoryslabs(invSlabList);
+    }
+    //this.ActionAssignOnOrderItems();
+    
+}
+
+/* ActionAssignOnOrderItems = function () {
+  let chkdList = []; let ordSlabsList = [];
+  this.stockList.OnOrderItems.map(function (elem) { if (elem.Check == 1 && elem.StatusID == 0) { chkdList.push(elem); return elem } { return 0 } });
+  for(let j = 0; j <= chkdList.length; j++) {
+      var model = new this.quoterep.invslabModel(_qscope, this.material.ID, j);
+      ordSlabsList.push(model);
+      this.slabInventory.material.OnOrderPoList.push(model);
+      this.slabInventory.material.stkShow = true;
+  };
+  if (ordSlabsList.length > 0) {
+      this.savematonorderslabs(ordSlabsList);
+  }
+} */
+
+
 
 }

@@ -6,6 +6,9 @@ declare const appUrl: any;
   providedIn: 'root'
 })
 export class QuotegetService {
+  ActionGetList(search: string, statusId: number, index: number, noOfRecords: number, accessmode: number, arg5: number, sortTypeId: number, sortby: number) {
+    throw new Error("Method not implemented.");
+  }
 
   url = appUrl;
   constructor(private http: HttpClient) { }

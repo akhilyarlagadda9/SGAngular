@@ -418,6 +418,7 @@ export class QuoterepService {
 
 /************MATERIAL SEARCH & POPULATION **************/
   popultaesearchiteminfo(material, subproductgroups, productItem) {
+    material.Description = productItem.Description;
     material.ProductType = productItem.SlabType;
     material.DepthID = productItem.ThicknessID == 0 ? 24 : productItem.ThicknessID;
     material.FinishID = productItem.FinishID == 0 ? 23 : productItem.FinishID;
@@ -487,7 +488,7 @@ preparefabrisklevels(material) {
   material.LaborUnitPrice = price;
   return material;
 }
-populateSlabSizes(slabs, productItem) {debugger
+populateSlabSizes(slabs, productItem) {
   for (let i = 0; i < slabs.length; i++) {
       let item = slabs[i];
       if (item.Width == 0 || item.Width == undefined) { item.Width = productItem.Width; }
@@ -832,4 +833,60 @@ preparematerials(materials) {
       return materials;
   }
 }
+
+invslabModel(quoteObj, materialId, item) {
+  let slab = {
+  ID : item.ID,
+  SlabID : item.ID,
+  Sf : item.Sf,
+  UpdatedByID : 1,
+  MaterialID : materialId,
+  ReferanceID : materialId,
+  ProjectName : quoteObj.header.QuoteName,
+  ProjectNO : quoteObj.header.QuoteNo,
+  NoOfSlabs : 1,
+  RevID : quoteObj.header.Version.ID,
+  VersionID : quoteObj.header.Version.ID,
+  ProjectID : quoteObj.header.ID,
+  CustTypeID : quoteObj.header.Version.CustTypeID,
+  Status : "Reserved",
+  StatusID : 15,
+  SlabNo : item.ExtSlabNo,
+  ExtSlabNo : item.ExtSlabNo,
+  AllocatedDate : new Date(),
+  Finish : item.Finish,
+  Depth : item.Depth,
+  SlabType : item.SlabType,
+  SlabTypeID : item.SlabTypeID,
+  PhaseSrno : 1,
+  CssColor : 'SkyBlue',
+  FinishID : item.FinishID,
+  DepthID : item.DepthID,
+  Location : item.StkLoc,
+  StkLoc : item.StkLoc,
+  Sqft : item.Sf,
+  SF : item.Sf,
+  SlabWidth : item.Width,
+  SlabHeight : item.Height,
+  Height : item.Height,
+  Width : item.Width,
+  UsableAW : item.UsableAW,
+  UsableBW : item.UsableBW,
+  UsableCW : item.UsableCW,
+  UsableDW : item.UsableDW,
+  UsableEW : item.UsableEW,
+  UsableFW : item.UsableFW,
+  SlabSqft : item.Sf,
+  SalePrice : item.SalePrice,
+  PoSerialNo : item.PoSerialNo,
+  BlockNo : item.BlockNo,
+  ExtPoID : item.ExtPoID,
+  RemnantTypeID : item.RemnantTypeID,
+  Remarks : "Job#: " + quoteObj.header.QuoteNo,
+  IsActive : 1,
+};
+return slab;
+}
+
+
 }

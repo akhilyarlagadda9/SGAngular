@@ -217,7 +217,27 @@ ActionSaveMaterialInvSlabList(slabList: any): Observable<any> {
   return this.http.post<any>(this.url + 'api/Quote/SaveMaterialInvSlabList', model, { headers: { 'Content-Type': 'application/json' } })
 }
 
+/**************Email Template Contact list******************/
+//Template List
+ActiongettemplateList(typeId:any):Observable<any> {
+  return this.http.get<any>(this.url + 'api/messageCenter/TemplateList?typeId=' + typeId)
+} //send 26 as typeid in ts function
 
+//Email List
+ActionEmailList():Observable<any> {
+  return this.http.get<any>(this.url + 'api/messageCenter/EmailList')
+}
+
+//quote customers
+ActionGetQuoteCustContactList(versionid:any):Observable<any> {
+  return this.http.get<any>(this.url + 'api/Quote/CustomerContactList?versionid=' + versionid) 
+} //send versionid as parameter
+
+//email employee list
+ActionGetEmailsEmployeeList(contactList):Observable<any> {
+  var parameter = JSON.stringify(contactList);
+  return this.http.post<any>(this.url + 'api/Quote/GetEmailsEmployeeList', parameter, { headers: { 'Content-Type': 'application/json' } })
+} //result of the customer contanct list must send as parameter to contactlist
 
 
 }

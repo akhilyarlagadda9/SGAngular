@@ -31,7 +31,7 @@ export class QuotegetService {
   }
 
  //Production Type List,DiscountType List
- QuoteMasterList(typeID:number):Observable<any> {
+ QuoteMasterList(typeID:number):Observable<any> {debugger;
   return this.http.get<any>(this.url +  'api/QuoteAdmin/MasterList?typeID=' + typeID)
 }
  //Price List
@@ -260,7 +260,14 @@ ActionGetsubproductgrouplist(typeid:any):Observable<any> {
   return this.http.get<any>(this.url + 'api/product/productSubGroupList?typeID=' + typeid + '&groupId=0') 
 }
 
+/*************Discount list****************/
+ActionGetQuoteMasterList(typeID:any):Observable<any> {
+  return this.http.get<any>(this.url + 'api/QuoteAdmin/MasterList?typeID=' + typeID ) 
+}
 
+ActionGetDiscountlist(versionid:any):Observable<any> {
+  return this.http.get<any>(this.url + 'api/Quote/DiscountList?versionId=' + versionid) 
+}
 
 
 

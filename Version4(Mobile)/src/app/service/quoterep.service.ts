@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
+import { QuoteService } from './quote.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -8,8 +9,10 @@ export class QuoterepService {
   constructor() { }
   private _interfacesource = new Subject<any>();
   interface$ = this._interfacesource.asObservable();
+  private service: QuoteService
   SendInfo(info: any) {
     this._interfacesource.next(info);
+    
   }
 
   //**************************************ADD ITEMS*********************************************/
@@ -887,6 +890,311 @@ invslabModel(quoteObj, materialId, item) {
 };
 return slab;
 }
+/**************Sales Tax***************/
 
+resetversionsummary(area, header, summary) {
+  this.resetversummary(header.Version, summary, header.SalesPersonID);
+  this.resetversionlistsummary(header.Version.ID, header.VersionList, summary);
+  this.resetareasummary(area, summary);
+  this.preparepaymentschedule(header);
+}
+
+resetversummary(version, summary, salesrepId) {
+  version.TaxAmt = summary.TaxAmt;
+  version.DiscountAmt = summary.DiscountAmt;
+  version.TotalAmt = summary.TotalAmt;
+  version.MaterialSqft = summary.MaterialSqft;
+  version.MatCost = summary.MaterialCost;
+  version.FabLaborSqft = summary.FabLaborSqft;
+  version.EdgeLnft = summary.EdgeLnft;
+  version.CutOutLnft = summary.CutOutLnft;
+  version.CutOutAmount = summary.CutOutAmount;
+  version.SplashSqft = summary.SplashSqft;
+  version.ToolQty = summary.ToolQty;
+  version.ToolAmt = summary.ToolAmt;
+  version.LaborAmt = summary.LaborAmt;
+  version.SinkQty = summary.SinkQty;
+  version.FaucetQty = summary.FaucetQty;
+  version.LaborQty = summary.LaborQty;
+  version.AddOnQty = summary.AddOnQty;
+  version.TileQty = summary.TileQty;
+  version.CabinetQty = summary.CabinetQty;
+  version.CarpetQty = summary.CarpetQty;
+  version.FloorQty = summary.FloorQty;
+  version.FloorAmt = summary.FloorAmt;
+  version.ConsumableQty = summary.ConsumableQty;
+  version.ConsumableAmt = summary.ConsumableAmt;
+  version.ApplianceQty = summary.ApplianceQty;
+  version.ApplianceAmt = summary.ApplianceAmt;
+  version.TileAmt = summary.TileAmt;
+  version.CabinetAmt = summary.CabinetAmt;
+  version.CarpetAmt = summary.CarpetAmt;    
+  version.OthersAmount = summary.OthersAmount;
+  version.AdditionalAmt = summary.AdditionalAmt;
+  version.EdgeAmount = summary.EdgeAmount;
+  version.MatAmount = summary.MatAmount;
+  version.FabLaborAmount = summary.FabLaborAmount;
+
+  version.FinalRefAmt = summary.FinalRefAmt;
+  version.FinalAmt = summary.FinalAmt;
+  version.FinalDiscAmt = summary.FinalDiscAmt;
+  version.FinalTaxAmt = summary.FinalTaxAmt;
+  version.FinalNetAmt = summary.FinalNetAmt;
+  version.RefAmt = summary.RefAmt;
+  version.RoundOff = summary.RoundOff;
+  version.CustomFeeAmt = summary.CustomFeeAmt;
+  version.ExtraFeeAmt = summary.ExtraFeeAmt;
+  version.CoTotal = summary.CoTotal;
+  version.PmtReceived = summary.PmtReceived;
+  version.SaleRevenue = summary.SaleRevenue;
+  version.TDollarAmount = summary.TDollarAmount;
+  version.FinalCost = summary.CostOfGoodsSold;
+  version.NetMargin = summary.NetMargin;
+  version.GrossMargin = summary.GrossMargin;
+  version.TDolloarPercentage = summary.TDolloarPercentage;
+  version.NetMarginPercentage = summary.NetMarginPercentage;
+  // get commission
+  let commission:any = this.service.qpversioncommissioninfo(salesrepId, version);
+  if (commission != null || commission != undefined) {
+      version.Commission = commission;
+      version.MarginWithoutAddons = commission.MarginWithoutAddons;
+      version.CommissionAmount = commission.CommissionAmount;
+      version.AddonsMargin = commission.AddonsMargin;
+      version.AddonCommissionAmt = commission.AddonsCommission;
+  }
+}
+
+resetversionlistsummary(versionId, versions, summary) {   
+  for (let i = 0; i < versions.length; i++) {
+      if (versions[i].ID == versionId) {
+          let ver = versions[i];
+          ver.DiscountAmt = summary.DiscountAmt;
+          ver.MaterialSqft = summary.MaterialSqft;
+          ver.MatCost = summary.MaterialCost;
+          ver.MatAmount = summary.MatAmount;
+          ver.FabLaborSqft = summary.FabLaborSqft;
+          ver.FabLaborAmount = summary.FabLaborAmount;
+          ver.EdgeAmount = summary.EdgeAmount;
+          ver.EdgeLnft = summary.EdgeLnft;
+          ver.AdditionalAmt = summary.AdditionalAmt;
+          ver.OthersAmount = summary.OthersAmount;
+          ver.SplashSqftAmt = summary.SplashSqftAmt;
+          ver.SplashSqft = summary.SplashSqft;
+          ver.CutOutLnft = summary.CutOutLnft;
+          ver.CutOutAmount = summary.CutOutAmount;
+          ver.LaborAmt = summary.LaborAmt;
+          ver.TotalAmt = summary.TotalAmt;
+          ver.SinkQty = summary.SinkQty;
+          ver.FaucetQty = summary.FaucetQty;
+          ver.LaborQty = summary.LaborQty;
+          ver.AddOnQty = summary.AddOnQty;
+          ver.TileQty = summary.TileQty;
+          ver.CabinetQty = summary.CabinetQty;
+          ver.CarpetQty = summary.CarpetQty;
+          ver.FloorQty = summary.FloorQty;
+          ver.FloorAmt = summary.FloorAmt;
+          ver.ConsumableQty = summary.ConsumableQty;
+          ver.ConsumableAmt = summary.ConsumableAmt;
+          ver.ApplianceQty = summary.ApplianceQty;
+          ver.ApplianceAmt = summary.ApplianceAmt;
+          ver.TileAmt = summary.TileAmt;
+          ver.CabinetAmt = summary.CabinetAmt;
+          ver.CarpetAmt = summary.CarpetAmt;
+          ver.PmtReceived = summary.PmtReceived;
+          ver.CoTotal = summary.CoTotal;
+          ver.ToolQty = summary.ToolQty;
+          ver.ToolAmt = summary.ToolAmt;
+          return;
+      }
+  }
+}
+
+resetareasummary(area,summary) {
+  area.FinalAreaAmt = summary.AreaFinalAmt;
+  area.TotalAmt = summary.AreaTotalAmt;
+  area.AreaLayAmt = summary.AreaTotalAmt;
+  area.AreaDiscAmt = summary.AreaDiscAmt;
+  area.MaterialSqft = summary.AreaMaterialSqft;
+  area.FabLaborSqft = summary.AreaFabLaborSqft;
+  area.SplashSqft = summary.AreaSplashSqft;
+  area.EdgeLnft = summary.AreaEdgeLnft;
+  area.CoMatSF = summary.AreaCoMaterialSqft;
+  area.CoFabSF = summary.AreaCoFabLaborSqft;
+  area.CoSplashSF = summary.AreaCoSplashSqft;
+  area.CoEdgeLF = summary.AreaCoEdgeLnft;
+}
+
+preparepaymentschedule(model) {
+  let qamount = (model.Version.TotalAmt + model.Version.TaxAmt) - (model.Version.DiscountAmt);
+  model.Version.SigningAmt = (qamount + model.Version.RoundOff) * (model.Version.DueSigning / 100);
+  model.Version.TeamplateAmt = (qamount + model.Version.RoundOff) * (model.Version.DueTeamplate / 100);
+  model.Version.InstallAmt = (qamount + model.Version.RoundOff) * (model.Version.DueInstall / 100);
+  model.Version.OtherAmt = (qamount + model.Version.RoundOff) * (model.Version.DueOther / 100);
+  //model.Version.TotalAmt = qamount;
+}
+
+/*  getviewtypeid() {
+  return _qscope.viewtypeid;
+} */
+
+/* getisparttemplate() {
+  return _qscope.IsParttemplate;
+} */
+
+/* getversion() {
+  return _qscope.quote.header.Version;
+} */
+calcversionsummary31(version) {
+  let viewtypeId = 1;//1-quote,2-job
+  //let parttemp = undefined;//part template(add)
+  if (viewtypeId == 1) {
+      //let version = this.getversion();
+      //version areas summary
+      let areatotalobj = this.setversionareastotalamt(version.AreaList);
+      //fee & charges
+      this.setversionreferraltotalamt(version, areatotalobj);
+      //Set version total
+      this.setversiontotalamt(version, areatotalobj);
+      //version discount
+      this.setversiondiscountstotalamt(version, areatotalobj.DiscountAmt);
+      //version tax
+      this.setversiontaxstotalamt(version);
+      //version payment schedule
+      this.setpaymentschedule(version);
+  }
+}
+
+
+setversionareastotalamt(areas) {
+  let areatotalobj = this.areamodel31();
+  if (areas != null) {
+      for (let i = 0; i < areas.length; i++) {
+          let area = areas[i];
+          //set amt totals
+          this.setareaamttotals(areatotalobj, area);
+      }
+  }
+  return areatotalobj;
+}
+
+setversionreferraltotalamt(version, area) {
+  let fee = 0;
+  if (version.RefFee != 0 && version.ParentID == 0) {
+      if (version.FeeTypeID == 1) {//percentage
+          fee += this.roundToTwo((area.MaterialAmount * version.RefFee) / 100);
+          fee += this.roundToTwo((area.FabLaborAmount * version.RefFee) / 100);
+          fee += this.roundToTwo((area.EdgeAmount * version.RefFee) / 100);
+          fee += this.roundToTwo((area.CutOutAmount * version.RefFee) / 100);
+          fee += this.roundToTwo(((area.SinkAmt + area.FaucetAmt) * version.RefFee) / 100);
+          fee += this.roundToTwo((area.laborAmt * version.RefFee) / 100);
+          fee += this.roundToTwo((area.OthersAmt * version.RefFee) / 100);
+          fee += this.roundToTwo((area.ApplianceAmt * version.RefFee) / 100);
+          fee += this.roundToTwo((area.TileAmt * version.RefFee) / 100);
+          fee += this.roundToTwo((area.CabinetAmt * version.RefFee) / 100);
+          fee += this.roundToTwo((area.ConsumableAmt * version.RefFee) / 100);
+          fee += this.roundToTwo((area.ToolAmt * version.RefFee) / 100);
+      }
+      else { fee += this.convertToFloat(version.RefFee); }//amount
+  }
+  version.RefAmt = fee;
+  return fee;
+}
+
+setversiontotalamt(version, area) {
+  let taxval = version.Tax / 100;
+  version.TotalAmt = area.TotalAmt + area.DiscountAmt;
+  version.TaxAmt = area.TotalTaxApplyAmt;
+  if (version.ParentID == 0 && version.RefAmt != 0)//doller tax
+  {
+      version.TotalAmt += version.RefAmt;
+      if (version.IsFeeTax == 1 && version.TaxAmt != 0) { version.TaxAmt += version.RefAmt; }
+  }
+  version.DiscTaxAmt = this.roundToTwo(area.DiscTaxAmt * taxval);
+  version.DiscountAmt += area.DiscountAmt;
+  version.FinalAmt = version.TotalAmt;
+}
+
+setversiondiscountstotalamt(version, discamt) {
+  let discpercentage = 0, discAmount = 0, discpercentageAmount = 0;
+  if (version.QuoteAreaDiscList != null) {
+      for (let i = 0; i < version.QuoteAreaDiscList.length; i++) {
+          let disc = version.QuoteAreaDiscList[i];
+          if (disc.DiscTypeID == 1 && disc.AreaID == 0) { discpercentage += disc.DiscVal; }
+          else if (disc.DiscTypeID == 2 && disc.AreaID == 0) { discAmount += disc.DiscVal; }
+      }
+  }
+  if (discpercentage > 0) { discpercentageAmount = this.roundToTwo(((version.TotalAmt) * discpercentage) / 100); }
+  version.DiscountAmt = discamt + discpercentageAmount + discAmount;
+}
+
+setversiontaxstotalamt(version) {
+  let taxval = version.Tax / 100, discwithtotalamt = version.TotalAmt;
+  let salestaxamt = this.setversiontotalTax(discwithtotalamt, version.TaxAmt, version.DiscountAmt, taxval);
+  let totaldisctaxamount = this.setversiondiscounttaxtotalamt(version, discwithtotalamt, taxval);
+  version.TaxAmt = salestaxamt + totaldisctaxamount;
+}
+
+setpaymentschedule(version) {
+  var qamount = (version.TotalAmt + version.TaxAmt) - (version.DiscountAmt);
+  version.SigningAmt = qamount * (version.DueSigning / 100);
+  version.TeamplateAmt = qamount * (version.DueTeamplate / 100);
+  version.InstallAmt = qamount * (version.DueInstall / 100);
+}
+
+areamodel31() {
+  let amodel:any = {};
+  amodel.MaterialSqft = 0; amodel.MaterialAmount = 0; amodel.FabLaborAmount = 0; amodel.EdgeAmount = 0; amodel.CutOutAmount = 0; amodel.LaborTax = 0; amodel.CabinetTax = 0;
+  amodel.SinkAmt = 0; amodel.FaucetAmt = 0; amodel.ApplianceAmt = 0; amodel.OthersAmt = 0; amodel.laborAmt = 0; amodel.TileAmt = 0; amodel.OtherTax = 0;
+  amodel.CabinetAmt = 0; amodel.ConsumableAmt = 0; amodel.ToolAmt = 0; amodel.DiscountAmt = 0; amodel.DiscTaxAmt = 0; amodel.TotalTaxApplyAmt = 0; amodel.TotalAmt = 0; amodel.UpgradeTax = 0; amodel.TileTax = 0;
+  return amodel;
+}
+
+setareaamttotals(areatotalobj, area) {
+  areatotalobj.MaterialAmount += this.convertToFloat(area.MaterialAmount);
+  areatotalobj.FabLaborAmount += this.convertToFloat(area.FabLaborAmount);
+  areatotalobj.EdgeAmount += this.convertToFloat(area.EdgeAmount);
+  areatotalobj.CutOutAmount += this.convertToFloat(area.CutOutAmount);
+  areatotalobj.SinkAmt += this.convertToFloat(area.SinkAmt);
+  areatotalobj.FaucetAmt += this.convertToFloat(area.FaucetAmt);
+  areatotalobj.ApplianceAmt += this.convertToFloat(area.ApplianceAmt);
+  areatotalobj.OthersAmt += this.convertToFloat(area.OthersAmt);
+  areatotalobj.laborAmt += this.convertToFloat(area.laborAmt);
+  areatotalobj.TileAmt += this.convertToFloat(area.TileAmt);
+  areatotalobj.CabinetAmt += this.convertToFloat(area.CabinetAmt);
+  areatotalobj.ToolAmt += this.convertToFloat(area.ToolAmt);
+  areatotalobj.ConsumableAmt += this.convertToFloat(area.ConsumableAmt);
+  areatotalobj.DiscountAmt += this.convertToFloat(area.DiscountAmt);
+  areatotalobj.DiscTaxAmt += this.convertToFloat(area.DiscTaxAmt);
+  areatotalobj.TotalTaxApplyAmt += this.convertToFloat(area.TotalTaxApplyAmt);
+  areatotalobj.TotalAmt += this.convertToFloat(area.TotalAmt);
+}
+
+convertToFloat(value) { value = (value == '' || value == undefined) ? 0 : value; return parseFloat(isNaN(value) ? 0 : value); }
+
+
+setversiontotalTax(totalAmount, totalTaxableAmt, totalDiscAmt, taxVal) {
+  let totalTaxamt = 0;
+  if (totalAmount != 0) {
+      let taxableDiscAmt = this.roundToTwo((totalTaxableAmt / totalAmount) * totalDiscAmt);
+      let taxAmtAfetrDiscount = totalTaxableAmt - taxableDiscAmt;
+      totalTaxamt = this.roundToTwo(taxAmtAfetrDiscount * taxVal);
+  }
+  return totalTaxamt;
+}
+
+
+setversiondiscounttaxtotalamt(version, discwithtotalamt, taxVal) {
+  let discTaxAmount = 0, discpercentageTax = 0, totaldisctaxamount = 0, disctax = 0;
+  if (version.QuoteAreaDiscList != null) {
+      for (let i = 0; i < version.QuoteAreaDiscList.length; i++) {
+          let p = version.QuoteAreaDiscList[i];
+          if (p.DiscTypeID == 1 && p.Tax == 1) { discpercentageTax += p.DiscVal; }
+          else if (p.DiscTypeID == 2 && p.Tax == 1) { discTaxAmount += p.DiscVal; }
+      }
+  }
+  if (discpercentageTax > 0) { disctax = this.roundToTwo((discwithtotalamt * discpercentageTax) / 100, ); }
+  totaldisctaxamount = version.DiscTaxAmt + ((disctax + discTaxAmount) * taxVal);
+  return totaldisctaxamount;
+}
 
 }

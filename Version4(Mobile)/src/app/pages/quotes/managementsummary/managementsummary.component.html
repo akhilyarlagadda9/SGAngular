@@ -13,12 +13,12 @@
           <ion-col size="6" class="paddzero text-right fontboldclr">&nbsp;$ {{(Version.TotalAmt) | number : '.2-2'}}</ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="6" class="paddzero text-right" (click)="ActionDiscSelect()"><u>Discount:</u></ion-col>
+          <ion-col size="6" class="paddzero text-right" (click)="ActionSummarySelect(1, 'Job Discount(s)')"><u>Discount:</u></ion-col>
           <ion-col size="6" class="paddzero text-right fontboldclr"><span style="color:red;">&nbsp;($
               {{(Version.DiscountAmt) | number : '.2-2'}})</span></ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="6" class="paddzero text-right" (click)="ActionTaxSelect()"><u>Sales Tax:</u></ion-col>
+          <ion-col size="6" class="paddzero text-right" (click)="ActionSummarySelect(2, 'Sales Tax(%)')"><u>Sales Tax:</u></ion-col>
           <ion-col size="6" class="paddzero text-right fontboldclr">&nbsp;$ {{Version.TaxAmt | number : '.2-2'}}</ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
@@ -28,7 +28,7 @@
           </ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="6" class="paddzero text-right" (click)="ActionFeeSelect()"><u>Fee & Charge:</u></ion-col>
+          <ion-col size="6" class="paddzero text-right" (click)="ActionSummarySelect(3, 'Charges')"><u>Fee & Charge:</u></ion-col>
           <ion-col size="6" class="paddzero text-right fontboldclr">&nbsp;$ {{(Version.RefAmt) | number : '.2-2'}}</ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
@@ -252,175 +252,5 @@
       </ion-col>
     </ion-row>
   </ion-card>
-  <ion-row>
-      <!-- <div><b class="titleheader fontheading">Payment Schedule</b></div>
-      <div><ion-icon  name="create" class="fontmedium marg-left" (click)="ActionEditPaymentScheduleDesc()"></ion-icon></div> -->
-      <ion-col>
-            <div><b class="titleheader marg-left fontheading">Payment Schedule</b></div>
-    </ion-col>
-    <ion-col size="2" class="text-right">
-      <ion-icon name="create" class="fontmedium" (click)="ActionEditPaymentSchedule()"></ion-icon>
-    </ion-col>
-  </ion-row>
-  <ion-card>
-      <ion-row style="background-color:lightgoldenrodyellow;">
-        <ion-col size="12" class="paddzero margintop5">
-          <ion-row *ngIf="Version.PayTypeID == 1">
-              {{Version.DueSigningName}}:({{Version.DueSigning}}%)
-              <span>$ {{Version.SigningAmt| number : '.2-2'}}</span>
-          </ion-row>
-          <ion-row *ngIf="Version.PayTypeID == 1 && Version.TeamplateAmt != 0">
-              {{Version.DueTeamplateName}}:({{Version.DueTeamplate}}%)
-              <span>$ {{Version.TeamplateAmt| number : '.2-2'}}</span>
-          </ion-row>
-          <ion-row *ngIf="Version.PayTypeID == 1">
-              {{Version.DueInstallName}}: ({{Version.DueInstall}}%)
-              <span>$ {{Version.InstallAmt | number : '.2-2'}}</span>
-          </ion-row>
-          <ion-row *ngIf="Version.PayTypeID == 2">
-              Pay Terms: <span class="b-Color">{{Version.PaymentTerm}}</span>
-              <span>$
-                  {{((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt))| number : '.2-2'}}</span>
-          </ion-row>
-      </ion-col>
-      </ion-row>
-    </ion-card>
-  <ion-row>
-    <div><b class="titleheader fontheading">Cost Summary</b></div>
-  </ion-row>
-  <ion-card>
-    <ion-row>
-      <ion-col size="12">
-        <ion-row class="mar-bot2">
-          <ion-col size="5" class="paddzero text-right"></ion-col>
-          <ion-col size="3" class="paddzero text-center fontbold"><u>Qty</u></ion-col>
-          <ion-col size="4" class="paddzero text-right fontbold"><u>Amount</u></ion-col>
-        </ion-row>
-        <ion-row class="mar-bot2">
-          <ion-col size="5" class="paddzero text-right">Material:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.MaterialSqft | number : '.2-2'}}</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.MatAmount | number : '.2-2'}}</ion-col>
-        </ion-row>
-        <ion-row class="mar-bot2">
-          <ion-col size="5" class="paddzero text-right">Fab Labor:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.FabLaborSqft | number : '.2-2'}}</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.FabLaborAmount | number : '.2-2'}}</ion-col>
-        </ion-row>
-        <ion-row class="mar-bot2" *ngIf="Version.EdgeLnft > 0">
-          <ion-col size="5" class="paddzero text-right">Edge:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.EdgeLnft | number : '.2-2'}}</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.EdgeAmount | number : '.2-2'}}</ion-col>
-        </ion-row>
-        <ion-row class="mar-bot2" *ngIf="Version.SinkQty > 0 || Version.FaucetQty > 0">
-          <ion-col size="5" class="paddzero text-right">Sinks & Faucets:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.SinkQty + Version.FaucetQty | number : '.2-2'}}</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.AdditionalAmt | number : '.2-2'}}</ion-col>
-        </ion-row>
-        <ion-row class="mar-bot2" *ngIf="Version.ApplianceQty > 0">
-          <ion-col size="5" class="paddzero text-right">Appliance:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.ApplianceQty | number : '.2-2'}}</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.ApplianceAmt | number : '.2-2'}}</ion-col>
-        </ion-row>
-        <ion-row class="mar-bot2" *ngIf="Version.CutOutLnft > 0">
-          <ion-col size="5" class="paddzero text-right">CutOut:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.CutOutLnft | number : '.2-2'}}</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.CutOutAmount | number : '.2-2'}}</ion-col>
-        </ion-row>
-        <ion-row class="mar-bot2" *ngIf="Version.LaborQty > 0">
-          <ion-col size="5" class="paddzero text-right">Labor:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.LaborQty | number : '.2-2'}}</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.LaborAmt | number : '.2-2'}}</ion-col>
-        </ion-row>
-        <ion-row class="mar-bot2" *ngIf="Version.TileQty > 0">
-          <ion-col size="5" class="paddzero text-right">Tile:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.TileQty | number : '.2-2'}}</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.TileAmt | number : '.2-2'}}</ion-col>
-        </ion-row>
-        <ion-row class="mar-bot2" *ngIf="Version.CabinetQty > 0">
-          <ion-col size="5" class="paddzero text-right">Cabinet:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.CabinetQty | number : '.2-2'}}</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.CabinetAmt | number : '.2-2'}}</ion-col>
-        </ion-row>
-        <ion-row class="mar-bot2" *ngIf="Version.CarpetQty > 0">
-          <ion-col size="5" class="paddzero text-right">Carpet:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.CarpetQty | number : '.2-2'}}</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.CarpetAmt | number : '.2-2'}}</ion-col>
-        </ion-row>
-        <ion-row class="mar-bot2" *ngIf="Version.AddOnQty > 0">
-          <ion-col size="5" class="paddzero text-right">Add.Products:</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.AddOnQty | number : '.2-2'}}</ion-col>
-          <ion-col size="4" class="paddzero text-right fontboldclr">$ {{Version.OthersAmount | number : '.2-2'}}</ion-col>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-  </ion-card>
-  <ion-row>
-    <div><b class="titleheader fontheading">Sales Report</b></div>
-  </ion-row>
-  <ion-card>
-   <ion-row style="background-color:lightgoldenrodyellow;">
-    <ion-col size="12">
-      <ion-row class="mar-bot2">
-        <ion-col size="5" class="paddzero text-right">Total Revenue:</ion-col>
-        <ion-col size="5" class="paddzero text-right fontboldclr">&nbsp;$ {{Version.SaleRevenue | number : '.2-2'}}</ion-col>
-        <ion-col size="2"></ion-col>
-      </ion-row>
-      <ion-row class="mar-bot2">
-        <ion-col size="5" class="paddzero text-right">Total Cost:</ion-col>
-        <ion-col size="5" class="paddzero text-right fontboldclr">&nbsp;$ {{Version.FinalCost | number : '.2-2'}}</ion-col>
-        <ion-col size="2"></ion-col>
-      </ion-row>
-      <ion-row class="mar-bot2">
-        <ion-col size="5" class="paddzero text-right">Material Cost:</ion-col>
-        <ion-col size="5" class="paddzero text-right fontboldclr">&nbsp;$ {{Version.MatCost | number : '.2-2'}}</ion-col>
-        <ion-col size="2"></ion-col>
-      </ion-row>
-      <ion-row class="mar-bot2">
-        <ion-col size="5" class="paddzero text-right">T$ Amount:</ion-col>
-        <ion-col size="5" class="paddzero text-right fontboldclr">&nbsp;$ {{Version.TDollarAmount | number : '.2-2'}}</ion-col>
-        <ion-col size="2" class="paddzero fontboldclr">({{Version.TDolloarPercentage | number:'.0-0'}}%)</ion-col>
-      </ion-row>
-      <ion-row class="mar-bot2">
-        <ion-col size="5" class="paddzero text-right">Gross Margin:</ion-col>
-        <ion-col size="5" class="paddzero text-right fontboldclr">&nbsp;$ {{Version.NetMargin | number : '.2-2'}}</ion-col>
-        <ion-col size="2" class="paddzero fontboldclr"> ({{Version.NetMarginPercentage | number:'.0-0'}}%)</ion-col>
-      </ion-row>
-      <ion-row class="mar-bot2">
-        <ion-col size="5" class="paddzero text-right">Net Margin:</ion-col>
-        <ion-col size="5" class="paddzero text-right fontboldclr">&nbsp;$ {{Version.NetMargin | number : '.2-2'}}</ion-col>
-        <ion-col size="2" class="paddzero fontboldclr"> ({{Version.NetMarginPercentage | number:'.0-0'}}%)</ion-col>
-      </ion-row>
-      <ion-row class="mar-bot2" *ngIf="Version.AddonsMargin > 0">
-        <ion-col size="5" class="paddzero text-right">Add On Margin:</ion-col>
-        <ion-col size="5" class="paddzero text-right fontboldclr">&nbsp;$ {{Version.AddonsMargin | number : '.2-2'}}</ion-col>
-        <ion-col size="2" class="paddzero fontboldclr">({{Version.AddonsMarginPercentage | number:'.0-0'}}%)</ion-col>
-      </ion-row>
-    </ion-col>
-  </ion-row>
-  </ion-card>
-  <ion-row>
-    <div><b class="titleheader fontheading">Sales Commission</b></div>
-  </ion-row>
-  <ion-card>
-    <ion-col size="12">
-      <ion-row style="margin-bottom: 4px;">
-            <ion-col size="3" class="paddzero text-center">Retail:</ion-col>
-            <ion-col size="8" class="paddzero text-left fontboldclr">&nbsp;<u>M7:Variable Gross Margin</u></ion-col>
-      </ion-row>
-      <ion-row class="mar-bot2">
-        <ion-col size="3" class="paddzero text-left">Min-Max</ion-col>
-        <ion-col size="2" class="paddzero text-center">Std</ion-col>
-        <ion-col size="2" class="paddzero text-center">Bonus</ion-col>
-        <ion-col size="3" class="paddzero text-center">Est Comm</ion-col>
-        <ion-col size="2" class="paddzero text-right">Addon</ion-col>
-      </ion-row>
-      <ion-row class="mar-bot2">
-          <ion-col size="3" class="paddzero text-left fontboldclr">{{percentage.Min}} - {{percentage.Max}}</ion-col>
-          <ion-col size="2" class="paddzero text-center fontboldclr">{{percentage.Std}}%</ion-col>
-          <ion-col size="2" class="paddzero text-center fontboldclr"> {{percentage.Bonus}}%</ion-col>
-          <ion-col size="3" class="paddzero text-center fontboldclr">{{Version.CommissionAmount}}</ion-col>
-          <ion-col size="2" class="paddzero text-right fontboldclr">{{Version.Commission.AddOnMargin}}%</ion-col>
-        </ion-row>
-    </ion-col>
-  </ion-card>
+
 </ion-content>

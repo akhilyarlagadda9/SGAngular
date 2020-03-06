@@ -187,7 +187,7 @@ export class QuoteeditComponent implements OnInit {
 
   //Management summary component
   async ActionSummaryEdit() {
-    let version = { Version: this.headerInfo.Version }
+    let version = { Version: this.headerInfo.Version, VersionId:this.qprmsobj.versionid, header:this.headerInfo }
     let copyver = JSON.parse(JSON.stringify(version));
     const modal = await this.Modalcntrl.create({
       component: ManagementsummaryComponent,

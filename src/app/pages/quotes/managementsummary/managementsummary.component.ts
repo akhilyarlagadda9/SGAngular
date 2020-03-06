@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, PopoverController, NavParams } from '@ionic/angular';
+import { ModalController, PopoverController, NavParams, NavController } from '@ionic/angular';
 import { QuoteService } from 'src/app/service/quote.service';
 import { QuotegetService } from 'src/app/service/quoteget.service';
+import { DiscountComponent } from '../discount/discount.component';
 
 @Component({
   selector: 'app-managementsummary',
@@ -9,10 +10,14 @@ import { QuotegetService } from 'src/app/service/quoteget.service';
   styleUrls: ['./managementsummary.component.scss'],
 })
 export class ManagementsummaryComponent implements OnInit {
+  Version: any;
+  VersionId:any;
+  header: any;
+ 
 
-  constructor(private service: QuoteService, public Modalcntrl: ModalController, private popoverCntrl: PopoverController) { }
+  constructor(private service: QuoteService, public Modalcntrl: ModalController,private navCtrl: NavController, private popoverCntrl: PopoverController) { }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   ActionCloseSummaryEdit() {
     this.Modalcntrl.dismiss({
@@ -20,13 +25,15 @@ export class ManagementsummaryComponent implements OnInit {
     });
   }
 
-  async ActionDiscSelect(ev: any) {
+  async ActionSummarySelect(SummaryTypeID:number, SumName:string) {
     let obj = {}
+    let version = {Version: this.Version, VersionId:this.VersionId, header:this.header, SummaryTypeID, SumName}
+   // let copyver = JSON.parse(JSON.stringify(version));
     const popover = await this.popoverCntrl.create({
       component: DiscountComponent,
-      event: ev,
       translucent: true,
-      componentProps: obj,
+      componentProps: version,
+      cssClass: "popover_class"
     });
     return await popover.present();
   }
@@ -65,23 +72,25 @@ export class ManagementsummaryComponent implements OnInit {
   }
 
 }
-@Component({
+/* @Component({
   //selector: 'app-itemsearchComponent',
   template: `
+  <form #form="ngForm" (ngSubmit)="ActionSaveDisc(form)" class="dis-content">
   <ion-header>
-    <ion-toolbar style="height:37px;top:-8px;left:-10px;">
-      <ion-title style="font-size:15px;">Job Discount(S)</ion-title>
-      <ion-button slot="end" color="success" size="small" class="pob2" (click)="ActionToClosePop()">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop()" class="pob">X</ion-button>
+    <ion-toolbar>
+      <ion-title class="titleheader">Job Discount(s)</ion-title>
+      <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
+      <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop()">X</ion-button>
     </ion-toolbar>
   </ion-header>
+  <ion-content>
   <ion-row style="height:360px">
   <ion-col>
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Discount</ion-label>
       <ion-select class="btninfo" interface="popover" [(ngModel)]="discname" name="discname"
-        (ionChange)="ActionChangeDiscount()">
-        <ion-select-option *ngFor="let disc of DiscountTypeList" [value]="discname"> {{disc.Name}}</ion-select-option>
+      (modelChange)="ActionChangeDiscount()">
+        <ion-select-option *ngFor="let dis of DiscountTypeList" [value]="dis.DiscTypeID"></ion-select-option>
       </ion-select>
       </ion-item>
       <ion-item>
@@ -98,7 +107,9 @@ export class ManagementsummaryComponent implements OnInit {
           <ion-label style="margin-left: 5px;">Tax</ion-label>
       </ion-item>
   </ion-col>
-</ion-row>`,
+</ion-row>
+</ion-content>
+</form>`,
   //styleUrls: ['./customeredit.component.scss'],
 })
 export class DiscountComponent implements OnInit {
@@ -106,26 +117,27 @@ export class DiscountComponent implements OnInit {
   searchResults = [];
   DiscountTypeList: any = [];
 
-  constructor(private Modalcntrl: ModalController, private navParams: NavParams, private popoverCntrl: PopoverController, private service: QuotegetService) { }
+  constructor(private Modalcntrl: ModalController, private navParams: NavParams, private popoverCntrl: PopoverController,private getservice: QuotegetService, private service: QuotegetService) { }
   ngOnInit() {
-    this.ActionSearchParentAccount();
     this.ActionChangeDiscount();
   }
   ActionSearchParentAccount() { }
   DiscTypes1: any = [{ ID: 1, Name: "%" }, { ID: 2, Name: "$" }];
 
   ActionChangeDiscount() {
-    let result = this.service.QuoteMasterList(2).subscribe(
+    let result = this.getservice.ActionGetQuoteMasterList(2).subscribe(
       data => { this.DiscountTypeList = data },
       error => console.log(error));
+      console.log(this.DiscountTypeList)
   }
 
-  ActionToClosePop() {
+  ActionToClosePop() {;
     this.popoverCntrl.dismiss({
       'dismissed': true
     });
   }
-}
+  
+} */
 
 @Component({
   //selector: 'app-itemsearchComponent',
@@ -407,5 +419,34 @@ export class PaymentScheduleComponent implements OnInit {
   }
 }
 
+/* @Component({
+  //selector: 'app-itemsearchComponent',
+  template: `
+          <ion-header>
+            <ion-toolbar>
+              <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop(false)">X</ion-button>
+            </ion-toolbar>
+          </ion-header>`,
+  styleUrls: ['./managementsummary.component.scss'],
+})
+export class DiscountComponent implements OnInit {
+  navObj = this.navParams.data;
+  constructor(private navParams: NavParams, private popoverCntrl: PopoverController) { }
+  obj: any;
+  ngOnInit() {
+    console.log("ok")
+   }
 
+  ActionLoadPopup(loadType: string, loadId: number, viewtype: string) {
+    this.obj = { loadType: loadType, loadId: loadId, ViewType: viewtype };
+    this.ActionToClosePop(true);
+  }
+  ActionToClosePop(isSelect: boolean) {
+    this.popoverCntrl.dismiss({
+      'dismissed': true,
+      info: this.obj,
+      isSelect: isSelect
+    });
+  }
+} */
 

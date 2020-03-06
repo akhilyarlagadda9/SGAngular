@@ -240,4 +240,72 @@ ActionGetEmailsEmployeeList(contactList):Observable<any> {
 } //result of the customer contanct list must send as parameter to contactlist
 
 
+/***************Save Discount List*****************/
+
+ //Cutout Save Function
+ qpactionsavediscount(versionId:number,areaId:number,tax:any): Observable<any> {
+  var model = JSON.stringify(versionId);
+  return this.http.post<any>(this.url + 'api/QSave/ActionSaveDiscount?versionId=' + versionId + '&areaId=' + areaId + '&tax=' + tax, model, { headers: { 'Content-Type': 'application/json' } })
+}
+
+
+/***************Sales Tax List*****************/
+
+ //Cutout Save Function
+ qpactionsavesalestax(model, areaId): Observable<any> {
+  var data = JSON.stringify(model);
+  return this.http.post<any>(this.url + 'api/QSave/ActionSaveSalesTax?areaId=' + areaId, data,{ headers: { 'Content-Type': 'application/json;charset=utf-8' } })
+}
+
+
+
+
+
+/* function qpversioncommissioninfo(salesrepId, info) {
+  let val = "";
+  $.ajax({
+      type: "post",
+      url: serviceBase + 'api/QEdit/GetCommissionDetails?salesrepId=' + salesrepId,
+      contentType: "application/json;charset=utf-8",
+      data: JSON.stringify(info),
+      dataType: "json",
+      async: false,
+      success: function (data) { val = data; },
+      error: function () {
+          // alert("Error");
+      }
+  });
+  return val;
+} */
+qpversioncommissioninfo(salesrepId, info): Observable<any> {
+  var data = JSON.stringify(info);
+  return this.http.post<any>(this.url + 'api/QEdit/GetCommissionDetails?salesrepId=' + salesrepId,{ headers: { 'Content-Type': "application/json;charset=utf-8" } })
+}
+
+
+/* function qscosummary(coId) {
+  let val = "";
+  $.ajax({
+      url: serviceBase + 'api/Drawing/CoVersionInfo?coId=' + coId,
+      type: "get",
+      async: false,
+      success: function (data) { val = data; },
+      error: function () {
+      }
+  });
+  return val;
+} */
+
+qscosummary(coId): Observable<any> {
+  var data = JSON.stringify(coId);
+  return this.http.post<any>(this.url + 'api/Drawing/CoVersionInfo?coId=' + coId,{ headers: { 'Content-Type': "application/json;charset=utf-8" } })
+}
+
+/****************Fees And Charges****************/
+
+qpactionsavereferralfee(model, areaId): Observable<any> {
+  var data = JSON.stringify(model);
+  return this.http.post<any>(this.url + 'api/QSave/ActionSaveReferralFee?areaId=' + areaId, model,{ headers: { 'Content-Type': "application/json;charset=utf-8" } })
+}
+
 }

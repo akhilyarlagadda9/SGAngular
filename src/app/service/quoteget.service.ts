@@ -31,7 +31,7 @@ export class QuotegetService {
   }
 
  //Production Type List,DiscountType List
- QuoteMasterList(typeID:number):Observable<any> {debugger;
+ QuoteMasterList(typeID:number):Observable<any> {;
   return this.http.get<any>(this.url +  'api/QuoteAdmin/MasterList?typeID=' + typeID)
 }
  //Price List
@@ -265,8 +265,19 @@ ActionGetQuoteMasterList(typeID:any):Observable<any> {
   return this.http.get<any>(this.url + 'api/QuoteAdmin/MasterList?typeID=' + typeID ) 
 }
 
-ActionGetDiscountlist(versionid:any):Observable<any> {
+getdiscountlist(versionid:any):Observable<any> {
   return this.http.get<any>(this.url + 'api/Quote/DiscountList?versionId=' + versionid) 
+}
+
+/*************Sales Tax list****************/
+getaccounttaxlist(typeID:number, CustTypeID:number):Observable<any> {
+  return this.http.get<any>(this.url + 'api/Quote/AccountTaxList?typeID=' + typeID + '&custTypeID=' + CustTypeID, ) 
+}
+
+
+/*************Fees and Charges list****************/
+getquotemasterlist(typeID:number):Observable<any> {
+  return this.http.get<any>(this.url + 'api/QuoteAdmin/MasterList?typeID=' + typeID) 
 }
 
 

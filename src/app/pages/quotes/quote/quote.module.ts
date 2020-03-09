@@ -33,11 +33,11 @@ import { FaucetsComponent } from '../faucets/faucets.component';
 import { TileinfoComponent } from '../tileinfo/tileinfo.component';
 import { CustomerinfoComponent } from '../customerinfo/customerinfo.component';
 import { AddareaComponent } from '../addarea/addarea.component';
-import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
+import { AddmatComponent, SearchComponent } from '../materialinfo/addmat/addmat.component';
 import { TemplateComponent } from '../template/template.component';
 import { CustitemComponent, itemsearchComponent } from '../custitem/custitem.component';
 import { CustomersearchComponent } from '../customersearch/customersearch.component';
-import { ManagementsummaryComponent,PaymentScheduleComponent,DiscountComponent,taxComponent,feeComponent} from '../managementsummary/managementsummary.component';
+import { ManagementsummaryComponent,PaymentScheduleComponent,taxComponent,feeComponent} from '../managementsummary/managementsummary.component';
 import { FabricationComponent } from '../fabrication/fabrication.component';
 import { LaborinfoComponent } from '../laborinfo/laborinfo.component';
 import { MapComponent } from '../../map/map.component';
@@ -49,12 +49,13 @@ import { ActivitiesComponent } from '../../common/activities/activities.componen
 import { AddpartComponent, AddSizesComponent } from '../addpart/addpart.component';
 import { AreasummaryComponent } from '../areasummary/areasummary.component';
 import { TransactionComponent } from '../transaction/transaction.component';
+import { DiscountComponent } from '../discount/discount.component';
 
 import { OtherComponent } from '../other/other.component';
 import { MaileditComponent } from '../mailedit/mailedit.component';
 import { ActionquoteComponent } from '../actionquote/actionquote.component';
-import { QuickquoteComponent } from '../quickquote/quickquote.component';
 import { AddmeasComponent } from '../materialinfo/addmeas/addmeas.component';
+import { QuickquoteComponent } from '../quickquote/quickquote.component';
 
 @NgModule({
   imports: [
@@ -69,7 +70,7 @@ import { AddmeasComponent } from '../materialinfo/addmeas/addmeas.component';
       },
     ])
   ],
-  entryComponents: [CreatequoteComponent,ActionquoteComponent,NewactionComponent,TransactionComponent,NewtranComponent,AccountsComponent,PaymentScheduleComponent,
+  entryComponents: [CreatequoteComponent,AddmeasComponent,SearchComponent,ActionquoteComponent,NewactionComponent,TransactionComponent,NewtranComponent,AccountsComponent,PaymentScheduleComponent,
     AdditionalitemserachComponent,DiscountComponent,feeComponent,
     taxComponent, itemsearchComponent,  CustomersearchComponent,
     CustitemComponent, TemplateComponent, AddmatComponent, 
@@ -86,7 +87,7 @@ import { AddmeasComponent } from '../materialinfo/addmeas/addmeas.component';
      AddpartComponent, AddSizesComponent,MaileditComponent, QuickquoteComponent,AddmeasComponent],
     
 
-  declarations: [QuotePage, ActionquoteComponent,NewactionComponent, TransactionComponent,AccountsComponent,NewtranComponent,PaymentScheduleComponent,AdditionalitemserachComponent,
+  declarations: [QuotePage,AddmeasComponent, SearchComponent, ActionquoteComponent,NewactionComponent, TransactionComponent,AccountsComponent,NewtranComponent,PaymentScheduleComponent,AdditionalitemserachComponent,
     taxComponent,feeComponent,DiscountComponent, itemsearchComponent,
     CustitemComponent, TemplateComponent, AddmatComponent, TileinfoComponent, 
     FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, 

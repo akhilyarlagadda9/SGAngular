@@ -177,7 +177,6 @@ export class SchedulingPage implements OnInit {
   }
 
   ActionEventsByFilterSettings() {
-    debugger;
     if (this.calObj.CalID == 1) {
       this.ActionGetResList();
     } else {

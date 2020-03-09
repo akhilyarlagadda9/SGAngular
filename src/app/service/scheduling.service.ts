@@ -19,8 +19,8 @@ return  new Date(date);
 }
 
 //Activity List
-ActionQuickActList(startDate:any, endDate:string, search:string, actTypeIds:number, userId:number, resIds:string,statusIds:string):Observable<any> {
-  return this.http.get<any>(this.url +  'api/Project/ActionQuickActList?startDate=' + startDate + "&endDate=" + endDate + "&search=" + search + '&actTypeIds=' + actTypeIds + "&userId=" + userId + "&resIds=" + resIds + "&statusIds=" + statusIds)
+ActionQuickActList(startDate:any, endDate:string, search:string, actTypeIds:number, userId:number, resIds:string,statusIds:string,colorId:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/ActionQuickActList?startDate=' + startDate + "&endDate=" + endDate + "&search=" + search + '&actTypeIds=' + actTypeIds + "&userId=" + userId + "&resIds=" + resIds + "&statusIds=" + statusIds + "&colorId=" + colorId)
 }
 
 //ActivityType List

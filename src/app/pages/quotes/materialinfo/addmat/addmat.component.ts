@@ -18,11 +18,7 @@ export class AddmatComponent implements OnInit {
   priceListID: number; AreaID: number
   material: any;
   loaderToShow: any;
-  // VersionId: number; materialId: number; AreaId: number; priceListID: number
-  //partList: any = [];
-  // partinfo: any;
-  //areaInfo: any;
-  //Version: any;
+  
   finishItems: any = []; thicknessItems: any = []; riskLevels: any = []; supplierList: any = []; slabtypes: any = []; subproductgroups: any = [];
   productItems: any = []; pricegroups: any = []; suppliers: any = [];
   prosubgroupId: number;
@@ -47,21 +43,17 @@ export class AddmatComponent implements OnInit {
   constructor(public loadingController: LoadingController, public popoverController: PopoverController, public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private quoterep: QuoterepService, private getservice: QuotegetService, private navParams: NavParams, private service: QuoteService) { }
 
   ngOnInit() {
-    if (this.material.ID == 0) {
-      this.GetMaterialVer(this.materialId);
-    }
-    else {
-      this.GetMaterialVer(this.material.ID);
-    }
     this.initdictlists();
-    this.InitMaterial();
+    if(this.material.ID == 0){
+      this.InitMaterial();
+    }else{
+      this.GetVerionMaterial(this.material.ID);
+    }
     //this.GetStockInfo();
-
   }
 
-  GetMaterialVer(materialId) {
+  GetVerionMaterial(materialId) {
     this.service.ActionVersionMaterial(materialId).subscribe(
-
       data => { this.material = data; console.log(this.material); }
     );
   }
@@ -220,6 +212,7 @@ export class AddmatComponent implements OnInit {
   }
 
   ActionPopulateMaterialSearch(productItem: any) {
+
     this.material = this.quoterep.popultaesearchiteminfo(this.material, this.subproductgroups, productItem);
     this.ActionClosePopup();
     console.log(this.material)

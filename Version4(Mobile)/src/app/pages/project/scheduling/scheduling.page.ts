@@ -8,7 +8,7 @@ import { SchedulingService } from 'src/app/service/scheduling.service';
 import { NavController } from '@ionic/angular';
 import { ActionSheetController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
-
+import * as $ from 'jquery';
 import { AddactivityComponent } from '../addactivity/addactivity.component';
 import { CalendarfilterComponent } from '../calendarfilter/calendarfilter.component';
 //import * as moment from 'moment';
@@ -22,6 +22,7 @@ import { FullCalendarComponent } from '@fullcalendar/angular';
 import { CalendarsettingComponent } from '../calendarsetting/calendarsetting.component';
 import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
+import { Calendar } from '@fullcalendar/core';
 
 //import momentTimezonePlugin from '@fullcalendar/moment-timezone';
 
@@ -55,15 +56,15 @@ declare var platform: string;
    <full-calendar
 #calendar
 schedulerLicenseKey ="GPL-My-Project-Is-Open-Source"
-defaultView="resourceTimeline_3days"
+[defaultView]="options.defaultView"
+[defaultDate]="options.defaultDate"
 themeSystem= 'cerulean'
 resourceLabelText= " "
 [height]="options.height"
-[slotWidth]="options.slotWidth"
 [header]="false"
-minTime = "06:00:00"
-maxTime = "22:00:00"
-
+[minTime] = "options.minTime"
+[maxTime] = "options.maxTime"
+[duration]="options.duration"
 [views]="options.views"
 [plugins]="options.plugins"
 (datesRender)="call($event)"
@@ -81,11 +82,11 @@ export class SchedulingPage implements OnInit {
   calendar: any; actlist: any = []; resources: any = []; options: OptionsInput; eventinfo: any;
   actResources: any = []; width: number;
   @ViewChild('calendar', { static: false }) fullcalendar: FullCalendarComponent;
-  CalendarTitle: any;ActiveDate:Date;
+  CalendarTitle: any; ActiveDate: Date; calendarApi4 = null;
   calObj: any = {
     StartDate: Date, EndDate: Date, ActTypeIDs: "11", ActTypes: "Template", ResourceIDs: "", ResourceNames: "ALL", StatusIDs: "", StatusNames: "ALL",
-    CalID: 1, CalendarType: "resourceTimeline", CalendarView: "resourceTimeline_3days", CalendarDays: 3, CalFields: "", Search: "", UserId: 0,
-    IsViewType: false, IsViewChange: false, starttime: "7:00 AM", endtime: "8:00 PM",
+    CalID: 1, CalendarType: "resourceTimeline", CalendarView: "resourceTimeline", CalendarDays: 3, CalFields: "", Search: "", UserId: 0,
+    IsDateChange: false, IsDayChange: false, IsViewChange: false, starttime: "7:00 AM", endtime: "8:00 PM", CalColorID: 1, ColorType: 'Activity Type',
     ActTypeList: [{ id: 11, groupId: 0, title: "Template" }]
   }
   constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) private locale: string, public loadingController: LoadingController,
@@ -97,40 +98,31 @@ export class SchedulingPage implements OnInit {
     this.options = {
       plugins: [interactionPlugin, dayGridPlugin, resourceTimelinePlugin, resourceTimeGridPlugin, resourceDayGridPlugin],
       height: height,
-      slotWidth: this.width,
-    //  resourceAreaWidth: platform == 'desktop' ? 180 : 100,
+      // slotWidth: this.width,
+      defaultView: "resourceTimeline",
+      minTime: "07:00:00",
+      maxTime: "22:00:00", defaultDate: _dafaultDate,
+      duration: { days: 3 },
+      //  resourceAreaWidth: platform == 'desktop' ? 180 : 100,
       views: {
         //resource by day
-        resourceTimeline: { type: 'timeline', editable: true, duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00", },
-        resourceTimeline_3days: {
-          type: 'resourceTimeline', slotDuration: { days: 1 }, buttonText: "resource", duration: { days: 3 }, dayCount: 1,
-        },
-        resourceTimeline_5days: {
-          type: 'resourceTimeline', slotDuration: { days: 1 }, buttonText: "resource", duration: { days: 5 }
+        resourceTimeline: {
+          type: 'resourceTimeline', slotDuration: { days: 1 }, buttonText: "resource", duration: { days: 3 },
         },
         //day by resource
-        resourcegridView_5days: {
-          type: 'resourceDayGrid', duration: { days: 5 }, buttonText: "resource",
-        },
-        resourcegridView_3days: {
-          type: 'resourceDayGrid', duration: { days: 3 }, buttonText: "resource",
-        },
         resourcegridView: {
-          type: 'resourceDayGrid', duration: { days: 1 }, buttonText: "resource",
-        },
-        resourceTimeGrid_3days: {
-          type: 'resourceTimeGrid', duration: { days: 3 }, buttonText: "resource",
+          type: 'resourceDayGrid', duration: { days: 3 }, buttonText: "resource",
         },
         // Day by Timeline
         restimelineDay: { type: 'resourceTimeline', duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00", },
       },
     }
-    ///thisObj = this;
   }
 
 
 
   ngAfterViewInit() {
+    this.calendarApi4 = this.fullcalendar;
     this.resources = [
       {
         id: "0",
@@ -141,7 +133,7 @@ export class SchedulingPage implements OnInit {
 
   call(info) {
     this.ActiveDate = info.view.activeStart;
-    if(info.view.type == "restimelineDay"){
+    if (info.view.type == "restimelineDay") {
       this.calObj.StartDate = this.datePipe.transform(this.calObj.StartDate, "MM/dd/yyyy");
       this.calObj.EndDate = this.datePipe.transform(this.calObj.EndDate, "MM/dd/yyyy");
     }
@@ -161,7 +153,7 @@ export class SchedulingPage implements OnInit {
     let calendarApi = this.fullcalendar.getApi();
     if (this.calObj.CalendarView == "restimelineDay") {
       let sDate = new Date(this.calObj.StartDate);
-      let daycount = navtype == "prev" ? -this.calObj.CalendarDays: this.calObj.CalendarDays; 
+      let daycount = navtype == "prev" ? -this.calObj.CalendarDays : this.calObj.CalendarDays;
       sDate.setDate(sDate.getDate() + daycount);
       this.calObj.StartDate = sDate;
       this.PrepareDays(navtype);
@@ -171,11 +163,10 @@ export class SchedulingPage implements OnInit {
     } else {
       calendarApi.next();
     }
-   
+
   }
 
   GetNavDates(view) {
-    console.log(view);
     let start = this.datePipe.transform(view.activeStart, "MM/dd/yyyy");
     // For Prev
     let prevbutton = <HTMLElement>document.body.querySelector(".fc-prev-button");
@@ -186,25 +177,22 @@ export class SchedulingPage implements OnInit {
   }
 
   ActionEventsByFilterSettings() {
-    if (this.calObj.CalID == 3 || this.calObj.CalendarView == "restimelineDay") {
-      this.ActionLoadEvents();
-    } else {
+    debugger;
+    if (this.calObj.CalID == 1) {
       this.ActionGetResList();
+    } else {
+      this.ActionLoadEvents();
     }
   }
 
 
   ActionRenderEvent(evnt) {
-   // this.PrepareEventHtml(evnt);
-    if (platform == 'desktop'){
-      this.PrepareEventForDesktop(evnt);
-    }else{
-      this.PrepareEventHtml(evnt);
-    }
-
-
-
-
+    this.PrepareEventHtml(evnt);
+    // if (platform == 'desktop'){
+    //   this.PrepareEventForDesktop(evnt);
+    // }else{
+    //   this.PrepareEventHtml(evnt);
+    // }
   }
   PrepareEventHtml(evnt) {
     let event = evnt.event.extendedProps;
@@ -213,13 +201,13 @@ export class SchedulingPage implements OnInit {
     htmlstring += "<div>" + event.ActivityType + "</div>";
     // "<img class='ico' src='" + event.Imageurl + "' width='20' height='20'>" + "</div>";
     htmlstring += "<div style='font-size: 10px;'>" + event.StartTime + " - " + event.EndTime + "</div>";
-    htmlstring += "<div>" + event.QuoteNo + "-" + event.QuoteName + "</div>";
-    htmlstring += "</div>"
+    htmlstring += "<div><b>" + event.QuoteNo + "- P" + event.PhaseSrNo + "</b></div>";
+    htmlstring += "<div>" + event.QuoteName + "</div></div>"
     evnt.el.innerHTML = htmlstring;
   }
   PrepareEventForDesktop(evnt) {
     let event = evnt.event.extendedProps; var htmlstring = '';
-    if(event.ResourceNames == null || event.ResourceNames == ""){
+    if (event.ResourceNames == null || event.ResourceNames == "") {
       event.ResourceNames = "resource+";
     }
     var rcolor = event.ResourceNames == "resource+" ? "Red" : "Blue";
@@ -249,30 +237,22 @@ export class SchedulingPage implements OnInit {
 
     htmlstring += "<tr><td style='border:0' colspan='2' valign='top' align='left'><div style='color:black;font-size: 13px' class='actdiv font-bold'>" + "<span style='color:blue;font-size: 14px'>" + event.QuoteNo + "</span>" + (event.PhaseSrNo > 0 ? " - P " + event.PhaseSrNo : "") + "</div><td></tr>";
     htmlstring += "<tr><td style='border:0' colspan='2' valign='top' align='left'><div  style='color:black;font-size: 13px' class='wordwrap'>" + event.CustName + CustType + "</div></td></tr>";
-   
+
     htmlstring += "<tr><td colspan='2' style='border:0;color:orangered;font-size:13px;' valign='top' align='right'>";
     htmlstring += "<div style='float:left'>" + event.PhaseSF + "</div>";
     htmlstring += "<div style='float:right'>" + addressString + "</div>";
-     htmlstring +=  "</td></tr>" + resourceString + "</table>";
+    htmlstring += "</td></tr>" + resourceString + "</table>";
     evnt.el.innerHTML = htmlstring;
   }
 
   ActionLoadEvents() {
     if (this.calObj.CalendarView != "" && this.calObj.CalendarView != undefined) {
       let resids = "";
-      let sDate = this.calObj.StartDate + " " + this.calObj.starttime;
-      let eDate= this.calObj.EndDate + " " + this.calObj.endtime;
-      
-      this.schService.ActionQuickActList(sDate, eDate, this.calObj.Search, this.calObj.ActTypeIDs, 0, this.calObj.ResourceIDs, this.calObj.StatusIDs).subscribe(data => {
-        console.log(data);
+      let sDate = this.calObj.StartDate; let eDate = this.calObj.EndDate;
+      let colorId =  this.calObj.CalID == 1 ? 1 : this.calObj.CalColorID;
+      this.schService.ActionQuickActList(sDate, eDate, this.calObj.Search, this.calObj.ActTypeIDs, 0, this.calObj.ResourceIDs, this.calObj.StatusIDs,colorId).subscribe(data => {
         this.actlist = [];
-        if (this.calObj.CalID == 3 || this.calObj.CalendarView == "restimelineDay") {
-          for (let j in data) {
-            let item = data[j];
-            item.Imageurl = '/StoneApp.App/DigitalContent/Status/' + item.StatusIcon;
-            this.SetActTypeEvents(item);
-          }
-        } else {
+        if (this.calObj.CalID == 1) {
           let filterIds = this.calObj.ResourceIDs;
           if (filterIds != "" && filterIds.length > 1) {
             filterIds = filterIds.split(',');
@@ -282,8 +262,13 @@ export class SchedulingPage implements OnInit {
             item.Imageurl = '/StoneApp.App/DigitalContent/Status/' + item.StatusIcon;
             this.SetResouceEvents(item, filterIds);
           }
+        } else {
+          for (let j in data) {
+            let item = data[j];
+            item.Imageurl = '/StoneApp.App/DigitalContent/Status/' + item.StatusIcon;
+            this.SetActTypeEvents(item);
+          }
         }
-
       });
     }
 
@@ -291,17 +276,17 @@ export class SchedulingPage implements OnInit {
   SetResouceEvents(item, filterIds) {
     let sDate = new Date(item.StartDate);
     let eDate = new Date(item.EndDate);
-    var id = (item.ResourceIDs != null && item.ResourceIDs != "") ? item.ResourceIDs.split(',') : "0";
-    for (var s = 0; s < id.length; s++) {
+    var resids = (item.ResourceIDs != null && item.ResourceIDs != "") ? item.ResourceIDs.split(',') : "0";
+    for (var s = 0; s < resids.length; s++) {
       let isexist = true;
       if (filterIds.length > 0) {
         isexist = false;
-        filterIds.map(function (elem) { if (elem == id[s]) { isexist = true; } });
+        filterIds.map(function (elem) { if (elem == resids[s]) { isexist = true; } });
       }
       if (isexist == true) {
-        let bgColor = platform == 'desktop' ? "#FFFFFF" : item.ActBgColor;
-        let textColor = platform == 'desktop' ? "black" : item.ActTextColor;
-        this.actlist.push({ title: item.QuoteNo, start: sDate, end: eDate, id: item.ID, resourceId: id[s], resourceIds: [id[s]], DragResId: id[s], backgroundColor: bgColor, textColor: item.ActTextColor, borderColor: textColor, extendedProps: item });
+        let bgColor = this.calObj.CalColorID == 2 ? "" : item.ActBgColor;
+        let textColor = this.calObj.CalColorID == 2 ? "" : item.ActTextColor;
+        this.actlist.push({ title: item.QuoteNo, start: sDate, end: eDate, id: item.ID, resourceId: resids[s], resourceIds: [resids[s]], DragResId: resids[s], backgroundColor: bgColor, textColor: item.ActTextColor, borderColor: textColor, extendedProps: item });
       }
     }
   }
@@ -314,8 +299,10 @@ export class SchedulingPage implements OnInit {
       sDate = new Date(this.datePipe.transform(this.ActiveDate, "MM/dd/yyyy") + " " + item.StartTime);
       eDate = new Date(this.datePipe.transform(this.ActiveDate, "MM/dd/yyyy") + " " + item.EndTime);
     }
-    let bgColor = platform == 'desktop' ? "#FFFFFF" : item.ActBgColor;
-    let textColor = platform == 'desktop' ? "black" : item.ActTextColor;
+    var resids = (item.ResourceIDs != null && item.ResourceIDs != "") ? item.ResourceIDs.split(',') : "0";
+    let resColor = item.ResColor == null || item.ResColor == "" ? "#ddd" : item.ResColor;
+    let bgColor = this.calObj.CalColorID == 2 ? resColor : item.ActBgColor;
+    let textColor = this.calObj.CalColorID == 2 ? "black" : item.ActTextColor;
     this.actlist.push({ title: item.QuoteNo, start: sDate, end: eDate, id: item.ID, resourceId: extid, resourceIds: [extid], backgroundColor: bgColor, textColor: textColor, borderColor: textColor, extendedProps: item });
   }
 
@@ -336,7 +323,8 @@ export class SchedulingPage implements OnInit {
       this.resources = [];
       for (let j in data.ActTypeResList) {
         let item = data.ActTypeResList[j];
-        this.resources.push({ id: item.ResourceID, groupId: 0, title: item.ResourceName });
+        item.TextColor = item.TextColor == null ? "#ddd" : item.TextColor;
+        this.resources.push({ id: item.ResourceID, groupId: 0, title: item.ResourceName, eventBackgroundColor: item.TextColor, eventTextColor: "black", eventBorderColor: "black", extendedProps: item });
       }
       this.actResources = this.resources;
     });
@@ -369,7 +357,7 @@ export class SchedulingPage implements OnInit {
     //console.log(ev);
     let sDate = new Date(ev.event._def.extendedProps.StartDate);
     let eDate = new Date(ev.event._def.extendedProps.EndDate);
-    let obj = { actId: ev.event._def.extendedProps.ID, actTypeID: ev.event._def.extendedProps.ActivityTypeID, StartDate: sDate, EndDate: eDate}
+    let obj = { actId: ev.event._def.extendedProps.ID, actTypeID: ev.event._def.extendedProps.ActivityTypeID, StartDate: sDate, EndDate: eDate }
     const modal = await this.Modalcntrl.create({
       component: ActinfoComponent,
       componentProps: obj
@@ -464,33 +452,40 @@ export class SchedulingPage implements OnInit {
     this.navCtrl.navigateRoot('/home');
   }
   LoadFilterView() {
+    let obj = this.calObj;
     this.resources = this.calObj.CalID == 3 ? this.calObj.ActTypeList : this.actResources;
-    if (this.calObj.IsViewChange == true || this.calObj.IsViewType == true) {
-      this.SetCalendarOptions();
-    }
-    else {
+    if (obj.IsViewChange == true || obj.IsDateChange == true || obj.IsDayChange == true) {
+      this.SetCalendarOptions(obj);
+    } else {
       this.ActionEventsByFilterSettings();
     }
     this.SetResourceGridViewWith();
   }
-  SetCalendarOptions() {
-    if (this.calObj.CalendarDays == "1" || this.calObj.CalendarType == "restimelineDay" || this.calObj.CalendarType == "dayGridWeek") { // day view
-      this.calObj.CalendarView = this.calObj.CalendarType;
-    }
-    else { // for multi day view
-      this.calObj.CalendarView = this.calObj.CalendarType + "_" + this.calObj.CalendarDays + "days";
-    }
+  SetCalendarOptions(obj) {
+    let calendarApi = this.fullcalendar.getApi();
+    //let gduration = calendarApi.getOption('duration');
     if (this.calObj.CalendarView == "restimelineDay") {
       this.PrepareDays("curr");
     }
-    let calendarApi = this.fullcalendar.getApi();
-    calendarApi.changeView(this.calObj.CalendarView, this.calObj.StartDate);
-    if (this.calObj.IsViewChange == false && this.calObj.IsViewType == true && this.calObj.CalendarType != "dayGridWeek") {
-      this.ChangedViewEvents();
+    if (calendarApi.view.type == this.calObj.CalendarView && obj.IsDayChange != true && obj.IsDateChange != true) {
+      this.ActionEventsByFilterSettings();
+    } else if (obj.IsDateChange == true && obj.IsViewChange == false && obj.IsViewChange == false) {
+      calendarApi.gotoDate(obj.StartDate);
+    } else {
+      let duration = { days: this.calObj.CalendarDays };
+      this.options.views.resourceTimeline.duration = { days: this.calObj.CalendarDays };
+      this.fullcalendar.views.resourceTimeline.duration = { days: this.calObj.CalendarDays };
+      this.fullcalendar.dateIncrement = this.calObj.CalendarDays;
+      //calendarApi.setOption('duration', duration);
+      calendarApi.batchRendering(function () {
+        calendarApi.setOption('duration', duration);
+        calendarApi.changeView(obj.CalendarView, obj.StartDate);
+      });
     }
     this.calObj.IsViewChange = false;
-
+    this.calObj.IsViewChange = false;
   }
+
   ChangedViewEvents() {
     let sdate = new Date(this.calObj.StartDate);
     sdate.setDate(sdate.getDate() + Number(this.calObj.CalendarDays));
@@ -526,7 +521,7 @@ export class SchedulingPage implements OnInit {
     let title = stitle + " - " + this.datePipe.transform(startDate, "MMM dd, yyyy");
     this.CalendarTitle = title;
     startDate.setDate(startDate.getDate() + 1);
-    this.calObj.EndDate =  startDate;
+    this.calObj.EndDate = startDate;
   }
 
 

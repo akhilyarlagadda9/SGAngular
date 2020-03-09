@@ -23,7 +23,7 @@
       </ion-select>
     </ion-col>
   </ion-row>
-  <ion-row class="marbot2">
+  <ion-row class="marbot2" *ngIf="(calObj.CalID == 1 && calObj.DisplayDays == 1) || calObj.CalID == 4">
     <ion-col size="4" class="text-left fontbold font-size15">Time Hrs From:</ion-col>
     <ion-col size="3" class="paddlef0">
       <ion-select class="btninfo" interface="popover" [(ngModel)]="calObj.starttime" name="starttime"  [selectedText]="calObj.starttime">
@@ -40,14 +40,15 @@
   <ion-row class="marbot2">
     <ion-col size="4" class="text-left fontbold font-size15">Start Date:</ion-col>
     <ion-col size="4" class="paddlef0">
-      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="calObj.StartDate" class="btninfo" (ngModelChange)="calObj.IsViewChange= true"  name="StartDate">{{calObj.StartDate}}</ion-datetime>
+      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="calObj.StartDate" class="btninfo" (ngModelChange)="calObj.IsDateChange= true"  name="StartDate">{{calObj.StartDate}}</ion-datetime>
     </ion-col>
     <ion-col size="2" class="text-right fontbold">Days:</ion-col>
     <ion-col size="2">
-      <ion-select [(ngModel)]="calObj.CalendarDays" name="CalendarDays" (ngModelChange)="calObj.IsViewChange= true" [selectedText]="calObj.CalendarDays" class="btninfo">
-        <ion-select-option value="1">1</ion-select-option>
+      <ion-select [(ngModel)]="calObj.CalendarDays" name="CalendarDays" [selectedText]="calObj.CalendarDays" (ngModelChange)="calObj.IsDayChange= true" [selectedText]="calObj.CalendarDays" class="btninfo">
+        <ion-select-option *ngFor="let c of calDays" [value]="c"> {{c}}</ion-select-option>
+        <!-- <ion-select-option value="1">1</ion-select-option>
         <ion-select-option value="3">3</ion-select-option>
-        <ion-select-option value="5">5</ion-select-option>
+        <ion-select-option value="5">5</ion-select-option> -->
       </ion-select>
     </ion-col>
   </ion-row>
@@ -58,5 +59,13 @@
   <ion-row class="marbot2 paddrght5">
     <ion-col size="4" class="text-left fontbold font-size15" (click)="ActionFilterPopup($event,3,calObj.StatusIDs,calObj.StatusNames)"><u>Act Status:</u></ion-col>
     <ion-col size="8" class="btninfo">{{calObj.StatusNames}}</ion-col>
+  </ion-row>
+  <ion-row class="marbot2">
+    <ion-col size="4" class="text-left fontbold font-size15">Color by Activities:</ion-col>
+    <ion-col size="8" class="paddlef0">
+      <ion-select [(ngModel)]="calObj.CalColorID" name="CalColorID" [selectedText]="calObj.ColorType" (ngModelChange)="ActionPopulateColor($event)" class="btninfo" interface="popover">
+        <ion-select-option *ngFor="let c of colorByActivities" [value]="c.ID"> {{c.Name}}</ion-select-option>
+      </ion-select>
+    </ion-col>
   </ion-row>
 </ion-content>

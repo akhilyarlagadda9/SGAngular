@@ -516,6 +516,7 @@ SetAreaPartIDs(list){
     return addToArray;
 }
   GetDuration(type) {
+    debugger;
     var hrs = this.actinfo.Hrs;
     var mins = this.actinfo.Mins;
     let sDate = new Date(this.actinfo.SchStartTime).toDateString() + " " + this.actinfo.STime;

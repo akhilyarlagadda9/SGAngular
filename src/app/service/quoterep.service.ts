@@ -20,7 +20,7 @@ export class QuoterepService {
     let material = {
       ID: 0, VersionID: versionId, CoID: 0, PriceByID: 0, FinishID: 0, DepthID: 0, UserID: 0, Tax: 0, ProductItemID: 0, ProSubGroupID: 0, DepthTypeID: 0, FinishTypeID: 0, SlabTypeID: 0, SupplierID: 0,Mstep:1,
       Color: '', Finish: '', Depth: '', SlabType: '', ProSubGroup: '', TaxVal: 0, Cost: 0, CostDiscount: 0, UnitCost: 0, UnitPrice: 0, Margin: 0, Sqft: 0, DeliveryFee: 0, SupplierName: '', SlabList: [], SearchChkFlag: 1,
-      WF:'',RiskLevelID : 0, RiskLevel :'', RiskLevels: "",
+      WF:'',RiskLevelID : 0, RiskLevel :'', RiskLevels: "",LaborUnitCost:0,LaborMargin:0,LaborUnitPrice:0
   }; return material;
   }
 
@@ -504,7 +504,7 @@ productselection(materialobj, subproductgroups, id) {
       var selectedIndex = subproductgroups.map(function (obj) { return obj.ID; }).indexOf(parseInt(id));
       let productsubgroup = selectedIndex != -1 ? subproductgroups[selectedIndex] : 0;
       materialobj.ProSubGroup = productsubgroup;
-      materialobj.ProSubGroupID = productsubgroup.ID;
+      materialobj.ProSubGroupID = id;
   }
   return materialobj;
 }

@@ -370,7 +370,7 @@ export class AddpartComponent implements OnInit {
 
 
   async ActionAddMaterial(materialId: any, source: string) {
-    let matinfo = {ID:materialId};
+    let matinfo = {ID:materialId,VersionID:this.partinfo.VersionID};
 
    let info = {material:matinfo, priceListID : this.priceListID,AreaID:this.areaInfo.ID};
     //let sel = { material : materialId == 0 ? {ID : 0} : this.material, VersionId: this.partinfo.VersionID, AreaId: this.partinfo.AreaID, materialId: materialId, priceListID: this.priceListID, areainfo : this.areaInfo }

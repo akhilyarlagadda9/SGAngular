@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import {CommhubeditComponent} from '../commhubedit/commhubedit.component'
+import {CommonEditMailHubComponent} from '../common-edit-mail-hub/common-edit-mail-hub.component';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { MaileditComponent } from '../mailedit/mailedit.component';
+import { OverlayEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-commhub',
@@ -34,10 +36,19 @@ export class CommhubComponent implements OnInit {
 
  //Comm.Hub Edit Function
   async ActionEditCommHub(note: any) {
-    let commDetails = {versionId : this.VersionId,commDetails: note}   
+    let commDetails = {versionId : this.VersionId,commDetails: note};
+    console.log(commDetails);   
     const modal = await this.Modalcntrl.create({
-      component: CommhubeditComponent,
-      componentProps : commDetails
+      component: CommonEditMailHubComponent,
+      componentProps : commDetails,
+    });
+    modal.onDidDismiss().then((result: OverlayEventDetail) => {
+      if (result.data !== null && result.data != undefined) {
+        if (result.data.issave == true) {
+          // this.UpdateActivty(result.data.componentProps);
+          //this.ActionLoadEvents();
+        }
+      }
     });
     return await modal.present();
   }

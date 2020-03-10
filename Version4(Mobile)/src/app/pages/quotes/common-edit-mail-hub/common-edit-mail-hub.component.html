@@ -1,0 +1,87 @@
+<form #form="ngForm" (ngSubmit)="ActionSaveActivity(form)" class="dis-content">
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <div><b>Email</b></div>
+      
+    </ion-title>
+    <ion-button slot="end" color="success" size="small" type="submit">Send</ion-button>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCommhubedit(false)">X</ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked" color="primary" class="margin-zero">Template:<span
+      class="requiredField">*</span></ion-label>
+    <ion-select class="btninfo" interface="popover" [(ngModel)]="templateList.Name" name="Name" #Name="ngModel" required (ngModelChange)="ActionChangeTempl($event)"  [selectedText]="templateList.Name">
+      <ion-select-option *ngFor="let template of templateList" [value]="template.Name">{{template.Name}}</ion-select-option>
+    </ion-select>
+    <div [hidden]="!form.submitted || Name.valid" class="invalid-feedback padd-Left">
+      <div class="error">Select Template</div>
+    </div>
+  </ion-item>
+  <ion-item>
+    <ion-label text-uppercase>Email</ion-label>
+    <ion-checkbox color="dark" name="Text" checked></ion-checkbox>
+    <ion-label text-uppercase>Text</ion-label>
+    <ion-checkbox color="dark" name="Text"></ion-checkbox>
+  </ion-item>
+  <ion-item>
+    <ion-label>From: </ion-label>
+    <ion-text >{{mailDetails.From}}</ion-text>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label position="stacked" color="primary" class="margin-zero">To:<span
+      class="requiredField">*</span></ion-label>
+    <!-- <ion-text>{{mailDetails.To}}</ion-text> -->
+    <ion-input [(ngModel)]="mailDetails.To" name="To" #To="ngModel" type="text" required (ngModelChange)="getToItems($event)"></ion-input>
+  </ion-item>
+  <div [hidden]="!form.submitted || To.valid" class="invalid-feedback padd-Left">
+    <div class="error">Select To</div>
+  </div>
+
+  <ion-item>
+    <ion-label>CC: </ion-label>
+    <!-- <ion-text>{{mailDetails.CC}}</ion-text> -->
+    <ion-input [(ngModel)]="mailDetails.CC" name="CC"  type="text" (ngModelChange)="getCCItems($event)"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Subject: </ion-label>
+    <ion-text>{{mailDetails.Subject}}</ion-text>
+  </ion-item>
+  <ckeditor tagName="textarea" [(ngModel)]="mailDetails.mailBody" name="mailBody" [editor]="Editor" ></ckeditor>
+</ion-content>
+</form>
+
+<ion-row *ngIf="isItemToAvailable" class="popupCls2">
+  <ion-toolbar class="resoucesty">
+    <ion-title class="titleheader">Mail Id's</ion-title>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionCloseMailPopup()" class="font11">X
+    </ion-button>
+  </ion-toolbar>
+    <ion-row *ngFor="let item of mailFilter" class="border-btm" (click)="addMail(item,1)">
+      <ion-row style="width: 100%;">
+        <ion-col size="8">
+          <span>{{item}}</span>
+        </ion-col>
+       </ion-row>
+    </ion-row>
+</ion-row>
+<ion-row *ngIf="isItemCCAvailable" class="popupCls2">
+  <ion-toolbar class="resoucesty">
+    <ion-title class="titleheader">Mail Id's</ion-title>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionCloseMailPopup()" class="font11">X
+    </ion-button>
+  </ion-toolbar>
+  <ion-row *ngFor="let item of mailFilter" class="border-btm" (click)="addMail(item,2)">
+    <ion-row style="width: 100%;">
+      <ion-col size="8" class="paddzero">
+        <span>{{item}}</span>
+      </ion-col>
+     </ion-row>
+  </ion-row>
+</ion-row>
+
+

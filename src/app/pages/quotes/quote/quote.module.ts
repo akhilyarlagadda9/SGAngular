@@ -19,6 +19,8 @@ import { PoeditComponent } from '../poedit/poedit.component';
 import { JobdesceditComponent } from '../jobdescedit/jobdescedit.component';
 import { CustomereditComponent } from '../customeredit/customeredit.component';
 import { CommhubeditComponent } from '../commhubedit/commhubedit.component';
+import {CommonEditMailHubComponent} from '../common-edit-mail-hub/common-edit-mail-hub.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 // item popups
@@ -68,7 +70,8 @@ import { QuickquoteComponent } from '../quickquote/quickquote.component';
         path: '',
         component: QuotePage
       },
-    ])
+    ]),
+    CKEditorModule
   ],
   entryComponents: [CreatequoteComponent,AddmeasComponent,SearchComponent,ActionquoteComponent,NewactionComponent,TransactionComponent,NewtranComponent,AccountsComponent,PaymentScheduleComponent,
     AdditionalitemserachComponent,DiscountComponent,feeComponent,
@@ -80,7 +83,7 @@ import { QuickquoteComponent } from '../quickquote/quickquote.component';
     QuoteeditComponent,HeadereditComponent,HeaderinfoComponent,
     PoitemsComponent,CommhubComponent,PrintsComponent,
     JobdesComponent,AreainfoComponent,PoeditComponent,
-    JobdesceditComponent,CustomereditComponent,CommhubeditComponent,
+    JobdesceditComponent,CustomereditComponent,CommhubeditComponent, CommonEditMailHubComponent,
     CustomerinfoComponent,AddareaComponent,CustomersearchComponent,
     ManagementsummaryComponent,additemComponent,ActivitiesComponent,AreasummaryComponent,
     FabricationComponent,LaborinfoComponent,MapComponent,QlayoutComponent,ArealayoutComponent,QnavigationComponent,OtherComponent,
@@ -96,7 +99,7 @@ import { QuickquoteComponent } from '../quickquote/quickquote.component';
     HeadereditComponent,HeaderinfoComponent,PoitemsComponent,
     CommhubComponent,PrintsComponent,JobdesComponent,
     AreainfoComponent,PoeditComponent,JobdesceditComponent,
-    CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,
+    CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,CommonEditMailHubComponent,
     AddareaComponent,CustomersearchComponent,ManagementsummaryComponent,ActivitiesComponent,AreasummaryComponent,
     additemComponent,additemComponent,FabricationComponent,LaborinfoComponent,MapComponent,QnavigationComponent,
     QlayoutComponent,ArealayoutComponent,OtherComponent,AddpartComponent,AddSizesComponent,MaileditComponent, QuickquoteComponent,AddmeasComponent]

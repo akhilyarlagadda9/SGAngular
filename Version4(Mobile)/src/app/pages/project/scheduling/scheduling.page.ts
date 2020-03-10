@@ -8,7 +8,6 @@ import { SchedulingService } from 'src/app/service/scheduling.service';
 import { NavController } from '@ionic/angular';
 import { ActionSheetController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
-import * as $ from 'jquery';
 import { AddactivityComponent } from '../addactivity/addactivity.component';
 import { CalendarfilterComponent } from '../calendarfilter/calendarfilter.component';
 //import * as moment from 'moment';

@@ -8,7 +8,7 @@ declare const appUrl: any;
 export class QuoteService {
   url = appUrl;
   constructor(private http: HttpClient) { }
-  
+//#region Get
   ActionQuoteList(search:string,statusId:number,index:number,noOfRecords:number,accessmode:number,userempid:number,sortTypeId:number,sortby:number): Observable<any> {
     return this.http.get<any>(this.url +  'api/QList/ActionQuoteList?search=' + search + "&statusId=" + statusId + "&index=" + index + "&noOfRecords=" + noOfRecords + "&preferenceId=" + accessmode + "&userRefId=" + userempid + "&sortTypeId=" + sortTypeId + "&quoteSortId=" + sortby) 
   }
@@ -31,22 +31,27 @@ export class QuoteService {
   ActionQuickPartList(versionId:number,areaId:number,partId:number,mode:number):Observable<any>{
     return this.http.get<any>(this.url +  'api/QEdit/ActionQuickPartList?versionId=' + versionId + '&areaId=' + areaId + "&partId=" + partId + "&mode=" + mode) 
   }
-/********** COMMON LISTS ******************/
-
-QuoteDictionaryLists(tIdList:any):Observable<any> {
-  return this.http.get<any>(appUrl +  'api/QuoteAdmin/QuoteDictionaryLists?typeIdList=' + tIdList)
-}
-
-/*****************ACCOUNTS TAB LISTS*****************/
-ActionGetInvoiceList(custID:number, quoteID:number):Observable<any>{
-  return this.http.get<any>(this.url +  'api/accReceivable/QuoteInvoiceList?custID=' + custID + "&quoteID=" + quoteID) 
-}
-
-ActionGetPaymentList(custID:number, quoteID:number):Observable<any>{
-  return this.http.get<any>(this.url + 'api/accReceivable/ProjectPmtList?custID=' + custID + "&proID=" + quoteID) 
-}
-
-/***********************************************Part Save Methods************************************/
+ 
+  ActionGetInvoiceList(custID:number, quoteID:number):Observable<any>{
+    return this.http.get<any>(this.url +  'api/accReceivable/QuoteInvoiceList?custID=' + custID + "&quoteID=" + quoteID) 
+  }
+  ActionGetPaymentList(custID:number, quoteID:number):Observable<any>{
+    return this.http.get<any>(this.url + 'api/accReceivable/ProjectPmtList?custID=' + custID + "&proID=" + quoteID) 
+  }
+  ActionGetQuoteAreas(verId: any, mode:any): Observable<any> {
+    return this.http.get<any>(this.url + 'api/QEdit/ActionVersionAreaList?versionID=' + verId + "&mode=" + mode)
+  }
+  
+  //#endregion
+//#region  List From Admin
+  QuoteDictionaryLists(tIdList:any):Observable<any> {
+    return this.http.get<any>(appUrl +  'api/QuoteAdmin/QuoteDictionaryLists?typeIdList=' + tIdList)
+  }
+  ActionGetProjectTypes(typeId:any):Observable<any> {
+    return this.http.get<any>(this.url + 'api/Project/ProjectProcessList?typeId=' + typeId,) 
+  }
+  //#endregion
+//#region Save Methods
 ActionSaveQuoteInfo(header: any): Observable<any> {
   var model = JSON.stringify(header);
   return this.http.post<any>(this.url + 'api/QSave/ActionSaveQuoteInfo', model, { headers: { 'Content-Type': 'application/json' } })
@@ -110,18 +115,20 @@ ActionSaveQuoteCustomer(header: any): Observable<any> {
 //   var model = JSON.stringify(item);
 //   return this.http.post<any>(this.url + 'api/QSave/ActionSaveAreaLayout?versionId=' + versionId, model, { headers: { 'Content-Type': 'application/json' } })
 // }
-
 ActionSavePartItems(item: any): Observable<any> {
   var model = JSON.stringify(item);
   return this.http.post<any>(this.url + 'api/QSave/ActionSavePartItems', model, { headers: { 'Content-Type': 'application/json' } })
 }
-
-
 ActionSaveMaterial(areaId,item: any): Observable<any> {
   var model = JSON.stringify(item);
   return this.http.post<any>(this.url + 'api/QSave/ActionSaveMaterial?areaId=' + areaId, model, { headers: { 'Content-Type': 'application/json' } })
 }
-/******************Material Lists******************/
+ActionSaveMaterialInvSlabList(slabList: any): Observable<any> {
+  var model = JSON.stringify(slabList);
+  return this.http.post<any>(this.url + 'api/Quote/SaveMaterialInvSlabList', model, { headers: { 'Content-Type': 'application/json' } })
+}
+//#endregion
+//#region  Material
 ActionGetMaterialList(verId:number):Observable<any>{
   return this.http.get<any>(this.url + 'api/QEdit/ActionVersionMaterialList?versionID=' + verId) 
 }
@@ -139,38 +146,53 @@ ActionVersionMaterial(materialId:any):Observable<any>{
 ActionGetProductInfo(productId:any, locId:any, search:any, finishId:any, depthId:any, prosubgroupId:any):Observable<any>{
   return this.http.get<any>(this.url + 'api/inventory/ActionGetProductInfo?productId=' + productId + "&locId=" + locId + "&search=" + search + "&finishId=" + finishId + "&depthId=" + depthId + '&prosubgroupId=' + prosubgroupId) 
 }
-
 //Maretial stock info slab list function
 ActionInventoryDicLists(typeid:any):Observable<any> {
   let typeIdList = [typeid];
   return this.http.get<any>(this.url + 'api/admin/InventoryDicLists?typeIdList=' + typeIdList) 
 }
-
-/********** Material ************/
 ActionGetmaterialsearchrecords(search:any, typeId:any, pricelistIds:any, depthId:any, finishId:any, searchtypeId:any,proSubGroupId:any):Observable<any>{
   return this.http.get<any>(this.url + 'api/Quote/ActionSearchMaterials?search=' + search + '&typeId=' + typeId + '&pricelistIds=' + pricelistIds + '&depthId=' + depthId + '&finishId=' + finishId + '&searchtypeId=' + searchtypeId + '&proSubGroupId=' + proSubGroupId) 
 }
-
 Actionpricegrouplists(pricelistId:any):Observable<any> {
   return this.http.get<any>(this.url + 'api/QuoteAdmin/ActionPriceGroupList?pricebookID=' + pricelistId) 
 }
-
 //Supplier list
 ActionGetSupplierAddDetails(supID:any):Observable<any> {
   return this.http.get<any>(this.url + 'api/purchase/GetSupplierAddDetails?supplierID=' + supID) 
 }
-
-/************PROJECT PROCESS LIST *************/
-
-ActionGetProjectTypes(typeId:any):Observable<any> {
-  return this.http.get<any>(this.url + 'api/Project/ProjectProcessList?typeId=' + typeId,) 
+//#endregion
+//#region  Comm Hub
+ActionTemplateList(typeId:any):Observable<any> {
+  return this.http.get<any>(this.url + 'api/messageCenter/TemplateList?typeId=' + typeId) 
 }
-
-
-/*******ACTIONS APPROVE< BIDDING< DECLINE< *********/
-
- //Fabrication,Measurements Save Function
- ActionSaveQuoteApproved(version: any): Observable<any> {
+ActionNoteInfo(Id:any):Observable<any> {
+  return this.http.get<any>(this.url + 'api/Quote/NoteInfo?Id=' + Id) 
+}
+ActionCustomerContactList(versionid:any):Observable<any> {
+  return this.http.get<any>(this.url + 'api/Quote/CustomerContactList?versionid=' + versionid) 
+}
+ActiongettemplateList(typeId:any):Observable<any> {
+  return this.http.get<any>(this.url + 'api/messageCenter/TemplateList?typeId=' + typeId)
+} 
+ActionGetEmailsEmployeeList(contactList):Observable<any> {
+  var parameter = JSON.stringify(contactList);
+  return this.http.post<any>(this.url + 'api/Quote/GetEmailsEmployeeList', parameter, { headers: { 'Content-Type': 'application/json' } })
+}
+ActionEmailList():Observable<any> {
+  return this.http.get<any>(this.url + 'api/messageCenter/EmailList')
+}
+ActionGetQuoteCustContactList(versionid:any):Observable<any> {
+  return this.http.get<any>(this.url + 'api/Quote/CustomerContactList?versionid=' + versionid) 
+} 
+qsendEmail(model): Observable<any> {
+  var parameter = JSON.stringify(model);
+  console.log(parameter);
+  return this.http.post<any>(this.url + 'api/Quote/ActionSendMail' + model,{ headers: { 'Content-Type': "application/json;charset=utf-8" } })
+}
+//#endregion
+//#region Save methods Quote Actions and Summary
+ActionSaveQuoteApproved(version: any): Observable<any> {
   var model = JSON.stringify(version);
   return this.http.post<any>(this.url + 'api/Review/ActionSaveQuoteApproved', model, { headers: { 'Content-Type': 'application/json' } })
 }
@@ -190,122 +212,31 @@ ActionSaveQuoteBidding(version: any): Observable<any> {
   var model = JSON.stringify(version);
   return this.http.post<any>(this.url +   'api/Review/ActionSaveQuoteBidding', model, { headers: { 'Content-Type': 'application/json' } })
 }
-/**********SAVE AREASLIST**********/
 ActionSaveAreaList(versionid: any,areaId:any,userId:any,arealist:any): Observable<any> {
   let parameter = JSON.stringify(arealist);
   return this.http.post<any>(this.url +  'api/QSave/ActionSaveAreaList?versionId=' + versionid + '&areaId=' + areaId + '&userId=' + userId + "&areaIds=" + '', parameter, { headers: { 'Content-Type': 'application/json' } })
 }
-ActionGetQuoteAreas(verId: any, mode:any): Observable<any> {
-  return this.http.get<any>(this.url + 'api/QEdit/ActionVersionAreaList?versionID=' + verId + "&mode=" + mode)
-}
-
-
-/***************************** Comm.Hub Lists *******************************/
-ActionTemplateList(typeId:any):Observable<any> {
-  return this.http.get<any>(this.url + 'api/messageCenter/TemplateList?typeId=' + typeId) 
-}
-ActionNoteInfo(Id:any):Observable<any> {
-  return this.http.get<any>(this.url + 'api/Quote/NoteInfo?Id=' + Id) 
-}
-ActionCustomerContactList(versionid:any):Observable<any> {
-  return this.http.get<any>(this.url + 'api/Quote/CustomerContactList?versionid=' + versionid) 
-}
-
-/****************** Material Stock Info Select Function *********************/
-ActionSaveMaterialInvSlabList(slabList: any): Observable<any> {
-  var model = JSON.stringify(slabList);
-  return this.http.post<any>(this.url + 'api/Quote/SaveMaterialInvSlabList', model, { headers: { 'Content-Type': 'application/json' } })
-}
-
-/**************Email Template Contact list******************/
-//Template List
-ActiongettemplateList(typeId:any):Observable<any> {
-  return this.http.get<any>(this.url + 'api/messageCenter/TemplateList?typeId=' + typeId)
-} //send 26 as typeid in ts function
-
-//Email List
-ActionEmailList():Observable<any> {
-  return this.http.get<any>(this.url + 'api/messageCenter/EmailList')
-}
-
-//quote customers
-ActionGetQuoteCustContactList(versionid:any):Observable<any> {
-  return this.http.get<any>(this.url + 'api/Quote/CustomerContactList?versionid=' + versionid) 
-} //send versionid as parameter
-
-//email employee list
-ActionGetEmailsEmployeeList(contactList):Observable<any> {
-  var parameter = JSON.stringify(contactList);
-  return this.http.post<any>(this.url + 'api/Quote/GetEmailsEmployeeList', parameter, { headers: { 'Content-Type': 'application/json' } })
-} //result of the customer contanct list must send as parameter to contactlist
-
-
-/***************Save Discount List*****************/
-
- //Cutout Save Function
- qpactionsavediscount(versionId:number,areaId:number,tax:any): Observable<any> {
+qpactionsavediscount(versionId:number,areaId:number,tax:any): Observable<any> {
   var model = JSON.stringify(versionId);
   return this.http.post<any>(this.url + 'api/QSave/ActionSaveDiscount?versionId=' + versionId + '&areaId=' + areaId + '&tax=' + tax, model, { headers: { 'Content-Type': 'application/json' } })
 }
-
-
-/***************Sales Tax List*****************/
-
- //Cutout Save Function
- qpactionsavesalestax(model, areaId): Observable<any> {
+qpactionsavesalestax(model, areaId): Observable<any> {
   var data = JSON.stringify(model);
   return this.http.post<any>(this.url + 'api/QSave/ActionSaveSalesTax?areaId=' + areaId, data,{ headers: { 'Content-Type': 'application/json;charset=utf-8' } })
 }
-
-
-
-
-
-/* function qpversioncommissioninfo(salesrepId, info) {
-  let val = "";
-  $.ajax({
-      type: "post",
-      url: serviceBase + 'api/QEdit/GetCommissionDetails?salesrepId=' + salesrepId,
-      contentType: "application/json;charset=utf-8",
-      data: JSON.stringify(info),
-      dataType: "json",
-      async: false,
-      success: function (data) { val = data; },
-      error: function () {
-          // alert("Error");
-      }
-  });
-  return val;
-} */
-qpversioncommissioninfo(salesrepId, info): Observable<any> {
-  var data = JSON.stringify(info);
-  return this.http.post<any>(this.url + 'api/QEdit/GetCommissionDetails?salesrepId=' + salesrepId,{ headers: { 'Content-Type': "application/json;charset=utf-8" } })
-}
-
-
-/* function qscosummary(coId) {
-  let val = "";
-  $.ajax({
-      url: serviceBase + 'api/Drawing/CoVersionInfo?coId=' + coId,
-      type: "get",
-      async: false,
-      success: function (data) { val = data; },
-      error: function () {
-      }
-  });
-  return val;
-} */
-
 qscosummary(coId): Observable<any> {
   var data = JSON.stringify(coId);
   return this.http.post<any>(this.url + 'api/Drawing/CoVersionInfo?coId=' + coId,{ headers: { 'Content-Type': "application/json;charset=utf-8" } })
 }
-
-/****************Fees And Charges****************/
-
+qpversioncommissioninfo(salesrepId, info): Observable<any> {
+  var data = JSON.stringify(info);
+  return this.http.post<any>(this.url + 'api/QEdit/GetCommissionDetails?salesrepId=' + salesrepId,{ headers: { 'Content-Type': "application/json;charset=utf-8" } })
+}
 qpactionsavereferralfee(model, areaId): Observable<any> {
   var data = JSON.stringify(model);
   return this.http.post<any>(this.url + 'api/QSave/ActionSaveReferralFee?areaId=' + areaId, model,{ headers: { 'Content-Type': "application/json;charset=utf-8" } })
 }
-
+//#endregion
+//#region Get methods For Summary
+//#endregion
 }

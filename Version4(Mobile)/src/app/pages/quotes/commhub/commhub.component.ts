@@ -33,9 +33,17 @@ export class CommhubComponent implements OnInit {
   ActionLoadHubInfo(componet: any){
     this.selectedhubtype = componet;
   }
-
- //Comm.Hub Edit Function
+   //Comm.Hub Edit Function
   async ActionEditCommHub(note: any) {
+    let commDetails = {versionId : this.VersionId,commDetails: note}   
+    const modal = await this.Modalcntrl.create({
+      component: CommhubeditComponent,
+      componentProps : commDetails
+    });
+    return await modal.present();
+  }
+ //Comm.Hub Mail Function
+  async ActionEditCommHubMail(note: any) {
     let commDetails = {versionId : this.VersionId,commDetails: note};
     console.log(commDetails);   
     const modal = await this.Modalcntrl.create({

@@ -133,6 +133,10 @@ export class CommonEditMailHubComponent implements OnInit {
     });
   }
  }
+//Attcahments
+ ActionUploadAttach(ev:any){
+   console.log(ev);
+ }
 
  //Close add activity function
  ActionCloseCommhubedit(issave) {

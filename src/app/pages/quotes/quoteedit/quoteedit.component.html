@@ -3,17 +3,19 @@
         <ion-buttons slot="start">
             <ion-icon class="fontlarge" (click)="ActionCloseQuoteInfo()" name="arrow-back"></ion-icon>
         </ion-buttons>
-        <ion-title>
+        <ion-title class="titlepad">
             <h1>
                 <div id="" class="text-left">{{headerInfo.QuoteNo}} -
-                    <select [(ngModel)]="QuoteVersionID" (change)="ActionLoadVersion(QuoteVersionID)" interface="popover" style="border: 0px;background: #3880ff;">
+                    <select [(ngModel)]="QuoteVersionID" (change)="ActionLoadVersion(QuoteVersionID)"
+                        interface="popover" style="border: 0px;background: #3880ff;">
                         <option *ngFor="let version of headerInfo.VersionList" value="{{version.ID}}">V{{version.SrNo}}
                         </option>
                     </select>
                 </div>
             </h1>
         </ion-title>
-        <span size="small" slot="end" (click)="ActionNewAction()"><u>Action</u><ion-icon name="arrow-dropdown-circle" slot="end" class="fontlarge marg-topicon" size="small"></ion-icon></span>
+        <span size="small" slot="end" (click)="ActionNewAction()"><h1 class="h1marg">A</h1></span>
+        <ion-icon name="arrow-dropdown-circle" slot="end" class="fontlarge marg-topicon" size="small" (click)="ActionNewAction()"></ion-icon>
         <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
     </ion-toolbar>
     <ion-toolbar>
@@ -30,7 +32,8 @@
                 <img src="assets/img/email-icon.png" alt="your image" style="width:35px;height:35px;">
                 <div><span style="font-size:11px;white-space: nowrap;" [ngClass]="{'txt-color' : selectedtabtype == 3 }">Comm Hub</span></div>
             </ion-col>
-            <ion-col class="paddtopzero text-center" *ngIf="headerInfo.Version.StatusID == 6" (click)="ActionLoadTabInfo(4)">
+            <ion-col class="paddtopzero text-center" *ngIf="headerInfo.Version.StatusID == 6"
+                (click)="ActionLoadTabInfo(4)">
                 <img src="assets/img/calendar-icon.png" alt="your image" style="width:35px;height:35px;">
                 <div><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 4 }">Activities</span></div>
             </ion-col>
@@ -38,7 +41,8 @@
                 <img src="assets/img/marbles-icon.png" alt="your image" style="width:35px;height:35px;">
                 <div><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 5 }">Other</span></div>
             </ion-col>
-            <ion-col class="paddtopzero text-center"  *ngIf="headerInfo.Version.StatusID == 6" (click)="ActionLoadTabInfo(6)">
+            <ion-col class="paddtopzero text-center" *ngIf="headerInfo.Version.StatusID == 6"
+                (click)="ActionLoadTabInfo(6)">
                 <img src="assets/img/coin-us-dollar-icon.png" alt="your image" style="width:35px;height:35px;">
                 <div> <span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 6 }">Accounts</span></div>
             </ion-col>
@@ -124,7 +128,8 @@
                     </ion-col>
                 </ion-row>
 
-                <app-areasummary [VersionId]="headerInfo.Version.ID" (areaevent)="AreaSummarySelect($event)"></app-areasummary>
+                <app-areasummary [VersionId]="headerInfo.Version.ID" (areaevent)="AreaSummarySelect($event)">
+                </app-areasummary>
             </div>
 
             <ion-list class="ion-no-margin">
@@ -134,20 +139,25 @@
                             <div><b class="fontbold text-right">Payment Schedule</b></div>
                         </ion-row>
                         <ion-row *ngIf="headerInfo.Version.PayTypeID == 1" class="font12">
-                            <span class="color-blue">{{headerInfo.Version.DueSigningName}}:({{headerInfo.Version.DueSigning}}%)</span>
+                            <span
+                                class="color-blue">{{headerInfo.Version.DueSigningName}}:({{headerInfo.Version.DueSigning}}%)</span>
                             <span>$ {{headerInfo.Version.SigningAmt| number : '.2-2'}}</span>
                         </ion-row>
-                        <ion-row *ngIf="headerInfo.Version.PayTypeID == 1 && headerInfo.Version.TeamplateAmt != 0" class="font12">
-                            <span class="color-blue">{{headerInfo.Version.DueTeamplateName}}:({{headerInfo.Version.DueTeamplate}}%)</span>                            
+                        <ion-row *ngIf="headerInfo.Version.PayTypeID == 1 && headerInfo.Version.TeamplateAmt != 0"
+                            class="font12">
+                            <span
+                                class="color-blue">{{headerInfo.Version.DueTeamplateName}}:({{headerInfo.Version.DueTeamplate}}%)</span>
                             <span>$ {{headerInfo.Version.TeamplateAmt| number : '.2-2'}}</span>
                         </ion-row>
                         <ion-row *ngIf="headerInfo.Version.PayTypeID == 1" class="font12">
-                            <span class="color-blue">{{headerInfo.Version.DueInstallName}}: ({{headerInfo.Version.DueInstall}}%)</span> 
+                            <span class="color-blue">{{headerInfo.Version.DueInstallName}}:
+                                ({{headerInfo.Version.DueInstall}}%)</span>
                             <span>$ {{headerInfo.Version.InstallAmt | number : '.2-2'}}</span>
                         </ion-row>
                         <ion-row *ngIf="headerInfo.Version.PayTypeID == 2" class="font12">
                             Pay Terms: <span class="color-blue">{{headerInfo.Version.PaymentTerm}}</span>
-                            <span>$ {{((headerInfo.Version.TotalAmt + headerInfo.Version.TaxAmt) - (headerInfo.Version.DiscountAmt))| number : '.2-2'}}</span>
+                            <span>$
+                                {{((headerInfo.Version.TotalAmt + headerInfo.Version.TaxAmt) - (headerInfo.Version.DiscountAmt))| number : '.2-2'}}</span>
                         </ion-row>
                     </ion-col>
                     <ion-col size="7" class="paddzero">
@@ -211,17 +221,17 @@
             <app-areainfo [Version]="headerInfo.Version"></app-areainfo>
         </ion-col>
         <ion-col *ngSwitchCase="3" style="padding-bottom: 70px;">
-          <app-commhub [VersionId]="headerInfo.Version.ID"></app-commhub>
+            <app-commhub [VersionId]="headerInfo.Version.ID"></app-commhub>
         </ion-col>
         <ion-col *ngSwitchCase="4">
             <app-activities [VersionId]="headerInfo.Version.ID" [PhaseId]="0"></app-activities>
         </ion-col>
-        
+
         <ion-col *ngSwitchCase="5" style="padding-bottom: 70px;">
             <app-other [VersionId]="headerInfo.Version.ID"></app-other>
         </ion-col>
         <ion-col *ngSwitchCase="6">
-            <app-accounts [custID]="headerInfo.Version.CustomerID" [headerInfo]="headerInfo"></app-accounts> 
+            <app-accounts [custID]="headerInfo.Version.CustomerID" [headerInfo]="headerInfo"></app-accounts>
         </ion-col>
     </ion-row>
 </ion-content>

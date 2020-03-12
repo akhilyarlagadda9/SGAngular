@@ -12,10 +12,11 @@ import { connectableObservableDescriptor } from 'rxjs/internal/observable/Connec
 })
 export class CommonEditMailHubComponent implements OnInit {
   Template:String = ""; To:String = "";From:String="";CC:String="";Subject:String="";mailBody:String="";
+  arrInfo:Array<any>=[];
   public Editor = ClassicEditor; isItemToAvailable:boolean=false;mailList:Array<any>=[]; mailFilter:Array<any>=[];
   isItemCCAvailable:boolean = false;
   templateList:Array<any>=[]; mailDetails:object={}; emailList:Array<any>=[];
-
+  @ViewChild('To', {static: false}) pRef: ElementRef;
 
   constructor(public Modalcntrl: ModalController,private qteService: QuoteService,private navParams: NavParams) { }
 
@@ -26,7 +27,8 @@ export class CommonEditMailHubComponent implements OnInit {
       CC: "",
       Subject: "",
       mailBody: ""
-    }
+    };
+   
     this.qteService.ActiongettemplateList(26).subscribe(data => {
       this.templateList = data;
       console.log(this.templateList);
@@ -68,25 +70,46 @@ export class CommonEditMailHubComponent implements OnInit {
       this.To = "";
      }
      console.log(result);
-     this.mailFilter = [];
+     this.arrInfo = [];
      if(result && result.trim() != ""){
       this.isItemToAvailable = true;
        this.mailList.filter((item) => {
+        var objInfo={
+          Name: "",
+          Phone: "",
+          Email: ""
+      };
            if((item.PriEmail).includes(result)){
-            this.mailFilter.push( item.PriEmail);
+            objInfo.Name = item.Name;
+            objInfo.Phone = item.PriPhone;
+            objInfo.Email = item.PriEmail;
+            this.arrInfo.push(objInfo);
+             console.log(item);
+            //this.mailFilter.push( item.PriEmail);
            }
          });
-         console.log(this.mailFilter);
+         console.log(this.arrInfo);
      }
   }
   addMail(selectMail,intItemChk){
-    this.mailFilter = [];
+    console.log(selectMail);
+    this.arrInfo = [];
     if(intItemChk == 1){
-    this.To = this.To+selectMail+",";
+      if(!this.To){
+        this.To = this.To+selectMail+",";
+      }
+      else{
+        this.To = this.To+"\n"+selectMail+",";
+      }
     console.log(this.To);
     }
     else{
-      this.CC = this.CC+selectMail+",";
+      if(!this.CC){
+        this.CC = this.CC+selectMail+",";
+      }
+      else{
+        this.CC = this.CC+"\n"+selectMail+",";
+      }
     }
     this.mailDetails = {
       Template: this.Template,
@@ -96,21 +119,31 @@ export class CommonEditMailHubComponent implements OnInit {
       Subject: this.Subject,
       mailBody: this.mailBody
     }
+   this.arrInfo = [];
     this.isItemToAvailable  = false;
     this.isItemCCAvailable = false;
   }
+
   getCCItems(ev: any) {
     var result = ev.substring(ev.length, (ev.lastIndexOf(",")+1));
     if(result == ""){
       this.CC="";
     }
     console.log(result);
-    this.mailFilter = [];
+    this.arrInfo = [];
     if(result && result.trim() != ""){
      this.isItemCCAvailable = true;
       this.mailList.filter((item) => {
+        var objInfo={
+          Name: "",
+          Phone: "",
+          Email: ""
+      };
           if((item.PriEmail).includes(result)){
-           this.mailFilter.push( item.PriEmail);
+            objInfo.Name = item.Name;
+            objInfo.Phone = item.PriPhone;
+            objInfo.Email = item.PriEmail;
+            this.arrInfo.push(objInfo);
           }
         });
     }
@@ -124,7 +157,7 @@ export class CommonEditMailHubComponent implements OnInit {
  ActionSaveActivity(form: NgForm){
   if (form.valid) {
     console.log(form); 
-    //dummy mail sent 
+    //dummy mail sent //TEST
     this.mailDetails["From"] = "support@stonegridusa.com";
     this.mailDetails["CC"] = "";
     this.mailDetails["To"] = "support@stonegridusa.com";

@@ -6,26 +6,21 @@ import { ActinfoComponent } from '../actinfo/actinfo.component';
 import { OverlayEventDetail } from '@ionic/core';
 import { SchedulingService } from 'src/app/service/scheduling.service';
 import { NavController } from '@ionic/angular';
-import { ActionSheetController } from '@ionic/angular';
+//import { ActionSheetController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
 import { AddactivityComponent } from '../addactivity/addactivity.component';
-import { CalendarfilterComponent } from '../calendarfilter/calendarfilter.component';
+//import { CalendarfilterComponent } from '../calendarfilter/calendarfilter.component';
 //import * as moment from 'moment';
-
 // Calendar Components
 import { OptionsInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
-import interactionPlugin from '@fullcalendar/interaction';
+//import interactionPlugin from '@fullcalendar/interaction';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { CalendarsettingComponent } from '../calendarsetting/calendarsetting.component';
 import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
-import { Calendar } from '@fullcalendar/core';
-
-//import momentTimezonePlugin from '@fullcalendar/moment-timezone';
-
-
+//import { Calendar } from '@fullcalendar/core';
 declare var platform: string;
 @Component({
   selector: 'app-scheduling',
@@ -95,7 +90,7 @@ export class SchedulingPage implements OnInit {
     let height = window.innerHeight - 110; this.width = 85;
     var _dafaultDate = new Date();
     this.options = {
-      plugins: [interactionPlugin, dayGridPlugin, resourceTimelinePlugin, resourceTimeGridPlugin, resourceDayGridPlugin],
+      plugins: [dayGridPlugin, resourceTimelinePlugin, resourceTimeGridPlugin, resourceDayGridPlugin],
       height: height,
       // slotWidth: this.width,
       defaultView: "resourceTimeline",
@@ -117,9 +112,6 @@ export class SchedulingPage implements OnInit {
       },
     }
   }
-
-
-
   ngAfterViewInit() {
     this.calendarApi4 = this.fullcalendar;
     this.resources = [
@@ -129,7 +121,6 @@ export class SchedulingPage implements OnInit {
         title: 'Un-Assigned'
       }]
   }
-
   call(info) {
     this.ActiveDate = info.view.activeStart;
     if (info.view.type == "restimelineDay") {
@@ -147,7 +138,6 @@ export class SchedulingPage implements OnInit {
     this.ActionEventsByFilterSettings();
     //this.ActionLoadEvents();
   }
-
   ActionNavigateView(navtype) {
     let calendarApi = this.fullcalendar.getApi();
     if (this.calObj.CalendarView == "restimelineDay") {
@@ -164,7 +154,6 @@ export class SchedulingPage implements OnInit {
     }
 
   }
-
   GetNavDates(view) {
     let start = this.datePipe.transform(view.activeStart, "MM/dd/yyyy");
     // For Prev
@@ -174,7 +163,6 @@ export class SchedulingPage implements OnInit {
     let nextbutton = <HTMLElement>document.body.querySelector(".fc-next-button");
     nextbutton.addEventListener("click", () => { this.calObj.StartDate = start; this.PrepareDays("next") });
   }
-
   ActionEventsByFilterSettings() {
     if (this.calObj.CalID == 1) {
       this.ActionGetResList();
@@ -182,8 +170,6 @@ export class SchedulingPage implements OnInit {
       this.ActionLoadEvents();
     }
   }
-
-
   ActionRenderEvent(evnt) {
     this.PrepareEventHtml(evnt);
     // if (platform == 'desktop'){
@@ -232,17 +218,14 @@ export class SchedulingPage implements OnInit {
     if (event.ProjectManagerID > 0) {
       htmlstring += "<tr><td style='border:0;color: grey;' colspan='2' valign='top' width='70%' align='left'>" + "<div align='left'>" + event.ProjectManager + "</div>" + "</td></tr>";
     }
-
     htmlstring += "<tr><td style='border:0' colspan='2' valign='top' align='left'><div style='color:black;font-size: 13px' class='actdiv font-bold'>" + "<span style='color:blue;font-size: 14px'>" + event.QuoteNo + "</span>" + (event.PhaseSrNo > 0 ? " - P " + event.PhaseSrNo : "") + "</div><td></tr>";
     htmlstring += "<tr><td style='border:0' colspan='2' valign='top' align='left'><div  style='color:black;font-size: 13px' class='wordwrap'>" + event.CustName + CustType + "</div></td></tr>";
-
     htmlstring += "<tr><td colspan='2' style='border:0;color:orangered;font-size:13px;' valign='top' align='right'>";
     htmlstring += "<div style='float:left'>" + event.PhaseSF + "</div>";
     htmlstring += "<div style='float:right'>" + addressString + "</div>";
     htmlstring += "</td></tr>" + resourceString + "</table>";
     evnt.el.innerHTML = htmlstring;
   }
-
   ActionLoadEvents() {
     if (this.calObj.CalendarView != "" && this.calObj.CalendarView != undefined) {
       let resids = "";
@@ -303,7 +286,6 @@ export class SchedulingPage implements OnInit {
     let textColor = this.calObj.CalColorID == 2 ? "black" : item.ActTextColor;
     this.actlist.push({ title: item.QuoteNo, start: sDate, end: eDate, id: item.ID, resourceId: extid, resourceIds: [extid], backgroundColor: bgColor, textColor: textColor, borderColor: textColor, extendedProps: item });
   }
-
   ActionRefreshCalendar() {
     this.calObj.ActTypeIDs = "11"; this.calObj.ActTypes = "Template";
     this.calObj.ResourceIDs = ""; this.calObj.ResourceNames = "ALL";
@@ -327,8 +309,6 @@ export class SchedulingPage implements OnInit {
       this.actResources = this.resources;
     });
   }
-
-
   PrepareEvents(list) {
 
   }
@@ -483,7 +463,6 @@ export class SchedulingPage implements OnInit {
     this.calObj.IsViewChange = false;
     this.calObj.IsViewChange = false;
   }
-
   ChangedViewEvents() {
     let sdate = new Date(this.calObj.StartDate);
     sdate.setDate(sdate.getDate() + Number(this.calObj.CalendarDays));
@@ -492,7 +471,6 @@ export class SchedulingPage implements OnInit {
     this.calObj.EndDate = this.datePipe.transform(sdate, "MM/dd/yyyy");
     this.ActionEventsByFilterSettings();
   }
-
   SetResourceGridViewWith() {
     let width = window.innerWidth + "px";
     if (this.calObj.ResourceIDs != "" && this.calObj.ResourceIDs != null && this.calObj.CalID == 1) {
@@ -503,7 +481,6 @@ export class SchedulingPage implements OnInit {
     }
     document.documentElement.style.setProperty("--reswidth", width)
   }
-
   PrepareDays(navtype) {
     this.resources = [];
     var startDate = new Date(this.calObj.StartDate.valueOf());
@@ -521,8 +498,6 @@ export class SchedulingPage implements OnInit {
     startDate.setDate(startDate.getDate() + 1);
     this.calObj.EndDate = startDate;
   }
-
-
 }
 
 

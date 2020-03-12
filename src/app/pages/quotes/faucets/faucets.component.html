@@ -64,11 +64,11 @@
       <ion-input type="text" class="labelfont" [(ngModel)]="faucet.Model" name="Model" readonly="readonly"></ion-input>
     </ion-item>
     <ion-item class="mar-left4">
-      <ion-checkbox class="marlft-rht"></ion-checkbox>
+      <ion-checkbox class="marlft-rht" [(ngModel)]="faucet.IsSupply" checked="faucet.IsSupply==1"></ion-checkbox>
       <ion-label>Customer Supply</ion-label>
     </ion-item>
     <ion-item class="mar-left4">
-      <ion-checkbox class="marlft-rht"></ion-checkbox>
+      <ion-checkbox class="marlft-rht" [(ngModel)]="faucet.FaucetAtShop" checked="faucet.FaucetAtShop==1"></ion-checkbox>
       <ion-label>Faucet is at shop</ion-label>
     </ion-item>
   </ion-content>

@@ -16,14 +16,11 @@ export class ActinfoComponent implements OnInit {
   actInfo: any;
   actheader: any;
   showmore: number = 0;
-
-  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private schService: SchedulingService, private datePipe: DatePipe) { }
-
+  constructor(public Modalcntrl: ModalController, private navParams: NavParams, 
+    private schService: SchedulingService, private datePipe: DatePipe) { }
   ngOnInit() {
-    this.ActionActivityInfo();
-  
+    this.ActionActivityInfo();  
   }
-
   ActionActivityInfo() {
     let start = this.datePipe.transform(this.obj.StartDate, "MM-dd-yyyy");
     let end = this.datePipe.transform(this.obj.EndDate, "MM-dd-yyyy");
@@ -50,7 +47,6 @@ export class ActinfoComponent implements OnInit {
   ActionMoreAreas(more: number) {
     this.showmore = more;
   }
-
   //Close Function
   ActionClose(issave) {
     this.Modalcntrl.dismiss({
@@ -59,7 +55,6 @@ export class ActinfoComponent implements OnInit {
       issave: issave
     });
   }
-
   //Edit Activity Function
   async ActionEditActivity() {
     let copyobj = JSON.parse(JSON.stringify(this.actInfo));

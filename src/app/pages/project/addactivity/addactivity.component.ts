@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams, AlertController } from '@ionic/angular';
 import { SchedulingService } from 'src/app/service/scheduling.service';
 import { OverlayEventDetail } from '@ionic/core';
-import { DatePipe, formatDate } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { NgForm } from '@angular/forms';
-import { ActinfoComponent } from '../actinfo/actinfo.component';
 declare var timings :any;
 import {AreaPartsComponent} from '../area-parts/area-parts.component';
 @Component({
@@ -43,9 +42,7 @@ export class AddactivityComponent implements OnInit {
     }
 
     console.log(this.actinfo);
-  }
-
-  
+  } 
 //#region Actions
 ActionActivityInfo() {
   let start = this.datePipe.transform(this.actinfo.SchStartTime, "MM-dd-yyyy");

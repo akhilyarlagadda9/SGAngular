@@ -1,250 +1,168 @@
 
   <form #form="ngForm" (ngSubmit)="ActionSaveActivity(form)" class="dis-content">
     <ion-header>
+      <ion-toolbar color="light">
+        <ion-buttons start>
+          <ion-button slot="start" color="danger" (click)="ActionCloseActivity(false)"> 
+            <span ion-text showWhen="ios" class="check-font" >Cancel</span></ion-button>
+        </ion-buttons>
+        <ion-title >Activity Details</ion-title>
+        <ion-buttons slot="end">
+          <ion-button slot="end" color="secondary" type="submit"> <span ion-text class="check-font">Save</span></ion-button>
+        </ion-buttons> 
+      </ion-toolbar>
       <ion-toolbar>
-        <ion-title class="titleheader">Activity Details</ion-title>
-        <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
-        <ion-button slot="end" color="danger" size="small" (click)="ActionCloseActivity(false)">X</ion-button>
+        <ion-item *ngIf="actinfo.ID > 0">
+          <ion-label>
+            <h2>{{actinfo.QuoteNo}} - {{actinfo.JobName}}</h2>
+            <h3>{{actinfo.CustName}}</h3>
+            <h3>{{actinfo.SalesPerName}}</h3>
+            <p>
+              {{actinfo.JobFullAddres}}
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item *ngIf="actinfo.ID == 0">
+          <ion-input type="text" placeholder="JobNo and Name"  name="actinfo.JobName" [(ngModel)]="actinfo.JobName" ></ion-input>
+          <ion-icon slot="end"  name="arrow-dropdown"
+          (click)="ActionApprovedJobList('',2)"></ion-icon>
+        <ion-icon slot="end" name="search"
+          (click)="ActionApprovedJobList(actinfo.JobName,1)"></ion-icon>
+          <div [hidden]="!form.submitted || JobName.valid" class="invalid-feedback padd-Left">
+            <div class="error">Select Job</div>
+          </div>
+        </ion-item>
+        <ion-item *ngIf="actinfo.ID == 0 && actinfo.JobName != '' && actinfo.JobName != null">
+          <ion-label>
+            <p>
+              {{actinfo.JobFullAddres}}
+            </p>
+          </ion-label>
+        </ion-item>
       </ion-toolbar>
     </ion-header>
-    <ion-content>
-    <ion-item *ngIf="actinfo.ID == 0">
-      <ion-label class="labelfont" position="floating" color="primary">Job# & Name<span
-          class="requiredField">*</span>
-      </ion-label>
-      <ion-input [(ngModel)]="actinfo.JobName" name="JobName" type="text" #JobName="ngModel"
-        (keyup.enter)="ActionApprovedJobList(actinfo.JobName,1)" required></ion-input>
-      <ion-icon slot="end" class="mart25" name="arrow-dropdown" (click)="ActionApprovedJobList('',2)"></ion-icon>
-      <ion-icon slot="end" class="mart25" name="search" (click)="ActionApprovedJobList(actinfo.JobName,1)"></ion-icon>
-      <div [hidden]="!form.submitted || JobName.valid" class="invalid-feedback padd-Left">
-        <div class="error">Select Job</div>
-      </div>
+<ion-content>
+<ion-list class="bg-lightgrey" >
+  <ion-item>
+    <ion-label floating>Phase<span class="requiredField">*</span></ion-label>
+    <ion-select (ngModelChange)="ActionChangePhase($event)" [(ngModel)]="actinfo.PhaseID" name="PhaseID" #PhaseID="ngModel" required [selectedText]="actinfo.PhaseName">
+      <ion-select-option *ngFor="let c of phaseList" [value]="c.ID">{{c.Name}}</ion-select-option>
+    </ion-select>
+    <div [hidden]="!form.submitted  || PhaseID.valid" class="invalid-feedback padd-Left">
+      <div class="error">Activity Phase is required</div>
+    </div>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Act Type<span class="requiredField">*</span></ion-label>
+    <ion-select [(ngModel)]="actinfo.ActTypeID" name="ActTypeID" [selectedText]="actinfo.ActivityType"
+      #ActTypeID="ngModel" (ngModelChange)="ActionGetStatusResourceList($event)" required>
+      <ion-select-option *ngFor="let c of ActTypeList" [value]="c.ID">{{c.Name}}</ion-select-option>
+    </ion-select>
+    <div [hidden]="!form.submitted  || ActTypeID.valid" class="invalid-feedback padd-Left">
+      <div class="error">Activity Type is required</div>
+    </div>
+  </ion-item>
+  <!-- <ion-item>
+    <ion-label floating  (click)="ActionOpenAreaPart()">Areas:</ion-label>
+  <span *ngFor="let part of actinfo.QuotePartList" (click)="ActionOpenAreaPart()"> 
+    {{part.AreaName}} - Part{{part.NewSrNo}} - {{part.JobSqft}} SF
+  </span>
+  </ion-item> -->
+  <ion-item>
+    <ion-label floating>Act Status:</ion-label>
+    <ion-select [(ngModel)]="actinfo.StatusID" name="StatusID" #StatusID="ngModel" (ngModelChange)="ActionSetStatus($event)">
+      <ion-select-option *ngFor="let c of statusList" [value]="c.ID">{{c.Name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label floating >Areas</ion-label>
+    <ion-item (click)="ActionOpenAreaPart()">
+      <span *ngFor="let part of actinfo.QuotePartList; let s = index" style="font-size: 14px;" > 
+        <span *ngIf="s < 2">
+          {{part.AreaName}} - Part{{part.NewSrNo}} - {{part.JobSqft}} SF
+        </span>
+      </span>
+      <ion-icon name="arrow-forward"></ion-icon>
     </ion-item>
+  </ion-item>
+</ion-list>
+<ion-list class="bg-lightgrey" >
+  <ion-item>
+    <ion-label floating >Start</ion-label>
+    <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" 
+    (ngModelChange)="actinfo.IsDateChange = true;ActionChangeDate($event,0,'sDate')" name="SchStartTime" [(ngModel)]="actinfo.SchStartTime">
+  </ion-datetime>
+  <ion-select class="btninfo" interface="popover" [(ngModel)]="actinfo.STime" name="STime" (ngModelChange)="ActionChangeDate($event,0,'')"  [selectedText]="actinfo.STime">
+    <ion-select-option *ngFor="let time of timings" [value]="time">{{time}}</ion-select-option>
+  </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label floating >End</ion-label>
+    <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" 
+    (ngModelChange)="actinfo.IsDateChange = true;ActionChangeDate($event,1,'eDate')" name="SchEndTime" [(ngModel)]="actinfo.SchEndTime">
+  </ion-datetime>
+  <ion-select class="btninfo" interface="popover" [(ngModel)]="actinfo.ETime" name="ETime" (ngModelChange)="ActionChangeDate($event,1,'')"  [selectedText]="actinfo.ETime">
+    <ion-select-option *ngFor="let time of timings" [value]="time">{{time}}</ion-select-option>
+  </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Duration(Hrs:Min)</ion-label>
+    <ion-input type="text" [(ngModel)]="actinfo.Hrs"   name="Hrs" class="labelfont text-right"></ion-input>
+    <ion-label>:</ion-label>
+    <ion-input type="text" [(ngModel)]="actinfo.Mins"  name="Mins" class="labelfont"></ion-input>
+    <ion-label>All Day</ion-label>
+    <ion-toggle checked="false" (ionChange)="ActionAllDayClick($event)"></ion-toggle>
+  </ion-item>
+</ion-list>
+<ion-list *ngIf="actinfo.StatusID ==5" class="bg-lightgrey" >
+  <ion-item>
+    <ion-label floating>Act Start</ion-label>
+        <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" name="ActStartDate"
+          [(ngModel)]="actinfo.ActualStartDate">
+        </ion-datetime><span class="select-icon ion-float-right"></span>
+  </ion-item>
+  <ion-item >
+    <ion-label floating>Act End:</ion-label>
+        <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" name="ActEndDate"
+          [(ngModel)]="actinfo.ActualEndDate">
+        </ion-datetime><span class="select-icon ion-float-right"></span>
    
-    <ion-item *ngIf="actinfo.ID > 0">
-      <ion-label>
-        <h2>{{actinfo.QuoteNo}} - {{actinfo.JobName}} -
-          P{{actinfo.PhaseSrNo}}</h2>
-        <h3>{{actinfo.SalesPerName}}</h3>
-        <p>
-          {{actinfo.JobFullAddres}}
-        </p>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked" color="primary" class="margin-zero">Activity Phase:<span
-        class="requiredField">*</span></ion-label>
-      <ion-select (ngModelChange)="ActionChangePhase($event)" [(ngModel)]="actinfo.PhaseID" name="PhaseID" #PhaseID="ngModel" required [selectedText]="actinfo.PhaseName">
-        <ion-select-option *ngFor="let c of phaseList" [value]="c.ID">{{c.Name}}</ion-select-option>
-      </ion-select>
-      <div [hidden]="!form.submitted  || PhaseID.valid" class="invalid-feedback padd-Left">
-        <div class="error">Activity Phase is required</div>
-      </div>
-    </ion-item>
-  
-    <ion-item>
-      <ion-label position="stacked" color="primary" class="margin-zero">Activity Type:<span
-        class="requiredField">*</span></ion-label>
-      <ion-select [(ngModel)]="actinfo.ActTypeID" name="ActTypeID" [selectedText]="actinfo.ActivityType"
-        #ActTypeID="ngModel" (ngModelChange)="ActionGetStatusResourceList($event)" required>
-        <ion-select-option *ngFor="let c of ActTypeList" [value]="c.ID">{{c.Name}}</ion-select-option>
-      </ion-select>
-      <div [hidden]="!form.submitted  || ActTypeID.valid" class="invalid-feedback padd-Left">
-        <div class="error">Activity Type is required</div>
-      </div>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label position="stacked" color="primary" class="margin-zero" (click)="ActionOpenAreaPart()">Areas:</ion-label>
-    <span *ngFor="let part of actinfo.QuotePartList" (click)="ActionOpenAreaPart()"> 
-      {{part.AreaName}} - Part{{part.NewSrNo}} - {{part.JobSqft}} SF
-    </span>
-      <!-- <ion-select [(ngModel)]="actinfo.AreasName" name="AreasName" #itemSelected="ngModel" [selectedText]="actinfo.AreasName" multiple="true" (ngModelChange)="ActionGetSelectedAreas($event)">
-        <ion-select-option [value]="0" selected="selected">ALL</ion-select-option>
-        <ion-select-option *ngFor="let part of QuotePartList" [value]="part.ID">{{part.AreaName}} - Part{{part.NewSrNo}} - {{part.JobSqft}} SF</ion-select-option>
-      </ion-select> -->
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating" color="primary" class="margin-zero">Activity Status:</ion-label>
-      <ion-select [(ngModel)]="actinfo.StatusID" name="StatusID" #StatusID="ngModel" (ngModelChange)="ActionSetStatus($event)">
-        <ion-select-option *ngFor="let c of statusList" [value]="c.ID">{{c.Name}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating" color="primary" class="margin-zero">Start Date & Time:</ion-label>
-      <ion-row style="width:100%">
-        <ion-col size="6">
-          <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" 
-            (ngModelChange)="actinfo.IsDateChange = true;ActionChangeDate($event,0,'sDate')" name="SchStartTime" [(ngModel)]="actinfo.SchStartTime">
-          </ion-datetime><span class="select-icon ion-float-right"></span>
-        </ion-col>
-        <!-- <ion-col size="4">
-          <ion-row>
-            <ion-col size="8" class="paddzero">All Day</ion-col>
-            <ion-col size="4" class="paddzero">
-              <ion-checkbox color="dark" name="Text" class="martb"></ion-checkbox>
-            </ion-col>
-          </ion-row>
-        </ion-col> -->
-        <ion-col size="6">
+  </ion-item>
+</ion-list>
+<ion-list class="bg-lightgrey">
+  <ion-item>
+    <ion-textarea rows="4" cols="6" placeholder="Notes" name="Memo" [(ngModel)]="actinfo.Memo" class="borderall"></ion-textarea>
+  </ion-item>
+</ion-list>
+<ion-list class="bg-lightgrey" >
+  <ion-row>
+    <ion-col size="3">
+      <ion-label color="primary" class="paddleft5">Resources: </ion-label>
+    </ion-col>
+    <ion-col size="9" class="text-right color-primary" (click)="ActionopenResourcePopup($event)"><u
+        class="paddright10">Select</u></ion-col>
+  </ion-row>
+  <ion-item class="paddleft5">
+    <ion-col size="8"><b>Name</b></ion-col>
+    <ion-col size="2"><b>Email</b></ion-col>
+    <ion-col size="2"><b>Text</b></ion-col>
+  </ion-item>
+  <ion-item *ngFor="let resource of actinfo.ResourceList; let i = index" class="paddleft5">
+    <ion-col size="8">
+      <span (click)="ActionDeleteSelectedItems(resource.ID,i)"><ion-icon name="trash" class="delsty"></ion-icon></span>&nbsp;
+       {{resource.ResourceName}}
+      <div> <small>{{resource.EmpMail}}</small></div>
+    </ion-col>
+    <ion-col size="2">
+      <ion-checkbox color="dark" name="Email" [(ngModel)]="resource.Email" checked="resource.Email ==1">
+      </ion-checkbox>
+    </ion-col>
+    <ion-col size="2">
+      <ion-checkbox color="dark" name="Text" [(ngModel)]="resource.Text" checked="resource.Text ==1"></ion-checkbox>
+    </ion-col>
+  </ion-item>
 
-          <ion-select class="btninfo" interface="popover" [(ngModel)]="actinfo.STime" name="STime" (ngModelChange)="ActionChangeDate($event,0,'')"  [selectedText]="actinfo.STime">
-            <ion-select-option *ngFor="let time of timings" [value]="time">{{time}}</ion-select-option>
-          </ion-select>
-
-          <!-- <ion-datetime  pickerFormat="h:mm A" name="STime" [(ngModel)]="actinfo.STime"></ion-datetime>
-          <span class="select-icon ion-float-right"></span> -->
-        </ion-col>
-      </ion-row>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating" color="primary" class="margin-zero">End Date & Time:</ion-label>
-      <ion-row style="width:100%">
-        <ion-col size="6">
-          <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" 
-            (ngModelChange)="actinfo.IsDateChange = true;ActionChangeDate($event,1,'eDate')" name="SchEndTime" [(ngModel)]="actinfo.SchEndTime">
-          </ion-datetime><span class="select-icon ion-float-right"></span>
-        </ion-col>
-        <ion-col size="6">
-          <ion-select class="btninfo" interface="popover" [(ngModel)]="actinfo.ETime" name="ETime" (ngModelChange)="ActionChangeDate($event,1,'')"  [selectedText]="actinfo.ETime">
-            <ion-select-option *ngFor="let time of timings" [value]="time">{{time}}</ion-select-option>
-          </ion-select>
-          <!-- <ion-datetime displayFormat="h:mm a" pickerFormat="h:mm A" name="ETime" [(ngModel)]="actinfo.ETime">
-          </ion-datetime><span class="select-icon ion-float-right"></span> -->
-        </ion-col>
-      </ion-row>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating" color="primary" class="margin-zero">Dration:</ion-label>
-      <ion-row style="width:100%">
-        <ion-col size="8">
-          <ion-row>
-            <ion-col size="4" class="paddzero">
-              <ion-input type="text" [(ngModel)]="actinfo.Hrs"  name="Hrs" class="labelfont"></ion-input>
-            </ion-col>
-            <ion-col size="2" class="paddzero">
-              Hrs
-            </ion-col>
-            <ion-col size="4" class="paddzero">
-              <ion-input type="text" [(ngModel)]="actinfo.Mins"  name="Mins" class="labelfont"></ion-input>
-            </ion-col>
-            <ion-col size="2" class="paddzero">
-              Min
-            </ion-col>
-          </ion-row>
-        </ion-col>
-        <ion-col size="4">
-          <ion-row>
-            <ion-col size="8" class="paddzero">All Day</ion-col>
-            <ion-col size="4" class="paddzero">
-              <ion-checkbox color="dark" name="Text" class="martb" (click)="isChecked($event)"></ion-checkbox>
-            </ion-col>
-          </ion-row>
-        
-        </ion-col>
-      </ion-row>
-    </ion-item>
-
-
-    <ion-item *ngIf="actinfo.StatusID ==5">
-      <ion-label position="floating" color="primary" class="margin-zero">Act Start Date & Time:</ion-label>
-      <ion-row style="width:100%">
-        <ion-col size="12" style="border-right: 1px solid #ddd;">
-          <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" name="ActStartDate"
-            [(ngModel)]="actinfo.ActualStartDate">
-          </ion-datetime><span class="select-icon ion-float-right"></span>
-        </ion-col>
-        <!-- <ion-col size="6">
-          <ion-datetime displayFormat="h:mm a" pickerFormat="h:mm A" name="ActStartTime"
-            [(ngModel)]="actinfo.ActualStartDate">
-          </ion-datetime><span class="select-icon ion-float-right"></span>
-        </ion-col> -->
-      </ion-row>
-    </ion-item>
-    <ion-item *ngIf="actinfo.StatusID ==5">
-      <ion-label position="floating" color="primary" class="margin-zero">Act End Date & Time:</ion-label>
-      <ion-row style="width:100%">
-        <ion-col size="12" style="border-right: 1px solid #ddd;">
-          <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY HH:mm" pickerFormat="MMM D:HH:mm" name="ActEndDate"
-            [(ngModel)]="actinfo.ActualEndDate">
-          </ion-datetime><span class="select-icon ion-float-right"></span>
-        </ion-col>
-        <!-- <ion-col size="6">
-          <ion-datetime displayFormat="h:mm a" pickerFormat="h:mm A" name="ActEndTime"
-            [(ngModel)]="actinfo.ActualEndDate">
-          </ion-datetime><span class="select-icon ion-float-right"></span>
-        </ion-col> -->
-      </ion-row>
-    </ion-item>
-    <ion-row>
-      <ion-label class="margin-zero notestyle" color="primary"><u>Note:</u></ion-label>
-    </ion-row>
-    <ion-row class="padding5">
-      <ion-textarea rows="4" cols="6" name="Memo" class="borderall"></ion-textarea>
-    </ion-row>
-    <ion-row>
-      <ion-col size="3">
-        <ion-label color="primary" class="paddleft5">Resources: </ion-label>
-      </ion-col>
-      <ion-col size="9" class="text-right color-primary" (click)="ActionopenResourcePopup($event)"><u
-          class="paddright10">Select</u></ion-col>
-    </ion-row>
-    <ion-row class="paddleft5">
-      <ion-col size="8"><b>Name</b></ion-col>
-      <ion-col size="2"><b>Email</b></ion-col>
-      <ion-col size="2"><b>Text</b></ion-col>
-    </ion-row>
-    <ion-row *ngFor="let resource of actinfo.ResourceList; let i = index" class="paddleft5">
-      <ion-col size="8">
-        <span (click)="ActionDeleteSelectedItems(resource.ID,i)"><ion-icon name="trash" class="delsty"></ion-icon></span>&nbsp;
-         {{resource.ResourceName}}
-        <div> <small>{{resource.EmpMail}}</small></div>
-      </ion-col>
-      <ion-col size="2">
-        <ion-checkbox color="dark" name="Email" [(ngModel)]="resource.Email" checked="resource.Email ==1">
-        </ion-checkbox>
-      </ion-col>
-      <ion-col size="2">
-        <ion-checkbox color="dark" name="Text" [(ngModel)]="resource.Text" checked="resource.Text ==1"></ion-checkbox>
-      </ion-col>
-    </ion-row>
+</ion-list>
 </ion-content>
 </form>
 
-<ion-row *ngIf="IsResource" class="popupCls1">
-  <ion-toolbar class="resoucesty">
-    <ion-title class="titleheader">Resources</ion-title>
-    <!-- <ion-button slot="end" color="success" size="small" type="submit" class="font11" (click)="ActionSaveResourceInfo()">
-      Select</ion-button> -->
-    <ion-button slot="end" color="danger" size="small" (click)="ActionCloseResourcePopup()" class="font11">X
-    </ion-button>
-  </ion-toolbar>
-  <div class="paddtop0 isresourecesty">
-    <ion-row *ngFor="let resource of resourceList" class="border-btm">
-      <ion-row style="width: 100%;">
-        <ion-col size="8" class="paddzero">
-          <span>
-            <ion-checkbox color="dark"  class="martb checksty" disabled="disabled" *ngIf="resource.CheckStatusID == 1"
-              [(ngModel)]="resource.Check" checked="resource.Check == 1"></ion-checkbox>
-            <ion-checkbox color="dark"  class="martb checksty" *ngIf="resource.CheckStatusID == 0"
-              (ngModelChange)="ActionPushResource($event,resource)" [(ngModel)]="resource.Check" checked="resource.Check == 1">
-            </ion-checkbox>
-          </span>&nbsp;
-          <span>{{resource.ResourceName}}</span>
-        </ion-col>
-        <ion-col class="paddzero text-right" size="4">
-          <span *ngIf="resource.IsLocked == 1"> <i class="fa fa-lock"></i>&nbsp;</span>
-          <span>{{resource.DayMaxSqft | number : '.2-2'}} | <span
-              style="color:red">{{resource.DaySqft | number : '.2-2'}}</span> &nbsp;</span>
-        </ion-col>
-      </ion-row>
-      <ion-row style="width: 100%;margin-bottom: 5px;">
-        <ion-col *ngIf="resource.EmpMail != '' && resource.EmpMail != null">
-          <span><small>{{resource.EmpMail}}</small></span>&nbsp;&nbsp;
-          <span>{{resource.EmpPhone}}</span>
-          <!-- <span class="color-red" *ngIf="resource.OffID == 1"><b> &nbsp; (DAY OFF)</b></span> -->
-        </ion-col>
-      </ion-row>
-    </ion-row>
-  </div>
-</ion-row>

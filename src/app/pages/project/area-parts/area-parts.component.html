@@ -1,27 +1,29 @@
 <ion-header>
-  <ion-toolbar style="top:5px;"><ion-title>Areas:</ion-title>
+  <ion-toolbar color="light">
+    <ion-buttons start>
+      <ion-button slot="start" color="danger" (click)="ActionToClosePop(false)"> 
+        <span class="check-font" ion-text showWhen="ios" >Cancel</span></ion-button>
+    </ion-buttons>
+    <ion-title >Areas</ion-title>
+    <ion-buttons slot="end">
+      <ion-button slot="end" color="secondary" (click)="ActionRunFilter()"> <span class="check-font" ion-text >Select</span></ion-button>
+    </ion-buttons> 
+  </ion-toolbar>
+  <!-- <ion-toolbar style="top:5px;"><ion-title>Areas:</ion-title>
     <ion-button slot="end" size="small" (click)="ActionRunFilter()">Select</ion-button>
     <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop(false)">X</ion-button>
-  </ion-toolbar>
+  </ion-toolbar> -->
 </ion-header>
 <ion-content>
-  <ion-list style="height:360px">
-    <ion-row  class="smallfont2 paddall border-btm">
-      <ion-col size="12">
-      <ion-checkbox style="width:30px" color="dark" [(ngModel)]="AllCheck" (click)="ActionAll()"></ion-checkbox><font size="4">ALL</font>
-      </ion-col>
-    </ion-row>
-    <ion-row *ngFor="let item of arrAreaInfo" class="smallfont2 paddall border-btm">
-    <ion-col size="12">
-     
-       
-      <div *ngIf="arrAreaInfo!='undefined'">
-      
-        <ion-checkbox style="width:30px" color="dark" [(ngModel)]="item.Check" (ngModelChange)="ActionIsselectAll()"></ion-checkbox>
-        <span style="color:blue">{{item.Area.Name}} - </span>Part {{item.NewSrNo}} - {{item.JobSqft}} <!--- <span>{{part.JobPartName}}</span>-->
-   
-    </div>
-    </ion-col>
-    </ion-row>
-  </ion-list>
+
+<ion-item>
+  <ion-checkbox style="width:30px" color="dark" [(ngModel)]="AllCheck" (click)="ActionAll()"></ion-checkbox><font size="4">ALL</font>
+  </ion-item>
+<ion-item *ngFor="let item of arrAreaInfo">
+  
+    <ion-checkbox style="width:30px" color="dark" [(ngModel)]="item.Check" (ngModelChange)="ActionIsselectAll()"></ion-checkbox>
+ <font>   <span style="color:blue">{{item.Area.Name}} - </span>Part {{item.NewSrNo}} - {{item.JobSqft}} </font>
+
+</ion-item>
+
 </ion-content>

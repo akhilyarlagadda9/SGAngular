@@ -38,8 +38,17 @@
     <ion-label>To:<span
       class="requiredField">*</span></ion-label>
     <!-- <ion-text>{{mailDetails.To}}</ion-text> -->
-    <ion-input [(ngModel)]="mailDetails.To" name="To" #To="ngModel" type="text" required (ngModelChange)="getToItems($event)"></ion-input>
+    <ion-textarea [(ngModel)]="mailDetails.To" name="To" #To type="text" required (ngModelChange)="getToItems($event)"></ion-textarea>
   </ion-item>
+        <ion-list *ngIf="isItemToAvailable">
+            <ion-item   *ngFor="let item of arrInfo" (click)="addMail(item.Email,1)" style="overflow-y: scroll; height:50px;">
+              <ion-row>
+                {{item.Name}}&nbsp; &nbsp; &nbsp;{{item.Email}}
+                <br>
+                {{item.Phone}}
+              </ion-row>
+              </ion-item>
+        </ion-list> 
   <div [hidden]="!form.submitted || To.valid" class="invalid-feedback padd-Left">
     <div class="error">Select To</div>
   </div>
@@ -47,18 +56,28 @@
   <ion-item>
     <ion-label>CC: </ion-label>
     <!-- <ion-text>{{mailDetails.CC}}</ion-text> -->
-    <ion-input [(ngModel)]="mailDetails.CC" name="CC"  type="text" (ngModelChange)="getCCItems($event)"></ion-input>
+    <ion-textarea [(ngModel)]="mailDetails.CC" name="CC"  type="text" (ngModelChange)="getCCItems($event)"></ion-textarea>
   </ion-item>
 
+  <ion-list *ngIf="isItemCCAvailable">
+    <ion-item  *ngFor="let item of arrInfo" (click)="addMail(item.Email,2)" style="overflow-y: scroll; height:50px;background-color:LightGray;">
+      <ion-row>
+        {{item.Name}}&nbsp; &nbsp; &nbsp;{{item.Email}}
+        <br>
+        {{item.Phone}}
+      </ion-row>
+      </ion-item>
+</ion-list> 
+
   <ion-item>
-    <ion-label>Subject: </ion-label>
-    <ion-text>{{mailDetails.Subject}}</ion-text>
+    <!-- <ion-label>Subject: </ion-label> -->
+    <ion-input placeholder="Subject" [(ngModel)]="mailDetails.Subject" name="Subject" autofocus></ion-input>
   </ion-item>
   <ckeditor tagName="textarea" [(ngModel)]="mailDetails.mailBody" name="mailBody" [editor]="Editor" ></ckeditor>
 </ion-content>
 </form>
 
-<ion-row *ngIf="isItemToAvailable" class="popupCls2">
+<!-- <ion-row *ngIf="isItemToAvailable" class="popupCls2">
   <ion-toolbar class="resoucesty">
     <ion-title class="titleheader">Mail Id's</ion-title>
     <ion-button slot="end" color="danger" size="small" (click)="ActionCloseMailPopup()" class="font11">X
@@ -71,8 +90,8 @@
         </ion-col>
        </ion-row>
     </ion-row>
-</ion-row>
-<ion-row *ngIf="isItemCCAvailable" class="popupCls2">
+</ion-row> -->
+<!-- <ion-row *ngIf="isItemCCAvailable" class="popupCls2">
   <ion-toolbar class="resoucesty">
     <ion-title class="titleheader">Mail Id's</ion-title>
     <ion-button slot="end" color="danger" size="small" (click)="ActionCloseMailPopup()" class="font11">X
@@ -85,6 +104,6 @@
       </ion-col>
      </ion-row>
   </ion-row>
-</ion-row>
+</ion-row> -->
 
 

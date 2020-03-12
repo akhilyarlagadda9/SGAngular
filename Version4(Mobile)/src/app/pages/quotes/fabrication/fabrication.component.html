@@ -32,8 +32,8 @@
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
       <ion-row> 
-        <span *ngIf="fabrication.SplashSqft != 0">{{(fabrication.PartSqft + fabrication.SplashSqft)}}</span>
-        <span *ngIf="fabrication.SplashSqft == 0">{{fabrication.PartSqft}}</span>
+        <span *ngIf="fabrication.SplashSqft != 0">{{(fabrication.PartSqft + fabrication.SplashSqft)| number : '.2-2'}}</span>
+        <span *ngIf="fabrication.SplashSqft == 0">{{fabrication.PartSqft | number : '.2-2'}}</span>
       </ion-row>
     </ion-item>
     <ion-item>
@@ -57,8 +57,8 @@
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
       <ion-row style="margin-right: 3px;" class="labelfont">$ 
-        <span *ngIf="fabrication.SplashSqft != 0">{{fabrication.LaborUnitPrice * (fabrication.PartSqft + fabrication.SplashSqft)}}</span>
-        <span *ngIf="fabrication.SplashSqft == 0">{{fabrication.LaborUnitPrice * fabrication.PartSqft}}</span>
+        <span *ngIf="fabrication.SplashSqft != 0">{{fabrication.LaborUnitPrice * (fabrication.PartSqft + fabrication.SplashSqft)| number : '.2-2'}}</span>
+        <span *ngIf="fabrication.SplashSqft == 0">{{fabrication.LaborUnitPrice * fabrication.PartSqft | number : '.2-2'}}</span>
       </ion-row>
     </ion-item>
   </ion-content>

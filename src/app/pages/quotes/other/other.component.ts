@@ -76,6 +76,7 @@ GetToolsList() {
   this.getservice.QuotetoolsList(this.VersionId).subscribe(
     data => { this.ToolList = data; }
   );
+  console.log(this.ToolList)
 }
 //Tool List Function
 GetAddonsList() {

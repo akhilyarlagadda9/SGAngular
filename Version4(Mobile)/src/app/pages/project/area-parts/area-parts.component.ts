@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, PopoverController, NavParams, AlertController } from '@ionic/angular';
+import { ModalController, NavParams, } from '@ionic/angular';
 
 @Component({
   selector: 'app-area-parts',
@@ -11,15 +11,12 @@ export class AreaPartsComponent implements OnInit {
   arrChekedItems:any=[];
   arrAreaInfo:any;
   AllCheck:boolean = false;
-  constructor(public Modalcntrl: ModalController,
-    public popoverCntrl: PopoverController, private navParams: NavParams,private alertCtrl: AlertController) { }
+  constructor(public Modalcntrl: ModalController,private navParams: NavParams,) { }
 
   ngOnInit() {
     let check = this.objAreaInfo.ActPartIds == "" || this.objAreaInfo.ActPartIds == null ? 1 : 0;
     let array = check == 0 ? this.objAreaInfo.ActPartIds.split(",") : [];
     if(this.objAreaInfo.PhasePartList.length>0){
-
-     
       this.arrAreaInfo = this.objAreaInfo.PhasePartList;
       let checkCount = 0;
       this.arrAreaInfo.forEach(element => {
@@ -97,7 +94,7 @@ export class AreaPartsComponent implements OnInit {
   // }
 
   ActionToClosePop(isselect) {
-    this.popoverCntrl.dismiss({
+    this.Modalcntrl.dismiss({
       'dismissed': true,
       componentProps: this.arrChekedItems,
       isSelect: isselect

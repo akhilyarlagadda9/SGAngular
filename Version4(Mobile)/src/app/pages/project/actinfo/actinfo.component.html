@@ -1,85 +1,117 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title class="titleheader check-font">{{actInfo.ActTypeName}}</ion-title>
-    <ion-icon name="create" slot="end" class="fontmedium" (click)="ActionClose(true)"></ion-icon>
-    <ion-icon name="trash" slot="end" class="fontmedium" style="color: white;"></ion-icon>&nbsp;
-    <ion-icon name="close" slot="end" class="fontlarge" (click)="ActionClose(false)"></ion-icon>
+  <ion-toolbar color="light">
+    <ion-buttons start>
+      <ion-button slot="start" color="danger" (click)="ActionClose(false)"> 
+        <span ion-text showWhen="ios" class="check-font" >Back</span></ion-button>
+    </ion-buttons>
+    <ion-title class="check-font">{{actInfo.ActTypeName}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button slot="end" color="secondary" (click)="ActionClose(true)"> <span ion-text class="check-font">Edit</span></ion-button>
+    </ion-buttons> 
+
+    <!-- <ion-icon name="create" slot="end" class="fontmedium" (click)="ActionClose(true)"></ion-icon>
+    <ion-icon name="close" slot="end" class="fontlarge" (click)="ActionClose(false)"></ion-icon> -->
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-item>
+      <ion-label>
+        <h1>{{actInfo.Version.Header.QuoteNo}} - {{actInfo.Version.Header.QuoteName}}</h1>
+        <h3>
+          {{actInfo.SchStartTime | date:'MMM dd'}} &nbsp; {{actInfo.STime}} - {{actInfo.ETime}}
+        </h3>
+      </ion-label>
+    </ion-item>
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
+
+<ion-list>
   <ion-row>
-    <ion-col size="1"></ion-col>
-    <ion-col size="11" class="paddzero">
-      <div><span class="fontsty">{{actInfo.Version.Header.QuoteNo}} - {{actInfo.Version.Header.QuoteName}} - P{{actInfo.Version.Header.PhaseSrNo}}</span></div>
+    <ion-col size="1">
+      <ion-icon name="pin" class="font20"></ion-icon>
+    </ion-col>
+    <ion-col size="10">
+      {{actInfo.JobFullAddres}}
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="1" class="paddt0"><ion-icon name="pin" class="font20"></ion-icon></ion-col>
-    <ion-col size="11" class="paddzero">
-      <div><span class="text2">{{actInfo.Version.Header.Address1}},{{actInfo.Version.Header.City}},{{actInfo.Version.Header.State}},{{actInfo.Version.Header.Zipcode}}</span></div>
-    </ion-col>
+  <ion-col size="1">
+    <ion-icon name="contact" class="font20"></ion-icon>
+  </ion-col>
+  <ion-col size="10">
+    {{actInfo.CustName}}
+  </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="1" class="paddt0"><ion-icon name="contact" class="color-coral font24"></ion-icon></ion-col>
-    <ion-col size="11" class="paddzero">
-      <span class="valignsup">{{actInfo.CustName}} &nbsp;- &nbsp;</span>
-      <ion-icon name="person" class="font24 colorb"></ion-icon>
-      <span class="valignsup">{{actInfo.SalesPerName}}</span>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size="1" class="paddt0"><ion-icon name="calendar" class="font20"></ion-icon></ion-col>
-    <ion-col size="11" class="paddzero">
-      <span class="text2">{{obj.StartDate | date:'MM/dd'}} - <b>{{obj.StartDate | date:'h:mm a'}}</b> ,
-        {{obj.EndDate | date:'MM/dd'}} - <b>{{obj.EndDate | date:'h:mm a'}}</b> -
-        {{actInfo.Hrs}} Hrs:{{actInfo.Mins}} Min</span>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size="1" class="paddt0"><img src="assets/img/Scheduled.png" alt="img" class="imgsty"></ion-col>
-    <ion-col size="11" class="paddzero"><span class="text2 valignsup">{{actInfo.StatusName}}</span></ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size="1" class="paddt0">
-      <ion-icon name="people" class="font24 colorb"></ion-icon>
-    </ion-col>
-    <ion-col size="11" class="paddzero">
-      <ion-row class="paddzero" *ngFor="let resource of actInfo.ResourceList;let i = index">
-        <ion-col size="12" *ngIf="i == 0">{{actInfo.ResourceList.length}} &nbsp; Resource'<span
-            *ngIf="actInfo.ResourceList.length > 1">s</span></ion-col>
-        <ion-col size="12" class="paddzero">
-          <div>{{resource.ResourceName}}</div>
-          <span *ngIf="resource.EmpMail!= null && resource.EmpMail != ''">
-            <ion-icon name="mail"></ion-icon>&nbsp;{{resource.EmpMail}}
-          </span><span *ngIf="resource.EmpPhone!= null && resource.EmpPhone != ''">,</span>
-          <span *ngIf="resource.EmpPhone!= null && resource.EmpPhone != ''">
-            <ion-icon name="call"></ion-icon>&nbsp;{{resource.EmpPhone}}
-          </span>
-        </ion-col>
-      </ion-row>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size="2" class="paddt0"><b>Areas:</b></ion-col>
-    <ion-col size="10" class="text-right paddzero"><b>{{actInfo.PhaseSF | number : '.2-2'}}SF</b>&nbsp;</ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col class="paddt0"></ion-col>
-    <ion-col size="11" class="paddzero">
-      <ion-row class="paddzero" *ngFor="let part of actInfo.QuotePartList;let i = index;let last = last">
-        <ion-col class="paddzero">
-          <div *ngIf="i < 3 && showmore == 0">{{part.AreaName}} - Part{{part.NewSrNo}} - {{part.JobSqft}} SF </div>
-          <div *ngIf="last && showmore == 0" class="colorb" (click)="ActionMoreAreas(1)"><u>More</u></div>
-        </ion-col>
-      </ion-row>
-      <div *ngIf="showmore == 1">
-        <div *ngFor="let part of actInfo.QuotePartList">{{part.AreaName}} - Part{{part.NewSrNo}} - {{part.JobSqft}} SF
-        </div>
-      </div>
-    </ion-col>
-  </ion-row>
-  <!-- <ion-row>
-    <ion-col size="1" class="font20 paddt0"><ion-icon name="menu"></ion-icon></ion-col>
-    <ion-col size="11" class="paddzero">{{actInfo.Memo}}</ion-col>
-  </ion-row> -->
+  <ion-col size="1">
+    <ion-icon name="person" class="font20"></ion-icon>
+  </ion-col>
+  <ion-col size="10">
+    {{actInfo.SalesPerName}}
+  </ion-col>
+</ion-row>
+
+<ion-row>
+  <ion-col size="1">
+    <img src="assets/img/Scheduled.png" alt="img" class="imgsty">
+  </ion-col>
+  <ion-col size="10">
+    {{actInfo.StatusName}}
+  </ion-col>
+</ion-row>
+<ion-row>
+  <ion-col size="1">
+    <ion-icon name="people" class="font20"></ion-icon>
+  </ion-col>
+  <ion-col size="10">
+    {{actInfo.ResourceList.length}} &nbsp; Resource'  
+  </ion-col>
+</ion-row>
+
+<ion-row>
+  <ion-col size="1">
+   
+  </ion-col>
+  <ion-col size="10">
+    <ion-label *ngFor="let resource of actInfo.ResourceList;let i = index">
+      <h3>{{resource.ResourceName}}</h3>
+      <p>
+        <span *ngIf="resource.EmpMail!= null && resource.EmpMail != ''">
+          <ion-icon name="mail"></ion-icon>&nbsp;{{resource.EmpMail}}
+        </span><span *ngIf="resource.EmpPhone!= null && resource.EmpPhone != ''">,</span>
+        <span *ngIf="resource.EmpPhone!= null && resource.EmpPhone != ''">
+          <ion-icon name="call"></ion-icon>&nbsp;{{resource.EmpPhone}}</span>
+      </p>
+    </ion-label>
+  </ion-col>
+</ion-row>
+<ion-row *ngIf="actInfo.Memo != null && actInfo.Memo != ''">
+  <ion-col size="1">
+    <ion-icon ios="ios-list" md="md-list" class="font20"></ion-icon>
+  </ion-col>
+  <ion-col size="10">
+    {{actInfo.Memo}} 
+  </ion-col>
+</ion-row>
+
+
+<ion-row>
+  <ion-col size="1">
+    <ion-icon ios="ios-list" md="md-list" class="font20"></ion-icon>
+  </ion-col>
+  <ion-col size="10">
+    <ion-label *ngFor="let part of actInfo.QuotePartList;">
+      <h3>{{part.AreaName}} - Part{{part.NewSrNo}} - {{part.JobSqft}} SF</h3>
+    </ion-label>
+  </ion-col>
+</ion-row>
+
+</ion-list>
+  
 </ion-content>
+<ion-footer >
+  <ion-toolbar color="light">
+    <ion-title  color="danger" >Delete Event</ion-title>
+  </ion-toolbar>
+</ion-footer>

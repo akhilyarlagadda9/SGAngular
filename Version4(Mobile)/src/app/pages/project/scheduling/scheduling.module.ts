@@ -12,7 +12,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { ActinfoComponent } from '../actinfo/actinfo.component';
 import {AreaPartsComponent} from '../area-parts/area-parts.component';
 import { FilterPipe } from 'src/app/FilterPipe';
-import { AddactivityComponent, jobssearchComponent } from '../addactivity/addactivity.component';
+import { AddactivityComponent, jobssearchComponent,resorceListComponent } from '../addactivity/addactivity.component';
 import { CalendarfilterComponent } from '../calendarfilter/calendarfilter.component';
 import { CalendarsettingComponent } from '../calendarsetting/calendarsetting.component';
 
@@ -23,8 +23,8 @@ import { CalendarsettingComponent } from '../calendarsetting/calendarsetting.com
     IonicModule,
     SchedulingPageRoutingModule,FullCalendarModule,
   ],
-  declarations: [SchedulingPage,ActinfoComponent,FilterPipe,AddactivityComponent,AreaPartsComponent,jobssearchComponent,CalendarfilterComponent,CalendarsettingComponent],
+  declarations: [SchedulingPage,ActinfoComponent,FilterPipe,AddactivityComponent,AreaPartsComponent,jobssearchComponent,CalendarfilterComponent,CalendarsettingComponent,resorceListComponent],
   entryComponents: [ActinfoComponent,AddactivityComponent,jobssearchComponent,AreaPartsComponent,
-  CalendarfilterComponent,CalendarsettingComponent],
+  CalendarfilterComponent,CalendarsettingComponent,resorceListComponent],
 })
 export class SchedulingPageModule {}

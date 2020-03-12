@@ -14,7 +14,7 @@
     <ion-content>
     <ion-item>
       <ion-label class="labelfont" position="stacked" color="primary">Description</ion-label>
-      <ion-select [(ngModel)]="cutout.TypeID" name="TypeID" (ngModelChange)="ActionPopulateCutout($event)"
+      <ion-select [(ngModel)]="cutout.TypeID" name="TypeID" (ngModelChange)="ActionPopulateCutout($event)" [selectedText]="cutout.Type"
         #nameField="ngModel" required>
         <ion-select-option *ngFor="let cut of cutoutlist" [value]="cut.ID"> <span>{{cut.Description}}</span>
         </ion-select-option>

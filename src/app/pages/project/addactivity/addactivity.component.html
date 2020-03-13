@@ -2,15 +2,18 @@
   <form #form="ngForm" (ngSubmit)="ActionSaveActivity(form)" class="dis-content">
     <ion-header>
       <ion-toolbar color="light">
-        <ion-buttons start>
-          <ion-button slot="start" color="danger" (click)="ActionCloseActivity(false)"> 
-            <span ion-text showWhen="ios" class="check-font" >Cancel</span></ion-button>
-        </ion-buttons>
-        <ion-title >Activity Details</ion-title>
-        <ion-buttons slot="end">
-          <ion-button slot="end" color="secondary" type="submit"> <span ion-text class="check-font">Save</span></ion-button>
-        </ion-buttons> 
-      </ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button color="danger" type="button" (click)="ActionCloseActivity(false)">
+              Close
+            </ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button color="secondary" type="submit" (click)="ActionClose(true)">
+              Edit
+            </ion-button>
+          </ion-buttons>
+          <ion-title align="center">Activity Details</ion-title>
+        </ion-toolbar>
       <ion-toolbar>
         <ion-item *ngIf="actinfo.ID > 0">
           <ion-label>

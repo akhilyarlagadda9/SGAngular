@@ -1,14 +1,16 @@
 <ion-header>
   <ion-toolbar color="light">
-    <ion-buttons start>
-      <ion-button slot="start" color="danger" (click)="ActionClose(false)"> 
-        <span ion-text showWhen="ios" class="check-font" >Back</span></ion-button>
+    <ion-buttons slot="start">
+      <ion-button color="danger" (click)="ActionClose(false)">
+        Close
+      </ion-button>
     </ion-buttons>
-    <ion-title class="check-font">{{actInfo.ActTypeName}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button slot="end" color="secondary" (click)="ActionClose(true)"> <span ion-text class="check-font">Edit</span></ion-button>
-    </ion-buttons> 
-
+      <ion-button color="secondary" (click)="ActionClose(true)">
+        Edit
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{actInfo.ActTypeName}}</ion-title>
     <!-- <ion-icon name="create" slot="end" class="fontmedium" (click)="ActionClose(true)"></ion-icon>
     <ion-icon name="close" slot="end" class="fontlarge" (click)="ActionClose(false)"></ion-icon> -->
   </ion-toolbar>

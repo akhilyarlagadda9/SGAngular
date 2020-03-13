@@ -1,6 +1,6 @@
 <ion-list class="no-margin" *ngIf="selectedtabtype == 1">
-  <ion-item>
-    <ion-row *ngFor="let sink of MaterialList,let i = index" class="ion-no-margin">
+  <ion-item  *ngFor="let sink of MaterialList,let i = index">
+    <ion-row class="ion-no-margin">
       <ion-col size="12" class="paddzero">
         <ion-row>
           <ion-col size="9">
@@ -46,10 +46,9 @@
     </ion-row>
   </ion-item>
 </ion-list>
-<ion-list class="ion-no-margin border-bottom" *ngIf="selectedtabtype == 2">
-      <ion-item *ngIf="SinkList != 0">
-        <ion-col>
-          <ion-row *ngFor="let sink of SinkList,let i = index" class="paddzero ">
+<ion-list class="ion-no-margin" *ngIf="selectedtabtype == 2">
+      <ion-item *ngFor="let sink of SinkList,let i = index">
+          <ion-row  class="paddzero ">
             <ion-label *ngIf="SinkList.length > 0 && i == 0"><b class="colorcyan">SINKS:</b></ion-label>
               <ion-col size=12 class="paddzero">
                 <ion-row>
@@ -71,10 +70,9 @@
                 </ion-col>
               </ion-row>
            </ion-row>
-        </ion-col>
       </ion-item>
-   <ion-item *ngIf="FaucetList != 0">
-    <ion-row *ngFor="let sink of FaucetList,let i = index" class="paddzero">
+   <ion-item *ngFor="let sink of FaucetList,let i = index">
+    <ion-row  class="paddzero">
       <ion-label *ngIf="FaucetList.length > 0 && i == 0"><b class="colorcyan">FAUCETS:</b></ion-label>
       <ion-col size=12 class="paddzero">
         <ion-row>
@@ -95,8 +93,8 @@
       </ion-col>
      </ion-row>
    </ion-item>
-  <ion-item *ngIf="ApplianceList != 0">
-    <ion-row *ngFor="let sink of ApplianceList,let i = index" class="paddzero">
+  <ion-item  *ngFor="let sink of ApplianceList,let i = index">
+    <ion-row class="paddzero">
       <ion-label *ngIf="ApplianceList.length > 0 && i == 0"><b class="colorcyan">APPLIANCES:</b></ion-label>
       <ion-col size=12 class="paddzero">
         <ion-row>
@@ -117,8 +115,8 @@
       </ion-col>
      </ion-row>
   </ion-item>
-   <ion-item *ngIf="ConsumableList != 0">
-    <ion-row *ngFor="let sink of ConsumableList,let i = index" class="paddzero">
+   <ion-item *ngFor="let sink of ConsumableList,let i = index">
+    <ion-row  class="paddzero">
       <ion-label *ngIf="ConsumableList.length > 0 && i == 0"><b class="colorcyan">CONSUMABLES:</b></ion-label>
       <ion-col size=12 class="paddzero">
         <ion-row>
@@ -139,8 +137,8 @@
       </ion-col>
      </ion-row>
    </ion-item>
-   <ion-item *ngIf="ToolList != 0">
-    <ion-row *ngFor="let sink of ToolList,let i = index" class="paddzero">
+   <ion-item *ngFor="let sink of ToolList,let i = index">
+    <ion-row  class="paddzero">
       <ion-label *ngIf="ToolList.length > 0 && i == 0"><b class="colorcyan">TOOLS:</b></ion-label>
       <ion-col size=12 class="paddzero">
         <ion-row>
@@ -163,8 +161,8 @@
    </ion-item>
 </ion-list>
 <ion-list class="ion-no-margin" *ngIf="selectedtabtype == 3">
-   <ion-item>
-    <ion-row *ngFor="let sink of OtherList,let i = index" class="paddzero">
+   <ion-item *ngFor="let sink of OtherList,let i = index">
+    <ion-row class="paddzero">
       <ion-label *ngIf="OtherList.length > 0 && i == 0"><b class="colorcyan">ADDONS:</b></ion-label>
       <ion-col size=12 class="paddzero">
         <ion-row>

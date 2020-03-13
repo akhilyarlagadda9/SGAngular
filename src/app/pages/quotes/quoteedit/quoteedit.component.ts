@@ -53,11 +53,14 @@ export class QuoteeditComponent implements OnInit {
     this.ActionQuoteInfo();
   }
 
-  ActionAreaList(){
+  ActionAreaList(typeId:number){
     this.service.ActionQuoteAreaList(this.qprmsobj.versionid).subscribe(data => { data;
       _qscope.quote.Version.AreaList = data;
       _qscope.quote.Version.AreaID = 0;
-      this.selectedtabtype = 2;
+      if(typeId == 0){
+        this.selectedtabtype = 2;
+      }
+      
     })
   }
 
@@ -74,12 +77,8 @@ export class QuoteeditComponent implements OnInit {
         this.headerInfo = data; _qscope.quote = {};
        this.versionList= this.headerInfo.VersionList;
         this.headerInfo.Version = this.headerInfo.VersionList.find(x => x.ID === this.qprmsobj.versionid);
-        _qscope.quote = this.headerInfo;
-        if(this.navParams.data.layoutId == 2){
-          this.ActionAreaList();
-        }
+        this.SetVersionInfo(0);
         this.GetAddress(this.headerInfo);
-        this.repService.setHeader(this.headerInfo);
       },
       error => console.log(error));
   }
@@ -88,7 +87,7 @@ export class QuoteeditComponent implements OnInit {
   ActionLoadTabInfo(componet: any) {
     this.selectedtabtype = componet;
     if(componet == 1){
-      this.ActionLoadVersion(this.QuoteVersionID);
+      this.ActionLoadVersion(this.qprmsobj.versionid);
     }
   }
   /***** Quote Header *****/
@@ -205,8 +204,16 @@ export class QuoteeditComponent implements OnInit {
     this.service.ActionVersionInfo1(this.qprmsobj.quoteid, id, 0).subscribe(data => {
       this.headerInfo.Version = data;
       this.qprmsobj.statusId = data.StatusID;
-      this.repService.setHeader(this.headerInfo);
+      this.SetVersionInfo(1);
     })
+  }
+
+  SetVersionInfo(typeId){
+    _qscope.quote = this.headerInfo;
+    if(this.navParams.data.layoutId == 2 || typeId == 1){
+      this.ActionAreaList(typeId);
+    }
+    this.repService.setHeader(this.headerInfo);
   }
   // AreaSummarySelect(ev) {
   //   if (ev == "success") {

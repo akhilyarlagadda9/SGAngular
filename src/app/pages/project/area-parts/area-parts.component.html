@@ -1,5 +1,18 @@
 <ion-header>
   <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-button color="danger" type="button" (click)="ActionToClosePop(false)">
+        Cancel
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="secondary" type="submit" (click)="ActionRunFilter()">
+        Select
+      </ion-button>
+    </ion-buttons>
+    <ion-title align="center">Areas</ion-title>
+  </ion-toolbar>
+  <!-- <ion-toolbar color="light">
     <ion-buttons start>
       <ion-button slot="start" color="danger" (click)="ActionToClosePop(false)"> 
         <span class="check-font" ion-text showWhen="ios" >Cancel</span></ion-button>
@@ -8,7 +21,7 @@
     <ion-buttons slot="end">
       <ion-button slot="end" color="secondary" (click)="ActionRunFilter()"> <span class="check-font" ion-text >Select</span></ion-button>
     </ion-buttons> 
-  </ion-toolbar>
+  </ion-toolbar> -->
   <!-- <ion-toolbar style="top:5px;"><ion-title>Areas:</ion-title>
     <ion-button slot="end" size="small" (click)="ActionRunFilter()">Select</ion-button>
     <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop(false)">X</ion-button>

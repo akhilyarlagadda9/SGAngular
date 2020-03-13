@@ -3,7 +3,7 @@ import { ModalController,NavParams } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { QuoteService } from 'src/app/service/quote.service';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import { QuoterepService } from 'src/app/service/quoterep.service';
 
 @Component({
   selector: 'app-common-edit-mail-hub',
@@ -14,11 +14,11 @@ export class CommonEditMailHubComponent implements OnInit {
   Template:String = ""; To:String = "";From:String="";CC:String="";Subject:String="";mailBody:String="";
   arrInfo:Array<any>=[];
   public Editor = ClassicEditor; isItemToAvailable:boolean=false;mailList:Array<any>=[]; mailFilter:Array<any>=[];
-  isItemCCAvailable:boolean = false;
+  isItemCCAvailable:boolean = false; headerData:any;
   templateList:Array<any>=[]; mailDetails:object={}; emailList:Array<any>=[];
   @ViewChild('To', {static: false}) pRef: ElementRef;
 
-  constructor(public Modalcntrl: ModalController,private qteService: QuoteService,private navParams: NavParams) { }
+  constructor(public Modalcntrl: ModalController,private qteService: QuoteService,private navParams: NavParams,private qRepService:QuoterepService) { }
 
   ngOnInit() {
     this. mailDetails ={
@@ -28,6 +28,9 @@ export class CommonEditMailHubComponent implements OnInit {
       Subject: "",
       mailBody: ""
     };
+   //this.qRepService.interface$.subscribe(message => this.headerData = message);
+   this.headerData = this.qRepService.getHeader();
+    console.log(this.headerData);
    
     this.qteService.ActiongettemplateList(26).subscribe(data => {
       this.templateList = data;
@@ -59,7 +62,7 @@ export class CommonEditMailHubComponent implements OnInit {
         From : this.From,
         To: this.To,
         CC: this.CC,
-        Subject: this.Subject,
+        Subject: this.headerData.QuoteNo+" - "+this.headerData.QuoteName+" - "+this.Subject,
         mailBody: this.mailBody
     }
     console.log(this.mailDetails);
@@ -80,6 +83,9 @@ export class CommonEditMailHubComponent implements OnInit {
           Email: ""
       };
            if((item.PriEmail).includes(result)){
+            //  if(item.PriPhone){
+            //     item.PriPhone = "("+ item.PriPhone.substring(0,2);+")"+ item.PriPhone.substr(3,item.PriPhone.length);;
+            //  }
             objInfo.Name = item.Name;
             objInfo.Phone = item.PriPhone;
             objInfo.Email = item.PriEmail;

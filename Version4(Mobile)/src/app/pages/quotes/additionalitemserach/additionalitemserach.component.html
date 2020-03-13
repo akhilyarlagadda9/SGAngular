@@ -1,12 +1,27 @@
 <ion-header>
   <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-button color="danger" type="button" (click)="ActionToClosePop(false)">
+        Cancel
+      </ion-button>
+    </ion-buttons>
+    <!-- <ion-buttons slot="end">
+      <ion-button color="secondary" type="submit">
+        Save
+      </ion-button>
+    </ion-buttons> -->
+    <ion-title align="center">
+      <b>Description</b>
+    </ion-title>
+  </ion-toolbar>
+  <!-- <ion-toolbar color="light">
     <ion-title><b>Description</b></ion-title>
     <ion-buttons start>
       <ion-button slot="start" color="danger" (click)="ActionToClosePop(false)"> 
         <span ion-text showWhen="ios" class="check-font" >Cancel</span></ion-button>
     </ion-buttons>
-    <!-- <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop(false)" class="btnsty">X</ion-button> -->
-  </ion-toolbar>
+    <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop(false)" class="btnsty">X</ion-button>
+  </ion-toolbar> -->
 </ion-header>
 <ion-content>
 <ion-list>

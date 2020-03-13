@@ -1,6 +1,24 @@
 <form #form="ngForm" class="dis-content">
   <ion-header>
     <ion-toolbar color="light">
+      <ion-buttons slot="start">
+        <ion-button color="danger" type="button" (click)="ActionToClosePop(false)">
+          Cancel
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button color="secondary" slot="end" *ngIf="SummaryTypeID == 1" (click)="ActionAddDiscount()">
+          Add
+        </ion-button>
+        <ion-button color="secondary" type="submit">
+          Save
+        </ion-button>
+      </ion-buttons>
+      <ion-title align="center">
+        {{SumName}}
+      </ion-title>
+    </ion-toolbar>
+    <!-- <ion-toolbar color="light">
       <ion-buttons start>
         <ion-button slot="start" color="danger" (click)="ActionToClosePop(false)">
           <span ion-text showWhen="ios" class="check-font">Cancel</span></ion-button>
@@ -12,7 +30,7 @@
         <ion-button slot="end" color="secondary" (click)="ActionSaveSummary(form,SummaryTypeID)"> <span ion-text
             class="check-font">Save</span></ion-button>
       </ion-buttons>
-    </ion-toolbar>
+    </ion-toolbar> -->
   </ion-header>
   <ion-content *ngIf="SummaryTypeID == 1">
     <ion-row>

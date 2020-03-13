@@ -24,45 +24,45 @@
     <ion-row *ngIf="Version.LatestCoID == 0">
       <ion-col size="12">
         <ion-row class="mar-bot2">
-          <ion-col size="6" class="paddzero text-right2">Sub Total:</ion-col>
-          <ion-col size="6" class="paddzero text-right2 fontboldclr">&nbsp;$ {{(Version.TotalAmt) | number : '.2-2'}}</ion-col>
+          <ion-col size="6" class="paddzero text-right2 line-hight-in">Sub Total:</ion-col>
+          <ion-col size="6" class="paddzero text-right2 line-hight-in fontboldclr">&nbsp;$ {{(Version.TotalAmt) | number : '.2-2'}}</ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="6" class="paddzero text-right2" (click)="ActionSummarySelect(1, 'Job Discount(s)')"><u>Discount:</u></ion-col>
-          <ion-col size="6" class="paddzero text-right2 fontboldclr"><span style="color:red;">&nbsp;($
+          <ion-col size="6" class="paddzero text-right2 line-hight-in" (click)="ActionSummarySelect(1, 'Discount(s)')"><u>Discount:</u></ion-col>
+          <ion-col size="6" class="paddzero text-right2 line-hight-in fontboldclr"><span style="color:red;">&nbsp;($
               {{(header.Version.DiscountAmt) | number : '.2-2'}})</span></ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="6" class="paddzero text-right2" (click)="ActionSummarySelect(2, 'Sales Tax(%)')"><u>Sales Tax:</u></ion-col>
-          <ion-col size="6" class="paddzero text-right2 fontboldclr">&nbsp;$ {{header.Version.TaxAmt | number : '.2-2'}}</ion-col>
+          <ion-col size="6" class="paddzero text-right2 line-hight-in" (click)="ActionSummarySelect(2, 'Sales Tax(%)')"><u>Sales Tax:</u></ion-col>
+          <ion-col size="6" class="paddzero text-right2 line-hight-in fontboldclr">&nbsp;$ {{header.Version.TaxAmt | number : '.2-2'}}</ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="6" class="paddzero text-right2">Net Total:</ion-col>
-          <ion-col size="6" class="paddzero text-right2 fontboldclr">$
+          <ion-col size="6" class="paddzero text-right2 line-hight-in">Net Total:</ion-col>
+          <ion-col size="6" class="paddzero text-right2 line-hight-in fontboldclr">$
             &nbsp;{{((Version.TotalAmt + Version.RoundOff + Version.TaxAmt - (Version.RefAmt + Version.RoundOff)) - (Version.DiscountAmt)) | number : '.2-2'}}
           </ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="6" class="paddzero text-right2" (click)="ActionSummarySelect(3, 'Charges')"><u>Fee & Charge:</u></ion-col>
-          <ion-col size="6" class="paddzero text-right2 fontboldclr">&nbsp;$ {{(header.Version.RefAmt) | number : '.2-2'}}</ion-col>
+          <ion-col size="6" class="paddzero text-right2 line-hight-in" (click)="ActionSummarySelect(3, 'Charges')"><u>Fee & Charge:</u></ion-col>
+          <ion-col size="6" class="paddzero text-right2 line-hight-in fontboldclr">&nbsp;$ {{(header.Version.RefAmt) | number : '.2-2'}}</ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="6" class="paddzero text-right2">Final Total:</ion-col>
-          <ion-col size="6" class="paddzero text-right2 fontboldclr">$
+          <ion-col size="6" class="paddzero text-right2 line-hight-in">Final Total:</ion-col>
+          <ion-col size="6" class="paddzero text-right2 line-hight-in fontboldclr">$
             &nbsp;{{((Version.TotalAmt + Version.RoundOff + Version.TaxAmt) - (Version.DiscountAmt)) | number : '.2-2'}}
           </ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="6" class="paddzero text-right2">Payment:</ion-col>
-          <ion-col size="6" class="paddzero text-right2 fontboldclr">&nbsp;($ {{(Version.PmtReceived) | number : '.2-2'}})</ion-col>
+          <ion-col size="6" class="paddzero text-right2 line-hight-in">Payment:</ion-col>
+          <ion-col size="6" class="paddzero text-right2 line-hight-in fontboldclr">&nbsp;($ {{(Version.PmtReceived) | number : '.2-2'}})</ion-col>
         </ion-row>
         <ion-row class="mar-bot2" *ngIf="Version.RefundAmount > 0">
-          <ion-col size="6" class="paddzero text-right2">Refunds:</ion-col>
-          <ion-col size="6" class="paddzero text-right2 fontboldclr">&nbsp;$ {{(Version.RefundAmount) | number : '.2-2'}}</ion-col>
+          <ion-col size="6" class="paddzero text-right2 line-hight-in">Refunds:</ion-col>
+          <ion-col size="6" class="paddzero text-right2 line-hight-in fontboldclr">&nbsp;$ {{(Version.RefundAmount) | number : '.2-2'}}</ion-col>
         </ion-row>
         <ion-row class="mar-bot2" *ngIf="Version.PmtReceived != 0 || Version.RefundAmount != 0 || Version.CreditAmount != 0">
-          <ion-col size="6" class="paddzero text-right2">Balance:</ion-col>
-          <ion-col size="6" class="paddzero text-right2 fontboldclr">$
+          <ion-col size="6" class="paddzero text-right2 line-hight-in">Balance:</ion-col>
+          <ion-col size="6" class="paddzero text-right2 line-hight-in fontboldclr">$
             &nbsp;{{((((Version.TotalAmt + Version.RoundOff + Version.TaxAmt) - Version.DiscountAmt) - (Version.PmtReceived - Version.RefundAmount) - Version.CreditAmount)) | number : '.2-2'}}
           </ion-col>
         </ion-row>
@@ -71,8 +71,8 @@
      <ion-row *ngIf="Version.LatestCoID > 0">
       <ion-col size="12">
         <ion-row class="mar-bot2">
-          <ion-col size="5" class="paddzero text-right2">Sub Total:</ion-col>
-          <ion-col size="7" class="paddzero text-right2 fontboldclr">
+          <ion-col size="5" class="paddzero text-right2 line-hight-in">Sub Total:</ion-col>
+          <ion-col size="7" class="paddzero text-right2 line-hight-in fontboldclr">
             <ion-row>
               <ion-col size="3" class="text-right2 paddzero">$ {{(Version.TotalAmt- Version.RoundOff) | number : '.2-2'}}
               </ion-col>
@@ -91,8 +91,8 @@
           </ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="5" class="paddzero text-right2" (click)="ActionDiscSelect()">Discount:</ion-col>
-          <ion-col size="7" class="paddzero text-right2 fontboldclr">
+          <ion-col size="5" class="paddzero text-right2 line-hight-in" (click)="ActionDiscSelect()">Discount:</ion-col>
+          <ion-col size="7" class="paddzero text-right2 line-hight-in fontboldclr">
             <ion-row>
               <ion-col size="3" class="text-right2 paddzero" color="danger">($ {{(Version.DiscountAmt) | number : '.2-2'}})
               </ion-col>
@@ -112,8 +112,8 @@
           </ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="5" class="paddzero text-right2" (click)="ActionTaxSelect">Sales Tax:</ion-col>
-          <ion-col size="7" class="paddzero text-right2 fontboldclr">
+          <ion-col size="5" class="paddzero text-right2 line-hight-in" (click)="ActionTaxSelect">Sales Tax:</ion-col>
+          <ion-col size="7" class="paddzero text-right2 line-hight-in fontboldclr">
             <ion-row>
               <ion-col size="3" class="text-right2 paddzero">$ {{Version.TaxAmt | number : '.2-2'}}</ion-col>
               <ion-col size="1" class="text-center paddzero">+</ion-col>
@@ -130,8 +130,8 @@
           </ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="5" class="paddzero text-right2">Net Total:</ion-col>
-          <ion-col size="7" class="paddzero text-right2 fontboldclr">
+          <ion-col size="5" class="paddzero text-right2 line-hight-in">Net Total:</ion-col>
+          <ion-col size="7" class="paddzero text-right2 line-hight-in fontboldclr">
             <ion-row>
               <ion-col size="3" class="text-right2 paddzero">$
                 {{((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt) - (Version.RefAmt + Version.RoundOff)) | number: '.2-2'}}
@@ -154,8 +154,8 @@
           </ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="5" class="paddzero text-right2" (click)="ActionFeeSelect">Fee & Charge:</ion-col>
-          <ion-col size="7" class="paddzero text-right2 fontboldclr">
+          <ion-col size="5" class="paddzero text-right2 line-hight-in" (click)="ActionFeeSelect">Fee & Charge:</ion-col>
+          <ion-col size="7" class="paddzero text-right2 line-hight-in fontboldclr">
             <ion-row>
               <ion-col size="3" class="text-right2 paddzero"> $ {{(Version.RefAmt + Version.RoundOff) | number: '.2-2'}}
               </ion-col>
@@ -171,8 +171,8 @@
           </ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="5" class="paddzero text-right2">Final Total:</ion-col>
-          <ion-col size="7" class="paddzero text-right2 fontboldclr">
+          <ion-col size="5" class="paddzero text-right2 line-hight-in">Final Total:</ion-col>
+          <ion-col size="7" class="paddzero text-right2 line-hight-in fontboldclr">
             <ion-row>
               <ion-col size="3" class="text-right2 paddzero">$
                 {{((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt)) | number: '.2-2'}}</ion-col>
@@ -193,8 +193,8 @@
           </ion-col>
         </ion-row>
         <ion-row class="mar-bot2">
-          <ion-col size="5" class="paddzero text-right2">Payment:</ion-col>
-          <ion-col size="7" class="paddzero text-right2 fontboldclr">
+          <ion-col size="5" class="paddzero text-right2 line-hight-in">Payment:</ion-col>
+          <ion-col size="7" class="paddzero text-right2 line-hight-in fontboldclr">
             <ion-row>
               <ion-col size="3" class="text-right2 paddzero" color="danger">($ {{(Version.PmtReceived) | number: '.2-2'}})
               </ion-col>
@@ -210,8 +210,8 @@
           </ion-col>
         </ion-row>
         <ion-row class="mar-bot2" *ngIf="Version.CreditAmount > 0">
-          <ion-col size="5" class="paddzero text-right2">Credits:</ion-col>
-          <ion-col size="7" class="paddzero text-right2 fontboldclr">
+          <ion-col size="5" class="paddzero text-right2 line-hight-in">Credits:</ion-col>
+          <ion-col size="7" class="paddzero text-right2 line-hight-in fontboldclr">
             <ion-row>
               <ion-col size="3" class="text-right2 paddzero" color="danger">($ {{(Version.CreditAmount) | number: '.2-2'}})
               </ion-col>
@@ -227,8 +227,8 @@
           </ion-col>
         </ion-row>
         <ion-row class="mar-bot2" *ngIf="Version.RefundAmount > 0">
-          <ion-col size="5" class="paddzero text-right2">Refunds:</ion-col>
-          <ion-col size="7" class="paddzero text-right2 fontboldclr">
+          <ion-col size="5" class="paddzero text-right2 line-hight-in">Refunds:</ion-col>
+          <ion-col size="7" class="paddzero text-right2 line-hight-in fontboldclr">
             <ion-row>
               <ion-col size="3" class="text-right2 paddzero" color="danger">($
                 {{(quote.header.Version.RefundAmount) | number: '.2-2'}})</ion-col>
@@ -244,8 +244,8 @@
           </ion-col>
         </ion-row>
         <ion-row class="mar-bot2" *ngIf="Version.PmtReceived != 0 || Version.RefundAmount != 0 || Version.CreditAmount != 0">
-          <ion-col size="5" class="paddzero text-right2">Balance:</ion-col>
-          <ion-col size="7" class="paddzero text-right2 fontboldclr">
+          <ion-col size="5" class="paddzero text-right2 line-hight-in">Balance:</ion-col>
+          <ion-col size="7" class="paddzero text-right2 line-hight-in fontboldclr">
             <ion-row>
               <ion-col size="3" class="text-right2 paddzero">$
                 {{((((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt)) - (Version.PmtReceived - Version.RefundAmount)) - Version.CreditAmount) | number: '.2-2'}}

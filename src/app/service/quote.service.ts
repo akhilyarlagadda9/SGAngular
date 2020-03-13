@@ -41,9 +41,38 @@ export class QuoteService {
   ActionGetQuoteAreas(verId: any, mode:any): Observable<any> {
     return this.http.get<any>(this.url + 'api/QEdit/ActionVersionAreaList?versionID=' + verId + "&mode=" + mode)
   }
-  
+  GetCustomerContacts(custId:number):Observable<any> {
+    return this.http.get<any>(this.url +  'api/QuoteRep3/GetCustomerContacts?custId=' + custId)
+  }
   //#endregion
 //#region  List From Admin
+LeadDictionaryLists(typeIdList):Observable<any> {
+  return this.http.get<any>(this.url +  'api/lead/LeadDictionaryLists?typeIdList=' + typeIdList)
+}
+getCustomerSearchList(search:string, typeId:Number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/customer/GetCustomerSearchList?search=' + search + "&typeId=" + typeId)
+ }
+ qsgetallcustomersearchlist(search:string, typeId:number, custTypeID:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/customer/GetAllCustomerSearchList?search=' + search + "&typeId=" + typeId + "&custTypeID=" + custTypeID)
+ }
+ getpricelists(typeId:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/QuoteAdmin/CustPriceList?typeID=' + "&typeId=" + typeId)
+}
+CustomerDictionayList(tIdList:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Customer/CustomerDictionayList?typeIdList=' + tIdList)
+}
+CustTypeResourceList(parentId:number,typeId:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/QuoteAdmin/CustTypeResourceList?parentID=' + parentId + '&typeId=' + typeId)
+}
+QuoteMasterList(typeID:number):Observable<any> {;
+  return this.http.get<any>(this.url +  'api/QuoteAdmin/MasterList?typeID=' + typeID)
+}
+CustPriceList(typeID:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/QuoteAdmin/CustPriceList?typeID=' + typeID)
+}
+SelTypePrefInfo(custTypeId:number,typeId:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/QuoteAdmin/SelTypePrefInfo?custTypeId=' + custTypeId + "&typeId=" + typeId)
+}
   QuoteDictionaryLists(tIdList:any):Observable<any> {
     return this.http.get<any>(appUrl +  'api/QuoteAdmin/QuoteDictionaryLists?typeIdList=' + tIdList)
   }
@@ -52,6 +81,10 @@ export class QuoteService {
   }
   //#endregion
 //#region Save Methods
+ActionSaveQuote(header: any): Observable<any> {
+  var info = JSON.stringify(header);
+  return this.http.post<any>(this.url + 'api/QuoteSave/ActionSaveQuote', info, { headers: { 'Content-Type': 'application/json' } })
+}
 ActionSaveQuoteInfo(header: any): Observable<any> {
   var model = JSON.stringify(header);
   return this.http.post<any>(this.url + 'api/QSave/ActionSaveQuoteInfo', model, { headers: { 'Content-Type': 'application/json' } })
@@ -216,8 +249,8 @@ ActionSaveAreaList(versionid: any,areaId:any,userId:any,arealist:any): Observabl
   let parameter = JSON.stringify(arealist);
   return this.http.post<any>(this.url +  'api/QSave/ActionSaveAreaList?versionId=' + versionid + '&areaId=' + areaId + '&userId=' + userId + "&areaIds=" + '', parameter, { headers: { 'Content-Type': 'application/json' } })
 }
-qpactionsavediscount(versionId:number,areaId:number,tax:any): Observable<any> {
-  var model = JSON.stringify(versionId);
+qpactionsavediscount(discountList,versionId:number,areaId:number,tax:any): Observable<any> {
+  var model = JSON.stringify(discountList);
   return this.http.post<any>(this.url + 'api/QSave/ActionSaveDiscount?versionId=' + versionId + '&areaId=' + areaId + '&tax=' + tax, model, { headers: { 'Content-Type': 'application/json' } })
 }
 qpactionsavesalestax(model, areaId): Observable<any> {

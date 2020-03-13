@@ -1,9 +1,24 @@
 <ion-header translucent>
-    <ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-button color="danger" type="button" (click)="ActionCloseJobDescEdit(false)">
+        Cancel
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="secondary" type="submit" (click)="ActionSaveJobDescEdit(Version)">
+        Save
+      </ion-button>
+    </ion-buttons>
+    <ion-title align="center">
+      Private Notes
+    </ion-title>
+  </ion-toolbar>
+    <!-- <ion-toolbar>
       <ion-title><b><span *ngIf="TypeID == 1">Description</span><span *ngIf="TypeID == 2">Private Notes</span></b></ion-title>
       <ion-button slot="end" color="success" size="small" (click)="ActionSaveJobDescEdit(Version)">Save</ion-button>
       <ion-button slot="end" color="danger" size="small" (click)="ActionCloseJobDescEdit(false)">X</ion-button>
-    </ion-toolbar>
+    </ion-toolbar> -->
   </ion-header>
   <ion-content>
     <ion-list class="ion-no-margin ion-no-padding">

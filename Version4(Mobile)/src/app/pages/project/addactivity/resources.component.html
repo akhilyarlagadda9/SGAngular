@@ -1,5 +1,18 @@
 <ion-header>
-    <ion-toolbar color="light">
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-button color="danger" type="button" (click)="ActionToClosePop(false)">
+        Cancel
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="secondary" type="submit" (click)="ActionToClosePop(true)">
+        Select
+      </ion-button>
+    </ion-buttons>
+    <ion-title align="center">Resources</ion-title>
+  </ion-toolbar>
+    <!-- <ion-toolbar color="light">
       <ion-buttons start>
         <ion-button slot="start" color="danger" (click)="ActionToClosePop(false)"> 
           <span class="check-font" ion-text showWhen="ios" >Cancel</span></ion-button>
@@ -8,7 +21,7 @@
       <ion-buttons slot="end">
         <ion-button slot="end" color="secondary" (click)="ActionToClosePop(true)"> <span class="check-font" ion-text >Select</span></ion-button>
       </ion-buttons> 
-    </ion-toolbar>
+    </ion-toolbar> -->
   </ion-header>
   <ion-content>
       <ion-row *ngFor="let resource of resourceList" class="border-btm">

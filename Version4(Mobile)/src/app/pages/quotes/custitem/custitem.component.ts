@@ -64,12 +64,12 @@ export class CustitemComponent implements OnInit {
   }
   async ActionSearchSelect(ev: any) {
     let obj = {}
-    const popover = await this.popoverCntrl.create({
+    const popover = await this.Modalcntrl.create({
       component: itemsearchComponent,
-      event: ev,
-      translucent: true,
+     // event: ev,
+     // translucent: true,
       componentProps: obj,
-      cssClass: "popover_class"
+     // cssClass: "popover_class"
     });
     return await popover.present();
   }
@@ -140,13 +140,13 @@ export class CustitemComponent implements OnInit {
 export class itemsearchComponent implements OnInit {
   searchObj = this.navParams.data;
   searchResults = [];
-  constructor(private Modalcntrl: ModalController, private navParams: NavParams, private popoverCntrl: PopoverController) { }
+  constructor(private Modalcntrl: ModalController, private navParams: NavParams) { }
   ngOnInit() { this.ActionSearchSelect(); }
   ActionSearchSelect() {
   }
 
   ActionToClosePop() {
-    this.popoverCntrl.dismiss({
+    this.Modalcntrl.dismiss({
       'dismissed': true
     });
   }

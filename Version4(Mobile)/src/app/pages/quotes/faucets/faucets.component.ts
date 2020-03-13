@@ -55,12 +55,12 @@ export class FaucetsComponent implements OnInit {
 
   async ActionSearchSelect(ev: any, typeid, typeid2) {
     let obj = { pricelistId: this.priceListID, searchTypeId: typeid, producttypeId: typeid2, search: this.faucet.Description == undefined ? "" : this.faucet.Description, info : this.faucet }
-    const popover = await this.popoverCntrl.create({
+    const popover = await this.Modalcntrl.create({
       component: AdditionalitemserachComponent,
-      event: ev,
-      translucent: true,
+     // event: ev,
+     // translucent: true,
       componentProps: obj,
-      cssClass: "popover_class"
+      //cssClass: "popover_class"
     });
     popover.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {

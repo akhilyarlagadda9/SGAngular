@@ -33,7 +33,7 @@ export class QuotePage implements OnInit {
   };
   qprmsobj: {
     quoteid: number, quoteno: string, versionid: number, customerid: number,
-    accountid: number, childaccid: number, phaseid: number, viewtypeid: number, layoutId: 1
+    accountid: number, childaccid: number, phaseid: number, viewtypeid: number, layoutId: 1,statusId:number,
   };
   layId: 1;
 
@@ -75,7 +75,7 @@ export class QuotePage implements OnInit {
     };
   }
   GetQuoteList(event) {
-    this.showLoader();
+    //this.showLoader();
     let obj = this.qsearchobj;
     //get list from db
     let result = this.service.ActionQuoteList(obj.search, obj.statusId, obj.index, obj.noOfRecords, obj.accessmode, 0, obj.sortTypeId, obj.sortby).subscribe(
@@ -94,7 +94,7 @@ export class QuotePage implements OnInit {
       let version = header.VersionList.filter(x => x.ID === header.VersionID)[0];
       this.qprmsobj = {
         quoteid: header.ID, quoteno: header.QuoteNo, versionid: header.VersionID, customerid: version.CustomerID,
-        accountid: version.ParentAccID, childaccid: version.ChildAccID, phaseid: 0, viewtypeid: 0, layoutId: 1
+        accountid: version.ParentAccID, childaccid: version.ChildAccID, phaseid: 0, viewtypeid: 0, layoutId: 1,statusId:version.StatusID,
       };
     } 
     const modal = await this.Modalcntrl.create({

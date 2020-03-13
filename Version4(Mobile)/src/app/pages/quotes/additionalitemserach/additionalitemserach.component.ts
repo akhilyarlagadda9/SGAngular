@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 
@@ -11,10 +11,11 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
 export class AdditionalitemserachComponent implements OnInit {
   searchobj = this.navParams.data;
   listItems = []; info: any;
-  constructor(private getservice: QuotegetService, private popoverCntrl: PopoverController, private navParams: NavParams, private quoterep: QuoterepService) { }
+  constructor(private getservice: QuotegetService, private modelCntrl: ModalController, private navParams: NavParams, private quoterep: QuoterepService) { }
 
 
   ngOnInit() {
+    console.log(this.searchobj);
     this.ActionlistItems();
   }
 
@@ -23,7 +24,7 @@ export class AdditionalitemserachComponent implements OnInit {
   ActionToClosePop(isselect) {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
-    this.popoverCntrl.dismiss({
+    this.modelCntrl.dismiss({
       'dismissed': true,
       componentProps: this.info,
       isselect: isselect

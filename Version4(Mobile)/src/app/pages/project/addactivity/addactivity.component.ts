@@ -515,13 +515,18 @@ async ActionOpenAreaPart(){
 @Component({
   template: `
   <ion-header>
-    <ion-toolbar color="light">
-    <ion-buttons end>
-    <ion-button slot="end" color="danger" (click)="ActionToClosePop(false)"> 
-      <span ion-text showWhen="ios" class="check-font" >Cancel</span></ion-button>
-  </ion-buttons>
-      <ion-title >Approved Jobs</ion-title>
-    </ion-toolbar>
+  <ion-toolbar color="light">
+          <ion-buttons slot="start">
+            <ion-button color="danger" type="button" (click)="ActionToClosePop(false)">
+            Cancel
+            </ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            
+          </ion-buttons>
+          <ion-title align="center">Approved Jobs</ion-title>
+        </ion-toolbar>
+   
   </ion-header>
   <ion-content>
   <ion-list>

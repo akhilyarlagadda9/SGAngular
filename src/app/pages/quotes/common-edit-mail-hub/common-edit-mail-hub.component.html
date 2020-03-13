@@ -24,9 +24,9 @@
     </div>
   </ion-item>
   <ion-item>
-    <ion-label text-uppercase>Email</ion-label>
-    <ion-checkbox color="dark" name="Text" checked></ion-checkbox>
-    <ion-label text-uppercase>Text</ion-label>
+  <ion-label text-uppercase style="display: flex !important;"><span style="margin-top: 10px;">Email:&nbsp;</span><ion-checkbox  color="dark" name="Text" checked></ion-checkbox></ion-label>
+    
+  <ion-label text-uppercase class="text-right">Text:</ion-label>
     <ion-checkbox color="dark" name="Text"></ion-checkbox>
   </ion-item>
   <ion-item>
@@ -41,11 +41,12 @@
     <ion-textarea [(ngModel)]="mailDetails.To" name="To" #To type="text" required (ngModelChange)="getToItems($event)"></ion-textarea>
   </ion-item>
         <ion-list *ngIf="isItemToAvailable">
-            <ion-item   *ngFor="let item of arrInfo" (click)="addMail(item.Email,1)" style="overflow-y: scroll; height:50px;">
+            <ion-item   *ngFor="let item of arrInfo" (click)="addMail(item.Email,1)" style="overflow-y: scroll; background-color: grey; min-height: 25px;border-bottom: black;">
               <ion-row>
-                {{item.Name}}&nbsp; &nbsp; &nbsp;{{item.Email}}
-                <br>
+                {{item.Name}}&nbsp; &nbsp;{{item.Email}}
+                <span style="display: block;">
                 {{item.Phone}}
+                </span>
               </ion-row>
               </ion-item>
         </ion-list> 

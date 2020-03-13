@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { QuoteService } from './quote.service';
 @Injectable({
   providedIn: 'root'
@@ -10,10 +10,97 @@ export class QuoterepService {
   private _interfacesource = new Subject<any>();
   interface$ = this._interfacesource.asObservable();
   private service: QuoteService
-  SendInfo(info: any) {
+  setHeader(info: any) {
     this._interfacesource.next(info);
-
   }
+  //#region Quote Header
+  // setHeader(headerInfo) {      
+  //   this.header.QuoteNo = headerInfo.QuoteNo;  
+  //   this.header.QuoteName = headerInfo.QuoteName;
+  //   this.header.ID = headerInfo.ID;
+  //   this.header.VersionID = headerInfo.Version.ID;
+  // }  
+  // getHeader() {  
+  //   return this.header;  
+  // }  
+  Prepareparentcustmodel(header, modelItem) {
+    header.Version.AccName = modelItem.SelName + modelItem.ShowHyphen + modelItem.Name;
+    header.Version.ParentCustInfo = modelItem;
+    header.Version.ChildAccID = modelItem.ParentID == 0 ? 0 : modelItem.ID;
+    header.Version.ParentAccID = modelItem.ParentID == 0 ? modelItem.ID : modelItem.ParentID;
+    header.Version.PayTypeID = modelItem.PayTermsID != 0 ? 2 : 1;
+    header.Version.PaymentTermID = modelItem.PayTermsID;
+    header.Version.CustTypeID = modelItem.TypeID;
+    header.Version.Financed = modelItem.Financed;
+    header.Version.FeeID = modelItem.FeeID;
+    header.Version.RefFee = modelItem.Fee;
+    header.Version.FeeTypeID = modelItem.FeeTypeID;
+  
+    let childAccCode = header.Version.ChildAccID == 0 ? "" : header.Version.ParentCustInfo.Code + " - ";
+    let cust = header.Version.Customer.Name == undefined ? "" : header.Version.Customer.Name;
+  
+    if (header.Version.IsCustRetail == 0 && header.CustomerID == 0) {
+        let parentName = header.Version.ChildAccID == 0 ? header.Version.ParentCustInfo.SelName : header.Version.ParentCustInfo.SelCode;
+        let childAccCode = header.Version.ChildAccID == 0 ? "" : " - " + header.Version.ParentCustInfo.Name;
+        //if (_qname) { header.QuoteName = parentName + childAccCode; }
+    } 
+    header.Version.AccountTaxID = modelItem.SalesTaxID;
+    header.Version.AccountTaxID = modelItem.SalesTaxID;
+    header.SalesPersonID = (header.SalesPersonID == 0 || header.SalesPersonID == undefined) ? this.getloginuserId() : header.SalesPersonID;
+    //calpriceList();
+  
+    return header;
+  }
+  Preparecustomermodel(header, model) {
+    let typeID = header.Version.CustTypeID;
+    header.Version.Customer = model;
+    header.Version.Customer.TypeID = typeID == 0 ? model.TypeID : typeID;
+    header.CustomerID = model.ID;
+    header.Version.CustomerID = model.ID;
+    header.Version.Financed = model.Financed;
+    header.Address1 = (header.Address1 == null || header.Address1 == "") ? model.BillAddress : header.Address1;
+    header.Address2 = (header.Address2 == null || header.Address2 == "") ? model.BillAddress1 : header.Address2;
+    header.City = (header.City == null || header.City == "") ? model.BillCity : header.City;
+    header.State = (header.State == null || header.State == "") ? model.BillState : header.State;
+    header.Zipcode = (header.Zipcode == null || header.Zipcode == "") ? model.BillZipCode : header.Zipcode;
+    header.Version.TaxID = 0;
+    header.IsCheck = 1;
+    header.Version.FeeID = model.FeeID;
+    header.Version.RefFee = model.Fee;
+    header.Version.FeeTypeID = model.FeeTypeID;
+    header.Version.Financed = model.Financed;
+    if (typeID == 4) {//Retail
+        header.Version.PriceListID = (header.Version.PriceListID == 0 || header.Version.PriceListID == undefined) ? model.PriceListID : header.Version.PriceListID;
+        let SalesPersonID = (model.SalesPersonID != 0 || model.SalesPersonID != undefined) ? model.SalesPersonID : header.SalesPersonID;
+        header.SalesPersonID = SalesPersonID == 0 ? this.getloginuserId() : SalesPersonID;
+  
+        let EstimatorID = (model.EstimatorID != 0 || model.EstimatorID != undefined) ? model.EstimatorID : header.EstimatorID;
+        header.EstimatorID = EstimatorID == 0 ? 0 : EstimatorID;
+  
+        let ProjManagerID = (model.ProjectManagerID != 0 || model.ProjectManagerID != undefined) ? model.ProjectManagerID : header.ProjectManagerID;
+        header.ProjectManagerID = ProjManagerID == 0 ? 0 : ProjManagerID;
+  
+        header.Version.PayTypeID = model.PayTermsID != 0 ? 2 : 1;
+        header.Version.PaymentTermID = model.PayTermsID;
+        header.Version.TaxID = model.SalesTaxID;
+       // if (_qname) { header.QuoteName = model.Name; }
+    } else {
+        if (header.Version.ParentCustInfo == undefined || header.Version.ParentCustInfo == null) {
+            header.Version.ParentCustInfo = {}; header.Version.ParentCustInfo.Code = ""; header.Version.ParentCustInfo.SelCode = "";
+        }
+        var hypen = header.Version.ParentAccID == 0 ? "" : " - ";
+        var childAccCode = header.Version.ChildAccID == 0 ? "" : header.Version.ParentCustInfo.Code + " - ";
+        var cust = header.Version.Customer.Name == undefined ? "" : header.Version.Customer.Name;
+        var selcode = header.Version.ParentCustInfo.SelCode == undefined ? "" : header.Version.ParentCustInfo.SelCode;
+        //if (_qname) { header.QuoteName = selcode + hypen + childAccCode + cust; }
+    }
+    return header;
+  }
+   
+  getloginuserId(){
+    return 0;
+  }
+  //#endregion
   //#region  Add Items
   AddPartMatItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number) {
     let partmat: any = {
@@ -889,49 +976,12 @@ export class QuoterepService {
     return slab;
   }
   //#endregion
-  //#region  Sales Tax
-  resetversionsummary(area, header, summary) {
-    this.resetversummary(header.Version, summary, header.SalesPersonID);
-    this.resetversionlistsummary(header.Version.ID, header.VersionList, summary);
-    this.resetareasummary(area, summary);
-    this.preparepaymentschedule(header);
-  }
-  resetversummary(version, summary, salesrepId) {
+  //#region  Version Summary
+
+  ResetVersionSummary(version, summary) {
     version.TaxAmt = summary.TaxAmt;
     version.DiscountAmt = summary.DiscountAmt;
     version.TotalAmt = summary.TotalAmt;
-    version.MaterialSqft = summary.MaterialSqft;
-    version.MatCost = summary.MaterialCost;
-    version.FabLaborSqft = summary.FabLaborSqft;
-    version.EdgeLnft = summary.EdgeLnft;
-    version.CutOutLnft = summary.CutOutLnft;
-    version.CutOutAmount = summary.CutOutAmount;
-    version.SplashSqft = summary.SplashSqft;
-    version.ToolQty = summary.ToolQty;
-    version.ToolAmt = summary.ToolAmt;
-    version.LaborAmt = summary.LaborAmt;
-    version.SinkQty = summary.SinkQty;
-    version.FaucetQty = summary.FaucetQty;
-    version.LaborQty = summary.LaborQty;
-    version.AddOnQty = summary.AddOnQty;
-    version.TileQty = summary.TileQty;
-    version.CabinetQty = summary.CabinetQty;
-    version.CarpetQty = summary.CarpetQty;
-    version.FloorQty = summary.FloorQty;
-    version.FloorAmt = summary.FloorAmt;
-    version.ConsumableQty = summary.ConsumableQty;
-    version.ConsumableAmt = summary.ConsumableAmt;
-    version.ApplianceQty = summary.ApplianceQty;
-    version.ApplianceAmt = summary.ApplianceAmt;
-    version.TileAmt = summary.TileAmt;
-    version.CabinetAmt = summary.CabinetAmt;
-    version.CarpetAmt = summary.CarpetAmt;
-    version.OthersAmount = summary.OthersAmount;
-    version.AdditionalAmt = summary.AdditionalAmt;
-    version.EdgeAmount = summary.EdgeAmount;
-    version.MatAmount = summary.MatAmount;
-    version.FabLaborAmount = summary.FabLaborAmount;
-
     version.FinalRefAmt = summary.FinalRefAmt;
     version.FinalAmt = summary.FinalAmt;
     version.FinalDiscAmt = summary.FinalDiscAmt;
@@ -950,73 +1000,31 @@ export class QuoterepService {
     version.GrossMargin = summary.GrossMargin;
     version.TDolloarPercentage = summary.TDolloarPercentage;
     version.NetMarginPercentage = summary.NetMarginPercentage;
-    // get commission
-    let commission: any = this.service.qpversioncommissioninfo(salesrepId, version);
-    if (commission != null || commission != undefined) {
-      version.Commission = commission;
-      version.MarginWithoutAddons = commission.MarginWithoutAddons;
-      version.CommissionAmount = commission.CommissionAmount;
-      version.AddonsMargin = commission.AddonsMargin;
-      version.AddonCommissionAmt = commission.AddonsCommission;
-    }
+    return version
   }
-  resetversionlistsummary(versionId, versions, summary) {
-    for (let i = 0; i < versions.length; i++) {
-      if (versions[i].ID == versionId) {
-        let ver = versions[i];
-        ver.DiscountAmt = summary.DiscountAmt;
-        ver.MaterialSqft = summary.MaterialSqft;
-        ver.MatCost = summary.MaterialCost;
-        ver.MatAmount = summary.MatAmount;
-        ver.FabLaborSqft = summary.FabLaborSqft;
-        ver.FabLaborAmount = summary.FabLaborAmount;
-        ver.EdgeAmount = summary.EdgeAmount;
-        ver.EdgeLnft = summary.EdgeLnft;
-        ver.AdditionalAmt = summary.AdditionalAmt;
-        ver.OthersAmount = summary.OthersAmount;
-        ver.SplashSqftAmt = summary.SplashSqftAmt;
-        ver.SplashSqft = summary.SplashSqft;
-        ver.CutOutLnft = summary.CutOutLnft;
-        ver.CutOutAmount = summary.CutOutAmount;
-        ver.LaborAmt = summary.LaborAmt;
-        ver.TotalAmt = summary.TotalAmt;
-        ver.SinkQty = summary.SinkQty;
-        ver.FaucetQty = summary.FaucetQty;
-        ver.LaborQty = summary.LaborQty;
-        ver.AddOnQty = summary.AddOnQty;
-        ver.TileQty = summary.TileQty;
-        ver.CabinetQty = summary.CabinetQty;
-        ver.CarpetQty = summary.CarpetQty;
-        ver.FloorQty = summary.FloorQty;
-        ver.FloorAmt = summary.FloorAmt;
-        ver.ConsumableQty = summary.ConsumableQty;
-        ver.ConsumableAmt = summary.ConsumableAmt;
-        ver.ApplianceQty = summary.ApplianceQty;
-        ver.ApplianceAmt = summary.ApplianceAmt;
-        ver.TileAmt = summary.TileAmt;
-        ver.CabinetAmt = summary.CabinetAmt;
-        ver.CarpetAmt = summary.CarpetAmt;
-        ver.PmtReceived = summary.PmtReceived;
-        ver.CoTotal = summary.CoTotal;
-        ver.ToolQty = summary.ToolQty;
-        ver.ToolAmt = summary.ToolAmt;
-        return;
-      }
-    }
-  }
-  resetareasummary(area, summary) {
-    area.FinalAreaAmt = summary.AreaFinalAmt;
-    area.TotalAmt = summary.AreaTotalAmt;
-    area.AreaLayAmt = summary.AreaTotalAmt;
-    area.AreaDiscAmt = summary.AreaDiscAmt;
-    area.MaterialSqft = summary.AreaMaterialSqft;
-    area.FabLaborSqft = summary.AreaFabLaborSqft;
-    area.SplashSqft = summary.AreaSplashSqft;
-    area.EdgeLnft = summary.AreaEdgeLnft;
-    area.CoMatSF = summary.AreaCoMaterialSqft;
-    area.CoFabSF = summary.AreaCoFabLaborSqft;
-    area.CoSplashSF = summary.AreaCoSplashSqft;
-    area.CoEdgeLF = summary.AreaCoEdgeLnft;
+  ResetVersionTotals(version, newversion) {
+    version.TaxAmt = newversion.TaxAmt;
+    version.DiscountAmt = newversion.DiscountAmt;
+    version.TotalAmt = newversion.TotalAmt;
+    version.FinalRefAmt = newversion.FinalRefAmt;
+    version.FinalAmt = newversion.FinalAmt;
+    version.FinalDiscAmt = newversion.FinalDiscAmt;
+    version.FinalTaxAmt = newversion.FinalTaxAmt;
+    version.FinalNetAmt = newversion.FinalNetAmt;
+    version.RefAmt = newversion.RefAmt;
+    version.RoundOff = newversion.RoundOff;
+    version.CustomFeeAmt = newversion.CustomFeeAmt;
+    version.ExtraFeeAmt = newversion.ExtraFeeAmt;
+    version.CoTotal = newversion.CoTotal;
+    version.PmtReceived = newversion.PmtReceived;
+    version.SaleRevenue = newversion.SaleRevenue;
+    version.TDollarAmount = newversion.TDollarAmount;
+    version.FinalCost = newversion.CostOfGoodsSold;
+    version.NetMargin = newversion.NetMargin;
+    version.GrossMargin = newversion.GrossMargin;
+    version.TDolloarPercentage = newversion.TDolloarPercentage;
+    version.NetMarginPercentage = newversion.NetMarginPercentage;
+    return version
   }
   preparepaymentschedule(model) {
     let qamount = (model.Version.TotalAmt + model.Version.TaxAmt) - (model.Version.DiscountAmt);

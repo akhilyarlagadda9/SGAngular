@@ -44,44 +44,44 @@ export class OtherComponent implements OnInit {
   //Material List Function
   GetMaterialList() {
     this.getservice.QuotematerialList(this.VersionId).subscribe(
-      data => { this.MaterialList = data; }
+      data => { data = data == null ? [] : data; this.MaterialList = data; }
     );
   }
   //Sink List Function
   GetSinkList() {
     this.getservice.QuotesinksList(this.VersionId).subscribe(
-      data => { this.SinkList = data; }
+      data => {data = data == null ? [] : data; this.SinkList = data; }
     );
   }
  //Faucet List Function
  GetFaucetList() {
   this.getservice.QuotefaucetsList(this.VersionId).subscribe(
-    data => { this.FaucetList = data; }
+    data => {data = data == null ? [] : data; this.FaucetList = data; }
   );
 }
 //Appliance List Function
 GetApplianceList() {
   this.getservice.QuoteappliancesList(this.VersionId).subscribe(
-    data => { this.ApplianceList = data; }
+    data => { data = data == null ? [] : data;this.ApplianceList = data; }
   );
 }
 //Consumables List Function
 GetConsumablesList() {
   this.getservice.QuoteconsumablesList(this.VersionId).subscribe(
-    data => { this.ConsumableList = data; }
+    data => {data = data == null ? [] : data; this.ConsumableList = data; }
   );
 }
 //Tool List Function
 GetToolsList() {
   this.getservice.QuotetoolsList(this.VersionId).subscribe(
-    data => { this.ToolList = data; }
+    data => { data = data == null ? [] : data;this.ToolList = data; }
   );
   console.log(this.ToolList)
 }
 //Tool List Function
 GetAddonsList() {
   this.getservice.QuoteaddonsList(this.VersionId).subscribe(
-    data => { this.OtherList = data; }
+    data => { data = data == null ? [] : data;this.OtherList = data; }
   );
 }
 

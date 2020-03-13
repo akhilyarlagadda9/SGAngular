@@ -117,10 +117,10 @@ export class AddpartComponent implements OnInit {
     let obj = {
       pricelistId: this.priceListID, searchTypeId: typeid, producttypeId: protypeId, search: info.Description == undefined ? "" : info.Description, info: info
     }
-    const popover = await this.popoverCntrl.create({
+    const popover = await this.Modalcntrl.create({
       component: AdditionalitemserachComponent,
-      event: ev,
-      translucent: true,
+     // event: ev,
+      //translucent: true,
       componentProps: obj,
       cssClass: "popover_class"
     });

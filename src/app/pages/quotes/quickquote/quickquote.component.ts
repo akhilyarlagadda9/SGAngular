@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CustomersearchComponent } from '../customersearch/customersearch.component';
 import { LoadingController, ModalController, PopoverController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core';
-import { QuotegetService } from 'src/app/service/quoteget.service';
-import { QuotepostService } from 'src/app/service/quotepost.service';
+//import { QuotegetService } from 'src/app/service/quoteget.service';
+//import { QuotepostService } from 'src/app/service/quotepost.service';
+import { QuoteService } from 'src/app/service/quote.service';
+import { QuoterepService } from 'src/app/service/quoterep.service';
 
 @Component({
   selector: 'app-quickquote',
@@ -27,7 +29,7 @@ export class QuickquoteComponent implements OnInit {
     quoteid: number, quoteno: string, versionid: number, customerid: number,
     accountid: number, childaccid: number, phaseid: number, viewtypeid: number, header: any, layoutId: 1
   };
-  constructor(public Modalcntrl: ModalController, private getservice: QuotegetService, private popoverCntrl: PopoverController, private postservice: QuotepostService) { }
+  constructor(public Modalcntrl: ModalController, private qService: QuoteService, private popoverCntrl: PopoverController, private qrepService: QuoterepService) { }
   ngOnInit() {
     this.header = {
       ProjectManagerID: 0, EstimatorID: 0, SalesPersonID: "",
@@ -49,10 +51,10 @@ export class QuickquoteComponent implements OnInit {
     };
 
     let custDicIds = [1]; let leadDicIds = [2, 3];
-    this.getservice.LeadDictionaryLists(leadDicIds).subscribe(
+    this.qService.LeadDictionaryLists(leadDicIds).subscribe(
       data => { this.leadTypes = data[0]; this.leadHearAbout = data[1] }
     );
-    this.getservice.CustomerDictionayList(custDicIds).subscribe(data => { this.customerTypes = data[0] });
+    this.qService.CustomerDictionayList(custDicIds).subscribe(data => { this.customerTypes = data[0] });
     this.PopulateDropDownList(4);
     //FORM VALIDATIONS
   }
@@ -80,7 +82,7 @@ export class QuickquoteComponent implements OnInit {
     if (form.valid) {
       //this.showLoader();
       this.ValidateHeader();
-      this.postservice.ActionSaveQuote(this.header).subscribe(data => {
+      this.qService.ActionSaveQuote(this.header).subscribe(data => {
         let Ids = data.split(',');
         this.header.ID = Ids[0];
         this.verId = Ids[1], this.quoteNo = Ids[2], this.customerId = Ids[3],
@@ -160,7 +162,7 @@ export class QuickquoteComponent implements OnInit {
     } else {
       if (info != '') {
         this.header.Version.AccName = info.SelName + info.ShowHyphen + info.Name;
-        this.header = this.getservice.Prepareparentcustmodel(this.header, info);
+        this.header = this.qrepService.Prepareparentcustmodel(this.header, info);
         this.populateSalesPersonList(info);
         //  populateSelPriceList(modelItem);
         this.populateEstimatorList(info);
@@ -186,17 +188,17 @@ export class QuickquoteComponent implements OnInit {
     this.PopulateDropDownList(Id);
   }
   PopulateDropDownList(Id: number) {
-    this.getservice.CustTypeResourceList(Id, 3).subscribe(data => { this.salesPersonsList = data });
-    this.getservice.CustTypeResourceList(Id, 8).subscribe(data => { this.estimatorsList = data });
-    this.getservice.CustTypeResourceList(Id, 9).subscribe(data => { this.projectManagersList = data });
-    this.getservice.QuoteMasterList(24).subscribe(data => { this.productionTypeList = data });
-    this.getservice.CustPriceList(Id).subscribe(data => { this.priceList = data });
+    this.qService.CustTypeResourceList(Id, 3).subscribe(data => { this.salesPersonsList = data });
+    this.qService.CustTypeResourceList(Id, 8).subscribe(data => { this.estimatorsList = data });
+    this.qService.CustTypeResourceList(Id, 9).subscribe(data => { this.projectManagersList = data });
+    this.qService.QuoteMasterList(24).subscribe(data => { this.productionTypeList = data });
+    this.qService.CustPriceList(Id).subscribe(data => { this.priceList = data });
   }
   PopulateIsCustDefault(Id) {
-    this.getservice.SelTypePrefInfo(Id, 5).subscribe(data => { if (data != null && data != "") { this.header.Version.IsCustRetail = data.Isdefault } });
+    this.qService.SelTypePrefInfo(Id, 5).subscribe(data => { if (data != null && data != "") { this.header.Version.IsCustRetail = data.Isdefault } });
   }
   PopulateCustomerInfo(info: any) {
-    this.header = this.getservice.Preparecustomermodel(this.header, info);
+    this.header = this.qrepService.Preparecustomermodel(this.header, info);
     if (this.header.Version.IsCustRetail == 1) {
       let childAccCode = this.header.Version.ChildAccID == 0 ? "" : this.header.Version.ParentCustInfo.Code + " - ";
       this.header.QuoteName = this.header.Version.ParentCustInfo.SelCode + " - " + childAccCode + info.Name;
@@ -237,7 +239,7 @@ export class QuickquoteComponent implements OnInit {
   }
   Getcustomercontacts() {
     let model: any; let header = this.header; let customerContacts = [];
-    this.getservice.GetCustomerContacts(header.CustomerID).subscribe(data => {
+    this.qService.GetCustomerContacts(header.CustomerID).subscribe(data => {
       customerContacts = data;
       if (header.CustomerID > 0) {
         model = customerContacts.find(s => s.CustomerID == header.CustomerID && s.IsDefault == 1);

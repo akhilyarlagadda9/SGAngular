@@ -1,5 +1,5 @@
 import { Component, OnInit, Directive, Input } from '@angular/core';
-import { NavController, ModalController, NavParams, AlertController, PopoverController } from '@ionic/angular';
+import { NavController, ModalController, NavParams, AlertController, PopoverController,ActionSheetController } from '@ionic/angular';
 import { QuoteService } from 'src/app/service/quote.service'
 
 
@@ -22,25 +22,19 @@ declare var _qscope: any;
   styleUrls: ['./quoteedit.component.scss'],
 })
 export class QuoteeditComponent implements OnInit {
-  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private service: QuoteService, private navCtrl: NavController, private popoverCntrl: PopoverController) { }
+  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private service: QuoteService,
+     private navCtrl: NavController, private repService: QuoterepService,public actionSheetCtrl: ActionSheetController) { }
   quoteId: number;
   quoteno: string;
   shownGroup = 1;
   qprmsobj = this.navParams.data;
-  headerInfo: any;
+  headerInfo:any;
+  versionList:any = [];
   selectedtabtype: number;
   QuoteVersionID: number = this.qprmsobj.versionid;
   expanded = false;
-  public customer: any;
-  public version: any;
   public contacts: any;
   public SelectedTypeID: number;
-  public Version: any;
-  public PoItemList: any;
-  public ParentID: number;
-  //version: any;
-
-
   toggleGroup(group) {
     if (this.isGroupShown(group)) {
       this.shownGroup = 0;
@@ -51,9 +45,8 @@ export class QuoteeditComponent implements OnInit {
   isGroupShown(group) {
     return this.shownGroup === group;
   };
-
-
   ngOnInit() {
+    //this.headerInfo.QuoteContacts = [];
     if(this.navParams.data.layoutId == 1){
       this.selectedtabtype = this.navParams.data.layoutId;
     }
@@ -79,11 +72,14 @@ export class QuoteeditComponent implements OnInit {
     let result = this.service.ActionQuoteInfo(this.qprmsobj.quoteid, this.qprmsobj.quoteno, this.qprmsobj.versionid, 0, 0, 0).subscribe(
       data => {
         this.headerInfo = data; _qscope.quote = {};
+       this.versionList= this.headerInfo.VersionList;
         this.headerInfo.Version = this.headerInfo.VersionList.find(x => x.ID === this.qprmsobj.versionid);
         _qscope.quote = this.headerInfo;
         if(this.navParams.data.layoutId == 2){
           this.ActionAreaList();
         }
+        this.GetAddress(this.headerInfo);
+        this.repService.setHeader(this.headerInfo);
       },
       error => console.log(error));
   }
@@ -102,6 +98,14 @@ export class QuoteeditComponent implements OnInit {
 
     });
     return await modal.present();
+  }
+  GetAddress(header){
+    header.Address1 = header.Address1 == null || header.Address1 == "" ? "" : header.Address1 + ",";
+    header.City = header.City == null || header.City == "" ? "" : header.City + ",";
+    header.State = header.State == null || header.State == "" ? "" : header.State;
+    header.Zipcode = header.Zipcode == null ? "" : header.Zipcode;
+    var zipcodeComma = header.Zipcode != "" && (header.State != "" || header.City != "") ? " - " : "";
+    this.headerInfo.FullAddres = header.Address1 + header.City + header.State + zipcodeComma + header.Zipcode;
   }
   //Job edit Function
   async ActionEditJob() {
@@ -143,7 +147,7 @@ export class QuoteeditComponent implements OnInit {
     custinfo.ContactList = contactList;
     let copyobj = JSON.parse(JSON.stringify(custinfo))
     //let obj = {version:this.headerInfo.Version,customerinfo:copyobj,SelectedTypeID:this.SelectedTypeID}
-    let obj = { version: this.version, customerinfo: copyobj, SelectedTypeID: this.SelectedTypeID }
+    let obj = { version: this.headerInfo.Version, customerinfo: copyobj, SelectedTypeID: this.SelectedTypeID }
     const modal = await this.Modalcntrl.create({
       component: CustomereditComponent,
       componentProps: obj,
@@ -200,6 +204,8 @@ export class QuoteeditComponent implements OnInit {
     this.qprmsobj.versionid = id;
     this.service.ActionVersionInfo1(this.qprmsobj.quoteid, id, 0).subscribe(data => {
       this.headerInfo.Version = data;
+      this.qprmsobj.statusId = data.StatusID;
+      this.repService.setHeader(this.headerInfo);
     })
   }
   // AreaSummarySelect(ev) {
@@ -207,17 +213,56 @@ export class QuoteeditComponent implements OnInit {
   //     this.ActionLoadTabInfo(2);
   //   }
   // }
+  // async ActionNewAction() {
+  //   let header = { header: this.headerInfo }
+  //   const popover = await this.popoverCntrl.create({
+  //     component: NewactionComponent,
+  //     componentProps: header,
+  //     translucent: true,
+  //     showBackdrop: true,
+  //     cssClass: "popover_class3"
+  //   });
+  //   return await popover.present();
+  // }
+
+
+
   async ActionNewAction() {
-    let header = { header: this.headerInfo }
-    const popover = await this.popoverCntrl.create({
-      component: NewactionComponent,
-      componentProps: header,
-      translucent: true,
-      showBackdrop: true,
-      cssClass: "popover_class3"
+    let actionSheet = this.actionSheetCtrl.create({
+      //title: 'Actions',
+      cssClass: 'action-sheets-basic-page',
+      buttons: [
+        {
+          text: 'Approve Quote', 
+          cssClass:'color-green',    
+          handler: () => {
+            console.log('Share clicked');
+          }
+        },
+        {
+          text: 'Cancel Quote',
+          role: 'destructive',
+          handler: () => {
+            console.log('Delete clicked');
+          }
+        },
+        {
+          text: 'Dicline Quote',
+          cssClass:'color-orange',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel', // will always sort to be on the bottom
+          handler: () => {
+          }
+        }
+      ]
     });
-    return await popover.present();
+    (await actionSheet).present();
   }
+
 }
 // <ion-row class="pad2" (click)="createaction(2,'a')"><span style="color:Blue"><b>Duplicate Version</b></span></ion-row>
 // <ion-row class="pad2" (click)="createaction(3,'Cancelled')"><span style="color:green"><b>Copy Quote</b></span></ion-row>

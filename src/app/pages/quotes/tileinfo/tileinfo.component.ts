@@ -34,12 +34,12 @@ export class TileinfoComponent implements OnInit {
   }
   async ActionSearchSelect(ev: any, typeid, productId) {
     let obj = { pricelistId : this.priceListID, searchTypeId: typeid, producttypeId: productId, search: this.tile.Description == undefined ? "" : this.tile.Description, info : this.tile }
-    const popover = await this.popoverCntrl.create({
+    const popover = await this.Modalcntrl.create({
       component: AdditionalitemserachComponent,
-      event: ev,
-      translucent: true,
+      //event: ev,
+     // translucent: true,
       componentProps: obj,
-      cssClass: "popover_class"
+      //cssClass: "popover_class"
     });
     popover.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {

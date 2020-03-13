@@ -1,218 +1,193 @@
 <form #form="ngForm" class="dis-content">
   <ion-header>
-    <ion-toolbar>
-      <ion-title class="titleheader">{{SumName}}</ion-title>
-      <ion-button slot="end" color="success" size="small" *ngIf="SummaryTypeID == 1" (click)="ActionSaveQuoteDiscount(form)">Save
-      </ion-button>
-      <ion-button slot="end" color="success" size="small" *ngIf="SummaryTypeID == 2" (click)="ActionSaveSalesTax(form)">
-        Save</ion-button>
-      <ion-button slot="end" color="success" size="small" *ngIf="SummaryTypeID == 3"
-        (click)="ActionSaveReferralFee(form)">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionToClosePop()">X</ion-button>
+    <ion-toolbar color="light">
+      <ion-buttons start>
+        <ion-button slot="start" color="danger" (click)="ActionToClosePop(false)">
+          <span ion-text showWhen="ios" class="check-font">Cancel</span></ion-button>
+      </ion-buttons>
+      <ion-title>{{SumName}}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button slot="end" *ngIf="SummaryTypeID == 1" (click)="ActionAddDiscount()" color="secondary"> <span
+            ion-text class="check-font">Add</span></ion-button> &nbsp;
+        <ion-button slot="end" color="secondary" (click)="ActionSaveSummary(form,SummaryTypeID)"> <span ion-text
+            class="check-font">Save</span></ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
   <ion-content *ngIf="SummaryTypeID == 1">
-    <ion-row style="height:360px">
-      <ion-col *ngFor="let dis of DiscountList">
+    <ion-row>
+      <ion-col *ngFor="let discount of DiscountList;let i = index" size="12">
         <ion-item>
-          <ion-label class="labelfont" position="floating" color="primary">Discount</ion-label>
-          <ion-select class="btninfo" interface="popover" [(ngModel)]="dis.DiscID" name="discname"
-            (ionChange)="ActionChangeDiscount(dis,2)">
+          <ion-label floating>Discount</ion-label>
+          <ion-select class="btninfo" interface="popover" [(ngModel)]="discount.DiscID" name="DiscID{{i}}"
+            (ngModelChange)="ActionChangeDiscount($event,discount)">
             <ion-select-option *ngFor="let d of DiscountTypeList" [value]="d.ID">{{d.Name}}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label class="labelfont" position="floating" color="primary">Value($/%)</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="dis.DiscVal" name="DiscVal"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label class="labelfont" position="floating" color="primary"></ion-label>
-          <ion-select [(ngModel)]="dis.DiscTypeID" name="DiscTypeID" class="labelfont">
-            <ion-select-option *ngFor="let disc of DiscTypes1" [value]="disc.ID">{{disc.Name}}</ion-select-option>
+          <ion-label floating>Value($/%)</ion-label>
+          <ion-input type="text" class="labelfont text-right" [(ngModel)]="discount.DiscVal"
+            name="discount.DiscVal{{i}}"></ion-input>
+          <ion-select [(ngModel)]="discount.DiscTypeID" name="discount.DiscTypeID{{i}}" class="labelfont">
+            <ion-select-option *ngFor="let c of DiscTypes1" [value]="c.ID">{{c.Name}}</ion-select-option>
           </ion-select>
+          <ion-label>Tax</ion-label>
+          <ion-checkbox></ion-checkbox>
         </ion-item>
-        <ion-item style="margin-left: -4%;">
-          <ion-checkbox style="margin-left: 4%;"></ion-checkbox>
-          <ion-label style="margin-left: 5px;">Tax</ion-label>
-        </ion-item>
+
       </ion-col>
     </ion-row>
   </ion-content>
   <ion-content *ngIf="SummaryTypeID == 2">
-    <ion-row style="height:360px">
-      <ion-col>
+    <ion-row>
+      <ion-col size="12">
         <ion-item>
-          <ion-label class="labelfont" color="primary">Customer Tax Code:</ion-label>
-          <ion-checkbox class="btninfo" slot="end" [(ngModel)]="header.Version.TaxCode" name="TaxCode"
-            (ionChange)="CheckUncheckTaxCode()">Tax</ion-checkbox>
+          <ion-label floating>Customer Tax Code:</ion-label>
+          <ion-checkbox class="btninfo" slot="end"checked="Version.TaxCode == 1" [(ngModel)]="Version.TaxCode" name="TaxCode"
+            (click)="ActionCheckUncheckTaxCode(Version.TaxCode)">Tax</ion-checkbox>
         </ion-item>
         <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary"></ion-label>
-          <ion-select class="btninfo" interface="popover" [(ngModel)]="header.Version.TaxID" name="TaxID"
-            [disabled]="header.Version.TaxCode == 0">
+          <ion-label floating></ion-label>
+          <ion-select style="width:70%" class="btninfo" interface="popover" [(ngModel)]="Version.TaxID" name="TaxID"
+            [disabled]="Version.TaxCode == 0">
             <ion-select-option *ngFor="let mat of TaxTypeList" [value]="mat.ID">{{mat.Name}}</ion-select-option>
           </ion-select>
-          <ion-input type="text" class="labelfont" [(ngModel)]="header.Version.Tax" name="MatPercent"
-            [disabled]="header.Version.MatPercent == 0">
-            <ion-row style="margin-right: 3px;">%</ion-row>
+          <ion-input type="text" class="labelfont text-right" [(ngModel)]="Version.Tax" name="MatPercent"
+            [disabled]="Version.MatPercent == 0">
           </ion-input>
+          <ion-label>%</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Material:</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="header.Version.MatPercent" name="MatPercent"
-            [disabled]="header.Version.MatPercent == 0">
-            <ion-row style="margin-right: 3px;">%</ion-row>
+          <ion-label floating>Material:</ion-label>
+          <ion-input type="text" class="labelfont text-right" [(ngModel)]="Version.MatPercent" name="MatPercent"
+            [disabled]="Version.MatPercent == 0">
           </ion-input>
+          <ion-label>%</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Fabrication:</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="header.Version.FabPercent" name="FabPercent"
-            [disabled]="header.Version.FabPercent == 0">
-            <ion-row style="margin-right: 3px;">%</ion-row>
+          <ion-label floating>Fabrication:</ion-label>
+          <ion-input type="text" class="labelfont text-right" [(ngModel)]="Version.FabPercent" name="FabPercent"
+            [disabled]="Version.FabPercent == 0">
+           
           </ion-input>
+          <ion-label>%</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Edge,Cutouts:</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="header.Version.GradePercent" name="GradePercent"
-            [disabled]="header.Version.GradePercent == 0">
-            <ion-row style="margin-right: 3px;">%</ion-row>
+          <ion-label floating>Edge,Cutouts:</ion-label>
+          <ion-input type="text" class="labelfont text-right"[(ngModel)]="Version.GradePercent" name="GradePercent"
+            [disabled]="Version.GradePercent == 0">            
           </ion-input>
+          <ion-label>%</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Sink,Faucet:</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="header.Version.AddonPercent" name="AddonPercent"
-            [disabled]="header.Version.AddonPercent == 0">
-            <ion-row style="margin-right: 3px;">%</ion-row>
+          <ion-label floating>Sink,Faucet:</ion-label>
+          <ion-input type="text" class="labelfont text-right" [(ngModel)]="Version.AddonPercent" name="AddonPercent"
+            [disabled]="Version.AddonPercent == 0">          
           </ion-input>
+          <ion-label>%</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Appliance:</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="header.Version.AppliancePercent" name="AppliancePercent"
-            [disabled]="header.Version.AppliancePercent == 0">
-            <ion-row style="margin-right: 3px;">%</ion-row>
+          <ion-label floating>Appliance:</ion-label>
+          <ion-input type="text" class="labelfont text-right" [(ngModel)]="Version.AppliancePercent" name="AppliancePercent"
+            [disabled]="Version.AppliancePercent == 0">           
           </ion-input>
+          <ion-label>%</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Add on:</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="header.Version.OtherPercent" name="OtherPercent"
-            [disabled]="header.Version.OtherPercent == 0">
-            <ion-row style="margin-right: 3px;">%</ion-row>
+          <ion-label floating>Add on:</ion-label>
+          <ion-input type="text" class="labelfont text-right" [(ngModel)]="Version.OtherPercent" name="OtherPercent"
+            [disabled]="Version.OtherPercent == 0">         
           </ion-input>
+          <ion-label>%</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Labor:</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="header.Version.LaborPercent" name="LaborPercent"
-            [disabled]="header.Version.LaborPercent == 0">
-            <ion-row style="margin-right: 3px;">%</ion-row>
+          <ion-label floating>Labor:</ion-label>
+          <ion-input type="text" class="labelfont text-right" [(ngModel)]="Version.LaborPercent" name="LaborPercent"
+            [disabled]="Version.LaborPercent == 0">         
           </ion-input>
+          <ion-label>%</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Tile:</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="header.Version.TilePercent" name="TilePercent"
-            [disabled]="header.Version.TilePercent == 0">
-            <ion-row style="margin-right: 3px;">%</ion-row>
+          <ion-label floating>Tile:</ion-label>
+          <ion-input type="text" class="labelfont text-right" [(ngModel)]="Version.TilePercent" name="TilePercent"
+            [disabled]="Version.TilePercent == 0">           
           </ion-input>
+          <ion-label>%</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Cabinet:</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="header.Version.CabinetPercent" name="CabinetPercent"
-            [disabled]="header.Version.CabinetPercent == 0">
-            <ion-row style="margin-right: 3px;">%</ion-row>
+          <ion-label floating>Cabinet:</ion-label>
+          <ion-input type="text" class="labelfont text-right" [(ngModel)]="Version.CabinetPercent" name="CabinetPercent"
+            [disabled]="Version.CabinetPercent == 0">          
           </ion-input>
+          <ion-label>%</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Carpet:</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="header.Version.CarpetPercent" name="CarpetPercent"
-            [disabled]="header.Version.CarpetPercent == 0">
-            <ion-row style="margin-right: 3px;">%</ion-row>
+          <ion-label floating>Carpet:</ion-label>
+          <ion-input type="text" class="labelfont text-right" [(ngModel)]="Version.CarpetPercent" name="CarpetPercent"
+            [disabled]="Version.CarpetPercent == 0">           
           </ion-input>
+          <ion-label>%</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Wood Floor:</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="header.Version.FloorPercent" name="FloorPercent"
-            [disabled]="header.Version.FloorPercent == 0">
-            <ion-row style="margin-right: 3px;">%</ion-row>
+          <ion-label floating>Wood Floor:</ion-label>
+          <ion-input type="text" class="labelfont text-right" [(ngModel)]="Version.FloorPercent" name="FloorPercent"
+            [disabled]="Version.FloorPercent == 0">          
           </ion-input>
+          <ion-label>%</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Consumable:</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="header.Version.ConsumablePercent"
-            name="ConsumablePercent" [disabled]="header.Version.ConsumablePercent == 0">
-            <ion-row style="margin-right: 3px;">%</ion-row>
+          <ion-label floating>Consumable:</ion-label>
+          <ion-input type="text" class="labelfont text-right" [(ngModel)]="Version.ConsumablePercent"
+            name="ConsumablePercent" [disabled]="Version.ConsumablePercent == 0">
           </ion-input>
+          <ion-label>%</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="labelfont" position="stacked" color="primary">Tool:</ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="header.Version.ToolPercent" name="ToolPercent"
-            [disabled]="header.Version.ToolPercent == 0">
-            <ion-row style="margin-right: 3px;">%</ion-row>
+          <ion-label floating>Tool:</ion-label>
+          <ion-input type="text" class="labelfont text-right" [(ngModel)]="Version.ToolPercent" name="ToolPercent"
+            [disabled]="Version.ToolPercent == 0">          
           </ion-input>
+          <ion-label>%</ion-label>
         </ion-item>
       </ion-col>
     </ion-row>
   </ion-content>
   <ion-content *ngIf="SummaryTypeID == 3">
-    <ion-row style="height:360px">
-      <ion-col>
-        <ion-item>
-          <ion-label class="labelfont" position="floating" color="primary">Fees</ion-label>
-          <ion-select class="btninfo" interface="popover" [(ngModel)]="header.Version.FeeID" name="FeeID"
-            (ionChange)="ActionChangeFeeType(header.Version.FeeID)">
-            <ion-select-option *ngFor="let mat of FeeTypeList " [value]="mat.ID">{{mat.Name}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-label class="labelfont" position="floating" color="primary"></ion-label>
-          <ion-input type="text" class="labelfont" [(ngModel)]="header.Version.RefFee" name="RefFee"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label class="labelfont" position="floating" color="primary"></ion-label>
-          <ion-select [(ngModel)]="header.Version.FeeTypeID" class="labelfont" name="FeeTypeID">
-            <ion-select-option *ngFor="let disc of DiscTypes1" [value]="disc.ID">{{disc.Name}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item style="margin-left: -4%;">
-          <ion-checkbox style="margin-left: 4%;" [(ngModel)]="header.Version.IsFeeTax" name="IsFeeTax"></ion-checkbox>
-          <ion-label style="margin-left: 5px;">FeeTax</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-col size="6">
-            <ion-label class="labelfont" color="primary">Net Total W/O Round Off:</ion-label>
-          </ion-col>
-          <ion-col size="6">
-            <ion-item>
-              <ion-input type="text" class="labelfont" readonly="readonly" name="Net">$
-                {{((header.Version.TotalAmt + header.Version.TaxAmt) - (header.Version.DiscountAmt))}}</ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-item>
-        <ion-item>
-          <ion-col size="6">
-            <ion-range value="20">
-              <ion-icon slot="start" size="small" name="remove" (click)="ActionRoundAmount(0)"></ion-icon>
-              <ion-icon slot="end" name="add" (click)="ActionRoundAmount(1)"></ion-icon>
-            </ion-range>
-          </ion-col>
-          <ion-col size="6">
-            <ion-item>
-              <ion-label class="labelfont" position="floating" color="primary">Round Off:</ion-label>
-              <ion-input type="text" class="labelfont" [(ngModel)]="header.Version.copyroundoff" name="copyroundoff">
-              </ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-item>
-        <ion-item>
-          <ion-col size="6">
-            <ion-label class="labelfont" color="primary">Net Total:</ion-label>
-          </ion-col>
-          <ion-col size="6">
-            <ion-item>
-              <ion-input type="text" class="labelfont" readonly="readonly" name="Total">$
-                {{(header.Version.copynetamt)}}</ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+      <ion-item>
+        <ion-label floating>Fees</ion-label>
+        <ion-select  interface="popover" style="min-width:150px;" [(ngModel)]="Version.FeeID" name="FeeID"
+          (ionChange)="ActionChangeFeeType(Version.FeeID)">
+          <ion-select-option *ngFor="let mat of FeeTypeList " [value]="mat.ID">{{mat.Name}}</ion-select-option>
+        </ion-select>
+        <ion-label floating></ion-label>
+        <ion-input type="text" class="labelfont text-right" [(ngModel)]="Version.RefFee" name="RefFee"></ion-input>
+        <ion-select [(ngModel)]="Version.FeeTypeID" class="labelfont" name="FeeTypeID">
+          <ion-select-option *ngFor="let disc of DiscTypes1" [value]="disc.ID">{{disc.Name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>FeeTax</ion-label>
+        <ion-checkbox [(ngModel)]="Version.IsFeeTax" class="text-right" name="IsFeeTax"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Net Total W/O Round Off</ion-label>
+        <ion-label class="text-right"><b>$ {{((Version.TotalAmt + Version.TaxAmt) - (Version.DiscountAmt))}}</b></ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Round Off:</ion-label>
+        <ion-range value="20">
+          <ion-icon slot="start" size="small" name="remove" (click)="ActionRoundAmount(0)"></ion-icon>
+        </ion-range>
+        <ion-input type="text" class="labelfont" [(ngModel)]="Version.copyroundoff" name="copyroundoff">
+        </ion-input>
+        <ion-range value="20">
+          <ion-icon slot="end" name="add" (click)="ActionRoundAmount(1)"></ion-icon>
+        </ion-range>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Net Total:</ion-label>
+        <ion-label class="text-right"><b>$ {{(Version.copynetamt)}}</b></ion-label>
+      </ion-item>
   </ion-content>
 </form>

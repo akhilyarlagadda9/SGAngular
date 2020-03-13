@@ -39,12 +39,12 @@ export class AddoninfoComponent implements OnInit {
     let obj = {
       pricelistId: this.priceListID, searchTypeId: typeid, producttypeId: typeid2, search: this.other.Description == undefined ? "" : this.other.Description, info : this.other
     }
-    const popover = await this.popoverCntrl.create({
+    const popover = await this.Modalcntrl.create({
       component: AdditionalitemserachComponent,
-      event: ev,
-      translucent: true,
+     // event: ev,
+     // translucent: true,
       componentProps: obj,
-      cssClass: "popover_class"
+      //cssClass: "popover_class"
     });
     popover.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {

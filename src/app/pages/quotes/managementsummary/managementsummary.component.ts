@@ -3,6 +3,8 @@ import { ModalController, PopoverController, NavParams, NavController } from '@i
 import { QuoteService } from 'src/app/service/quote.service';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { DiscountComponent } from '../discount/discount.component';
+import { OverlayEventDetail } from '@ionic/core';
+import { QuoterepService } from 'src/app/service/quoterep.service';
 
 @Component({
   selector: 'app-managementsummary',
@@ -15,7 +17,8 @@ export class ManagementsummaryComponent implements OnInit {
   header: any;
  
 
-  constructor(private service: QuoteService, public Modalcntrl: ModalController,private navCtrl: NavController, private popoverCntrl: PopoverController) { }
+  constructor(private service: QuoteService, public Modalcntrl: ModalController,
+    private navCtrl: NavController, private popoverCntrl: PopoverController,private quoterep: QuoterepService) { }
 
   ngOnInit() {}
 
@@ -26,14 +29,20 @@ export class ManagementsummaryComponent implements OnInit {
   }
 
   async ActionSummarySelect(SummaryTypeID:number, SumName:string) {
-    let obj = {}
-    let version = {Version: this.Version, VersionId:this.VersionId, header:this.header, SummaryTypeID, SumName}
+    
+    let version = JSON.stringify(this.Version);
+    let obj = {Version: version, SummaryTypeID:SummaryTypeID, SumName:SumName}
    // let copyver = JSON.parse(JSON.stringify(version));
-    const popover = await this.popoverCntrl.create({
+    const popover = await this.Modalcntrl.create({
       component: DiscountComponent,
-      translucent: true,
-      componentProps: version,
-      cssClass: "popover_class"
+      componentProps: obj,
+    });
+    popover.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null) {
+        if (detail.data.issave == true) {
+         this.Version = this.quoterep.ResetVersionTotals(this.Version,detail.data.componentProps);
+        }
+      }
     });
     return await popover.present();
   }

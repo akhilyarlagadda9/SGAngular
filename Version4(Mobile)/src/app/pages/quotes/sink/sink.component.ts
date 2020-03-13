@@ -52,12 +52,12 @@ export class SinkComponent implements OnInit {
     let obj = {
       pricelistId: this.priceListID, searchTypeId: typeid, producttypeId: typeid2, search: this.sinkfaucet.Description == undefined ? "" : this.sinkfaucet.Description, info : this.sinkfaucet
     }
-    const popover = await this.popoverCntrl.create({
+    const popover = await this.Modalcntrl.create({
       component: AdditionalitemserachComponent,
-      event: ev,
-      translucent: true,
+     // event: ev,
+      //translucent: true,
       componentProps: obj,
-      cssClass: "popover_class"
+      //cssClass: "popover_class"
     });
     popover.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {

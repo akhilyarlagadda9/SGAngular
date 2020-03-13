@@ -47,7 +47,7 @@
         </ion-label>
         <ion-select [(ngModel)]="header.LeadInfo.LeadTypeID" name="LeadTypeID" #LeadTypeID="ngModel" class="labelfont"
           required>
-          <ion-select-option *ngFor="let p of leadTypes" [value]="p.ID">{{p.Name}}</ion-select-option>
+          <ion-select-option  *ngFor="let p of leadTypes"  [value]="p.ID">{{p.Name}}</ion-select-option>
         </ion-select>
       </ion-item>
       <div [hidden]="!form.submitted  || LeadTypeID.valid" class="invalid-feedback padd-Left">
@@ -122,7 +122,7 @@
         <ion-label class="labelfont" position="stacked" color="primary">Project Type<span
             class="requiredField">*</span>
         </ion-label>
-        <ion-select [(ngModel)]="header.Version.CustTypeID" name="CustTypeID" #CustTypeID="ngModel" class="labelfont" required>
+        <ion-select [(ngModel)]="header.Version.CustTypeID"  name="CustTypeID" #CustTypeID="ngModel" class="labelfont" required>
           <ion-select-option *ngFor="let p of customerTypes" [value]="p.ID">{{p.Name}}</ion-select-option>
         </ion-select>
         <!-- <ion-input type="text" [(ngModel)]="header.Version.CustTypeID" name="CustTypeID" #CustTypeID="ngModel" class="labelfont" required readonly="readonly"></ion-input> -->

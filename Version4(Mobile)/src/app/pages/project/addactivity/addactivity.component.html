@@ -47,7 +47,7 @@
 <ion-content>
 <ion-list class="bg-lightgrey" >
   <ion-item>
-    <ion-label floating>Phase<span class="requiredField">*</span></ion-label>
+    <ion-label floating>Phase<span class="requiredField">*:</span></ion-label>
     <ion-select (ngModelChange)="ActionChangePhase($event)" [(ngModel)]="actinfo.PhaseID" name="PhaseID" #PhaseID="ngModel" required [selectedText]="actinfo.PhaseName">
       <ion-select-option *ngFor="let c of phaseList" [value]="c.ID">{{c.Name}}</ion-select-option>
     </ion-select>
@@ -56,7 +56,7 @@
     </div>
   </ion-item>
   <ion-item>
-    <ion-label floating>Act Type<span class="requiredField">*</span></ion-label>
+    <ion-label floating>Act Type<span class="requiredField">*:</span></ion-label>
     <ion-select [(ngModel)]="actinfo.ActTypeID" name="ActTypeID" [selectedText]="actinfo.ActivityType"
       #ActTypeID="ngModel" (ngModelChange)="ActionGetStatusResourceList($event)" required>
       <ion-select-option *ngFor="let c of ActTypeList" [value]="c.ID">{{c.Name}}</ion-select-option>
@@ -78,7 +78,7 @@
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-label floating >Areas</ion-label>
+    <ion-label floating >Areas:</ion-label>
     <ion-item (click)="ActionOpenAreaPart()">
       <span *ngFor="let part of actinfo.QuotePartList; let s = index" style="font-size: 14px;" > 
         <span *ngIf="s < 2">
@@ -91,7 +91,7 @@
 </ion-list>
 <ion-list class="bg-lightgrey" >
   <ion-item>
-    <ion-label floating >Start</ion-label>
+    <ion-label floating >Start:</ion-label>
     <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" 
     (ngModelChange)="actinfo.IsDateChange = true;ActionChangeDate($event,0,'sDate')" name="SchStartTime" [(ngModel)]="actinfo.SchStartTime">
   </ion-datetime>
@@ -100,7 +100,7 @@
   </ion-select>
   </ion-item>
   <ion-item>
-    <ion-label floating >End</ion-label>
+    <ion-label floating >End:</ion-label>
     <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" 
     (ngModelChange)="actinfo.IsDateChange = true;ActionChangeDate($event,1,'eDate')" name="SchEndTime" [(ngModel)]="actinfo.SchEndTime">
   </ion-datetime>
@@ -109,7 +109,7 @@
   </ion-select>
   </ion-item>
   <ion-item>
-    <ion-label floating>Duration(Hrs:Min)</ion-label>
+    <ion-label floating>Duration(Hrs:Min):</ion-label>
     <ion-input type="text" [(ngModel)]="actinfo.Hrs"   name="Hrs" class="labelfont text-right"></ion-input>
     <ion-label>:</ion-label>
     <ion-input type="text" [(ngModel)]="actinfo.Mins"  name="Mins" class="labelfont"></ion-input>

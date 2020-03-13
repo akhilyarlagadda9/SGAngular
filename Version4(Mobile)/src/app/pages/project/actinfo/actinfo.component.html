@@ -1,6 +1,19 @@
 <ion-header>
   <ion-toolbar color="light">
     <ion-buttons slot="start">
+      <ion-button color="danger" type="button" (click)="ActionClose(false)">
+        Close
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="secondary" type="submit" (click)="ActionClose(true)">
+        Edit
+      </ion-button>
+    </ion-buttons>
+    <ion-title align="center">{{actInfo.ActTypeName}}</ion-title>
+  </ion-toolbar>
+  <!-- <ion-toolbar color="light">
+    <ion-buttons slot="start">
       <ion-button color="danger" (click)="ActionClose(false)">
         Close
       </ion-button>
@@ -11,9 +24,9 @@
       </ion-button>
     </ion-buttons>
     <ion-title>{{actInfo.ActTypeName}}</ion-title>
-    <!-- <ion-icon name="create" slot="end" class="fontmedium" (click)="ActionClose(true)"></ion-icon>
-    <ion-icon name="close" slot="end" class="fontlarge" (click)="ActionClose(false)"></ion-icon> -->
-  </ion-toolbar>
+    <ion-icon name="create" slot="end" class="fontmedium" (click)="ActionClose(true)"></ion-icon>
+    <ion-icon name="close" slot="end" class="fontlarge" (click)="ActionClose(false)"></ion-icon>
+  </ion-toolbar> -->
   <ion-toolbar>
     <ion-item>
       <ion-label>

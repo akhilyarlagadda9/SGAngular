@@ -194,7 +194,7 @@ export class AddpartComponent implements OnInit {
     this.ActionSetFabSqft(index);
   }
   ActionSetFabSqft(index) {
-    const sum = this.partinfo.PartFabList[index].MeasureList.reduce((sum, current) => Number(sum) + current.Sqft, 0);
+    const sum = this.partinfo.PartFabList[index].MeasureList.reduce((sum, current) => this.quoterep.convertToFloat(sum) + current.Sqft, 0);
     this.partinfo.PartFabList[index].PartSqft = sum;
     this.PopulateSqfts();
   }
@@ -203,7 +203,7 @@ export class AddpartComponent implements OnInit {
     this.ActionChangeSplash();
   }
   ActionChangeSplash() {
-    const sum = this.partinfo.SplashList.reduce((sum, current) => Number(sum) + current.Sqft, 0);
+    const sum = this.partinfo.SplashList.reduce((sum, current) => this.quoterep.convertToFloat(sum) + current.Sqft, 0);
     this.partinfo.PartFabList[0].SplashSqft = sum;
     //this.partinfo.PartFabList[0].Sqft =this.partinfo.PartFabList[0].PartSqft + this.partinfo.PartFabList[0].SplashSqft;
     // console.log(this.partinfo.PartFabList[0]);

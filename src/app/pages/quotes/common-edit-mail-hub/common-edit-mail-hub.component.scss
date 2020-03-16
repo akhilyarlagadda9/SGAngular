@@ -2,9 +2,9 @@
     display: flex;
     align-items: center;
 }
-:host ::ng-deep .ck-editor__editable_inline {
-    min-height: 200px;
-}
+// :host ::ng-deep .ck-editor__editable_inline {
+//     min-height: 200px;
+// }
 .popupCls2 { //For BIg popover
     padding: 5px;
     left: 35px;
@@ -23,4 +23,3 @@
 ion-button {
     --background: white;
 }
-

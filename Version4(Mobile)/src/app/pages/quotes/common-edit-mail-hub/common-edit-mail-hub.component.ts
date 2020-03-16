@@ -1,7 +1,8 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ModalController,NavParams } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 import { QuoteService } from 'src/app/service/quote.service';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 
@@ -13,7 +14,8 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
 export class CommonEditMailHubComponent implements OnInit {
   Template:String = ""; To:String = "";From:String="";CC:String="";Subject:String="";mailBody:String="";
   arrInfo:Array<any>=[];
-  public Editor = ClassicEditor; isItemToAvailable:boolean=false;mailList:Array<any>=[]; mailFilter:Array<any>=[];
+ // public Editor = ClassicEditor; 
+  isItemToAvailable:boolean=false;mailList:Array<any>=[]; mailFilter:Array<any>=[];
   isItemCCAvailable:boolean = false; headerData:any;
   templateList:Array<any>=[]; mailDetails:object={}; emailList:Array<any>=[];
   @ViewChild('To', {static: false}) pRef: ElementRef;
@@ -185,5 +187,8 @@ export class CommonEditMailHubComponent implements OnInit {
     issave: issave
   });
 }
+editconfig:AngularEditorModule={
+  width: 'auto',
 
+};
 }

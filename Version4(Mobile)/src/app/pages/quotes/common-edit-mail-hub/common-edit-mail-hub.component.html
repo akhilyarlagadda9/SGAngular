@@ -75,7 +75,7 @@
     <ion-input placeholder="Subject" [(ngModel)]="mailDetails.Subject" name="Subject" autofocus></ion-input>
   </ion-item>
   <!-- <ckeditor tagName="textarea" [(ngModel)]="mailDetails.mailBody" name="mailBody" [editor]="Editor" ></ckeditor> -->
-  <angular-editor [placeholder]="'Enter text here...'"[(ngModel)]="mailDetails.mailBody" name="mailBody" style="height: 250px;"></angular-editor>
+  <angular-editor [(ngModel)]="mailDetails.mailBody" name="mailBody" [config]="config"></angular-editor>
 </ion-content>
 </form>
 

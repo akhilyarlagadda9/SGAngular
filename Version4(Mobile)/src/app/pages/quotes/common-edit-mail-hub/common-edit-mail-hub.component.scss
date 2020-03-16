@@ -5,6 +5,12 @@
 // :host ::ng-deep .ck-editor__editable_inline {
 //     min-height: 200px;
 // }
+
+.te-basic-tools .angular-editor-button[title="Subscript"]
+.te-basic-tools .angular-editor-button[title="Undo"]
+.te-basic-tools .angular-editor-button[title="Redo"]{
+   display: none;
+}
 .popupCls2 { //For BIg popover
     padding: 5px;
     left: 35px;

@@ -20,7 +20,7 @@ import { JobdesceditComponent } from '../jobdescedit/jobdescedit.component';
 import { CustomereditComponent } from '../customeredit/customeredit.component';
 import { CommhubeditComponent } from '../commhubedit/commhubedit.component';
 import {CommonEditMailHubComponent} from '../common-edit-mail-hub/common-edit-mail-hub.component';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+//import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
@@ -72,7 +72,7 @@ import { QuickquoteComponent } from '../quickquote/quickquote.component';
         component: QuotePage
       },
     ]),
-    CKEditorModule,AngularEditorModule
+    AngularEditorModule
   ],
   entryComponents: [CreatequoteComponent,AddmeasComponent,SearchComponent,ActionquoteComponent,NewactionComponent,TransactionComponent,NewtranComponent,AccountsComponent,PaymentScheduleComponent,
     AdditionalitemserachComponent,DiscountComponent,feeComponent,

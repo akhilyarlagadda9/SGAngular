@@ -48,6 +48,7 @@ export class CommonEditMailHubComponent implements OnInit {
     });
     
   }
+  
   ActionChangeTempl(selectedTemplate){
       this.templateList.forEach(element => {
         if(selectedTemplate == element.Name){

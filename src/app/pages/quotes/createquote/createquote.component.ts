@@ -27,7 +27,7 @@ export class CreatequoteComponent implements OnInit {
     quoteid: number, quoteno: string, versionid: number, customerid: number,
     accountid: number, childaccid: number, phaseid: number, viewtypeid: number, layoutId: 2
   };
-  constructor(private formBuilder: FormBuilder, private loadingController: LoadingController, public Modalcntrl: ModalController,
+  constructor(private loadingController: LoadingController, public Modalcntrl: ModalController,
       private popoverCntrl: PopoverController,private qServe:QuoteService,private qRep:QuoterepService) { }
   ngOnInit() {
     this.header = {
@@ -129,13 +129,13 @@ export class CreatequoteComponent implements OnInit {
   async ActionShowPopover(ev: any, typeId: number, search, clickType: number) {
     let custTypeID = this.header.Version.ParentAccID > 0 && clickType == 0 ? 4 : 0;
     let obj = { search: search, selectTypeId: typeId, custTypeID: custTypeID }
-    const popover = await this.popoverCntrl.create({
+    const popover = await this.Modalcntrl.create({
       component: CustomersearchComponent,
-      event: ev,
-      translucent: true,
+      //event: ev,
+     // translucent: true,
       showBackdrop: true,
       componentProps: obj,
-      cssClass: "popover_class4"
+     // cssClass: "popover_class4"
     })
     popover.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {

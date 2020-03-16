@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DebugElement } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { QuoteService } from 'src/app/service/quote.service';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 
@@ -24,8 +23,8 @@ export class MeasurementsComponent implements OnInit {
     this.ActionSetFabSqft();
 
   }
-  ActionSetFabSqft() {
-    const sum = this.fab.MeasureList.reduce((sum, current) => Number(sum) + current.Sqft, 0);
+  ActionSetFabSqft() {debugger
+    const sum = this.fab.MeasureList.reduce((sum, current) => this.quoterep.convertToFloat(sum) + current.Sqft, 0);
     this.fab.PartSqft = sum;
   }
   ActionDelete(index:number){

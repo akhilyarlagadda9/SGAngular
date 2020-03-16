@@ -187,8 +187,17 @@ export class CommonEditMailHubComponent implements OnInit {
     issave: issave
   });
 }
-editconfig:AngularEditorModule={
-  width: 'auto',
-
+config: AngularEditorModule = {
+  editable: true,
+  spellcheck: true,
+  height: '100%',
+  //minHeight: '5rem',
+  placeholder: 'Enter text here...',
+  autoFocus: true,
+  toolbarHiddenButtons: [
+    ['undo','redo','strikeThrough','subscript','superscript','justifyLeft','justifyCenter','justifyRight','justifyFull',
+     'indent','outdent','insertUnorderedList','insertOrderedList','insertImage','insertVideo','insertHorizontalRule',
+     'clearFormatting','toggleEditorMode'],
+    ],
 };
 }

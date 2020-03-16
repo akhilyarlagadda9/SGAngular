@@ -185,7 +185,7 @@
       </ion-item>
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Production Type</ion-label>
-        <ion-select [(ngModel)]="header.Version.ProductionTypeID" name="ProductionTypeID" class="labelfont">
+        <ion-select [(ngModel)]="header.Version.JobTypeID" name="JobTypeID" class="labelfont">
           <ion-select-option *ngFor="let p of productionTypeList" [value]="p.Name">{{p.Name}}
           </ion-select-option>
         </ion-select>

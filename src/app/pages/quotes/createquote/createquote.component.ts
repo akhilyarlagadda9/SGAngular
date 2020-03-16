@@ -38,13 +38,13 @@ export class CreatequoteComponent implements OnInit {
       //SalesPersonID : _userModel.logInUserEmpID,
       JobName: "", Address1: "", Address2: "", City: "", State: "", Zipcode: "", YearBuilt: "",
       LeadInfo: {
-        LeadTypeID: "", SourceID: 0, HearBefore: 2, HearAbout: "",
+        ID:0,LeadTypeID: "", SourceID: 0, HearBefore: 2, HearAbout: "",
       },
       Version: {
-        AccName: "", PriceListID: "", ProductionTypeID: "", CustTypeID: 4, InvoiceTo: 1, ParentAccID: 0, ChildAccID: 0, StatusID: 1,
+        ID:0,AccName: "", PriceListID: "", ProductionTypeID: "", CustTypeID: 4, InvoiceTo: 1, ParentAccID: 0, ChildAccID: 0, StatusID: 1,
         ParentCustInfo: {}, ChildParentCustInfo: {},
         Customer: {
-          Name: "", FirstName: "", LastName: "", PPhone: "", Email: "", chkflag: false,
+         ID:0,TypeID:0, Name: "", FirstName: "", LastName: "", PPhone: "", Email: "", chkflag: false,
         },
       },
     };
@@ -80,7 +80,6 @@ export class CreatequoteComponent implements OnInit {
   //get f() { return this.registerForm.controls; }
 
   ActionQuoteSubmit(form: any) {
-    debugger;
     if (form.valid) {
       //this.showLoader();
       this.ValidateHeader();
@@ -122,6 +121,9 @@ export class CreatequoteComponent implements OnInit {
         header.Version.ParentAccID = modelItem.ParentID;
       }
     }
+    header.ContactInfo = header.ContactInfo == "" ? {} : header.ContactInfo;
+  header.Version.IsAccAsCustomer = header.Version.IsAccAsCustomer == true ? 1 :0;
+    this.header = header;
   }
 
   async ActionShowPopover(ev: any, typeId: number, search, clickType: number) {
@@ -171,7 +173,7 @@ export class CreatequoteComponent implements OnInit {
         this.header.Version.AccName = info.SelName + info.ShowHyphen + info.Name;
         this.header = this.qRep.Prepareparentcustmodel(this.header, info);
         this.populateSalesPersonList(info);
-        //  populateSelPriceList(modelItem);
+        this.populatePriceList(info);
         this.populateEstimatorList(info);
         this.populateProjManagerList(info);
         this.ActionSameAsCustomerAddress();
@@ -200,8 +202,8 @@ export class CreatequoteComponent implements OnInit {
     this.qServe.CustTypeResourceList(Id, 9).subscribe(data => { this.projectManagersList = data });
     this.qServe.QuoteMasterList(24).subscribe(data => { this.productionTypeList = data;
       if(this.productionTypeList != null){
-let model = this.productionTypeList[0];
-this.header.Version.ProductionTypeID = model.ID;
+               let model = this.productionTypeList[0];
+              this.header.Version.JobTypeID = model.ID;
 //this.header.Version.ProductionTypeID = model.Name;
       }
      });
@@ -269,6 +271,7 @@ this.header.Version.ProductionTypeID = model.ID;
     if (modelItem.SalesPersonIDs != null && modelItem.SalesPersonIDs != "") {
       salesperList = JSON.parse(modelItem.SalesPersonIDs);
       salesperList.map(function (elem) { elem.ResourceName = elem.Name; elem.ResourceID = elem.ID; return elem });
+      
     }
     if (salesperList.length == 0) {
       salesperList = this.salesPersonsList;
@@ -276,6 +279,19 @@ this.header.Version.ProductionTypeID = model.ID;
       this.header.SalesPersonID = salesperList[0].ID;
     }
     return salesperList;
+  }
+  populatePriceList(modelItem) {
+    let priceList = [];
+    if (modelItem.PriceListIDs != null && modelItem.PriceListIDs != "") {
+      priceList = JSON.parse(modelItem.PriceListIDs);
+      priceList.map(function (elem) { elem.Name = elem.Name; elem.ID = elem.ID; return elem });
+    }
+    if (priceList.length == 0) {
+      priceList = this.priceList;
+    } else {
+      this.header.PriceListID = priceList[0].RefID;
+    }
+    return priceList;
   }
   populateEstimatorList(modelItem) {
     let salesperList = [];

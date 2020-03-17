@@ -70,6 +70,12 @@ export class CommonEditMailHubComponent implements OnInit {
     }
     console.log(this.mailDetails);
   }
+
+
+  onBlurMethod(){
+    this.mailDetails["mailBody"] = document.getElementById("mail_body").innerHTML;
+  }
+
   getToItems(ev: any) {
      var result = ev.substring(ev.length, (ev.lastIndexOf(",")+1));
      if(result==""){
@@ -188,17 +194,17 @@ export class CommonEditMailHubComponent implements OnInit {
     issave: issave
   });
 }
-config: AngularEditorModule = {
-  editable: true,
-  spellcheck: true,
-  height: '100%',
-  //minHeight: '5rem',
-  placeholder: 'Enter text here...',
-  autoFocus: true,
-  toolbarHiddenButtons: [
-    ['undo','redo','strikeThrough','subscript','superscript','justifyLeft','justifyCenter','justifyRight','justifyFull',
-     'indent','outdent','insertUnorderedList','insertOrderedList','insertImage','insertVideo','insertHorizontalRule',
-     'clearFormatting','toggleEditorMode'],
-    ],
-};
+// config: AngularEditorModule = {
+//   editable: true,
+//   spellcheck: true,
+//   height: '100%',
+//   //minHeight: '5rem',
+//   placeholder: 'Enter text here...',
+//   autoFocus: true,
+//   toolbarHiddenButtons: [
+//     ['undo','redo','strikeThrough','subscript','superscript','justifyLeft','justifyCenter','justifyRight','justifyFull',
+//      'indent','outdent','insertUnorderedList','insertOrderedList','insertImage','insertVideo','insertHorizontalRule',
+//      'clearFormatting','toggleEditorMode'],
+//     ],
+// };
 }

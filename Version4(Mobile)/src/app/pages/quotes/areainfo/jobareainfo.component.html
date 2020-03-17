@@ -75,43 +75,32 @@
       <ion-row>
       <ion-col>
         <span class="colorblue textfont14">UM:</span>
-        <span *ngIf="mat.IsChg == '2' && mat.MaterialID > 0">{{ mat.MaterialName }}
-            <span *ngIf="(mat.ProductItemNo != '' && mat.ProductItemNo != null) || (mat.ProSubGroup !=null && mat.ProSubGroup !='')">[# {{mat.ProductItemNo}} - {{mat.ProSubGroup}}]
-            </span>&nbsp;
-          </span>
-        <span *ngIf="mat.IsChg == '0' && mat.MaterialID > 0">{{ mat.MaterialName }}
+      
+        <span *ngIf="mat.MaterialID > 0">{{ mat.MaterialName }}
         <span *ngIf="(mat.ProductItemNo != '' && mat.ProductItemNo != null) || (mat.ProSubGroup !=null && mat.ProSubGroup !='')">[# {{mat.ProductItemNo}} - {{mat.ProSubGroup}}]</span></span>
         <span *ngIf="mat.CoSrNo > 0 && mat.MaterialID > 0">&nbsp;C{{mat.CoSrNo}}&nbsp;</span>
         <span *ngIf="mat.PriceByID == '1' && mat.Qty != 0 && mat.MaterialID > 0">(Price By Slab)</span>
         <span *ngIf="mat.PriceByID == '1' && mat.Qty == 0 && mat.MaterialID > 0">(Price By Slab)</span>
         <span *ngIf="mat.PriceByID == '2' && mat.MaterialID > 0">(Slab Wgt. Avg.)</span>
         <span *ngIf="(mat.ProductItemNo == null || mat.ProductItemNo == '')">(No Match)</span>
-        &nbsp;<span *ngIf="mat.IsOptional == 1">&nbsp;Optional&nbsp;</span>@
-        <span *ngIf="mat.IsChg == '2'">{{mat.Qty | number:'.2-2'}}</span>
-        <span *ngIf="mat.IsChg == '0'">{{mat.Qty | number:'.2-2'}}</span>
+        &nbsp;<span *ngIf="mat.IsOptional == 1">&nbsp;Optional&nbsp;</span>
+       
       </ion-col>
-      <ion-col size="3" class="text-right">$&nbsp;
-        <span *ngIf="mat.IsChg == '2'">{{(mat.Qty * mat.UnitPrice) | number:'.2-2'}}&nbsp;</span>
-        <span *ngIf="mat.IsChg == '0'">{{(mat.Qty * mat.UnitPrice) | number:'.2-2'}}&nbsp;</span>
+      <ion-col size="3" class="text-right">
+        <span>{{mat.JobQty | number:'.2-2'}}</span>
       </ion-col>
     </ion-row>
     </ion-col>
   </ion-row>
   <ion-row class="rowlineitem" *ngFor="let material of partinfo.PartMaterialList">
     <ion-col (click)="ActionEditMaterial(material)"><u class="colorblue textfont14">M</u>:
-      <span *ngIf="material.IsChg == '2' && material.ID > 0">{{material.MaterialName }}</span>
-      <span *ngIf="material.IsChg == '0' && material.ID > 0">{{ material.MaterialName }}</span>
+    
+      <span *ngIf="material.ID > 0">{{ material.MaterialName }}</span>
       <span *ngIf="material.CoSrNo > 0 && material.ID > 0">&nbsp;C{{material.CoSrNo}}</span>
       <span *ngIf="material.IsOptional == 1">Optional</span>&nbsp;
-      <span>@<u class="colorgreen">
-          <span *ngIf="material.IsChg == '2'">{{ material.Qty | number : '.2-2'}}</span>
-          <span *ngIf="material.IsChg == '0'">{{ material.Qty | number : '.2-2'}}</span>
-        </u>
-      </span>
     </ion-col>
-    <ion-col size="3" class="text-right">$&nbsp;
-      <span *ngIf="material.IsChg == '2'">{{ (material.Qty * material.UnitPrice) | number : '.2-2'}}&nbsp;</span>
-      <span *ngIf="material.IsChg == '0'">{{ (material.Qty * material.UnitPrice) | number : '.2-2'}}&nbsp;</span>
+    <ion-col size="3" class="text-right">
+      <span>{{  material.JobQty | number : '.2-2'}}</span>
     </ion-col>
   </ion-row>
   <ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList"
@@ -124,14 +113,10 @@
           <span *ngIf="fabrication.IsChg != '2'">({{size.Width}} * {{size.Height}})</span>
         </span> <span *ngIf="size.Sqft == 0">-</span>&nbsp;
       </span>
-      <span>@
-        <u class="colorgreen">
-          <span *ngIf="fabrication.IsChg == '2'">{{ fabrication.PartSqft | number : '.2-2'}}</span>
-          <span *ngIf="fabrication.IsChg != '2'">{{ fabrication.PartSqft | number : '.2-2'}}</span>
-        </u>
-      </span>
     </ion-col>
-    <ion-col size="3" class="text-right">-&nbsp;</ion-col>
+    <ion-col size="3" class="text-right">&nbsp;
+          <span>{{ fabrication.Sqft | number : '.2-2'}}</span>
+    </ion-col>
   </ion-row>
   <ion-row class="rowlineitem" *ngFor="let splash of partinfo.SplashList">
     <ion-col (click)="ActionEditSplash(splash, i)"><u class="colorblue textfont14">Spl</u>:
@@ -139,13 +124,10 @@
       <span *ngIf="splash.IsChg != '2'">{{ splash.Splash }}</span>
       <span *ngIf="splash.CoSrNo > '0'">&nbsp;C{{splash.CoSrNo}}</span>
       &nbsp;<span *ngIf="splash.IsOptional == 1">Optional</span>&nbsp;
-      <span>@<u class="colorgreen">
-          <span *ngIf="splash.IsChg == '2'">{{ splash.Sqft | number : '.2-2'}}</span>
-          <span *ngIf="splash.IsChg == '0'">{{ splash.Sqft | number : '.2-2'}}</span>
-        </u>
-      </span>
     </ion-col>
-    <ion-col size="3" class="text-right">-&nbsp;</ion-col>
+    <ion-col size="3" class="text-right">&nbsp;
+      <span >{{ splash.JobQty | number : '.2-2'}}</span>
+    </ion-col>
   </ion-row>
   <ion-row class="rowlineitem" *ngFor="let edge of partinfo.EdgeList">
     <ion-col (click)="ActionEditEdge(edge)"><u class="colorblue textfont14">E</u>:
@@ -153,16 +135,9 @@
       <span *ngIf="edge.IsChg != '2'">{{ edge.EdgeProfile }}</span>
       <span *ngIf="edge.CoSrNo > '0'">C{{edge.CoSrNo}}</span>
       <span *ngIf="edge.IsOptional == 1">&nbsp;Optional</span>&nbsp;
-      <span>@
-        <u class="colorgreen">
-          <span *ngIf="edge.IsChg == '2'">{{ edge.LF | number : '.2-2'}}</span>
-          <span *ngIf="edge.IsChg == '0'">{{ edge.LF | number : '.2-2'}}</span>
-        </u>
-      </span>
     </ion-col>
-    <ion-col size="3" class="text-right">$
-      <span *ngIf="edge.IsChg == '2'">{{ edge.Amt | number : '.2-2'}}&nbsp;</span>
-      <span *ngIf="edge.IsChg == '0'">{{ edge.Amt | number : '.2-2'}}&nbsp;</span>
+    <ion-col size="3" class="text-right">
+          <span >{{ edge.JobQty | number : '.2-2'}}</span>
     </ion-col>
   </ion-row>
   <ion-row class="rowlineitem" *ngFor="let sinkfaucet of partinfo.SinkList">
@@ -173,16 +148,9 @@
         <span *ngIf="sinkfaucet.CoSrNo > 0">&nbsp;C{{sinkfaucet.CoSrNo}}</span>
         <span *ngIf="sinkfaucet.IsOptional == 1">Optional</span>&nbsp;
       </span>
-      <span>
-        @<u class="colorgreen">
-          <span *ngIf="sinkfaucet.IsChg == '2'">{{ sinkfaucet.Qty | number : '.2-2'}}</span>
-          <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Qty | number : '.2-2'}}</span>
-        </u>
-      </span>
     </ion-col>
-    <ion-col size="3" class="text-right">$
-      <span *ngIf="sinkfaucet.IsChg == '2'">{{ sinkfaucet.Amount | number : '.2-2'}}&nbsp;</span>
-      <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Amount | number : '.2-2'}}&nbsp;</span>
+    <ion-col size="3" class="text-right">
+          <span>{{ sinkfaucet.JobQty | number : '.2-2'}}</span>
     </ion-col>
   </ion-row>
   <ion-row class="rowlineitem" *ngFor="let faucet of partinfo.FaucetList">
@@ -193,16 +161,9 @@
         <span *ngIf="faucet.CoSrNo > 0">&nbsp;C{{faucet.CoSrNo}}&nbsp;</span>
         <span *ngIf="faucet.IsOptional == 1">&nbsp;Optional&nbsp;</span> &nbsp;
       </span>
-      <span>@
-        <u class="colorgreen">
-          <span *ngIf="faucet.IsChg == '2'">{{ faucet.Qty | number : '.2-2'}}</span>
-          <span *ngIf="faucet.IsChg == '0'">{{ faucet.Qty | number : '.2-2'}}</span>
-        </u>
-      </span>
     </ion-col>
-    <ion-col size="3" class="text-right">$
-      <span *ngIf="faucet.IsChg == '2'">{{ faucet.Amount | number : '.2-2'}}&nbsp;</span>
-      <span *ngIf="faucet.IsChg == '0'">{{ faucet.Amount | number : '.2-2'}}&nbsp;</span>
+    <ion-col size="3" class="text-right">
+          <span>{{ faucet.JobQty | number : '.2-2'}}</span>
     </ion-col>
   </ion-row>
   <ion-row class="rowlineitem" *ngFor="let coutout of partinfo.CutoutList">
@@ -213,16 +174,9 @@
           <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
           <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
           &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
-          <span>@
-            <u class="colorgreen">
-              <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
-              <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
-            </u>
-          </span>
         </ion-col>
-        <ion-col size="3" class="text-right">$
-          <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
-          <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+        <ion-col size="3" class="text-right">
+              <span>{{ coutout.JobQty | number : '.2-2'}}</span>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -233,16 +187,9 @@
           <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
           <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
           &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
-          <span>@
-            <u class="colorgreen">
-              <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
-              <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
-            </u>
-          </span>
         </ion-col>
-        <ion-col size="3" class="text-right">$
-          <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
-          <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+        <ion-col size="3" class="text-right">
+              <span>{{ coutout.JobQty | number : '.2-2'}}</span>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -253,16 +200,9 @@
           <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
           <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
           &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
-          <span>@
-            <u class="colorgreen">
-              <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
-              <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
-            </u>
-          </span>
         </ion-col>
-        <ion-col size="3" class="text-right">$
-          <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
-          <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+        <ion-col size="3" class="text-right">
+              <span>{{ coutout.JobQty | number : '.2-2'}}</span>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -274,20 +214,9 @@
       <span *ngIf="fabrication.IsChg != '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}} Sqft.
         Fabrication</span>
       <span *ngIf="fabrication.CoSrNo > '0'">C{{fabrication.CoSrNo}}</span>&nbsp;
-      <span>@
-        <u class="colorgreen">
-          <span
-            *ngIf="fabrication.IsChg == '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}}</span>
-          <span
-            *ngIf="fabrication.IsChg != '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}}</span>
-        </u>
-      </span>
     </ion-col>
-    <ion-col size="3" class="text-right">$
-      <span
-        *ngIf="fabrication.IsChg == '2'">{{ ((fabrication.PartSqft + fabrication.SplashSqft) * fabrication.LaborUnitPrice) | number : '.2-2'}}&nbsp;</span>
-      <span
-        *ngIf="fabrication.IsChg != '2'">{{ ((fabrication.PartSqft + fabrication.SplashSqft) * fabrication.LaborUnitPrice)  | number : '.2-2'}}&nbsp;</span>
+    <ion-col size="3" class="text-right">
+          <span>{{ (fabrication.JobQty + fabrication.JobSplashSf) | number : '.2-2'}}</span>
     </ion-col>
   </ion-row>
   <ion-row class="rowlineitem" *ngFor="let labor of partinfo.LaborList">
@@ -300,16 +229,9 @@
             <span *ngIf="labor.CoSrNo > 0">&nbsp;C{{labor.CoSrNo}}&nbsp;</span>
             <span *ngIf="labor.IsOptional == 1">&nbsp;Optional&nbsp;</span>
           </span>&nbsp;
-          <span>@
-            <u class="colorgreen">
-              <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
-              <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
-            </u>
-          </span>
         </ion-col>
-        <ion-col size="3" class="text-right">$
-          <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-          <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+        <ion-col size="3" class="text-right">
+              <span >{{ labor.JobQty | number : '.2-2'}}</span>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -322,16 +244,9 @@
             <span *ngIf="labor.CoSrNo > 0">&nbsp;C{{labor.CoSrNo}}&nbsp;</span>
             <span *ngIf="labor.IsOptional == 1">&nbsp;Optional&nbsp;</span>
           </span>&nbsp;
-          <span>@
-            <u class="colorgreen">
-              <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
-              <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
-            </u>
-          </span>
         </ion-col>
-        <ion-col size="3" class="text-right">$
-          <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-          <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+        <ion-col size="3" class="text-right">
+              <span>{{ labor.JobQty | number : '.2-2'}}</span>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -342,16 +257,9 @@
           <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
           <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
           <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
-          <span>@
-            <u class="colorgreen">
-              <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
-              <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
-            </u>
-          </span>
         </ion-col>
-        <ion-col size="3" class="text-right">$
-          <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-          <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+        <ion-col size="3" class="text-right">
+              <span>{{ labor.JobQty | number : '.2-2'}}</span>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -364,16 +272,9 @@
         <span *ngIf="sinkfaucet.CoSrNo > 0">C{{sinkfaucet.CoSrNo}}</span>
         <span *ngIf="sinkfaucet.IsOptional == 1">Optional</span>&nbsp;
       </span>
-      <span>@
-        <u class="colorgreen">
-          <span *ngIf="sinkfaucet.IsChg == '2'">{{ sinkfaucet.Qty | number : '.2-2'}}</span>
-          <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Qty | number : '.2-2'}}</span>
-        </u>
-      </span>
     </ion-col>
-    <ion-col size="3" class="text-right">$
-      <span *ngIf="sinkfaucet.IsChg == '2'">{{ sinkfaucet.Amount | number : '.2-2'}}&nbsp;</span>
-      <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Amount | number : '.2-2'}}&nbsp;</span>
+    <ion-col size="3" class="text-right">
+          <span>{{ sinkfaucet.JobQty | number : '.2-2'}}</span>
     </ion-col>
   </ion-row>
   <ion-row class="rowlineitem" *ngFor="let other of partinfo.OtherList">
@@ -384,16 +285,9 @@
         <span *ngIf="other.CoSrNo > 0">C{{other.CoSrNo}}</span>
         <span *ngIf="other.IsOptional == 1">Optional</span>&nbsp;
       </span>
-      <span>@
-        <u class="colorgreen">
-          <span *ngIf="other.IsChg == '2'">{{ other.Qty | number : '.2-2'}}</span>
-          <span *ngIf="other.IsChg == '0'">{{ other.Qty | number : '.2-2'}}</span>
-        </u>
-      </span>
     </ion-col>
-    <ion-col size="3" class="text-right">$
-      <span *ngIf="other.IsChg == '2'">{{ other.Amount | number : '.2-2'}}&nbsp;</span>
-      <span *ngIf="other.IsChg == '0'">{{ other.Amount | number : '.2-2'}}&nbsp;</span>
+    <ion-col size="3" class="text-right">
+          <span>{{ other.JobQty | number : '.2-2'}}</span>
     </ion-col>
   </ion-row>
   <ion-row class="rowlineitem" *ngFor="let labor of partinfo.TileList">
@@ -404,16 +298,9 @@
         <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
         <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
       </span>
-      <span>@
-        <u class="colorgreen">
-          <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
-          <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
-        </u>
-      </span>
     </ion-col>
-    <ion-col size="3" class="text-right">$
-      <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-      <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+    <ion-col size="3" class="text-right">
+          <span>{{ labor.JobQty | number : '.2-2'}}</span>
     </ion-col>
   </ion-row>
   <ion-row class="rowlineitem" *ngFor="let labor of partinfo.CabinetList">
@@ -422,16 +309,9 @@
       <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
       <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
       <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
-      <span>@
-        <u class="colorgreen">
-          <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
-          <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
-        </u>
-      </span>
     </ion-col>
-    <ion-col size="3" class="text-right">$
-      <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-      <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+    <ion-col size="3" class="text-right">
+          <span>{{ labor.JobQty | number : '.2-2'}}</span>
     </ion-col>
   </ion-row>
   <ion-row class="rowlineitem" *ngFor="let labor of partinfo.CarpetList">
@@ -440,16 +320,9 @@
       <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
       <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
       <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
-      <span>@
-        <u class="colorgreen">
-          <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
-          <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
-        </u>
-      </span>
     </ion-col>
-    <ion-col size="3" class="text-right">$
-      <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-      <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+    <ion-col size="3" class="text-right">
+      <span >{{ labor.JobQty | number : '.2-2'}}</span>
     </ion-col>
   </ion-row>
   <ion-row class="rowlineitem" *ngFor="let labor of partinfo.ConsumableList">
@@ -458,16 +331,9 @@
       <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
       <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
       <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
-      <span>@
-        <u class="colorgreen">
-          <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
-          <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
-        </u>
-      </span>
     </ion-col>
-    <ion-col size="3" class="text-right">$
-      <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-      <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+    <ion-col size="3" class="text-right">
+          <span>{{ labor.JobQty | number : '.2-2'}}</span>
     </ion-col>
   </ion-row>
   <ion-row class="rowlineitem" *ngFor="let labor of partinfo.ToolList">
@@ -476,16 +342,10 @@
       <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
       <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
       <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
-      <span>@
-        <u class="colorgreen">
-          <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
-          <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
-        </u>
-      </span>
     </ion-col>
-    <ion-col size="3" class="text-right">$
-      <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-      <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+    <ion-col size="3" class="text-right">
+      <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
+          <span>{{ labor.JobQty | number : '.2-2'}}</span>
     </ion-col>
   </ion-row>
   <ion-row class="rowlineitem" *ngFor="let response of partinfo.CustomerItemList">
@@ -501,14 +361,9 @@
       <ion-row>
         <ion-col (click)="ActionCreateTile(3,'Tool')" color="danger"><u class="colorblue textfont14">Disc</u>:
           <span>{{partdisc.Description}}</span>
-          <span>@
-            <u class="colorgreen">
-              {{ partdisc.Qty | number: '.2-2'}}
-            </u>
-          </span>
         </ion-col>
-        <ion-col size="3" class="text-right">$
-          {{ (partdisc.Qty * partdisc.Price) | number: '.2-2'}}&nbsp;
+        <ion-col size="3" class="text-right">
+          {{ partdisc.JobQty | number: '.2-2'}}&nbsp;
         </ion-col>
       </ion-row>
     </ion-col>

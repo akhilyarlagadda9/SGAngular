@@ -24,7 +24,7 @@ declare var _qscope, QBRinitAreadrawing, QBRinitdrawingareapartshape, QBRinitdra
 
 @Component({
   selector: 'app-areainfo',
-  templateUrl: './areainfo.component.html',
+  templateUrl: './jobareainfo.component.html',
   styleUrls: ['./areainfo.component.scss'],
   inputs: [`Version`]
 })

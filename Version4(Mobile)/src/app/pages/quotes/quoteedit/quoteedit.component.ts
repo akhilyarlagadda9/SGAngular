@@ -12,6 +12,8 @@ import { ManagementsummaryComponent } from '../managementsummary/managementsumma
 import { PoeditComponent } from '../poedit/poedit.component';
 import { ActionquoteComponent } from '../actionquote/actionquote.component';
 import { QuoterepService } from 'src/app/service/quoterep.service';
+
+import { CallNumber } from '@ionic-native/call-number/ngx';
 //import { QuoterepService } from 'src/app/service/quoterep.service';
 
 declare var _qscope: any;
@@ -22,7 +24,7 @@ declare var _qscope: any;
   styleUrls: ['./quoteedit.component.scss'],
 })
 export class QuoteeditComponent implements OnInit {
-  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private service: QuoteService,
+  constructor(public Modalcntrl: ModalController, private navParams: NavParams,private callNumber: CallNumber, private service: QuoteService,
      private navCtrl: NavController, private repService: QuoterepService,public actionSheetCtrl: ActionSheetController) { }
   quoteId: number;
   quoteno: string;
@@ -268,6 +270,14 @@ export class QuoteeditComponent implements OnInit {
       ]
     });
     (await actionSheet).present();
+  }
+
+
+  callNow(number) {
+    this.callNumber.callNumber(number, true)
+      .then(res => console.log('Launched dialer!', res))
+      .catch(err => console.log('Error launching dialer', err));
+      console.log(number)
   }
 
 }

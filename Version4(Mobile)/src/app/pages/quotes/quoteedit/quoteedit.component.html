@@ -73,13 +73,13 @@
                         <span class="valignsup">
                             {{contact.Name}}
                         </span>
-                        <span *ngIf="contact.Phone != '' && contact.Phone != null" class="valignsup">
+                        <span *ngIf="contact.Phone != '' && contact.Phone != null" name="contact" class="valignsup">
                             - &nbsp; {{contact.Phone}}
                         </span>
                     </ion-col>
                     <ion-col size="12" *ngIf="contact.Email != '' && contact.Email != null">
                         <ion-icon class="text-font" class="fontsmall" style="display: none;" name="contact"></ion-icon>
-                        <ion-icon class="text-font" class="fontsmall" name="call"></ion-icon> <span
+                        <ion-icon class="text-font" class="fontsmall" name="call" (click)="callNow(contact.Phone)"></ion-icon> <span
                             class="valignsup">{{contact.Email}}</span>
                     </ion-col>
                 </div>

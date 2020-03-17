@@ -75,7 +75,11 @@
     <ion-input placeholder="Subject" [(ngModel)]="mailDetails.Subject" name="Subject" autofocus></ion-input>
   </ion-item>
   <!-- <ckeditor tagName="textarea" [(ngModel)]="mailDetails.mailBody" name="mailBody" [editor]="Editor" ></ckeditor> -->
-  <angular-editor [(ngModel)]="mailDetails.mailBody" name="mailBody" [config]="config"></angular-editor>
+  <!-- <angular-editor [(ngModel)]="mailDetails.mailBody" name="mailBody" [config]="config"></angular-editor> -->
+  &nbsp;
+  <div class="col-xs-6 col-sm-3" class="wideInput" id="mail_body" contenteditable="true" data-text="Enter text here" [innerHTML]="mailDetails.mailBody" (blur)="onBlurMethod()">
+  <!-- <textarea class="wideInput" placeholder="Enter mail Body" [innerHTML]="mailDetails.mailBody"></textarea> -->
+  </div>
 </ion-content>
 </form>
 

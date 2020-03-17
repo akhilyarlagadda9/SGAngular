@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, AngularDelegate } from '@ionic/angular';
 import { QuotegetService } from 'src/app/service/quoteget.service';
+import { OverlayEventDetail } from '@ionic/core';
+import { AddactivityComponent } from 'src/app/pages/project/addactivity/addactivity.component';
 
 @Component({
   selector: 'app-activities',
@@ -12,6 +14,7 @@ export class ActivitiesComponent implements OnInit {
   VersionId: any;
   PhaseId: any;
   ActivitiesList: any;
+  eventinfo: { ID: number; VersionID: number; PhaseID: number; ActTypeID: number; ResourceList: any[]; SchStartTime: Date; SchEndTime: Date; ProjectID: number; JobName: string; TypeID: number; };
 
   constructor(public Modalcntrl : ModalController,private getservice: QuotegetService) { }
 
@@ -23,7 +26,48 @@ export class ActivitiesComponent implements OnInit {
     this.getservice.QuoteactivitiesList(this.VersionId,this.PhaseId).subscribe(
       data => { this.ActivitiesList = data; }
     );
+    console.log(this.ActivitiesList)
   }
 
+  
+/* async addActivities() {debugger
+    let actinfo = {}
+    //let viewtypeId = { viewtypeId: viewId }
+    const modal = await this.Modalcntrl.create({
+      component: AddactivityComponent,
+      componentProps: actinfo,
+    });
+    return await modal.present();
+  } */
 
+
+  async addActivities(Id: number) {
+    let actinfo = {
+      ID: Id, VersionID: this.VersionId, PhaseID: this.PhaseId, ActTypeID: 11, ResourceList: [], SchStartTime: new Date(), SchEndTime: new Date(),
+      ProjectID: 0, JobName: "", TypeID: 0
+    }
+    actinfo = Id > 0 ? this.eventinfo : actinfo
+    //let viewtypeId = { viewtypeId: viewId }
+    const modal = await this.Modalcntrl.create({
+      component: AddactivityComponent,
+      componentProps: actinfo,
+    });
+
+    modal.onDidDismiss().then((result: OverlayEventDetail) => {
+      if (result.data !== null && result.data != undefined) {
+        if (result.data.issave == true) {
+          // this.UpdateActivty(result.data.componentProps);
+          //this.ActionLoadEvents();
+        }
+        //this.calObj.ActTypeID = result.data.ActTypeId;
+        // this.calObj.ResourceIds = result.data.ResourceIds;
+        // this.calObj.ResourceNames = result.data.ResourceNames;
+        // this.calObj.ActivityType = result.data.ActivityType
+        //this.ActionLoadEvents();
+      }
+    });
+
+    return await modal.present();
+
+  }
 }

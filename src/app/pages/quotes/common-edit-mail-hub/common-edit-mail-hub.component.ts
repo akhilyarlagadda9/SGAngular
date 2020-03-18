@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { QuoteService } from 'src/app/service/quote.service';
 import { QuoterepService } from 'src/app/service/quoterep.service';
+import { QuotegetService } from 'src/app/service/quoteget.service';
 
 @Component({
   selector: 'app-common-edit-mail-hub',
@@ -15,12 +16,12 @@ export class CommonEditMailHubComponent implements OnInit {
   Template:String = ""; To:String = "";From:String="";CC:String="";Subject:String="";mailBody:String="";
   arrInfo:Array<any>=[];
  // public Editor = ClassicEditor; 
-  isItemToAvailable:boolean=false;mailList:Array<any>=[]; mailFilter:Array<any>=[];
+  isItemToAvailable:boolean=false;mailList:Array<any>=[]; mailFilter:Array<any>=[]; blnIsAtttachAvailable:boolean=false;getNoteAttachments:Array<any>=[];
   isItemCCAvailable:boolean = false; headerData:any;
   templateList:Array<any>=[]; mailDetails:object={}; emailList:Array<any>=[];
   @ViewChild('To', {static: false}) pRef: ElementRef;
 
-  constructor(public Modalcntrl: ModalController,private qteService: QuoteService,private navParams: NavParams,private qRepService:QuoterepService) { }
+  constructor(public Modalcntrl: ModalController,private qteService: QuoteService,private navParams: NavParams,private qRepService:QuoterepService,private qGetService:QuotegetService) { }
 
   ngOnInit() {
     this. mailDetails ={
@@ -47,6 +48,10 @@ export class CommonEditMailHubComponent implements OnInit {
         });
     });
     
+    this.qGetService.NoteAttachements(this.headerData.ID).subscribe(data=>{
+        this.getNoteAttachments.push(data[0]);
+    });
+    console.log(this.getNoteAttachments);
   }
   
   ActionChangeTempl(selectedTemplate){
@@ -182,8 +187,13 @@ export class CommonEditMailHubComponent implements OnInit {
   }
  }
 //Attcahments
- ActionUploadAttach(ev:any){
-   console.log(ev);
+ActionOnAttach(){
+  this.blnIsAtttachAvailable =true;
+   
+ }
+ addAttach(file){
+  this.blnIsAtttachAvailable =false;
+  console.log(file);
  }
 
  //Close add activity function

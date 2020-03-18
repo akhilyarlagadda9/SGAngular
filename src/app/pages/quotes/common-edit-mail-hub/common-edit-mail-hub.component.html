@@ -5,13 +5,23 @@
       <div><b>Email</b></div>
 
     </ion-title>
-    
-    <ion-icon ios="ios-attach"  slot="end" md="md-attach" style="color:black;zoom:2.0;"></ion-icon>
+  
+   <ion-button slot="end" size="small" type="submit" (click)="ActionOnAttach()"><ion-icon ios="ios-attach"  slot="end" md="md-attach" style="color:black;zoom:2.0;"></ion-icon></ion-button>
+
     <!-- <input type="file" (change)="ActionUploadCommhubAttach($event)"> -->
     <ion-button slot="end" size="small" type="submit"><ion-icon ios="ios-send" md="md-send" style="color:black;zoom:2.0;"></ion-icon></ion-button>
     <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCommhubedit(false)">X</ion-button>
   </ion-toolbar>
 </ion-header>
+<ion-item *ngIf="blnIsAtttachAvailable">
+  <ion-row style="width: 100%;" *ngFor="let attach of getNoteAttachments" (click)="addAttach(attach)">
+    <ion-row style="width: 100%;">
+      <ion-col size="8">
+        <span>{{attach.FileName}}</span>
+      </ion-col>
+     </ion-row>
+  </ion-row>
+</ion-item>
 <ion-content>
   <ion-item>
     <ion-label>Template:<span

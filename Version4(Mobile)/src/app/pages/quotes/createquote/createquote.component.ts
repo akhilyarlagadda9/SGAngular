@@ -81,7 +81,7 @@ export class CreatequoteComponent implements OnInit {
 
   ActionQuoteSubmit(form: any) {
     if (form.valid) {
-      //this.showLoader();
+      this.showLoader();
       this.ValidateHeader();
       this.qServe.ActionSaveQuote(this.header).subscribe(data => {
         let Ids = data.split(',');
@@ -91,6 +91,7 @@ export class CreatequoteComponent implements OnInit {
           accountid: this.header.Version.ParentAccID, childaccid: this.header.Version.ChildAccID,
            phaseid: 0, viewtypeid: 0, layoutId: 2
         };
+        this.hideLoader()
         this.ActionCloseCreateQuote(true);
       })
     }

@@ -22,14 +22,14 @@ export class QuoteService {
   ActionQuickAreaList(versionId:number,areaId:number,partId:number,mode:number): Observable<any> {
     return this.http.get<any>(this.url +  'api/QEdit/ActionQuickAreaList?versionId=' + versionId + '&areaId=' + areaId + "&partId=" + partId + "&mode=" + mode) 
   }
-  ActionPartInfo(versionId:number,areaId:number,partId:number,mode:number):Observable<any>{
-    return this.http.get<any>(this.url +  'api/QEdit/ActionPartInfo?versionId=' + versionId + '&areaId=' + areaId + "&partId=" + partId + "&mode=" + mode) 
+  ActionPartInfo(versionId:number,phaseId:number,areaId:number,partId:number,mode:number):Observable<any>{
+    return this.http.get<any>(this.url +  'api/QEdit/ActionPartInfo?versionId=' + versionId + '&phaseId=' + phaseId + '&areaId=' + areaId + "&partId=" + partId + "&mode=" + mode) 
   }
-  ActionQuoteAreaList(versionID:number): Observable<any> {
-    return this.http.get<any>(this.url +  'api/QEdit/ActionQuoteAreaList?versionID=' + versionID) 
+  ActionQuoteAreaList(versionID:number,phaseID:number): Observable<any> {
+    return this.http.get<any>(this.url +  'api/QEdit/ActionQuoteAreaList?versionID=' + versionID + "&phaseID=" + phaseID) 
   }
-  ActionQuickPartList(versionId:number,areaId:number,partId:number,mode:number):Observable<any>{
-    return this.http.get<any>(this.url +  'api/QEdit/ActionQuickPartList?versionId=' + versionId + '&areaId=' + areaId + "&partId=" + partId + "&mode=" + mode) 
+  ActionQuickPartList(versionId:number,phaseId:number,areaId:number,partId:number,mode:number):Observable<any>{
+    return this.http.get<any>(this.url +  'api/QEdit/ActionQuickPartList?versionId=' + versionId +'&phaseId=' + phaseId + '&areaId=' + areaId + "&partId=" + partId + "&mode=" + mode) 
   }
  
   ActionGetInvoiceList(custID:number, quoteID:number):Observable<any>{
@@ -44,6 +44,12 @@ export class QuoteService {
   GetCustomerContacts(custId:number):Observable<any> {
     return this.http.get<any>(this.url +  'api/QuoteRep3/GetCustomerContacts?custId=' + custId)
   }
+//#region JobView
+ActionGetPhaseList(versionId: number): Observable<any> {
+  return this.http.get<any>(this.url + 'api/Project3/ActionGetPhaseList?versionId=' + versionId)
+}
+//#endregion
+  
   //#endregion
 //#region  List From Admin
 LeadDictionaryLists(typeIdList):Observable<any> {
@@ -196,6 +202,16 @@ ActionGetSupplierAddDetails(supID:any):Observable<any> {
 }
 //#endregion
 //#region  Comm Hub
+ProjectProcessList(typeId:number):Observable<any> {
+  console.log(typeId);
+  return this.http.get<any>(this.url +  'api/Project/ProjectProcessList?typeId=' + typeId)
+}
+FormsList(typeId:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/FormsList?typeId=' + typeId)
+}
+CommHubPhaseList(versionID:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/CommHubPhaseList?versionID=' + versionID)
+}
 ActionTemplateList(typeId:any):Observable<any> {
   return this.http.get<any>(this.url + 'api/messageCenter/TemplateList?typeId=' + typeId) 
 }
@@ -208,16 +224,21 @@ ActionCustomerContactList(versionid:any):Observable<any> {
 ActiongettemplateList(typeId:any):Observable<any> {
   return this.http.get<any>(this.url + 'api/messageCenter/TemplateList?typeId=' + typeId)
 } 
+ActionEmailList():Observable<any> {
+  return this.http.get<any>(this.url + 'api/messageCenter/EmailList')
+}
 ActionGetEmailsEmployeeList(contactList):Observable<any> {
   var parameter = JSON.stringify(contactList);
   return this.http.post<any>(this.url + 'api/Quote/GetEmailsEmployeeList', parameter, { headers: { 'Content-Type': 'application/json' } })
 }
-ActionEmailList():Observable<any> {
-  return this.http.get<any>(this.url + 'api/messageCenter/EmailList')
-}
 ActionGetQuoteCustContactList(versionid:any):Observable<any> {
   return this.http.get<any>(this.url + 'api/Quote/CustomerContactList?versionid=' + versionid) 
 } 
+ActionCommunicationMessageList1(versionId:number, catId:number, phaseId:number, typeId:number, customerId:number, projectId:number):Observable<any> {
+  return this.http.get<any>(this.url + 'api/Quote/CommunicationMessageList1?versionId=' + versionId + "&catagoryId=" + catId + "&phaseId=" + phaseId + "&typeId=" + typeId + "&customerId=" + customerId + '&projectId=' + projectId) 
+}
+
+//#region 
 qsendEmail(model): Observable<any> {
   var parameter = JSON.stringify(model);
   console.log(parameter);

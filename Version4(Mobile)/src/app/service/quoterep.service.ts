@@ -10,19 +10,18 @@ export class QuoterepService {
   private _interfacesource = new Subject<any>();
   interface$ = this._interfacesource.asObservable();
   private service: QuoteService
-  setHeader(info: any) {
-    this._interfacesource.next(info);
-  }
+  // setHeader(info: any) {
+  //   this._interfacesource.next(info);
+  // }
   //#region Quote Header
-  // setHeader(headerInfo) {      
-  //   this.header.QuoteNo = headerInfo.QuoteNo;  
-  //   this.header.QuoteName = headerInfo.QuoteName;
-  //   this.header.ID = headerInfo.ID;
-  //   this.header.VersionID = headerInfo.Version.ID;
-  // }  
-  // getHeader() {  
-  //   return this.header;  
-  // }  
+  setHeader(info) { 
+    this.header = {ID:info.ID,QuoteNo:info.QuoteNo,QuoteName:info.QuoteName,
+      VersionID:info.Version.ID,CustomerID:info.Version.CustomerID,
+    } 
+  }  
+  getHeader() {  
+    return this.header;  
+  }  
   Prepareparentcustmodel(header, modelItem) {
     header.Version.AccName = modelItem.SelName + modelItem.ShowHyphen + modelItem.Name;
     header.Version.ParentCustInfo = modelItem;

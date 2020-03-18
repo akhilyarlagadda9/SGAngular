@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { QuotepostService } from 'src/app/service/quotepost.service';
 import { PoeditComponent } from '../poedit/poedit.component';
@@ -119,10 +119,13 @@ export class HeadereditComponent implements OnInit {
   });
   return await modal.present();
 }
-ActionSaveHeader(){
-  this.service.ActionSaveQuoteInfo(this.headerinfo).subscribe(data=>{
-    this.ActionCloseJobEdit(true);
-  })
+ActionSaveHeader(form:NgForm){
+  if (form.valid) {
+    this.service.ActionSaveQuoteInfo(this.headerinfo).subscribe(data=>{
+      this.ActionCloseJobEdit(true);
+    })
+  }
 }
+
 
 }

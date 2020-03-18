@@ -31,21 +31,21 @@ export class PoeditComponent implements OnInit {
   GetSelectedSalespersonName() {
     let poitem = this.salespersons.find(s => s.ResourceID == this.poitem.POByID);
     if (poitem != null) {
-      this.poitem.POByID = poitem.ResourceName;
+      this.poitem.POBy = poitem.ResourceName;
     }
   }
 
   ActionSavePOItem() {
     this.postservice.ActionSavePoItem(this.poitem).subscribe(data => {
-      this.ID = data;
+      this.ID = data;this.poitem.ID = data;
       this.ActionClosePOItem(true);
     })
   }
   ActionClosePOItem(issave) {
-    let item = { poitem: this.poitem, index: this.index, ID: this.ID }
+   // let item = { poitem: this.poitem, index: this.index, ID: this.ID }
     this.Modalcntrl.dismiss({
       'dismissed': true,
-      componentProps: item,
+      componentProps: this.poitem,
       issave: issave
     });
   }

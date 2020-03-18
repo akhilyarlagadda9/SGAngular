@@ -24,12 +24,12 @@ declare var _qscope, QBRinitAreadrawing, QBRinitdrawingareapartshape, QBRinitdra
 
 @Component({
   selector: 'app-areainfo',
-  templateUrl: './jobareainfo.component.html',
+  templateUrl: './areainfo.component.html',
   styleUrls: ['./areainfo.component.scss'],
-  inputs: [`Version`]
+  inputs: [`Version`,`PhaseId`]
 })
 export class AreainfoComponent implements OnInit {
-  public Version: any; coId: number; coSrNo: string;
+  public Version: any; coId: number; coSrNo: string;PhaseId:number;
   arealist: any = []; AreaID: number;
   partinfo: any = []; AreaPartID: number;
    areaInfo: any = {
@@ -68,7 +68,7 @@ export class AreainfoComponent implements OnInit {
   //     error => console.log(error));
   // }
   ActionPartsByArea(areaID: any, parttype: number) {
-    this.service.ActionQuickPartList(this.Version.ID, areaID, 0, 0).subscribe(data => {
+    this.service.ActionQuickPartList(this.Version.ID,this.PhaseId, areaID, 0, 0).subscribe(data => {
       this.areaInfo = data;
       this.areaInfo.PartList = this.areaInfo.PartList == null ? [] : this.areaInfo.PartList;
       let length = this.areaInfo.PartList.length;
@@ -92,7 +92,7 @@ export class AreainfoComponent implements OnInit {
 
 
   ActionGetPartInfo(partId: number) {
-    let result = this.service.ActionPartInfo(this.Version.ID, this.AreaID, partId, 0).subscribe(
+    let result = this.service.ActionPartInfo(this.Version.ID,this.PhaseId, this.AreaID, partId, 0).subscribe(
       data => {
         this.partinfo = data;
         this.PartDrawing(partId);

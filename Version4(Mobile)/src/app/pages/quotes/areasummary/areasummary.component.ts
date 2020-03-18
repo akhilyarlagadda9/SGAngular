@@ -5,10 +5,10 @@ declare var _qscope :any;
   selector: 'app-areasummary',
   templateUrl: './areasummary.component.html',
   styleUrls: ['./areasummary.component.scss'],
-  inputs: [`VersionId`]
+  inputs: [`VersionId`,`PhaseId`]
 })
 export class AreasummaryComponent  {
-  arealist: any = []; VersionId: any;
+  arealist: any = []; VersionId: number;PhaseId:number;
   selectedevent="";
   @Output() areaevent = new EventEmitter<any>();
   constructor(private qservice: QuoteService) { }
@@ -18,7 +18,7 @@ export class AreasummaryComponent  {
     this.ActionAreaList();
 }
 ActionAreaList(){
-  this.qservice.ActionQuoteAreaList(this.VersionId).subscribe(data => { this.arealist = data;
+  this.qservice.ActionQuoteAreaList(this.VersionId,this.PhaseId).subscribe(data => { this.arealist = data;
     this.SetDefaultArea();
   })
 }

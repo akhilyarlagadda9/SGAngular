@@ -28,7 +28,7 @@
             <ion-input required type="text" [(ngModel)]="headerinfo.QuoteName" name="QuoteName" class="inputheight"></ion-input>
         </ion-item>
         <div [hidden]="!form.submitted  || headerinfo.QuoteName.valid" class="invalid-feedback padd-Left">
-            <div class="error">Account Name is required</div>
+            <div class="error">Job Name is required</div>
           </div>
         <ion-item>
             <ion-label position="floating" color="primary" class="labelfont margin-zero">Address</ion-label>
@@ -39,21 +39,21 @@
             <ion-input required type="text" [(ngModel)]="headerinfo.City" name="City" class="inputheight"></ion-input>
         </ion-item>
         <div [hidden]="!form.submitted  || headerinfo.City.valid" class="invalid-feedback padd-Left">
-            <div class="error">Account Name is required</div>
+            <div class="error">City Name is required</div>
           </div>
         <ion-item>
             <ion-label position="floating" color="primary" class="labelfont margin-zero">State</ion-label>
             <ion-input required type="text" [(ngModel)]="headerinfo.State" name="State" class="inputheight"></ion-input>
         </ion-item>
         <div [hidden]="!form.submitted  || headerinfo.State.valid" class="invalid-feedback padd-Left">
-            <div class="error">Account Name is required</div>
+            <div class="error">Account State is required</div>
           </div>
         <ion-item>
             <ion-label position="floating" color="primary" class="labelfont margin-zero">Zipcode</ion-label>
             <ion-input required type="text" [(ngModel)]="headerinfo.Zipcode" name="Zipcode" class="inputheight"></ion-input>
         </ion-item>
         <div [hidden]="!form.submitted  || headerinfo.Zipcode.valid" class="invalid-feedback padd-Left">
-            <div class="error">Account Name is required</div>
+            <div class="error">Zipcode is required</div>
           </div>
         <ion-item>
             <ion-label position="floating" color="primary" class="labelfont margin-zero">Year Built</ion-label>
@@ -78,7 +78,7 @@
             </ion-select>
          </ion-item>
          <div [hidden]="!form.submitted  || headerinfo.SalesPerson.valid" class="invalid-feedback padd-Left">
-            <div class="error">Account Name is required</div>
+            <div class="error">SalesPerson is required</div>
           </div>
         <ion-item>
             <ion-label class="labelfont margin-zero" position="floating" color="primary">Estimator</ion-label>
@@ -103,15 +103,15 @@
               </ion-select-option>
             </ion-select>
           </ion-item>
-          <div [hidden]="!form.submitted  || headerinfo.JobType.valid" class="invalid-feedback padd-Left">
-            <div class="error">Account Name is required</div>
-          </div>
         <ion-item>
             <ion-label class="labelfont margin-zero" position="floating" color="primary">Price List</ion-label>      
             <ion-select [(ngModel)]="headerinfo.Version.PriceListID" name="PriceListID" #PriceListID="ngModel" name="PriceListID"  class="labelfont">
               <ion-select-option *ngFor="let p of priceList" [value]="p.RefID">{{p.Name}}</ion-select-option>
             </ion-select>
           </ion-item>
+          <div [hidden]="!form.submitted  || headerinfo.Version.PriceListID.valid" class="invalid-feedback padd-Left">
+            <div class="error">Price List is required</div>
+          </div>
         <ion-item class="borbottom">
             <ion-label position="floating" color="primary" class="margin-zero">Lat & Long</ion-label>
             <ion-row>

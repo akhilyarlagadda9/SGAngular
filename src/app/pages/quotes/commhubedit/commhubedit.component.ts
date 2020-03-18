@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 
 
@@ -9,13 +9,14 @@ import { QuotegetService } from 'src/app/service/quoteget.service';
   styleUrls: ['./commhubedit.component.scss'],
 })
 export class CommhubeditComponent implements OnInit {
-  categoryList: any;  docFormList: any;  msgStatusList: any;  phaseList: any;  versionId: any;  commDetails: any;  notesList: any;  StatusID: any;
+  categoryList: any;  docFormList: any;  msgStatusList: any;  phaseList: any;  
+  commDetails: any = this.navParams.data;;  notesList: any;  StatusID: any;
 
-  constructor(public Modalcntrl : ModalController, private getservice: QuotegetService) {
-    this.commDetails = {};
+  constructor(public Modalcntrl : ModalController, private getservice: QuotegetService,private navParams: NavParams) {
+    
    }
 
-  ngOnInit() {
+  ngOnInit() { 
     this.GetcategoryList();
     this.GetformsList();
     this.GetstatusList();
@@ -44,7 +45,7 @@ export class CommhubeditComponent implements OnInit {
   }
   //Phase List Function
   GetphaseList() {
-    this.getservice.CommHubPhaseList(this.versionId).subscribe(
+    this.getservice.CommHubPhaseList(this.commDetails.VersionID).subscribe(
       data => { 
         this.phaseList = data;
         this.GetSelectedPhaseName();

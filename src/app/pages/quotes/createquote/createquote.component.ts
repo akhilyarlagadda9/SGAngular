@@ -31,7 +31,7 @@ export class CreatequoteComponent implements OnInit {
       private popoverCntrl: PopoverController,private qServe:QuoteService,private qRep:QuoterepService) { }
   ngOnInit() {
     this.header = {
-      ProjectManagerID: 0, EstimatorID: 0, SalesPersonID: "",
+      ProjectManagerID: 0, EstimatorID: 0, SalesPersonID: 0,
       ID: 0, CustomerID: 0, QuoteOrLeadTypeID: 2, QuoteInfoType: "QUOTE", LocID: 1, CustJobNo: "", CustPoNo: "", QuoteDate: new Date().toLocaleDateString("en-US"),
       IsCheck: 1,
       //UserID : getloginuserId(),
@@ -41,7 +41,7 @@ export class CreatequoteComponent implements OnInit {
         ID:0,LeadTypeID: "", SourceID: 0, HearBefore: 2, HearAbout: "",
       },
       Version: {
-        ID:0,AccName: "", PriceListID: "", ProductionTypeID: "", CustTypeID: 4, InvoiceTo: 1, ParentAccID: 0, ChildAccID: 0, StatusID: 1,
+        ID:0,AccName: "", PriceListID: 0, ProductionTypeID: "", CustTypeID: 4, InvoiceTo: 1, ParentAccID: 0, ChildAccID: 0, StatusID: 1,
         ParentCustInfo: {}, ChildParentCustInfo: {},
         Customer: {
          ID:0,TypeID:0, Name: "", FirstName: "", LastName: "", PPhone: "", Email: "", chkflag: false,
@@ -89,11 +89,11 @@ export class CreatequoteComponent implements OnInit {
         this.qprmsobj = {
           quoteid: Number(Ids[0]), quoteno: Ids[2], versionid: Number(Ids[1]), customerid: Ids[3],
           accountid: this.header.Version.ParentAccID, childaccid: this.header.Version.ChildAccID,
-           phaseid: 0, viewtypeid: 0, layoutId: 2
+           phaseid: 0, viewtypeid: 1, layoutId: 2
         };
-        this.hideLoader()
         this.ActionCloseCreateQuote(true);
-      })
+        this.hideLoader();
+      });
     }
   }
   ActionShowNewCustomerList(ev: any, typeId: number, search: string, clickType: number) {

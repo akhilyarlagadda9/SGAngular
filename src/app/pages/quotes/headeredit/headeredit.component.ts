@@ -102,7 +102,7 @@ export class HeadereditComponent implements OnInit {
  //PO items Edit Function
  async ActionEditPOItem(info: any, indx: any) {
   if (info == 0) {
-    info = { ID: 0, VersionID: this.headerinfo.VersionID, POByID: 0, PONumber: 0, PODate: Date, POAmount: 0, AttachmentList: [], ParentID: this.headerinfo.ParentID, POBy:0 }
+    info = { ID: 0, VersionID: this.headerinfo.Version.ID, POByID: 0, PONumber: 0, PODate: Date, POAmount: 0, AttachmentList: [], ParentID: this.headerinfo.ParentID, POBy:0 }
   }
   let poitem = { poitem: info, index: indx, ParentID : this.headerinfo.Version.CustTypeID };
   const modal = await this.Modalcntrl.create({
@@ -110,11 +110,13 @@ export class HeadereditComponent implements OnInit {
     componentProps: poitem,
   })
   modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-    if (detail.data.componentProps.ID == 0) {
-      this.PoItemList.push(detail.data.componentProps.poitem)
-    }
-    else {
-      this.PoItemList[detail.data.componentProps.index] = detail.data.componentProps.poitem;
+    if(detail.data.issave == true){
+      if (info.ID == 0) {
+        this.PoItemList.push(detail.data.componentProps)
+      }
+      else {
+        this.PoItemList[indx] = detail.data.componentProps;
+      }
     }
   });
   return await modal.present();

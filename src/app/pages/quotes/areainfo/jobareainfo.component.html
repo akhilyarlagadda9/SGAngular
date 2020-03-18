@@ -1,5 +1,5 @@
 
-
+<ng-template #myPhaseAreaTemplate>
     <ion-row class="rowlineitem">
         <ion-col size="2" class="textfont14">Area
         </ion-col>
@@ -13,8 +13,6 @@
           <ion-icon name="add-circle" class="fontmedium" (click)="ActionAddArea(AreaID)"></ion-icon>
         </ion-col>
       </ion-row>
-  
-  
   <ion-row class="rowlineitem">
     <ion-col size="2" *ngIf="partinfo.ID == 0 || partinfo.ID == '' || partinfo.ID == null" class="textfont14">Part</ion-col>
     <ion-col size="2" *ngIf="partinfo.ID > 0" (click)="ActionAddPart(partinfo.ID)"><u class="colorblue textfont14">Part</u>  </ion-col>
@@ -368,3 +366,4 @@
       </ion-row>
     </ion-col>
   </ion-row>
+</ng-template>

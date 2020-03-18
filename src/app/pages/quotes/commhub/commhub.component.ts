@@ -2,27 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import {CommhubeditComponent} from '../commhubedit/commhubedit.component'
 import {CommonEditMailHubComponent} from '../common-edit-mail-hub/common-edit-mail-hub.component';
-import { QuotegetService } from 'src/app/service/quoteget.service';
+//import { QuotegetService } from 'src/app/service/quoteget.service';
 import { MaileditComponent } from '../mailedit/mailedit.component';
 import { OverlayEventDetail } from '@ionic/core';
+import { QuoterepService } from 'src/app/service/quoterep.service';
+import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-commhub',
   templateUrl: './commhub.component.html',
   styleUrls: ['./commhub.component.scss'],
-  inputs: [`VersionId`]
+  inputs: [`VersionId`,`PhaseId`]
 })
 export class CommhubComponent implements OnInit {
-  VersionId: any;  processtypeList: any;  docFormList: any;  phaseList: any;  selectedhubtype: number = 1;  type: any;  notesList: any; 
-  msgStatusList: any;
+  VersionId: any; PhaseId:number; processtypeList: any;  docFormList: any;  phaseList: any;  selectedhubtype: number = 1;  type: any;  
+  notesList: any; msgList:any = [];
+  msgStatusList: any;CategoryID:number = 0;quoteInfo:any;
   commDetails: any;
   details: any;
   typeId: any;
   
   //selectedoption: any;
-  constructor(public Modalcntrl : ModalController,private getservice: QuotegetService) { }
+  constructor(public Modalcntrl : ModalController,private qservice: QuoteService,private qRepService:QuoterepService) { }
 
   ngOnInit() {
+    debugger;
+    this.quoteInfo = this.qRepService.getHeader();
     this.GetprocessstatusList();
     this.GetformsList();
     this.GetphaseList();
@@ -35,10 +40,16 @@ export class CommhubComponent implements OnInit {
   }
    //Comm.Hub Edit Function
   async ActionEditCommHub(note: any) {
-    let commDetails = {versionId : this.VersionId,commDetails: note}   
+    if(note == 0){
+      let msg = this.quoteInfo.QuoteNo + " - " +this.quoteInfo.QuoteName;
+      note ={ID:0,VersionID:this.VersionId,Subject:msg,PhaseID:this.PhaseId}
+    }else{
+      note = JSON.parse(JSON.stringify(note));
+    }
+  //  let commDetails = {versionId : this.VersionId,commDetails: note}   
     const modal = await this.Modalcntrl.create({
       component: CommhubeditComponent,
-      componentProps : commDetails
+      componentProps : note
     });
     return await modal.present();
   }
@@ -71,7 +82,7 @@ export class CommhubComponent implements OnInit {
   }
  //Status List Function
   GetprocessstatusList() {
-    this.getservice.processTypeList(1).subscribe(
+    this.qservice.ProjectProcessList(1).subscribe(
       data => {
         this.processtypeList = data;
       }
@@ -79,24 +90,29 @@ export class CommhubComponent implements OnInit {
   }
  //Document Forms List Function
   GetformsList() {
-    this.getservice.formsList(1).subscribe(
+    this.qservice.FormsList(1).subscribe(
      data => {this.docFormList = data;}
    );
   }
  //Phase List Function
   GetphaseList() {
-    this.getservice.CommHubPhaseList(this.VersionId).subscribe(
+    this.qservice.CommHubPhaseList(this.VersionId).subscribe(
       data => { this.phaseList = data; }
     );
   }
-
   //Quote Notes List
   GetQuoteNoteList() {
-    this.getservice.QuoteNotes(this.VersionId,0).subscribe(
-      data => { 
-        this.notesList = data;
-      }
-    );
-  }
+    debugger;
+    this.qservice.ActionCommunicationMessageList1(this.VersionId,this.CategoryID,this.PhaseId,0,this.quoteInfo.CustomerID,this.quoteInfo.ID).subscribe(data => {
+      this.notesList = data.filter(x => x.TypeID != -2 && x.TypeID != -7);
+      this.msgList = data.filter(x => x.TypeID == -1 || x.TypeID == -2 || x.IsSent == 1);
+    });
+    
+  //   this.getservice.QuoteNotes(this.VersionId,0).subscribe(
+  //     data => { 
+  //       this.notesList = data;
+  //     }
+  //   );
+   }
  
 }

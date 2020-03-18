@@ -32,12 +32,15 @@ export class PoitemsComponent implements OnInit {
       componentProps: poitem,
     })
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-      if (detail.data.componentProps.ID == 0) {
-        this.PoItemList.push(detail.data.componentProps.poitem)
+      if(detail.data.issave == true){
+        if (detail.data.componentProps.ID == 0) {
+          this.PoItemList.push(detail.data.componentProps)
+        }
+        else {
+          this.PoItemList[indx] = detail.data.componentProps;
+        }
       }
-      else {
-        this.PoItemList[detail.data.componentProps.index] = detail.data.componentProps.poitem;
-      }
+     
     });
     return await modal.present();
   }

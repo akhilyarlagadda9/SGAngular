@@ -94,7 +94,7 @@ export class QuotePage implements OnInit {
       let version = header.VersionList.filter(x => x.ID === header.VersionID)[0];
       this.qprmsobj = {
         quoteid: header.ID, quoteno: header.QuoteNo, versionid: header.VersionID, customerid: version.CustomerID,
-        accountid: version.ParentAccID, childaccid: version.ChildAccID, phaseid: 0, viewtypeid: 0, layoutId: 1,statusId:version.StatusID,
+        accountid: version.ParentAccID, childaccid: version.ChildAccID, phaseid: 0, viewtypeid: 1, layoutId: 1,statusId:version.StatusID,
       };
     } 
     const modal = await this.Modalcntrl.create({

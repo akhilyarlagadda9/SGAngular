@@ -6,11 +6,17 @@
         <ion-title>
             <div style="font-size: 22px;" class="text-left">
                {{headerInfo.QuoteNo}} -
-                    <select [(ngModel)]="QuoteVersionID" (change)="ActionLoadVersion(QuoteVersionID)"
-                        interface="popover" style="border: 0px;background: #3880ff;">
-                        <option *ngFor="let version of versionList" value="{{version.ID}}">V{{version.SrNo}}
-                        </option>
-                    </select></div>
+               <select [(ngModel)]="qprmsobj.phaseid" *ngIf="qprmsobj.viewtypeid == 2" (change)="ActionLoadPhase(qprmsobj.phaseid)"
+               interface="popover" style="border: 0px;background: #3880ff;">
+               <option *ngFor="let phase of phaseList" value="{{phase.ID}}">P{{phase.Code}}
+               </option>
+           </select>
+           <select [(ngModel)]="qprmsobj.versionid" *ngIf="qprmsobj.viewtypeid == 1" (change)="ActionLoadVersion(qprmsobj.versionid)"
+           interface="popover" style="border: 0px;background: #3880ff;">
+           <option *ngFor="let version of versionList" value="{{version.ID}}">V{{version.SrNo}}
+           </option>
+       </select></div>  
+                   
         </ion-title>
         <!-- <span size="small" slot="end" (click)="ActionNewAction()"><h1 class="h1marg">Action</h1></span> -->
         <ion-icon name="arrow-dropdown-circle" slot="end" class="fontlarge" (click)="ActionNewAction()"></ion-icon>&nbsp;
@@ -39,7 +45,7 @@
                 <img src="assets/img/marbles-icon.png" alt="your image" style="width:35px;height:35px;">
                 <div><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 5 }">Other</span></div>
             </ion-col>
-            <ion-col class="paddtopzero text-center" *ngIf="qprmsobj.statusId == 6"
+            <ion-col class="paddtopzero text-center" *ngIf="qprmsobj.statusId == 6 && qprmsobj.viewtypeid == 1"
                 (click)="ActionLoadTabInfo(6)">
                 <img src="assets/img/coin-us-dollar-icon.png" alt="your image" style="width:35px;height:35px;">
                 <div> <span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 6 }">Accounts</span></div>
@@ -116,7 +122,6 @@
                     </div>
                 </ion-col>
             </ion-row>
-
             <div>
                 <ion-row style="background:#ddd;">
                     <ion-col>
@@ -124,11 +129,11 @@
                     </ion-col>
                 </ion-row>
 
-                <app-areasummary [VersionId]="headerInfo.Version.ID" (areaevent)="AreaSummarySelect($event)">
+                <app-areasummary [VersionId]="headerInfo.Version.ID"  [PhaseId]="qprmsobj.phaseid" (areaevent)="AreaSummarySelect($event)">
                 </app-areasummary>
             </div>
 
-            <ion-list class="ion-no-margin">
+            <ion-list class="ion-no-margin" *ngIf="qprmsobj.viewtypeid == 1">
                 <ion-row class="paddzero">
                     <ion-col size="5" class="paddzero margintop5">
                         <ion-row>
@@ -214,13 +219,13 @@
             </ion-list>
         </ion-col>
         <ion-col *ngSwitchCase="2">
-            <app-areainfo [Version]="headerInfo.Version"></app-areainfo>
+            <app-areainfo [Version]="headerInfo.Version" [PhaseId]="qprmsobj.phaseid"></app-areainfo>
         </ion-col>
         <ion-col *ngSwitchCase="3" style="padding-bottom: 70px;">
-            <app-commhub [VersionId]="headerInfo.Version.ID"></app-commhub>
+            <app-commhub [VersionId]="headerInfo.Version.ID" [PhaseId]="qprmsobj.phaseid"></app-commhub>
         </ion-col>
         <ion-col *ngSwitchCase="4">
-            <app-activities [VersionId]="headerInfo.Version.ID" [PhaseId]="0"></app-activities>
+            <app-activities [VersionId]="headerInfo.Version.ID" [PhaseId]="qprmsobj.phaseid"></app-activities>
         </ion-col>
 
         <ion-col *ngSwitchCase="5" style="padding-bottom: 70px;">

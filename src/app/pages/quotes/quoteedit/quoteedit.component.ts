@@ -9,11 +9,10 @@ import { MapComponent } from '../../map/map.component';
 import { CustomereditComponent } from '../customeredit/customeredit.component';
 import { JobdesceditComponent } from '../jobdescedit/jobdescedit.component';
 import { ManagementsummaryComponent } from '../managementsummary/managementsummary.component';
-import { PoeditComponent } from '../poedit/poedit.component';
 import { ActionquoteComponent } from '../actionquote/actionquote.component';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 
-import { CallNumber } from '@ionic-native/call-number/ngx';
+//import { CallNumber } from '@ionic-native/call-number/ngx';
 //import { QuoterepService } from 'src/app/service/quoterep.service';
 
 declare var _qscope: any;
@@ -24,14 +23,14 @@ declare var _qscope: any;
   styleUrls: ['./quoteedit.component.scss'],
 })
 export class QuoteeditComponent implements OnInit {
-  constructor(public Modalcntrl: ModalController, private navParams: NavParams,private callNumber: CallNumber, private service: QuoteService,
+  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private service: QuoteService,
      private navCtrl: NavController, private repService: QuoterepService,public actionSheetCtrl: ActionSheetController) { }
   quoteId: number;
   quoteno: string;
   shownGroup = 1;
   qprmsobj = this.navParams.data;
   headerInfo:any;
-  versionList:any = [];
+  versionList:any = [];phaseList:any = [];
   selectedtabtype: number;
   QuoteVersionID: number = this.qprmsobj.versionid;
   expanded = false;
@@ -53,10 +52,13 @@ export class QuoteeditComponent implements OnInit {
       this.selectedtabtype = this.navParams.data.layoutId;
     }
     this.ActionQuoteInfo();
+    if(this.qprmsobj.viewtypeid == 2){
+      this.ActionGetPhaseList();
+    }
   }
 
   ActionAreaList(typeId:number){
-    this.service.ActionQuoteAreaList(this.qprmsobj.versionid).subscribe(data => { data;
+    this.service.ActionQuoteAreaList(this.qprmsobj.versionid,this.qprmsobj.phaseid).subscribe(data => { data;
       _qscope.quote.Version.AreaList = data;
       _qscope.quote.Version.AreaID = 0;
       if(typeId == 0){
@@ -84,6 +86,7 @@ export class QuoteeditComponent implements OnInit {
       },
       error => console.log(error));
   }
+
 
   /*****tabs****** */
   ActionLoadTabInfo(componet: any) {
@@ -256,7 +259,7 @@ export class QuoteeditComponent implements OnInit {
           }
         },
         {
-          text: 'Dicline Quote',
+          text: 'Decline Quote',
           cssClass:'color-orange',
           handler: () => {
           }
@@ -271,13 +274,23 @@ export class QuoteeditComponent implements OnInit {
     });
     (await actionSheet).present();
   }
-
+  //#region  JobView
+  ActionGetPhaseList(){
+    this.service.ActionGetPhaseList(this.qprmsobj.versionid).subscribe(data => {
+      this.phaseList = data;
+    })
+  }
+  ActionLoadPhase(id) {
+    this.qprmsobj.phaseid = id;
+    this.ActionAreaList(1);
+  }
+  //#endregion
 
   callNow(number) {
-    this.callNumber.callNumber(number, true)
-      .then(res => console.log('Launched dialer!', res))
-      .catch(err => console.log('Error launching dialer', err));
-      console.log(number)
+    // this.callNumber.callNumber(number, true)
+    //   .then(res => console.log('Launched dialer!', res))
+    //   .catch(err => console.log('Error launching dialer', err));
+    //   console.log(number)
   }
 
 }

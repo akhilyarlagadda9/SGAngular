@@ -15,10 +15,7 @@
 <ion-list class="liststy" *ngIf="selectedhubtype == 1">
   <ion-card class="margin-bottom" style="margin-top: 0px;" *ngFor="let note of notesList">
     <ion-row class="no-padding paddzero">
-      <ion-col size="1">
-        <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub(note)"></ion-icon>
-      </ion-col>
-      <ion-col size="9">
+      <ion-col size="10">
         <ion-row class="marbot">
           <ion-col class="paddzero text-left textsty paddleft">{{note.Subject}}</ion-col>
         </ion-row>
@@ -34,13 +31,10 @@
       </ion-col>
       <ion-col size="2" class="text-right">
         <div>
-          <ion-icon name="download" class="downloadsty"></ion-icon>
+          <ion-icon name="create" class="fontmedium size-L" (click)="ActionEditCommHub(note)"></ion-icon>
         </div>
         <div>
-          <ion-icon name="cloud-upload" class="uploadsty"></ion-icon>
-        </div>
-        <div>
-          <ion-icon name="mail" class="uploadsty"></ion-icon>
+          <ion-icon name="mail" class="uploadsty  size-L" (click)="ActionEditCommHubMail(0)"></ion-icon>
         </div>
       </ion-col>
     </ion-row>

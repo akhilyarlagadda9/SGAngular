@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
-import { QuotegetService } from 'src/app/service/quoteget.service';
 import { QuoteService } from 'src/app/service/quote.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { QuoterepService } from 'src/app/service/quoterep.service';
@@ -159,8 +158,7 @@ export class CommhubeditComponent implements OnInit {
   }
 
   ActionSaveQuoteNote(){
-   // this.commDetails.TemplateAttachmentList = this.commDetails.TemplateAttachmentList == null ? [] :this.commDetails.TemplateAttachmentList;
-    this.qservice.qsendEmail(this.commDetails).subscribe(data => {
+    this.qservice.SaveQuoteNote(this.commDetails).subscribe(data => {
       this.commDetails.ID = data;
       this.ActionCloseCommhubedit(true);
   });

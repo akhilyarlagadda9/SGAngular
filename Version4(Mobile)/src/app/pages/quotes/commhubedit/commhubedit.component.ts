@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { QuotegetService } from 'src/app/service/quoteget.service';
-
+import { QuoteService } from 'src/app/service/quote.service';
+import { AuthService } from 'src/app/service/auth.service';
+import { QuoterepService } from 'src/app/service/quoterep.service';
+import { HttpClient, HttpEventType } from '@angular/common/http';
+declare const appUrl: any;
 
 @Component({
   selector: 'app-commhubedit',
@@ -9,30 +13,46 @@ import { QuotegetService } from 'src/app/service/quoteget.service';
   styleUrls: ['./commhubedit.component.scss'],
 })
 export class CommhubeditComponent implements OnInit {
-  categoryList: any;  docFormList: any;  msgStatusList: any;  phaseList: any;  
-  commDetails: any = this.navParams.data;;  notesList: any;  StatusID: any;
+  categoryList: any; docFormList: any; msgStatusList: any; phaseList: any;
+  commDetails: any = this.navParams.data;; notesList: any; StatusID: any;
+  userInfo: any; header: any;
 
-  constructor(public Modalcntrl : ModalController, private getservice: QuotegetService,private navParams: NavParams) {
-    
-   }
 
-  ngOnInit() { 
+  fileData: File = null; url = appUrl;
+  fileUploadProgress: string = null;
+  uploadedFilePath: string = null;
+
+  constructor(public Modalcntrl: ModalController, private qservice: QuoteService,
+    private navParams: NavParams, private authservice: AuthService, private qRepService: QuoterepService, private http: HttpClient) {
+
+  }
+
+  ngOnInit() {
+    this.authservice.GetStoredLoginUser().then((data) => {
+      this.userInfo = data;
+      if (this.commDetails.ID == 0) {
+        this.commDetails.UserID = data.logInUserID;
+      }
+    });
+    this.header = this.qRepService.getHeader();
+
     this.GetcategoryList();
     this.GetformsList();
     this.GetstatusList();
     this.GetphaseList();
   }
   //Close Function
-  ActionCloseCommhubedit() {
+  ActionCloseCommhubedit(issave) {
     this.Modalcntrl.dismiss({
-      'dismissed': true
+      'dismissed': true,
+      issave:issave
     });
   }
   //Category List Function
   GetcategoryList() {
-    this.getservice.NotecategoryList(0).subscribe(
-      data => { 
-        this.categoryList = data; 
+    this.qservice.NotecategoryList(0).subscribe(
+      data => {
+        this.categoryList = data;
         this.GetSelectedCategoryName();
       }
     );
@@ -45,11 +65,11 @@ export class CommhubeditComponent implements OnInit {
   }
   //Phase List Function
   GetphaseList() {
-    this.getservice.CommHubPhaseList(this.commDetails.VersionID).subscribe(
-      data => { 
+    this.qservice.CommHubPhaseList(this.commDetails.RefID).subscribe(
+      data => {
         this.phaseList = data;
         this.GetSelectedPhaseName();
-       }
+      }
     );
   }
   GetSelectedPhaseName() {
@@ -60,7 +80,7 @@ export class CommhubeditComponent implements OnInit {
   }
   //Document Forms List Function
   GetformsList() {
-    this.getservice.formsList(1).subscribe(
+    this.qservice.FormsList(1).subscribe(
       data => {
         this.docFormList = data;
         this.GetSelectedFormName();
@@ -75,7 +95,7 @@ export class CommhubeditComponent implements OnInit {
   }
   //Status List Function
   GetstatusList() {
-    this.getservice.QuoteMasterList(11).subscribe(
+    this.qservice.QuoteMasterList(11).subscribe(
       data => {
         this.msgStatusList = data;
         this.GetSelectedStatusName();
@@ -90,16 +110,61 @@ export class CommhubeditComponent implements OnInit {
   }
   //Attachments Function
   ActionUploadCommhubAttach(event: any) {
+    if (this.commDetails.ID == 0) {
+      let info = this.commDetails;
+      this.qservice.DocHeader(info.ID, info.RefID, info.categoryID, this.userInfo.logInUserID, info.Subject, info.TypeID).subscribe(data => {
+        this.commDetails.ID = data;
+        this.UploadImage(event);
+      });
+    } else {
+      this.UploadImage(event);
+    }
+
+  }
+  UploadImage(event) {
     if (event.target.files && event.target.files[0]) {
-      let file = event.target.files[0];
-      var reader = new FileReader();
-      reader.onload = (event: any) => {
-        let model = { ID: 0, Path: file.name }
-        this.commDetails.AttachmentList.push(model);
-      }
-      reader.readAsDataURL(event.target.files[0]);
+      let info = this.commDetails;
+      this.fileData = <File>event.target.files[0];
+      const formData = new FormData();
+      formData.append('files', this.fileData);
+      this.fileUploadProgress = '0%';
+      this.http.post(this.url + 'api/fileUpload/UploadAttatchments?Id=' + info.ID + "&versionId=" + info.RefID + "&typeId=" + info.TypeID + "&quoteNo=" + this.header.QuoteNo + "&jobstatusId=" + this.header.Version.JobStatusID, formData, {
+        reportProgress: true,
+        observe: 'events'
+      })
+        .subscribe(events => {
+          if (events.type === HttpEventType.UploadProgress) {
+            this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
+            console.log(this.fileUploadProgress);
+          } else if (events.type === HttpEventType.Response) {
+            this.fileUploadProgress = '';
+            if (events.body != null) {
+              this.PushImage(events.body);
+            }
+            // alert('SUCCESS !!');
+          }
+        });
+
     }
   }
+  PushImage(result) {
+    var result = result.toString().replace('[', "").replace(']', "");
+    let array = result.split('+');
+    let name = array[0].replace(/"/g, '');
+    var model = {
+      ID: Number(result[2].replace(/"/g, '')), FileName: name,
+      Check: 1, ThumbPath: "thumb_" + name, QuoteNo: this.header.QuoteNo, TypeID: this.commDetails.TypeID,
+    };
+    this.commDetails.AttachmentList.push(model);
+  }
 
+  ActionSaveQuoteNote(){
+   // this.commDetails.TemplateAttachmentList = this.commDetails.TemplateAttachmentList == null ? [] :this.commDetails.TemplateAttachmentList;
+    this.qservice.qsendEmail(this.commDetails).subscribe(data => {
+      this.commDetails.ID = data;
+      this.ActionCloseCommhubedit(true);
+  });
+  }
 
+  
 }

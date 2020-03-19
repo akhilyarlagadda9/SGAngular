@@ -122,7 +122,7 @@ export class AddpartComponent implements OnInit {
      // event: ev,
       //translucent: true,
       componentProps: obj,
-      cssClass: "popover_class"
+     // cssClass: "popover_class"
     });
     popover.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {

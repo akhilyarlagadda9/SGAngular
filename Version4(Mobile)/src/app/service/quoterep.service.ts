@@ -16,7 +16,8 @@ export class QuoterepService {
   //#region Quote Header
   setHeader(info) { 
     this.header = {ID:info.ID,QuoteNo:info.QuoteNo,QuoteName:info.QuoteName,
-      VersionID:info.Version.ID,CustomerID:info.Version.CustomerID,
+      VersionID:info.Version.ID,CustomerID:info.Version.CustomerID,LocID:info.LocID,
+      Version:{SrNo:info.Version.SrNo,JobStatusID:info.Version.JobStatusID}
     } 
   }  
   getHeader() {  

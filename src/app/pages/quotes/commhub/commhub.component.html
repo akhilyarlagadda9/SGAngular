@@ -1,22 +1,21 @@
+
+
+
+<ion-row>
+  <ion-col size="5">
+    <ion-select [(ngModel)]="CategoryID" class="btninfo" interface="popover" >
+      <ion-select-option [value]="0" selected="selected">ALL</ion-select-option>
+      <ion-select-option *ngFor="let process of processtypeList" [value]="process.ID" >{{process.Name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-col>
+  <ion-col size="3" class="text-right">
+    <ion-button *ngIf="selectedhubtype == 2" (click)="ActionEditCommHubMail(0)" size="small" class="text-right fontbold">Compose</ion-button>
+    <ion-button *ngIf="selectedhubtype == 1" (click)="ActionEditCommHub(0)" size="small" class="text-right fontbold">ADD</ion-button>
+  </ion-col>
+</ion-row>
+
 <ion-list class="liststy" *ngIf="selectedhubtype == 1">
-  <ion-row>
-    <ion-col size="5">
-      <ion-select class="btninfo" interface="popover" >
-        <ion-select-option [value]="0" selected="selected">ALL</ion-select-option>
-        <ion-select-option *ngFor="let process of processtypeList" [value]="process.ID" >{{process.Name}}
-        </ion-select-option>
-      </ion-select>
-    </ion-col>
-    <!-- <ion-col size="4">
-      <ion-select class="btninfo" interface="popover">
-        <ion-select-option [value]="0" selected="selected">ALL</ion-select-option>
-        <ion-select-option *ngFor="let process of phaseList" [value]="process.ID">{{process.Name}}</ion-select-option>
-      </ion-select>
-    </ion-col> -->
-    <ion-col size="3" class="text-right">
-      <ion-button (click)="ActionEditCommHub(0)" size="small" class="text-right fontbold">ADD</ion-button>
-    </ion-col>
-  </ion-row>
   <ion-card class="margin-bottom" style="margin-top: 0px;" *ngFor="let note of notesList">
     <ion-row class="no-padding paddzero">
       <ion-col size="1">
@@ -51,19 +50,8 @@
   </ion-card>
 </ion-list>
 <ion-list class="liststy" *ngIf="selectedhubtype == 2">
-  <ion-row>
-    <ion-col size="6">
-      <ion-select class="btninfo" interface="popover">
-        <ion-select-option [value]="0" selected="selected">ALL</ion-select-option>
-        <ion-select-option *ngFor="let process of processtypeList" value="Name">{{process.Name}}</ion-select-option>
-      </ion-select>
-    </ion-col>
-    <ion-col size="2"></ion-col>
-    <ion-col size="4" class="text-right">
-      <ion-button (click)="ActionEditCommHubMail(0)" size="small" class="text-right fontbold">Compose</ion-button>
-    </ion-col>
-  </ion-row>
-  <ion-card class="margin-bottom" style="margin-top: 0px;" *ngFor="let note of notesList">
+
+  <ion-card class="margin-bottom" style="margin-top: 0px;" *ngFor="let note of msgList">
     <ion-row class="no-padding paddzero">
       <ion-col size="10">
         <ion-row class="marbot">
@@ -85,26 +73,6 @@
   </ion-card>
 </ion-list>
 <ion-list class="liststy" *ngIf="selectedhubtype == 3">
-  <ion-row>
-    <ion-col size="5">
-      <ion-select class="btninfo" interface="popover">
-        <ion-select-option [value]="0" selected="selected">ALL</ion-select-option>
-        <ion-select-option *ngFor="let process of processtypeList" value="Name">{{process.Name}}</ion-select-option>
-      </ion-select>
-    </ion-col>
-    <ion-col size="1"></ion-col>
-    <!-- <ion-col size="6" class="text-right">
-      <span style="vertical-align: super;"><b>View By:&nbsp;</b></span>
-      <span>
-        <span>
-          <ion-icon name="menu" style="font-size: 25px;line-height: 30px;color: rgb(0, 0, 255);"></ion-icon>&nbsp;&nbsp;
-        </span>
-        <span>
-          <ion-icon name="images" style="font-size: 25px;line-height: 30px;color: rgb(0, 0, 255);"></ion-icon>
-        </span>
-      </span>
-    </ion-col> -->
-  </ion-row>
   <ion-card class="margin-bottom" style="margin-top: 0px;" *ngFor="let picture of pictureList">
     <ion-row class="no-padding paddzero" style="overflow-y: scroll;">
       <ion-col size="12">
@@ -117,25 +85,13 @@
     </ion-row>
   </ion-card>
 </ion-list>
-<!-- <ion-toolbar class="tab-btm">
-  <ion-tabs>
-    <ion-tab-bar slot="bottom" color="light">
-      <ion-tab-button (click)="ActionLoadHubInfo(1)">
-        <ion-icon name="book"></ion-icon>
-        <ion-label class="iconsty" [ngClass]="{'txt-color' : selectedhubtype == 1 }">Notes</ion-label>
-      </ion-tab-button>
-      <ion-tab-button (click)="ActionLoadHubInfo(2)">
-        <ion-icon name="mail"></ion-icon>
-        <ion-label class="iconsty" [ngClass]="{'txt-color' : selectedhubtype == 2 }">Mail</ion-label>
-      </ion-tab-button>
-      <ion-tab-button (click)="ActionLoadHubInfo(3)">
-        <ion-icon name="document"></ion-icon>
-        <ion-label class="iconsty" [ngClass]="{'txt-color' : selectedhubtype == 3 }">Files</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
-</ion-toolbar> -->
-<ion-footer class="tab-btm" style="padding-right: 5px;background: aliceblue;">
+
+
+
+
+
+<!-- <div style="flex: 1;">
+<ion-footer style="padding-right: 5px;background: aliceblue;">
   <ion-segment style="height: 44px;">
     <ion-segment-button checked (click)="ActionLoadHubInfo(1)">
       <ion-icon name="book" class="imghw1 paddzero"></ion-icon>
@@ -151,3 +107,6 @@
     </ion-segment-button>
   </ion-segment>
 </ion-footer>
+
+</div> -->
+

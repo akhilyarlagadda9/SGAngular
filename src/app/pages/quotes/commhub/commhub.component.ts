@@ -23,6 +23,7 @@ export class CommhubComponent implements OnInit {
   typeId: any;
   imgPath:string;
   pictureList:Array<any>=[];
+ 
   //selectedoption: any;
   constructor(public Modalcntrl : ModalController,private qservice: QuoteService,private qRepService:QuoterepService) { }
 

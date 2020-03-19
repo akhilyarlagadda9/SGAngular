@@ -28,8 +28,8 @@
       </ion-item>
       <ion-item>
           <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Uploaded By:</ion-label>
-          <ion-select [(ngModel)]="poitem.POByID" name="POByID" [selectedText]="poitem.POBy">
-               <ion-select-option *ngFor="let poitem of salespersons" [value]="poitem.ResourceID">{{poitem.ResourceName}}</ion-select-option>
+          <ion-select [(ngModel)]="poitem.POByID" name="POByID" [selectedText]="poitem.POBy" (ngModelChange)="GetSelectedSalespersonName($event)">
+               <ion-select-option *ngFor="let s of salespersons" [value]="s.ResourceID">{{s.ResourceName}}</ion-select-option>
           </ion-select>
       </ion-item>
       <ion-item>

@@ -26,7 +26,6 @@ export class CommhubComponent implements OnInit {
   constructor(public Modalcntrl : ModalController,private qservice: QuoteService,private qRepService:QuoterepService) { }
 
   ngOnInit() {
-    debugger;
     this.quoteInfo = this.qRepService.getHeader();
     this.GetprocessstatusList();
     this.GetformsList();
@@ -41,8 +40,10 @@ export class CommhubComponent implements OnInit {
    //Comm.Hub Edit Function
   async ActionEditCommHub(note: any) {
     if(note == 0){
-      let msg = this.quoteInfo.QuoteNo + " - " +this.quoteInfo.QuoteName;
-      note ={ID:0,VersionID:this.VersionId,Subject:msg,PhaseID:this.PhaseId}
+      let msg = this.quoteInfo.QuoteNo + " - v " + this.quoteInfo.Version.SrNo + this.quoteInfo.QuoteName;
+      let source = this.PhaseId > 0 ? "job" :"";
+      note ={ID:0,RefID:this.VersionId,Subject:msg,PhaseID:this.PhaseId,ModuleID:3,StatusID:94,
+      Path:"normal.png",categoryID:0,Source:source,LocID:this.quoteInfo.LocID,AttachmentList:[],TypeID:0}
     }else{
       note = JSON.parse(JSON.stringify(note));
     }
@@ -50,6 +51,13 @@ export class CommhubComponent implements OnInit {
     const modal = await this.Modalcntrl.create({
       component: CommhubeditComponent,
       componentProps : note
+    });
+    modal.onDidDismiss().then((result: OverlayEventDetail) => {
+      if (result.data !== null && result.data != undefined) {
+        if (result.data.issave == true) {
+          this.GetQuoteNoteList();
+        }
+      }
     });
     return await modal.present();
   }
@@ -102,7 +110,6 @@ export class CommhubComponent implements OnInit {
   }
   //Quote Notes List
   GetQuoteNoteList() {
-    debugger;
     this.qservice.ActionCommunicationMessageList1(this.VersionId,this.CategoryID,this.PhaseId,0,this.quoteInfo.CustomerID,this.quoteInfo.ID).subscribe(data => {
       this.notesList = data.filter(x => x.TypeID != -2 && x.TypeID != -7);
       this.msgList = data.filter(x => x.TypeID == -1 || x.TypeID == -2 || x.IsSent == 1);

@@ -39,8 +39,8 @@
         </ion-item>
         <ion-item>
           <ion-label floating>Type:</ion-label>
-          <ion-select [(ngModel)]="commDetails.formtype" name="formtype" [selectedText]="commDetails.formtype">
-            <ion-select-option *ngFor="let category of docFormList" [value]="category.Name">{{category.Name}}</ion-select-option>
+          <ion-select [(ngModel)]="commDetails.FormID" name="FormID" [selectedText]="commDetails.formtype" (ngModelChange)="ActionChangeTempl($event,1)">
+            <ion-select-option *ngFor="let c of docFormList" [value]="c.ID">{{c.Name}}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
@@ -71,7 +71,7 @@
           <ion-label floating><u>Note:</u></ion-label>
         </ion-item>
         <ion-row class="padding5">
-          <ion-textarea rows="4" cols="10" [(ngModel)]="commDetails.Body" name="Body" class="borderall"></ion-textarea>
+          <ion-textarea rows="4" cols="10"  [(ngModel)]="commDetails.Body" name="Body" class="borderall"></ion-textarea>
         </ion-row>
       </ion-list>
     </ion-content >

@@ -83,15 +83,9 @@ export class CommhubeditComponent implements OnInit {
     this.qservice.FormsList(1).subscribe(
       data => {
         this.docFormList = data;
-        this.GetSelectedFormName();
+        this.ActionChangeTempl(this.commDetails.FromID,0);
       }
     );
-  }
-  GetSelectedFormName() {
-    let commDetails = this.docFormList.find(s => s.ID == this.commDetails.FromTypeID);
-    if (commDetails != null) {
-      this.commDetails.formtype = commDetails.Name;
-    }
   }
   //Status List Function
   GetstatusList() {
@@ -165,5 +159,17 @@ export class CommhubeditComponent implements OnInit {
   });
   }
 
+
+
+  ActionChangeTempl(event,typeId){
+    let docInfo = this.docFormList.find(s => s.ID == event);
+    if (docInfo != null) {
+      this.commDetails.formtype = docInfo.Name;
+      if(typeId == 0){
+        this.commDetails.Subject = this.header.QuoteNo + " - V " + this.header.Version.SrNo + " - " + this.header.QuoteName + " - " +  docInfo.Name;
+      }
+    }
+  }
+  
   
 }

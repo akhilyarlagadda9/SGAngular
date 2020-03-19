@@ -1,4 +1,4 @@
-import { Component, OnInit, Directive, Input } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController, ModalController, NavParams, AlertController, PopoverController,ActionSheetController } from '@ionic/angular';
 import { QuoteService } from 'src/app/service/quote.service'
 
@@ -11,6 +11,8 @@ import { JobdesceditComponent } from '../jobdescedit/jobdescedit.component';
 import { ManagementsummaryComponent } from '../managementsummary/managementsummary.component';
 import { ActionquoteComponent } from '../actionquote/actionquote.component';
 import { QuoterepService } from 'src/app/service/quoterep.service';
+import { CommhubComponent } from '../commhub/commhub.component';
+import { OtherComponent } from '../other/other.component';
 
 //import { CallNumber } from '@ionic-native/call-number/ngx';
 //import { QuoterepService } from 'src/app/service/quoterep.service';
@@ -34,6 +36,8 @@ export class QuoteeditComponent implements OnInit {
   selectedtabtype: number;
   QuoteVersionID: number = this.qprmsobj.versionid;
   expanded = false;
+  @ViewChild(CommhubComponent, { static: false }) commHubCom: CommhubComponent;selChildTabId:number = 1;
+  @ViewChild(OtherComponent, { static: false }) otherCom: OtherComponent;
   public contacts: any;
   public SelectedTypeID: number;
   toggleGroup(group) {
@@ -90,7 +94,7 @@ export class QuoteeditComponent implements OnInit {
 
   /*****tabs****** */
   ActionLoadTabInfo(componet: any) {
-    this.selectedtabtype = componet;
+    this.selectedtabtype = componet;this.selChildTabId=1;
     if(componet == 1){
       this.ActionLoadVersion(this.qprmsobj.versionid);
     }
@@ -220,11 +224,11 @@ export class QuoteeditComponent implements OnInit {
     }
     this.repService.setHeader(this.headerInfo);
   }
-  // AreaSummarySelect(ev) {
-  //   if (ev == "success") {
-  //     this.ActionLoadTabInfo(2);
-  //   }
-  // }
+  AreaSummarySelect(ev) {
+    if (ev == "success") {
+      this.ActionLoadTabInfo(2);
+    }
+  }
   // async ActionNewAction() {
   //   let header = { header: this.headerInfo }
   //   const popover = await this.popoverCntrl.create({
@@ -237,8 +241,15 @@ export class QuoteeditComponent implements OnInit {
   //   return await popover.present();
   // }
 
-
-
+  ActionLoadCommHub(typeId) {
+     this.selChildTabId = typeId;
+     this.commHubCom.ActionLoadHubInfo(typeId);
+  }
+  ActionLoadOtherTab(typeId) {
+    this.selChildTabId = typeId;
+    this.otherCom.ActionLoadTabInfo(typeId);
+ }
+  
   async ActionNewAction() {
     let actionSheet = this.actionSheetCtrl.create({
       //title: 'Actions',

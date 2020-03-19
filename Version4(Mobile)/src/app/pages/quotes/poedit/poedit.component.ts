@@ -29,9 +29,9 @@ export class PoeditComponent implements OnInit {
     );
   }
   GetSelectedSalespersonName() {
-    let poitem = this.salespersons.find(s => s.ResourceID == this.poitem.POByID);
-    if (poitem != null) {
-      this.poitem.POBy = poitem.ResourceName;
+    let po = this.salespersons.find(s => s.ResourceID == this.poitem.POByID);
+    if (po != null) {
+      this.poitem.POBy = po.ResourceName;
     }
   }
 

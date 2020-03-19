@@ -12,6 +12,7 @@ declare const appUrl: any;
   styleUrls: ['./commhubedit.component.scss'],
 })
 export class CommhubeditComponent implements OnInit {
+  
   categoryList: any; docFormList: any; msgStatusList: any; phaseList: any;
   commDetails: any = this.navParams.data;; notesList: any; StatusID: any;
   userInfo: any; header: any;

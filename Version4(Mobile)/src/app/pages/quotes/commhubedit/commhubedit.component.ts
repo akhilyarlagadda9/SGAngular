@@ -35,7 +35,6 @@ export class CommhubeditComponent implements OnInit {
       }
     });
     this.header = this.qRepService.getHeader();
-
     this.GetcategoryList();
     this.GetformsList();
     this.GetstatusList();
@@ -150,6 +149,7 @@ export class CommhubeditComponent implements OnInit {
       Check: 1, ThumbPath: "thumb_" + name, QuoteNo: this.header.QuoteNo, TypeID: this.commDetails.TypeID,
     };
     this.commDetails.AttachmentList.push(model);
+    
   }
 
   ActionSaveQuoteNote(){
@@ -165,7 +165,7 @@ export class CommhubeditComponent implements OnInit {
     let docInfo = this.docFormList.find(s => s.ID == event);
     if (docInfo != null) {
       this.commDetails.formtype = docInfo.Name;
-      if(typeId == 0){
+      if(typeId == 1){
         this.commDetails.Subject = this.header.QuoteNo + " - V " + this.header.Version.SrNo + " - " + this.header.QuoteName + " - " +  docInfo.Name;
       }
     }

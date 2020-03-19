@@ -42,34 +42,37 @@ export class CommhubComponent implements OnInit {
   //Tab selection Function
   ActionLoadHubInfo(componet: any){
     this.selectedhubtype = componet;
-    if(componet == 3){
-      this.notesList.forEach(notes => {
-        notes.AttachmentList.forEach(attach => {
-          let path = "";
-          let objDetails = {};
-          let arrExt = attach.FileName.split(".");
-          let strExt = "|gif|GIF|bmp|jpeg|jpg|png|PNG|JPG|JPEG|pdf|PDF|xlsx";
-          if(strExt.includes("|"+ arrExt[1] +"|")){
-            if(attach.ThumbPath){
-             path = this.imgPath+ encodeURIComponent(attach.ThumbPath);
-            }else{
-              path = this.imgPath+ attach.FileName;
-            }
-            objDetails["Name"] = arrExt[0];
-            if(arrExt[1] == "pdf" || arrExt[1] == "PDF"){
-              objDetails["Path"] = "assets/img/Pdf.png";
-            }else if(arrExt[1]=="xlsx"){
-              objDetails["Path"] = "assets/img/XL.png";
-            }else{
-            objDetails["Path"] = path;
-            }
-           this.pictureList.push(objDetails);
-          }
-        });
-      });
-  }
   console.log(this.pictureList);
 }
+
+GetPictureList(){
+  this.notesList.forEach(notes => {
+    notes.AttachmentList.forEach(attach => {
+      let path = "";
+      let objDetails = {};
+      let arrExt = attach.FileName.split(".");
+      let strExt = "|gif|GIF|bmp|jpeg|jpg|png|PNG|JPG|JPEG|pdf|PDF|xlsx";
+      if(strExt.includes("|"+ arrExt[1] +"|")){
+        if(attach.ThumbPath){
+         path = this.imgPath+ encodeURIComponent(attach.ThumbPath);
+        }else{
+          path = this.imgPath+ attach.FileName;
+        }
+        objDetails["Name"] = arrExt[0];
+        if(arrExt[1] == "pdf" || arrExt[1] == "PDF"){
+          objDetails["Path"] = "assets/img/Pdf.png";
+        }else if(arrExt[1]=="xlsx"){
+          objDetails["Path"] = "assets/img/XL.png";
+        }else{
+        objDetails["Path"] = path;
+        }
+       this.pictureList.push(objDetails);
+      }
+    });
+  });
+}
+
+
    //Comm.Hub Edit Function
   async ActionEditCommHub(note: any) {
     if(note == 0){
@@ -146,6 +149,7 @@ export class CommhubComponent implements OnInit {
     this.qservice.ActionCommunicationMessageList1(this.VersionId,this.CategoryID,this.PhaseId,0,this.quoteInfo.CustomerID,this.quoteInfo.ID).subscribe(data => {
       this.notesList = data.filter(x => x.TypeID != -2 && x.TypeID != -7);
       this.msgList = data.filter(x => x.TypeID == -1 || x.TypeID == -2 || x.IsSent == 1);
+      this.GetPictureList();
     });
     
   //   this.getservice.QuoteNotes(this.VersionId,0).subscribe(

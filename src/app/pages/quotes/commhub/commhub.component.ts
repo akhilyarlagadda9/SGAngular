@@ -35,7 +35,10 @@ export class CommhubComponent implements OnInit {
     this.GetphaseList();
     this.GetQuoteNoteList();
   }
-
+  ActionChangeCategory(event){
+    this.CategoryID = event;
+    this.GetQuoteNoteList();
+  }
   //Tab selection Function
   ActionLoadHubInfo(componet: any){
     this.selectedhubtype = componet;
@@ -70,7 +73,7 @@ export class CommhubComponent implements OnInit {
    //Comm.Hub Edit Function
   async ActionEditCommHub(note: any) {
     if(note == 0){
-      let msg = this.quoteInfo.QuoteNo + " - v " + this.quoteInfo.Version.SrNo + this.quoteInfo.QuoteName;
+      let msg = this.quoteInfo.QuoteNo + " - V " + this.quoteInfo.Version.SrNo + " - " + this.quoteInfo.QuoteName;
       let source = this.PhaseId > 0 ? "job" :"";
       note ={ID:0,RefID:this.VersionId,Subject:msg,PhaseID:this.PhaseId,ModuleID:3,StatusID:94,
       Path:"normal.png",categoryID:0,Source:source,LocID:this.quoteInfo.LocID,AttachmentList:[],TypeID:0}

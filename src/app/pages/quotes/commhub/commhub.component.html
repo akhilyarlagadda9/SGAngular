@@ -3,96 +3,37 @@
 
 <ion-row>
   <ion-col size="5">
-    <ion-select [(ngModel)]="CategoryID" class="btninfo" interface="popover" >
+    <ion-select [(ngModel)]="CategoryID" class="btninfo" interface="popover"(ngModelChange)="ActionChangeCategory($event)">
       <ion-select-option [value]="0" selected="selected">ALL</ion-select-option>
       <ion-select-option *ngFor="let process of processtypeList" [value]="process.ID" >{{process.Name}}
       </ion-select-option>
     </ion-select>
   </ion-col>
-  <ion-col size="3" class="text-right">
+  <ion-col size="7" class="text-right">
     <ion-button *ngIf="selectedhubtype == 2" (click)="ActionEditCommHubMail(0)" size="small" class="text-right fontbold">Compose</ion-button>
     <ion-button *ngIf="selectedhubtype == 1" (click)="ActionEditCommHub(0)" size="small" class="text-right fontbold">ADD</ion-button>
   </ion-col>
 </ion-row>
 
-<ion-list class="liststy" *ngIf="selectedhubtype == 1">
-    <ion-item class="paddzero margleft" *ngFor="let note of notesList">
-      <ion-col>
-        <ion-row class="paddzero text-left textsty" (click)="ActionEditCommHub(note)">{{note.Subject}}</ion-row>
-        <ion-row class="paddzero text-left" (click)="ActionEditCommHub(note)">{{note.User}}</ion-row>
-        <ion-row (click)="ActionEditCommHub(note)"><p>{{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</p></ion-row>
-      </ion-col>
-      <ion-col size="2">
-        <button ion-button clear item-end (click)="ActionEditCommHubMail(0)">View</button>
-      </ion-col>
-    </ion-item>
-  <!-- <ion-card class="margin-bottom" style="margin-top: 0px;" *ngFor="let note of notesList">
-    <ion-row class="no-padding paddzero">
-      <ion-col size="1">
-        <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub(note)"></ion-icon>
-      </ion-col>
-      <ion-col size="9">
-        <ion-row class="marbot">
-          <ion-col class="paddzero text-left textsty paddleft">{{note.Subject}}</ion-col>
-        </ion-row>
-        <ion-row class="marbot">
-          <ion-col class="paddzero text-left paddleft">{{note.User}}</ion-col>
-        </ion-row>
-        <ion-row class="marbot">
-          <ion-col class="paddzero text-left paddleft">{{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</ion-col>
-        </ion-row>
-        <ion-row class="marbot">
-          <ion-col class="paddzero text-left paddleft">{{note.Path}}</ion-col>
-        </ion-row>
-      </ion-col>
-      <ion-col size="2" class="text-right">
-        <div>
-          <ion-icon name="download" class="downloadsty"></ion-icon>
-        </div>
-        <div>
-          <ion-icon name="cloud-upload" class="uploadsty"></ion-icon>
-        </div>
-        <div>
-          <ion-icon name="mail" class="uploadsty"></ion-icon>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-card> -->
+<ion-list class="ion-no-margin" *ngIf="selectedhubtype == 1">
+  <ion-item *ngFor="let note of notesList" (click)="ActionEditCommHub(note)">
+    <ion-label>
+     <h2>{{note.Subject}}</h2>
+     <h3>{{note.User}} - {{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</h3>
+     <p innerHTML="{{note.Body}}"></p>
+    </ion-label>
+   </ion-item>
 </ion-list>
-<ion-list class="liststy" *ngIf="selectedhubtype == 2">
-  <ion-item class="paddzero margleft" *ngFor="let note of msgList">
-    <ion-col>
-      <ion-row class="paddzero text-left textsty" (click)="ActionEditCommHub(note)">{{note.Subject}}</ion-row>
-      <ion-row class="paddzero text-left" (click)="ActionEditCommHub(note)">{{note.User}}</ion-row>
-      <ion-row (click)="ActionEditCommHub(note)"><p>{{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</p></ion-row>
-    </ion-col>
-    <ion-col size="2">
-      <button ion-button clear item-end>View</button>
-    </ion-col>
+<ion-list class="ion-no-margin" *ngIf="selectedhubtype == 2">
+  <ion-item *ngFor="let note of msgList" (click)="ActionEditCommHub(note)">
+   <ion-label>
+    <h2>{{note.Subject}}</h2>
+    <h3>{{note.User}} - {{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</h3>
+    <p innerHTML="note.Body"></p>
+   </ion-label>
   </ion-item>
-
-  <!-- <ion-card class="margin-bottom" style="margin-top: 0px;" *ngFor="let note of msgList">
-    <ion-row class="no-padding paddzero">
-      <ion-col size="10">
-        <ion-row class="marbot">
-          <ion-col class="paddzero text-left textsty paddleft">{{note.Subject}}</ion-col>
-        </ion-row>
-        <ion-row class="marbot">
-          <ion-col class="paddzero text-left paddleft">{{note.User}}</ion-col>
-        </ion-row>
-        <ion-row class="marbot">
-          <ion-col class="paddzero text-left paddleft">{{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</ion-col>
-        </ion-row>
-      </ion-col>
-      <ion-col size="2" class="text-right">
-        <ion-icon name="download" class="downloadsty"></ion-icon>
-        <ion-icon name="cloud-upload" class="uploadsty"></ion-icon>
-        <ion-icon name="mail" class="uploadsty"></ion-icon>
-      </ion-col>
-    </ion-row>
-  </ion-card> -->
 </ion-list>
-<ion-list class="liststy" *ngIf="selectedhubtype == 3">
+<ion-list class="ion-no-margin" *ngIf="selectedhubtype == 3">
   <ion-card class="margin-bottom margcard" style="margin-top: 0px;" *ngFor="let picture of pictureList">
     <ion-col class="no-padding paddzero" style="overflow-y: scroll;">
         <ion-row class="marbot">

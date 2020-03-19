@@ -83,16 +83,15 @@
   </ion-card>
 </ion-list>
 <ion-list class="liststy" *ngIf="selectedhubtype == 3">
-  <ion-card class="margin-bottom" style="margin-top: 0px;" *ngFor="let picture of pictureList">
-    <ion-row class="no-padding paddzero" style="overflow-y: scroll;">
-      <ion-col size="12">
+  <ion-card class="margin-bottom margcard" style="margin-top: 0px;" *ngFor="let picture of pictureList">
+    <ion-col class="no-padding paddzero" style="overflow-y: scroll;">
         <ion-row class="marbot">
-          <ion-col class="paddzero text-left textsty paddleft">
-            <img [src]="picture.Path" style="width:100%;height:350px;"><span style="font-size: medium;">{{picture.Name}}</span>
+          <ion-col class="paddzero text-center">
+            <span style="font-size: medium;">{{picture.Name}}</span>
           </ion-col>
         </ion-row>
-      </ion-col>
-    </ion-row>
+    </ion-col>
+    <img [src]="picture.Path" style="width:100%;height:200px;">
   </ion-card>
 </ion-list>
 

@@ -40,7 +40,7 @@ export class ManagementsummaryComponent implements OnInit {
     popover.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {
         if (detail.data.issave == true) {
-         this.Version = this.quoterep.ResetVersionTotals(this.Version,detail.data.componentProps);
+         this.header.Version = this.quoterep.ResetVersionTotals(this.Version,detail.data.componentProps);
         }
       }
     });

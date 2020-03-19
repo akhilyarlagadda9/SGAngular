@@ -108,8 +108,8 @@ ActionRoundAmount(typeid) {
   this.Version.copyroundoff = this.quoterep.roundToTwo(this.quoterep.convertToFloat(this.Version.copyroundoff) + round);
 }
 ActionSaveReferralFee = function () {
-  this.header.Version.RoundOff = this.quoterep.convertToFloat(this.header.Version.copyroundoff);
-  this.header.Version.refPopover = false;
+  this.Version.RoundOff = this.quoterep.convertToFloat(this.header.Version.copyroundoff);
+  this.Version.refPopover = false;
   let model: any = {}, version = this.header.Version;
   model.ID = version.ID;
   model.UserID =  this.UserId;
@@ -196,7 +196,6 @@ ActionSaveReferralFee = function () {
     }
   }
   ActionCheckUncheckTaxCode = function (event) {
-    debugger;
     if (this.Version.TaxCode == false) {
       this.Version.Tax = 0;
       this.Version.MatPercent = 0;

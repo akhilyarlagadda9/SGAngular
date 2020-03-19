@@ -7,7 +7,7 @@ import { MaileditComponent } from '../mailedit/mailedit.component';
 import { OverlayEventDetail } from '@ionic/core';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { QuoteService } from 'src/app/service/quote.service';
-
+declare const imgUrl: any;
 @Component({
   selector: 'app-commhub',
   templateUrl: './commhub.component.html',
@@ -16,17 +16,19 @@ import { QuoteService } from 'src/app/service/quote.service';
 })
 export class CommhubComponent implements OnInit {
   VersionId: any; PhaseId:number; processtypeList: any;  docFormList: any;  phaseList: any;  selectedhubtype: number = 1;  type: any;  
-  notesList: any; msgList:any = [];
+  notesList: any; msgList:any = []; 
   msgStatusList: any;CategoryID:number = 0;quoteInfo:any;
   commDetails: any;
   details: any;
   typeId: any;
-  
+  imgPath:string;
+  pictureList:Array<any>=[];
   //selectedoption: any;
   constructor(public Modalcntrl : ModalController,private qservice: QuoteService,private qRepService:QuoterepService) { }
 
   ngOnInit() {
     this.quoteInfo = this.qRepService.getHeader();
+    this.imgPath = imgUrl + "Jobs/" + this.quoteInfo.QuoteNo + "/";
     this.GetprocessstatusList();
     this.GetformsList();
     this.GetphaseList();
@@ -36,7 +38,34 @@ export class CommhubComponent implements OnInit {
   //Tab selection Function
   ActionLoadHubInfo(componet: any){
     this.selectedhubtype = componet;
+    if(componet == 3){
+      this.notesList.forEach(notes => {
+        notes.AttachmentList.forEach(attach => {
+          let path = "";
+          let objDetails = {};
+          let arrExt = attach.FileName.split(".");
+          let strExt = "|gif|GIF|bmp|jpeg|jpg|png|PNG|JPG|JPEG|pdf|PDF|xlsx";
+          if(strExt.includes("|"+ arrExt[1] +"|")){
+            if(attach.ThumbPath){
+             path = this.imgPath+ encodeURIComponent(attach.ThumbPath);
+            }else{
+              path = this.imgPath+ attach.FileName;
+            }
+            objDetails["Name"] = arrExt[0];
+            if(arrExt[1] == "pdf" || arrExt[1] == "PDF"){
+              objDetails["Path"] = "assets/img/Pdf.png";
+            }else if(arrExt[1]=="xlsx"){
+              objDetails["Path"] = "assets/img/XL.png";
+            }else{
+            objDetails["Path"] = path;
+            }
+           this.pictureList.push(objDetails);
+          }
+        });
+      });
   }
+  console.log(this.pictureList);
+}
    //Comm.Hub Edit Function
   async ActionEditCommHub(note: any) {
     if(note == 0){

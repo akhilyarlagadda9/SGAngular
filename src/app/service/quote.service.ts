@@ -206,6 +206,9 @@ ProjectProcessList(typeId:number):Observable<any> {
   console.log(typeId);
   return this.http.get<any>(this.url +  'api/Project/ProjectProcessList?typeId=' + typeId)
 }
+NotecategoryList(Id:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Quote/NotecategoryList?Id=' + Id)
+}
 FormsList(typeId:number):Observable<any> {
   return this.http.get<any>(this.url +  'api/Project/FormsList?typeId=' + typeId)
 }
@@ -238,12 +241,20 @@ ActionCommunicationMessageList1(versionId:number, catId:number, phaseId:number, 
   return this.http.get<any>(this.url + 'api/Quote/CommunicationMessageList1?versionId=' + versionId + "&catagoryId=" + catId + "&phaseId=" + phaseId + "&typeId=" + typeId + "&customerId=" + customerId + '&projectId=' + projectId) 
 }
 
+DocHeader(Id:number, versionId:number, categoryId:number, userID:number, subject:number, typeId:number):Observable<any> {
+  return this.http.post<any>(this.url + 'api/fileUpload/DocHeader?Id=' + Id + "&versionId=" + versionId + "&categoryId=" + categoryId + "&userID=" + userID + "&subject=" + subject + '&typeId=' + typeId, { headers: { 'Content-Type': 'application/json' }}) 
+}
+UploadAttatchments(Id:number, versionId:number,typeId:number, quoteno:string, jobstatusId:number):Observable<any> {
+  return this.http.get<any>(this.url + 'api/fileUpload/UploadAttatchments?Id=' + Id + "&versionId=" + versionId + "&typeId=" + typeId + "&quoteNo=" + quoteno + "&jobstatusId=" + jobstatusId) 
+}
 //#region 
 qsendEmail(model): Observable<any> {
   var parameter = JSON.stringify(model);
   console.log(parameter);
-  return this.http.post<any>(this.url + 'api/Quote/ActionSendMail' + model,{ headers: { 'Content-Type': "application/json;charset=utf-8" } })
+  return this.http.post<any>(this.url + 'api/Quote/ActionSendMail', parameter,{ headers: { 'Content-Type': "application/json" } })
 }
+
+
 //#endregion
 //#region Save methods Quote Actions and Summary
 ActionSaveQuoteApproved(version: any): Observable<any> {

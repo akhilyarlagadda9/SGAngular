@@ -1,6 +1,19 @@
 <form #form="ngForm" (ngSubmit)="ActionSaveActivity(form)" class="dis-content">
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-button color="danger" type="button" (click)="ActionCloseCommhubedit(false)">
+        Close
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="secondary" >
+        
+      </ion-button>
+    </ion-buttons>
+    <ion-title align="center">Email</ion-title>
+  </ion-toolbar>
+  <!-- <ion-toolbar>
     <ion-title>
       <div><b>Email</b></div>
 
@@ -8,10 +21,10 @@
   
    <ion-button slot="end" size="small" type="submit" (click)="ActionOnAttach()"><ion-icon ios="ios-attach"  slot="end" md="md-attach" style="color:black;zoom:2.0;"></ion-icon></ion-button>
 
-    <!-- <input type="file" (change)="ActionUploadCommhubAttach($event)"> -->
+    <input type="file" (change)="ActionUploadCommhubAttach($event)">
     <ion-button slot="end" size="small" type="submit"><ion-icon ios="ios-send" md="md-send" style="color:black;zoom:2.0;"></ion-icon></ion-button>
     <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCommhubedit(false)">X</ion-button>
-  </ion-toolbar>
+  </ion-toolbar> -->
 </ion-header>
 <ion-item *ngIf="blnIsAtttachAvailable">
   <ion-row style="width: 100%;" *ngFor="let attach of getNoteAttachments" (click)="addAttach(attach)">

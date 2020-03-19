@@ -16,7 +16,17 @@
 </ion-row>
 
 <ion-list class="liststy" *ngIf="selectedhubtype == 1">
-  <ion-card class="margin-bottom" style="margin-top: 0px;" *ngFor="let note of notesList">
+    <ion-item class="paddzero margleft" *ngFor="let note of notesList">
+      <ion-col>
+        <ion-row class="paddzero text-left textsty" (click)="ActionEditCommHub(note)">{{note.Subject}}</ion-row>
+        <ion-row class="paddzero text-left" (click)="ActionEditCommHub(note)">{{note.User}}</ion-row>
+        <ion-row (click)="ActionEditCommHub(note)"><p>{{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</p></ion-row>
+      </ion-col>
+      <ion-col size="2">
+        <button ion-button clear item-end (click)="ActionEditCommHubMail(0)">View</button>
+      </ion-col>
+    </ion-item>
+  <!-- <ion-card class="margin-bottom" style="margin-top: 0px;" *ngFor="let note of notesList">
     <ion-row class="no-padding paddzero">
       <ion-col size="1">
         <ion-icon name="create" class="fontmedium" (click)="ActionEditCommHub(note)"></ion-icon>
@@ -31,9 +41,9 @@
         <ion-row class="marbot">
           <ion-col class="paddzero text-left paddleft">{{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</ion-col>
         </ion-row>
-        <!-- <ion-row class="marbot">
+        <ion-row class="marbot">
           <ion-col class="paddzero text-left paddleft">{{note.Path}}</ion-col>
-        </ion-row> -->
+        </ion-row>
       </ion-col>
       <ion-col size="2" class="text-right">
         <div>
@@ -47,7 +57,7 @@
         </div>
       </ion-col>
     </ion-row>
-  </ion-card>
+  </ion-card> -->
 </ion-list>
 <ion-list class="liststy" *ngIf="selectedhubtype == 2">
 

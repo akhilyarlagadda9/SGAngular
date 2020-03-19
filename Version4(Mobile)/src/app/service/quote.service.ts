@@ -248,6 +248,10 @@ UploadAttatchments(Id:number, versionId:number,typeId:number, quoteno:string, jo
   return this.http.get<any>(this.url + 'api/fileUpload/UploadAttatchments?Id=' + Id + "&versionId=" + versionId + "&typeId=" + typeId + "&quoteNo=" + quoteno + "&jobstatusId=" + jobstatusId) 
 }
 //#region 
+SaveQuoteNote(model): Observable<any> {
+  var parameter = JSON.stringify(model);
+  return this.http.post<any>(this.url + 'api/Quote/SaveQuoteNote', parameter,{ headers: { 'Content-Type': "application/json" } })
+}
 qsendEmail(model): Observable<any> {
   var parameter = JSON.stringify(model);
   console.log(parameter);

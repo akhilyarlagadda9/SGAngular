@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { ModalController, PopoverController, LoadingController } from '@ionic/angular';
 import { QuoteService } from 'src/app/service/quote.service';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
@@ -28,8 +28,9 @@ export class AddpartComponent implements OnInit {
   shownGroup: number = 1;
   shownGroup4: any = 2;
   material: any;
+  loaderToShow: Promise<void>;
   
-  constructor(public Modalcntrl: ModalController, public popoverCntrl: PopoverController,
+  constructor(public Modalcntrl: ModalController, public popoverCntrl: PopoverController,public loadingController: LoadingController,
     private service: QuoteService, private getservice: QuotegetService, private quoterep: QuoterepService) { }
 
   ngOnInit() {
@@ -346,13 +347,29 @@ export class AddpartComponent implements OnInit {
     }
   }
   ActionSavePart() {
+    this.showLoader()
     if (this.partinfo.VersionID > 0) {
       this.service.ActionSavePartItems(this.partinfo).subscribe(data => {
+        this.hideLoader();
         this.ActionCloseAddPart(true);
       })
     }
 
 
+  }
+
+  showLoader() {
+    this.loaderToShow = this.loadingController.create({
+      message: 'please wait'
+    }).then((res) => {
+      res.present();
+      res.onDidDismiss().then((dis) => {
+        console.log('Loading dismissed!');
+      });
+    });
+  }
+  async hideLoader() {
+    this.loadingController.dismiss();
   }
   /***************POPOVERS ******************/
   // async ActionAddSize(ev: any) {

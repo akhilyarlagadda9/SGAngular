@@ -7,7 +7,7 @@
           </ion-button>
         </ion-buttons>
         <ion-buttons slot="end">
-          <ion-button color="secondary" type="submit">
+          <ion-button color="primary" type="submit">
             Save
           </ion-button>
         </ion-buttons>
@@ -57,11 +57,11 @@
           </div>
         <ion-item>
             <ion-label position="floating" color="primary" class="labelfont margin-zero">Year Built</ion-label>
-            <ion-input required type="text" [(ngModel)]="headerinfo.YearBuilt" name="YearBuilt" class="inputheight"></ion-input>
+            <ion-input type="text" [(ngModel)]="headerinfo.YearBuilt" name="YearBuilt" class="inputheight"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label position="floating" color="primary" class="labelfont margin-zero">Quote Number</ion-label>
-            <ion-input required type="text" [(ngModel)]="headerinfo.QuoteNo" name="QuoteNo" class="inputheight"></ion-input>
+            <ion-input type="text" [(ngModel)]="headerinfo.QuoteNo" name="QuoteNo" class="inputheight"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label position="floating" color="primary" class="labelfont margin-zero">Quote Date</ion-label>
@@ -73,7 +73,7 @@
         </ion-item>
         <ion-item>
             <ion-label class="labelfont margin-zero" position="floating" color="primary">Sales Rep</ion-label>
-            <ion-select required [(ngModel)]="headerinfo.SalesPerson" name="SalesPerson" [selectedText]="headerinfo.SalesPerson" name="SalesPerson">
+            <ion-select [(ngModel)]="headerinfo.SalesPerson" name="SalesPerson" [selectedText]="headerinfo.SalesPerson" name="SalesPerson">
               <ion-select-option *ngFor="let p of salesPersonsList" [value]="p.ResourceName">{{p.ResourceName}}</ion-select-option>
             </ion-select>
          </ion-item>
@@ -98,14 +98,14 @@
           </ion-item>
         <ion-item>
             <ion-label class="labelfont margin-zero" position="floating" color="primary">Production Type</ion-label>
-            <ion-select required [(ngModel)]="headerinfo.JobType" name="JobType" class="labelfont" name="JobType" [selectedText]="headerinfo.JobType">
+            <ion-select [(ngModel)]="headerinfo.JobType" name="JobType" class="labelfont" name="JobType" [selectedText]="headerinfo.JobType">
               <ion-select-option *ngFor="let p of productionTypeList" [value]="p.Name">{{p.Name}}
               </ion-select-option>
             </ion-select>
           </ion-item>
         <ion-item>
             <ion-label class="labelfont margin-zero" position="floating" color="primary">Price List</ion-label>      
-            <ion-select [(ngModel)]="headerinfo.Version.PriceListID" name="PriceListID" #PriceListID="ngModel" name="PriceListID"  class="labelfont">
+            <ion-select required [(ngModel)]="headerinfo.Version.PriceListID" name="PriceListID" #PriceListID="ngModel" name="PriceListID"  class="labelfont">
               <ion-select-option *ngFor="let p of priceList" [value]="p.RefID">{{p.Name}}</ion-select-option>
             </ion-select>
           </ion-item>

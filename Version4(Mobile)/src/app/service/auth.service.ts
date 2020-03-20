@@ -45,6 +45,7 @@ export class AuthService {
   }
   
     this.storage.set("_usermodel", this.userModel);
+    this.storage.set("_loguserId", this.userModel);
   }
   GetStoredCompany() {
     return this.storage.get("CompanyInfo").then((CompanyInfo) => {
@@ -54,6 +55,11 @@ export class AuthService {
   GetStoredLoginUser() {
     return this.storage.get("_usermodel").then((usermodel) => {
       return usermodel;
+    });
+  }
+  GetStoredLoginUserID() {
+    return this.storage.get("_loguserId").then((userid) => {
+      return userid;
     });
   }
 }

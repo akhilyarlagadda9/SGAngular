@@ -191,7 +191,6 @@ export class AddpartComponent implements OnInit {
   }
 
   ActionSetSqft(size, typeid, index) {
-    debugger;
     size.Sqft = this.quoterep.calcsqft(size.Width, size.Height);
     this.ActionSetFabSqft(index);
   }

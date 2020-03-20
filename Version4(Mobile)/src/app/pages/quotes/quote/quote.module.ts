@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 // Components
 import { QuotePage } from './quote.page';
 import { CreatequoteComponent } from 'src/app/pages/quotes/createquote/createquote.component';
-import { QuoteeditComponent ,NewactionComponent } from 'src/app/pages/quotes/quoteedit/quoteedit.component';
+import { QuoteeditComponent } from 'src/app/pages/quotes/quoteedit/quoteedit.component';
 import { HeadereditComponent } from 'src/app/pages/quotes/headeredit/headeredit.component';
 import { HeaderinfoComponent } from '../headerinfo/headerinfo.component';
 import { PoitemsComponent } from '../poitems/poitems.component';
@@ -74,7 +74,8 @@ import { QuickquoteComponent } from '../quickquote/quickquote.component';
     ]),
     AngularEditorModule
   ],
-  entryComponents: [CreatequoteComponent,AddmeasComponent,SearchComponent,ActionquoteComponent,NewactionComponent,TransactionComponent,NewtranComponent,AccountsComponent,PaymentScheduleComponent,
+  entryComponents: [CreatequoteComponent,AddmeasComponent,SearchComponent,ActionquoteComponent,
+    TransactionComponent,NewtranComponent,AccountsComponent,PaymentScheduleComponent,
     AdditionalitemserachComponent,DiscountComponent,feeComponent,
     taxComponent, itemsearchComponent,  CustomersearchComponent,
     CustitemComponent, TemplateComponent, AddmatComponent, 
@@ -89,9 +90,8 @@ import { QuickquoteComponent } from '../quickquote/quickquote.component';
     ManagementsummaryComponent,additemComponent,ActivitiesComponent,AreasummaryComponent,
     FabricationComponent,LaborinfoComponent,MapComponent,QlayoutComponent,ArealayoutComponent,QnavigationComponent,OtherComponent,
      AddpartComponent, AddSizesComponent,MaileditComponent, QuickquoteComponent,AddmeasComponent],
-    
-
-  declarations: [QuotePage,AddmeasComponent, SearchComponent, ActionquoteComponent,NewactionComponent, TransactionComponent,AccountsComponent,NewtranComponent,PaymentScheduleComponent,AdditionalitemserachComponent,
+  declarations: [QuotePage,AddmeasComponent, SearchComponent, ActionquoteComponent, 
+    TransactionComponent,AccountsComponent,NewtranComponent,PaymentScheduleComponent,AdditionalitemserachComponent,
     taxComponent,feeComponent,DiscountComponent, itemsearchComponent,
     CustitemComponent, TemplateComponent, AddmatComponent, TileinfoComponent, 
     FaucetsComponent, MeasurementsComponent, MaterialinfoComponent, 

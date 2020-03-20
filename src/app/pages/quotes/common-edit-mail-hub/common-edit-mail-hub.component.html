@@ -6,10 +6,10 @@
         Close
       </ion-button>
     </ion-buttons>
-    <ion-buttons slot="end">
+    <ion-buttons slot="end" (click)="ActionUploadCommhubAttach($event)">
       <ion-button color="secondary" >
         <!-- <ion-icon ios="ios-send" md="md-send" style="color:black;zoom:2.0;"></ion-icon> -->
-        <ion-icon ios="ios-attach"  slot="end" md="md-attach" ></ion-icon>
+        <ion-icon ios="ios-attach"  slot="end" md="md-attach" (click)="ActionUploadCommhubAttach($event)"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
@@ -104,6 +104,15 @@
     <!-- <ion-label>Subject: </ion-label> -->
     <ion-input placeholder="Subject" [(ngModel)]="mailDetails.Subject" name="Subject" autofocus></ion-input>
   </ion-item>
+
+  <ion-row *ngFor="let category of commDetails.AttachmentList">
+    <ion-col class="paddleft5">
+      <span><ion-icon name="trash" class="delsty"></ion-icon></span>&nbsp;
+      <span>{{category.FileName}}</span>
+    </ion-col>
+  </ion-row>
+
+  
   <!-- <ckeditor tagName="textarea" [(ngModel)]="mailDetails.mailBody" name="mailBody" [editor]="Editor" ></ckeditor> -->
   <!-- <angular-editor [(ngModel)]="mailDetails.mailBody" name="mailBody" [config]="config"></angular-editor> -->
   &nbsp;

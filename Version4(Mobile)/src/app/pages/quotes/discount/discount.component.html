@@ -7,10 +7,10 @@
         </ion-button>
       </ion-buttons>
       <ion-buttons slot="end">
-        <ion-button color="secondary" slot="end" *ngIf="SummaryTypeID == 1" (click)="ActionAddDiscount()">
+        <ion-button color="primary" slot="end" *ngIf="SummaryTypeID == 1" (click)="ActionAddDiscount()">
           Add
         </ion-button>
-        <ion-button color="secondary" (click)="ActionSaveSummary(form,SummaryTypeID)">
+        <ion-button color="primary" (click)="ActionSaveSummary(form,SummaryTypeID)">
           Save
         </ion-button>
       </ion-buttons>
@@ -25,7 +25,7 @@
       </ion-buttons>
       <ion-title>{{SumName}}</ion-title>
       <ion-buttons slot="end">
-        <ion-button slot="end" *ngIf="SummaryTypeID == 1" (click)="ActionAddDiscount()" color="secondary"> <span
+        <ion-button slot="end" *ngIf="SummaryTypeID == 1" (click)="ActionAddDiscount()" color="primary"> <span
             ion-text class="check-font">Add</span></ion-button> &nbsp;
         <ion-button slot="end" color="secondary" (click)="ActionSaveSummary(form,SummaryTypeID)"> <span ion-text
             class="check-font">Save</span></ion-button>

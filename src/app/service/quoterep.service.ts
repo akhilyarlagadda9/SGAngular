@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { QuoteService } from './quote.service';
+import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
 export class QuoterepService {
   header: any;
-  constructor() { }
+  constructor(private authservice:AuthService) { }
   private _interfacesource = new Subject<any>();
   interface$ = this._interfacesource.asObservable();
   private service: QuoteService
@@ -96,9 +97,21 @@ export class QuoterepService {
     }
     return header;
   }
-   
   getloginuserId(){
-    return 0;
+    let userId;
+    this.authservice.GetStoredLoginUserID().then((data) => {
+     return userId = data;
+    });
+  }
+  GetQuoteAddress(header){
+    let address = "";
+    header.Address1 = header.Address1 == null || header.Address1 == "" ? "" : header.Address1 + ",";
+    header.City = header.City == null || header.City == "" ? "" : header.City + ",";
+    header.State = header.State == null || header.State == "" ? "" : header.State;
+    header.Zipcode = header.Zipcode == null ? "" : header.Zipcode;
+    var zipcodeComma = header.Zipcode != "" && (header.State != "" || header.City != "") ? " - " : "";
+    address = header.Address1 + header.City + header.State + zipcodeComma + header.Zipcode;
+    return address;
   }
   //#endregion
   //#region  Add Items
@@ -896,13 +909,12 @@ export class QuoterepService {
     }
     item.scopedescription = scopedesc;
   }
-
   pushquoteversionvalues(version, action) {
     version.StatusID = action.StatusId;
     version.Status = action.ActionName;
     version.StatusColor = "Green";
-    //version.UserID = getloginuserId();
-    version.UserID = 1;
+    version.UserID = this.getloginuserId();
+   // version.UserID = 1;
     version.LayApproval = action.LayApproval;
     version.CustPickup = action.CustPickup;
     version.Reason = action.Description;
@@ -911,7 +923,7 @@ export class QuoterepService {
     version.HoldFlag = action.PreferID;
     version.PhStatusID = action.PreferID == 0 ? action.StageID : 8;//8 for hold
     return version;
-  }
+  } 
   preparematerials(materials) {
     if (materials != null) {
       for (let i = 0; i < materials.length; i++) {
@@ -921,7 +933,6 @@ export class QuoterepService {
       return materials;
     }
   }
-
   invslabModel(quoteObj, materialId, item) {
     let slab = {
       ID: item.ID,

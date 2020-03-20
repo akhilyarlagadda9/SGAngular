@@ -1,26 +1,20 @@
 import { Component, OnInit, ViewChild, Inject, LOCALE_ID, Input } from '@angular/core';
-//import { CalendarComponent } from 'ionic2-calendar/calendar';
-import { ModalController, LoadingController, PopoverController, NavParams } from '@ionic/angular';
-//import { formatDate } from '@angular/common';
+import { ModalController, LoadingController, ActionSheetController } from '@ionic/angular';
 import { ActinfoComponent } from '../actinfo/actinfo.component';
 import { OverlayEventDetail } from '@ionic/core';
 import { SchedulingService } from 'src/app/service/scheduling.service';
 import { NavController } from '@ionic/angular';
-//import { ActionSheetController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
 import { AddactivityComponent } from '../addactivity/addactivity.component';
-//import { CalendarfilterComponent } from '../calendarfilter/calendarfilter.component';
-//import * as moment from 'moment';
 // Calendar Components
 import { OptionsInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
-//import interactionPlugin from '@fullcalendar/interaction';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { CalendarsettingComponent } from '../calendarsetting/calendarsetting.component';
 import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
-//import { Calendar } from '@fullcalendar/core';
+import { QuoteeditComponent } from '../../quotes/quoteedit/quoteedit.component';
 declare var platform: string;
 @Component({
   selector: 'app-scheduling',
@@ -61,14 +55,13 @@ resourceLabelText= " "
 [duration]="options.duration"
 [views]="options.views"
 [plugins]="options.plugins"
-(datesRender)="call($event)"
+(datesRender)="Actioncall($event)"
 [events]="actlist"
 [resources]="resources"
 (eventRender)="ActionRenderEvent($event)"
 (eventClick)="ActionOnEventSelected($event)"
 ></full-calendar></ion-content>
 `,
-
   //styleUrls: ['./scheduling.page.scss'],
   providers: [DatePipe]
 })
@@ -78,13 +71,17 @@ export class SchedulingPage implements OnInit {
   @ViewChild('calendar', { static: false }) fullcalendar: FullCalendarComponent;
   CalendarTitle: any; ActiveDate: Date; calendarApi4 = null;
   calObj: any = {
-    StartDate: Date, EndDate: Date, ActTypeIDs: "11", ActTypes: "Template", ResourceIDs: "", ResourceNames: "ALL", StatusIDs: "", StatusNames: "ALL",
-    CalID: 1, CalendarType: "resourceTimeline", CalendarView: "resourceTimeline", CalendarDays: 3, CalFields: "", Search: "", UserId: 0,
-    IsDateChange: false, IsDayChange: false, IsViewChange: false, starttime: "7:00 AM", endtime: "8:00 PM", CalColorID: 1, ColorType: 'Activity Type',
-    ActTypeList: [{ id: 11, groupId: 0, title: "Template" }]
+    StartDate: Date, EndDate: Date, ActTypeIDs: "11", ActTypes: "Template", ResourceIDs: "", 
+    ResourceNames: "ALL", StatusIDs: "", StatusNames: "ALL",IsDateChange: false, IsDayChange: false,
+    CalID: 1, CalendarType: "resourceTimeline", CalendarView: "resourceTimeline", 
+    CalendarDays: 3, CalFields: "", Search: "", UserId: 0,
+    IsViewChange: false, starttime: "7:00 AM",endtime: "8:00 PM", CalColorID: 1,
+    ColorType: 'Activity Type',ActTypeList: [{ id: 11, groupId: 0, title: "Template" }]
   }
-  constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) private locale: string, public loadingController: LoadingController,
-    private schService: SchedulingService, private navCtrl: NavController, private datePipe: DatePipe) { }
+  constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) 
+  public loadingController: LoadingController,private schService: SchedulingService, 
+    private navCtrl: NavController, private datePipe: DatePipe, 
+    public actionSheetCtrl: ActionSheetController) { }
 
   ngOnInit() {
     let height = window.innerHeight - 110; this.width = 85;
@@ -121,7 +118,8 @@ export class SchedulingPage implements OnInit {
         title: 'Un-Assigned'
       }]
   }
-  call(info) {
+//#region  Actions
+  Actioncall(info) {
     this.ActiveDate = info.view.activeStart;
     if (info.view.type == "restimelineDay") {
       this.calObj.StartDate = this.datePipe.transform(this.calObj.StartDate, "MM/dd/yyyy");
@@ -154,15 +152,6 @@ export class SchedulingPage implements OnInit {
     }
 
   }
-  GetNavDates(view) {
-    let start = this.datePipe.transform(view.activeStart, "MM/dd/yyyy");
-    // For Prev
-    let prevbutton = <HTMLElement>document.body.querySelector(".fc-prev-button");
-    prevbutton.addEventListener("click", () => { this.calObj.StartDate = start; this.PrepareDays("prev") });
-    //For Next
-    let nextbutton = <HTMLElement>document.body.querySelector(".fc-next-button");
-    nextbutton.addEventListener("click", () => { this.calObj.StartDate = start; this.PrepareDays("next") });
-  }
   ActionEventsByFilterSettings() {
     if (this.calObj.CalID == 1) {
       this.ActionGetResList();
@@ -178,6 +167,219 @@ export class SchedulingPage implements OnInit {
     //   this.PrepareEventHtml(evnt);
     // }
   }
+  ActionLoadEvents() {
+    if (this.calObj.CalendarView != "" && this.calObj.CalendarView != undefined) {
+      let resids = "";
+      let sDate = this.calObj.StartDate; let eDate = this.calObj.EndDate;
+      let colorId =  this.calObj.CalID == 1 ? 1 : this.calObj.CalColorID;
+      this.schService.ActionQuickActList(sDate, eDate, this.calObj.Search, this.calObj.ActTypeIDs, 0, this.calObj.ResourceIDs, this.calObj.StatusIDs,colorId).subscribe(data => {
+        this.actlist = [];
+        if (this.calObj.CalID == 1) {
+          let filterIds = this.calObj.ResourceIDs;
+          if (filterIds != "" && filterIds.length > 1) {
+            filterIds = filterIds.split(',');
+          }
+          for (let j in data) {
+            let item = data[j];
+            item.Imageurl = '/StoneApp.App/DigitalContent/Status/' + item.StatusIcon;
+            this.SetResouceEvents(item, filterIds);
+          }
+        } else {
+          for (let j in data) {
+            let item = data[j];
+            item.Imageurl = '/StoneApp.App/DigitalContent/Status/' + item.StatusIcon;
+            this.SetActTypeEvents(item);
+          }
+        }
+      });
+    }
+
+  }
+  ActionRefreshCalendar() {
+    this.calObj.ActTypeIDs = "11"; this.calObj.ActTypes = "Template";
+    this.calObj.ResourceIDs = ""; this.calObj.ResourceNames = "ALL";
+    this.calObj.StatusIDs = ""; this.calObj.StatusNames = "ALL"
+    this.calObj.CalID = 1,
+      // this.calObj.CalendarView= "resourceTimeline";
+      this.calObj.CalendarDays = 3, this.calObj.CalFields = ""; this.calObj.Search = ""; this.calObj.UserId = 0;
+    this.calObj.IsViewChange = false;
+    this.ActionEventsByFilterSettings();
+    //this.ActionGetResList();
+  }
+  ActionGetResList() {
+    this.schService.GetResourcesAndHolidays(this.calObj.StartDate, this.calObj.EndDate, this.calObj.ActTypeIDs, 1, this.calObj.ResourceIDs).subscribe(data => {
+      this.ActionLoadEvents();
+      this.resources = [];
+      for (let j in data.ActTypeResList) {
+        let item = data.ActTypeResList[j];
+        item.TextColor = item.TextColor == null ? "#ddd" : item.TextColor;
+        this.resources.push({ id: item.ResourceID, groupId: 0, title: item.ResourceName, eventBackgroundColor: item.TextColor, eventTextColor: "black", eventBorderColor: "black", extendedProps: item });
+      }
+      this.actResources = this.resources;
+    });
+  }
+  ActionGoToHome() {
+    this.navCtrl.navigateRoot('/home');
+  }
+//#endregion  
+//#region other Methods
+GetNavDates(view) {
+  let start = this.datePipe.transform(view.activeStart, "MM/dd/yyyy");
+  // For Prev
+  let prevbutton = <HTMLElement>document.body.querySelector(".fc-prev-button");
+  prevbutton.addEventListener("click", () => { this.calObj.StartDate = start; this.PrepareDays("prev") });
+  //For Next
+  let nextbutton = <HTMLElement>document.body.querySelector(".fc-next-button");
+  nextbutton.addEventListener("click", () => { this.calObj.StartDate = start; this.PrepareDays("next") });
+}
+UpdateActivty(info) {
+  let filterIds = this.calObj.ResourceIDs;
+  if (filterIds != "" && filterIds.length > 1) {
+    filterIds = filterIds.split(',');
+  }
+  let quickInfo = this.PrepareActInfo(info);
+  if (info.ExtID > 0) {
+    let calendarApi = this.fullcalendar.getApi();
+    var event = calendarApi.getEventById(info.ID)
+    event.remove();
+  }
+  //  this.ActionPushEvents(quickInfo, filterIds);
+}
+LoadFilterView() {
+  let obj = this.calObj;
+  this.resources = this.calObj.CalID == 3 ? this.calObj.ActTypeList : this.actResources;
+  if (obj.IsViewChange == true || obj.IsDateChange == true || obj.IsDayChange == true) {
+    this.SetCalendarOptions(obj);
+  } else {
+    this.ActionEventsByFilterSettings();
+  }
+  this.SetResourceGridViewWith();
+}
+ChangedViewEvents() {
+  let sdate = new Date(this.calObj.StartDate);
+  sdate.setDate(sdate.getDate() + Number(this.calObj.CalendarDays));
+  this.calObj.StartDate = this.datePipe.transform(this.calObj.StartDate, "MM/dd/yyyy");
+  // this.calObj.StartDate = moment(this.calObj.StartDate).utc().format("MM/DD/YYYY");;
+  this.calObj.EndDate = this.datePipe.transform(sdate, "MM/dd/yyyy");
+  this.ActionEventsByFilterSettings();
+}
+//#endregion
+//#region popups
+  //Calendar Settings Function
+  async ActionCalendarSetting() {
+    let obj = { calObj: this.calObj };
+    //  let copyobj = JSON.parse(JSON.stringify(this.calObj));
+    const modal = await this.Modalcntrl.create({
+      component: CalendarsettingComponent,
+      componentProps: obj
+    });
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null) {
+        if (detail.data.isfilter == true) {
+          this.calObj = detail.data.componentProps;
+          this.LoadFilterView();
+        }
+      }
+    });
+    return await modal.present();
+  }
+  //Onclick event Info
+  async ActionOnEventSelected(ev) {
+    let actionSheet = this.actionSheetCtrl.create({
+      //title: 'Actions',
+      cssClass: 'action-sheets-basic-page',
+      buttons: [       {
+          text: 'Activity Edit',
+         // role: 'destructive',
+          handler: () => {this.ActionEditActivity(ev);}
+        },
+        {
+          text: 'Job View',
+          cssClass:'color-orange',
+          handler: () => {this.ActionEditJobView(ev);}
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel', // will always sort to be on the bottom
+          handler: () => { }
+        }
+      ]
+    });
+    (await actionSheet).present();
+  }
+  async ActionEditActivity(ev) {
+    //console.log(ev);
+    let sDate = new Date(ev.event._def.extendedProps.StartDate);
+    let eDate = new Date(ev.event._def.extendedProps.EndDate);
+    let obj = { actId: ev.event._def.extendedProps.ID, actTypeID: ev.event._def.extendedProps.ActivityTypeID, StartDate: sDate, EndDate: eDate }
+    const modal = await this.Modalcntrl.create({
+      component: ActinfoComponent,
+      componentProps: obj
+    });
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail.data != null) {
+        if (detail.data.issave) {
+          this.eventinfo = detail.data.componentProps
+          this.ActionAddActivity(ev.event.id);
+          //  this.actlist.push(detail.data.componentProps);
+          //this.beforeViewType = detail.data.componentProps.eventType;
+          //detail.data.componentProps.eventType = ""; //blanking out as we do not want to bind it beforehand
+          // this.eventSource.push(detail.data.componentProps);
+          // this.myCal.loadEvents();
+          // this.resetEvent();
+
+        }
+      }
+    });
+    return await modal.present();
+  }
+  async ActionEditJobView(ev) {
+    //console.log(ev);
+    let event = ev.event.extendedProps;  
+      let qprmsobj = {
+        quoteid: event.ProjectID, quoteno: event.QuoteNo, versionid: event.VersionID, customerid: 0,
+        accountid: 0, childaccid: 0, phaseid: event.PhaseID, viewtypeid: event.PhaseID > 0 ? 2 : 1, layoutId: 1,statusId:event.PhaseID > 0 ? 6 : 1,
+      }; 
+    const modal = await this.Modalcntrl.create({
+      component: QuoteeditComponent,
+      //component: QlayoutComponent,
+      componentProps: qprmsobj,
+    });
+    return await modal.present();
+    
+  }
+  //Add events
+  async ActionAddActivity(Id: number) {
+    let actinfo = {
+      ID: Id, VersionID: 0, PhaseID: 0, ActTypeID: 11, ResourceList: [], SchStartTime: new Date(), SchEndTime: new Date(),
+      ProjectID: 0, JobName: "", TypeID: 0
+    }
+    actinfo = Id > 0 ? this.eventinfo : actinfo
+    //let viewtypeId = { viewtypeId: viewId }
+    const modal = await this.Modalcntrl.create({
+      component: AddactivityComponent,
+      componentProps: actinfo,
+    });
+
+    modal.onDidDismiss().then((result: OverlayEventDetail) => {
+      if (result.data !== null && result.data != undefined) {
+        if (result.data.issave == true) {
+          // this.UpdateActivty(result.data.componentProps);
+          this.ActionLoadEvents();
+        }
+        //this.calObj.ActTypeID = result.data.ActTypeId;
+        // this.calObj.ResourceIds = result.data.ResourceIds;
+        // this.calObj.ResourceNames = result.data.ResourceNames;
+        // this.calObj.ActivityType = result.data.ActivityType
+        //this.ActionLoadEvents();
+      }
+    });
+
+    return await modal.present();
+
+  }
+//#endregion
+//#region Prepare Methods
   PrepareEventHtml(evnt) {
     let event = evnt.event.extendedProps;
     var htmlstring = '';
@@ -188,6 +390,51 @@ export class SchedulingPage implements OnInit {
     htmlstring += "<div><b>" + event.QuoteNo + "- P" + event.PhaseSrNo + "</b></div>";
     htmlstring += "<div>" + event.QuoteName + "</div></div>"
     evnt.el.innerHTML = htmlstring;
+  }
+  PrepareDays(navtype) {
+    this.resources = [];
+    var startDate = new Date(this.calObj.StartDate.valueOf());
+    for (var s = 0; s < this.calObj.CalendarDays; s++) {
+      let start = startDate;
+      if (s > 0) {
+        start.setDate(startDate.getDate() + 1);
+      }
+      let start4 = this.datePipe.transform(start, "MM/dd/yyyy");
+      this.resources.push({ id: start4, title: start4 });
+    }
+    let stitle = this.datePipe.transform(this.calObj.StartDate, "MMM dd");
+    let title = stitle + " - " + this.datePipe.transform(startDate, "MMM dd, yyyy");
+    this.CalendarTitle = title;
+    startDate.setDate(startDate.getDate() + 1);
+    this.calObj.EndDate = startDate;
+  }
+  PrepareActInfo(info) {
+    let item: any;
+    item = {
+      ID: info.ID,
+      PhaseID: info.PhaseID,
+      ProjectID: info.ProjectID,
+      VersionID: info.VersionID,
+      PhaseSrNo: (info.PhaseSrNo == null || info.PhaseSrNo == "") ? "0" : info.PhaseSrNo,
+      StartTime: info.SchStartTime,
+      EndTime: info.SchEndTime,
+      ActivityType: info.ActTypeName,
+      ActivityTypeID: info.ActTypeID,
+      StatusID: info.StatusID,
+      StatusName: info.StatusName,
+      StatusIcon: info.IconPath,
+      PhaseSF: info.PhaseSF,
+      ResourceNames: info.ResourceName,
+      ResourceIDs: info.ResourceIDs,
+      QuoteName: info.JobName,
+      QuoteNo: info.QuoteNO,
+      AllDay: info.AllDay == 1 ? true : false,
+      ActBgColor: info.ActColorCode,
+      ActTextColor: info.ActTxtColor,
+    }
+    return item;
+  }
+  PrepareEvents(list) {
   }
   PrepareEventForDesktop(evnt) {
     let event = evnt.event.extendedProps; var htmlstring = '';
@@ -226,34 +473,8 @@ export class SchedulingPage implements OnInit {
     htmlstring += "</td></tr>" + resourceString + "</table>";
     evnt.el.innerHTML = htmlstring;
   }
-  ActionLoadEvents() {
-    if (this.calObj.CalendarView != "" && this.calObj.CalendarView != undefined) {
-      let resids = "";
-      let sDate = this.calObj.StartDate; let eDate = this.calObj.EndDate;
-      let colorId =  this.calObj.CalID == 1 ? 1 : this.calObj.CalColorID;
-      this.schService.ActionQuickActList(sDate, eDate, this.calObj.Search, this.calObj.ActTypeIDs, 0, this.calObj.ResourceIDs, this.calObj.StatusIDs,colorId).subscribe(data => {
-        this.actlist = [];
-        if (this.calObj.CalID == 1) {
-          let filterIds = this.calObj.ResourceIDs;
-          if (filterIds != "" && filterIds.length > 1) {
-            filterIds = filterIds.split(',');
-          }
-          for (let j in data) {
-            let item = data[j];
-            item.Imageurl = '/StoneApp.App/DigitalContent/Status/' + item.StatusIcon;
-            this.SetResouceEvents(item, filterIds);
-          }
-        } else {
-          for (let j in data) {
-            let item = data[j];
-            item.Imageurl = '/StoneApp.App/DigitalContent/Status/' + item.StatusIcon;
-            this.SetActTypeEvents(item);
-          }
-        }
-      });
-    }
-
-  }
+  //#endregion
+//#region  set Methods
   SetResouceEvents(item, filterIds) {
     let sDate = new Date(item.StartDate);
     let eDate = new Date(item.EndDate);
@@ -286,158 +507,15 @@ export class SchedulingPage implements OnInit {
     let textColor = this.calObj.CalColorID == 2 ? "black" : item.ActTextColor;
     this.actlist.push({ title: item.QuoteNo, start: sDate, end: eDate, id: item.ID, resourceId: extid, resourceIds: [extid], backgroundColor: bgColor, textColor: textColor, borderColor: textColor, extendedProps: item });
   }
-  ActionRefreshCalendar() {
-    this.calObj.ActTypeIDs = "11"; this.calObj.ActTypes = "Template";
-    this.calObj.ResourceIDs = ""; this.calObj.ResourceNames = "ALL";
-    this.calObj.StatusIDs = ""; this.calObj.StatusNames = "ALL"
-    this.calObj.CalID = 1,
-      // this.calObj.CalendarView= "resourceTimeline";
-      this.calObj.CalendarDays = 3, this.calObj.CalFields = ""; this.calObj.Search = ""; this.calObj.UserId = 0;
-    this.calObj.IsViewChange = false;
-    this.ActionEventsByFilterSettings();
-    //this.ActionGetResList();
-  }
-  ActionGetResList() {
-    this.schService.GetResourcesAndHolidays(this.calObj.StartDate, this.calObj.EndDate, this.calObj.ActTypeIDs, 1, this.calObj.ResourceIDs).subscribe(data => {
-      this.ActionLoadEvents();
-      this.resources = [];
-      for (let j in data.ActTypeResList) {
-        let item = data.ActTypeResList[j];
-        item.TextColor = item.TextColor == null ? "#ddd" : item.TextColor;
-        this.resources.push({ id: item.ResourceID, groupId: 0, title: item.ResourceName, eventBackgroundColor: item.TextColor, eventTextColor: "black", eventBorderColor: "black", extendedProps: item });
-      }
-      this.actResources = this.resources;
-    });
-  }
-  PrepareEvents(list) {
-
-  }
-  //Calendar Settings Function
-  async ActionCalendarSetting() {
-    let obj = { calObj: this.calObj };
-    //  let copyobj = JSON.parse(JSON.stringify(this.calObj));
-    const modal = await this.Modalcntrl.create({
-      component: CalendarsettingComponent,
-      componentProps: obj
-    });
-    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-      if (detail !== null) {
-        if (detail.data.isfilter == true) {
-          this.calObj = detail.data.componentProps;
-          this.LoadFilterView();
-        }
-      }
-    });
-    return await modal.present();
-  }
-  //Onclick event Info
-  async ActionOnEventSelected(ev) {
-    //console.log(ev);
-    let sDate = new Date(ev.event._def.extendedProps.StartDate);
-    let eDate = new Date(ev.event._def.extendedProps.EndDate);
-    let obj = { actId: ev.event._def.extendedProps.ID, actTypeID: ev.event._def.extendedProps.ActivityTypeID, StartDate: sDate, EndDate: eDate }
-    const modal = await this.Modalcntrl.create({
-      component: ActinfoComponent,
-      componentProps: obj
-    });
-    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-      if (detail.data != null) {
-        if (detail.data.issave) {
-          this.eventinfo = detail.data.componentProps
-          this.ActionAddActivity(ev.event.id);
-          //  this.actlist.push(detail.data.componentProps);
-          //this.beforeViewType = detail.data.componentProps.eventType;
-          //detail.data.componentProps.eventType = ""; //blanking out as we do not want to bind it beforehand
-          // this.eventSource.push(detail.data.componentProps);
-          // this.myCal.loadEvents();
-          // this.resetEvent();
-
-        }
-      }
-    });
-    return await modal.present();
-  }
-  //Add events
-  async ActionAddActivity(Id: number) {
-    let actinfo = {
-      ID: Id, VersionID: 0, PhaseID: 0, ActTypeID: 11, ResourceList: [], SchStartTime: new Date(), SchEndTime: new Date(),
-      ProjectID: 0, JobName: "", TypeID: 0
-    }
-    actinfo = Id > 0 ? this.eventinfo : actinfo
-    //let viewtypeId = { viewtypeId: viewId }
-    const modal = await this.Modalcntrl.create({
-      component: AddactivityComponent,
-      componentProps: actinfo,
-    });
-
-    modal.onDidDismiss().then((result: OverlayEventDetail) => {
-      if (result.data !== null && result.data != undefined) {
-        if (result.data.issave == true) {
-          // this.UpdateActivty(result.data.componentProps);
-          this.ActionLoadEvents();
-        }
-        //this.calObj.ActTypeID = result.data.ActTypeId;
-        // this.calObj.ResourceIds = result.data.ResourceIds;
-        // this.calObj.ResourceNames = result.data.ResourceNames;
-        // this.calObj.ActivityType = result.data.ActivityType
-        //this.ActionLoadEvents();
-      }
-    });
-
-    return await modal.present();
-
-  }
-  UpdateActivty(info) {
-    let filterIds = this.calObj.ResourceIDs;
-    if (filterIds != "" && filterIds.length > 1) {
-      filterIds = filterIds.split(',');
-    }
-    let quickInfo = this.PrepareActInfo(info);
-    if (info.ExtID > 0) {
-      let calendarApi = this.fullcalendar.getApi();
-      var event = calendarApi.getEventById(info.ID)
-      event.remove();
-    }
-    //  this.ActionPushEvents(quickInfo, filterIds);
-  }
-  PrepareActInfo(info) {
-    let item: any;
-    item = {
-      ID: info.ID,
-      PhaseID: info.PhaseID,
-      ProjectID: info.ProjectID,
-      VersionID: info.VersionID,
-      PhaseSrNo: (info.PhaseSrNo == null || info.PhaseSrNo == "") ? "0" : info.PhaseSrNo,
-      StartTime: info.SchStartTime,
-      EndTime: info.SchEndTime,
-      ActivityType: info.ActTypeName,
-      ActivityTypeID: info.ActTypeID,
-      StatusID: info.StatusID,
-      StatusName: info.StatusName,
-      StatusIcon: info.IconPath,
-      PhaseSF: info.PhaseSF,
-      ResourceNames: info.ResourceName,
-      ResourceIDs: info.ResourceIDs,
-      QuoteName: info.JobName,
-      QuoteNo: info.QuoteNO,
-      AllDay: info.AllDay == 1 ? true : false,
-      ActBgColor: info.ActColorCode,
-      ActTextColor: info.ActTxtColor,
-    }
-    return item;
-  }
-  ActionGoToHome() {
-    this.navCtrl.navigateRoot('/home');
-  }
-  LoadFilterView() {
-    let obj = this.calObj;
-    this.resources = this.calObj.CalID == 3 ? this.calObj.ActTypeList : this.actResources;
-    if (obj.IsViewChange == true || obj.IsDateChange == true || obj.IsDayChange == true) {
-      this.SetCalendarOptions(obj);
+  SetResourceGridViewWith() {
+    let width = window.innerWidth + "px";
+    if (this.calObj.ResourceIDs != "" && this.calObj.ResourceIDs != null && this.calObj.CalID == 1) {
+      let array = this.calObj.ResourceIDs.split(",");
+      width = array.length * 100 * Number(this.calObj.CalendarDays) + "px";
     } else {
-      this.ActionEventsByFilterSettings();
+      width = this.resources.length * 100 * Number(this.calObj.CalendarDays) + "px";
     }
-    this.SetResourceGridViewWith();
+    document.documentElement.style.setProperty("--reswidth", width)
   }
   SetCalendarOptions(obj) {
     let calendarApi = this.fullcalendar.getApi();
@@ -463,41 +541,7 @@ export class SchedulingPage implements OnInit {
     this.calObj.IsViewChange = false;
     this.calObj.IsViewChange = false;
   }
-  ChangedViewEvents() {
-    let sdate = new Date(this.calObj.StartDate);
-    sdate.setDate(sdate.getDate() + Number(this.calObj.CalendarDays));
-    this.calObj.StartDate = this.datePipe.transform(this.calObj.StartDate, "MM/dd/yyyy");
-    // this.calObj.StartDate = moment(this.calObj.StartDate).utc().format("MM/DD/YYYY");;
-    this.calObj.EndDate = this.datePipe.transform(sdate, "MM/dd/yyyy");
-    this.ActionEventsByFilterSettings();
-  }
-  SetResourceGridViewWith() {
-    let width = window.innerWidth + "px";
-    if (this.calObj.ResourceIDs != "" && this.calObj.ResourceIDs != null && this.calObj.CalID == 1) {
-      let array = this.calObj.ResourceIDs.split(",");
-      width = array.length * 100 * Number(this.calObj.CalendarDays) + "px";
-    } else {
-      width = this.resources.length * 100 * Number(this.calObj.CalendarDays) + "px";
-    }
-    document.documentElement.style.setProperty("--reswidth", width)
-  }
-  PrepareDays(navtype) {
-    this.resources = [];
-    var startDate = new Date(this.calObj.StartDate.valueOf());
-    for (var s = 0; s < this.calObj.CalendarDays; s++) {
-      let start = startDate;
-      if (s > 0) {
-        start.setDate(startDate.getDate() + 1);
-      }
-      let start4 = this.datePipe.transform(start, "MM/dd/yyyy");
-      this.resources.push({ id: start4, title: start4 });
-    }
-    let stitle = this.datePipe.transform(this.calObj.StartDate, "MMM dd");
-    let title = stitle + " - " + this.datePipe.transform(startDate, "MMM dd, yyyy");
-    this.CalendarTitle = title;
-    startDate.setDate(startDate.getDate() + 1);
-    this.calObj.EndDate = startDate;
-  }
+  //#endregion
 }
 
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams, LoadingController } from '@ionic/angular';
 import { QuoteService } from 'src/app/service/quote.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { QuoterepService } from 'src/app/service/quoterep.service';
@@ -21,8 +21,9 @@ export class CommhubeditComponent implements OnInit {
   fileData: File = null; url = appUrl;
   fileUploadProgress: string = null;
   uploadedFilePath: string = null;
+  loaderToShow: Promise<void>;
 
-  constructor(public Modalcntrl: ModalController, private qservice: QuoteService,
+  constructor(public Modalcntrl: ModalController, private qservice: QuoteService,public loadingController: LoadingController,
     private navParams: NavParams, private authservice: AuthService, private qRepService: QuoterepService, private http: HttpClient) {
 
   }
@@ -115,6 +116,7 @@ export class CommhubeditComponent implements OnInit {
 
   }
   UploadImage(event) {
+    this.showLoader()
     if (event.target.files && event.target.files[0]) {
       let info = this.commDetails;
       this.fileData = <File>event.target.files[0];
@@ -149,6 +151,7 @@ export class CommhubeditComponent implements OnInit {
       Check: 1, ThumbPath: "thumb_" + name, QuoteNo: this.header.QuoteNo, TypeID: this.commDetails.TypeID,
     };
     this.commDetails.AttachmentList.push(model);
+    this.hideLoader()
     
   }
 
@@ -157,6 +160,20 @@ export class CommhubeditComponent implements OnInit {
       this.commDetails.ID = data;
       this.ActionCloseCommhubedit(true);
   });
+  }
+
+  showLoader() {
+    this.loaderToShow = this.loadingController.create({
+      message: 'please wait'
+    }).then((res) => {
+      res.present();
+      res.onDidDismiss().then((dis) => {
+        console.log('Loading dismissed!');
+      });
+    });
+  }
+  async hideLoader() {
+    this.loadingController.dismiss();
   }
 
 

@@ -19,6 +19,7 @@ export class CommhubComponent implements OnInit {
   notesList: any; msgList:any = []; 
   msgStatusList: any;CategoryID:number = 0;quoteInfo:any;
   commDetails: any;
+  categoryList: any;
   details: any;
   typeId: any;
   imgPath:string;
@@ -34,6 +35,7 @@ export class CommhubComponent implements OnInit {
     this.GetformsList();
     this.GetphaseList();
     this.GetQuoteNoteList();
+    this.GetPictureList();
   }
   ActionChangeCategory(event){
     this.CategoryID = event;
@@ -74,6 +76,23 @@ GetPictureList(){
 ActionPreviewFile(path){
   window.open(path, '_blank');
 }
+
+  //Category List Function
+  GetcategoryList() {
+    this.qservice.NotecategoryList(0).subscribe(
+      data => {
+        this.categoryList = data;
+        this.GetSelectedCategoryName();
+        console.log(this.categoryList)
+      }
+    );
+  }
+  GetSelectedCategoryName() {
+    let commDetails = this.categoryList.find(s => s.ID == this.commDetails.categoryID);
+    if (commDetails != null) {
+      this.commDetails.category = commDetails.Name;
+    }
+  }
 
    //Comm.Hub Edit Function
   async ActionEditCommHub(note: any) {

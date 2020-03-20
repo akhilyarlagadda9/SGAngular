@@ -59,19 +59,21 @@ GetPictureList(){
           path = this.imgPath+ attach.FileName;
         }
         objDetails["Name"] = arrExt[0];
-        if(arrExt[1] == "pdf" || arrExt[1] == "PDF"){
-          objDetails["Path"] = "assets/img/Pdf.png";
-        }else if(arrExt[1]=="xlsx"){
-          objDetails["Path"] = "assets/img/XL.png";
-        }else{
+        // if(arrExt[1] == "pdf" || arrExt[1] == "PDF"){
+        //   objDetails["Path"] = "assets/img/Pdf.png";
+        // }else if(arrExt[1]=="xlsx"){
+        //   objDetails["Path"] = "assets/img/XL.png";
+        // }else{
         objDetails["Path"] = path;
-        }
+       // }
        this.pictureList.push(objDetails);
       }
     });
   });
 }
-
+ActionPreviewFile(path){
+  window.open(path, '_blank');
+}
 
    //Comm.Hub Edit Function
   async ActionEditCommHub(note: any) {

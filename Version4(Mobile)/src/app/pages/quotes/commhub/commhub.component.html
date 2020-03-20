@@ -42,7 +42,7 @@
           </ion-col>
         </ion-row>
     </ion-col>
-    <img [src]="picture.Path" style="width:100%;height:200px;">
+    <img [src]="picture.Path" style="width:100%;height:200px;" (click)="ActionPreviewFile(picture.Path)">
   </ion-card>
 </ion-list>
 

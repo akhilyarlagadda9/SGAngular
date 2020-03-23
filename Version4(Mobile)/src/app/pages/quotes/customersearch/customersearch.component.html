@@ -1,4 +1,4 @@
-<div style="height: 550px;">
+
 <ion-header>
   <ion-toolbar color="light">
     <ion-buttons slot="start">
@@ -13,6 +13,7 @@
     </ion-button> -->
   </ion-toolbar>
 </ion-header>
+<ion-content>
 <ion-list>
   <ion-item *ngFor="let customer of customerList" (click)="ActionPopulateParentInfo(customer)">
     <div *ngIf="customer.TypeID != 4">
@@ -28,4 +29,4 @@
     --NO RECORDS FOUND--
   </div>
 </ion-list>
-</div>
+</ion-content>

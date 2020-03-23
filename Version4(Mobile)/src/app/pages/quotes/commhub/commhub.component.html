@@ -16,21 +16,22 @@
 </ion-row>
 
 <ion-list class="ion-no-margin" *ngIf="selectedhubtype == 1">
-  <ion-item *ngFor="let note of notesList" (click)="ActionEditCommHub(note)">
+  <ion-item *ngFor="let note of notesList" >
     <ion-col>
-      <ion-row>
+      <ion-row (click)="ActionEditCommHub(note)">
         <ion-label>
           <h2>{{note.Subject}}</h2>
           <h3>{{note.User}} - {{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</h3>
           <p innerHTML="{{note.Body}}"></p>
          </ion-label>
       </ion-row>
-      <ion-row *ngFor="let category of note.AttachmentList">
-        <ion-label><u class="attachstyle color-primary">Attachments:</u></ion-label>
-        <ion-col class="paddleft5">
-          <span><ion-icon name="trash" class="delsty color-red"></ion-icon></span>&nbsp;
-          <span style="font-size: small;">{{category.FileName}}</span>
-        </ion-col>
+      <ion-row *ngFor="let category of note.AttachmentList; let i = index">
+        <ion-col  size="1">
+          <ion-icon *ngIf="i == 0" ios="ios-attach"  md="md-attach"></ion-icon>
+          </ion-col>
+          <ion-col size="11" >
+            <ion-label><p>{{category.FileName}}</p></ion-label>
+          </ion-col>
       </ion-row>
     </ion-col>
    </ion-item>

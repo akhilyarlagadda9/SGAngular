@@ -106,7 +106,7 @@ export class CommhubeditComponent implements OnInit {
   ActionUploadCommhubAttach(event: any) {
     if (this.commDetails.ID == 0) {
       let info = this.commDetails;
-      this.qservice.DocHeader(info.ID, info.RefID, info.categoryID, this.userInfo.logInUserID, info.Subject, info.TypeID).subscribe(data => {
+      this.qservice.DocHeader(info.ID, info.RefID, info.categoryID, this.commDetails.UserID, info.Subject, info.TypeID).subscribe(data => {
         this.commDetails.ID = data;
         this.UploadImage(event);
       });

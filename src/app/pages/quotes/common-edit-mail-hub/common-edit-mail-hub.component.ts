@@ -1,11 +1,13 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { ModalController,NavParams } from '@ionic/angular';
+import { ModalController,NavParams, LoadingController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
-// import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { AngularEditorModule } from '@kolkov/angular-editor';
+//import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { QuoteService } from 'src/app/service/quote.service';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { QuotegetService } from 'src/app/service/quoteget.service';
+import { HttpClient, HttpEventType } from '@angular/common/http';
+import { AuthService } from 'src/app/service/auth.service';
+declare const appUrl: any;
 
 @Component({
   selector: 'app-common-edit-mail-hub',
@@ -20,10 +22,28 @@ export class CommonEditMailHubComponent implements OnInit {
   isItemCCAvailable:boolean = false; headerData:any;
   templateList:Array<any>=[]; mailDetails:object={}; emailList:Array<any>=[];
   @ViewChild('To', {static: false}) pRef: ElementRef;
+  commDetails: any = this.navParams.data;
+  
+  fileData: File = null;
+  userInfo: any;
+  fileUploadProgress: string = null;
+  url = appUrl;
+  header: any;
+  loaderToShow: Promise<void>;
+  categoryList: any;
+  phaseList: any;
+  docFormList: any;
+  msgStatusList: any;
 
-  constructor(public Modalcntrl: ModalController,private qteService: QuoteService,private navParams: NavParams,private qRepService:QuoterepService,private qGetService:QuotegetService) { }
+  constructor(public Modalcntrl: ModalController,private authservice: AuthService,private http: HttpClient, public loadingController: LoadingController, private qservice: QuoteService,private qteService: QuoteService,private navParams: NavParams,private qRepService:QuoterepService,private qGetService:QuotegetService) { }
 
   ngOnInit() {
+    this.authservice.GetStoredLoginUser().then((data) => {
+      this.userInfo = data;
+      if (this.commDetails.ID == 0) {
+        this.commDetails.UserID = data.logInUserID;
+      }
+    });
     this. mailDetails ={
       From : "",
       To: "",
@@ -32,7 +52,8 @@ export class CommonEditMailHubComponent implements OnInit {
       mailBody: ""
     };
    //this.qRepService.interface$.subscribe(message => this.headerData = message);
-   this.headerData = this.qRepService.getHeader();
+   //this.headerData = this.qRepService.getHeader();
+   this.header = this.qRepService.getHeader();
     console.log(this.headerData);
    
     this.qteService.ActiongettemplateList(26).subscribe(data => {
@@ -52,8 +73,13 @@ export class CommonEditMailHubComponent implements OnInit {
         this.getNoteAttachments.push(data[0]);
     });
     console.log(this.getNoteAttachments);
+
+    this.header = this.qRepService.getHeader();
+    this.GetcategoryList();
+    this.GetformsList();
+    this.GetstatusList();
+    this.GetphaseList();
   }
-  
   ActionChangeTempl(selectedTemplate){
       this.templateList.forEach(element => {
         if(selectedTemplate == element.Name){
@@ -186,6 +212,61 @@ export class CommonEditMailHubComponent implements OnInit {
     });
   }
  }
+
+   //Category List Function
+   GetcategoryList() {
+    this.qservice.NotecategoryList(0).subscribe(
+      data => {
+        this.categoryList = data;
+        this.GetSelectedCategoryName();
+      }
+    );
+  }
+  GetSelectedCategoryName() {
+    let commDetails = this.categoryList.find(s => s.ID == this.commDetails.categoryID);
+    if (commDetails != null) {
+      this.commDetails.category = commDetails.Name;
+    }
+  }
+  //Phase List Function
+  GetphaseList() {
+    this.qservice.CommHubPhaseList(this.commDetails.RefID).subscribe(
+      data => {
+        this.phaseList = data;
+        this.GetSelectedPhaseName();
+      }
+    );
+  }
+  GetSelectedPhaseName() {
+    let commDetails = this.phaseList.find(s => s.ID == this.commDetails.PhaseID);
+    if (commDetails != null) {
+      this.commDetails.Phase = commDetails.Name;
+    }
+  }
+  //Document Forms List Function
+  GetformsList() {
+    this.qservice.FormsList(1).subscribe(
+      data => {
+        this.docFormList = data;
+        this.ActionChangeTempl(this.commDetails.FromID,);
+      }
+    );
+  }
+  //Status List Function
+  GetstatusList() {
+    this.qservice.QuoteMasterList(11).subscribe(
+      data => {
+        this.msgStatusList = data;
+        this.GetSelectedStatusName();
+      }
+    );
+  }
+  GetSelectedStatusName() {
+    let commDetails = this.msgStatusList.find(s => s.ID == this.commDetails.StatusID);
+    if (commDetails != null) {
+      this.commDetails.Status = commDetails.Name;
+    }
+  }
 //Attcahments
 ActionOnAttach(){
   this.blnIsAtttachAvailable =true;
@@ -217,4 +298,80 @@ ActionOnAttach(){
 //      'clearFormatting','toggleEditorMode'],
 //     ],
 // };
+
+  //Attachments Function
+  ActionUploadCommhubAttach(event: any) {
+    if (this.commDetails.ID == 0) {
+      let info = this.commDetails;
+      this.qservice.DocHeader(info.ID, info.RefID, info.categoryID, this.userInfo.logInUserID, info.Subject, info.TypeID).subscribe(data => {
+        this.commDetails.ID = data;
+        this.UploadImage(event);
+      });
+    } else {
+      this.UploadImage(event);
+    }
+
+  }
+  UploadImage(event) {
+    this.showLoader()
+    if (event.target.files && event.target.files[0]) {
+      let info = this.commDetails;
+      this.fileData = <File>event.target.files[0];
+      const formData = new FormData();
+      formData.append('files', this.fileData);
+      this.fileUploadProgress = '0%';
+      this.http.post(this.url + 'api/fileUpload/UploadAttatchments?Id=' + info.ID + "&versionId=" + info.RefID + "&typeId=" + info.TypeID + "&quoteNo=" + this.header.QuoteNo + "&jobstatusId=" + this.header.Version.JobStatusID, formData, {
+        reportProgress: true,
+        observe: 'events'
+      })
+        .subscribe(events => {
+          if (events.type === HttpEventType.UploadProgress) {
+            this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
+            console.log(this.fileUploadProgress);
+          } else if (events.type === HttpEventType.Response) {
+            this.fileUploadProgress = '';
+            if (events.body != null) {
+              this.PushImage(events.body);
+            }
+            // alert('SUCCESS !!');
+          }
+        });
+
+    }
+  }
+  PushImage(result) {
+    var result = result.toString().replace('[', "").replace(']', "");
+    let array = result.split('+');
+    let name = array[0].replace(/"/g, '');
+    var model = {
+      ID: Number(result[2].replace(/"/g, '')), FileName: name,
+      Check: 1, ThumbPath: "thumb_" + name, QuoteNo: this.header.QuoteNo, TypeID: this.commDetails.TypeID,
+    };
+    this.commDetails.AttachmentList.push(model);
+    this.hideLoader()
+    
+  }
+
+  ActionSaveQuoteNote(){
+    this.qservice.SaveQuoteNote(this.commDetails).subscribe(data => {
+      this.commDetails.ID = data;
+      this.ActionCloseCommhubedit(true);
+  });
+  }
+
+  showLoader() {
+    this.loaderToShow = this.loadingController.create({
+      message: 'please wait'
+    }).then((res) => {
+      res.present();
+      res.onDidDismiss().then((dis) => {
+        console.log('Loading dismissed!');
+      });
+    });
+  }
+  async hideLoader() {
+    this.loadingController.dismiss();
+  }
 }
+
+

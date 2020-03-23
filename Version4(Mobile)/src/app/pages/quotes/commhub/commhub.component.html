@@ -3,7 +3,7 @@
 
 <ion-row>
   <ion-col size="5">
-    <ion-select [(ngModel)]="CategoryID" class="btninfo" interface="popover"(ngModelChange)="ActionChangeCategory($event)">
+    <ion-select [(ngModel)]="CategoryID" class="btninfo" interface="popover" (ngModelChange)="ActionChangeCategory($event)">
       <ion-select-option [value]="0" selected="selected">ALL</ion-select-option>
       <ion-select-option *ngFor="let process of processtypeList" [value]="process.ID" >{{process.Name}}
       </ion-select-option>
@@ -16,8 +16,8 @@
 </ion-row>
 
 <ion-list class="ion-no-margin" *ngIf="selectedhubtype == 1">
-  <ion-item *ngFor="let note of notesList" >
-    <ion-col>
+  <ion-item class="paddzero item-marg" *ngFor="let note of notesList" >
+    <ion-col size="9">
       <ion-row (click)="ActionEditCommHub(note)">
         <ion-label>
           <h2>{{note.Subject}}</h2>
@@ -25,17 +25,20 @@
           <p innerHTML="{{note.Body}}"></p>
          </ion-label>
       </ion-row>
-      <ion-row *ngFor="let category of note.AttachmentList; let i = index">
-        <ion-col  size="1">
+      <ion-row class="paddzero" *ngFor="let category of note.AttachmentList; let i = index">
+        <ion-col class="paddzero" size="1">
           <ion-icon *ngIf="i == 0" ios="ios-attach"  md="md-attach"></ion-icon>
           </ion-col>
-          <ion-col size="11" >
+          <ion-col size="11" class="paddzero">
             <ion-label><p>{{category.FileName}}</p></ion-label>
           </ion-col>
+          
       </ion-row>
     </ion-col>
+    <ion-col size="1">
+      <ion-button shape="round" fill="outline">Mail</ion-button>
+    </ion-col>
    </ion-item>
- 
 </ion-list>
 <ion-list class="ion-no-margin" *ngIf="selectedhubtype == 2">
   <ion-item *ngFor="let note of msgList" (click)="ActionEditCommHub(note)">

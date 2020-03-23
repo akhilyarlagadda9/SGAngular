@@ -3,7 +3,7 @@ import { ModalController, PopoverController, LoadingController } from '@ionic/an
 import { QuoteService } from 'src/app/service/quote.service';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
-import { prepareEventListenerParameters } from '@angular/compiler/src/render3/view/template';
+//import { prepareEventListenerParameters } from '@angular/compiler/src/render3/view/template';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { OverlayEventDetail } from '@ionic/core';
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
@@ -37,7 +37,6 @@ export class AddpartComponent implements OnInit {
     this.GetPriceListItems();
     this.GetMaterialList();
     this.GetCounterList();
-
   }
 
   PreparePart() {

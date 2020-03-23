@@ -116,7 +116,7 @@ export class CommhubeditComponent implements OnInit {
 
   }
   UploadImage(event) {
-    this.showLoader()
+    this.showLoader();
     if (event.target.files && event.target.files[0]) {
       let info = this.commDetails;
       this.fileData = <File>event.target.files[0];
@@ -151,7 +151,7 @@ export class CommhubeditComponent implements OnInit {
       Check: 1, ThumbPath: "thumb_" + name, QuoteNo: this.header.QuoteNo, TypeID: this.commDetails.TypeID,
     };
     this.commDetails.AttachmentList.push(model);
-    this.hideLoader()
+    this.hideLoader();
     
   }
 

@@ -48,6 +48,7 @@ export class CommhubComponent implements OnInit {
 }
 
 GetPictureList(){
+  this.notesList = this.notesList == null ? [] : this.notesList;
   this.notesList.forEach(notes => {
     notes.AttachmentList.forEach(attach => {
       let path = "";

@@ -269,6 +269,7 @@ async ActionNewAction() {
         if (detail.data.issave == true) {
           this.headerInfo.Version.StatusID = this.actionObj.StatusID;
           this.headerInfo.Version.Status = this.actionObj.Status;
+          this.qprmsobj.statusId = this.actionObj.StatusID;
         }
       }
     });

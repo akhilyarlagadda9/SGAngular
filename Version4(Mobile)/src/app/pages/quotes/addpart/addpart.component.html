@@ -89,7 +89,7 @@
             <ion-col class="lablewid" size="1" class="color-primary martop10"><b>M:</b></ion-col>
             <ion-col size="7" class="labelfont">
               <ion-select [(ngModel)]="mat.MaterialID" name="MaterialID"
-                (ngModelChange)="ActionPopulateMaterial($event,i)" interface="popover"
+                (ngModelChange)="ActionPopulateMaterial($event,i)"
                 class="border-btm labelfont2 color-blue">
                 <ion-select-option *ngFor="let material of MaterialList" [value]="material.ID">{{material.StoneType}} -
                   {{material.Color}} - {{material.Depth}} - {{material.Finish}}</ion-select-option>
@@ -162,7 +162,7 @@
             <ion-col size="1" class="round color-img color-text text-center mar-top5">{{i + 1}}</ion-col>
             <ion-col size="8">
               <ion-select class="btninfo" [(ngModel)]="size.CounterType" name="CounterType"
-                [selectedText]="size.CounterType" interface="popover" class="color-blue labelfont2 border-btm">
+                [selectedText]="size.CounterType" class="color-blue labelfont2 border-btm">
                 <ion-select-option *ngFor="let c of CountertypeList" [value]="c.Name">{{c.Name}}</ion-select-option>
               </ion-select>
             </ion-col>
@@ -210,7 +210,7 @@
             <ion-row>
               <ion-col size="1" class="color-green martop10"><b>S:</b></ion-col>
               <ion-col size="8">
-                <ion-select [(ngModel)]="splash.SplashID" name="SplashID" interface="popover"
+                <ion-select [(ngModel)]="splash.SplashID" name="SplashID"
                   class="border-btm labelfont2 color-blue" (ngModelChange)="ActionPopulateSplash($event,i)">
                   <ion-select-option *ngFor="let spl of SplashList" [value]="spl.ID">{{spl.Description}}
                   </ion-select-option>
@@ -254,7 +254,7 @@
             <ion-row>
               <ion-col size="1" class="color-green martop10 paddzero"><b>E:</b></ion-col>
               <ion-col size="8">
-                <ion-select [(ngModel)]="edge.EdgeProfileID" class="btninfo" interface="popover"
+                <ion-select [(ngModel)]="edge.EdgeProfileID" class="btninfo"
                   (ngModelChange)="ActionPopulateEdge($event,i)" class="border-btm labelfont2 color-blue">
                   <ion-select-option *ngFor="let edg of EdgeList" [value]="edg.ID">{{edg.Description}}
                   </ion-select-option>
@@ -314,7 +314,7 @@
             <ion-row>
               <ion-col size="1" class="color-green martop10 paddzero"><b>C:</b></ion-col>
               <ion-col size="8">
-                <ion-select [(ngModel)]="cutout.TypeID" interface="popover"
+                <ion-select [(ngModel)]="cutout.TypeID"
                   (ngModelChange)="ActionPopulateCutout($event,i)" class="border-btm labelfont2 color-blue">
                   <ion-select-option *ngFor="let c of CutoutList" [value]="c.ID">{{c.Description}}</ion-select-option>
                 </ion-select>

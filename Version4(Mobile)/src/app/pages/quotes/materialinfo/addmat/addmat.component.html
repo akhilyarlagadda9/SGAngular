@@ -147,7 +147,7 @@
         <ion-col size="6">
           <ion-item>
             <ion-label position="floating" color="primary">Thickness</ion-label>
-            <ion-select [(ngModel)]="material.DepthID" name="DepthID" #DepthID="ngModel" interface="popover"
+            <ion-select [(ngModel)]="material.DepthID" name="DepthID" #DepthID="ngModel"
               class="labelfont2" required>
               <ion-select-option *ngFor="let item of thicknessItems" [value]="item.ID">{{item.Name}}</ion-select-option>
             </ion-select>
@@ -159,7 +159,7 @@
         <ion-col size="6">
           <ion-item>
             <ion-label position="floating" color="primary">Finish</ion-label>
-            <ion-select [(ngModel)]="material.FinishID" name="FinishID" #FinishID="ngModel" interface="popover"
+            <ion-select [(ngModel)]="material.FinishID" name="FinishID" #FinishID="ngModel"
               class="labelfont2" required>
               <ion-select-option *ngFor="let item of finishItems" [value]="item.ID">{{item.Name}}</ion-select-option>
             </ion-select>
@@ -245,37 +245,37 @@
         <ion-icon name="cart" (click)="ActionAddMeas()" class="fontmedium"></ion-icon>
       </ion-row>
 
-      <ion-row *ngFor="let size of material.SlabList;let i = index">
-        <ion-col size="3">
+      <ion-row class="paddzero" *ngFor="let size of material.SlabList;let i = index">
+        <ion-col size="4">
           <ion-item>
-            <ion-label class="labelfont2" position="floating" color="primary">W</ion-label>
+            <ion-label floting color="primary">W</ion-label>
             <ion-input type="text" class="labelfont2" name="Vendor" [(ngModel)]="size.Width"
               (change)="ActionSetSqft(size,0)"></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col size="3">
+        <ion-col size="4">
           <ion-item>
-            <ion-label class="labelfont2" position="floating" color="primary">H</ion-label>
+            <ion-label floting color="primary">H</ion-label>
             <ion-input type="text" class="labelfont2" name="Vendor" [(ngModel)]="size.Height"
               (change)="ActionSetSqft(size,0)"></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col size="3">
+        <ion-col size="4">
           <ion-item>
-            <ion-label class="labelfont2" position="floating" color="primary">Sqft</ion-label>
+            <ion-label floting color="primary">Sqft</ion-label>
             <ion-input type="text" class="labelfont2" name="Sqft" [(ngModel)]="size.Sqft"></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col size="3">
+        <ion-col size="6">
           <ion-item>
-            <ion-label class="labelfont2" position="floating" color="primary">Qty</ion-label>
+            <ion-label floting color="primary">Qty</ion-label>
             <ion-input type="text" class="labelfont2" [(ngModel)]="size.Qty" name="Qty"
               (change)="ActionSetAmount()"></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col size="3">
+        <ion-col size="6">
           <ion-item>
-            <ion-label class="labelfont2" position="floating" color="primary">Price/Sqft</ion-label>
+            <ion-label floting color="primary">Price/Sqft&nbsp;</ion-label>
             <ion-input type="text" class="labelfont2" [(ngModel)]="size.Amount" name="Amount">
               <ion-row class="mar-right3">$</ion-row>
             </ion-input>

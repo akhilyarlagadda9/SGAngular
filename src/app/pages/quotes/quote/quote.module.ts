@@ -21,7 +21,7 @@ import { CustomereditComponent } from '../customeredit/customeredit.component';
 import { CommhubeditComponent } from '../commhubedit/commhubedit.component';
 import {CommonEditMailHubComponent} from '../common-edit-mail-hub/common-edit-mail-hub.component';
 //import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { AngularEditorModule } from '@kolkov/angular-editor';
+//import { AngularEditorModule } from '@kolkov/angular-editor';
 
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 // item popups
@@ -59,6 +59,9 @@ import { MaileditComponent } from '../mailedit/mailedit.component';
 import { ActionquoteComponent } from '../actionquote/actionquote.component';
 import { AddmeasComponent } from '../materialinfo/addmeas/addmeas.component';
 import { QuickquoteComponent } from '../quickquote/quickquote.component';
+import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { FileTransfer} from '@ionic-native/file-transfer/ngx';
 
 @NgModule({
   imports: [
@@ -66,13 +69,18 @@ import { QuickquoteComponent } from '../quickquote/quickquote.component';
     FormsModule,
     IonicModule, 
     ReactiveFormsModule,
+    //HttpHeaders ,
     RouterModule.forChild([
       {
         path: '',
         component: QuotePage
       },
     ]),
-    AngularEditorModule
+  ],
+  providers:[
+    DocumentViewer,
+    File,
+    FileTransfer,
   ],
   entryComponents: [CreatequoteComponent,AddmeasComponent,SearchComponent,ActionquoteComponent,
     TransactionComponent,NewtranComponent,AccountsComponent,PaymentScheduleComponent,

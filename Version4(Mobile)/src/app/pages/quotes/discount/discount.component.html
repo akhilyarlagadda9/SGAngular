@@ -37,7 +37,7 @@
       <ion-col *ngFor="let discount of DiscountList;let i = index" size="12">
         <ion-item>
           <ion-label floating>Discount</ion-label>
-          <ion-select class="btninfo" interface="popover" [(ngModel)]="discount.DiscID" name="DiscID{{i}}"
+          <ion-select class="btninfo" [(ngModel)]="discount.DiscID" name="DiscID{{i}}"
             (ngModelChange)="ActionChangeDiscount($event,discount)">
             <ion-select-option *ngFor="let d of DiscountTypeList" [value]="d.ID">{{d.Name}}</ion-select-option>
           </ion-select>
@@ -66,7 +66,7 @@
         </ion-item>
         <ion-item>
           <ion-label floating></ion-label>
-          <ion-select style="width:70%" class="btninfo" interface="popover" [(ngModel)]="Version.TaxID" name="TaxID"
+          <ion-select style="width:70%" class="btninfo" [(ngModel)]="Version.TaxID" name="TaxID"
             [disabled]="Version.TaxCode == 0">
             <ion-select-option *ngFor="let mat of TaxTypeList" [value]="mat.ID">{{mat.Name}}</ion-select-option>
           </ion-select>
@@ -173,7 +173,7 @@
   <ion-content *ngIf="SummaryTypeID == 3">
       <ion-item>
         <ion-label floating>Fees</ion-label>
-        <ion-select  interface="popover" style="min-width:150px;" [(ngModel)]="Version.FeeID" name="FeeID"
+        <ion-select style="min-width:150px;" [(ngModel)]="Version.FeeID" name="FeeID"
           (ionChange)="ActionChangeFeeType(Version.FeeID)">
           <ion-select-option *ngFor="let mat of FeeTypeList " [value]="mat.ID">{{mat.Name}}</ion-select-option>
         </ion-select>

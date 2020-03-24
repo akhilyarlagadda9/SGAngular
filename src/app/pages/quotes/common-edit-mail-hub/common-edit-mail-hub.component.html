@@ -13,7 +13,7 @@
           <input type="file" (change)="ActionUploadCommhubAttach($event)">
         </ion-icon>
       </ion-button> -->
-      <ion-button color="primary" >
+      <ion-button color="primary" type="submit">
         <ion-icon ios="ios-send" md="md-send"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -45,7 +45,7 @@
   <ion-item>
     <ion-label>Template:<span
       class="requiredField">*</span></ion-label>
-    <ion-select class="btninfo" interface="popover" [(ngModel)]="templateList.Name" name="Name" #Name="ngModel" required (ngModelChange)="ActionChangeTempl($event)"  [selectedText]="templateList.Name">
+    <ion-select class="btninfo" [(ngModel)]="templateList.Name" name="Name" #Name="ngModel" required (ngModelChange)="ActionChangeTempl($event)"  [selectedText]="templateList.Name">
       <ion-select-option *ngFor="let template of templateList" [value]="template.Name">{{template.Name}}</ion-select-option>
     </ion-select>
     <div [hidden]="!form.submitted || Name.valid" class="invalid-feedback padd-Left">
@@ -67,7 +67,7 @@
     <ion-label>To:<span
       class="requiredField">*</span></ion-label>
     <!-- <ion-text>{{mailDetails.To}}</ion-text> -->
-    <ion-textarea [(ngModel)]="mailDetails.To" name="To" #To type="text" required (ngModelChange)="getToItems($event)"></ion-textarea>
+    <ion-textarea [(ngModel)]="mailDetails.To" name="To" #To="ngModel" required (ngModelChange)="getToItems($event)"></ion-textarea>
   </ion-item>
         <ion-list *ngIf="isItemToAvailable">
             <ion-item   *ngFor="let item of arrInfo" (click)="addMail(item.Email,1)" style="overflow-y: scroll; background-color: grey; min-height: 25px;border-bottom: black;">
@@ -113,8 +113,8 @@
       </span>
     </ion-label>
   <ion-label>
-    <ion-row *ngFor="let category of commDetails.AttachmentList">
-      <ion-col class="paddleft5">
+    <ion-row *ngFor="let category of commDetails.AttachmentList" >
+      <ion-col class="paddleft5" (click)="ActionPreviewFile(commDetails.Path)" >
         <span><ion-icon name="trash" class="delIcon"></ion-icon></span>&nbsp;
         <span>{{category.FileName}}</span>
       </ion-col>

@@ -25,34 +25,34 @@
     <ion-list class="ion-no-margin ion-no-padding">
         <ion-item>
             <ion-label position="floating" color="primary" class="labelfont margin-zero">Job Name</ion-label>
-            <ion-input required type="text" [(ngModel)]="headerinfo.QuoteName" name="QuoteName" class="inputheight"></ion-input>
+            <ion-input required type="text" [(ngModel)]="headerinfo.QuoteName" name="headerinfo.QuoteName" #QuoteName="ngModel" class="inputheight"></ion-input>
         </ion-item>
-        <div [hidden]="!form.submitted  || headerinfo.QuoteName.valid" class="invalid-feedback padd-Left">
+        <div [hidden]="!form.submitted  || QuoteName.valid" class="invalid-feedback padd-Left">
             <div class="error">Job Name is required</div>
           </div>
         <ion-item>
             <ion-label position="floating" color="primary" class="labelfont margin-zero">Address</ion-label>
-            <ion-input required type="text" [(ngModel)]="headerinfo.Address1" name="Address1" class="inputheight"></ion-input>
+            <ion-input required type="text" [(ngModel)]="headerinfo.Address1" name="headerinfo.Address1" class="inputheight"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label position="floating" color="primary" class="labelfont margin-zero">City</ion-label>
-            <ion-input required type="text" [(ngModel)]="headerinfo.City" name="City" class="inputheight"></ion-input>
+            <ion-input required type="text" [(ngModel)]="headerinfo.City" name="headerinfo.City" #City="ngModel" class="inputheight"></ion-input>
         </ion-item>
-        <div [hidden]="!form.submitted  || headerinfo.City.valid" class="invalid-feedback padd-Left">
+        <div [hidden]="!form.submitted  || City.valid" class="invalid-feedback padd-Left">
             <div class="error">City Name is required</div>
           </div>
         <ion-item>
             <ion-label position="floating" color="primary" class="labelfont margin-zero">State</ion-label>
-            <ion-input required type="text" [(ngModel)]="headerinfo.State" name="State" class="inputheight"></ion-input>
+            <ion-input required type="text" [(ngModel)]="headerinfo.State" name="headerinfo.State" #State="ngModel" class="inputheight"></ion-input>
         </ion-item>
-        <div [hidden]="!form.submitted  || headerinfo.State.valid" class="invalid-feedback padd-Left">
+        <div [hidden]="!form.submitted  || State.valid" class="invalid-feedback padd-Left">
             <div class="error">Account State is required</div>
           </div>
         <ion-item>
             <ion-label position="floating" color="primary" class="labelfont margin-zero">Zipcode</ion-label>
-            <ion-input required type="text" [(ngModel)]="headerinfo.Zipcode" name="Zipcode" class="inputheight"></ion-input>
+            <ion-input required type="text" [(ngModel)]="headerinfo.Zipcode" name="headerinfo.Zipcode" #Zipcode="ngModel" class="inputheight"></ion-input>
         </ion-item>
-        <div [hidden]="!form.submitted  || headerinfo.Zipcode.valid" class="invalid-feedback padd-Left">
+        <div [hidden]="!form.submitted  || Zipcode.valid" class="invalid-feedback padd-Left">
             <div class="error">Zipcode is required</div>
           </div>
         <ion-item>
@@ -73,11 +73,11 @@
         </ion-item>
         <ion-item>
             <ion-label class="labelfont margin-zero" position="floating" color="primary">Sales Rep</ion-label>
-            <ion-select [(ngModel)]="headerinfo.SalesPerson" name="SalesPerson" [selectedText]="headerinfo.SalesPerson" name="SalesPerson">
+            <ion-select [(ngModel)]="headerinfo.SalesPerson" name="headerinfo.SalesPerson" [selectedText]="headerinfo.SalesPerson" #SalesPerson="ngModel" name="SalesPerson">
               <ion-select-option *ngFor="let p of salesPersonsList" [value]="p.ResourceName">{{p.ResourceName}}</ion-select-option>
             </ion-select>
          </ion-item>
-         <div [hidden]="!form.submitted  || headerinfo.SalesPerson.valid" class="invalid-feedback padd-Left">
+         <div [hidden]="!form.submitted  || SalesPerson.valid" class="invalid-feedback padd-Left">
             <div class="error">SalesPerson is required</div>
           </div>
         <ion-item>
@@ -105,11 +105,11 @@
           </ion-item>
         <ion-item>
             <ion-label class="labelfont margin-zero" position="floating" color="primary">Price List</ion-label>      
-            <ion-select required [(ngModel)]="headerinfo.Version.PriceListID" name="PriceListID" #PriceListID="ngModel" name="PriceListID"  class="labelfont">
+            <ion-select required [(ngModel)]="headerinfo.Version.PriceListID" name="headerinfo.Version.PriceListID" #PriceListID="ngModel" name="PriceListID"  class="labelfont">
               <ion-select-option *ngFor="let p of priceList" [value]="p.RefID">{{p.Name}}</ion-select-option>
             </ion-select>
           </ion-item>
-          <div [hidden]="!form.submitted  || headerinfo.Version.PriceListID.valid" class="invalid-feedback padd-Left">
+          <div [hidden]="!form.submitted  || PriceListID.valid" class="invalid-feedback padd-Left">
             <div class="error">Price List is required</div>
           </div>
         <ion-item class="borbottom">

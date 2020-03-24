@@ -1,5 +1,5 @@
 import { NgModule,Directive, ElementRef, HostBinding, HostListener } from '@angular/core';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule ,ReactiveFormsModule } from '@angular/forms'; 
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http'; 
@@ -13,7 +13,7 @@ import { QuotePageModule } from './pages/quotes/quote/quote.module';
 import { SchedulingPageModule } from './pages/project/scheduling/scheduling.module';
 //import { AgmCoreModule } from '@agm/core';
 //import { GoogleMaps } from '@ionic-native/google-maps';
-
+//import { Storage } from '@ionic/storage';
 declare var urlss;
 //import {Camera} from '@ionic-native/file'
 @NgModule({
@@ -27,12 +27,12 @@ declare var urlss;
     // AgmCoreModule.forRoot({
     //   apiKey: 'AIzaSyDLkwxgLxSXDDXWgMss9nnIwBciWaZkPL8' // apiKey is required 
     // }),
-    IonicStorageModule .forRoot(),SchedulingPageModule
+    IonicStorageModule.forRoot(),SchedulingPageModule,ReactiveFormsModule 
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },IonicStorageModule
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
 })

@@ -3,7 +3,7 @@
       <ion-col size="2" class="textfont14">Area
       </ion-col>
       <ion-col size="9">
-        <ion-select class="btninfo" interface="popover" [(ngModel)]="AreaID" name="AreaID"
+        <ion-select class="btninfo" [(ngModel)]="AreaID" name="AreaID"
           (ionChange)="ActionPartsByArea(AreaID, 1)">
           <ion-select-option *ngFor="let area of arealist" [value]="area.ID">{{area.Name}}</ion-select-option>
         </ion-select>
@@ -18,7 +18,7 @@
   <ion-col size="2" *ngIf="partinfo.ID == 0 || partinfo.ID == '' || partinfo.ID == null" class="textfont14">Part</ion-col>
   <ion-col size="2" *ngIf="partinfo.ID > 0" (click)="ActionAddPart(partinfo.ID)"><u class="colorblue textfont14">Part</u>  </ion-col>
   <ion-col size="9" class="text-left">
-    <ion-select class="btninfo" interface="popover" [(ngModel)]="AreaPartID" name="AreaPartID"
+    <ion-select class="btninfo" [(ngModel)]="AreaPartID" name="AreaPartID"
       (ionChange)="ActionGetPartInfo(AreaPartID)">
       <ion-select-option *ngFor="let part of areaInfo.PartList" [value]="part.ID"><span
           *ngIf="part.Name == '' || part.Name == null">Part{{part.SrNo}}</span>{{part.Name}}</ion-select-option>
@@ -521,7 +521,7 @@
     <ion-col size="2" class="textfont14">Area
     </ion-col>
     <ion-col size="9">
-      <ion-select class="btninfo" interface="popover" [(ngModel)]="AreaID" name="AreaID"
+      <ion-select class="btninfo" [(ngModel)]="AreaID" name="AreaID"
         (ionChange)="ActionPartsByArea(AreaID, 1)">
         <ion-select-option *ngFor="let area of arealist" [value]="area.ID">{{area.Name}}</ion-select-option>
       </ion-select>
@@ -534,7 +534,7 @@
 <ion-col size="2" *ngIf="partinfo.ID == 0 || partinfo.ID == '' || partinfo.ID == null" class="textfont14">Part</ion-col>
 <ion-col size="2" *ngIf="partinfo.ID > 0" (click)="ActionAddPart(partinfo.ID)"><u class="colorblue textfont14">Part</u>  </ion-col>
 <ion-col size="9" class="text-left">
-  <ion-select class="btninfo" interface="popover" [(ngModel)]="AreaPartID" name="AreaPartID"
+  <ion-select class="btninfo" [(ngModel)]="AreaPartID" name="AreaPartID"
     (ionChange)="ActionGetPartInfo(AreaPartID)">
     <ion-select-option *ngFor="let part of areaInfo.PartList" [value]="part.ID"><span
         *ngIf="part.Name == '' || part.Name == null">Part{{part.SrNo}}</span>{{part.Name}}</ion-select-option>

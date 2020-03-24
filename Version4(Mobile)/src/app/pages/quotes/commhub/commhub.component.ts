@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import {CommhubeditComponent} from '../commhubedit/commhubedit.component'
 import {CommonEditMailHubComponent} from '../common-edit-mail-hub/common-edit-mail-hub.component';
 //import { QuotegetService } from 'src/app/service/quoteget.service';
@@ -7,6 +7,10 @@ import { MaileditComponent } from '../mailedit/mailedit.component';
 import { OverlayEventDetail } from '@ionic/core';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { QuoteService } from 'src/app/service/quote.service';
+import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer/ngx';
+
 declare const imgUrl: any;
 @Component({
   selector: 'app-commhub',
@@ -26,7 +30,8 @@ export class CommhubComponent implements OnInit {
   pictureList:Array<any>=[];
  
   //selectedoption: any;
-  constructor(public Modalcntrl : ModalController,private qservice: QuoteService,private qRepService:QuoterepService) { }
+  constructor(public Modalcntrl : ModalController,private qservice: QuoteService,private qRepService:QuoterepService,
+    private file:File,private documentViewer: DocumentViewer,private filetransfer:FileTransfer,private platform:Platform) { }
 
   ngOnInit() {
     this.quoteInfo = this.qRepService.getHeader();
@@ -75,7 +80,22 @@ GetPictureList(){
   });
 }
 ActionPreviewFile(path){
-  window.open(path, '_blank');
+  //window.open(path, '_blank');
+  let _strEx = path.substring(path.lastIndexOf(".")+1,path.length);
+  let strMyFileExtn = "myFile"+_strEx;
+  let pathCheck=null;
+  if(this.platform.is('ios')){
+    pathCheck = this.file.documentsDirectory;
+  }
+  else{
+    pathCheck = this.file.dataDirectory;
+  }
+
+    const transfer:FileTransferObject = this.filetransfer.create();
+     transfer.download(path,pathCheck+strMyFileExtn,true).then(entry=>{
+        let url=entry.toURL();
+        this.documentViewer.viewDocument(url,'application/pdf',{});
+     });
 }
 
   //Category List Function
@@ -121,7 +141,7 @@ ActionPreviewFile(path){
   }
  //Comm.Hub Mail Function
   async ActionEditCommHubMail(note: any) {
-    let commDetails = {versionId : this.VersionId,commDetails: note};
+    let commDetails = {versionId : this.VersionId,commDetails: this.notesList};
     console.log(commDetails);   
     const modal = await this.Modalcntrl.create({
       component: CommonEditMailHubComponent,

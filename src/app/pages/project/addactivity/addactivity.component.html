@@ -95,7 +95,7 @@
     <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" 
     (ngModelChange)="actinfo.IsDateChange = true;ActionChangeDate($event,0,'sDate')" name="SchStartTime" [(ngModel)]="actinfo.SchStartTime">
   </ion-datetime>
-  <ion-select class="btninfo" interface="popover" [(ngModel)]="actinfo.STime" name="STime" (ngModelChange)="ActionChangeDate($event,0,'')"  [selectedText]="actinfo.STime">
+  <ion-select class="btninfo" [(ngModel)]="actinfo.STime" name="STime" (ngModelChange)="ActionChangeDate($event,0,'')"  [selectedText]="actinfo.STime">
     <ion-select-option *ngFor="let time of timings" [value]="time">{{time}}</ion-select-option>
   </ion-select>
   </ion-item>
@@ -104,7 +104,7 @@
     <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" 
     (ngModelChange)="actinfo.IsDateChange = true;ActionChangeDate($event,1,'eDate')" name="SchEndTime" [(ngModel)]="actinfo.SchEndTime">
   </ion-datetime>
-  <ion-select class="btninfo" interface="popover" [(ngModel)]="actinfo.ETime" name="ETime" (ngModelChange)="ActionChangeDate($event,1,'')"  [selectedText]="actinfo.ETime">
+  <ion-select class="btninfo" [(ngModel)]="actinfo.ETime" name="ETime" (ngModelChange)="ActionChangeDate($event,1,'')"  [selectedText]="actinfo.ETime">
     <ion-select-option *ngFor="let time of timings" [value]="time">{{time}}</ion-select-option>
   </ion-select>
   </ion-item>

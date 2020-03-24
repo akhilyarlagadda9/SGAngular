@@ -112,6 +112,13 @@ async ActionQuoteHeader() {
     component: HeadereditComponent
 
   });
+  modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+    if (detail !== null) {
+      if (detail.data.issave == true) {
+     
+      }
+    }
+  });
   return await modal.present();
 }
 //Job Description Edit Function
@@ -146,7 +153,8 @@ async ActionEditJob() {
   modal.onDidDismiss().then((detail: OverlayEventDetail) => {
     if (detail !== null) {
       if (detail.data.isSave == true) {
-        this.headerInfo = detail.data.componentProps;
+        this.headerInfo =  this.qrepservice.ResetQuote(this.headerInfo,detail.data.componentProps)
+       // this.headerInfo = detail.data.componentProps;
         //this.contacts = detail.data.componentProps.ContactList;
       }
     }

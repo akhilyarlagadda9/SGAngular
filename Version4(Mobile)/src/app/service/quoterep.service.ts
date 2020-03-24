@@ -113,6 +113,27 @@ export class QuoterepService {
     address = header.Address1 + header.City + header.State + zipcodeComma + header.Zipcode;
     return address;
   }
+  ResetQuote(header,newheader){
+    header.QuoteName =newheader.QuoteName; 
+    header.QuoteNo =newheader.QuoteNo; 
+    header.Address1 =newheader.Address1; 
+    header.City =newheader.City; 
+    header.State =newheader.State; 
+    header.Zipcode =newheader.Zipcode; 
+    header.YearBuilt =newheader.YearBuilt; 
+    header.QuoteDate =newheader.QuoteDate; 
+    header.SalesPersonID =newheader.SalesPersonID;
+    header.EstimatorID =newheader.EstimatorID;
+    header.Lat =newheader.Lat;
+    header.Long =newheader.Long;
+    header.ProjectManagerID =newheader.ProjectManagerID;
+    header.Version.ExpiryDate =newheader.Version.ExpiryDate; 
+    header.Version.JobTypeID =newheader.Version.JobTypeID; 
+    header.Version.PriceListID =newheader.Version.PriceListID; 
+    header.Version.Financed =newheader.Version.Financed; 
+    header.FullAddress = this.GetQuoteAddress(newheader);
+    return header;
+  } 
   //#endregion
   //#region  Add Items
   AddPartMatItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number) {

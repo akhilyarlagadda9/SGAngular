@@ -3,7 +3,7 @@
 
 <ion-row>
   <ion-col size="5">
-    <ion-select [(ngModel)]="CategoryID" class="btninfo" interface="popover" (ngModelChange)="ActionChangeCategory($event)">
+    <ion-select [(ngModel)]="CategoryID" class="btninfo" (ngModelChange)="ActionChangeCategory($event)">
       <ion-select-option [value]="0" selected="selected">ALL</ion-select-option>
       <ion-select-option *ngFor="let process of processtypeList" [value]="process.ID" >{{process.Name}}
       </ion-select-option>

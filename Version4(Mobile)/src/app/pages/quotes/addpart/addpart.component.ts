@@ -193,11 +193,21 @@ export class AddpartComponent implements OnInit {
     size.Sqft = this.quoterep.calcsqft(size.Width, size.Height);
     this.ActionSetFabSqft(index);
   }
+
   ActionSetFabSqft(index) {
     const sum = this.partinfo.PartFabList[index].MeasureList.reduce((sum, current) => sum + this.quoterep.convertToFloat(current.Sqft), 0);
     this.partinfo.PartFabList[index].PartSqft = sum;
     this.PopulateSqfts();
   }
+  ActionChangeFabSqft(index) {
+    this.PopulateSqfts();
+    let list = this.partinfo.PartFabList[index].MeasureList;
+    for (let i in list) {
+      let size = list[i];
+      size.Height =0;size.Width = 0;size.Sqft = 0;
+    }
+  }
+
   ActionSetSplashSqft(splash) {
     splash.Sqft = this.quoterep.calcsqft(splash.Width, splash.Height);
     this.ActionChangeSplash();
@@ -212,7 +222,8 @@ export class AddpartComponent implements OnInit {
   }
   PopulateSqfts() {
     // Fab
-    this.partinfo.PartFabList[0].Sqft = Number(this.partinfo.PartFabList[0].PartSqft) + Number(this.partinfo.PartFabList[0].SplashSqft);
+    let fab =this.partinfo.PartFabList[0]; 
+    this.partinfo.PartFabList[0].Sqft = this.quoterep.convertToFloat(fab.PartSqft) + this.quoterep.convertToFloat(fab.SplashSqft);
     this.ActionSetAmount("Fab", this.partinfo.PartFabList[0]);
     let sqft = this.partinfo.PartFabList[0].Sqft;
     // Material

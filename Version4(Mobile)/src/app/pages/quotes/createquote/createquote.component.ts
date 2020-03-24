@@ -31,7 +31,7 @@ export class CreatequoteComponent implements OnInit {
       private popoverCntrl: PopoverController,private qServe:QuoteService,private qRep:QuoterepService) { }
   ngOnInit() {
     this.header = {
-      ProjectManagerID: 0, EstimatorID: 0, SalesPersonID: 0,
+      ProjectManagerID: 0, EstimatorID: 0,
       ID: 0, CustomerID: 0, QuoteOrLeadTypeID: 2, QuoteInfoType: "QUOTE", LocID: 1, CustJobNo: "", CustPoNo: "", QuoteDate: new Date().toLocaleDateString("en-US"),
       IsCheck: 1,
       //UserID : getloginuserId(),
@@ -41,7 +41,7 @@ export class CreatequoteComponent implements OnInit {
         ID:0,LeadTypeID: "", SourceID: 0, HearBefore: 2, HearAbout: "",
       },
       Version: {
-        ID:0,AccName: "", PriceListID: 0, ProductionTypeID: "", CustTypeID: 4, InvoiceTo: 1, ParentAccID: 0, ChildAccID: 0, StatusID: 1,
+        ID:0,AccName: "", ProductionTypeID: "", CustTypeID: 4, InvoiceTo: 1, ParentAccID: 0, ChildAccID: 0, StatusID: 1,
         ParentCustInfo: {}, ChildParentCustInfo: {},
         Customer: {
          ID:0,TypeID:0, Name: "", FirstName: "", LastName: "", PPhone: "", Email: "", chkflag: false,
@@ -198,17 +198,33 @@ export class CreatequoteComponent implements OnInit {
     this.PopulateDropDownList(Id);
   }
   PopulateDropDownList(Id: number) {
-    this.qServe.CustTypeResourceList(Id, 3).subscribe(data => { this.salesPersonsList = data });
-    this.qServe.CustTypeResourceList(Id, 8).subscribe(data => { this.estimatorsList = data });
-    this.qServe.CustTypeResourceList(Id, 9).subscribe(data => { this.projectManagersList = data });
-    this.qServe.QuoteMasterList(24).subscribe(data => { this.productionTypeList = data;
+    this.qServe.CustTypeResourceList(Id, 3).subscribe(data => {
+       this.salesPersonsList = data; 
+       if(this.salesPersonsList != null){
+        let model = this.salesPersonsList[0];
+       this.header.SalesPersonID = model.ResourceID;
+}
+    });
+    this.qServe.CustTypeResourceList(Id, 8).subscribe(data => {
+       this.estimatorsList = data; 
+      });
+    this.qServe.CustTypeResourceList(Id, 9).subscribe(data => { 
+      this.projectManagersList = data; 
+    });
+    this.qServe.QuoteMasterList(24).subscribe(data => { 
+      this.productionTypeList = data;
       if(this.productionTypeList != null){
                let model = this.productionTypeList[0];
               this.header.Version.JobTypeID = model.ID;
-//this.header.Version.ProductionTypeID = model.Name;
       }
      });
-    this.qServe.CustPriceList(Id).subscribe(data => { this.priceList = data });
+    this.qServe.CustPriceList(Id).subscribe(data => { 
+      this.priceList = data;
+      if(this.priceList != null){
+        let model = this.priceList[0];
+       this.header.Version.PriceListID = model.RefID;
+}
+     });
   }
   PopulateIsCustDefault(Id) {
     this.qServe.SelTypePrefInfo(Id, 5).subscribe(data => { if (data != null && data != "") { this.header.Version.IsCustRetail = data.Isdefault } });

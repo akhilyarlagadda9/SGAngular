@@ -8,6 +8,7 @@ import { QuotegetService } from 'src/app/service/quoteget.service';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { AuthService } from 'src/app/service/auth.service';
 declare const appUrl: any;
+declare const imgUrl: any;
 
 @Component({
   selector: 'app-common-edit-mail-hub',
@@ -15,14 +16,15 @@ declare const appUrl: any;
   styleUrls: ['./common-edit-mail-hub.component.scss'],
 })
 export class CommonEditMailHubComponent implements OnInit {
-  Template:String = ""; To:String = "";From:String="";CC:String="";Subject:String="";mailBody:String="";progressNumber:Number=0;
+  Template:String = ""; To:String = "";From:String="";CC:String="";Subject:String="";mailBody:String="";
   arrInfo:Array<any>=[];
  // public Editor = ClassicEditor; 
   isItemToAvailable:boolean=false;mailList:Array<any>=[]; mailFilter:Array<any>=[]; blnIsAtttachAvailable:boolean=false;getNoteAttachments:Array<any>=[];
-  isItemCCAvailable:boolean = false;
+  isItemCCAvailable:boolean = false; headerData:any;
   templateList:Array<any>=[]; mailDetails:object={}; emailList:Array<any>=[];
   @ViewChild('To', {static: false}) pRef: ElementRef;
   commDetails: any = this.navParams.data;
+  previewDetails:Array<any>=[];
   
   fileData: File = null;
   userInfo: any;
@@ -34,29 +36,34 @@ export class CommonEditMailHubComponent implements OnInit {
   phaseList: any;
   docFormList: any;
   msgStatusList: any;
+  showPreview: any;
+  imgPath: string;
+  filePath:string="";
+  fileName:string="";
+  progressNumber:Number=0;
 
   constructor(public Modalcntrl: ModalController,private authservice: AuthService,private http: HttpClient, public loadingController: LoadingController, private qservice: QuoteService,private qteService: QuoteService,private navParams: NavParams,private qRepService:QuoterepService,private qGetService:QuotegetService) { }
 
   ngOnInit() {
-   // document.getElementById("progress").style.visibility = "hidden";
+    document.getElementById("progress").style.visibility = "hidden";
     this.authservice.GetStoredLoginUser().then((data) => {
       this.userInfo = data;
       if (this.commDetails.ID == 0) {
         this.commDetails.UserID = data.logInUserID;
       }
     });
-    this.mailDetails ={
+    this. mailDetails ={
       From : "",
       To: "",
       CC: "",
       Subject: "",
       mailBody: ""
     };
-    console.log(this.mailDetails);
+    
    //this.qRepService.interface$.subscribe(message => this.headerData = message);
-   //this.headerData = this.qRepService.getHeader();
+   this.headerData = this.qRepService.getHeader();
    this.header = this.qRepService.getHeader();
-    console.log(this.header);
+   
    
     this.qteService.ActiongettemplateList(26).subscribe(data => {
       this.templateList = data;
@@ -71,16 +78,17 @@ export class CommonEditMailHubComponent implements OnInit {
         });
     });
     
-    this.qGetService.NoteAttachements(this.header.ID).subscribe(data=>{
+    this.qGetService.NoteAttachements(this.headerData.ID).subscribe(data=>{
         this.getNoteAttachments.push(data[0]);
     });
     console.log(this.getNoteAttachments);
 
-    //this.header = this.qRepService.getHeader();
     this.GetcategoryList();
     this.GetformsList();
     this.GetstatusList();
     this.GetphaseList();
+    
+    this.imgPath = imgUrl + "Jobs/" + this.headerData.QuoteNo + "/";
   }
   ActionChangeTempl(selectedTemplate){
       this.templateList.forEach(element => {
@@ -98,7 +106,7 @@ export class CommonEditMailHubComponent implements OnInit {
         From : this.From,
         To: this.To,
         CC: this.CC,
-        Subject: this.header.QuoteNo+" - "+this.header.QuoteName+" - "+this.Subject,
+        Subject: this.headerData.QuoteNo+" - "+this.headerData.QuoteName+" - "+this.Subject,
         mailBody: this.mailBody
     }
     console.log(this.mailDetails);
@@ -302,10 +310,11 @@ ActionOnAttach(){
 // };
 
   //Attachments Function
-  ActionUploadCommhubAttach(event: any) {
+  ActionUploadCommhubAttach(event: any) {debugger;
     if (this.commDetails.ID == 0) {
       let info = this.commDetails;
       this.qservice.DocHeader(info.ID, info.RefID, info.categoryID, this.userInfo.logInUserID, info.Subject, info.TypeID).subscribe(data => {
+        console.log(data);
         this.commDetails.ID = data;
         this.UploadImage(event);
       });
@@ -315,9 +324,8 @@ ActionOnAttach(){
 
   }
   UploadImage(event) {
-    console.log(event);
-   // document.getElementById("progress").style.visibility = "visible";
-   // this.progressNumber =0;
+    document.getElementById("progress").style.visibility = "visible";
+    this.progressNumber =0;
     //this.showLoader()
     if (event.target.files && event.target.files[0]) {
       console.log(this.commDetails);
@@ -333,7 +341,7 @@ ActionOnAttach(){
         .subscribe(events => {
           if (events.type === HttpEventType.UploadProgress) {
             this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
-            //this.progressNumber = events.loaded / events.total;
+            this.progressNumber = events.loaded / events.total;
             console.log(this.fileUploadProgress);
           } else if (events.type === HttpEventType.Response) {
             this.fileUploadProgress = '';
@@ -355,18 +363,18 @@ ActionOnAttach(){
       Check: 1, ThumbPath: "thumb_" + name, QuoteNo: this.header.QuoteNo, TypeID: this.commDetails.TypeID,
     };
     this.commDetails.AttachmentList.push(model);
-    //document.getElementById("progress").style.visibility = "hidden";
-    //this.progressNumber =0;
+    document.getElementById("progress").style.visibility = "hidden";
+    this.progressNumber =0;
     //this.hideLoader()
     
   }
 
-  ActionSaveQuoteNote(){
+  /* ActionSaveQuoteNote(){debugger;
     this.qservice.SaveQuoteNote(this.commDetails).subscribe(data => {
       this.commDetails.ID = data;
       this.ActionCloseCommhubedit(true);
   });
-  }
+  } */
 
   showLoader() {
     this.loaderToShow = this.loadingController.create({

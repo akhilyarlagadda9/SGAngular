@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { QuoteService } from 'src/app/service/quote.service';
+import { AuthService } from 'src/app/service/auth.service';
  
 declare var _qscope;
  
@@ -10,13 +11,14 @@ declare var _qscope;
   styleUrls: ['./addarea.component.scss'],
 })
 export class AddareaComponent implements OnInit {
-  Version: any;quote : any;
+  Version: any;quote : any;userId:number;
   areas: any
   areasaveStatus: string;
   selectedareaId: any;
   arealists: any = [];
-  constructor(public Modalcntrl: ModalController, private service : QuoteService) { }
+  constructor(public Modalcntrl: ModalController, private service : QuoteService,private authService:AuthService) { }
   ngOnInit() {
+    this.authService.GetStoredLoginUserID().then((resultId) => {this.userId = resultId});
   }
   ActionAddArea() {
     let jobTypeId = 0
@@ -29,27 +31,24 @@ export class AddareaComponent implements OnInit {
     this.arealists.push(newarea);
   }
   ActionSaveBatchAreas() {
-    let ischkareas = this.checkactivieareas();
-    if (ischkareas) {
+    this.checkactivieareas();
+   // ischkareas = ischkareas == undefined ? true :ischkareas;
+    //if (ischkareas) {
         let areaId = this.selectedareaId;
         //let unitschgareaIds = this.getunitschangedareas(this.arealists);
-        let userId = 1;
-        let versionid = this.Version.ID;
-        //this.resetcheckuncheck();
-        //let parameter = JSON.stringify(this.arealists);
-        this.service.ActionSaveAreaList(versionid, areaId, userId, this.arealists).subscribe(data => {
-          let resultareas = this.service.ActionGetQuoteAreas(versionid, 0);
+        this.service.ActionSaveAreaList(this.Version.ID, areaId, this.userId, this.arealists).subscribe(data => {
+          let resultareas = this.service.ActionGetQuoteAreas(this.Version.ID, 0);
           if (_qscope.mode != 'draw') {
             _qscope.quote.Version.AreaList = resultareas;
           }
           let currentareas = _qscope.quote.Version.AreaList;
-          this.preapreareas(currentareas, resultareas);
-          this.preapreareas(this.Version.VersionAreaList, resultareas);
-          _qscope.quote.Version.AreaList = currentareas;
-          this.ActionCloseAddArea();
+         // this.preapreareas(currentareas, resultareas);
+      //    this.preapreareas(this.Version.VersionAreaList, resultareas);
+        //  _qscope.quote.Version.AreaList = currentareas;
+          this.ActionCloseAddArea(true);
           //this.saveareasummary(unitschgareaIds, versionid, userId);
         });
-    } 
+ //   } 
     // else {
     //     swal('Please select at least one Area !');
     // }
@@ -70,8 +69,8 @@ getunitschangedareas(areas) {
 }
 checkactivieareas() {
   for (let i = 0; i < this.arealists.length; i++) {
-      if (this.arealists[i].Isactive == 1) {
-          return true;
+      if (this.arealists[i].Isactive == 1 && (this.arealists[i].Name == "" || this.arealists[i].Name == null)) {
+        this.arealists.splice(i, 1);
       }
   }
 }
@@ -100,8 +99,11 @@ saveareasummary(unitschgareaIds, versionid, userId){
 }
 
 
-ActionCloseAddArea() {
+ActionCloseAddArea(issave) {
   this.Modalcntrl.dismiss({
+    'dismissed': true,
+    componentProps: this.arealists,
+    issave: issave
   });
 }
 

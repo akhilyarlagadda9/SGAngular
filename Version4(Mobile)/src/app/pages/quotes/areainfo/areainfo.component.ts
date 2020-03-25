@@ -30,7 +30,7 @@ declare var _qscope, QBRinitAreadrawing, QBRinitdrawingareapartshape, QBRinitdra
 })
 export class AreainfoComponent implements OnInit {
   public Version: any; coId: number; coSrNo: string;PhaseId:number;
-  arealist: any = []; AreaID: number;
+  arealist: any = []; AreaID: number;AreaName:string;
   partinfo: any = []; AreaPartID: number;
    areaInfo: any = {
     //PartList: [], ID: 0,
@@ -68,6 +68,7 @@ export class AreainfoComponent implements OnInit {
   //     error => console.log(error));
   // }
   ActionPartsByArea(areaID: any, parttype: number) {
+    this.GetAreaName(areaID);
     this.service.ActionQuickPartList(this.Version.ID,this.PhaseId, areaID, 0, 0).subscribe(data => {
       this.areaInfo = data;
       this.areaInfo.PartList = this.areaInfo.PartList == null ? [] : this.areaInfo.PartList;
@@ -107,17 +108,26 @@ export class AreainfoComponent implements OnInit {
   }
   /***** Addarea DETAILS *****/
   async ActionAddArea(areaId:any) {
-    let info = {arealists : this.arealist, Version : this.Version, quote : _qscope.quote, selectedareaId : areaId}
+    let copyobj = JSON.parse(JSON.stringify(this.arealist));
+    let info = {arealists : copyobj, Version : this.Version, quote : _qscope.quote, selectedareaId : areaId}
     const modal = await this.Modalcntrl.create({
       component: AddareaComponent,
       componentProps : info
+    });
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail.data.issave == true) {
+      this.arealist = detail.data.componentProps;
+      _qscope.quote.Version.AreaList = detail.data.componentProps;
+      this.GetAreaName(this.AreaID);
+      }
     });
     return await modal.present();
   }
   /***** Add PART *****/
   async ActionAddPart(Id) {
+    let copyObj = JSON.parse(JSON.stringify(this.partinfo));
     let info = {ID:Id, VersionID:this.Version.ID,AreaID:this.AreaID,Name:"", SrNo: Id == 0 ? this.areaInfo.PartList.length + 1 :this.partinfo.SrNo }
-    let obj = {partinfo: Id == 0 ? info : this.partinfo, priceListID: Number (this.Version.PriceListID),coId:this.coId, coSrNo:this.coSrNo, matPercent :this.Version.MatPercent, areaInfo : this.areaInfo }
+    let obj = {partinfo: Id == 0 ? info : copyObj, priceListID: Number (this.Version.PriceListID),coId:this.coId, coSrNo:this.coSrNo, matPercent :this.Version.MatPercent, areaInfo : this.areaInfo }
     const modal = await this.Modalcntrl.create({
       component: AddpartComponent,
       componentProps: obj
@@ -440,6 +450,13 @@ export class AreainfoComponent implements OnInit {
       componentProps: copyver
     });
     return await modal.present();
+  }
+
+  GetAreaName(id){
+    let area = this.arealist.find(s => s.ID == id);
+    if (area != null) {
+      this.AreaName = area.Name;
+    }
   }
 }
 

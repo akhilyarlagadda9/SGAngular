@@ -32,6 +32,7 @@ export class CommhubeditComponent implements OnInit {
   ngOnInit() {
     this.authservice.GetStoredLoginUser().then((data) => {
       this.userInfo = data;
+      console.log(data);
       if (this.commDetails.ID == 0) {
         this.commDetails.UserID = data.logInUserID;
       }
@@ -107,7 +108,9 @@ export class CommhubeditComponent implements OnInit {
   //Attachments Function
   ActionUploadCommhubAttach(event: any) {
     if (this.commDetails.ID == 0) {
+      console.log(this.commDetails);
       let info = this.commDetails;
+      console.log(info);
       this.qservice.DocHeader(info.ID, info.RefID, info.categoryID, this.commDetails.UserID, info.Subject, info.TypeID).subscribe(data => {
         this.commDetails.ID = data;
         this.UploadImage(event);

@@ -33,7 +33,7 @@
         </ion-item>
         <ion-item>
           <ion-label floating>Phase:</ion-label>
-          <ion-select [(ngModel)]="commDetails.Phase" name="PhaseID" [selectedText]="commDetails.Phase">
+          <ion-select [(ngModel)]="commDetails.Phase" name="Phase" [selectedText]="commDetails.Phase">
              <ion-select-option *ngFor="let category of phaseList" [value]="category.Name">{{category.Name}}</ion-select-option>
          </ion-select>
         </ion-item>

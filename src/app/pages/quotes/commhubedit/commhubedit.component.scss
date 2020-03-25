@@ -40,3 +40,10 @@
 ion-select{
    max-width: 70% !important;
 }
+.quizz-progress {
+   ion-progress-bar {
+      --background: green;
+      --buffer-background: grey;
+      --progress-background: rgb(0, 0, 0);
+   }
+}

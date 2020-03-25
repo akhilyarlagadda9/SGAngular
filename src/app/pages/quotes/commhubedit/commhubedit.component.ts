@@ -22,6 +22,7 @@ export class CommhubeditComponent implements OnInit {
   fileUploadProgress: string = null;
   uploadedFilePath: string = null;
   loaderToShow: Promise<void>;
+  progressNumber:Number=0;
 
   constructor(public Modalcntrl: ModalController, private qservice: QuoteService,public loadingController: LoadingController,
     private navParams: NavParams, private authservice: AuthService, private qRepService: QuoterepService, private http: HttpClient) {
@@ -40,6 +41,7 @@ export class CommhubeditComponent implements OnInit {
     this.GetformsList();
     this.GetstatusList();
     this.GetphaseList();
+    document.getElementById("progress").style.visibility = "hidden";
   }
   //Close Function
   ActionCloseCommhubedit(issave) {
@@ -116,7 +118,9 @@ export class CommhubeditComponent implements OnInit {
 
   }
   UploadImage(event) {
-    this.showLoader();
+    document.getElementById("progress").style.visibility = "visible";
+    this.progressNumber =0;
+    //this.showLoader();
     if (event.target.files && event.target.files[0]) {
       let info = this.commDetails;
       this.fileData = <File>event.target.files[0];
@@ -130,7 +134,8 @@ export class CommhubeditComponent implements OnInit {
         .subscribe(events => {
           if (events.type === HttpEventType.UploadProgress) {
             this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
-            console.log(this.fileUploadProgress);
+            this.progressNumber = events.loaded / events.total;
+            console.log(this.fileUploadProgress); // We can remove this now
           } else if (events.type === HttpEventType.Response) {
             this.fileUploadProgress = '';
             if (events.body != null) {
@@ -139,8 +144,8 @@ export class CommhubeditComponent implements OnInit {
             // alert('SUCCESS !!');
           }
         });
-
     }
+    
   }
   PushImage(result) {
     var result = result.toString().replace('[', "").replace(']', "");
@@ -151,7 +156,9 @@ export class CommhubeditComponent implements OnInit {
       Check: 1, ThumbPath: "thumb_" + name, QuoteNo: this.header.QuoteNo, TypeID: this.commDetails.TypeID,
     };
     this.commDetails.AttachmentList.push(model);
-    this.hideLoader();
+    document.getElementById("progress").style.visibility = "hidden";
+    this.progressNumber =0;
+    //this.hideLoader();
     
   }
 

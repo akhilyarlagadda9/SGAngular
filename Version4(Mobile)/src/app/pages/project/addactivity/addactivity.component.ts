@@ -35,7 +35,7 @@ export class AddactivityComponent implements OnInit {
     this.ActionActivityTypeList();
 
     if (this.actinfo.VersionID > 0) {
-      this.ActionPhaseist();
+      this.ActionPhaseist(0);
     }
     if (this.actinfo.PhaseID > 0) {
       this.ActionPhasePartList(0);
@@ -73,10 +73,13 @@ ActionGetSelectedAreas(ev:any) {
     }
   }
 }
-ActionPhaseist() {
+ActionPhaseist(typeId) {
   this.schService.PhaseList(this.actinfo.VersionID).subscribe(
     data => {
       this.phaseList = data;
+      if(typeId == 1){ 
+        this.ActionChangePhase(this.phaseList[0].ID);
+       }
       this.ActionGetSelectedPhase();
     });
 }
@@ -187,6 +190,14 @@ ActionChangeDate(selctedDate, typeId, type) {
     this.GetDuration(typeId);
   }
 
+}
+ActionChangeDuration(value,typeId){
+  if(typeId == 1){
+    this.actinfo.Hrs = value;
+  }else{
+    this.actinfo.Mins =value; 
+  }
+  this.GetDuration(0);
 }
 ActionSaveActivity(form: NgForm) {
   if (form.valid) {
@@ -342,7 +353,7 @@ async ActionOpenAreaPart(){
     this.actinfo.MatTypeID = version.Header.MatTypeID;
     this.actinfo.MaterialName = version.PhaseMaterials;
     this.GetJobAddress(version.Header);
-    this.ActionPhaseist();
+    this.ActionPhaseist(1);
   }
   GetJobAddress(header) {
     this.actinfo.JobName = header.QuoteName;

@@ -45,23 +45,25 @@ export class HeadereditComponent implements OnInit {
   PopulateDropDownList(Id: number) {
     this.getservice.CustTypeResourceList(Id, 3).subscribe(data => {
       this.salesPersonsList = data ;
-      this.GetSelectedSalesrepName();
+     // this.GetSelectedSalesrepName();
      // this.headerinfo.SalesPersonID = this.navObj.SalesPersonID; 
     });
     this.getservice.CustTypeResourceList(Id, 8).subscribe(data => {
        this.estimatorsList = data
-       this.GetSelectedEstimatorName();
+       this.ActionGetEstimatorName(this.headerinfo.EstimatorID);
       //this.headerinfo.EstimatorID = this.navObj.EstimatorID; 
     });
     this.getservice.CustTypeResourceList(Id, 9).subscribe(data => {
        this.projectManagersList = data;
-       this.GetSelectedManagerName();
+       //this.GetSelectedManagerName();
       //this.headerinfo.ProjectManagerID = this.navObj.ProjectManagerID;
     });
     this.getservice.QuoteMasterList(24).subscribe(data => {
       this.productionTypeList = data;
-      let JobTypeID = this.headerinfo.Version.JobTypeID.split(',');
-      this.GetSelectedProductionName(JobTypeID);
+      if(this.headerinfo.Version.JobTypeID != "" && this.headerinfo.Version.JobTypeID!= null){
+        let JobTypeID = this.headerinfo.Version.JobTypeID.split(',');
+        this.ActionGetProductionName(JobTypeID[0]);
+      }
       //this.headerinfo.ProjectManagerID = this.navObj.ProjectManagerID;
     });
     this.getservice.CustPriceList(Id).subscribe(data => { 
@@ -70,33 +72,37 @@ export class HeadereditComponent implements OnInit {
     });
   }
   
-  GetSelectedSalesrepName() {
-    let headerinfo = this.salesPersonsList.find(s => s.ResourceID == this.headerinfo.SalesPersonID);
+  ActionGetSalesrepName(id) {
+    let headerinfo = this.salesPersonsList.find(s => s.ResourceID == id);
     if (headerinfo != null) {
       this.headerinfo.SalesPerson = headerinfo.ResourceName;
     }
   }
-  GetSelectedEstimatorName() {
-    let headerinfo = this.estimatorsList.find(s => s.ResourceID == this.headerinfo.EstimatorID);
+  ActionGetEstimatorName(id) {
+    let headerinfo = this.estimatorsList.find(s => s.ResourceID == id);
     if (headerinfo != null) {
       this.headerinfo.Estimator = headerinfo.ResourceName;
     }
   }
-  GetSelectedManagerName() {
-    let headerinfo = this.projectManagersList.find(s => s.ResourceID == this.headerinfo.ProjectManagerID);
+  ActionGetManagerName(id) {
+    let headerinfo = this.projectManagersList.find(s => s.ResourceID == id);
     if (headerinfo != null) {
       this.headerinfo.ProjectManager = headerinfo.ResourceName;
     }
   }
-  GetSelectedProductionName(JobType:any) {
-    let TypeName = [];
-    for(let i = 0; i < JobType.length ; i++){
-      var TypeList = this.productionTypeList.find(s => s.ID == JobType[i]);
-      if (TypeList != null) {
-        TypeName.push(TypeList.Name);
-      }
-      this.headerinfo.JobType = TypeName;
+  ActionGetProductionName(Id) {
+    let headerinfo = this.productionTypeList.find(s => s.ID == Id);
+    if (headerinfo != null) {
+      this.headerinfo.JobType = headerinfo.Name;
     }
+    // let TypeName = [];
+    // for(let i = 0; i < Ids.length ; i++){
+    //   var TypeList = this.productionTypeList.find(s => s.ID == JobType[i]);
+    //   if (TypeList != null) {
+    //     TypeName.push(TypeList.Name);
+    //   }
+    //   this.headerinfo.JobType = TypeName;
+    // }
   }
  
  //PO items Edit Function

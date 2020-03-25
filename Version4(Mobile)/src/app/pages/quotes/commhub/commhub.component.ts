@@ -39,7 +39,7 @@ export class CommhubComponent implements OnInit {
     this.GetformsList();
     this.GetphaseList();
     this.GetQuoteNoteList();
-    this.GetPictureList();
+    //this.GetPictureList();
   }
   ActionChangeCategory(event){
     this.CategoryID = event;
@@ -51,50 +51,9 @@ export class CommhubComponent implements OnInit {
   console.log(this.pictureList);
 }
 
-GetPictureList(){
-  this.notesList = this.notesList == null ? [] : this.notesList;
-  this.notesList.forEach(notes => {
-    notes.AttachmentList.forEach(attach => {
-      let path = "";
-      let objDetails = {};
-      let arrExt = attach.FileName.split(".");
-      let strExt = "|gif|GIF|bmp|jpeg|jpg|png|PNG|JPG|JPEG|pdf|PDF|xlsx";
-      if(strExt.includes("|"+ arrExt[1] +"|")){
-        if(attach.ThumbPath){
-         path = this.imgPath+ encodeURIComponent(attach.ThumbPath);
-        }else{
-          path = this.imgPath+ attach.FileName;
-        }
-        objDetails["Name"] = arrExt[0];
-        // if(arrExt[1] == "pdf" || arrExt[1] == "PDF"){
-        //   objDetails["Path"] = "assets/img/Pdf.png";
-        // }else if(arrExt[1]=="xlsx"){
-        //   objDetails["Path"] = "assets/img/XL.png";
-        // }else{
-        objDetails["Path"] = path;
-       // }
-       this.pictureList.push(objDetails);
-      }
-    });
-  });
-}
-ActionPreviewFile(path){
-  window.open(path, '_blank');
-  // let _strEx = path.substring(path.lastIndexOf(".")+1,path.length);
-  // let strMyFileExtn = "myFile"+_strEx;
-  // let pathCheck=null;
-  // if(this.platform.is('ios')){
-  //   pathCheck = this.file.documentsDirectory;
-  // }
-  // else{
-  //   pathCheck = this.file.dataDirectory;
-  // }
-
-  //   const transfer:FileTransferObject = this.filetransfer.create();
-  //    transfer.download(path,pathCheck+strMyFileExtn,true).then(entry=>{
-  //       let url=entry.toURL();
-  //       this.documentViewer.viewDocument(url,'application/pdf',{});
-  //    });
+ActionPreviewFile(fileName){
+  let fullPath = this.imgPath+ encodeURIComponent(fileName);
+  window.open(fullPath, '_blank');
 }
 
   //Category List Function
@@ -190,7 +149,6 @@ ActionPreviewFile(path){
     this.qservice.ActionCommunicationMessageList1(this.VersionId,this.CategoryID,this.PhaseId,0,this.quoteInfo.CustomerID,this.quoteInfo.ID).subscribe(data => {
       this.notesList = data.filter(x => x.TypeID != -2 && x.TypeID != -7);
       this.msgList = data.filter(x => x.TypeID == -1 || x.TypeID == -2 || x.IsSent == 1);
-      this.GetPictureList();
     });
     
   //   this.getservice.QuoteNotes(this.VersionId,0).subscribe(

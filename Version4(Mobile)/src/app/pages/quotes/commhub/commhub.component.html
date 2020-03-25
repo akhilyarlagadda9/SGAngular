@@ -30,7 +30,7 @@
           <ion-icon *ngIf="i == 0" ios="ios-attach"  md="md-attach"></ion-icon>
           </ion-col>
           <ion-col size="11" class="paddzero">
-            <ion-label><p>{{category.FileName}}</p></ion-label>
+            <ion-label (click)="ActionPreviewFile(category.FileName)"><p>{{category.FileName}}</p></ion-label>
           </ion-col>
           
       </ion-row>

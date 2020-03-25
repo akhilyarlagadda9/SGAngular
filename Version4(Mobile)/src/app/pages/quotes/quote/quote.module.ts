@@ -59,9 +59,9 @@ import { MaileditComponent } from '../mailedit/mailedit.component';
 import { ActionquoteComponent } from '../actionquote/actionquote.component';
 import { AddmeasComponent } from '../materialinfo/addmeas/addmeas.component';
 import { QuickquoteComponent } from '../quickquote/quickquote.component';
-import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
-import { File } from '@ionic-native/file/ngx';
-import { FileTransfer} from '@ionic-native/file-transfer/ngx';
+// import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+// import { File } from '@ionic-native/file/ngx';
+// import { FileTransfer} from '@ionic-native/file-transfer/ngx';
 
 @NgModule({
   imports: [
@@ -77,11 +77,11 @@ import { FileTransfer} from '@ionic-native/file-transfer/ngx';
       },
     ]),
   ],
-  providers:[
-    DocumentViewer,
-    File,
-    FileTransfer,
-  ],
+  // providers:[
+  //   DocumentViewer,
+  //   File,
+  //   FileTransfer,
+  // ],
   entryComponents: [CreatequoteComponent,AddmeasComponent,SearchComponent,ActionquoteComponent,
     TransactionComponent,NewtranComponent,AccountsComponent,PaymentScheduleComponent,
     AdditionalitemserachComponent,DiscountComponent,feeComponent,

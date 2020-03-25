@@ -110,16 +110,16 @@
         <ion-col size="7" class="paddzero text-left">
           <input type="file" (change)="ActionUploadCommhubAttach($event)">
         </ion-col>
-        <!-- <div class="quizz-progress ion-text-center" id="progress">
+        <div class="quizz-progress ion-text-center" id="progress">
           <ion-progress-bar color="secondary" [value]="progressNumber" style="min-height:12px;width: 95px;"></ion-progress-bar>{{fileUploadProgress}}
-        </div> -->
+        </div>
       </span>
     </ion-label>
   <ion-label>
     <ion-row *ngFor="let category of commDetails.AttachmentList" >
-      <ion-col class="paddleft5" (click)="ActionPreviewFile(commDetails.Path)" >
+      <ion-col class="paddleft5" (click)="ActionPreviewFile(commDetails.Path)">
         <span><ion-icon name="trash" class="delIcon"></ion-icon></span>&nbsp;
-        <span>{{category.FileName}}</span>
+        <span >{{category.FileName}}</span>
       </ion-col>
     </ion-row>
   </ion-label>

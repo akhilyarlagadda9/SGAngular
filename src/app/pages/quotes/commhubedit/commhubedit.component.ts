@@ -14,7 +14,7 @@ declare const appUrl: any;
 export class CommhubeditComponent implements OnInit {
   
   categoryList: any; docFormList: any; msgStatusList: any; phaseList: any;
-  commDetails: any = this.navParams.data;; notesList: any; StatusID: any;
+  commDetails: any = this.navParams.data; notesList: any; StatusID: any;
   userInfo: any; header: any;
 
 
@@ -30,6 +30,7 @@ export class CommhubeditComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.authservice.GetStoredLoginUser().then((data) => {
       this.userInfo = data;
       console.log(data);
@@ -67,7 +68,7 @@ export class CommhubeditComponent implements OnInit {
     }
   }
   //Phase List Function
-  GetphaseList() {
+  GetphaseList() {debugger
     this.qservice.CommHubPhaseList(this.commDetails.RefID).subscribe(
       data => {
         this.phaseList = data;

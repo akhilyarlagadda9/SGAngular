@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, Platform } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import {CommhubeditComponent} from '../commhubedit/commhubedit.component'
 import {CommonEditMailHubComponent} from '../common-edit-mail-hub/common-edit-mail-hub.component';
 //import { QuotegetService } from 'src/app/service/quoteget.service';
@@ -55,7 +55,6 @@ ActionPreviewFile(fileName){
   let fullPath = this.imgPath+ encodeURIComponent(fileName);
   window.open(fullPath, '_blank');
 }
-
   //Category List Function
   GetcategoryList() {
     this.qservice.NotecategoryList(0).subscribe(
@@ -88,6 +87,7 @@ ActionPreviewFile(fileName){
       component: CommhubeditComponent,
       componentProps : note
     });
+    console.log(note)
     modal.onDidDismiss().then((result: OverlayEventDetail) => {
       if (result.data !== null && result.data != undefined) {
         if (result.data.issave == true) {
@@ -98,18 +98,27 @@ ActionPreviewFile(fileName){
     return await modal.present();
   }
  //Comm.Hub Mail Function
-  async ActionEditCommHubMail(note: any) {
-    let commDetails = {versionId : this.VersionId,commDetails: this.notesList};
-    console.log(commDetails);   
+  async ActionEditCommHubMail(note: any) {debugger
+    if(note == 0){
+      let msg = this.quoteInfo.QuoteNo + " - V " + this.quoteInfo.Version.SrNo + " - " + this.quoteInfo.QuoteName;
+      let source = this.PhaseId > 0 ? "job" :"";
+      note ={ID:0,RefID:this.VersionId,Subject:msg,PhaseID:this.PhaseId,ModuleID:3,StatusID:94,
+      Path:"normal.png",categoryID:0,Source:source,LocID:this.quoteInfo.LocID,AttachmentList:[],TypeID:0}
+    }else{
+      note = JSON.parse(JSON.stringify(note));
+    }
+    //let commDetails = {versionId : this.VersionId,commDetails: note};
+    //console.log(commDetails);   
     const modal = await this.Modalcntrl.create({
       component: CommonEditMailHubComponent,
-      componentProps : commDetails,
+      componentProps : note,
     });
     modal.onDidDismiss().then((result: OverlayEventDetail) => {
       if (result.data !== null && result.data != undefined) {
         if (result.data.issave == true) {
           // this.UpdateActivty(result.data.componentProps);
           //this.ActionLoadEvents();
+          //this.GetPictureList();
         }
       }
     });

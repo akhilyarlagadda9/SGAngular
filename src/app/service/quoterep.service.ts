@@ -124,6 +124,8 @@ export class QuoterepService {
     header.QuoteDate =newheader.QuoteDate; 
     header.SalesPersonID =newheader.SalesPersonID;
     header.EstimatorID =newheader.EstimatorID;
+    header.SalesPerson =newheader.SalesPerson;
+    header.ProjectManager =newheader.ProjectManager;
     header.Lat =newheader.Lat;
     header.Long =newheader.Long;
     header.ProjectManagerID =newheader.ProjectManagerID;

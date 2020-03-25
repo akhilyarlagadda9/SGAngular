@@ -7,9 +7,9 @@ import { MaileditComponent } from '../mailedit/mailedit.component';
 import { OverlayEventDetail } from '@ionic/core';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { QuoteService } from 'src/app/service/quote.service';
-import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
-import { File } from '@ionic-native/file/ngx';
-import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer/ngx';
+// import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+// import { File } from '@ionic-native/file/ngx';
+// import { FileTransfer, FileTransferObject} from '@ionic-native/file-transfer/ngx';
 
 declare const imgUrl: any;
 @Component({
@@ -30,8 +30,7 @@ export class CommhubComponent implements OnInit {
   pictureList:Array<any>=[];
  
   //selectedoption: any;
-  constructor(public Modalcntrl : ModalController,private qservice: QuoteService,private qRepService:QuoterepService,
-    private file:File,private documentViewer: DocumentViewer,private filetransfer:FileTransfer,private platform:Platform) { }
+  constructor(public Modalcntrl : ModalController,private qservice: QuoteService,private qRepService:QuoterepService) { }
 
   ngOnInit() {
     this.quoteInfo = this.qRepService.getHeader();
@@ -80,22 +79,22 @@ GetPictureList(){
   });
 }
 ActionPreviewFile(path){
-  //window.open(path, '_blank');
-  let _strEx = path.substring(path.lastIndexOf(".")+1,path.length);
-  let strMyFileExtn = "myFile"+_strEx;
-  let pathCheck=null;
-  if(this.platform.is('ios')){
-    pathCheck = this.file.documentsDirectory;
-  }
-  else{
-    pathCheck = this.file.dataDirectory;
-  }
+  window.open(path, '_blank');
+  // let _strEx = path.substring(path.lastIndexOf(".")+1,path.length);
+  // let strMyFileExtn = "myFile"+_strEx;
+  // let pathCheck=null;
+  // if(this.platform.is('ios')){
+  //   pathCheck = this.file.documentsDirectory;
+  // }
+  // else{
+  //   pathCheck = this.file.dataDirectory;
+  // }
 
-    const transfer:FileTransferObject = this.filetransfer.create();
-     transfer.download(path,pathCheck+strMyFileExtn,true).then(entry=>{
-        let url=entry.toURL();
-        this.documentViewer.viewDocument(url,'application/pdf',{});
-     });
+  //   const transfer:FileTransferObject = this.filetransfer.create();
+  //    transfer.download(path,pathCheck+strMyFileExtn,true).then(entry=>{
+  //       let url=entry.toURL();
+  //       this.documentViewer.viewDocument(url,'application/pdf',{});
+  //    });
 }
 
   //Category List Function

@@ -40,3 +40,11 @@ ion-button {
     opacity:0.6;
     content:attr(data-text)
 }
+
+.quizz-progress {
+    ion-progress-bar {
+       --background: green;
+       --buffer-background: grey;
+       --progress-background: rgb(0, 0, 0);
+    }
+ }

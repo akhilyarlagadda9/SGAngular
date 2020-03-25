@@ -27,12 +27,12 @@ declare var urlss;
     // AgmCoreModule.forRoot({
     //   apiKey: 'AIzaSyDLkwxgLxSXDDXWgMss9nnIwBciWaZkPL8' // apiKey is required 
     // }),
-    IonicStorageModule.forRoot(),SchedulingPageModule,ReactiveFormsModule 
+    IonicStorageModule.forRoot(),ReactiveFormsModule,SchedulingPageModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy,useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
 })

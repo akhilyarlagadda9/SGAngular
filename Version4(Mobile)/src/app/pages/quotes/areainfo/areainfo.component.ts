@@ -280,7 +280,7 @@ export class AreainfoComponent implements OnInit {
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail.data.issave == true) {
-        this.partinfo.LaborList = detail.data.componentProps.Labor;
+        this.partinfo.LaborList = detail.data.componentProps;
       }
     });
     return await modal.present();

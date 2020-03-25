@@ -3,7 +3,7 @@
       <ion-col size="2" class="textfont14">Area
       </ion-col>
       <ion-col size="9">
-        <ion-select class="btninfo" [(ngModel)]="AreaID" name="AreaID"
+        <ion-select class="btninfo" [(ngModel)]="AreaID" name="AreaID" [selectedText]="AreaName"
           (ionChange)="ActionPartsByArea(AreaID, 1)">
           <ion-select-option *ngFor="let area of arealist" [value]="area.ID">{{area.Name}}</ion-select-option>
         </ion-select>

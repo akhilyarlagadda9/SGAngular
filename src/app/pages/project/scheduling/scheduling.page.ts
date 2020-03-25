@@ -89,7 +89,7 @@ export class SchedulingPage implements OnInit {
     this.options = {
       plugins: [dayGridPlugin, resourceTimelinePlugin, resourceTimeGridPlugin, resourceDayGridPlugin],
       height: height,
-      // slotWidth: this.width,
+      slotWidth: this.width,
       defaultView: "resourceTimeline",
       minTime: "07:00:00",
       maxTime: "22:00:00", defaultDate: _dafaultDate,
@@ -522,6 +522,7 @@ ChangedViewEvents() {
     //let gduration = calendarApi.getOption('duration');
     if (this.calObj.CalendarView == "restimelineDay") {
       this.PrepareDays("curr");
+    //  calendarApi.setOption('slotWidth', "35");
     }
     if (calendarApi.view.type == this.calObj.CalendarView && obj.IsDayChange != true && obj.IsDateChange != true) {
       this.ActionEventsByFilterSettings();

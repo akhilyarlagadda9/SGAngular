@@ -152,7 +152,7 @@ async ActionEditJob() {
   });
   modal.onDidDismiss().then((detail: OverlayEventDetail) => {
     if (detail !== null) {
-      if (detail.data.isSave == true) {
+      if (detail.data.issave == true) {
         this.headerInfo =  this.qrepservice.ResetQuote(this.headerInfo,detail.data.componentProps)
        // this.headerInfo = detail.data.componentProps;
         //this.contacts = detail.data.componentProps.ContactList;
@@ -275,9 +275,9 @@ async ActionNewAction() {
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {
         if (detail.data.issave == true) {
-          this.headerInfo.Version.StatusID = this.actionObj.StatusID;
-          this.headerInfo.Version.Status = this.actionObj.Status;
-          this.qprmsobj.statusId = this.actionObj.StatusID;
+          this.headerInfo.Version.StatusID = this.actionObj.StatusId;
+          this.headerInfo.Version.Status = this.actionObj.ActionName;
+          this.qprmsobj.statusId = this.actionObj.StatusId;
         }
       }
     });

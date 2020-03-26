@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Inject, LOCALE_ID, Input } from '@angular/core';
-import { ModalController, LoadingController, ActionSheetController } from '@ionic/angular';
+import { ModalController, LoadingController, ActionSheetController, AlertController } from '@ionic/angular';
 import { ActinfoComponent } from '../actinfo/actinfo.component';
 import { OverlayEventDetail } from '@ionic/core';
 import { SchedulingService } from 'src/app/service/scheduling.service';
@@ -81,7 +81,7 @@ export class SchedulingPage implements OnInit {
   constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) 
   public loadingController: LoadingController,private schService: SchedulingService, 
     private navCtrl: NavController, private datePipe: DatePipe, 
-    public actionSheetCtrl: ActionSheetController) { }
+    public actionSheetCtrl: ActionSheetController,private alertCtrl: AlertController) { }
 
   ngOnInit() {
     let height = window.innerHeight - 110; this.width = 85;
@@ -309,6 +309,7 @@ ChangedViewEvents() {
   }
   async ActionEditActivity(ev) {
     //console.log(ev);
+    let objAlrtShow={};
     let sDate = new Date(ev.event._def.extendedProps.StartDate);
     let eDate = new Date(ev.event._def.extendedProps.EndDate);
     let obj = { actId: ev.event._def.extendedProps.ID, actTypeID: ev.event._def.extendedProps.ActivityTypeID, StartDate: sDate, EndDate: eDate }
@@ -318,6 +319,7 @@ ChangedViewEvents() {
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail.data != null) {
+        console.log(detail.data);
         if (detail.data.issave) {
           this.eventinfo = detail.data.componentProps
           this.ActionAddActivity(ev.event.id);
@@ -329,10 +331,55 @@ ChangedViewEvents() {
           // this.resetEvent();
 
         }
+        else if(detail.data.deleteAct){
+          //console.log(detail.data);
+          objAlrtShow = {
+            Header: "Are you sure you want to delete activity?",
+            SubAlert: "Do you want to continue?",
+            ActivityId: detail.data.componentProps.ResourceList[0].ActivityID
+          }
+          this.confirmDeleteAct(objAlrtShow);
+        }
       }
     });
     return await modal.present();
   }
+  async confirmDeleteAct(event) {
+    const alert = await this.alertCtrl.create({
+      header: event.Header,
+      message: event.SubAlert,
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'danger',
+        handler: (blah) => {
+          // May be do something letter
+        }
+      }, {
+        text: 'Allow',
+        handler: () => {
+          this.schService.ActionDeleteActivity(event.ActivityId).subscribe(data=>{
+            this.ActionRefreshCalendar();//need to refresh
+          })
+          this.ConfirmSuccess();
+        }
+      }]
+    });
+    alert.present();
+  }
+  async ConfirmSuccess(){
+    let obj = {
+      Header: "Activity Deleted Sucessfully!",
+    }
+    const alert = await this.alertCtrl.create({
+      header: obj.Header,
+      buttons: [{
+        text: 'OK',
+      }]
+    });
+    alert.present();
+  }
+ 
   async ActionEditJobView(ev) {
     //console.log(ev);
     let event = ev.event.extendedProps;  

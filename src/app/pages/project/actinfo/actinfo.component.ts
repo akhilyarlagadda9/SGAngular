@@ -16,6 +16,7 @@ export class ActinfoComponent implements OnInit {
   actInfo: any;
   actheader: any;
   showmore: number = 0;
+  blnDeleteAct:Boolean=false;
   constructor(public Modalcntrl: ModalController, private navParams: NavParams, 
     private schService: SchedulingService, private datePipe: DatePipe) { }
   ngOnInit() {
@@ -47,13 +48,21 @@ export class ActinfoComponent implements OnInit {
   ActionMoreAreas(more: number) {
     this.showmore = more;
   }
+
+  ActionDeleteEvent(){
+    // this.actInfo={};
+    this.blnDeleteAct = true;
+    this.ActionClose(false);
+  }
   //Close Function
   ActionClose(issave) {
     this.Modalcntrl.dismiss({
       'dismissed': true,
       componentProps: this.actInfo,
-      issave: issave
+      issave: issave,
+      deleteAct:this.blnDeleteAct
     });
+    this.blnDeleteAct = false;
   }
   //Edit Activity Function
   async ActionEditActivity() {

@@ -109,6 +109,10 @@ ActionSaveResourceInfo(model:any, activityId:any) {
   var parameter = JSON.stringify(model);
   return this.http.post<any>(this.url + 'api/Project/SaveResourceInfo?activityId=' + activityId, parameter, { headers: { 'Content-Type': 'application/json' } })
 }
+//Delete Activity
+ActionDeleteActivity(activityId:any):Observable<any>{
+  return this.http.get<any>(this.url +  'api/Project/DeleteActivity?activityId=' + activityId);
+}
 
 
 }

@@ -163,6 +163,7 @@ export class AddpartComponent implements OnInit {
     if (material != null && material != undefined) {
       this.partinfo.PartMaterialList[index] = this.quoterep.SetPartMaterial(this.partinfo.PartMaterialList[index], material);
     }
+    this.ActionSetAmount("matfab", this.partinfo.PartMaterialList[index]);
   }
   ActionPopulateSize(Id, index) {
     // let material = this.CountertypeList.find(s=>s.ID == Id);

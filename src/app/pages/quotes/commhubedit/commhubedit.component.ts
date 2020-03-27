@@ -4,6 +4,7 @@ import { QuoteService } from 'src/app/service/quote.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { HttpClient, HttpEventType } from '@angular/common/http';
+import { isNumber } from 'util';
 declare const appUrl: any;
 
 @Component({
@@ -15,7 +16,7 @@ export class CommhubeditComponent implements OnInit {
   
   categoryList: any; docFormList: any; msgStatusList: any; phaseList: any;
   commDetails: any = this.navParams.data; notesList: any; StatusID: any;
-  userInfo: any; header: any;
+  userInfo: any; header: any; intID:any;
 
 
   fileData: File = null; url = appUrl;
@@ -47,6 +48,7 @@ export class CommhubeditComponent implements OnInit {
   }
   //Close Function
   ActionCloseCommhubedit(issave) {
+    console.log(this.commDetails);
     this.Modalcntrl.dismiss({
       'dismissed': true,
       issave:issave
@@ -68,7 +70,7 @@ export class CommhubeditComponent implements OnInit {
     }
   }
   //Phase List Function
-  GetphaseList() {debugger
+  GetphaseList() {
     this.qservice.CommHubPhaseList(this.commDetails.RefID).subscribe(
       data => {
         this.phaseList = data;
@@ -122,10 +124,10 @@ export class CommhubeditComponent implements OnInit {
 
   }
   UploadImage(event) {
-    document.getElementById("progress").style.visibility = "visible";
     this.progressNumber =0;
     //this.showLoader();
     if (event.target.files && event.target.files[0]) {
+      document.getElementById("progress").style.visibility = "visible";
       let info = this.commDetails;
       this.fileData = <File>event.target.files[0];
       const formData = new FormData();
@@ -156,7 +158,7 @@ export class CommhubeditComponent implements OnInit {
     let array = result.split('+');
     let name = array[0].replace(/"/g, '');
     var model = {
-      ID: Number(result[2].replace(/"/g, '')), FileName: name,
+      ID: Number(array[2].replace(/"/g, '')), FileName: name,
       Check: 1, ThumbPath: "thumb_" + name, QuoteNo: this.header.QuoteNo, TypeID: this.commDetails.TypeID,
     };
     this.commDetails.AttachmentList.push(model);
@@ -164,6 +166,14 @@ export class CommhubeditComponent implements OnInit {
     this.progressNumber =0;
     //this.hideLoader();
     
+  }
+  ActionDelete(ID){
+    this.intID="";
+    console.log(ID);
+   this.qservice.ActionDeleteImage(ID).subscribe(event=>{
+       this.intID = event;
+     console.log(this.intID);
+   });
   }
 
   ActionSaveQuoteNote(){

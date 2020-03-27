@@ -68,8 +68,10 @@
         <ion-label>
           <ion-row *ngFor="let category of commDetails.AttachmentList">
             <ion-col class="paddleft5">
-              <span><ion-icon name="trash" class="delIcon"></ion-icon></span>&nbsp;
+              <span *ngIf="category.ID!=intID">
+              <span (click)="ActionDelete(category.ID)"><ion-icon name="trash" class="delIcon"></ion-icon></span>&nbsp;
               <span>{{category.FileName}}</span>
+            </span>
             </ion-col>
           </ion-row>
         </ion-label>

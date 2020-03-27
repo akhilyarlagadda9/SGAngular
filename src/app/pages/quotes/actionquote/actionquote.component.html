@@ -45,21 +45,20 @@
           </ion-datetime>
         </ion-item>
       </ion-radio-group>
-      <ion-row>
-        <ion-col size="12">
-          <ion-checkbox  mode="md" [color]="primary" name="LayApproval" [(ngModel)]="action.LayApproval"
+      
+        <ion-item class="marg-17">
+          <ion-checkbox class="marg-18"  mode="ios" [color]="primary" name="LayApproval" [(ngModel)]="action.LayApproval"
             checked="action.LayApproval ==1"></ion-checkbox>
-          <ion-label>Layout Approval</ion-label>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="12">
-          <ion-checkbox   mode="md" [color]="primary" name="CustPickup" [(ngModel)]="action.CustPickup"
+          <ion-label class="marg-22">Layout Approval</ion-label>
+        </ion-item>
+        <ion-item class="marg-17">
+          <ion-checkbox class="marg-18"  mode="ios" [color]="primary" name="CustPickup" [(ngModel)]="action.CustPickup"
             checked="action.CustPickup ==1"></ion-checkbox>
-          <ion-label>Customer Pickup</ion-label>
-        </ion-col>
-      </ion-row>
+          <ion-label class="marg-22">Customer Pickup</ion-label>
+        </ion-item>
     </ion-col>
+
+
     <ion-col size="12" *ngIf="showjobReady">
       <ion-item>
         <ion-radio slot="start" [color]="primary" name="PriceByID" checked="action.PreferID == 2"></ion-radio>

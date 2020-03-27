@@ -28,9 +28,9 @@
             <ion-label position="floating" color="primary" class="margin-zero">Customer</ion-label>
             <ion-input required [(ngModel)]="header.Customer.Name" name="Name" (keyup.enter)="ActionShowNewCustomerList($event)" type="text" class="inputheight"></ion-input>
             <ion-icon slot="end" class="martop35" name="arrow-dropdown"
-            (click)="ActionShowNewCustomerList($event,2,header.Version.Customer.Name,0)"></ion-icon>
+            (click)="ActionShowNewCustomerList($event,2,header.Customer.Name,0)"></ion-icon>
           <ion-icon slot="end" class="martop35" name="search"
-            (click)="ActionShowNewCustomerList($event,1,header.Version.Customer.Name,0)"></ion-icon>
+            (click)="ActionShowNewCustomerList($event,1,header.Customer.Name,0)"></ion-icon>
         </ion-item>
         <ion-item>
             <ion-label position="floating" color="primary" class="margin-zero">Address</ion-label>

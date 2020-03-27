@@ -249,34 +249,34 @@
         <ion-col size="4">
           <ion-item>
             <ion-label floting color="primary">W</ion-label>
-            <ion-input type="text" class="labelfont2" name="Width" [(ngModel)]="size.Width"
-              (change)="ActionSetSqft(size,0)"></ion-input>
+            <ion-input type="text" class="labelfont2" name="size.Width" [(ngModel)]="size.Width"
+              (change)="ActionSetSqft(i,0)"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="4">
           <ion-item>
             <ion-label floting color="primary">H</ion-label>
-            <ion-input type="text" class="labelfont2" name="Length" [(ngModel)]="size.Length"
-              (change)="ActionSetSqft(size,0)"></ion-input>
+            <ion-input type="text" class="labelfont2"  [(ngModel)]="size.Length" name="size.Length"
+              (change)="ActionSetSqft(i,0)"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="4">
           <ion-item>
             <ion-label floting color="primary">Sqft</ion-label>
-            <ion-input type="text" class="labelfont2" name="Sqft" [(ngModel)]="size.Sqft"></ion-input>
+            <ion-input type="text" class="labelfont2"  [(ngModel)]="size.Sqft" name="Sqft" ></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="6">
           <ion-item>
             <ion-label floting color="primary">Qty</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="size.NoOfSlabs" name="NoOfSlabs"
+            <ion-input type="text" class="labelfont2" [(ngModel)]="size.NoOfSlabs" name="size.NoOfSlabs"
               (change)="ActionSetAmount()"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="6">
           <ion-item>
             <ion-label floting color="primary">Price/Sqft&nbsp;</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="size.Amount" name="Amount">
+            <ion-input type="text" class="labelfont2" [(ngModel)]="size.Amount" name="size.Amount">
               <ion-row class="mar-right3">$</ion-row>
             </ion-input>
           </ion-item>

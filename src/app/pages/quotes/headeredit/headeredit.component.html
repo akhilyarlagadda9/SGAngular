@@ -103,7 +103,7 @@
           </ion-item>
         <ion-item>
             <ion-label >Price List</ion-label>      
-            <ion-select required [(ngModel)]="headerinfo.Version.PriceListID" name="PriceListID" #PriceListID="ngModel"  >
+            <ion-select required [(ngModel)]="headerinfo.Version.PriceListID" name="PriceListID" [selectedText]="headerinfo.Version.PriceList" (ngModelChange)="ActionGetPriceList($event)" #PriceListID="ngModel"  >
               <ion-select-option *ngFor="let p of priceList" [value]="p.RefID">{{p.Name}}</ion-select-option>
             </ion-select>
           </ion-item>

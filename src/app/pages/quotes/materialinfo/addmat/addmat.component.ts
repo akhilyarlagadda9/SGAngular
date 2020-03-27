@@ -144,8 +144,8 @@ export class AddmatComponent implements OnInit {
     );
   } */
 
-  ActionSetSqft(size, typeid) {
-    size.Sqft = this.quoterep.calcsqft(size.Width, size.Height);
+  ActionSetSqft(i, typeid) {
+    this.material.SlabList[i].Sqft = this.quoterep.calcsqft(this.material.SlabList[i].Width, this.material.SlabList[i].Length);
   }
 
 

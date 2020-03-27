@@ -36,14 +36,18 @@ export class DiscountComponent implements OnInit {
     this.Version = JSON.parse(this.Version);
     this.VersionId = this.Version.ID;
     this.ActionChangeDiscountList();
-    this.GetQuoteDiscoutList();
-    this.ActionTaxPopup();
-    this.ActionFeePopup();
+    if(this.SummaryTypeID == 2){
+      this.GetQuoteDiscoutList();
+    }
+    if(this.SummaryTypeID == 2){
+      this.ActionTaxPopup();
+    }
     if(this.SummaryTypeID == 3){
-    this.authService.GetStoredLoginUser().then((data) =>{
-      this.UserId = data == null ? 0 : data.logInUserID;
-    });
+     this.ActionFeePopup();
   }
+  this.authService.GetStoredLoginUser().then((data) =>{
+    this.UserId = data == null ? 0 : data.logInUserID;
+  });
   }
   //#region Discount
   ActionChangeDiscountList() {
@@ -108,9 +112,9 @@ ActionRoundAmount(typeid) {
   this.Version.copyroundoff = this.quoterep.roundToTwo(this.quoterep.convertToFloat(this.Version.copyroundoff) + round);
 }
 ActionSaveReferralFee = function () {
-  this.Version.RoundOff = this.quoterep.convertToFloat(this.header.Version.copyroundoff);
+  this.Version.RoundOff = this.quoterep.convertToFloat(this.Version.copyroundoff);
   this.Version.refPopover = false;
-  let model: any = {}, version = this.header.Version;
+  let model: any = {}, version = this.Version;
   model.ID = version.ID;
   model.UserID =  this.UserId;
   model.RefFee = version.RefFee;
@@ -136,7 +140,7 @@ ActionSaveReferralFee = function () {
   model.CarpetFee = version.CarpetFee;
   model.FloorFee = version.FloorFee;
   model.ConsumableFee = version.ConsumableFee;
-  let results = this.service.qpactionsavereferralfee(model, this.header.Version.AreaID).subscribe(data => {
+  this.service.qpactionsavereferralfee(model, this.Version.AreaID).subscribe(data => {
   this.Version = this.quoterep.ResetVersionSummary(this.Version, data.VersionSummary);
   this.ActionToClosePop(true);
 });
@@ -145,8 +149,12 @@ ActionSaveReferralFee = function () {
   //#region  Sales Tax
   
   ActionTaxPopup() {
-    let result = this.getservice.getaccounttaxlist(3, this.Version.CustTypeID).subscribe(
-      data => { this.TaxTypeList = data });
+    this.getservice.getaccounttaxlist(3, this.Version.CustTypeID).subscribe(
+      data => { this.TaxTypeList = data;
+        if(this.TaxTypeList.length > 0){
+          this.Version.TaxID= this.Version.TaxID == 0 ? this.TaxTypeList[0].ID : this.Version.TaxID;
+        }
+        });
     console.log(this.TaxTypeList)
   }
 
@@ -154,7 +162,7 @@ ActionSaveReferralFee = function () {
     if (form.valid) {
       let model: any = {}, version = this.Version;
       model.ID = version.ID;
-      model.UserID = 'Test';
+      model.UserID = this.UserId;
       model.Tax = version.Tax;
       model.TaxID = version.TaxID;
       model.MatPercent = version.MatPercent;
@@ -170,34 +178,21 @@ ActionSaveReferralFee = function () {
       model.OtherPercent = version.OtherPercent;
       model.ToolPercent = version.ToolPercent;
       model.TaxCode = version.TaxCode;
-      let results = this.service.qpactionsavesalestax(model, this.Version.AreaID);
-      if (results != null && results.VersionSummary != undefined) {
-        this.resetversioninfo(results.VersionSummary);
-      } else {
-        this.quoterep.calcversionsummary31(version);
-      }
-      results.Root = 'Tax';
-      this.fabcent = version.FabPercent;//fab
-      this.matcent = version.MatPercent;//mat
-      this.gradecent = version.GradePercent;//edge,splash,cut
-      this.laborcent = version.LaborPercent;//labor
-      this.addoncent = version.OtherPercent;//addon
-      this.sinkcent = version.AddonPercent;//sink,faucet
-      this.tilecent = version.TilePercent;//tile
-      this.caPercent = version.CarpetPercent;//carpet
-      this.cbPercent = version.CabinetPercent;//cabinet
-      this.flPercent = version.FloorPercent;//floor
-      this.cosPercent = version.ConsumablePercent;//consumble
-      this.appliancePercent = version.AppliancePercent;//appliance
-      this.toolPercent = version.ToolPercent;//tool
-      //alert({ title: "UPDATED SUCCESSFULLY.", timer: 500, showConfirmButton: false });
-      this.presentAlert()
-      this.ActionToClosePop(true);
+      this.service.qpactionsavesalestax(model, this.Version.AreaID).subscribe(results =>{
+        if (results != null && results.VersionSummary != undefined) {
+          this.Version = this.quoterep.ResetVersionSummary(this.Version, results.VersionSummary);
+        } else {
+          this.quoterep.calcversionsummary31(version);
+        }
+        results.Root = 'Tax';
+        this.ActionToClosePop(true);
+      });
+     
     }
   }
   ActionCheckUncheckTaxCode = function (event) {
-    if (this.Version.TaxCode == false) {
-      this.Version.Tax = 0;
+    if (event.target.checked == false) {
+      this.Version.Tax = 0;this.Version.TaxCode = 0;
       this.Version.MatPercent = 0;
       this.Version.FabPercent = 0;
       this.Version.GradePercent = 0;
@@ -211,6 +206,7 @@ ActionSaveReferralFee = function () {
       this.Version.FloorPercent = 0;
       this.Version.ConsumablePercent = 0;
     } else {
+      this.Version.TaxCode = 1;
       //this.quote.header.header.Version.Tax = 0;
       this.Version.MatPercent = 100;
       this.Version.FabPercent = 100;

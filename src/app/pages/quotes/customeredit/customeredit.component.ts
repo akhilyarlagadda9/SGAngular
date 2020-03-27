@@ -1,5 +1,10 @@
 import { Component, OnInit,EventEmitter } from '@angular/core';
 import { ModalController ,NavParams } from '@ionic/angular';
+import { OverlayEventDetail } from '@ionic/core';
+import { CustomersearchComponent } from '../customersearch/customersearch.component';
+import { QuoterepService } from 'src/app/service/quoterep.service';
+import { QuoteService } from 'src/app/service/quote.service';
+import { NgForm } from '@angular/forms';
 declare var _qscope;
 @Component({
   selector: 'app-customeredit',
@@ -8,8 +13,9 @@ declare var _qscope;
 })
 export class CustomereditComponent implements OnInit {
 
-  constructor(private Modalcntrl : ModalController,private navParams : NavParams,) { }
-  customerinfo = this.navParams.data;
+  constructor(private Modalcntrl : ModalController,private navParams : NavParams,
+    private qRep:QuoterepService,private qServe:QuoteService) { }
+  customerinfo = this.navParams.data;header :any;
   ngOnInit() {}
 
 
@@ -18,7 +24,7 @@ export class CustomereditComponent implements OnInit {
     // this.customerEvent.emit(this.customerinfo);
      this.Modalcntrl.dismiss({
        'dismissed': true,
-       componentProps:this.customerinfo,
+       componentProps:this.header,
        issave:issave
      });
    }
@@ -35,9 +41,58 @@ export class CustomereditComponent implements OnInit {
     // return await popover.present();
   }
 
+  ActionShowNewCustomerList(ev: any, typeId: number, search: string, clickType: number) {
+    search = search == undefined ? "" : search;
+    if ((search != null && search != "") || typeId == 2) {
+      this.ActionShowPopover(ev, typeId, search, clickType);
+    }
+  }
+  async ActionShowPopover(ev: any, typeId: number, search, clickType: number) {
+    let custTypeID = this.header.Customer.Version.ParentAccID > 0 && clickType == 0 ? 4 : 0;
+    let obj = { search: search, selectTypeId: typeId, custTypeID: custTypeID }
+    const popover = await this.Modalcntrl.create({
+      component: CustomersearchComponent,
+      //event: ev,
+     // translucent: true,
+      showBackdrop: true,
+      componentProps: obj,
+     // cssClass: "popover_class4"
+    })
+    popover.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null) {
+        if (detail.data.isselect == true) {
+          this.PopulateCustomerInfo(detail.data.componentProps);
+        }
+      }
+    });
+    return await popover.present();
+  }
+  PopulateCustomerInfo(info: any) {
+    this.header = this.qRep.Preparecustomermodel(this.header, info);
+   // this.ActionPopulateCustName();
+    this.Getcustomercontacts();
+  }
+  Getcustomercontacts() {
+    let model: any; let header = this.header; 
+    this.qServe.GetCustomerContacts(header.CustomerID).subscribe(data => {
+      this.header.CustomerContacts = data;
+      if (header.CustomerID > 0) {
+        model = this.header.CustomerContacts.find(s => s.CustomerID == header.CustomerID && s.IsDefault == 1);
+        if (model != "" && model != null && model != undefined) {
+          header.Version.CustContactID = model.ID;
+        }
+        //  customerContacts.map(function (elem) { if (elem.CustomerID == header.CustomerID && elem.IsDefault == 1) { model = elem; } });
 
-  ActionSaveCustomer(){
-
+      }
+    });
+  }
+  ActionSaveCustomer(form:NgForm){
+    if (form.valid) {
+      this.header.Version.InvoiceTo = this.header.Version.InvoiceTo == true ? 1 : 0;
+      this.qServe.ActionSaveQuoteCustomer(this.header).subscribe(data=>{
+        this.ActionCloseCustomer(true);
+      })
+    }
   }
 
 }

@@ -68,7 +68,7 @@ export class AreainfoComponent implements OnInit {
   //     error => console.log(error));
   // }
   ActionPartsByArea(areaID: any, parttype: number) {
-    this.GetAreaName(areaID);
+    if(this.arealist != null){this.GetAreaName(areaID);}
     this.service.ActionQuickPartList(this.Version.ID,this.PhaseId, areaID, 0, 0).subscribe(data => {
       this.areaInfo = data;
       this.areaInfo.PartList = this.areaInfo.PartList == null ? [] : this.areaInfo.PartList;

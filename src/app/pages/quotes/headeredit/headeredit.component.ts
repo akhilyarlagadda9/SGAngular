@@ -20,7 +20,7 @@ export class HeadereditComponent implements OnInit {
   constructor(public Modalcntrl: ModalController, private navParams: NavParams, private getservice: QuotegetService,private service:QuoteService) {
     this.PopulateDropDownList(this.navParams.data.Version.CustTypeID);
    }
-  headerinfo:any;
+  headerinfo:any={QuoteContacts:[]};
   salesPersonsList: any = [];
   estimatorsList: any = [];
   projectManagersList: any = [];

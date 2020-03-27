@@ -62,7 +62,7 @@
         <ion-item>
           <ion-label floating>Customer Tax Code:</ion-label>
           <ion-checkbox class="btninfo" slot="end"checked="Version.TaxCode == 1" [(ngModel)]="Version.TaxCode" name="TaxCode"
-            (click)="ActionCheckUncheckTaxCode(Version.TaxCode)">Tax</ion-checkbox>
+            (ionChange)="ActionCheckUncheckTaxCode($event)">Tax</ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label floating></ion-label>
@@ -70,8 +70,8 @@
             [disabled]="Version.TaxCode == 0">
             <ion-select-option *ngFor="let mat of TaxTypeList" [value]="mat.ID">{{mat.Name}}</ion-select-option>
           </ion-select>
-          <ion-input type="text" class="labelfont text-right" [(ngModel)]="Version.Tax" name="MatPercent"
-            [disabled]="Version.MatPercent == 0">
+          <ion-input type="text" class="labelfont text-right" [(ngModel)]="Version.Tax" name="Tax"
+            [disabled]="Version.TaxCode == 0">
           </ion-input>
           <ion-label>%</ion-label>
         </ion-item>

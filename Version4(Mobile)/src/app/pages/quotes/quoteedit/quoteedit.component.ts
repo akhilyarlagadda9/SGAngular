@@ -23,7 +23,7 @@ export class QuoteeditComponent implements OnInit {
     private navCtrl: NavController, private repService: QuoterepService,
     public actionSheetCtrl: ActionSheetController, private qrepservice: QuoterepService) { }
   qprmsobj = this.navParams.data;
-  headerInfo: any;
+  headerInfo: any={QuoteContacts:[]};
   versionList: any = []; phaseList: any = [];
   selectedtabtype: number;selChildTabId: number = 1;
   //QuoteVersionID: number = this.qprmsobj.versionid;
@@ -153,7 +153,7 @@ async ActionEditJob() {
   modal.onDidDismiss().then((detail: OverlayEventDetail) => {
     if (detail !== null) {
       if (detail.data.issave == true) {
-        this.headerInfo =  this.qrepservice.ResetQuote(this.headerInfo,detail.data.componentProps)
+        this.headerInfo =  this.qrepservice.ResetQuote(this.headerInfo,detail.data.componentProps);
        // this.headerInfo = detail.data.componentProps;
         //this.contacts = detail.data.componentProps.ContactList;
       }
@@ -173,11 +173,12 @@ async ActionLoadMap() {
 }
 //Customer Edit Function
 async ActionEditCustomer(typeId: number, info: any, contactList) {
-  let custinfo = info;
-  custinfo.ContactList = contactList;
-  let copyobj = JSON.parse(JSON.stringify(custinfo))
+  // let custinfo = info;
+  // custinfo.ContactList = contactList;
+  // let copyobj = JSON.parse(JSON.stringify(custinfo))
   //let obj = {version:this.headerInfo.Version,customerinfo:copyobj,SelectedTypeID:this.SelectedTypeID}
-  let obj = { version: this.headerInfo.Version, customerinfo: copyobj, SelectedTypeID: this.SelectedTypeID }
+  let copyobj = JSON.parse(JSON.stringify(this.headerInfo));
+  let obj = { header: copyobj, SelectedTypeID: this.SelectedTypeID }
   const modal = await this.Modalcntrl.create({
     component: CustomereditComponent,
     componentProps: obj,
@@ -185,7 +186,7 @@ async ActionEditCustomer(typeId: number, info: any, contactList) {
   modal.onDidDismiss().then((detail: OverlayEventDetail) => {
     if (detail !== null) {
       if (detail.data.issave == true) {
-        this.SetCustomerDetails(typeId, detail.data);
+        this.headerInfo =  this.qrepservice.ResetQuoteCutomer(this.headerInfo,detail.data.componentProps)
       }
     }
   });

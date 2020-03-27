@@ -96,14 +96,12 @@
                         <span class="color-primary"
                             (click)="ActionEditCustomer(1,headerInfo.Customer,headerInfo.CustomerContacts)"><u>Cust:</u></span>{{headerInfo.Customer.Name}}
                     </div>
-                    <div class="valignsup" *ngIf="headerInfo.Version.ChildAccID  > 0"
-                        (click)="ActionEditCustomer(3,headerInfo.ChildAccount,headerInfo.ChildAccountContacts)">
-                        <span class="color-primary"><u> Child Acc:</u></span><span
+                    <div class="valignsup" *ngIf="headerInfo.Version.ChildAccID  > 0">
+                        <span >Child Acc:</span><span
                             class="labelfont">&nbsp;{{headerInfo.ChildAccount.Name}}</span>
                     </div>
-                    <div class="valignsup" *ngIf="headerInfo.Version.ParentAccID  > 0"
-                        (click)="ActionEditCustomer(2,headerInfo.ParentAccount,headerInfo.ParentAccountContacts)">
-                        <span class="color-primary"><u>Acc:</u></span><span
+                    <div class="valignsup" *ngIf="headerInfo.Version.ParentAccID  > 0">
+                        <span>Acc:</span><span
                             class="labelfont">&nbsp;{{headerInfo.ParentAccount.Name}}</span>
                     </div>
                 </ion-col>

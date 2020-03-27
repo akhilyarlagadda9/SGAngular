@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Version } from '@angular/core';
 import { Subject } from 'rxjs';
 import { QuoteService } from './quote.service';
 import { AuthService } from './auth.service';
@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
 })
 export class QuoterepService {
   header: any;
-  constructor(private authservice:AuthService) { }
+  constructor(private authservice: AuthService) { }
   private _interfacesource = new Subject<any>();
   interface$ = this._interfacesource.asObservable();
   private service: QuoteService
@@ -15,16 +15,17 @@ export class QuoterepService {
   //   this._interfacesource.next(info);
   // }
   //#region Quote Header
-  setHeader(info) { 
+  setHeader(info) {
     console.log(info);
-    this.header = {ID:info.ID,QuoteNo:info.QuoteNo,QuoteName:info.QuoteName,
-      VersionID:info.Version.ID,CustomerID:info.Version.CustomerID,LocID:info.LocID,
-      Version:{SrNo:info.Version.SrNo,JobStatusID:info.Version.JobStatusID,TypeID:info.Version.TypeID}
-    } 
-  }  
-  getHeader() {  
-    return this.header;  
-  }  
+    this.header = {
+      ID: info.ID, QuoteNo: info.QuoteNo, QuoteName: info.QuoteName,
+      VersionID: info.Version.ID, CustomerID: info.Version.CustomerID, LocID: info.LocID,
+      Version: { SrNo: info.Version.SrNo, JobStatusID: info.Version.JobStatusID, TypeID: info.Version.TypeID }
+    }
+  }
+  getHeader() {
+    return this.header;
+  }
   Prepareparentcustmodel(header, modelItem) {
     header.Version.AccName = modelItem.SelName + modelItem.ShowHyphen + modelItem.Name;
     header.Version.ParentCustInfo = modelItem;
@@ -37,27 +38,27 @@ export class QuoterepService {
     header.Version.FeeID = modelItem.FeeID;
     header.Version.RefFee = modelItem.Fee;
     header.Version.FeeTypeID = modelItem.FeeTypeID;
-  
+
     let childAccCode = header.Version.ChildAccID == 0 ? "" : header.Version.ParentCustInfo.Code + " - ";
     let cust = header.Version.Customer.Name == undefined ? "" : header.Version.Customer.Name;
-  
+
     if (header.Version.IsCustRetail == 0 && header.CustomerID == 0) {
-        let parentName = header.Version.ChildAccID == 0 ? header.Version.ParentCustInfo.SelName : header.Version.ParentCustInfo.SelCode;
-        let childAccCode = header.Version.ChildAccID == 0 ? "" : " - " + header.Version.ParentCustInfo.Name;
-        //if (_qname) { header.QuoteName = parentName + childAccCode; }
-    } 
+      let parentName = header.Version.ChildAccID == 0 ? header.Version.ParentCustInfo.SelName : header.Version.ParentCustInfo.SelCode;
+      let childAccCode = header.Version.ChildAccID == 0 ? "" : " - " + header.Version.ParentCustInfo.Name;
+      //if (_qname) { header.QuoteName = parentName + childAccCode; }
+    }
     header.Version.AccountTaxID = modelItem.SalesTaxID;
     header.Version.AccountTaxID = modelItem.SalesTaxID;
     header.SalesPersonID = (header.SalesPersonID == 0 || header.SalesPersonID == undefined) ? this.getloginuserId() : header.SalesPersonID;
     //calpriceList();
-  
+
     return header;
   }
   Preparecustomermodel(header, model) {
     let typeID = header.Version.CustTypeID;
     header.Customer = model;
-    header.Version.Customer= model;
-   // header.Version.Customer.TypeID = typeID == 0 ? model.TypeID : typeID;
+    header.Version.Customer = model;
+    // header.Version.Customer.TypeID = typeID == 0 ? model.TypeID : typeID;
     header.CustomerID = model.ID;
     header.Version.CustomerID = model.ID;
     header.Version.Financed = model.Financed;
@@ -73,39 +74,39 @@ export class QuoterepService {
     header.Version.FeeTypeID = model.FeeTypeID;
     header.Version.Financed = model.Financed;
     if (typeID == 4) {//Retail
-        header.Version.PriceListID = (header.Version.PriceListID == 0 || header.Version.PriceListID == undefined) ? model.PriceListID : header.Version.PriceListID;
-        let SalesPersonID = (model.SalesPersonID != 0 || model.SalesPersonID != undefined) ? model.SalesPersonID : header.SalesPersonID;
-        header.SalesPersonID = SalesPersonID == 0 ? this.getloginuserId() : SalesPersonID;
-  
-        let EstimatorID = (model.EstimatorID != 0 || model.EstimatorID != undefined) ? model.EstimatorID : header.EstimatorID;
-        header.EstimatorID = EstimatorID == 0 ? 0 : EstimatorID;
-  
-        let ProjManagerID = (model.ProjectManagerID != 0 || model.ProjectManagerID != undefined) ? model.ProjectManagerID : header.ProjectManagerID;
-        header.ProjectManagerID = ProjManagerID == 0 ? 0 : ProjManagerID;
-  
-        header.Version.PayTypeID = model.PayTermsID != 0 ? 2 : 1;
-        header.Version.PaymentTermID = model.PayTermsID;
-        header.Version.TaxID = model.SalesTaxID;
-       // if (_qname) { header.QuoteName = model.Name; }
+      header.Version.PriceListID = (header.Version.PriceListID == 0 || header.Version.PriceListID == undefined) ? model.PriceListID : header.Version.PriceListID;
+      let SalesPersonID = (model.SalesPersonID != 0 || model.SalesPersonID != undefined) ? model.SalesPersonID : header.SalesPersonID;
+      header.SalesPersonID = SalesPersonID == 0 ? this.getloginuserId() : SalesPersonID;
+
+      let EstimatorID = (model.EstimatorID != 0 || model.EstimatorID != undefined) ? model.EstimatorID : header.EstimatorID;
+      header.EstimatorID = EstimatorID == 0 ? 0 : EstimatorID;
+
+      let ProjManagerID = (model.ProjectManagerID != 0 || model.ProjectManagerID != undefined) ? model.ProjectManagerID : header.ProjectManagerID;
+      header.ProjectManagerID = ProjManagerID == 0 ? 0 : ProjManagerID;
+
+      header.Version.PayTypeID = model.PayTermsID != 0 ? 2 : 1;
+      header.Version.PaymentTermID = model.PayTermsID;
+      header.Version.TaxID = model.SalesTaxID;
+      // if (_qname) { header.QuoteName = model.Name; }
     } else {
-        if (header.Version.ParentCustInfo == undefined || header.Version.ParentCustInfo == null) {
-            header.Version.ParentCustInfo = {}; header.Version.ParentCustInfo.Code = ""; header.Version.ParentCustInfo.SelCode = "";
-        }
-        //var hypen = header.Version.ParentAccID == 0 ? "" : " - ";
-       // var childAccCode = header.Version.ChildAccID == 0 ? "" : header.Version.ParentCustInfo.Code + " - ";
-       // var cust = header.Version.Customer.Name == undefined ? "" : header.Version.Customer.Name;
-       // var selcode = header.Version.ParentCustInfo.SelCode == undefined ? "" : header.Version.ParentCustInfo.SelCode;
-        //if (_qname) { header.QuoteName = selcode + hypen + childAccCode + cust; }
+      if (header.Version.ParentCustInfo == undefined || header.Version.ParentCustInfo == null) {
+        header.Version.ParentCustInfo = {}; header.Version.ParentCustInfo.Code = ""; header.Version.ParentCustInfo.SelCode = "";
+      }
+      //var hypen = header.Version.ParentAccID == 0 ? "" : " - ";
+      // var childAccCode = header.Version.ChildAccID == 0 ? "" : header.Version.ParentCustInfo.Code + " - ";
+      // var cust = header.Version.Customer.Name == undefined ? "" : header.Version.Customer.Name;
+      // var selcode = header.Version.ParentCustInfo.SelCode == undefined ? "" : header.Version.ParentCustInfo.SelCode;
+      //if (_qname) { header.QuoteName = selcode + hypen + childAccCode + cust; }
     }
     return header;
   }
-  getloginuserId(){
+  getloginuserId() {
     let userId;
     this.authservice.GetStoredLoginUserID().then((data) => {
-     return userId = data;
+      return userId = data;
     });
   }
-  GetQuoteAddress(header){
+  GetQuoteAddress(header) {
     let address = "";
     header.Address1 = header.Address1 == null || header.Address1 == "" ? "" : header.Address1 + ",";
     header.City = header.City == null || header.City == "" ? "" : header.City + ",";
@@ -115,32 +116,32 @@ export class QuoterepService {
     address = header.Address1 + header.City + header.State + zipcodeComma + header.Zipcode;
     return address;
   }
-  ResetQuote(header,newheader){
-    header.QuoteName =newheader.QuoteName; 
-    header.QuoteNo =newheader.QuoteNo; 
-    header.Address1 =newheader.Address1; 
-    header.City =newheader.City; 
-    header.State =newheader.State; 
-    header.Zipcode =newheader.Zipcode; 
-    header.YearBuilt =newheader.YearBuilt; 
-    header.QuoteDate =newheader.QuoteDate; 
-    header.SalesPersonID =newheader.SalesPersonID;
-    header.EstimatorID =newheader.EstimatorID;
-    header.SalesPerson =newheader.SalesPerson;
-    header.ProjectManager =newheader.ProjectManager;
-    header.Lat =newheader.Lat;
-    header.Long =newheader.Long;
-    header.ProjectManagerID =newheader.ProjectManagerID;
-    header.Version.ExpiryDate =newheader.Version.ExpiryDate; 
-    header.Version.JobTypeID =newheader.Version.JobTypeID; 
-    header.Version.PriceListID =newheader.Version.PriceListID; 
-    header.Version.Financed =newheader.Version.Financed; 
+  ResetQuote(header, newheader) {
+    header.QuoteName = newheader.QuoteName;
+    header.QuoteNo = newheader.QuoteNo;
+    header.Address1 = newheader.Address1;
+    header.City = newheader.City;
+    header.State = newheader.State;
+    header.Zipcode = newheader.Zipcode;
+    header.YearBuilt = newheader.YearBuilt;
+    header.QuoteDate = newheader.QuoteDate;
+    header.SalesPersonID = newheader.SalesPersonID;
+    header.EstimatorID = newheader.EstimatorID;
+    header.SalesPerson = newheader.SalesPerson;
+    header.ProjectManager = newheader.ProjectManager;
+    header.Lat = newheader.Lat;
+    header.Long = newheader.Long;
+    header.ProjectManagerID = newheader.ProjectManagerID;
+    header.Version.ExpiryDate = newheader.Version.ExpiryDate;
+    header.Version.JobTypeID = newheader.Version.JobTypeID;
+    header.Version.PriceListID = newheader.Version.PriceListID;
+    header.Version.Financed = newheader.Version.Financed;
     header.PoItemList = newheader.PoItemList
     header.FullAddress = this.GetQuoteAddress(newheader);
     return header;
-  } 
+  }
 
-  ResetQuoteCutomer(header,newheader){
+  ResetQuoteCutomer(header, newheader) {
     header.Customer = newheader.Customer;
     header.CustomerID = newheader.Customer.ID;
     header.Version.CustomerID = newheader.Version.CustomerID;
@@ -950,7 +951,7 @@ export class QuoterepService {
     version.Status = action.ActionName;
     version.StatusColor = "Green";
     version.UserID = this.getloginuserId();
-   // version.UserID = 1;
+    // version.UserID = 1;
     version.LayApproval = action.LayApproval;
     version.CustPickup = action.CustPickup;
     version.Reason = action.Description;
@@ -959,7 +960,7 @@ export class QuoterepService {
     version.HoldFlag = action.PreferID;
     version.PhStatusID = action.PreferID == 0 ? action.StageID : 8;//8 for hold
     return version;
-  } 
+  }
   preparematerials(materials) {
     if (materials != null) {
       for (let i = 0; i < materials.length; i++) {
@@ -1026,6 +1027,7 @@ export class QuoterepService {
   //#region  Version Summary
 
   ResetVersionSummary(version, summary) {
+    debugger;
     version.TaxAmt = summary.TaxAmt;
     version.DiscountAmt = summary.DiscountAmt;
     version.TotalAmt = summary.TotalAmt;
@@ -1050,6 +1052,12 @@ export class QuoterepService {
     return version
   }
   ResetVersionTotals(version, newversion) {
+    version.TaxID = newversion.TaxID;
+    version.TaxCode = newversion.TaxCode;
+    version.FeeID = newversion.FeeID;
+    version.RefFee = newversion.RefFee;
+    version.FeeTypeID = newversion.FeeTypeID;
+    version.IsFeeTax = newversion.IsFeeTax;
     version.TaxAmt = newversion.TaxAmt;
     version.DiscountAmt = newversion.DiscountAmt;
     version.TotalAmt = newversion.TotalAmt;
@@ -1071,6 +1079,21 @@ export class QuoterepService {
     version.GrossMargin = newversion.GrossMargin;
     version.TDolloarPercentage = newversion.TDolloarPercentage;
     version.NetMarginPercentage = newversion.NetMarginPercentage;
+    version.copyroundoff = newversion.copyroundoff;
+    version.MatPercent = newversion.MatPercent;
+    version.FabPercent = newversion.FabPercent;
+    version.GradePercent = newversion.GradePercent;
+    version.AddonPercent = newversion.AddonPercent;
+    version.AppliancePercent = newversion.AppliancePercent;
+    version.OtherPercent = newversion.OtherPercent;
+    version.LaborPercent = newversion.LaborPercent;
+    version.TilePercent = newversion.TilePercent;
+    version.CabinetPercent = newversion.CabinetPercent;
+    version.CarpetPercent = newversion.CarpetPercent;
+    version.FloorPercent = newversion.FloorPercent;
+    version.ConsumablePercent = newversion.CabinetPercent;
+    version.ToolPercent = newversion.CarpetPercent;
+    this.PaymentScheduleInfo(version);
     return version
   }
   preparepaymentschedule(model) {
@@ -1080,6 +1103,19 @@ export class QuoterepService {
     model.Version.InstallAmt = (qamount + model.Version.RoundOff) * (model.Version.DueInstall / 100);
     model.Version.OtherAmt = (qamount + model.Version.RoundOff) * (model.Version.DueOther / 100);
     //model.Version.TotalAmt = qamount;
+  }
+
+  PaymentScheduleInfo(details) {
+    let qamount = (details.TotalAmt + details.TaxAmt) - (details.DiscountAmt);
+    let dues = this.convertToFloat(details.DueSigning) / 100;
+    let duet = this.convertToFloat(details.DueTeamplate) / 100;
+    let duei = this.convertToFloat(details.DueInstall) / 100;
+    let dueo = this.convertToFloat(details.DueOther) / 100;
+    details.SigningAmt = Math.round((qamount + details.RoundOff) * dues);
+    details.TeamplateAmt = Math.round((qamount + details.RoundOff) * duet);
+    details.InstallAmt = Math.round(qamount * duei);
+    details.OtherAmt = Math.round(qamount * dueo);
+    return details;
   }
   /*  getviewtypeid() {
     return _qscope.viewtypeid;

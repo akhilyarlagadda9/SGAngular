@@ -55,8 +55,9 @@ export class QuoterepService {
   }
   Preparecustomermodel(header, model) {
     let typeID = header.Version.CustTypeID;
-    header.Version.Customer = model;
-    header.Version.Customer.TypeID = typeID == 0 ? model.TypeID : typeID;
+    header.Customer = model;
+    header.Version.Customer= model;
+   // header.Version.Customer.TypeID = typeID == 0 ? model.TypeID : typeID;
     header.CustomerID = model.ID;
     header.Version.CustomerID = model.ID;
     header.Version.Financed = model.Financed;
@@ -90,10 +91,10 @@ export class QuoterepService {
         if (header.Version.ParentCustInfo == undefined || header.Version.ParentCustInfo == null) {
             header.Version.ParentCustInfo = {}; header.Version.ParentCustInfo.Code = ""; header.Version.ParentCustInfo.SelCode = "";
         }
-        var hypen = header.Version.ParentAccID == 0 ? "" : " - ";
-        var childAccCode = header.Version.ChildAccID == 0 ? "" : header.Version.ParentCustInfo.Code + " - ";
-        var cust = header.Version.Customer.Name == undefined ? "" : header.Version.Customer.Name;
-        var selcode = header.Version.ParentCustInfo.SelCode == undefined ? "" : header.Version.ParentCustInfo.SelCode;
+        //var hypen = header.Version.ParentAccID == 0 ? "" : " - ";
+       // var childAccCode = header.Version.ChildAccID == 0 ? "" : header.Version.ParentCustInfo.Code + " - ";
+       // var cust = header.Version.Customer.Name == undefined ? "" : header.Version.Customer.Name;
+       // var selcode = header.Version.ParentCustInfo.SelCode == undefined ? "" : header.Version.ParentCustInfo.SelCode;
         //if (_qname) { header.QuoteName = selcode + hypen + childAccCode + cust; }
     }
     return header;
@@ -134,10 +135,19 @@ export class QuoterepService {
     header.Version.JobTypeID =newheader.Version.JobTypeID; 
     header.Version.PriceListID =newheader.Version.PriceListID; 
     header.Version.Financed =newheader.Version.Financed; 
+    header.PoItemList = newheader.PoItemList
     header.FullAddress = this.GetQuoteAddress(newheader);
     return header;
   } 
-  
+
+  ResetQuoteCutomer(header,newheader){
+    header.Customer = newheader.Customer;
+    header.CustomerID = newheader.Customer.ID;
+    header.Version.CustomerID = newheader.Version.CustomerID;
+    header.CustomerContacts = newheader.CustomerContacts;
+    return header;
+  }
+
   //#endregion
   //#region  Add Items
   AddPartMatItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number) {

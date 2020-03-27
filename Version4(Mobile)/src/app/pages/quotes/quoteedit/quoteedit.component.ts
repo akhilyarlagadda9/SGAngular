@@ -154,9 +154,7 @@ async ActionEditJob() {
     if (detail !== null) {
       if (detail.data.issave == true) {
         this.headerInfo =  this.qrepservice.ResetQuote(this.headerInfo,detail.data.componentProps);
-       // this.headerInfo = detail.data.componentProps;
-        //this.contacts = detail.data.componentProps.ContactList;
-      }
+      }else{this.headerInfo.PoItemList = detail.data.componentProps.PoItemList}
     }
   });
   return await modal.present();
@@ -254,6 +252,7 @@ async ActionNewAction() {
       this.ActionAreaList(typeId);
     }
     this.repService.setHeader(this.headerInfo);
+    this.headerInfo.Version = this.repService.PaymentScheduleInfo(this.headerInfo.Version);
   }
 //#endregion
 //#region Quote Actions

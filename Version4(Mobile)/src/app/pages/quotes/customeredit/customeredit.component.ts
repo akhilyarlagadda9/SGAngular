@@ -48,7 +48,7 @@ export class CustomereditComponent implements OnInit {
     }
   }
   async ActionShowPopover(ev: any, typeId: number, search, clickType: number) {
-    let custTypeID = this.header.Customer.Version.ParentAccID > 0 && clickType == 0 ? 4 : 0;
+    let custTypeID = 4;
     let obj = { search: search, selectTypeId: typeId, custTypeID: custTypeID }
     const popover = await this.Modalcntrl.create({
       component: CustomersearchComponent,

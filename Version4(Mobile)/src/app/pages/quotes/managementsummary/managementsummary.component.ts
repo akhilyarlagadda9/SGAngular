@@ -41,6 +41,7 @@ export class ManagementsummaryComponent implements OnInit {
       if (detail !== null) {
         if (detail.data.issave == true) {
          this.header.Version = this.quoterep.ResetVersionTotals(this.Version,detail.data.componentProps);
+         
         }
       }
     });

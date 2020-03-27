@@ -31,7 +31,6 @@ export class CommhubeditComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.authservice.GetStoredLoginUser().then((data) => {
       this.userInfo = data;
       console.log(data);
@@ -59,16 +58,25 @@ export class CommhubeditComponent implements OnInit {
     this.qservice.NotecategoryList(0).subscribe(
       data => {
         this.categoryList = data;
-        this.GetSelectedCategoryName();
+        this.ActionGetCatagory(this.commDetails.categoryID);
       }
     );
   }
-  GetSelectedCategoryName() {
-    let commDetails = this.categoryList.find(s => s.ID == this.commDetails.categoryID);
-    if (commDetails != null) {
-      this.commDetails.category = commDetails.Name;
+  ActionGetCatagory(id) {
+    let info = this.categoryList.find(s => s.ID == id);
+    if (info != null) {
+      this.commDetails.Category = info.Name;
     }
   }
+  ActionChangephase(id) {
+    let info = this.phaseList.find(s => s.ID == id);
+    if (info != null) {
+      this.commDetails.Phase = info.Name;
+    }
+  }
+  
+
+
   //Phase List Function
   GetphaseList() {
     this.qservice.CommHubPhaseList(this.commDetails.RefID).subscribe(

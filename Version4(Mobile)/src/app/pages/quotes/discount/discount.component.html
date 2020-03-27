@@ -62,12 +62,12 @@
         <ion-item>
           <ion-label floating>Customer Tax Code:</ion-label>
           <ion-checkbox class="btninfo" slot="end"checked="Version.TaxCode == 1" [(ngModel)]="Version.TaxCode" name="TaxCode"
-            (ionChange)="ActionCheckUncheckTaxCode($event)">Tax</ion-checkbox>
+            (ngModelChange)="ActionCheckUncheckTaxCode($event)">Tax</ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label floating></ion-label>
           <ion-select style="width:70%" class="btninfo" [(ngModel)]="Version.TaxID" name="TaxID"
-            [disabled]="Version.TaxCode == 0">
+            [disabled]="Version.TaxCode == 0" (ngModelChange)="ActionGetTax($event,1)" [selectedText]="Version.TaxName">
             <ion-select-option *ngFor="let mat of TaxTypeList" [value]="mat.ID">{{mat.Name}}</ion-select-option>
           </ion-select>
           <ion-input type="text" class="labelfont text-right" [(ngModel)]="Version.Tax" name="Tax"

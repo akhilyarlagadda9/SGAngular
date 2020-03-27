@@ -134,11 +134,8 @@ export class AreainfoComponent implements OnInit {
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail.data.issave == true) {
-        if(detail.data.componentProps.ID > 0){
-          this.partinfo.Name = detail.data.componentProps.Name;
-        }else{
-          this.ActionPartsByArea(this.AreaID, 0);
-        }
+        this.partinfo.Name = detail.data.componentProps.Name;
+        this.ActionPartsByArea(this.AreaID, 0);
       }
     });
     return await modal.present();

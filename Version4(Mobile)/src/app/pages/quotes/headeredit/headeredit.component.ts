@@ -90,6 +90,12 @@ export class HeadereditComponent implements OnInit {
       this.headerinfo.ProjectManager = headerinfo.ResourceName;
     }
   }
+  ActionGetPriceList(id) {
+    let headerinfo = this.priceList.find(s => s.RefID == id);
+    if (headerinfo != null) {
+      this.headerinfo.Version.PriceList = headerinfo.Name;
+    }
+  }
   ActionGetProductionName(Id) {
     let headerinfo = this.productionTypeList.find(s => s.ID == Id);
     if (headerinfo != null) {

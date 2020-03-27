@@ -358,8 +358,9 @@ export class AddpartComponent implements OnInit {
     }
   }
   ActionSavePart() {
-    this.showLoader()
+    debugger;
     if (this.partinfo.VersionID > 0) {
+      this.showLoader();
       this.service.ActionSavePartItems(this.partinfo).subscribe(data => {
         this.hideLoader();
         this.ActionCloseAddPart(true);

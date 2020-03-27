@@ -26,35 +26,35 @@
     <ion-content>
       <ion-list >
         <ion-item>
-          <ion-label floating style="width: 30%;">Category:</ion-label>
-          <ion-select [(ngModel)]="commDetails.category" name="category" [selectedText]="commDetails.category">
-             <ion-select-option *ngFor="let category of categoryList" [value]="category.Name">{{category.Name}}</ion-select-option>
+          <ion-label style="width: 30%;">Category:</ion-label>
+          <ion-select [(ngModel)]="commDetails.CategoryID" name="CategoryID" [selectedText]="commDetails.Category" (ngModelChange)="ActionGetCatagory($event)">
+             <ion-select-option *ngFor="let category of categoryList" [value]="category.ID">{{category.Name}}</ion-select-option>
          </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label floating>Phase:</ion-label>
-          <ion-select [(ngModel)]="commDetails.Phase" name="Phase" [selectedText]="commDetails.Phase">
-             <ion-select-option *ngFor="let category of phaseList" [value]="category.Name">{{category.Name}}</ion-select-option>
+          <ion-label>Phase:</ion-label>
+          <ion-select [(ngModel)]="commDetails.PhaseID" name="PhaseID" [selectedText]="commDetails.Phase" (ngModelChange)="ActionChangephase($event)">
+             <ion-select-option *ngFor="let category of phaseList" [value]="category.ID">{{category.Name}}</ion-select-option>
          </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label floating>Type:</ion-label>
+          <ion-label>Type:</ion-label>
           <ion-select [(ngModel)]="commDetails.FormID" name="FormID" [selectedText]="commDetails.formtype" (ngModelChange)="ActionChangeTempl($event,1)">
             <ion-select-option *ngFor="let c of docFormList" [value]="c.ID">{{c.Name}}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label floating>Subject:</ion-label>
+          <ion-label>Subject:</ion-label>
           <ion-input type="text" class="inputheight" [(ngModel)]="commDetails.Subject" name="Subject"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label floating>Status:</ion-label>
+          <ion-label>Status:</ion-label>
           <ion-select [(ngModel)]="commDetails.Status" name="StatusID" [selectedText]="commDetails.Status">
             <ion-select-option *ngFor="let category of msgStatusList" [value]="">{{category.Name}}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item class="item-marg">
-          <ion-label floating>
+          <ion-label>
             <span class="btn btn-success fileinput-button" ngClass="{disabled: disabled}" floating>
               <u>Attachments:</u>
               <ion-col size="7" class="paddzero text-left">

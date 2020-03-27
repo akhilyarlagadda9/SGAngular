@@ -36,13 +36,13 @@ export class DiscountComponent implements OnInit {
     this.Version = JSON.parse(this.Version);
     this.VersionId = this.Version.ID;
     this.ActionChangeDiscountList();
-    if(this.SummaryTypeID == 2){
+    if(this.SummaryTypeID == 1){ // discount
       this.GetQuoteDiscoutList();
     }
-    if(this.SummaryTypeID == 2){
+    if(this.SummaryTypeID == 2){ // for tax
       this.ActionTaxPopup();
     }
-    if(this.SummaryTypeID == 3){
+    if(this.SummaryTypeID == 3){ // for fees and charges
      this.ActionFeePopup();
   }
   this.authService.GetStoredLoginUser().then((data) =>{
@@ -80,7 +80,14 @@ export class DiscountComponent implements OnInit {
     let result = this.getservice.getdiscountlist(this.VersionId).subscribe(
       data => {this.DiscountList = data; });
   }
-
+  ActionGetTax(id,typeId) {
+    let info = this.TaxTypeList.find(s => s.ID == id);
+    if (info != null) {
+      this.Version.TaxName = info.Name;
+      if(typeId == 1){this.Version.Tax = info.Tax;}
+    }
+  }
+  
   //#endregion
 //#region Fees and Charges
 ActionFeePopup() {
@@ -153,6 +160,7 @@ ActionSaveReferralFee = function () {
       data => { this.TaxTypeList = data;
         if(this.TaxTypeList.length > 0){
           this.Version.TaxID= this.Version.TaxID == 0 ? this.TaxTypeList[0].ID : this.Version.TaxID;
+          this.ActionGetTax(this.Version.TaxID,0);
         }
         });
     console.log(this.TaxTypeList)

@@ -90,5 +90,4 @@ export class QuotepostService {
     return this.http.post<any>(this.url + 'api/QSave/ActionSaveCustResponse', model, { headers: { 'Content-Type': 'application/json' } })
   }
 
-
 }

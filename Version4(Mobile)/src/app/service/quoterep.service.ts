@@ -16,9 +16,10 @@ export class QuoterepService {
   // }
   //#region Quote Header
   setHeader(info) { 
+    console.log(info);
     this.header = {ID:info.ID,QuoteNo:info.QuoteNo,QuoteName:info.QuoteName,
       VersionID:info.Version.ID,CustomerID:info.Version.CustomerID,LocID:info.LocID,
-      Version:{SrNo:info.Version.SrNo,JobStatusID:info.Version.JobStatusID}
+      Version:{SrNo:info.Version.SrNo,JobStatusID:info.Version.JobStatusID,TypeID:info.Version.TypeID}
     } 
   }  
   getHeader() {  
@@ -136,6 +137,7 @@ export class QuoterepService {
     header.FullAddress = this.GetQuoteAddress(newheader);
     return header;
   } 
+  
   //#endregion
   //#region  Add Items
   AddPartMatItem(partId: number, areaId: number, verId: number, coId: number, coSrno: string, matcent: number) {
@@ -254,6 +256,7 @@ export class QuoterepService {
       ProjectID: 0, CoID: 0, CoSrNo: 0, SlabNo: '', ProjectName: '', ProjectNO: '', NoOfSlabs: 1, UnitCost: 0, Margin: 0, UnitPrice: 0, PriceBy: 0, Color: '', StockNo: '', BlockNo: ''
     }; return slab;
   }
+
   //#endregion
   //#region   Set Items
   SetPartMaterial(partmat, material) {

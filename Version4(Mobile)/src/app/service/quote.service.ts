@@ -252,6 +252,9 @@ SaveQuoteNote(model): Observable<any> {
   var parameter = JSON.stringify(model);
   return this.http.post<any>(this.url + 'api/Quote/SaveQuoteNote', parameter,{ headers: { 'Content-Type': "application/json" } })
 }
+ActionDeleteImage(id):Observable<any>{
+  return this.http.post<any>(this.url + 'api/Quote/RemovePic?Id=' + id,{})
+}
 qsendEmail(model): Observable<any> {
   var parameter = JSON.stringify(model);
   console.log(parameter);

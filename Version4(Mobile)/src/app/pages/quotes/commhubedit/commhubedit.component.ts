@@ -204,9 +204,6 @@ export class CommhubeditComponent implements OnInit {
   async hideLoader() {
     this.loadingController.dismiss();
   }
-
-
-
   ActionChangeTempl(event,typeId){
     let docInfo = this.docFormList.find(s => s.ID == event);
     if (docInfo != null) {

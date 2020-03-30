@@ -47,6 +47,10 @@ export class QuoteService {
   POImageDelete(id:number):Observable<any> {
     return this.http.get<any>(this.url +  'api/Quote/POImageDelete?id=' + id)
     }
+
+    POItemDelete(id:number):Observable<any> {
+      return this.http.post<any>(this.url +  'api/QSave/ActionRemovePOItems?Id=' + id,{})
+   }
 //#region JobView
 ActionGetPhaseList(versionId: number): Observable<any> {
   return this.http.get<any>(this.url + 'api/Project3/ActionGetPhaseList?versionId=' + versionId)

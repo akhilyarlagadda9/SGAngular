@@ -110,6 +110,18 @@ export class HeadereditComponent implements OnInit {
     //   this.headerinfo.JobType = TypeName;
     // }
   }
+
+  ActionDeleteItem(id){
+    console.log(id);
+    this.service.POItemDelete(id).subscribe(data=>{
+      console.log(data);
+      for(var i=0;i<this.headerinfo.PoItemList.length;i++){
+        if(this.headerinfo.PoItemList[i].ID==data){
+          this.headerinfo.PoItemList.splice(i,1);
+        }
+      }
+    });
+  }
  
  //PO items Edit Function
  async ActionEditPOItem(info: any, indx: any) {

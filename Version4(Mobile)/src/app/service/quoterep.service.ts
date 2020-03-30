@@ -108,12 +108,12 @@ export class QuoterepService {
   }
   GetQuoteAddress(header) {
     let address = "";
-    header.Address1 = header.Address1 == null || header.Address1 == "" ? "" : header.Address1 + ",";
-    header.City = header.City == null || header.City == "" ? "" : header.City + ",";
-    header.State = header.State == null || header.State == "" ? "" : header.State;
+    let address1 = header.Address1 == null || header.Address1 == "" ? "" : header.Address1 + ",";
+    let city = header.City == null || header.City == "" ? "" : header.City + ",";
+    let state = header.State == null || header.State == "" ? "" : header.State;
     header.Zipcode = header.Zipcode == null ? "" : header.Zipcode;
     var zipcodeComma = header.Zipcode != "" && (header.State != "" || header.City != "") ? " - " : "";
-    address = header.Address1 + header.City + header.State + zipcodeComma + header.Zipcode;
+    address = address1 + city + state + zipcodeComma + state;
     return address;
   }
   ResetQuote(header, newheader) {
@@ -137,7 +137,7 @@ export class QuoterepService {
     header.Version.PriceListID = newheader.Version.PriceListID;
     header.Version.Financed = newheader.Version.Financed;
     header.PoItemList = newheader.PoItemList
-    header.FullAddress = this.GetQuoteAddress(newheader);
+    header.FullAddres = this.GetQuoteAddress(newheader);
     return header;
   }
 

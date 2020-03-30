@@ -336,7 +336,7 @@ ChangedViewEvents() {
           objAlrtShow = {
             Header: "Are you sure you want to delete activity?",
             SubAlert: "Do you want to continue?",
-            ActivityId: detail.data.componentProps.ResourceList[0].ActivityID
+            ActivityId: detail.data.componentProps.ID
           }
           this.confirmDeleteAct(objAlrtShow);
         }
@@ -344,10 +344,10 @@ ChangedViewEvents() {
     });
     return await modal.present();
   }
-  async confirmDeleteAct(event) {
+  async confirmDeleteAct(obj) {
     const alert = await this.alertCtrl.create({
-      header: event.Header,
-      message: event.SubAlert,
+      header: obj.Header,
+      message: obj.SubAlert,
       buttons: [{
         text: 'Cancel',
         role: 'cancel',
@@ -358,9 +358,16 @@ ChangedViewEvents() {
       }, {
         text: 'Allow',
         handler: () => {
-          this.schService.ActionDeleteActivity(event.ActivityId).subscribe(data=>{
-            this.ActionRefreshCalendar();//need to refresh
-          })
+          debugger;
+          this.schService.ActionDeleteActivity(obj.ActivityId).subscribe(data=>{
+            if(this.calObj.CalendarView == "resourceTimeline"){
+              this.ActionLoadEvents();
+            }else{
+              let calendarApi = this.fullcalendar.getApi();
+              var event = calendarApi.getEventById(obj.ActivityId)
+              event.remove();
+            }
+          });
           this.ConfirmSuccess();
         }
       }]

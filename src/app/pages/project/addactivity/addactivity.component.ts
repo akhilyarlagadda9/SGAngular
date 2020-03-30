@@ -200,6 +200,7 @@ ActionChangeDuration(value,typeId){
   this.GetDuration(0);
 }
 ActionSaveActivity(form: NgForm) {
+  debugger;
   if (form.valid) {
     this.actinfo.SchStartTime = new Date(this.actinfo.SchStartTime).toDateString() + " " + this.actinfo.STime;
     this.actinfo.SchEndTime= new Date(this.actinfo.SchEndTime).toDateString() + " " + this.actinfo.ETime;

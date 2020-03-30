@@ -129,9 +129,16 @@
   <!-- <ckeditor tagName="textarea" [(ngModel)]="mailDetails.mailBody" name="mailBody" [editor]="Editor" ></ckeditor> -->
   <!-- <angular-editor [(ngModel)]="mailDetails.mailBody" name="mailBody" [config]="config"></angular-editor> -->
   &nbsp;
-  <div class="col-xs-6 col-sm-3" class="wideInput" id="mail_body" contenteditable="true" data-text="Enter text here" [innerHTML]="mailDetails.mailBody" (blur)="onBlurMethod()">
-  <!-- <textarea class="wideInput" placeholder="Enter mail Body" [innerHTML]="mailDetails.mailBody"></textarea> -->
-  </div>
+  <!-- <div class="col-xs-6 col-sm-3" class="wideInput" id="mail_body" contenteditable="true" data-text="Enter text here" [innerHTML]="mailDetails.mailBody" (blur)="onBlurMethod()">
+  
+  </div> -->
+  <ion-textarea class="wideInput" placeholder="Enter mail Body" [innerHTML]="mailDetails.mailBody"></ion-textarea>
+  <!-- <ion-item>
+    <ion-label floating><u>Note:</u></ion-label>
+  </ion-item> -->
+  <!-- <ion-row class="padding5">
+    <ion-textarea rows="4" cols="10" name="Body" class="borderall" placeholder="Enter mail Body" [innerHTML]="mailDetails.mailBody"></ion-textarea>
+  </ion-row> -->
 </ion-content>
 </form>
 

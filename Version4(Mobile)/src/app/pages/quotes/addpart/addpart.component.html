@@ -87,7 +87,7 @@
         <span *ngIf="isGroupShown(1)">
           <ion-row>
             <ion-col class="lablewid" size="1" class="color-primary martop10"><b>M:</b></ion-col>
-            <ion-col size="7" class="labelfont">
+            <ion-col size="6" class="labelfont">
               <ion-select [(ngModel)]="mat.MaterialID" name="MaterialID"
                 (ngModelChange)="ActionPopulateMaterial($event,i)"
                 class="border-btm labelfont2 color-blue">
@@ -95,8 +95,9 @@
                   {{material.Color}} - {{material.Depth}} - {{material.Finish}}</ion-select-option>
               </ion-select>
             </ion-col>
-            <ion-col size="1" class="paddzero mar-top5 color-primary">
-              <ion-icon name="add-circle" class="fontmedium" (click)="ActionAddMaterial(mat.MaterialID, 'QuotePart')"></ion-icon>
+            <ion-col size="2" class="paddzero mar-top5 color-primary">
+              <ion-icon name="add-circle" class="fontmedium" (click)="ActionAddMaterial(0, 'QuotePart')"></ion-icon>
+              <ion-icon name="create" class="fontmedium" (click)="ActionAddMaterial(mat.MaterialID, 'QuotePart')"></ion-icon>
             </ion-col>
             <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
               <ion-input type="text" [(ngModel)]="mat.Sqft" readonly="readonly"

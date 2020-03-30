@@ -150,7 +150,7 @@
             <ion-col>
                 <ion-row>
                     <ion-col size="9" class="paddzero">
-                        <span>
+                        <span (click)="ActionDeleteItem(info.ID)">
                             <ion-icon name="trash" class="delsty"></ion-icon>
                         </span>
                         <span>&nbsp;&nbsp;<u (click)="ActionEditPOItem(info, i)"><b>PO#</b></u>:</span>

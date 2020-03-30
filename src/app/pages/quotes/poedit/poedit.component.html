@@ -50,7 +50,7 @@
       </ion-row>
       <ion-row *ngFor="let attah of poitem.AttachmentList">
         <ion-col class="paddleft5">
-          <span><ion-icon name="trash" class="delsty"></ion-icon></span>&nbsp;
+          <span (click)="ActionDeleteImage(attah.ID)"><ion-icon name="trash" class="delsty"></ion-icon></span>&nbsp;
           <span>{{attah.Path}}</span>
         </ion-col>
     </ion-row>

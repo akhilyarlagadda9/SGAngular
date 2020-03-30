@@ -4,6 +4,7 @@ import { QuotepostService } from 'src/app/service/quotepost.service';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { QuoterepService } from 'src/app/service/quoterep.service';
+import { QuoteService } from 'src/app/service/quote.service';
 declare const appUrl: any;
 @Component({
   selector: 'app-poedit',
@@ -18,7 +19,7 @@ export class PoeditComponent implements OnInit {
   ParentID: number;fileData: File = null; url = appUrl;
 
   constructor(public Modalcntrl: ModalController, private postservice: QuotepostService, 
-    private getservice: QuotegetService,private http: HttpClient,private qRepService:QuoterepService) { }
+    private getservice: QuotegetService,private http: HttpClient,private qRepService:QuoterepService,private qservice:QuoteService) { }
   ngOnInit() {
     this.GetSalesPersonList();
     this.header = this.qRepService.getHeader();
@@ -117,5 +118,15 @@ export class PoeditComponent implements OnInit {
     };
     this.poitem.AttachmentList.push(model);
     //document.getElementById("progress").style.visibility = "hidden";
+  }
+
+  ActionDeleteImage(id){
+    this.qservice.POImageDelete(id).subscribe(data=>{
+       for(var i=0;i<this.poitem.AttachmentList.length;i++){
+         if(this.poitem.AttachmentList[i].ID==data){
+          this.poitem.AttachmentList.splice(i,1);
+         }
+       }
+    });
   }
 }

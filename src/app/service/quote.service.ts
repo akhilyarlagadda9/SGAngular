@@ -44,6 +44,9 @@ export class QuoteService {
   GetCustomerContacts(custId:number):Observable<any> {
     return this.http.get<any>(this.url +  'api/QuoteRep3/GetCustomerContacts?custId=' + custId)
   }
+  POImageDelete(id:number):Observable<any> {
+    return this.http.get<any>(this.url +  'api/Quote/POImageDelete?id=' + id)
+    }
 //#region JobView
 ActionGetPhaseList(versionId: number): Observable<any> {
   return this.http.get<any>(this.url + 'api/Project3/ActionGetPhaseList?versionId=' + versionId)
@@ -260,7 +263,7 @@ qsendEmail(model): Observable<any> {
   console.log(parameter);
   return this.http.post<any>(this.url + 'api/Quote/ActionSendMail', parameter,{ headers: { 'Content-Type': "application/json" } })
 }
-
+//#endregion
 
 //#endregion
 //#region Save methods Quote Actions and Summary

@@ -26,15 +26,18 @@
           </ion-label>
         </ion-item>
         <ion-item *ngIf="actinfo.ID == 0">
-          <ion-input type="text" placeholder="JobNo and Name"  name="actinfo.JobName" [(ngModel)]="actinfo.JobName" ></ion-input>
+          <ion-input type="text" placeholder="JobNo and Name"  [(ngModel)]="actinfo.JobName" name="JobName"  #JobName="ngModel" required></ion-input>
           <ion-icon slot="end"  name="arrow-dropdown"
           (click)="ActionApprovedJobList('',2)"></ion-icon>
         <ion-icon slot="end" name="search"
           (click)="ActionApprovedJobList(actinfo.JobName,1)"></ion-icon>
-          <div [hidden]="!form.submitted || JobName.valid" class="invalid-feedback padd-Left">
-            <div class="error">Select Job</div>
-          </div>
+          <div *ngIf="form.submitted && JobName.invalid" class="invalid-feedback">
+            <div *ngIf="JobName.errors.required" class="color-red">Select Job</div>
+        </div>
         </ion-item>
+        <div *ngIf="form.submitted && JobName.invalid" class="invalid-feedback padd-Left">
+          <div *ngIf="JobName.errors.required" class="color-red">Select Job</div>
+      </div>
         <ion-item *ngIf="actinfo.ID == 0 && actinfo.JobName != '' && actinfo.JobName != null">
           <ion-label>
             <p>
@@ -51,9 +54,9 @@
     <ion-select (ngModelChange)="ActionChangePhase($event)" [(ngModel)]="actinfo.PhaseID" name="PhaseID" #PhaseID="ngModel" required [selectedText]="actinfo.PhaseName">
       <ion-select-option *ngFor="let c of phaseList" [value]="c.ID">{{c.Name}}</ion-select-option>
     </ion-select>
-    <div [hidden]="!form.submitted  || PhaseID.valid" class="invalid-feedback padd-Left">
-      <div class="error">Activity Phase is required</div>
-    </div>
+    <div *ngIf="form.submitted && PhaseID.invalid" class="invalid-feedback">
+      <div *ngIf="PhaseID.errors.required" class="color-red">Activity Phase is required</div>
+  </div>
   </ion-item>
   <ion-item>
     <ion-label floating>Act Type<span class="requiredField">*:</span></ion-label>

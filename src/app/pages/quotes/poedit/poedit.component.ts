@@ -2,29 +2,33 @@ import { Component, OnInit, Version } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { QuotepostService } from 'src/app/service/quotepost.service';
 import { QuotegetService } from 'src/app/service/quoteget.service';
-
+import { HttpClient, HttpEventType } from '@angular/common/http';
+import { QuoterepService } from 'src/app/service/quoterep.service';
+declare const appUrl: any;
 @Component({
   selector: 'app-poedit',
   templateUrl: './poedit.component.html',
   styleUrls: ['./poedit.component.scss'],
 })
 export class PoeditComponent implements OnInit {
-  poitem: any;
-  index: any;
+  poitem: any;header:any;
+  index: any;isSave:boolean = false;
   ID: any;
   salespersons: any;
-  ParentID: number;
+  ParentID: number;fileData: File = null; url = appUrl;
 
-  constructor(public Modalcntrl: ModalController, private postservice: QuotepostService, private getservice: QuotegetService) { }
+  constructor(public Modalcntrl: ModalController, private postservice: QuotepostService, 
+    private getservice: QuotegetService,private http: HttpClient,private qRepService:QuoterepService) { }
   ngOnInit() {
     this.GetSalesPersonList();
+    this.header = this.qRepService.getHeader();
     this.poitem.AttachmentList = this.poitem.AttachmentList == null || this.poitem.AttachmentList == undefined ? [] : this.poitem.AttachmentList;
   }
   GetSalesPersonList() {
     this.getservice.getsalespersons(this.ParentID, 3).subscribe(
       data => { 
         this.salespersons = data;
-        this.GetSelectedSalespersonName();
+      //  this.GetSelectedSalespersonName();
        }
     );
   }
@@ -35,13 +39,19 @@ export class PoeditComponent implements OnInit {
     }
   }
 
-  ActionSavePOItem() {
+  ActionSavePOItem(type) {
     this.postservice.ActionSavePoItem(this.poitem).subscribe(data => {
       this.ID = data;this.poitem.ID = data;
-      this.ActionClosePOItem(true);
+      if(type == 1){ //  save from Image upload
+        this.UploadImage(event);
+      }
+      else{
+        this.ActionClosePOItem(true);
+      }
     })
   }
   ActionClosePOItem(issave) {
+    let save = this.isSave == true ? this.isSave: issave;
    // let item = { poitem: this.poitem, index: this.index, ID: this.ID }
     this.Modalcntrl.dismiss({
       'dismissed': true,
@@ -49,15 +59,63 @@ export class PoeditComponent implements OnInit {
       issave: issave
     });
   }
+  // ActionUploadPoAttach(event: any) {
+  //   if (event.target.files && event.target.files[0]) {
+  //     let file = event.target.files[0];
+  //     var reader = new FileReader();
+  //     reader.onload = (event: any) => {
+  //       let model = { ID: 0, Path: file.name }
+  //       this.poitem.AttachmentList.push(model);
+  //     }
+  //     reader.readAsDataURL(event.target.files[0]);
+  //   }
+  // }
+
+
+
   ActionUploadPoAttach(event: any) {
-    if (event.target.files && event.target.files[0]) {
-      let file = event.target.files[0];
-      var reader = new FileReader();
-      reader.onload = (event: any) => {
-        let model = { ID: 0, Path: file.name }
-        this.poitem.AttachmentList.push(model);
+    if (this.poitem.ID == 0) {
+     this.isSave = true;
+      if (this.poitem.POByID != 0 && this.poitem.PONumber != undefined) {
+        this.ActionSavePOItem(1);
       }
-      reader.readAsDataURL(event.target.files[0]);
+    } else {
+      this.UploadImage(event);
     }
+
+  }
+  UploadImage(event) {  
+    if (event.target.files && event.target.files[0]) {
+      let info = this.poitem;
+      this.fileData = <File>event.target.files[0];
+      const formData = new FormData();
+      formData.append('files', this.fileData);
+      this.http.post(this.url + 'api/fileUpload/POAttachmentUpload?Id=' + info.ID + "&versionId=" + info.VersionID + "&quoteNo=" + this.header.QuoteNo + "&jobstatusId=0", formData, {
+        reportProgress: true,
+        observe: 'events'
+      })
+        .subscribe(events => {
+          if (events.type === HttpEventType.UploadProgress) {
+            
+          } else if (events.type === HttpEventType.Response) {
+            if (events.body != null) {
+              this.PushImage(events.body);
+            }
+          }
+        });
+    }
+    
+  }
+
+  PushImage(result) {
+    var result = result.toString().replace('[', "").replace(']', "");
+    let array = result.split(',');
+    let name = array[0].replace(/"/g, '');
+    var model = {
+      ID: Number(array[1].replace(/"/g, '')), Path: name,
+      Check: 1,
+    };
+    this.poitem.AttachmentList.push(model);
+    //document.getElementById("progress").style.visibility = "hidden";
   }
 }

@@ -4,7 +4,7 @@ import { SchedulingService } from 'src/app/service/scheduling.service';
 import { DatePipe } from '@angular/common';
 import { AddactivityComponent } from '../addactivity/addactivity.component';
 import { OverlayEventDetail } from '@ionic/core';
-
+declare const imgUrl: any;
 @Component({
   selector: 'app-actinfo',
   templateUrl: './actinfo.component.html',
@@ -28,6 +28,8 @@ export class ActinfoComponent implements OnInit {
     let result = this.schService.ActivityInfo(this.obj.actId, this.obj.actTypeID, start, end).subscribe(
       data => {
         this.actInfo = data;
+        this.actInfo.Imageurl = imgUrl + 'Status/' + this.actInfo.IconPath;
+        this.actInfo.StatusIcon
         this.GetJobAddress(data.Version.Header);
        // this.actheader = data.Version.Header;
         console.log(data);

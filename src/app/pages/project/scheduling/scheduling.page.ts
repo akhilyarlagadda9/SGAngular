@@ -15,7 +15,7 @@ import { CalendarsettingComponent } from '../calendarsetting/calendarsetting.com
 import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
 import { QuoteeditComponent } from '../../quotes/quoteedit/quoteedit.component';
-declare var platform: string;
+declare var platform: string;declare const imgUrl: any;
 @Component({
   selector: 'app-scheduling',
   // template: `<div id="calendar"></div>`,
@@ -181,13 +181,13 @@ export class SchedulingPage implements OnInit {
           }
           for (let j in data) {
             let item = data[j];
-            item.Imageurl = '/StoneApp.App/DigitalContent/Status/' + item.StatusIcon;
+            item.Imageurl = imgUrl + 'Status/' + item.StatusIcon;
             this.SetResouceEvents(item, filterIds);
           }
         } else {
           for (let j in data) {
             let item = data[j];
-            item.Imageurl = '/StoneApp.App/DigitalContent/Status/' + item.StatusIcon;
+            item.Imageurl = imgUrl + 'Status/' + item.StatusIcon;
             this.SetActTypeEvents(item);
           }
         }
@@ -438,8 +438,8 @@ ChangedViewEvents() {
     let event = evnt.event.extendedProps;
     var htmlstring = '';
     htmlstring = "<div style='font-size: 13px;white-space: normal' >";
-    htmlstring += "<div>" + event.ActivityType + "</div>";
-    // "<img class='ico' src='" + event.Imageurl + "' width='20' height='20'>" + "</div>";
+    //htmlstring += "<div>" + event.ActivityType;
+    htmlstring += "<div><img class='ico' src='" + event.Imageurl + "' width='15' height='15'>" + event.ActivityType + "</div>";
     htmlstring += "<div style='font-size: 10px;'>" + event.StartTime + " - " + event.EndTime + "</div>";
     htmlstring += "<div><b>" + event.QuoteNo + "- P" + event.PhaseSrNo + "</b></div>";
     htmlstring += "<div>" + event.QuoteName + "</div></div>"

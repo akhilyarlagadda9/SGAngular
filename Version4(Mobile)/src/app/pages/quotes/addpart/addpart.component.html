@@ -97,7 +97,7 @@
             </ion-col>
             <ion-col size="2" class="paddzero mar-top5 color-primary">
               <ion-icon name="add-circle" class="fontmedium" (click)="ActionAddMaterial(0, 'QuotePart')"></ion-icon>
-              <ion-icon name="create" class="fontmedium" (click)="ActionAddMaterial(mat.MaterialID, 'QuotePart')"></ion-icon>
+              <ion-icon name="create" *ngIf="mat.MaterialID > 0" class="fontmedium" (click)="ActionAddMaterial(mat.MaterialID, 'QuotePart')"></ion-icon>
             </ion-col>
             <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
               <ion-input type="text" [(ngModel)]="mat.Sqft" readonly="readonly"

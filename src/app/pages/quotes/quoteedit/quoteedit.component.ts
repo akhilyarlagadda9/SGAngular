@@ -207,36 +207,38 @@ async ActionNewAction() {
   let cancelFlg = (version.StatusID != 4 || version.StatusID == 6) && version.IsLock == 0 ? "Cancel Quote" : "";
   let bidFlg = (version.StatusID == 2 || version.StatusID == 4) && version.IsLock == 0 ? "Bidding Quote" : "";
   let appFlag = version.StatusID != 6 && this.headerInfo.IsApproved == false && version.IsLock == 0 ? "Approve Quote" : "";
+let appButtons = [
+  {
+    text: bidFlg,
+    cssClass: 'color-green',
+    handler: () => { this.ActionQuoteStatuses(1, 'Bidding'); }
+  },
+  {
+    text: appFlag,
+    cssClass: 'color-green',
+    handler: () => { this.ActionQuoteStatuses(6, 'Approved'); }
+  },
+  {
+    text: cancelFlg,
+    role: 'destructive',
+    handler: () => { this.ActionQuoteStatuses(4, 'Cancelled'); }
+  },
+  {
+    text: delFlag,
+    cssClass: 'color-orange',
+    handler: () => { this.ActionQuoteStatuses(2, 'Declined'); }
+  },
+  {
+    text: 'Cancel',
+    role: 'cancel', // will always sort to be on the bottom
+    handler: () => { }
+  }
+]
+appButtons = appButtons.filter(x => x.text != "");
   let actionSheet = this.actionSheetCtrl.create({
     //title: 'Actions',
     cssClass: 'action-sheets-basic-page',
-    buttons: [
-      {
-        text: bidFlg,
-        cssClass: 'color-green',
-        handler: () => { this.ActionQuoteStatuses(1, 'Bidding'); }
-      },
-      {
-        text: appFlag,
-        cssClass: 'color-green',
-        handler: () => { this.ActionQuoteStatuses(6, 'Approved'); }
-      },
-      {
-        text: cancelFlg,
-        role: 'destructive',
-        handler: () => { this.ActionQuoteStatuses(4, 'Cancelled'); }
-      },
-      {
-        text: delFlag,
-        cssClass: 'color-orange',
-        handler: () => { this.ActionQuoteStatuses(2, 'Declined'); }
-      },
-      {
-        text: 'Cancel',
-        role: 'cancel', // will always sort to be on the bottom
-        handler: () => { }
-      }
-    ]
+    buttons: appButtons,
   });
   (await actionSheet).present();
 }
@@ -251,8 +253,15 @@ async ActionNewAction() {
     if (this.navParams.data.layoutId == 2 || typeId == 1) {
       this.ActionAreaList(typeId);
     }
+    this.UpdateColor();
     this.repService.setHeader(this.headerInfo);
     this.headerInfo.Version = this.repService.PaymentScheduleInfo(this.headerInfo.Version);
+  }
+  UpdateColor(){
+    let statusId = this.headerInfo.Version.StatusID;
+    this.headerInfo.StatusColor = statusId == 6 ? "success" : (statusId == 4 ? "danger" : (statusId == 2 ? "warning" : "primary"));
+    let color = statusId == 6 ? "#10dc60" : (statusId == 4 ? "#f04141" : (statusId == 2 ? "#ffce00" : "#3880ff"));
+    document.documentElement.style.setProperty("--statuscolor", color);
   }
 //#endregion
 //#region Quote Actions
@@ -278,6 +287,7 @@ async ActionNewAction() {
           this.headerInfo.Version.StatusID = this.actionObj.StatusId;
           this.headerInfo.Version.Status = this.actionObj.ActionName;
           this.qprmsobj.statusId = this.actionObj.StatusId;
+          this.UpdateColor();
         }
       }
     });

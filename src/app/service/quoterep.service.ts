@@ -1026,14 +1026,15 @@ export class QuoterepService {
   //#endregion
   //#region  Version Summary
 
-  ResetVersionSummary(version, summary) {
-    debugger;
+  ResetVersionSummary(version, summary,typeId) {
     version.TaxAmt = summary.TaxAmt;
-    version.DiscountAmt = summary.DiscountAmt;
+    if(typeId == 1){
+      version.DiscountAmt = summary.DiscountAmt;
+      version.FinalDiscAmt = summary.FinalDiscAmt;
+    }
     version.TotalAmt = summary.TotalAmt;
     version.FinalRefAmt = summary.FinalRefAmt;
     version.FinalAmt = summary.FinalAmt;
-    version.FinalDiscAmt = summary.FinalDiscAmt;
     version.FinalTaxAmt = summary.FinalTaxAmt;
     version.FinalNetAmt = summary.FinalNetAmt;
     version.RefAmt = summary.RefAmt;

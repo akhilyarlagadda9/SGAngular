@@ -26,7 +26,6 @@ export class AddmatComponent implements OnInit {
   showProductinventory: boolean;
   showProducts: boolean;
   showProductinventory1: boolean;
-  SlabList: any;
   size: any;
   materialId: number;
   stockList: any;
@@ -92,10 +91,10 @@ export class AddmatComponent implements OnInit {
   InitMaterial() {
     this.material.SlabList = [];
     this.material = this.quoterep.SetInitMaterial(this.material.VersionID);
+    this.ActionAddMeas();
   }
-  ActionAddSlab() {
+  ActionAddMeas() {
     this.material.SlabList = this.material.SlabList == null ? [] : this.material.SlabList;
-
     let slab = this.quoterep.SetInitSlabs();
     this.material.SlabList.push(slab);
     
@@ -248,7 +247,7 @@ export class AddmatComponent implements OnInit {
   //  }
 
   /***** STOCKIFO DETAILS *****/
-  async ActionAddMeas() {
+  async ActionAddSlab() {
     let sel = {material: this.material, finishItems: this.finishItems, thicknessItems: this.thicknessItems}
     const modal = await this.Modalcntrl.create({
       component: AddmeasComponent,

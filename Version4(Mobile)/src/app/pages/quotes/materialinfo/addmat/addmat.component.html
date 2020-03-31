@@ -52,22 +52,9 @@
       <ion-col size="1" *ngIf="Progress == 0">
         <ion-fab-button color="light" (click)="changeProgress(1)">2</ion-fab-button>
       </ion-col>
-     <!--  <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 0">
-      <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 0">
-      <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 0">
-        <ion-progress-bar></ion-progress-bar>
-      </ion-col>
-      <ion-col size="3" class="progbar-mat" *ngIf="Progress == 2">
-        <ion-progress-bar value="1"></ion-progress-bar>
-      </ion-col>
-      <ion-col size="1" *ngIf="Progress == 3 || Progress == 2">
-        <ion-fab-button color="primary" (click)="changeProgress(2)">3</ion-fab-button>
-      </ion-col>
-      <ion-col size="1" *ngIf="Progress == 0 || Progress == 1">
-        <ion-fab-button color="light" (click)="changeProgress(2)">3</ion-fab-button>
-      </ion-col> -->
     </ion-row>
-    <div *ngIf="Progress == 0">
+    <ion-row [ngSwitch]="Progress">
+    <ion-col size="12" *ngSwitchCase="0">
       <ion-item>
         <ion-label class="labelfont2" position="floating" color="primary">Material*</ion-label>
         <ion-input type="text" class="labelfont2" [(ngModel)]="material.Description" name="Description" #nameField="ngModel"
@@ -237,55 +224,57 @@
           </ion-item>
         </ion-col>
       </ion-row>
-    </div>
-    <div *ngIf="Progress == 1">
+    </ion-col>
+    <ion-col size="12" *ngSwitchCase="1" >
       <ion-row class="bgcolor-gray">
-        <span class="fontbold text-font mar-top5">Measurements:</span>
-        <ion-icon name="add-circle" (click)="ActionAddSlab()" class="fontmedium"></ion-icon>
-        <ion-icon name="cart" (click)="ActionAddMeas()" class="fontmedium"></ion-icon>
+        <ion-col size="8"><span class="fontbold text-font mar-top5">Measurements:</span></ion-col>
+        <ion-col size="4" class="text-right">
+          <ion-icon name="add-circle" type="button" (click)="ActionAddMeas()" class="fontmedium"></ion-icon>
+        <ion-icon name="cart" type="button" (click)="ActionAddSlab()" class="fontmedium"></ion-icon>
+        </ion-col>
       </ion-row>
-
-      <ion-row class="paddzero" *ngFor="let size of material.SlabList;let i = index">
+      <ion-row class="paddzero" *ngFor="let nonslab of material.SlabList;let i = index">
         <ion-col size="4">
           <ion-item>
             <ion-label floting color="primary">W</ion-label>
-            <ion-input type="text" class="labelfont2" name="size.Width" [(ngModel)]="size.Width"
+            <ion-input type="text" class="labelfont2"  [(ngModel)]="nonslab.Width" name="Width_{{i}}"
               (change)="ActionSetSqft(i,0)"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="4">
           <ion-item>
             <ion-label floting color="primary">H</ion-label>
-            <ion-input type="text" class="labelfont2"  [(ngModel)]="size.Length" name="size.Length"
+            <ion-input type="text" class="labelfont2"  [(ngModel)]="nonslab.Length" name="Length_{{i}}"
               (change)="ActionSetSqft(i,0)"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="4">
           <ion-item>
             <ion-label floting color="primary">Sqft</ion-label>
-            <ion-input type="text" class="labelfont2"  [(ngModel)]="size.Sqft" name="Sqft" ></ion-input>
+            <ion-input type="text" class="labelfont2"  [(ngModel)]="nonslab.Sqft" name="Sqft_{{i}}" ></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="6">
           <ion-item>
             <ion-label floting color="primary">Qty</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="size.NoOfSlabs" name="size.NoOfSlabs"
+            <ion-input type="text" class="labelfont2" [(ngModel)]="nonslab.NoOfSlabs" name="NoOfSlabs_{{i}}"
               (change)="ActionSetAmount()"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="6">
           <ion-item>
             <ion-label floting color="primary">Price/Sqft&nbsp;</ion-label>
-            <ion-input type="text" class="labelfont2" [(ngModel)]="size.Amount" name="size.Amount">
+            <ion-input type="text" class="labelfont2" [(ngModel)]="nonslab.Amount" name="Amount_{{i}}">
               <ion-row class="mar-right3">$</ion-row>
             </ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row *ngFor="let inv of chkdList">
+      <!-- <ion-row *ngFor="let inv of chkdList">
         <ion-checkbox></ion-checkbox>
-      </ion-row>
-    </div>
+      </ion-row> -->
+    </ion-col>
+    </ion-row>
     <!-- <div *ngIf="Progress == 2">
       <ion-row>
         <ion-col size="5">

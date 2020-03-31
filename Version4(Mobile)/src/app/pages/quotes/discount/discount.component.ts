@@ -72,7 +72,7 @@ export class DiscountComponent implements OnInit {
   ActionSaveQuoteDiscount = function () {
     //this.Version.discPopover = false;
     let results = this.service.qpactionsavediscount(this.DiscountList, this.Version.ID, this.Version.AreaID, this.Version.Tax).subscribe(data => {
-      this.Version = this.quoterep.ResetVersionSummary(this.Version, data.VersionSummary);
+      this.Version = this.quoterep.ResetVersionSummary(this.Version, data.VersionSummary,this.SummaryTypeID);
       this.ActionToClosePop(true);
     });
   }
@@ -148,7 +148,7 @@ ActionSaveReferralFee = function () {
   model.FloorFee = version.FloorFee;
   model.ConsumableFee = version.ConsumableFee;
   this.service.qpactionsavereferralfee(model, this.Version.AreaID).subscribe(data => {
-  this.Version = this.quoterep.ResetVersionSummary(this.Version, data.VersionSummary);
+  this.Version = this.quoterep.ResetVersionSummary(this.Version, data.VersionSummary,this.SummaryTypeID);
   this.ActionToClosePop(true);
 });
 }
@@ -189,7 +189,7 @@ ActionSaveReferralFee = function () {
       model.ToolPercent = version.ToolPercent;
       this.service.qpactionsavesalestax(model, this.Version.AreaID).subscribe(results =>{
         if (results != null && results.VersionSummary != undefined) {
-          this.Version = this.quoterep.ResetVersionSummary(this.Version, results.VersionSummary);
+          this.Version = this.quoterep.ResetVersionSummary(this.Version, results.VersionSummary,this.SummaryTypeID);
         } else {
          // this.quoterep.calcversionsummary31(version);
         }

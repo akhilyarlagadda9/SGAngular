@@ -171,6 +171,8 @@ ActionSaveReferralFee = function () {
       let model: any = {}, version = this.Version;
       model.ID = version.ID;
       model.UserID = this.UserId;
+      version.TaxCode = version.TaxCode == true ? 1 : 0;
+      model.TaxCode = version.TaxCode;
       model.Tax = version.Tax;
       model.TaxID = version.TaxID;
       model.MatPercent = version.MatPercent;
@@ -185,12 +187,11 @@ ActionSaveReferralFee = function () {
       model.ConsumablePercent = version.ConsumablePercent;
       model.OtherPercent = version.OtherPercent;
       model.ToolPercent = version.ToolPercent;
-      model.TaxCode = version.TaxCode;
       this.service.qpactionsavesalestax(model, this.Version.AreaID).subscribe(results =>{
         if (results != null && results.VersionSummary != undefined) {
           this.Version = this.quoterep.ResetVersionSummary(this.Version, results.VersionSummary);
         } else {
-          this.quoterep.calcversionsummary31(version);
+         // this.quoterep.calcversionsummary31(version);
         }
         results.Root = 'Tax';
         this.ActionToClosePop(true);
@@ -199,23 +200,7 @@ ActionSaveReferralFee = function () {
     }
   }
   ActionCheckUncheckTaxCode = function (event) {
-    if (event.target.checked == false) {
-      this.Version.Tax = 0;this.Version.TaxCode = 0;
-      this.Version.MatPercent = 0;
-      this.Version.FabPercent = 0;
-      this.Version.GradePercent = 0;
-      this.Version.AddonPercent = 0;
-      this.Version.AppliancePercent = 0;
-      this.Version.OtherPercent = 0;
-      this.Version.LaborPercent = 0;
-      this.Version.TilePercent = 0;
-      this.Version.CabinetPercent = 0;
-      this.Version.CarpetPercent = 0;
-      this.Version.FloorPercent = 0;
-      this.Version.ConsumablePercent = 0;
-    } else {
-      this.Version.TaxCode = 1;
-      //this.quote.header.header.Version.Tax = 0;
+    if (event == true) {
       this.Version.MatPercent = 100;
       this.Version.FabPercent = 100;
       this.Version.GradePercent = 100;
@@ -228,16 +213,25 @@ ActionSaveReferralFee = function () {
       this.Version.CarpetPercent = 100;
       this.Version.FloorPercent = 100;
       this.Version.ConsumablePercent = 100;
+    } else {
+      this.Version.Tax = 0;
+      this.Version.MatPercent = 0;
+      this.Version.FabPercent = 0;
+      this.Version.GradePercent = 0;
+      this.Version.AddonPercent = 0;
+      this.Version.AppliancePercent = 0;
+      this.Version.OtherPercent = 0;
+      this.Version.LaborPercent = 0;
+      this.Version.TilePercent = 0;
+      this.Version.CabinetPercent = 0;
+      this.Version.CarpetPercent = 0;
+      this.Version.FloorPercent = 0;
+      this.Version.ConsumablePercent = 0;
+      //this.quote.header.header.Version.Tax = 0;
       //this.ActionChangeQuoteTax(this.header.Version);
     }
   }
   //#endregion
-
- 
-
-
-
-
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Alert',
@@ -262,9 +256,6 @@ ActionSaveReferralFee = function () {
   area(area: any, header: any, versummary: any) {
     throw new Error("Method not implemented.");
   }
-
-
-
 ActionSaveSummary(form,typeId) {
     switch (typeId) {
       case 1:this.ActionSaveQuoteDiscount();break;

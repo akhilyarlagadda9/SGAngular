@@ -1,18 +1,18 @@
 <ion-header>
-    <ion-toolbar color="primary">
+    <ion-toolbar color="{{headerInfo.StatusColor}}">
         <ion-buttons slot="start">
             <ion-icon class="fontlarge" (click)="ActionCloseQuoteInfo()" name="arrow-back"></ion-icon>
         </ion-buttons>
         <ion-title>
             <div style="font-size: 22px;" class="text-left">
                {{headerInfo.QuoteNo}} -
-               <select [(ngModel)]="qprmsobj.phaseid" *ngIf="qprmsobj.viewtypeid == 2" (change)="ActionLoadPhase(qprmsobj.phaseid)"
-                style="border: 0px;background: #3880ff;">
+               <select class="statusColor" [(ngModel)]="qprmsobj.phaseid" *ngIf="qprmsobj.viewtypeid == 2" (change)="ActionLoadPhase(qprmsobj.phaseid)"
+                style="border: 0px;">
                <option *ngFor="let phase of phaseList" value="{{phase.ID}}">P{{phase.Code}}
                </option>
            </select>
-           <select [(ngModel)]="qprmsobj.versionid" *ngIf="qprmsobj.viewtypeid == 1" (change)="ActionLoadVersion(qprmsobj.versionid)"
-           style="border: 0px;background: #3880ff;">
+           <select class="statusColor" [(ngModel)]="qprmsobj.versionid" *ngIf="qprmsobj.viewtypeid == 1" (change)="ActionLoadVersion(qprmsobj.versionid)"
+           style="border: 0px;">
            <option *ngFor="let version of versionList" value="{{version.ID}}">V{{version.SrNo}}
            </option>
        </select></div>  

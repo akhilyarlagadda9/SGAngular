@@ -88,7 +88,7 @@
           <ion-row>
             <ion-col class="lablewid" size="1" class="color-primary martop10"><b>M:</b></ion-col>
             <ion-col size="6" class="labelfont">
-              <ion-select [(ngModel)]="mat.MaterialID" name="MaterialID"
+              <ion-select [(ngModel)]="mat.MaterialID" name="MaterialID" #MaterialID="ngModel" required
                 (ngModelChange)="ActionPopulateMaterial($event,i)"
                 class="border-btm labelfont2 color-blue">
                 <ion-select-option *ngFor="let material of MaterialList" [value]="material.ID">{{material.StoneType}} -
@@ -97,7 +97,7 @@
             </ion-col>
             <ion-col size="2" class="paddzero mar-top5 color-primary">
               <ion-icon name="add-circle" class="fontmedium" (click)="ActionAddMaterial(0, 'QuotePart')"></ion-icon>
-              <ion-icon name="create" *ngIf="mat.MaterialID > 0" class="fontmedium" (click)="ActionAddMaterial(mat.MaterialID, 'QuotePart')"></ion-icon>
+              <ion-icon name="create" *ngIf="mat.MaterialID > 0" class="fontmedium2" (click)="ActionAddMaterial(mat.MaterialID, 'QuotePart')"></ion-icon>
             </ion-col>
             <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
               <ion-input type="text" [(ngModel)]="mat.Sqft" readonly="readonly"

@@ -18,6 +18,7 @@ export class AddmatComponent implements OnInit {
   priceListID: number; AreaID: number
   material: any;
   loaderToShow: any;
+  loaderToShow2: Promise<void>;
   
   finishItems: any = []; thicknessItems: any = []; riskLevels: any = []; supplierList: any = []; slabtypes: any = []; subproductgroups: any = [];
   productItems: any = []; pricegroups: any = []; suppliers: any = [];
@@ -95,8 +96,8 @@ export class AddmatComponent implements OnInit {
   }
   ActionAddMeas() {
     this.material.SlabList = this.material.SlabList == null ? [] : this.material.SlabList;
-    let slab = this.quoterep.SetInitSlabs();
-    this.material.SlabList.push(slab);
+    let size = this.quoterep.AddMeasurementItem();
+    this.material.SlabList.push(size);
     
   }
   ActionToClose(issave) {
@@ -109,14 +110,31 @@ export class AddmatComponent implements OnInit {
   }
 
 
-  ActionSaveMaterial(form: any) {
-    if (form.valid && form.touched) {
+  ActionSaveMaterial(form: any) {debugger
+    this.showLoader2()
+    if (form.valid) {
       this.material.UserID = 0;
       if (typeof (this.material.RiskLevels) == 'object') { this.riskLevels = JSON.stringify(this.riskLevels) };
       this.service.ActionSaveMaterial(this.AreaID, this.material).subscribe(data => {
         this.ActionToClose(true);
+        this.hideLoader()
       });
     }
+  }
+
+  showLoader2() {
+    this.loaderToShow2 = this.loadingController.create({
+      message: 'Please wait'
+    }).then((res) => {
+      res.present();
+
+      res.onDidDismiss().then((dis) => {
+        console.log('Loading dismissed!');
+      });
+    });
+  }
+  async hideLoader() {
+    this.loadingController.dismiss();
   }
 
 
@@ -143,8 +161,8 @@ export class AddmatComponent implements OnInit {
     );
   } */
 
-  ActionSetSqft(i, typeid) {
-    this.material.SlabList[i].Sqft = this.quoterep.calcsqft(this.material.SlabList[i].Width, this.material.SlabList[i].Length);
+  ActionSetSqft(size) {debugger;
+    size.Sqft = this.quoterep.calcsqft(size.Width, size.Length);
   }
 
 

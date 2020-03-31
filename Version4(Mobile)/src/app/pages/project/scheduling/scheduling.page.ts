@@ -569,7 +569,7 @@ ChangedViewEvents() {
     } else {
       width = this.resources.length * 100 * Number(this.calObj.CalendarDays) + "px";
     }
-    document.documentElement.style.setProperty("--reswidth", width)
+    document.documentElement.style.setProperty("--reswidth", width);
   }
   SetCalendarOptions(obj) {
     let calendarApi = this.fullcalendar.getApi();

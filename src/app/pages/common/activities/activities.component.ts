@@ -40,7 +40,6 @@ export class ActivitiesComponent implements OnInit {
     return await modal.present();
   } */
 
-
   async addActivities(Id: number) {
     let actinfo = {
       ID: Id, VersionID: this.VersionId, PhaseID: this.PhaseId, ActTypeID: 11, ResourceList: [], SchStartTime: new Date(), SchEndTime: new Date(),
@@ -52,18 +51,11 @@ export class ActivitiesComponent implements OnInit {
       component: AddactivityComponent,
       componentProps: actinfo,
     });
-
     modal.onDidDismiss().then((result: OverlayEventDetail) => {
       if (result.data !== null && result.data != undefined) {
         if (result.data.issave == true) {
-          // this.UpdateActivty(result.data.componentProps);
-          //this.ActionLoadEvents();
+          this.GetActivitiesList();
         }
-        //this.calObj.ActTypeID = result.data.ActTypeId;
-        // this.calObj.ResourceIds = result.data.ResourceIds;
-        // this.calObj.ResourceNames = result.data.ResourceNames;
-        // this.calObj.ActivityType = result.data.ActivityType
-        //this.ActionLoadEvents();
       }
     });
 

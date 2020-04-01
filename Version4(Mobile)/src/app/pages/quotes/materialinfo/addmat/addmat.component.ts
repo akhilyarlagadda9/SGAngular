@@ -110,9 +110,9 @@ export class AddmatComponent implements OnInit {
   }
 
 
-  ActionSaveMaterial(form: any) {debugger
-    this.showLoader2()
+  ActionSaveMaterial(form: any) {
     if (form.valid) {
+      this.showLoader2();
       this.material.UserID = 0;
       if (typeof (this.material.RiskLevels) == 'object') { this.riskLevels = JSON.stringify(this.riskLevels) };
       this.service.ActionSaveMaterial(this.AreaID, this.material).subscribe(data => {
@@ -161,8 +161,8 @@ export class AddmatComponent implements OnInit {
     );
   } */
 
-  ActionSetSqft(index, size) {
-    size.Sqft = this.quoterep.calcsqft(this.material.SlabList[index].Width, this.material.SlabList[index].Length);
+  ActionSetSqft(size) {
+    size.Sqft = this.quoterep.calcsqft(size.Width, size.Length);
   }
 
 

@@ -62,9 +62,10 @@
         <ion-icon slot="end" name="search" class="mar-top20"
           (click)="ActionSearchProductItems(material, 2,material.ProSubGroup,1)" (click)="showLoader(0)"></ion-icon>
       </ion-item>
-      <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
-        <div class="error">Material Name is required</div>
-      </div>
+
+      <div *ngIf="form.submitted && nameField.invalid" class="invalid-feedback padd-Left">
+        <div *ngIf="nameField.errors.required" class="color-red">Select Material</div>
+    </div>
       <div *ngIf="material.showProducts == true" class="popupCls1">
         <ion-row style="width: 100%;">
           <ion-col size="11">
@@ -139,9 +140,9 @@
               <ion-select-option *ngFor="let item of thicknessItems" [value]="item.ID">{{item.Name}}</ion-select-option>
             </ion-select>
           </ion-item>
-          <div [hidden]="!form.submitted  || (DepthID.valid && FinishID.touched)" class="invalid-feedback padd-Left">
-            <div class="error">!Required</div>
-          </div>
+          <div *ngIf="form.submitted && DepthID.invalid" class="invalid-feedback padd-Left">
+            <div *ngIf="DepthID.errors.required" class="color-red">Select Thickness</div>
+        </div>
         </ion-col>
         <ion-col size="6">
           <ion-item>
@@ -151,9 +152,10 @@
               <ion-select-option *ngFor="let item of finishItems" [value]="item.ID">{{item.Name}}</ion-select-option>
             </ion-select>
           </ion-item>
-          <div [hidden]="!form.submitted  || (FinishID.valid && FinishID.touched)" class="invalid-feedback padd-Left">
-            <div class="error">!Required</div>
-          </div>
+          <div *ngIf="form.submitted && FinishID.invalid" class="invalid-feedback padd-Left">
+            <div *ngIf="FinishID.errors.required" class="color-red">Select Finish</div>
+        </div>
+        
         </ion-col>
       </ion-row>
       <ion-row>
@@ -238,14 +240,14 @@
           <ion-item>
             <ion-label floting color="primary">W</ion-label>
             <ion-input type="text" class="labelfont2"  [(ngModel)]="nonslab.Width" name="Width_{{i}}"
-              (change)="ActionSetSqft(i,nonslab)"></ion-input>
+              (change)="ActionSetSqft(nonslab)"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="4">
           <ion-item>
             <ion-label floting color="primary">H</ion-label>
             <ion-input type="text" class="labelfont2"  [(ngModel)]="nonslab.Length" name="Length_{{i}}"
-              (change)="ActionSetSqft(i,nonslab)"></ion-input>
+              (change)="ActionSetSqft(nonslab)"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="4">

@@ -16,7 +16,7 @@ export class PoeditComponent implements OnInit {
   index: any;isSave:boolean = false;
   ID: any;
   salespersons: any;
-  ParentID: number;fileData: File = null; url = appUrl;
+  ParentID: number;fileData: File = null; url = appUrl;imgEvent:any;
 
   constructor(public Modalcntrl: ModalController, private postservice: QuotepostService, 
     private getservice: QuotegetService,private http: HttpClient,private qRepService:QuoterepService,private qservice:QuoteService) { }
@@ -44,7 +44,7 @@ export class PoeditComponent implements OnInit {
     this.postservice.ActionSavePoItem(this.poitem).subscribe(data => {
       this.ID = data;this.poitem.ID = data;
       if(type == 1){ //  save from Image upload
-        this.UploadImage(event);
+        this.UploadImage(this.imgEvent);
       }
       else{
         this.ActionClosePOItem(true);
@@ -76,7 +76,7 @@ export class PoeditComponent implements OnInit {
 
   ActionUploadPoAttach(event: any) {
     if (this.poitem.ID == 0) {
-     this.isSave = true;
+     this.isSave = true;this.imgEvent = event;
       if (this.poitem.POByID != 0 && this.poitem.PONumber != undefined) {
         this.ActionSavePOItem(1);
       }

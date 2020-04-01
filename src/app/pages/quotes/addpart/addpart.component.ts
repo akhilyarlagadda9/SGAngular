@@ -35,7 +35,7 @@ export class AddpartComponent implements OnInit {
 
   ngOnInit() {
     this.GetPriceListItems();
-    this.GetMaterialList();
+    this.GetMaterialList(0);
     this.GetCounterList();
   }
 
@@ -93,9 +93,12 @@ export class AddpartComponent implements OnInit {
     }
   }
 
-  GetMaterialList() {
+  GetMaterialList(materialId) {
     this.service.ActionGetMaterialList(this.partinfo.VersionID).subscribe(data => {
       this.MaterialList = data;
+      if(materialId > 0){
+        this.ActionPopulateMaterial(materialId,0);
+      }
     })
   }
   GetCounterList() {
@@ -408,8 +411,9 @@ export class AddpartComponent implements OnInit {
       componentProps: info
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      debugger;
       if (detail.data.issave == true) {
-        this.GetMaterialList();
+        this.GetMaterialList(materialId);
       }
     });
     return await modal.present();

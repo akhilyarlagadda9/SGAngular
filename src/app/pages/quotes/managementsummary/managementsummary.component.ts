@@ -14,7 +14,7 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
 export class ManagementsummaryComponent implements OnInit {
   Version: any;
   VersionId:any;
-  header: any;
+  header: any;saveflag:boolean = false;
  
 
   constructor(private service: QuoteService, public Modalcntrl: ModalController,
@@ -25,6 +25,7 @@ export class ManagementsummaryComponent implements OnInit {
   ActionCloseSummaryEdit() {
     this.Modalcntrl.dismiss({
       'dismissed': true,
+      issave: this.saveflag,
     });
   }
 
@@ -40,8 +41,8 @@ export class ManagementsummaryComponent implements OnInit {
     popover.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {
         if (detail.data.issave == true) {
-         this.header.Version = this.quoterep.ResetVersionTotals(this.Version,detail.data.componentProps);
-         
+          this.saveflag = true;
+         this.header.Version = this.quoterep.ResetVersionTotals(this.Version,detail.data.componentProps);        
         }
       }
     });

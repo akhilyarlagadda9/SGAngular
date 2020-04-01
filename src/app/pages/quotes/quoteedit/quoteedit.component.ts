@@ -184,7 +184,7 @@ async ActionEditCustomer(typeId: number, info: any, contactList) {
   modal.onDidDismiss().then((detail: OverlayEventDetail) => {
     if (detail !== null) {
       if (detail.data.issave == true) {
-        this.headerInfo =  this.qrepservice.ResetQuoteCutomer(this.headerInfo,detail.data.componentProps)
+        this.headerInfo =  this.qrepservice.ResetQuoteCutomer(this.headerInfo,detail.data.componentProps);
       }
     }
   });
@@ -197,6 +197,13 @@ async ActionSummaryEdit() {
   const modal = await this.Modalcntrl.create({
     component: ManagementsummaryComponent,
     componentProps: copyver
+  });
+  modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+    if (detail !== null) {
+      if (detail.data.issave == true) {
+        this.headerInfo.Version =  detail.data.componentProps;
+      }
+    }
   });
   return await modal.present();
 }

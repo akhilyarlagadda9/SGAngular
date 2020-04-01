@@ -148,6 +148,7 @@ export class HeadereditComponent implements OnInit {
 }
 ActionSaveHeader(form:NgForm){
   if (form.valid) {
+    this.headerinfo.Version.Financed  = this.headerinfo.Version.Financed == true ? 1 :0;
     this.service.ActionSaveQuoteInfo(this.headerinfo).subscribe(data=>{
       this.ActionCloseJobEdit(true);
     })

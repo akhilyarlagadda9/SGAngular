@@ -124,6 +124,7 @@ export class CreatequoteComponent implements OnInit {
     }
     header.ContactInfo = header.ContactInfo == "" ? {} : header.ContactInfo;
   header.Version.IsAccAsCustomer = header.Version.IsAccAsCustomer == true ? 1 :0;
+  header.Version.Financed  = header.Version.Financed == true ? 1 :0;
     this.header = header;
   }
 

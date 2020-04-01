@@ -113,7 +113,7 @@ export class QuoterepService {
     let state = header.State == null || header.State == "" ? "" : header.State;
     header.Zipcode = header.Zipcode == null ? "" : header.Zipcode;
     var zipcodeComma = header.Zipcode != "" && (header.State != "" || header.City != "") ? " - " : "";
-    address = address1 + city + state + zipcodeComma + state;
+    address = address1 + city + state + zipcodeComma + header.Zipcode;
     return address;
   }
   ResetQuote(header, newheader) {

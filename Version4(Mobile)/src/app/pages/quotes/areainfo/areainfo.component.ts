@@ -125,8 +125,9 @@ export class AreainfoComponent implements OnInit {
   }
   /***** Add PART *****/
   async ActionAddPart(Id) {
+    this.partinfo.Shape = this.partinfo.Shape == null ? "": this.partinfo.Shape;
     let copyObj = JSON.parse(JSON.stringify(this.partinfo));
-    let info = {ID:Id, VersionID:this.Version.ID,AreaID:this.AreaID,Name:"", SrNo: Id == 0 ? this.areaInfo.PartList.length + 1 :this.partinfo.SrNo }
+    let info = {ID:Id, VersionID:this.Version.ID,AreaID:this.AreaID,Name:"",Shape:"", SrNo: Id == 0 ? this.areaInfo.PartList.length + 1 :this.partinfo.SrNo }
     let obj = {partinfo: Id == 0 ? info : copyObj, priceListID: Number (this.Version.PriceListID),coId:this.coId, coSrNo:this.coSrNo, matPercent :this.Version.MatPercent, areaInfo : this.areaInfo }
     const modal = await this.Modalcntrl.create({
       component: AddpartComponent,

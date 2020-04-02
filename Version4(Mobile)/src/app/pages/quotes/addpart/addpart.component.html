@@ -88,7 +88,7 @@
           <ion-row>
             <ion-col class="lablewid" size="1" class="color-primary martop10"><b>M:</b></ion-col>
             <ion-col size="6" class="labelfont">
-              <ion-select [(ngModel)]="mat.MaterialID" name="MaterialID"  #MaterialID="ngModel" required
+              <ion-select [(ngModel)]="mat.MaterialID" name="MaterialID"  #MaterialID="ngModel"zz required
                 (ngModelChange)="ActionPopulateMaterial($event,i)"
                 class="border-btm labelfont2 color-blue">
                 <ion-select-option *ngFor="let material of MaterialList" [value]="material.ID">{{material.StoneType}} -

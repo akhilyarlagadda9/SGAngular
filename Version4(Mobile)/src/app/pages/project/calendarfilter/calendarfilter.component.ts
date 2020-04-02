@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
 import { FilterPipe } from 'src/app/FilterPipe';
 import { SchedulingService } from 'src/app/service/scheduling.service';
 
@@ -16,7 +16,7 @@ export class CalendarfilterComponent implements OnInit {
    result:any = this.navParams.data;
    ActTypeList: any;StatusList:any;ResourceList: any;
   constructor(private schService: SchedulingService, private navParams: NavParams,
-    private popoverCntrl: PopoverController, private FilterPipe: FilterPipe) {
+     private FilterPipe: FilterPipe,private modelCntrl:ModalController) {
     this.searchableList = ['Name'];
     this.flagtoCheckResStatus=true;
     if(this.result.FiterTypeID ==1){
@@ -148,7 +148,7 @@ ActionGetResoucreList() {
 
 
   ActionToClosePop(isselect) {
-    this.popoverCntrl.dismiss({
+    this.modelCntrl.dismiss({
       'dismissed': true,
       componentProps: this.result,
       isSelect: isselect

@@ -39,13 +39,13 @@
   <ion-row class="marbot2" *ngIf="(calObj.CalID == 1 && calObj.DisplayDays == 1) || calObj.CalID == 4">
     <ion-col size="4" class="text-left fontbold font-size15">Time Hrs From:</ion-col>
     <ion-col size="3" class="paddlef0">
-      <ion-select class="btninfo" interface="popover" [(ngModel)]="calObj.starttime" name="starttime"  [selectedText]="calObj.starttime">
+      <ion-select class="btninfo"  [(ngModel)]="calObj.starttime" name="starttime"  [selectedText]="calObj.starttime">
         <ion-select-option *ngFor="let time of timings" [value]="time.name">{{time}}</ion-select-option>
       </ion-select>
     </ion-col>
     <ion-col size="1" class="text-right fontbold font-size15" style="padding-right: 0px;">To:</ion-col>
     <ion-col size="3">
-      <ion-select class="btninfo" interface="popover" [(ngModel)]="calObj.endtime" name="endtime" [selectedText]="calObj.endtime">
+      <ion-select class="btninfo"  [(ngModel)]="calObj.endtime" name="endtime" [selectedText]="calObj.endtime">
         <ion-select-option *ngFor="let time of timings" [value]="time.name">{{time}}</ion-select-option>
       </ion-select>
     </ion-col>
@@ -76,7 +76,7 @@
   <ion-row class="marbot2">
     <ion-col size="4" class="text-left fontbold font-size15">Color by Activities:</ion-col>
     <ion-col size="8" class="paddlef0">
-      <ion-select [(ngModel)]="calObj.CalColorID" name="CalColorID" [selectedText]="calObj.ColorType" (ngModelChange)="ActionPopulateColor($event)" class="btninfo" interface="popover">
+      <ion-select [(ngModel)]="calObj.CalColorID" name="CalColorID" [selectedText]="calObj.ColorType" (ngModelChange)="ActionPopulateColor($event)" class="btninfo" >
         <ion-select-option *ngFor="let c of colorByActivities" [value]="c.ID"> {{c.Name}}</ion-select-option>
       </ion-select>
     </ion-col>

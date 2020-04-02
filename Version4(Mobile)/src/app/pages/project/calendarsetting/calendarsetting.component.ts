@@ -17,7 +17,7 @@ export class CalendarsettingComponent implements OnInit {
   calDays = [{Id: 1},{Id: 3},{Id: 5}];
   colorByActivities = [{ ID: 1, Name: 'Activity Type' }, { ID: 2, Name: 'Resource' }];
   // calViews = [{Id: 1,name:'Resource By Day',Type:"resourceTimeline"},{Id: 2,name:'Day By Resource',Type:"resourcegridView"},{Id: 3,name:'Day By Time',Type:"timelineDay"},{Id: 4,name:'Day By Resource By Time',Type:"resourceTimeGrid"},];
-  constructor(public Modalcntrl: ModalController,private schService: SchedulingService, private popoverCntrl: PopoverController) { }
+  constructor(public Modalcntrl: ModalController) { }
 
   ngOnInit() { 
     this.ActionPopulateView(this.calObj.CalID);
@@ -52,12 +52,12 @@ export class CalendarsettingComponent implements OnInit {
       FiterTypeID:filterTypeId,SelIDs:selIds,SelNames:selNames,ActTypeIDs:this.calObj.ActTypeIDs,
       CheckedActTypeList:[]
     };
-    const popover = await this.popoverCntrl.create({
+    const popover = await this.Modalcntrl.create({
       component: CalendarfilterComponent,
-      event: ev,
-      translucent: true,
+      //event: ev,
+      //translucent: true,
       componentProps: obj,
-      cssClass: "popover_class"
+     // cssClass: "popover_class"
     });
     popover.onDidDismiss().then((result: OverlayEventDetail) => {
       if (result !== null) {

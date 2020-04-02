@@ -1055,6 +1055,7 @@ export class QuoterepService {
   ResetVersionTotals(version, newversion) {
     version.TaxID = newversion.TaxID;
     version.TaxCode = newversion.TaxCode;
+    version.Tax = newversion.Tax;
     version.FeeID = newversion.FeeID;
     version.RefFee = newversion.RefFee;
     version.FeeTypeID = newversion.FeeTypeID;

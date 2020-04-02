@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { OverlayEventDetail } from '@ionic/core';
 import { AddmatComponent } from './addmat/addmat.component';
 import { NgForm } from '@angular/forms';
+import { QuoterepService } from 'src/app/service/quoterep.service';
 
 @Component({
   selector: 'app-materialinfo',
@@ -16,7 +18,7 @@ export class MaterialinfoComponent implements OnInit {
   Version:any;
   areaInfo: any;
   priceListID: any;
-  constructor(public Modalcntrl: ModalController) { }
+  constructor(public Modalcntrl: ModalController,private quoterep:QuoterepService) { }
 
   ngOnInit() {
 
@@ -41,6 +43,11 @@ export class MaterialinfoComponent implements OnInit {
     const modal = await this.Modalcntrl.create({
       component: AddmatComponent,
       componentProps: info,
+    });
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail.data.issave == true && detail.data.componentProps.ID > 0) {
+      this.material = this.quoterep.SetPartMaterial(this.material, detail.data.componentProps);
+      }
     });
     return await modal.present();
   }

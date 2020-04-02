@@ -361,7 +361,6 @@ export class AddpartComponent implements OnInit {
     }
   }
   ActionSavePart() {
-    debugger;
     if (this.partinfo.VersionID > 0) {
       this.showLoader();
       this.service.ActionSavePartItems(this.partinfo).subscribe(data => {
@@ -411,7 +410,6 @@ export class AddpartComponent implements OnInit {
       componentProps: info
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-      debugger;
       if (detail.data.issave == true) {
         this.GetMaterialList(materialId);
       }

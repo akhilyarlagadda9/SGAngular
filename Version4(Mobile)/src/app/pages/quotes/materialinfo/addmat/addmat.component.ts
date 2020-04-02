@@ -96,7 +96,7 @@ export class AddmatComponent implements OnInit {
   }
   ActionAddMeas() {
     this.material.SlabList = this.material.SlabList == null ? [] : this.material.SlabList;
-    let size = this.quoterep.AddMeasurementItem();
+    let size = this.quoterep.SetInitSlabs();
     this.material.SlabList.push(size);
     
   }
@@ -105,6 +105,7 @@ export class AddmatComponent implements OnInit {
     // can "dismiss" itself and optionally pass back data
     this.Modalcntrl.dismiss({
       'dismissed': true,
+      componentProps:this.material,
       issave: issave
     });
   }

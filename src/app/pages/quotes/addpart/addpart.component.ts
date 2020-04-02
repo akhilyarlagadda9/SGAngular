@@ -29,21 +29,28 @@ export class AddpartComponent implements OnInit {
   shownGroup4: any = 2;
   material: any;
   loaderToShow: Promise<void>;
-  
+  readonlyFlag:boolean = false;
   constructor(public Modalcntrl: ModalController, public popoverCntrl: PopoverController,public loadingController: LoadingController,
     private service: QuoteService, private getservice: QuotegetService, private quoterep: QuoterepService) { }
 
   ngOnInit() {
+    debugger;
+    this.readonlyFlag = this.partinfo.Shape != "" ? true : false;
     this.GetPriceListItems();
     this.GetMaterialList(0);
     this.GetCounterList();
   }
 
   PreparePart() {
-    this.partinfo.Name = ""; this.partinfo.IsActive = 1; this.partinfo.IsActive = 1;
-    this.partinfo.PartMaterialList = []; this.partinfo.PartFabList = [];
-    this.partinfo.EdgeList = []; this.partinfo.SplashList = []; this.partinfo.CutoutList = [];
-    this.partinfo.LaborList = []; this.partinfo.SinkList = []; this.partinfo.FaucetList = []; this.partinfo.OtherList = [];this.partinfo.ApplianceList = [];
+    this.partinfo = {Name:"",IsActive:1,Shape:"",PartMaterialList:[],PartFabList:[],
+    EdgeList:[],SplashList:[],CutoutList:[],LaborList:[],SinkList:[],FaucetList:[],
+    OtherList:[],ApplianceList:[]
+  }
+    // this.partinfo.Name = ""; this.partinfo.IsActive = 1; this.partinfo.IsActive = 1;
+    // this.partinfo.Shape ="";
+    // this.partinfo.PartMaterialList = []; this.partinfo.PartFabList = [];
+    // this.partinfo.EdgeList = []; this.partinfo.SplashList = []; this.partinfo.CutoutList = [];
+    // this.partinfo.LaborList = []; this.partinfo.SinkList = []; this.partinfo.FaucetList = []; this.partinfo.OtherList = [];this.partinfo.ApplianceList = [];
     // Material
     let partmat = this.quoterep.AddPartMatItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent);
     this.partinfo.PartMaterialList.push(partmat);

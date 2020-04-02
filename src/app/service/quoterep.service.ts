@@ -283,6 +283,8 @@ export class QuoterepService {
     partmat.DiscVal = material.DiscVal;
     partmat.DiscTypeID = material.DiscTypeID;
     partmat.IsDiscTax = material.IsDiscTax;
+    partmat.MaterialName = material.Description + " - "  +  material.Depth + " - " + 
+    material.Finish;
     return partmat;
   }
   SetSizes(size, selectcounter) {

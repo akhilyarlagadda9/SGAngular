@@ -34,7 +34,6 @@ export class AddpartComponent implements OnInit {
     private service: QuoteService, private getservice: QuotegetService, private quoterep: QuoterepService) { }
 
   ngOnInit() {
-    debugger;
     this.readonlyFlag = this.partinfo.Shape != "" ? true : false;
     this.GetPriceListItems();
     this.GetMaterialList(0);

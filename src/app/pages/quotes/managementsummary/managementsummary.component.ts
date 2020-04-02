@@ -25,6 +25,7 @@ export class ManagementsummaryComponent implements OnInit {
   ActionCloseSummaryEdit() {
     this.Modalcntrl.dismiss({
       'dismissed': true,
+      componentProps:this.Version,
       issave: this.saveflag,
     });
   }

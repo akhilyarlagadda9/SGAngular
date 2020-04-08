@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { NgForm } from '@angular/forms';
 declare var timings :any;
 import {AreaPartsComponent} from '../area-parts/area-parts.component';
+import { AuthService } from 'src/app/service/auth.service';
 @Component({
   selector: 'app-addactivity',
   templateUrl: './addactivity.component.html',
@@ -15,16 +16,17 @@ import {AreaPartsComponent} from '../area-parts/area-parts.component';
 export class AddactivityComponent implements OnInit {
   actinfo: any = this.navParams.data; ApproveList: any; serObj: any;
   ActTypeList: any; statusList: any; phaseList: any; ResourceList: any[]; PhasePartList: any; ResourceListWithDates: any[];
-  eventCopy: any;
+  eventCopy: any;calAccess:boolean;
   IsResource: boolean;
   IsSelectedPopulate: number;
   resourceList: any;
   QuotePartList: any;timings:any = timings;
   //arrShowItems:any;
   constructor(public Modalcntrl: ModalController, private schService: SchedulingService,private navParams: NavParams,
-    private datePipe: DatePipe, private alertCtrl: AlertController) { }
+    private datePipe: DatePipe, private alertCtrl: AlertController,private authservise:AuthService) { }
 
   ngOnInit() {
+    this.LoadCalendarAccess();
     if (this.actinfo.ID == 0) {
       this.ActionActivityInfo();
     } else {
@@ -43,6 +45,7 @@ export class AddactivityComponent implements OnInit {
 
     console.log(this.actinfo);
   } 
+
 //#region Actions
 ActionActivityInfo() {
   let start = this.datePipe.transform(this.actinfo.SchStartTime, "MM-dd-yyyy");
@@ -332,6 +335,11 @@ async ActionOpenAreaPart(){
 }
 //#endregion
   //#region activity preparation
+  LoadCalendarAccess(){
+    this.authservise.GetStoredCalAccess().then(result => {
+      let access = result == 2 ? true : false;
+      this.calAccess = access;});
+      }
   PopulateVersionInfo(version: any) {
     this.actinfo.JobName = version.Header.QuoteName;
     this.actinfo.QuoteNo = version.Header.QuoteNo;

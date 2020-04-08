@@ -15,8 +15,14 @@ export class AdditionalitemserachComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.searchobj);
-    this.ActionlistItems();
+    let ids = [5,6,10];
+    let typeid = this.searchobj.producttypeId;
+    if(typeid == 5 || typeid == 6 || typeid == 10 ){
+      this.GetPriceListItems();
+    }else{
+      this.ActionlistItems();
+    }
+    
   }
 
 
@@ -35,18 +41,19 @@ export class AdditionalitemserachComponent implements OnInit {
   ActionSelectItem(Id: any) {
     let info = this.listItems.find(s => s.ID == Id);
     if (info != null && info != undefined) {
-      if (this.searchobj.producttypeId == 8) {
-        this.info = this.quoterep.Setsink(this.info, info);
-      }
-      else if (this.searchobj.producttypeId == 9) {
-        this.info = this.quoterep.SetFaucet(this.info, info);
-      }
-      else if (this.searchobj.producttypeId == 11) {
-        this.info = this.quoterep.SetAddon(this.info, info);
-      }
-      else {
-        this.info = this.quoterep.SetTile(this.info, info);
-      }
+     this.info = info;
+      // if (this.searchobj.producttypeId == 8) {
+      //   this.info = this.quoterep.Setsink(this.info, info);
+      // }
+      // else if (this.searchobj.producttypeId == 9) {
+      //   this.info = this.quoterep.SetFaucet(this.info, info);
+      // }
+      // else if (this.searchobj.producttypeId == 11) {
+      //   this.info = this.quoterep.SetAddon(this.info, info);
+      // }
+      // else {
+      //   this.info = this.quoterep.SetTile(this.info, info);
+      // }
 
       // this.partinfo.CutoutList[index] = this.quoterep.SetCutout(this.partinfo.CutoutList[index], cutout);
     }
@@ -57,7 +64,13 @@ export class AdditionalitemserachComponent implements OnInit {
       this.listItems = data
     });
   }
+  GetPriceListItems() {
+    let typeIdList = []; typeIdList.push(this.searchobj.producttypeId);
+    this.getservice.qsgetpricelistitems(this.searchobj.pricelistId, typeIdList).subscribe(data => {
+      this.listItems = data[0];
+    })
 
+  }
   ActionPopulateParentInfo(item: any) {
     this.info = item;
     this.ActionToClosePop(true);

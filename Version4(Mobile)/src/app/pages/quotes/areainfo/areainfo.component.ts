@@ -19,9 +19,7 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
 import { FabricationComponent } from '../fabrication/fabrication.component';
 import { LaborinfoComponent } from '../laborinfo/laborinfo.component';
 import { AddpartComponent } from '../addpart/addpart.component';
-
 declare var _qscope, QBRinitAreadrawing, QBRinitdrawingareapartshape, QBRinitdrawarea: any;
-
 @Component({
   selector: 'app-areainfo',
   templateUrl: './areainfo.component.html',

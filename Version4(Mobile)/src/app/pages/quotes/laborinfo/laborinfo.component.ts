@@ -30,7 +30,7 @@ export class LaborinfoComponent implements OnInit {
    //Search Function
    async ActionSearchSelect(ev: any, typeid, typeid2) {
     let obj = {
-      pricelistId: this.priceListID, searchTypeId: typeid, producttypeId: typeid2, search: this.labor.Description == undefined ? "" : this.labor.Description, info : this.labor
+      pricelistId: this.priceListID, searchTypeId: typeid, producttypeId: typeid2, search: this.labor.Description == undefined ? "" : this.labor.Description
     }
     const popover = await this.Modalcntrl.create({
       component: AdditionalitemserachComponent,
@@ -42,7 +42,7 @@ export class LaborinfoComponent implements OnInit {
     popover.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {
         if(detail.data.isselect == true){
-          this.labor = this.quoterep.SetAddon(this.labor,detail.data.componentProps);
+          this.labor = this.quoterep.SetLabor(this.labor,detail.data.componentProps);
         }
       }
    });

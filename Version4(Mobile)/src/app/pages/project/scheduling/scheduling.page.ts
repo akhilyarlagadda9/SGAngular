@@ -15,6 +15,7 @@ import { CalendarsettingComponent } from '../calendarsetting/calendarsetting.com
 import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
 import { QuoteeditComponent } from '../../quotes/quoteedit/quoteedit.component';
+import { MapComponent } from '../../map/map.component';
 import { AuthService } from 'src/app/service/auth.service';
 
 
@@ -28,6 +29,7 @@ declare var platform: string;declare const imgUrl: any;
   <ion-toolbar color="primary">
   <ion-icon name="menu" class="fontlarge"  slot="start" (click)="ActionCalendarSetting()"></ion-icon>
   <ion-icon name="refresh" class="fontmedium"  slot="start" (click)="ActionRefreshCalendar()"></ion-icon>
+  <ion-icon ios="ios-locate" class="fontmedium" md="md-locate" (click)="ActionMapView()"></ion-icon>
   <ion-title class="headersty">{{calObj.ActTypes}}</ion-title>
   <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
   </ion-toolbar>
@@ -140,6 +142,17 @@ export class SchedulingPage implements OnInit {
     this.calObj.CalendarView = info.view.type;
     this.ActionEventsByFilterSettings();
     //this.ActionLoadEvents();
+  }
+  //Calling the Map View
+  async ActionMapView(){
+    console.log(this.actlist);
+    let copyobj = JSON.parse(JSON.stringify(this.actlist));
+    let obj = {headerInfo: copyobj,MapCalled:"Scheduling"};
+    const modal = await this.Modalcntrl.create({
+      component: MapComponent,
+      componentProps: obj,
+    });
+    return await modal.present();
   }
   ActionNavigateView(navtype) {
     let calendarApi = this.fullcalendar.getApi();

@@ -9,8 +9,8 @@ import { Storage } from '@ionic/storage';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  loaderToShow: any;CompanyInfo:any={ID:0,Name:""};UserInfo:any = {logInUserID:0,loginUserName:""}
-
+  loaderToShow: any;CompanyInfo:any={ID:0,Name:""};UserInfo:any = {logInUserID:0,loginUserName:""};
+  userAccess:any = {quote:1,calendar:1};
   constructor(private navCtrl:NavController, public loadingController: LoadingController,
     private authservise:AuthService, private storage: Storage) {
    
@@ -34,7 +34,11 @@ this.authservise.GetStoredLoginUser().then(result => {
   this.authservise.GetStoredCompany().then(result => {
     this.CompanyInfo = result;
     });
+    this.authservise.GetStoredUserModuleAccess().then(result => {
+      this.userAccess = result;
+      });
   }
+
   
    /* showLoader() {
     this.loaderToShow = this.loadingController.create({

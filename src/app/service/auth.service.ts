@@ -50,27 +50,29 @@ export class AuthService {
   async GetStoredCompany() {
     const keyVal = await this.storage.get("CompanyInfo");
     return keyVal;
-    // return this.storage.get("CompanyInfo").then((CompanyInfo) => {
-    //   return CompanyInfo;
-    // });
   }
   async GetStoredLoginUser() {
-    
     return await this.storage.get("UserInfo").then(result => {;
     return result;
     });
-    // return this.storage.get("UserInfo").then(result => {
-    //   console.log(result);
-    //   return result;
-    // });;
   }
   async GetStoredLoginUserID() {
     const keyVal = await this.storage.get("loguserId");
     return keyVal;
-    // return this.storage.get("loguserId").then((userid) => {
-    //   return userid;
-    // });
   }
+  async GetStoredUserModuleAccess() {
+    const keyVal = await this.storage.get("userModuleAccess");
+    return keyVal;
+  }
+  async GetStoredQuoteAccess() {
+    const keyVal = await this.storage.get("quoteaccess");
+    return keyVal;
+  }
+  async GetStoredCalAccess() {
+    const keyVal = await this.storage.get("calendaraccess");
+    return keyVal;
+  }
+
   
 }
 

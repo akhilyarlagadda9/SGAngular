@@ -166,7 +166,7 @@ export class QuoterepService {
     let edge: any = {
       PartID: partId, AreaID: areaId, VersionID: verId, CoID: coId, CoSrNo: coSrno, Tax: matcent, ID: 0, IsChgFlag: 1, ParentID: Number,
       SaveFlag: 1, Isactive: 1, IsActive: 1, JobQty: Number, IsOptional: Number,
-      EdgeProfileID: Number, EdgeProfile: Number, Description: 'Finished Edge', DiscAmt: 0, IsPrint: 1, IsChg: 0,
+      EdgeProfileID: Number, EdgeProfile: "", Description: 'Finished Edge', DiscAmt: 0, IsPrint: 1, IsChg: 0,
       Inches: Number, LF: 0, UnitPrice: 0, Margin: 0, UnitCost: 0, Amount: 0, Amt: 0
     }
     return edge;
@@ -270,6 +270,36 @@ export class QuoterepService {
 
   //#endregion
   //#region   Set Items
+  SetQuoteItem(typeid, info, selItem) {
+    switch (typeid) {
+      case 5: // Edge 
+        info = this.SetEdge(info, selItem);
+        break;
+      case 6: // splash
+        info = this.Setsplash(info, selItem);
+        break;
+      case 10: // cutout
+        info = this.SetCutout(info, selItem);
+        break;
+      case 7: //labor
+        info = this.SetLabor(info, selItem);
+        break;
+      case 8: //sink
+        info = this.Setsink(info, selItem);
+        break;
+      case 9: //faucet
+        info = this.SetFaucet(info, selItem);
+        break;
+      case 11: //addon
+        info = this.SetAddon(info, selItem);
+        break;
+      case 12: case 13: case 14: case 16: case 17: case 18: case 26:
+        //12 tile,13 cabinet,14 carpet ,16 woodfloor,17 consumables,26 toop,18 app
+        info = this.SetTile(info, selItem);
+        break;
+    }
+    return info;
+  }
   SetPartMaterial(partmat, material) {
     partmat.MaterialID = material.ID;
     let price = (material.PriceByID == 0 || material.PriceByID == 1) ? material.UnitPrice : material.WagPrice;
@@ -283,8 +313,8 @@ export class QuoterepService {
     partmat.DiscVal = material.DiscVal;
     partmat.DiscTypeID = material.DiscTypeID;
     partmat.IsDiscTax = material.IsDiscTax;
-    partmat.MaterialName = material.Description + " - "  +  material.Depth + " - " + 
-    material.Finish;
+    partmat.MaterialName = material.Description + " - " + material.Depth + " - " +
+      material.Finish;
     return partmat;
   }
   SetSizes(size, selectcounter) {
@@ -358,7 +388,6 @@ export class QuoterepService {
       faucet.Amount = faucet.UnitPrice;
     }
     faucet.ProductItemID = productItem.ProductItemID;
-    faucet.Show = 0;
     return faucet;
   }
   SetAddon(addon, productItem) {
@@ -394,6 +423,24 @@ export class QuoterepService {
     tile.ProductItemID = productItem.ProductItemID;
     tile.Show = 0;
     return tile;
+  }
+  SetLabor(labor,productItem){
+    labor.Description = productItem.Description;
+    labor.ProductDescription = productItem.ProductDescription;
+    labor.JobDes = productItem.Description;
+    labor.Qty = 1;
+    if (labor.ID == 0) {
+        labor.IsPriceChg = labor.Unitprice != productItem.Price ? true : false;
+        labor.UnitCost = productItem.Cost;
+        labor.Margin = productItem.Margin;
+        labor.UnitPrice = productItem.Price;
+        labor.Amount = labor.UnitPrice;
+    }
+    labor.UnitTypeID = productItem.UnitTypeID;
+    labor.ProductItemID = productItem.ProductItemID;
+    if (labor.AreaID > 0 && labor.UnitTypeID == 20) {
+       // setpartlaborqty1(part, labor.AreaID);
+    }
   }
   SetCustItem(custitem, productitem) {
     custitem.Description = productitem.Name; custitem.JobDes = productitem.Name;
@@ -1028,9 +1075,9 @@ export class QuoterepService {
   //#endregion
   //#region  Version Summary
 
-  ResetVersionSummary(version, summary,typeId) {
+  ResetVersionSummary(version, summary, typeId) {
     version.TaxAmt = summary.TaxAmt;
-    if(typeId == 1){
+    if (typeId == 1) {
       version.DiscountAmt = summary.DiscountAmt;
       version.FinalDiscAmt = summary.FinalDiscAmt;
     }

@@ -16,13 +16,13 @@
 
 <ion-content>
   <ion-list>
-      <ion-item >
-          <ion-col (click)="ActionLoadModule('/home/quotelist')">
+      <ion-item *ngIf="userAccess.quote != 0">
+          <ion-col  (click)="ActionLoadModule('/home/quotelist')">
               <h2><img src="assets/img/Quote1.png" alt="img" class="imghw35"> Quoting</h2>
         </ion-col>
       </ion-item>
-      <ion-item >
-        <ion-col (click)="ActionLoadModule('/home/scheduling')">
+      <ion-item *ngIf="userAccess.calendar != 0">
+        <ion-col  (click)="ActionLoadModule('/home/scheduling')">
             <h2><img src="assets/img/calendar-icon.png" alt="img" class="imghw35"> Scheduling</h2></ion-col>
       </ion-item>
       <ion-item >

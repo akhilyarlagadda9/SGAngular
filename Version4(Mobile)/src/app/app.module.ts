@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { QuotePageModule } from './pages/quotes/quote/quote.module';
 import { SchedulingPageModule } from './pages/project/scheduling/scheduling.module';
 //import { AgmCoreModule } from '@agm/core';
-import { GoogleMaps} from '@ionic-native/google-maps/ngx';
+//import { GoogleMaps} from '@ionic-native/google-maps/ngx';
 //import { Storage } from '@ionic/storage';
 declare var urlss;
 //import {Camera} from '@ionic-native/file'
@@ -32,7 +32,7 @@ declare var urlss;
   providers: [
     StatusBar,
     SplashScreen,
-    GoogleMaps,
+    //GoogleMaps,
     { provide: RouteReuseStrategy,useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

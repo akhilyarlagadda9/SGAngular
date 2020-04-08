@@ -16,14 +16,9 @@ export class AddpartComponent implements OnInit {
   partinfo: any; priceListID: any; pricebook: any;
   coId: number; coSrNo: string; matPercent: any;
   MaterialList: any = []; CountertypeList: any = [];
-  SplashList: any = []; EdgeList: any = []; CutoutList: any = [];
-  selectedcomponent: number = 2;
-  sinkfaucet: any;
-  faucet: any;
-  labor: any;
+ // SplashList: any = []; EdgeList: any = []; CutoutList: any = [];
+  selectedcomponent: number = 2; 
   Version:any;
-  other: any;
-  appliance: any;
   areaInfo: any;
   shownGroup: number = 1;
   shownGroup4: any = 2;
@@ -35,21 +30,20 @@ export class AddpartComponent implements OnInit {
 
   ngOnInit() {
     this.readonlyFlag = this.partinfo.Shape != "" ? true : false;
-    this.GetPriceListItems();
+    //this.GetPriceListItems();
     this.GetMaterialList(0);
     this.GetCounterList();
   }
 
   PreparePart() {
-    this.partinfo = {Name:"",IsActive:1,Shape:"",PartMaterialList:[],PartFabList:[],
-    EdgeList:[],SplashList:[],CutoutList:[],LaborList:[],SinkList:[],FaucetList:[],
-    OtherList:[],ApplianceList:[]
-  }
-    // this.partinfo.Name = ""; this.partinfo.IsActive = 1; this.partinfo.IsActive = 1;
-    // this.partinfo.Shape ="";
-    // this.partinfo.PartMaterialList = []; this.partinfo.PartFabList = [];
-    // this.partinfo.EdgeList = []; this.partinfo.SplashList = []; this.partinfo.CutoutList = [];
-    // this.partinfo.LaborList = []; this.partinfo.SinkList = []; this.partinfo.FaucetList = []; this.partinfo.OtherList = [];this.partinfo.ApplianceList = [];
+  //   this.partinfo = {Name:"",IsActive:1,Shape:"",PartMaterialList:[],PartFabList:[],
+  //   EdgeList:[],SplashList:[],CutoutList:[],LaborList:[],SinkList:[],FaucetList:[],
+  //   OtherList:[],ApplianceList:[]
+  // }
+    this.partinfo.Name = ""; this.partinfo.IsActive = 1; 
+    this.partinfo.PartMaterialList = []; this.partinfo.PartFabList = [];
+    this.partinfo.EdgeList = []; this.partinfo.SplashList = []; this.partinfo.CutoutList = [];
+    this.partinfo.LaborList = []; this.partinfo.SinkList = []; this.partinfo.FaucetList = []; this.partinfo.OtherList = [];this.partinfo.ApplianceList = [];
     // Material
     let partmat = this.quoterep.AddPartMatItem(this.partinfo.ID, this.partinfo.AreaID, this.partinfo.VersionID, this.coId, this.coSrNo, this.matPercent);
     this.partinfo.PartMaterialList.push(partmat);
@@ -112,46 +106,17 @@ export class AddpartComponent implements OnInit {
       this.CountertypeList = data[0];
     })
   }
-  GetPriceListItems() {
-    let typeIdList = []; typeIdList.push(5); typeIdList.push(6); typeIdList.push(10); typeIdList.push(7);
-    this.getservice.qsgetpricelistitems(this.priceListID, typeIdList).subscribe(data => {
-      this.SplashList = data[1];
-      this.EdgeList = data[0];
-      this.CutoutList = data[2];
-      console.log(data);
-    })
-    this.FabricationRiskLevels();
-  }
-  async ActionSearchSelect(ev: any, typeid, protypeId, info) {
-    let obj = {
-      pricelistId: this.priceListID, searchTypeId: typeid, producttypeId: protypeId, search: info.Description == undefined ? "" : info.Description, info: info
-    }
-    const popover = await this.Modalcntrl.create({
-      component: AdditionalitemserachComponent,
-     // event: ev,
-      //translucent: true,
-      componentProps: obj,
-     // cssClass: "popover_class"
-    });
-    popover.onDidDismiss().then((detail: OverlayEventDetail) => {
-      if (detail !== null) {
-        if (detail.data.isselect == true) {
-          if (protypeId == 8) {
-            this.sinkfaucet = detail.data.componentProps;
-          } else if (protypeId == 9) {
-            this.faucet = detail.data.componentProps;
-          } else if (protypeId == 7) {
-            this.labor = detail.data.componentProps;
-          } else if (protypeId == 11) {
-            this.other = detail.data.componentProps;
-          } else if (protypeId == 18){
-            this.appliance = detail.data.componentProps;
-          }
-        }
-      }
-    });
-    return await popover.present();
-  }
+  // GetPriceListItems() {
+  //   let typeIdList = []; typeIdList.push(5); typeIdList.push(6); typeIdList.push(10); typeIdList.push(7);
+  //   this.getservice.qsgetpricelistitems(this.priceListID, typeIdList).subscribe(data => {
+  //     this.SplashList = data[1];
+  //     this.EdgeList = data[0];
+  //     this.CutoutList = data[2];
+  //     console.log(data);
+  //   })
+  //   this.FabricationRiskLevels();
+  // }
+ 
   FabricationRiskLevels() {
     let result = this.service.FabricationRiskLevels(this.priceListID).subscribe(data => {
       if (data != undefined) {
@@ -163,10 +128,6 @@ export class AddpartComponent implements OnInit {
       }
     })
   }
-
-
-
-
   ActionPopulateMaterial(Id, index) {
     let material = this.MaterialList.find(s => s.ID == Id);
     if (material != null && material != undefined) {
@@ -180,24 +141,24 @@ export class AddpartComponent implements OnInit {
     //   this.partinfo.PartMaterialList[index] = this.quoterep.SetPartMaterial(this.partinfo.PartMaterialList[index],material);
     // }
   }
-  ActionPopulateSplash(Id, index) {
-    let splash = this.SplashList.find(s => s.ID == Id);
-    if (splash != null && splash != undefined) {
-      this.partinfo.SplashList[index] = this.quoterep.Setsplash(this.partinfo.SplashList[index], splash);
-    }
-  }
-  ActionPopulateEdge(Id, index) {
-    let edge = this.EdgeList.find(s => s.ID == Id);
-    if (edge != null && edge != undefined) {
-      this.partinfo.EdgeList[index] = this.quoterep.SetEdge(this.partinfo.EdgeList[index], edge);
-    }
-  }
-  ActionPopulateCutout(Id, index) {
-    let cutout = this.CutoutList.find(s => s.ID == Id);
-    if (cutout != null && cutout != undefined) {
-      this.partinfo.CutoutList[index] = this.quoterep.SetCutout(this.partinfo.CutoutList[index], cutout);
-    }
-  }
+  // ActionPopulateSplash(Id, index) {
+  //   let splash = this.SplashList.find(s => s.ID == Id);
+  //   if (splash != null && splash != undefined) {
+  //     this.partinfo.SplashList[index] = this.quoterep.Setsplash(this.partinfo.SplashList[index], splash);
+  //   }
+  // }
+  // ActionPopulateEdge(Id, index) {
+  //   let edge = this.EdgeList.find(s => s.ID == Id);
+  //   if (edge != null && edge != undefined) {
+  //     this.partinfo.EdgeList[index] = this.quoterep.SetEdge(this.partinfo.EdgeList[index], edge);
+  //   }
+  // }
+  // ActionPopulateCutout(Id, index) {
+  //   let cutout = this.CutoutList.find(s => s.ID == Id);
+  //   if (cutout != null && cutout != undefined) {
+  //     this.partinfo.CutoutList[index] = this.quoterep.SetCutout(this.partinfo.CutoutList[index], cutout);
+  //   }
+  // }
 
   ActionSetSqft(size, typeid, index) {
     size.Sqft = this.quoterep.calcsqft(size.Width, size.Height);
@@ -337,9 +298,6 @@ export class AddpartComponent implements OnInit {
         model.Amount = this.quoterep.calcitemamt(model.Sqft, model.UnitPrice);
         model.Amt = model.Amount;
         break;
-      case "labor":
-        model.Amount = this.quoterep.calcitemamt(model.Qty, model.UnitPrice);
-        break;
       case "cutout":
         model.Amount = this.quoterep.calcitemamt(model.LF, model.Unitprice);
         model.Amt = model.Amount;
@@ -348,22 +306,22 @@ export class AddpartComponent implements OnInit {
         model.Amount = this.quoterep.calcitemamt(model.LF, model.UnitPrice);
         model.Amt = model.Amount;
         break;
-      case "sink":
+      case "sink": case "tile":case "other":case "labor":
         model.Amount = this.quoterep.calcitemamt(model.Qty, model.UnitPrice);
         model.Amt = model.Amount;
         break;
-      case "faucet":
-        model.Amount = this.quoterep.calcitemamt(model.Qty, model.UnitPrice);
-        model.Amt = model.Amount;
-        break;
-      case "other":
-        model.Amount = this.quoterep.calcitemamt(model.Qty, model.UnitPrice);
-        model.Amt = model.Amount;
-        break;
-        case "appliance":
-        model.Amount = this.quoterep.calcitemamt(model.Qty, model.UnitPrice);
-        model.Amt = model.Amount;
-        break;
+      // case "faucet":
+      //   model.Amount = this.quoterep.calcitemamt(model.Qty, model.UnitPrice);
+      //   model.Amt = model.Amount;
+      //   break;
+      // case "other":
+      //   model.Amount = this.quoterep.calcitemamt(model.Qty, model.UnitPrice);
+      //   model.Amt = model.Amount;
+      //   break;
+      //   case "appliance":
+      //   model.Amount = this.quoterep.calcitemamt(model.Qty, model.UnitPrice);
+      //   model.Amt = model.Amount;
+      //   break;
     }
   }
   ActionSavePart() {
@@ -454,8 +412,34 @@ export class AddpartComponent implements OnInit {
     return this.shownGroup4 === group;
   };
 
-
-
+  async ActionSearchSelect(ev: any, typeid, protypeId, info) {
+    let obj = {
+      pricelistId: this.priceListID, searchTypeId: typeid, producttypeId: protypeId, search: info.Description == undefined ? "" : info.Description
+    }
+    const popover = await this.Modalcntrl.create({
+      component: AdditionalitemserachComponent,
+      componentProps: obj,
+    });
+    popover.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null) {
+        if (detail.data.isselect == true) {
+          info = this.quoterep.SetQuoteItem(protypeId,info,detail.data.componentProps);
+          // if (protypeId == 8) {
+          //   this.sinkfaucet = detail.data.componentProps;
+          // } else if (protypeId == 9) {
+          //   this.faucet = detail.data.componentProps;
+          // } else if (protypeId == 7) {
+          //   this.labor = detail.data.componentProps;
+          // } else if (protypeId == 11) {
+          //   this.other = detail.data.componentProps;
+          // } else if (protypeId == 18){
+          //   this.appliance = detail.data.componentProps;
+          // }
+        }
+      }
+    });
+    return await popover.present();
+  }
 }
 
 /***************Additional popups***********************/

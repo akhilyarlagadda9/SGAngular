@@ -11,15 +11,15 @@ declare var platform: string;
 })
 export class LoginPage implements OnInit {
   user: {
-    UserName: string, PasswordHash: string
+    UserName: string, PasswordHash: string, UserPermissions: any, logInUserIsAdmin: number,
   };
   ErrorMsg: string;
-  constructor(private navCtrl: NavController, private authservise: AuthService, 
+  constructor(private navCtrl: NavController, private authservise: AuthService,
     private plt: Platform, private storage: Storage) {
 
   }
   ngOnInit() {
-    this.user = { UserName: "", PasswordHash: "" };
+    this.user = { UserName: "", PasswordHash: "", UserPermissions: [], logInUserIsAdmin: 0 };
     this.FildPlatform();
     // if (this.plt.is('android')) {
     //   alert("android");
@@ -53,7 +53,7 @@ export class LoginPage implements OnInit {
       if (data != null) {
         this.user = data;
         this.ActionCompanyInfo();
-      //  this.authservise.SetUserModel(data);
+        //  this.authservise.SetUserModel(data);
         //this.navCtrl.navigateRoot('/home');
       } else {
         this.ErrorMsg = "Incorrect UserName and Password!";
@@ -64,17 +64,21 @@ export class LoginPage implements OnInit {
 
   ActionCompanyInfo() {
     this.authservise.GetCompanyInfo().subscribe(data => {
-     // this.authservise.SetCompanyStorage(data);
+      // this.authservise.SetCompanyStorage(data);
       this.setData(data);
     });
   }
 
   async setData(CompanyInfo) {
+    // set user info
     let info = this.SetUserModel(this.user);
-   await this.storage.set("UserInfo", info);
-   await this.storage.set("loguserId", info.logInUserID);
-  const company = await this.storage.set("CompanyInfo", CompanyInfo);
-   this.navCtrl.navigateRoot('/home');
+    await this.storage.set("UserInfo", info);
+    await this.storage.set("loguserId", info.logInUserID);
+    // set user Permissions
+    this.SetUserPermissions(this.user.UserPermissions, this.user.logInUserIsAdmin);
+    //set company info
+    const company = await this.storage.set("CompanyInfo", CompanyInfo);
+    this.navCtrl.navigateRoot('/home');
   }
 
   SetUserModel(data) {
@@ -83,18 +87,47 @@ export class LoginPage implements OnInit {
       loginUserName: data.FirstName, logInUserEmail: data.Email, logInUserIsAdmin: data.IsAdmin,
       logInUserSignature: (data.Signature == null || data.Signature == undefined) ? "" : data.Signature,
       userModules: data.ModuleList, userPermissions: data.UserPermissions, quotePermissions: data.QuotePermissions,
-      quoteaccess :[],salestrackeraccess:[],jobaccess:[],calendaraccess:[],
-    }; 
-    let permissions =  data.UserPermissions;
-    for (var i = 0; i < permissions.length; i += 1) {
-      if (permissions[i].PermissionID == 71 && permissions[i].ModuleID == 3) { userModel.quoteaccess = permissions[i]; }
-      if (permissions[i].PermissionID == 83 && permissions[i].ModuleID == 3) { userModel.salestrackeraccess = permissions[i]; }
-      if (permissions[i].PermissionID == 65 && permissions[i].ModuleID == 4) { userModel.jobaccess = permissions[i]; }
-      if (permissions[i].PermissionID == 66 && permissions[i].ModuleID == 4) { userModel.calendaraccess = permissions[i]; }
+
+    };
+    //   let permissions =  data.UserPermissions;
+    //   for (var i = 0; i < permissions.length; i += 1) {
+    //     if (permissions[i].PermissionID == 71 && permissions[i].ModuleID == 3) { userModel.quoteaccess = permissions[i]; }
+    //     if (permissions[i].PermissionID == 83 && permissions[i].ModuleID == 3) { userModel.salestrackeraccess = permissions[i]; }
+    //     if (permissions[i].PermissionID == 65 && permissions[i].ModuleID == 4) { userModel.jobaccess = permissions[i]; }
+    //     if (permissions[i].PermissionID == 66 && permissions[i].ModuleID == 4) { userModel.calendaraccess = permissions[i]; }
+    // }
+    return userModel;
   }
-  return userModel;
+  async SetUserPermissions(permissions: any, isAdmin) {
+    let quoteaccess: number, salestrackeraccess: number, jobaccess: number, calendaraccess: number;
+    if (isAdmin == 1) {
+      quoteaccess = 2; salestrackeraccess = 2, jobaccess = 2, calendaraccess = 2;
+    } else {
+      for (var i = 0; i < permissions.length; i += 1) {
+        if (permissions[i].PermissionID == 71 && permissions[i].ModuleID == 3) {
+          quoteaccess = permissions[i].AccessType;
+        }
+        if (permissions[i].PermissionID == 65 && permissions[i].ModuleID == 4) {
+          jobaccess = permissions[i].AccessType;
+        }
+        if (permissions[i].PermissionID == 66 && permissions[i].ModuleID == 4) {
+          calendaraccess = permissions[i].AccessType;
+
+        }
+      }
+      quoteaccess = quoteaccess == undefined ? 0 : quoteaccess;
+      jobaccess = jobaccess == undefined ? 0 : jobaccess;
+      calendaraccess = calendaraccess == undefined ? 0 : calendaraccess;
+    }
+    let useraccess = { quote: quoteaccess, job: jobaccess, calendar: calendaraccess }
+    await this.storage.set("userModuleAccess", useraccess);
+     await this.storage.set("quoteaccess", quoteaccess);
+    // await this.storage.set("salestrackeraccess", salestrackeraccess);
+    // await this.storage.set("jobaccess", jobaccess);
+    await this.storage.set("calendaraccess", calendaraccess);
   }
 
 
-  
+
+
 }

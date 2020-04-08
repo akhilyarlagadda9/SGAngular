@@ -8,7 +8,7 @@
             </ion-button>
           </ion-buttons>
           <ion-buttons slot="end">
-            <ion-button color="primary" type="submit">
+            <ion-button color="primary"  *ngIf="calAccess" type="submit">
               Save
             </ion-button>
           </ion-buttons>
@@ -145,7 +145,7 @@
     <ion-col size="3">
       <ion-label color="primary" class="paddleft5">Resources: </ion-label>
     </ion-col>
-    <ion-col size="9" class="text-right color-primary" (click)="ActionopenResourcePopup($event)"><u
+    <ion-col size="9" class="text-right color-primary"  *ngIf="calAccess" (click)="ActionopenResourcePopup($event)"><u
         class="paddright10">Select</u></ion-col>
   </ion-row>
   <ion-item class="paddleft5">
@@ -155,7 +155,7 @@
   </ion-item>
   <ion-item *ngFor="let resource of actinfo.ResourceList; let i = index" class="paddleft5">
     <ion-col size="8">
-      <span (click)="ActionDeleteSelectedItems(resource.ID,i)"><ion-icon name="trash" class="delsty"></ion-icon></span>&nbsp;
+      <span *ngIf="calAccess" (click)="ActionDeleteSelectedItems(resource.ID,i)"><ion-icon name="trash" class="delsty"></ion-icon></span>&nbsp;
        {{resource.ResourceName}}
       <div> <small>{{resource.EmpMail}}</small></div>
     </ion-col>

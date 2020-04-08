@@ -15,6 +15,11 @@ import { CalendarsettingComponent } from '../calendarsetting/calendarsetting.com
 import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
 import { QuoteeditComponent } from '../../quotes/quoteedit/quoteedit.component';
+import { AuthService } from 'src/app/service/auth.service';
+
+
+
+
 declare var platform: string;declare const imgUrl: any;
 @Component({
   selector: 'app-scheduling',
@@ -81,7 +86,7 @@ export class SchedulingPage implements OnInit {
   constructor(public Modalcntrl: ModalController, @Inject(LOCALE_ID) 
   public loadingController: LoadingController,private schService: SchedulingService, 
     private navCtrl: NavController, private datePipe: DatePipe, 
-    public actionSheetCtrl: ActionSheetController,private alertCtrl: AlertController) { }
+    public actionSheetCtrl: ActionSheetController,private alertCtrl: AlertController,private authService:AuthService) { }
 
   ngOnInit() {
     let height = window.innerHeight - 110; this.width = 85;

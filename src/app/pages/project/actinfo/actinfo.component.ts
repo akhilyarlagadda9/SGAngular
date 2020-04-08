@@ -4,6 +4,7 @@ import { SchedulingService } from 'src/app/service/scheduling.service';
 import { DatePipe } from '@angular/common';
 import { AddactivityComponent } from '../addactivity/addactivity.component';
 import { OverlayEventDetail } from '@ionic/core';
+import { AuthService } from 'src/app/service/auth.service';
 declare const imgUrl: any;
 @Component({
   selector: 'app-actinfo',
@@ -15,13 +16,19 @@ export class ActinfoComponent implements OnInit {
   obj: any = this.navParams.data;
   actInfo: any;
   actheader: any;
-  showmore: number = 0;
+  showmore: number = 0;calAccess:boolean
   blnDeleteAct:Boolean=false;
   constructor(public Modalcntrl: ModalController, private navParams: NavParams, 
-    private schService: SchedulingService, private datePipe: DatePipe) { }
+    private schService: SchedulingService, private datePipe: DatePipe,private authservise:AuthService) { }
   ngOnInit() {
+    this.LoadCalendarAccess();
     this.ActionActivityInfo();  
   }
+  LoadCalendarAccess(){
+    this.authservise.GetStoredCalAccess().then(result => {
+      let access = result == 2 ? true : false;
+      this.calAccess = access;});
+      }
   ActionActivityInfo() {
     let start = this.datePipe.transform(this.obj.StartDate, "MM-dd-yyyy");
     let end = this.datePipe.transform(this.obj.EndDate, "MM-dd-yyyy");

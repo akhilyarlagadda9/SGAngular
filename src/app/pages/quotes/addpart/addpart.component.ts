@@ -30,6 +30,7 @@ export class AddpartComponent implements OnInit {
 
   ngOnInit() {
     this.readonlyFlag = this.partinfo.Shape != "" ? true : false;
+    this.FabricationRiskLevels();
     //this.GetPriceListItems();
     this.GetMaterialList(0);
     this.GetCounterList();

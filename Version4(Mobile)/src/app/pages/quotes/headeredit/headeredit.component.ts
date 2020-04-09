@@ -99,7 +99,7 @@ export class HeadereditComponent implements OnInit {
   ActionGetProductionName(Id) {
     let headerinfo = this.productionTypeList.find(s => s.ID == Id);
     if (headerinfo != null) {
-      this.headerinfo.JobType = headerinfo.Name;
+      this.headerinfo.Version.JobType = headerinfo.Name;
     }
     // let TypeName = [];
     // for(let i = 0; i < Ids.length ; i++){

@@ -11,6 +11,7 @@ import { ActionquoteComponent } from '../actionquote/actionquote.component';
 import { QuoterepService } from 'src/app/service/quoterep.service';
 import { CommhubComponent } from '../commhub/commhub.component';
 import { OtherComponent } from '../other/other.component';
+import { AuthService } from 'src/app/service/auth.service';
 //import { CallNumber } from '@ionic-native/call-number/ngx';
 declare var _qscope: any;
 @Component({
@@ -21,11 +22,12 @@ declare var _qscope: any;
 export class QuoteeditComponent implements OnInit {
   constructor(public Modalcntrl: ModalController, private navParams: NavParams, private service: QuoteService,
     private navCtrl: NavController, private repService: QuoterepService,
-    public actionSheetCtrl: ActionSheetController, private qrepservice: QuoterepService) { }
+    public actionSheetCtrl: ActionSheetController, private qrepservice: QuoterepService,private authService: AuthService) { }
   qprmsobj = this.navParams.data;
   headerInfo: any={QuoteContacts:[]};
   versionList: any = []; phaseList: any = [];
   selectedtabtype: number;selChildTabId: number = 1;
+  //OCInfoAdd:any;
   //QuoteVersionID: number = this.qprmsobj.versionid;
   @ViewChild(CommhubComponent, { static: false }) commHubCom: CommhubComponent; 
   @ViewChild(OtherComponent, { static: false }) otherCom: OtherComponent;
@@ -33,6 +35,7 @@ export class QuoteeditComponent implements OnInit {
   public SelectedTypeID: number;
  //#region Actions
   ngOnInit() {
+
     if (this.navParams.data.layoutId == 1) {
       this.selectedtabtype = this.navParams.data.layoutId;
     }
@@ -162,7 +165,7 @@ async ActionEditJob() {
 //Map Function
 async ActionLoadMap() {
   let copyobj = JSON.parse(JSON.stringify(this.headerInfo));
-  let obj = { headerInfo: copyobj }
+  let obj = {headerInfo: copyobj,MapCalled:"Quote"};
   const modal = await this.Modalcntrl.create({
     component: MapComponent,
     componentProps: obj,

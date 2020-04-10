@@ -88,7 +88,7 @@
           <ion-row>
             <ion-col class="lablewid" size="1" class="color-primary martop10"><b>M:</b></ion-col>
             <ion-col size="6" class="labelfont">
-              <ion-select [(ngModel)]="mat.MaterialID" name="MaterialID"  #MaterialID="ngModel"zz required
+              <ion-select [(ngModel)]="mat.MaterialID" [disabled]="readonlyFlag" name="MaterialID"  #MaterialID="ngModel"zz required
                 (ngModelChange)="ActionPopulateMaterial($event,i)"
                 class="border-btm labelfont2 color-blue">
                 <ion-select-option *ngFor="let material of MaterialList" [value]="material.ID">{{material.StoneType}} -
@@ -100,7 +100,7 @@
               <ion-icon name="create" *ngIf="mat.MaterialID > 0" class="fontmedium2" (click)="ActionAddMaterial(mat.MaterialID, 'QuotePart')"></ion-icon>
             </ion-col>
             <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
-              <ion-input type="text" [(ngModel)]="mat.Sqft" readonly="readonly"
+              <ion-input type="text" [readonly]="readonlyFlag" [(ngModel)]="mat.Sqft" readonly="readonly"
                 class="text-center border-right color-primary" name="Sqft">
               </ion-input>
               <span class="color-primary">SF</span>
@@ -160,13 +160,13 @@
           <ion-row>
             <ion-col size="1" class="round color-img color-text text-center mar-top5">{{i + 1}}</ion-col>
             <ion-col size="8">
-              <ion-select  class="btninfo" [(ngModel)]="size.CounterType" name="CounterType"
+              <ion-select  class="btninfo" [disabled]="readonlyFlag" [(ngModel)]="size.CounterType" name="CounterType" 
                 [selectedText]="size.CounterType" class="color-blue labelfont2 border-btm">
                 <ion-select-option *ngFor="let c of CountertypeList" [value]="c.Name">{{c.Name}}</ion-select-option>
               </ion-select>
             </ion-col>
             <ion-col size="3" class="roundborder borderall flex fontbold mar-top5">
-              <ion-input type="text" [(ngModel)]="size.Sqft" (change)="ActionSetFabSqft(j)"
+              <ion-input type="text" [readonly]="readonlyFlag" [(ngModel)]="size.Sqft" (change)="ActionSetFabSqft(j)"
                 class="text-center border-right color-primary" name="Sqft">
               </ion-input>
               <span class="color-primary">SF</span>
@@ -174,12 +174,12 @@
           </ion-row>
           <ion-row class="color-img bdr-radius20">
             <ion-col size="5" class="fontbold labelfont2 flex mar-top5"><span class="color-text">W:&nbsp;</span>
-              <ion-input type="text" [(ngModel)]="size.Width" name="Width" (change)="ActionSetSqft(size,0,j)"
+              <ion-input type="text" [readonly]="readonlyFlag" [(ngModel)]="size.Width" name="Width" (change)="ActionSetSqft(size,0,j)"
                 class="roundborder borderall bg-white text-center"></ion-input>
             </ion-col>
             <ion-col size="1" class="fontbold labelfont2 color-text mar-top5">X</ion-col>
             <ion-col size="5" class="fontbold flex labelfont2 mar-top5"><span class="color-text">H:&nbsp; </span>
-              <ion-input type="text" [(ngModel)]="size.Height" name="Height" (change)="ActionSetSqft(size,0,j)"
+              <ion-input type="text" [readonly]="readonlyFlag" [(ngModel)]="size.Height" name="Height" (change)="ActionSetSqft(size,0,j)"
                 class="roundborder borderall bg-white text-center"></ion-input>
             </ion-col>
             <ion-col size="1" class="color-primary round bg-white text-center mar-top5"
@@ -210,9 +210,10 @@
               <ion-col size="1" class="color-green martop10"><b>S:</b></ion-col>
               <ion-col size="8">
                 <ion-item>
-                  <ion-input type="text" class="labelfont paddzero" [(ngModel)]="splash.Splash"
-                name="Splash" ></ion-input>
-              <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,6,splash)"></ion-icon>
+                  <ion-input type="text"  [readonly]="readonlyFlag" class="labelfont paddzero" [(ngModel)]="splash.Splash"
+                  name="Splash" ></ion-input>
+              <ion-icon name="arrow-dropdown" *ngIf="readonlyFlag == false" (click)="ActionSearchSelect($event,2,6,splash)"></ion-icon>
+              <ion-icon name="arrow-dropdown" *ngIf="readonlyFlag == true"></ion-icon>
                 </ion-item>
                 <!-- <ion-select [(ngModel)]="splash.SplashID" name="SplashID"
                   class="border-btm labelfont2 color-blue" (ngModelChange)="ActionPopulateSplash($event,i)">
@@ -221,7 +222,7 @@
                 </ion-select> -->
               </ion-col>
               <ion-col size="2" class="roundborder borderall flex fontbold mar-top5">
-                <ion-input type="text" [(ngModel)]="splash.Sqft" class="text-center border-right color-primary"
+                <ion-input type="text" [readonly]="readonlyFlag" [(ngModel)]="splash.Sqft" class="text-center border-right color-primary"
                   name="Sqft" (change)="ActionChangeSplash()">
                 </ion-input>
                 <span class="color-primary">SF</span>
@@ -230,12 +231,12 @@
             </ion-row>
             <ion-row class="color-img bdr-radius20">
               <ion-col size="5" class="fontbold labelfont2 flex mar-top5"><span class="color-text">W:&nbsp;</span>
-                <ion-input type="text" [(ngModel)]="splash.Width" name="Width"
+                <ion-input type="text" [readonly]="readonlyFlag" [(ngModel)]="splash.Width" name="Width"
                   class="roundborder borderall bg-white text-center" (change)="ActionSetSplashSqft(splash)"></ion-input>
               </ion-col>
               <ion-col size="1" class="fontbold labelfont2 color-text mar-top5">X</ion-col>
               <ion-col size="5" class="fontbold flex labelfont2 mar-top5"><span class="color-text">H:&nbsp; </span>
-                <ion-input type="text" [(ngModel)]="splash.Height" name="Height"
+                <ion-input type="text" [readonly]="readonlyFlag" [(ngModel)]="splash.Height" name="Height"
                   class="roundborder borderall bg-white text-center" (change)="ActionSetSplashSqft(splash)"></ion-input>
               </ion-col>
               <ion-col size="1" class="color-primary round bg-white text-center mar-top5"
@@ -259,9 +260,10 @@
               <ion-col size="1" class="color-green martop10 paddzero"><b>E:</b></ion-col>
               <ion-col size="8">
                 <ion-item>
-                  <ion-input type="text" class="labelfont paddzero" [(ngModel)]="edge.EdgeProfile"
+                  <ion-input type="text" [readonly]="readonlyFlag" class="labelfont paddzero" [(ngModel)]="edge.EdgeProfile"
                 name="EdgeProfile" ></ion-input>
-                <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,5,edge)"></ion-icon>
+                <ion-icon name="arrow-dropdown" *ngIf="readonlyFlag == false" (click)="ActionSearchSelect($event,2,5,edge)"></ion-icon>
+                <ion-icon name="arrow-dropdown" *ngIf="readonlyFlag == true"></ion-icon>
                 </ion-item>
                 <!-- <ion-select [(ngModel)]="edge.EdgeProfileID" class="btninfo"
                   (ngModelChange)="ActionPopulateEdge($event,i)" class="border-btm labelfont2 color-blue">
@@ -270,7 +272,7 @@
                 </ion-select> -->
               </ion-col>
               <ion-col size="2" class="roundborder borderall flex fontbold mar-top5">
-                <ion-input type="text" [(ngModel)]="edge.LF" (change)="ActionSetAmount('edge',edge)"
+                <ion-input type="text" [readonly]="readonlyFlag" [(ngModel)]="edge.LF" (change)="ActionSetAmount('edge',edge)"
                   class="text-center border-right color-primary" name="LF">
                 </ion-input>
                 <span class="color-primary">LF</span>
@@ -324,9 +326,10 @@
               <ion-col size="1" class="color-green martop10 paddzero"><b>C:</b></ion-col>
               <ion-col size="8">
                 <ion-item>
-                  <ion-input type="text" class="labelfont paddzero" [(ngModel)]="cutout.Type"
+                  <ion-input type="text" [readonly]="readonlyFlag" class="labelfont paddzero" [(ngModel)]="cutout.Type"
                 name="Type" ></ion-input>
-                <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,10,cutout)"></ion-icon>
+                <ion-icon name="arrow-dropdown" *ngIf="readonlyFlag == false" (click)="ActionSearchSelect($event,2,10,cutout)"></ion-icon>
+                <ion-icon name="arrow-dropdown" *ngIf="readonlyFlag == true"></ion-icon>
                 </ion-item>
                 <!-- <ion-select [(ngModel)]="cutout.TypeID"
                   (ngModelChange)="ActionPopulateCutout($event,i)" class="border-btm labelfont2 color-blue">
@@ -334,7 +337,7 @@
                 </ion-select> -->
               </ion-col>
               <ion-col size="2" class="roundborder borderall flex fontbold mar-top5">
-                <ion-input type="text" [(ngModel)]="cutout.LF" (change)="ActionSetAmount('cutout',cutout)"
+                <ion-input type="text" [readonly]="readonlyFlag" [(ngModel)]="cutout.LF" (change)="ActionSetAmount('cutout',cutout)"
                   class="text-center border-right color-primary" name="LF">
                 </ion-input>
                 <span class="color-primary">EA</span>
@@ -386,14 +389,16 @@
               <ion-col size="1" class="color-green martop10 paddzero"><b>A:</b></ion-col>
               <ion-col size="8" class="paddzero">
                 <ion-item>
-                  <ion-input type="text" class="labelfont paddzero" [(ngModel)]="appliance.Description"
+                  <ion-input type="text" [readonly]="readonlyFlag" class="labelfont paddzero" [(ngModel)]="appliance.Description"
                     name="Description" (keyup.enter)="ActionSearchSelect($event,1,18,appliance)" required></ion-input>
-                  <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,18,appliance)"></ion-icon>
-                  <ion-icon name="search" (click)="ActionSearchSelect($event,1,18,appliance)"></ion-icon>
+                  <ion-icon name="arrow-dropdown" *ngIf="readonlyFlag == false" (click)="ActionSearchSelect($event,2,18,appliance)"></ion-icon>
+                  <ion-icon name="search" *ngIf="readonlyFlag == false" (click)="ActionSearchSelect($event,1,18,appliance)"></ion-icon>
+                  <ion-icon name="arrow-dropdown" *ngIf="readonlyFlag == true"></ion-icon>
+                  <ion-icon name="search" *ngIf="readonlyFlag == true"></ion-icon>
                 </ion-item>
               </ion-col>
               <ion-col size="2" class="roundborder borderall flex fontbold mar-top5">
-                <ion-input type="text" [(ngModel)]="appliance.Qty" class="text-center border-right color-primary"
+                <ion-input type="text" [readonly]="readonlyFlag" [(ngModel)]="appliance.Qty" class="text-center border-right color-primary"
                   name="Qty" (change)="ActionSetAmount('tile', appliance)">
                 </ion-input>
                 <span class="color-primary">EA</span>
@@ -448,14 +453,16 @@
               <ion-col size="1" class="color-green martop10 paddzero"><b>S:</b></ion-col>
               <ion-col size="8" class="paddzero">
                 <ion-item>
-                  <ion-input type="text" class="labelfont paddzero" [(ngModel)]="sinkfaucet.Description"
+                  <ion-input type="text" [readonly]="readonlyFlag" class="labelfont paddzero" [(ngModel)]="sinkfaucet.Description"
                     name="Description" (keyup.enter)="ActionSearchSelect($event,1,8,sinkfaucet)" required></ion-input>
-                  <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,8,sinkfaucet)"></ion-icon>
-                  <ion-icon name="search" (click)="ActionSearchSelect($event,1,8,sinkfaucet)"></ion-icon>
+                  <ion-icon name="arrow-dropdown" *ngIf="readonlyFlag == false" (click)="ActionSearchSelect($event,2,8,sinkfaucet)"></ion-icon>
+                  <ion-icon name="search" *ngIf="readonlyFlag == false" (click)="ActionSearchSelect($event,1,8,sinkfaucet)"></ion-icon>
+                  <ion-icon name="arrow-dropdown" *ngIf="readonlyFlag == true"></ion-icon>
+                  <ion-icon name="search" *ngIf="readonlyFlag == true"></ion-icon>
                 </ion-item>
               </ion-col>
               <ion-col size="2" class="roundborder borderall flex fontbold mar-top5">
-                <ion-input type="text" [(ngModel)]="sinkfaucet.Qty" class="text-center border-right color-primary"
+                <ion-input type="text" [readonly]="readonlyFlag" [(ngModel)]="sinkfaucet.Qty" class="text-center border-right color-primary"
                   name="Qty" (change)="ActionSetAmount('sink', sinkfaucet)">
                 </ion-input>
                 <span class="color-primary">EA</span>
@@ -508,14 +515,16 @@
               <ion-col size="1" class="color-green martop10"><b>F:</b></ion-col>
               <ion-col size="8" class="paddzero">
                 <ion-item>
-                  <ion-input type="text" class="labelfont paddzero" [(ngModel)]="faucet.Description" name="Description"
+                  <ion-input type="text" [readonly]="readonlyFlag" class="labelfont paddzero" [(ngModel)]="faucet.Description" name="Description"
                     (keyup.enter)="ActionSearchSelect($event,1,9,faucet)" required></ion-input>
-                  <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,9,faucet)"></ion-icon>
-                  <ion-icon name="search" (click)="ActionSearchSelect($event,1,9,faucet)"></ion-icon>
+                  <ion-icon name="arrow-dropdown" *ngIf="readonlyFlag == false" (click)="ActionSearchSelect($event,2,9,faucet)"></ion-icon>
+                  <ion-icon name="search" *ngIf="readonlyFlag == false" (click)="ActionSearchSelect($event,1,9,faucet)"></ion-icon>
+                  <ion-icon name="arrow-dropdown" *ngIf="readonlyFlag == true"></ion-icon>
+                  <ion-icon name="search" *ngIf="readonlyFlag == true"></ion-icon>
                 </ion-item>
               </ion-col>
               <ion-col size="2" class="roundborder borderall flex fontbold mar-top5">
-                <ion-input type="text" [(ngModel)]="faucet.Qty" class="text-center border-right color-primary"
+                <ion-input type="text" [readonly]="readonlyFlag" [(ngModel)]="faucet.Qty" class="text-center border-right color-primary"
                   name="Qty" (change)="ActionSetAmount('sink', faucet)">
                 </ion-input>
                 <span class="color-primary">EA</span>
@@ -570,14 +579,16 @@
               <ion-col size="1" class="color-green martop10 paddzero"><b>L:</b></ion-col>
               <ion-col size="8" class="paddzero">
                 <ion-item>
-                  <ion-input type="text" class="labelfont paddzero" [(ngModel)]="labor.Description" name="Description"
+                  <ion-input type="text" [readonly]="readonlyFlag" class="labelfont paddzero" [(ngModel)]="labor.Description" name="Description"
                     (keyup.enter)="ActionSearchSelect($event,1,7,labor)" required></ion-input>
-                  <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,7,labor)"></ion-icon>
-                  <ion-icon name="search" (click)="ActionSearchSelect($event,1,7,labor)"></ion-icon>
+                  <ion-icon name="arrow-dropdown" *ngIf="readonlyFlag == false" (click)="ActionSearchSelect($event,2,7,labor)"></ion-icon>
+                  <ion-icon name="search" *ngIf="readonlyFlag == false" (click)="ActionSearchSelect($event,1,7,labor)"></ion-icon>
+                  <ion-icon name="arrow-dropdown" *ngIf="readonlyFlag == true"></ion-icon>
+                  <ion-icon name="search" *ngIf="readonlyFlag == true"></ion-icon>
                 </ion-item>
               </ion-col>
               <ion-col size="2" class="roundborder borderall flex fontbold mar-top5">
-                <ion-input type="text" [(ngModel)]="labor.Qty" class="text-center border-right color-primary" name="Qty"
+                <ion-input type="text"  [readonly]="readonlyFlag" [(ngModel)]="labor.Qty" class="text-center border-right color-primary" name="Qty"
                   (change)="ActionSetAmount('labor', labor)">
                 </ion-input>
                 <span class="color-primary">EA</span>
@@ -630,14 +641,16 @@
               <ion-col size="1" class="color-green martop10 paddzero"><b>A:</b></ion-col>
               <ion-col size="8" class="paddzero">
                 <ion-item>
-                  <ion-input type="text" class="labelfont paddzero" [(ngModel)]="other.Description" name="Description"
+                  <ion-input type="text" [readonly]="readonlyFlag" class="labelfont paddzero" [(ngModel)]="other.Description" name="Description"
                     (keyup.enter)="ActionSearchSelect($event,1,11,other)" required></ion-input>
-                  <ion-icon name="arrow-dropdown" (click)="ActionSearchSelect($event,2,11,other)"></ion-icon>
-                  <ion-icon name="search" (click)="ActionSearchSelect($event,1,11,other)"></ion-icon>
+                  <ion-icon name="arrow-dropdown" *ngIf="readonlyFlag == false" (click)="ActionSearchSelect($event,2,11,other)"></ion-icon>
+                  <ion-icon name="search" *ngIf="readonlyFlag == false" (click)="ActionSearchSelect($event,1,11,other)"></ion-icon>
+                  <ion-icon name="arrow-dropdown" *ngIf="readonlyFlag == true"></ion-icon>
+                  <ion-icon name="search" *ngIf="readonlyFlag == true"></ion-icon>
                 </ion-item>
               </ion-col>
               <ion-col size="2" class="roundborder borderall flex fontbold mar-top5">
-                <ion-input type="text" [(ngModel)]="other.Qty" class="text-center border-right color-primary" name="Qty"
+                <ion-input type="text" [readonly]="readonlyFlag" [(ngModel)]="other.Qty" class="text-center border-right color-primary" name="Qty"
                   (change)="ActionSetAmount('other', other)">
                 </ion-input>
                 <span class="color-primary">EA</span>

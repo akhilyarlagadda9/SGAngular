@@ -20,7 +20,7 @@ export class MaterialinfoComponent implements OnInit {
   priceListID: any;
   constructor(public Modalcntrl: ModalController,private quoterep:QuoterepService) { }
 
-  ngOnInit() {
+  ngOnInit() {;
 
   }
 

@@ -29,7 +29,7 @@ export class CreatequoteComponent implements OnInit {
   };
   constructor(private loadingController: LoadingController, public Modalcntrl: ModalController,
       private popoverCntrl: PopoverController,private qServe:QuoteService,private qRep:QuoterepService) { }
-  ngOnInit() {
+  ngOnInit() {debugger;
     this.header = {
       ProjectManagerID: 0, EstimatorID: 0,
       ID: 0, CustomerID: 0, QuoteOrLeadTypeID: 2, QuoteInfoType: "QUOTE", LocID: 1, CustJobNo: "", CustPoNo: "", QuoteDate: new Date().toLocaleDateString("en-US"),

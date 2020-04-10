@@ -15,7 +15,7 @@
   <ion-item >
     <ion-row>
     <ion-col size="12" *ngFor="let item of listItems" (click)="ActionSelectItem(item.ID)" class="border-btm">
-      <ion-label>
+      <ion-label class="searchpadd">
         <h3>{{item.Description}}</h3>
         <p>{{item.ProductDescription}}</p>
       </ion-label>

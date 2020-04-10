@@ -130,11 +130,13 @@ export class AddpartComponent implements OnInit {
     })
   }
   ActionPopulateMaterial(Id, index) {
+    console.log(this.partinfo.PartMaterialList)
     let material = this.MaterialList.find(s => s.ID == Id);
     if (material != null && material != undefined) {
       this.partinfo.PartMaterialList[index] = this.quoterep.SetPartMaterial(this.partinfo.PartMaterialList[index], material);
     }
     this.ActionSetAmount("matfab", this.partinfo.PartMaterialList[index]);
+    console.log(this.partinfo.PartMaterialList)
   }
   ActionPopulateSize(Id, index) {
     // let material = this.CountertypeList.find(s=>s.ID == Id);
@@ -263,9 +265,12 @@ export class AddpartComponent implements OnInit {
     this.partinfo.PartFabList[jndx].MeasureList.splice(indx, 1);
     this.ActionSetFabSqft(jndx);
   }
-  ActionRemoveSplash(index:number){
+  /* ActionRemoveSplash(index:number){
+    let currIndex = this.partinfo.SplashList.findIndex(function (o) { return o.ID === Id && o.Description === desc; });
+    //this.removelabor(this.partinfo.ID, currIndex, this.partinfo.SplashList);
     this.partinfo.SplashList.splice(index, 1);
-  }
+    
+  } */
   ActionRemoveEdge(index:number){
     this.partinfo.EdgeList.splice(index, 1);
   }
@@ -441,6 +446,26 @@ export class AddpartComponent implements OnInit {
     });
     return await popover.present();
   }
+
+  /* removelabor(Id, index, laborlist) {
+    if (Id > 0) {
+        let previousWindowKeyDown = window.onkeydown;
+        swal({ title: "", text: "Are you sure you want to Delete?", type: "warning", showCancelButton: true, confirmButtonClass: "btn-danger", confirmButtonText: "Yes", cancelButtonText: "No", closeOnConfirm: false },
+            function (isConfirm) {
+                window.onkeydown = null;
+                if (isConfirm) {
+                    this.$apply(function () { laborlist.splice(index, 1); });
+                    let result = this.service.qpremovelabor(Id, laborlist.versionId, this.area.ID);
+                    resetversioninfo(result.VersionSummary);
+                    this.$apply(function () { calcversionsummary31(); });
+                    window.onkeydown = previousWindowKeyDown;
+                    swal({ title: "DELETED SUCCESSFULLY.", timer: 2000, showConfirmButton: false });
+                }
+            });
+    } else {
+        laborlist.splice(index, 1);  calcversionsummary31(); 
+    }
+} */
 }
 
 /***************Additional popups***********************/

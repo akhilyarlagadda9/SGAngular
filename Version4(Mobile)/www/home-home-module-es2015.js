@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\" >\n        <img src=\"assets/img/companylogo.png\" alt=\"your image\" style=\"width:25px;height:25px;\">\n      </ion-buttons>\n      <ion-title><h1>StoneApp</h1></ion-title>\n      \n      <ion-icon slot=\"end\" class=\"fontlarge\" name=\"power\" color=\"danger\" (click)=\"ActionLogout()\"></ion-icon>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n      <ion-item >\n          <ion-col (click)=\"ActionLoadQuote()\" (click)=\" showLoader()\">\n              <h2>  <ion-icon name=\"logo-buffer\" style=\"color:rgb(148, 24, 117)\"></ion-icon> Quoting</h2>\n        </ion-col>\n      </ion-item>\n      <ion-item >\n        <ion-col>\n            <h2><ion-icon name=\"calendar\" style=\"color: rgb(218, 101, 58);\"></ion-icon> Scheduling</h2></ion-col>\n      </ion-item>\n      <ion-item >\n          <ion-col>\n              <h2><ion-icon name=\"barcode\" style=\"color: rgb(31, 85, 31);\"></ion-icon>  Purchasing</h2></ion-col>\n      </ion-item>\n        <ion-item >\n            <ion-col>\n                <h2> <ion-icon name=\"clipboard\" style=\"color: rgb(160, 140, 28);\"></ion-icon> Inventory</h2></ion-col>\n      </ion-item>\n  </ion-list>\n</ion-content>\n"
+module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <!-- <ion-buttons slot=\"start\" >\n        <img src=\"assets/img/companylogo.png\" alt=\"your image\" style=\"width:25px;height:25px;\">\n      </ion-buttons> -->\n      <ion-title slot=\"start\" class=\"titleheader\"><h1> {{CompanyInfo.Name}} </h1></ion-title>\n      <ion-buttons slot=\"end\">\n        <ion-icon slot=\"end\"  name=\"person\" (click)=\"ActionLogout()\"></ion-icon>\n        <div class=\"check-font\">\n          {{UserInfo.loginUserName}}\n        </div>\n        <ion-icon slot=\"end\" class=\"btn-logout\" name=\"power\" (click)=\"ActionLogout()\"></ion-icon>\n      </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n      <ion-item *ngIf=\"userAccess.quote != 0\">\n          <ion-col  (click)=\"ActionLoadModule('/home/quotelist')\">\n              <h2><img src=\"assets/img/Quote1.png\" alt=\"img\" class=\"imghw35\"> Quoting</h2>\n        </ion-col>\n      </ion-item>\n      <ion-item *ngIf=\"userAccess.calendar != 0\">\n        <ion-col  (click)=\"ActionLoadModule('/home/scheduling')\">\n            <h2><img src=\"assets/img/calendar-icon.png\" alt=\"img\" class=\"imghw35\"> Scheduling</h2></ion-col>\n      </ion-item>\n      <ion-item >\n          <ion-col>\n              <h2><img src=\"assets/img/Purchasing Icon5.jpg\" alt=\"img\" class=\"imghw35\">  Purchasing</h2></ion-col>\n      </ion-item>\n        <ion-item >\n            <ion-col>\n                <h2><img src=\"assets/img/Inventory34.png\" alt=\"img\" class=\"imghw35\"> Inventory</h2></ion-col>\n      </ion-item>\n  </ion-list>\n</ion-content>\n"
 
 /***/ }),
 
@@ -52,7 +52,11 @@ HomePageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                     path: 'quotelist',
                     // component:QuotePage
                     loadChildren: () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ../pages/quotes/quote/quote.module */ "./src/app/pages/quotes/quote/quote.module.ts")).then(m => m.QuotePageModule)
-                }
+                },
+                {
+                    path: 'scheduling',
+                    loadChildren: () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ../pages/project/scheduling/scheduling.module */ "./src/app/pages/project/scheduling/scheduling.module.ts")).then(m => m.SchedulingPageModule)
+                },
             ])
         ],
         declarations: [_home_page__WEBPACK_IMPORTED_MODULE_6__["HomePage"],]
@@ -70,7 +74,7 @@ HomePageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2hvbWUvaG9tZS5wYWdlLnNjc3MifQ== */"
+module.exports = ".btn-logout {\n  background: red;\n  color: white;\n  border-radius: 100%;\n  font-size: 30px;\n  margin-right: 5px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaG9tZS9DOlxcVmVyc2lvbjQoTW9iaWxlKS9zcmNcXGFwcFxcaG9tZVxcaG9tZS5wYWdlLnNjc3MiLCJzcmMvYXBwL2hvbWUvaG9tZS5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQ0E7RUFDSSxlQUFBO0VBQ0EsWUFBQTtFQUNBLG1CQUFBO0VBQ0EsZUFBQTtFQUNBLGlCQUFBO0FDQUoiLCJmaWxlIjoic3JjL2FwcC9ob21lL2hvbWUucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXG4uYnRuLWxvZ291dHtcbiAgICBiYWNrZ3JvdW5kOiByZWQ7IFxuICAgIGNvbG9yOiB3aGl0ZTsgXG4gICAgYm9yZGVyLXJhZGl1czogMTAwJTtcbiAgICBmb250LXNpemU6MzBweDtcbiAgICBtYXJnaW4tcmlnaHQ6IDVweDtcbn0iLCIuYnRuLWxvZ291dCB7XG4gIGJhY2tncm91bmQ6IHJlZDtcbiAgY29sb3I6IHdoaXRlO1xuICBib3JkZXItcmFkaXVzOiAxMDAlO1xuICBmb250LXNpemU6IDMwcHg7XG4gIG1hcmdpbi1yaWdodDogNXB4O1xufSJdfQ== */"
 
 /***/ }),
 
@@ -87,34 +91,49 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var src_app_service_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/service/auth.service */ "./src/app/service/auth.service.ts");
+/* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm2015/ionic-storage.js");
+
+
 
 
 
 let HomePage = class HomePage {
-    constructor(navCtrl, loadingController) {
+    constructor(navCtrl, loadingController, authservise, storage) {
         this.navCtrl = navCtrl;
         this.loadingController = loadingController;
+        this.authservise = authservise;
+        this.storage = storage;
+        this.CompanyInfo = { ID: 0, Name: "" };
+        this.UserInfo = { logInUserID: 0, loginUserName: "" };
+        this.userAccess = { quote: 1, calendar: 1 };
     }
-    ActionLoadQuote() {
-        this.navCtrl.navigateRoot('/home/quotelist');
+    ngOnInit() {
+        this.LoadCompanyAndUser();
+    }
+    ActionLoadModule(path) {
+        this.navCtrl.navigateRoot(path);
     }
     ActionLogout() {
         this.navCtrl.navigateRoot('/login');
     }
-    showLoader() {
-        this.loaderToShow = this.loadingController.create({
-            message: 'Please wait'
-        }).then((res) => {
-            res.present();
-            res.onDidDismiss().then((dis) => {
-                console.log('Loading dismissed!');
-            });
+    LoadCompanyAndUser() {
+        this.authservise.GetStoredLoginUser().then(result => {
+            this.UserInfo = result;
+        });
+        this.authservise.GetStoredCompany().then(result => {
+            this.CompanyInfo = result;
+        });
+        this.authservise.GetStoredUserModuleAccess().then(result => {
+            this.userAccess = result;
         });
     }
 };
 HomePage.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"] },
+    { type: src_app_service_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"] },
+    { type: _ionic_storage__WEBPACK_IMPORTED_MODULE_4__["Storage"] }
 ];
 HomePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -122,7 +141,8 @@ HomePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         template: __webpack_require__(/*! raw-loader!./home.page.html */ "./node_modules/raw-loader/index.js!./src/app/home/home.page.html"),
         styles: [__webpack_require__(/*! ./home.page.scss */ "./src/app/home/home.page.scss")]
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"], _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"]])
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"], _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"],
+        src_app_service_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"], _ionic_storage__WEBPACK_IMPORTED_MODULE_4__["Storage"]])
 ], HomePage);
 
 

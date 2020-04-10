@@ -69,7 +69,8 @@ export class CommonEditMailHubComponent implements OnInit {
       this.templateList = data;
       console.log(this.templateList);
     });
-   this.qteService.ActionGetQuoteCustContactList(this.navParams.data.versionId).subscribe(data=>{
+   this.qteService.ActionGetQuoteCustContactList(this.header.VersionID).subscribe(data=>{
+     console.log(data)
         this.qteService.ActionGetEmailsEmployeeList(data).subscribe(item=>{
           item.forEach(element => {
             this.mailList.push(element);
@@ -97,7 +98,7 @@ export class CommonEditMailHubComponent implements OnInit {
           this.To = element.To;
           this.From = element.From;
           this.CC= element.CC;
-          this.Subject = element.Subject;
+          this.Subject = this.Subject+" - "+element.Subject;
           this.mailBody = element.Body;
         }
       });
@@ -106,7 +107,7 @@ export class CommonEditMailHubComponent implements OnInit {
         From : this.From,
         To: this.To,
         CC: this.CC,
-        Subject: this.headerData.QuoteNo+" - "+this.headerData.QuoteName+" - "+this.Subject,
+        Subject:this.Subject ,
         mailBody: this.mailBody
     }
     console.log(this.mailDetails);
@@ -117,7 +118,7 @@ export class CommonEditMailHubComponent implements OnInit {
     this.mailDetails["mailBody"] = document.getElementById("mail_body").innerHTML;
   }
 
-  getToItems(ev: any) {
+  getToItems(ev: any) {debugger;
      var result = ev.substring(ev.length, (ev.lastIndexOf(",")+1));
      if(result==""){
       this.To = "";
@@ -127,6 +128,7 @@ export class CommonEditMailHubComponent implements OnInit {
      if(result && result.trim() != ""){
       this.isItemToAvailable = true;
        this.mailList.filter((item) => {
+         console.log(item);
         var objInfo={
           Name: "",
           Phone: "",
@@ -310,7 +312,7 @@ ActionOnAttach(){
 // };
 
   //Attachments Function
-  ActionUploadCommhubAttach(event: any) {debugger;
+  ActionUploadCommhubAttach(event: any) {
     if (this.commDetails.ID == 0) {
       let info = this.commDetails;
       this.qservice.DocHeader(info.ID, info.RefID, info.categoryID, this.userInfo.logInUserID, info.Subject, info.TypeID).subscribe(data => {
@@ -369,7 +371,7 @@ ActionOnAttach(){
     
   }
 
-  /* ActionSaveQuoteNote(){debugger;
+  /* ActionSaveQuoteNote(){;
     this.qservice.SaveQuoteNote(this.commDetails).subscribe(data => {
       this.commDetails.ID = data;
       this.ActionCloseCommhubedit(true);

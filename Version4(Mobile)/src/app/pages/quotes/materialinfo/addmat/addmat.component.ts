@@ -98,6 +98,7 @@ export class AddmatComponent implements OnInit {
     this.material.SlabList = this.material.SlabList == null ? [] : this.material.SlabList;
     let size = this.quoterep.SetInitSlabs();
     this.material.SlabList.push(size);
+    console.log(this.material.SlabList)
     
   }
   ActionToClose(issave) {
@@ -191,7 +192,7 @@ export class AddmatComponent implements OnInit {
   };
 
   /*********Material Search************/
-  ActionSearchProductItems = function (material, searchtypeId, productsubgroup, searchType) {
+  ActionSearchProductItems(material, searchtypeId, productsubgroup, searchType) {
     this.material.searchType = searchType; this.material.showProducts = true;
     let searchobj = material;
     let prosubgroupId = (productsubgroup == null || productsubgroup == undefined || productsubgroup == 0) ? 0 : productsubgroup.ID;
@@ -200,10 +201,12 @@ export class AddmatComponent implements OnInit {
     else if (prosubgroupId > 0 && color == "") { this.searchtypeId = 1; }
     else if (prosubgroupId == 0 && color != "") { this.searchtypeId = 2; }
     else if (prosubgroupId > 0 && color != "") { this.searchtypeId = 3; }
-    this.preparematerialsearch(material, searchtypeId, prosubgroupId, color, searchobj, this.priceListID);
+    this.ActionSearchSelect(material, searchtypeId, prosubgroupId, color, searchobj, this.priceListID);
+    //this.preparematerialsearch(material, searchtypeId, prosubgroupId, color, searchobj, this.priceListID);
+    
     
   }
-  preparematerialsearch(material, searchtypeId, prosubgroupId, color, searchobj, pricelistId) {
+  /* preparematerialsearch(material, searchtypeId, prosubgroupId, color, searchobj, pricelistId) {
     this.material.SearchChkFlag = material.SearchChkFlag == undefined ? 0 : material.SearchChkFlag;
     this.material.DepthTypeID = material.DepthTypeID == undefined ? 0 : material.DepthTypeID;
     this.material.FinishTypeID = material.FinishTypeID == undefined ? 0 : material.FinishTypeID;
@@ -214,10 +217,8 @@ export class AddmatComponent implements OnInit {
     this.service.Actionpricegrouplists(pricelistId).subscribe(data => { this.pricegroups = data});
     this.preparesuppliersfromresults(this.productItems);
     this.showProductinventory = false; this.showProducts = true;
-  }
-  ActionClosePopup() {
-    this.material.showProducts = false; this.showProducts = false; this.showProductinventory = false; this.showProductinventory1 = false;
-  }
+  } */
+  
   preparesuppliersfromresults(productItems: any) {
     let supplierList = [];
     if (productItems.length > 0) {
@@ -229,12 +230,12 @@ export class AddmatComponent implements OnInit {
     }
   }
 
-  ActionPopulateMaterialSearch(productItem: any) {
+  /* ActionPopulateMaterialSearch(productItem: any) {
 
     this.material = this.quoterep.popultaesearchiteminfo(this.material, this.subproductgroups, productItem);
     this.ActionClosePopup();
     console.log(this.material)
-  }
+  } */
 
 
 
@@ -275,22 +276,22 @@ export class AddmatComponent implements OnInit {
     return await modal.present();
   }
 
-  async ActionSearchSelect(typeid, typeid2) {
-    let obj = { searchTypeId: typeid, producttypeId: typeid2, search: this.material.Des == undefined ? "" : this.material.Des }
-    const popover = await this.popoverCntrl.create({
+  async ActionSearchSelect(material, searchtypeId, prosubgroupId, color, searchobj,priceListID) {
+    let obj = { material, searchtypeId, prosubgroupId, color, searchobj,priceListID}
+    const popover = await this.Modalcntrl.create({
       component: SearchComponent,
-      translucent: true,
       componentProps: obj,
-      cssClass: "popover_class"
     });
+    console.log(obj);
     return await popover.present();
+    
   }
   
 
 }
 
 @Component({
-  template: `
+ /*  template: `
   <ion-header>
   <ion-toolbar class="toolsty">
     <ion-title class="titleheader2"><b>Description</b></ion-title>
@@ -310,7 +311,9 @@ export class AddmatComponent implements OnInit {
   </ion-row>
   </ion-item>
 </ion-content>`,
-  styleUrls: ['./addmat.component.scss'],
+  styleUrls: ['./addmat.component.scss'], */
+  selector: 'app-search',
+  templateUrl: './search.html',
 })
 export class SearchComponent implements OnInit {
   partinfo: any = [];
@@ -319,27 +322,84 @@ export class SearchComponent implements OnInit {
   info: any;
   searchobj = this.navParams.data;
   listItems = [];
-  constructor(private navParams: NavParams, public Modalcntrl: ModalController, private getservice: QuotegetService, private popoverCntrl: PopoverController) { }
+  material: any;
+  prosubgroupId: number;
+  searchtypeId: number;
+  pricegroups: any = [];
+  productItems: any = [];
+  subproductgroups: any = [];
+  showProductinventory: boolean;
+  showProducts: boolean;
+  loaderToShow: any;
+  showProductinventory1: boolean;
+  color: any;
+  priceListID: any;
+  constructor(private service: QuoteService,private navParams: NavParams,private quoterep: QuoterepService, public Modalcntrl: ModalController, private getservice: QuotegetService, private popoverCntrl: PopoverController) { }
   obj: any;
   ngOnInit() {
-    this.ActionlistItems()
+    //this.ActionlistItems()
+    this.preparematerialsearch(this.material, this.searchtypeId, this.prosubgroupId, this.color, this.searchobj, this.priceListID)
+    
   }
 
-  ActionToClosePop(isSelect: boolean) {
-    this.popoverCntrl.dismiss({
+  ActionClosePopup() {
+    this.material.showProducts = false; this.showProducts = false; this.showProductinventory = false; //this.showProductinventory1 = false;
+    this.Modalcntrl.dismiss({
+      componentProps:this.material,
       'dismissed': true,
-      isSelect: isSelect
     });
   }
 
-  ActionSelectItem(model: any) {
+ /*  ActionSelectItem(model: any) {
     this.info = model;
     this.ActionToClosePop(true)
-  }
-  ActionlistItems() {
-    this.getservice.ActionSearchMaterials(this.searchobj.search, this.searchobj.typeId, this.searchobj.pricelistIds, this.searchobj.depthId, this.searchobj.finishId, this.searchobj.searchtypeId, this.searchobj.proSubGroupId).subscribe(data => {
+  } */
+  /* ActionlistItems() {debugger
+    this.getservice.ActionSearchMaterials(this.searchobj.search, this.material.typeId, this.searchobj.pricelistIds, this.searchobj.depthId, this.searchobj.finishId, this.searchobj.searchtypeId, this.searchobj.proSubGroupId).subscribe(data => {
       this.listItems = data
     });
+    
+  } */
+
+  preparematerialsearch(material, searchtypeId, prosubgroupId, color=this.color, searchobj, pricelistId) {
+    this.material.SearchChkFlag = material.SearchChkFlag == undefined ? 0 : material.SearchChkFlag;
+    this.material.DepthTypeID = material.DepthTypeID == undefined ? 0 : material.DepthTypeID;
+    this.material.FinishTypeID = material.FinishTypeID == undefined ? 0 : material.FinishTypeID;
+    if (this.material.SearchChkFlag != 0) {
+      this.prosubgroupId = 0; this.searchtypeId = 2;
+    }
+    this.service.ActionGetmaterialsearchrecords(color, this.material.SearchChkFlag, this.priceListID, this.material.DepthTypeID, this.material.FinishTypeID, searchtypeId, prosubgroupId).subscribe(data => { this.productItems = data;this.showLoader(1);  });
+    this.service.Actionpricegrouplists(pricelistId).subscribe(data => { this.pricegroups = data;console.log(data)});
+    this.preparesuppliersfromresults(this.productItems);
+    this.showProductinventory = false; this.showProducts = true;
+  }
+  preparesuppliersfromresults(productItems: any) {
+    let supplierList = [];
+    if (productItems.length > 0) {
+      productItems.map(function (elem) {
+        if (elem.SupplierID > 0) {
+          let item = { ID: "", Name: '' }; item.ID = elem.SupplierID; item.Name = elem.SupplierName; supplierList.push(item);
+        }
+      });
+    }
   }
 
+  showLoader(value) {
+    if (value == 0)
+    {this.loaderToShow = 0 }
+    else 
+    {this.loaderToShow = 1}
+  }
+
+  ActionPopulateMaterialSearch(productItem: any) {
+;
+    this.material = this.quoterep.popultaesearchiteminfo(this.material, this.subproductgroups, productItem);
+    this.ActionClosePopup();
+    console.log(this.material)
+  }
+
+  /* ActionClosePopup() {
+    ;
+    this.material.showProducts = false; this.showProducts = false; this.showProductinventory = false; this.showProductinventory1 = false;
+  } */
 }

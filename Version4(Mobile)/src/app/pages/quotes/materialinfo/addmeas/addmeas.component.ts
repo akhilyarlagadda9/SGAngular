@@ -21,7 +21,7 @@ export class AddmeasComponent implements OnInit {
   ngOnInit() {
     this.GetStockInfo()
     this.GetSlabListInfo()
-    this.SaveStockLisk()
+    //this.SaveStockLisk()
   }
 
   ActionToClose() {
@@ -61,19 +61,19 @@ export class AddmeasComponent implements OnInit {
     );
   }
 
-  SaveStockLisk() {
+  /* SaveStockLisk() {
     this.service.ActionSaveMaterialInvSlabList(this.stockList).subscribe(
 
       data => { this.stockinfo = data; console.log(this.stockinfo); }
     );
-  }
+  } */
 
   /* ActionAssignSlabs = function () {;
     let chkdList = []; let invSlabList = [];
     this.stockList.SlabList.map(function (elem) { if (elem.Check == 1 && (elem.StatusID == 7 || elem.StatusID == 17)) { chkdList.push(elem); return elem } { return 0 } });
     
     if (invSlabList.length > 0) {
-      this.SaveStockLisk(invSlabList);
+      thiso.SaveStockLisk(invSlabList);
     }
     this.ActionAssignOnOrderItems();
 } */ 
@@ -81,32 +81,36 @@ export class AddmeasComponent implements OnInit {
 ActionAssignSlabs = function () {
     var chkdList = []; let invSlabList = [];
     this.stockList.SlabList.map(function (elem) { if (elem.Check == 1 && (elem.StatusID == 7 || elem.StatusID == 17)) { chkdList.push(elem); return elem } { return 0 } });
-    for (let j = 0; j <= chkdList.length; j++) {
-        var model = new this.quoterep.invslabModel(_qscope, this.material.ID, j);
+    for (let j = 0; j < chkdList.length; j++) {
+        var model = this.quoterep.invslabModel(_qscope, this.material.ID, chkdList[j]);
         invSlabList.push(model);
-        this.material.InvSlabList.push(model);
+        console.log(model)
+        //this.material.InvSlabList.push(model);
         this.material.stkShow = true;
     };
     if (invSlabList.length > 0) {
-        this.savematinventoryslabs(invSlabList);
+
+        this.service.ActionSaveMaterialInvSlabList(invSlabList).subscribe( data => {invSlabList = data;console.log(data)} );
+        console.log(invSlabList)
     }
-    //this.ActionAssignOnOrderItems();
+    this.ActionAssignOnOrderItems();
+    this.ActionToClose();
     
 }
 
-/* ActionAssignOnOrderItems = function () {
+ActionAssignOnOrderItems = function () {
   let chkdList = []; let ordSlabsList = [];
   this.stockList.OnOrderItems.map(function (elem) { if (elem.Check == 1 && elem.StatusID == 0) { chkdList.push(elem); return elem } { return 0 } });
-  for(let j = 0; j <= chkdList.length; j++) {
-      var model = new this.quoterep.invslabModel(_qscope, this.material.ID, j);
+  for(let j = 0; j < chkdList.length; j++) {
+      var model = this.quoterep.invslabModel(_qscope, this.material.ID, ordSlabsList[j]);
       ordSlabsList.push(model);
-      this.slabInventory.material.OnOrderPoList.push(model);
+      //this.slabInventory.material.OnOrderPoList.push(model);
       this.slabInventory.material.stkShow = true;
   };
   if (ordSlabsList.length > 0) {
       this.savematonorderslabs(ordSlabsList);
   }
-} */
+}
 
 
 

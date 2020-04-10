@@ -86,7 +86,7 @@
   <ion-item>
     <ion-label>CC: </ion-label>
     <!-- <ion-text>{{mailDetails.CC}}</ion-text> -->
-    <ion-textarea [(ngModel)]="mailDetails.CC" name="CC"  type="text" (ngModelChange)="getCCItems($event)"></ion-textarea>
+    <ion-textarea contenteditable="true" [(ngModel)]="mailDetails.CC" name="CC"  type="text" (ngModelChange)="getCCItems($event)"></ion-textarea>
   </ion-item>
 
   <ion-list *ngIf="isItemCCAvailable">
@@ -103,7 +103,7 @@
     <!-- <ion-label>Subject: </ion-label> -->
     <ion-input placeholder="Subject" [(ngModel)]="mailDetails.Subject" name="Subject" autofocus></ion-input>
   </ion-item>
-  <ion-item class="item-marg">
+  <ion-item>
     <ion-label floating>
       <span class="btn btn-success fileinput-button" ngClass="{disabled: disabled}" floating>
         <u>Attachments:</u>
@@ -132,7 +132,7 @@
   <!-- <div class="col-xs-6 col-sm-3" class="wideInput" id="mail_body" contenteditable="true" data-text="Enter text here" [innerHTML]="mailDetails.mailBody" (blur)="onBlurMethod()">
   
   </div> -->
-  <ion-textarea class="wideInput" placeholder="Enter mail Body" [innerHTML]="mailDetails.mailBody"></ion-textarea>
+  <ion-textarea class="mail-text" placeholder="Enter mail Body" [innerHTML]="mailDetails.mailBody" contenteditable="true"></ion-textarea>
   <!-- <ion-item>
     <ion-label floating><u>Note:</u></ion-label>
   </ion-item> -->

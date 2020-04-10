@@ -93,12 +93,13 @@ ActionPreviewFile(fileName){
         if (result.data.issave == true) {
           this.GetQuoteNoteList();
         }
+        console.log(this.notesList);
       }
     });
     return await modal.present();
   }
  //Comm.Hub Mail Function
-  async ActionEditCommHubMail(note: any) {debugger
+  async ActionEditCommHubMail(note: any) {
     if(note == 0){
       let msg = this.quoteInfo.QuoteNo + " - V " + this.quoteInfo.Version.SrNo + " - " + this.quoteInfo.QuoteName;
       let source = this.PhaseId > 0 ? "job" :"";

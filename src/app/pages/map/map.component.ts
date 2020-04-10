@@ -22,7 +22,7 @@ export class MapComponent implements OnInit  {
   OCLat:number=0;OCLan:number=0;
   CustLat:number=0;CustLan:number=0; arrData:Array<any>=[];
   constructor(private  Modalcntrl: ModalController,private authService: AuthService,private navParams: NavParams,private platform:Platform) { }
- arrInformation:any=[]; strCustFullAdd:string="";strHeadToShow:string=""; arrHead:Array<String>=[];
+ arrInformation:any=[]; strCustFullAdd:string="";strHeadToShow:string=""; arrHead:Array<String>=[]; distance:any = 0;
 objDataInfo = this.navParams.data;
  ngOnInit() {
   this.loadMap();
@@ -45,7 +45,7 @@ objDataInfo = this.navParams.data;
       //this.scheduleMap();
       this.objDataInfo.headerInfo.forEach(data => {
         this.strCustFullAdd = data.extendedProps.Address+","+data.extendedProps.City+","+data.extendedProps.State+","+data.extendedProps.Zipcode;
-        this.strHeadToShow = data.extendedProps.QuoteNo+"-"+data.extendedProps.QuoteNo+ this.strCustFullAdd;
+        this.strHeadToShow = data.extendedProps.QuoteNo+"-"+data.extendedProps.QuoteName+ this.strCustFullAdd;
         this.arrData.push(this.strCustFullAdd);
         this.arrHead.push(this.strHeadToShow);
     });
@@ -58,6 +58,10 @@ objDataInfo = this.navParams.data;
 
     this.scheduleMap();
   }
+}
+
+ActionZoom(){
+  this.map.setCameraZoom(4.3);
 }
 
 scheduleMap(){
@@ -137,7 +141,7 @@ markerLine(){
     'target': latLngBounds,
     });
     let directionsService = new google.maps.DirectionsService;
-
+    //let distanceService = new google.maps.DistanceMatrixService();
     directionsService.route({
         origin: this.arrInformation[0],
         destination: this.arrInformation[1],
@@ -152,6 +156,15 @@ markerLine(){
                 width:4,
                 geodesic:false
             });
+            var R = 6378137; // Earth’s mean radius in meter
+            var dLat = (this.arrInformation[1].lat -this.arrInformation[0].lat)*Math.PI/180;
+            var dLong = (this.arrInformation[1].lng - this.arrInformation[0].lng)*Math.PI/180;
+            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos((this.arrInformation[0].lat)*Math.PI/180) * Math.cos((this.arrInformation[1].lat)*Math.PI/180) *
+              Math.sin(dLong / 2) * Math.sin(dLong / 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            this.distance = ((R * c)/1000).toFixed(2); // distance in km
+            console.log(this.distance);
         } else {
             console.warn(status);
         }

@@ -26,5 +26,12 @@
   </ion-toolbar> -->
 </ion-header>
 <ion-content>
-<div id="map_canvas"></div>
+<div id="map_canvas">
+  <div *ngIf="distance == 0">
+  <span class="smallPanel" (click)="ActionZoom()">Zoom</span>
+  </div>
+  <div *ngIf="distance !=0">
+    <span class="smallPanel">{{distance}} kms</span>
+  </div>
+</div>
 </ion-content>

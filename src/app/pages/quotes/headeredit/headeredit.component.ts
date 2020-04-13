@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams,AlertController } from '@ionic/angular';
 import { FormsModule, NgForm } from '@angular/forms';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { QuotepostService } from 'src/app/service/quotepost.service';
@@ -17,7 +17,7 @@ export class HeadereditComponent implements OnInit {
   navObj = this.navParams.data;
   PoItemList: any;
 
-  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private getservice: QuotegetService,private service:QuoteService) {
+  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private getservice: QuotegetService,private service:QuoteService,private alertCtrl: AlertController) {
     this.PopulateDropDownList(this.navParams.data.Version.CustTypeID);
    }
   headerinfo:any={QuoteContacts:[]};
@@ -113,7 +113,29 @@ export class HeadereditComponent implements OnInit {
 
   ActionDeleteItem(id){
     console.log(id);
-    this.service.POItemDelete(id).subscribe(data=>{
+    let objAlrtShow = {
+      Header: "Are you sure you want to delete activity?",
+      SubAlert: "Do you want to continue?",
+      ID: id
+    }
+    this.confirmDelete(objAlrtShow);
+  }
+
+  async confirmDelete(obj){
+    const alert = await this.alertCtrl.create({
+      header: obj.Header,
+      message: obj.SubAlert,
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'danger',
+        handler: (blah) => {
+          // May be do something letter
+        }
+      }, {
+        text: 'Allow',
+        handler: () => {
+      this.service.POItemDelete(obj.ID).subscribe(data=>{
       console.log(data);
       for(var i=0;i<this.headerinfo.PoItemList.length;i++){
         if(this.headerinfo.PoItemList[i].ID==data){
@@ -121,8 +143,24 @@ export class HeadereditComponent implements OnInit {
         }
       }
     });
+      this.ConfirmSuccess();
+    }
+    }]
+    });
+    alert.present();
   }
- 
+  async ConfirmSuccess(){
+    let obj = {
+      Header: "Activity Deleted Sucessfully!",
+    }
+    const alert = await this.alertCtrl.create({
+      header: obj.Header,
+      buttons: [{
+        text: 'OK',
+      }]
+    });
+    alert.present();
+  }
  //PO items Edit Function
  async ActionEditPOItem(info: any, indx: any) {
   if (info == 0) {

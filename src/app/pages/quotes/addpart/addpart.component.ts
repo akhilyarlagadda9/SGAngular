@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, PopoverController, LoadingController } from '@ionic/angular';
+import { ModalController, PopoverController, LoadingController, AlertController } from '@ionic/angular';
 import { QuoteService } from 'src/app/service/quote.service';
 import { QuotegetService } from 'src/app/service/quoteget.service';
 import { AddmatComponent } from '../materialinfo/addmat/addmat.component';
@@ -27,7 +27,7 @@ export class AddpartComponent implements OnInit {
   readonlyFlag:boolean = false;
   currIndex:any = [];
   constructor(public Modalcntrl: ModalController, public popoverCntrl: PopoverController,public loadingController: LoadingController,
-    private service: QuoteService, private getservice: QuotegetService, private quoterep: QuoterepService) { }
+    private service: QuoteService, private getservice: QuotegetService, private quoterep: QuoterepService,private alertCtrl: AlertController) { }
 
   ngOnInit() {
     this.readonlyFlag = this.partinfo.Shape != "" ? true : false;
@@ -271,29 +271,148 @@ export class AddpartComponent implements OnInit {
   //ActionRemoveEdge(index:number){}
 
 
-  ActionRemovePartItems(index:number, part, type){
-    this.removepartItems(part.ID,index, part, type,);
+  async ConfirmSuccess(){
+    const alert = await this.alertCtrl.create({
+      header: "Activity Deleted Sucessfully!",
+      buttons: [{
+        text: 'OK',
+      }]
+    });
+    alert.present();
+  }
+
+  async  ActionRemovePartItems(index:number, part, type){
+    const alert = await this.alertCtrl.create({
+      header: "Are you sure you want to delete activity?",
+      message: "Do you want to continue?",
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'danger',
+        handler: (blah) => {
+         //May be later
+        }
+      }, {
+        text: 'Allow',
+        handler: () => {
+          this.removepartItems(part.ID,index, part, type,);
+          this.ConfirmSuccess();
+    }
+    }]
+    });
+    alert.present();
+  }
+  async ActionRemoveSink(index:number){
+    const alert = await this.alertCtrl.create({
+      header: "Are you sure you want to delete activity?",
+      message: "Do you want to continue?",
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'danger',
+        handler: (blah) => {
+         //May be later
+        }
+      }, {
+        text: 'Allow',
+        handler: () => {
+          this.removesink(this.partinfo.SinkList[index].ID, index, this.partinfo.SinkList[index]);
+          this.partinfo.SinkList.splice(index, 1);
+          this.ConfirmSuccess();
+    }
+    }]
+    });
+    alert.present();
+
+  }
+  async ActionRemoveFaucet(index:number){
+    const alert = await this.alertCtrl.create({
+      header: "Are you sure you want to delete activity?",
+      message: "Do you want to continue?",
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'danger',
+        handler: (blah) => {
+         //May be later
+        }
+      }, {
+        text: 'Allow',
+        handler: () => {
+          this.removefaucet(this.partinfo.FaucetList[index].ID, index, this.partinfo.FaucetList[index]);
+          this.partinfo.FaucetList.splice(index, 1);
+          this.ConfirmSuccess();
+    }
+    }]
+    });
+    alert.present();
+  }
+  async ActionRemoveLabor(index:number){
+    const alert = await this.alertCtrl.create({
+      header: "Are you sure you want to delete activity?",
+      message: "Do you want to continue?",
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'danger',
+        handler: (blah) => {
+         //May be later
+        }
+      }, {
+        text: 'Allow',
+        handler: () => {
+          this.removelabor(this.partinfo.LaborList[index].ID, index, this.partinfo.LaborList[index]);
+          this.partinfo.LaborList.splice(index, 1);
+          this.ConfirmSuccess();
+    }
+    }]
+    });
+    alert.present();
+  }
+  async ActionRemoveOther(index:number){
+    const alert = await this.alertCtrl.create({
+      header: "Are you sure you want to delete activity?",
+      message: "Do you want to continue?",
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'danger',
+        handler: (blah) => {
+         //May be later
+        }
+      }, {
+        text: 'Allow',
+        handler: () => {
+          this.removeaddon(this.partinfo.OtherList[index].ID, index, this.partinfo.OtherList[index]);
+          this.partinfo.OtherList.splice(index, 1);
+          this.ConfirmSuccess();
+    }
+    }]
+    });
+    alert.present();
+  }
+  async ActionRemoveAppliance(index:number){
+    const alert = await this.alertCtrl.create({
+      header: "Are you sure you want to delete activity?",
+      message: "Do you want to continue?",
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'danger',
+        handler: (blah) => {
+         //May be later
+        }
+      }, {
+        text: 'Allow',
+        handler: () => {
+          this.removetile(this.partinfo.ApplianceList[index].ID, index, this.partinfo.ApplianceList[index]);
+          this.partinfo.ApplianceList.splice(index, 1);
+          this.ConfirmSuccess();
+    }
+    }]
+    });
+    alert.present();
     
-  }
-  ActionRemoveSink(index:number){
-    this.removesink(this.partinfo.SinkList[index].ID, index, this.partinfo.SinkList[index]);
-    this.partinfo.SinkList.splice(index, 1);
-  }
-  ActionRemoveFaucet(index:number){
-    this.removefaucet(this.partinfo.FaucetList[index].ID, index, this.partinfo.FaucetList[index]);
-    this.partinfo.FaucetList.splice(index, 1);
-  }
-  ActionRemoveLabor(index:number){
-    this.removelabor(this.partinfo.LaborList[index].ID, index, this.partinfo.LaborList[index]);
-    this.partinfo.LaborList.splice(index, 1);
-  }
-  ActionRemoveOther(index:number){debugger
-    this.removeaddon(this.partinfo.OtherList[index].ID, index, this.partinfo.OtherList[index]);
-    this.partinfo.OtherList.splice(index, 1);
-  }
-  ActionRemoveAppliance(index:number){
-    this.removetile(this.partinfo.ApplianceList[index].ID, index, this.partinfo.ApplianceList[index]);
-    this.partinfo.ApplianceList.splice(index, 1);
   }
   ActionSetMargin(typeId: number, model: any, type: string) {
     model = this.quoterep.margincalculations(typeId, model, type);
@@ -477,7 +596,7 @@ removepartItems(Id,index, part, type,) {
           partItems = part.CutoutList;
           this.service.qppartcutoutremove(Id,  part.VersionID, part.AreaID,).subscribe(data => {});
           this.partinfo.CutoutList.splice(index, 1);
-          break
+          break;
   }
 }
 

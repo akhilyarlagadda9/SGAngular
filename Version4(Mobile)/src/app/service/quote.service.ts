@@ -315,7 +315,57 @@ qpactionsavereferralfee(model, areaId): Observable<any> {
   var data = JSON.stringify(model);
   return this.http.post<any>(this.url + 'api/QSave/ActionSaveReferralFee?areaId=' + areaId, model,{ headers: { 'Content-Type': "application/json;charset=utf-8" } })
 }
+
+
 //#endregion
 //#region Get methods For Summary
+//#endregion
+
+//#region   remove function
+
+
+
+
+qppartmaterialremove(Id, versionId, areaId): Observable<any> {
+  return this.http.post<any>(this.url + 'api/QSave/ActionRemovePartMaterial?Id=' + Id + '&versionId=' + versionId + '&areaId=' + areaId, { headers: { 'Content-Type': 'application/json' } })
+}
+
+qppartfabremove(Id, versionId, areaId): Observable<any> {
+  return this.http.post<any>(this.url + 'api/QSave/ActionRemovePartFab?Id=' + Id + '&versionId=' + versionId + '&areaId=' + areaId, { headers: { 'Content-Type': 'application/json' } })
+}
+
+qppartedgeremove(Id, versionId, areaId): Observable<any> {
+  return this.http.post<any>(this.url + 'api/QSave/ActionRemovePartEdge?Id=' + Id + '&versionId=' + versionId + '&areaId=' + areaId, { headers: { 'Content-Type': 'application/json' } })
+}
+
+qppartsplashremove(Id, versionId, areaId): Observable<any> {
+  return this.http.post<any>(this.url + 'api/QSave/ActionRemovePartSplash?Id=' + Id + '&versionId=' + versionId + '&areaId=' + areaId, { headers: { 'Content-Type': 'application/json' } })
+}
+
+qppartcutoutremove(Id, versionId, areaId): Observable<any> {
+  return this.http.post<any>(this.url + 'api/QSave/ActionRemovePartCutout?Id=' + Id + '&versionId=' + versionId + '&areaId=' + areaId, { headers: { 'Content-Type': 'application/json' } })
+}
+
+qpremovesink(Id, versionId, areaId): Observable<any> {
+  return this.http.post<any>(this.url + 'api/QSave/ActionRemoveSink?Id=' + Id + '&versionId=' + versionId + '&areaId=' + areaId, { headers: { 'Content-Type': 'application/json' } })
+}
+
+qpremovefaucet(Id, versionId, areaId): Observable<any> {
+  return this.http.post<any>(this.url + 'api/QSave/ActionRemoveFaucet?Id=' + Id + '&versionId=' + versionId + '&areaId=' + areaId, { headers: { 'Content-Type': 'application/json' } })
+}
+
+
+qpremovelabor(Id, versionId, areaId): Observable<any> {
+  return this.http.post<any>(this.url + 'api/QSave/ActionRemoveLabor?Id=' + Id + '&versionId=' + versionId + '&areaId=' + areaId, { headers: { 'Content-Type': 'application/json' } })
+}
+
+qpremoveaddon(Id, versionId, areaId): Observable<any> {
+  return this.http.post<any>(this.url + 'api/QSave/ActionRemoveAddon?Id=' + Id + '&versionId=' + versionId + '&areaId=' + areaId, { headers: { 'Content-Type': 'application/json' } })
+}
+qpremovetile(Id, versionId, areaId): Observable<any> {
+  return this.http.post<any>(this.url + 'api/QSave/ActionRemoveTile?Id=' + Id + '&versionId=' + versionId + '&areaId=' + areaId, { headers: { 'Content-Type': 'application/json' } })
+}
+
+  
 //#endregion
 }

@@ -1,0 +1,63 @@
+<!-- <div *ngIf="form.submitted && nameField.invalid" class="invalid-feedback padd-Left">
+    <div *ngIf="nameField.errors.required" class="color-red">Select Material</div>
+</div> -->
+
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-button color="danger" type="button" (click)="ActionClosePopup()">
+        Cancel
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+    </ion-buttons>
+    <ion-title align="center">Material Search</ion-title>
+  </ion-toolbar>
+  </ion-header>
+<ion-content>
+  <div>
+    <!-- <ion-row style="width: 100%;">
+      <ion-col size="11">
+        <ion-label color="primary" class="paddleft5 fontbold"> </ion-label>
+      </ion-col>
+      <ion-col size="1" class="text-center" style="font-size: 18px;" (click)="ActionClosePopup()"><b>X</b>
+      </ion-col>
+    </ion-row> -->
+    <div style="width: 100%;overflow: auto;background-color: white;">
+      <div *ngIf="productItems.length != 0 && loaderToShow == 1" >
+        <ion-row *ngFor="let product of productItems" class="paddzero border-btm smallfont2">
+          <ion-col class="paddzero" (click)="ActionPopulateMaterialSearch(product)">
+            <ion-row>
+              <ion-col size="10" class="fontbold"> {{product.Description}} - {{product.Thickness}} -
+                {{product.Finish}}&nbsp;<span class="color-blue">({{product.SlabType}})</span></ion-col>
+              <ion-col size="2" class="text-right">{{product.Price  | number : '.2-2'}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="11">
+                <small class="color-blue fontbold">
+                  {{product.ItemNO}} - {{product.StoneType}}
+                  <span ng-if="product.SupplierName != '' && product.SupplierID > 0"> {{product.SupplierName}}</span>
+                  <span
+                    ng-if="product.GroupID > 0 && product.Group != '' &&  product.Group != null && product.Group != 'Select--One'">
+                    - {{product.Group}}</span>
+                  <span ng-if="product.RiskLevelID > 0"> - {{product.RiskLevel}}</span>
+                  <span ng-if="product.PriceByTypeID == 2"> - Slab Wgt. Avg.</span>
+                  <span ng-if="product.PriceByTypeID == 0"> - Sqft</span>
+                  <span ng-if="product.PriceByTypeID == 1"> - Price By Slab</span>
+                </small>
+              </ion-col>
+              <ion-col size="1" class="text-right">{{product.InStock}}</ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </div>
+      <ion-row *ngIf="productItems.length == 0 && loaderToShow == 1" class="color-red font-bold">
+        <ion-col class=" text-center">--NO RECORD FOUND--</ion-col>
+      </ion-row>
+      <ion-row *ngIf="loaderToShow == 0" class="color-red font-bold">
+        <ion-col class=" text-center"><ion-spinner name="dots" color="primary"></ion-spinner></ion-col>
+      </ion-row>
+    </div>
+  </div>
+</ion-content>
+  

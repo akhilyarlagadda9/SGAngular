@@ -227,7 +227,7 @@
                 </ion-input>
                 <span class="color-primary">SF</span>
               </ion-col>
-              <ion-col size="1" (click)="ActionRemoveSplash(i)"><ion-icon name="trash" class="fontmedium color-red"></ion-icon></ion-col>
+              <ion-col size="1" *ngIf="readonlyFlag == false" (click)="ActionRemovePartItems(i,splash, 'Splash')"><ion-icon name="trash" class="fontmedium color-red"></ion-icon></ion-col>
             </ion-row>
             <ion-row class="color-img bdr-radius20">
               <ion-col size="5" class="fontbold labelfont2 flex mar-top5"><span class="color-text">W:&nbsp;</span>
@@ -277,7 +277,7 @@
                 </ion-input>
                 <span class="color-primary">LF</span>
               </ion-col>
-              <ion-col size="1" (click)="ActionRemoveEdge(i)"><ion-icon name="trash" class="fontmedium color-red"></ion-icon></ion-col>
+              <ion-col size="1" *ngIf="readonlyFlag == false" (click)="ActionRemovePartItems(i,edge, 'Edge')"><ion-icon name="trash" class="fontmedium color-red"></ion-icon></ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="3">
@@ -342,7 +342,7 @@
                 </ion-input>
                 <span class="color-primary">EA</span>
               </ion-col>
-              <ion-col size="1" (click)="ActionRemoveCutout(i)"><ion-icon name="trash" class="fontmedium color-red"></ion-icon></ion-col>
+              <ion-col size="1" *ngIf="readonlyFlag == false" (click)="ActionRemovePartItems(i,cutout,'CutOut', 0)"><ion-icon name="trash" class="fontmedium color-red"></ion-icon></ion-col>
             </ion-row>
             <ion-row>
               <ion-col size="3">

@@ -25,6 +25,7 @@ export class AddpartComponent implements OnInit {
   material: any;
   loaderToShow: Promise<void>;
   readonlyFlag:boolean = false;
+  currIndex:any = [];
   constructor(public Modalcntrl: ModalController, public popoverCntrl: PopoverController,public loadingController: LoadingController,
     private service: QuoteService, private getservice: QuotegetService, private quoterep: QuoterepService) { }
 
@@ -265,31 +266,33 @@ export class AddpartComponent implements OnInit {
     this.partinfo.PartFabList[jndx].MeasureList.splice(indx, 1);
     this.ActionSetFabSqft(jndx);
   }
-  /* ActionRemoveSplash(index:number){
-    let currIndex = this.partinfo.SplashList.findIndex(function (o) { return o.ID === Id && o.Description === desc; });
-    //this.removelabor(this.partinfo.ID, currIndex, this.partinfo.SplashList);
-    this.partinfo.SplashList.splice(index, 1);
+  //ActionRemoveSplash(index:number){}
+
+  //ActionRemoveEdge(index:number){}
+
+
+  ActionRemovePartItems(index:number, part, type){
+    this.removepartItems(part.ID,index, part, type,);
     
-  } */
-  ActionRemoveEdge(index:number){
-    this.partinfo.EdgeList.splice(index, 1);
-  }
-  ActionRemoveCutout(index:number){
-    this.partinfo.CutoutList.splice(index, 1);
   }
   ActionRemoveSink(index:number){
+    this.removesink(this.partinfo.SinkList[index].ID, index, this.partinfo.SinkList[index]);
     this.partinfo.SinkList.splice(index, 1);
   }
   ActionRemoveFaucet(index:number){
+    this.removefaucet(this.partinfo.FaucetList[index].ID, index, this.partinfo.FaucetList[index]);
     this.partinfo.FaucetList.splice(index, 1);
   }
   ActionRemoveLabor(index:number){
+    this.removelabor(this.partinfo.LaborList[index].ID, index, this.partinfo.LaborList[index]);
     this.partinfo.LaborList.splice(index, 1);
   }
-  ActionRemoveOther(index:number){
+  ActionRemoveOther(index:number){debugger
+    this.removeaddon(this.partinfo.OtherList[index].ID, index, this.partinfo.OtherList[index]);
     this.partinfo.OtherList.splice(index, 1);
   }
   ActionRemoveAppliance(index:number){
+    this.removetile(this.partinfo.ApplianceList[index].ID, index, this.partinfo.ApplianceList[index]);
     this.partinfo.ApplianceList.splice(index, 1);
   }
   ActionSetMargin(typeId: number, model: any, type: string) {
@@ -446,26 +449,59 @@ export class AddpartComponent implements OnInit {
     });
     return await popover.present();
   }
+//*******************Part item delete funcrtionality********************//
 
-  /* removelabor(Id, index, laborlist) {
-    if (Id > 0) {
-        let previousWindowKeyDown = window.onkeydown;
-        swal({ title: "", text: "Are you sure you want to Delete?", type: "warning", showCancelButton: true, confirmButtonClass: "btn-danger", confirmButtonText: "Yes", cancelButtonText: "No", closeOnConfirm: false },
-            function (isConfirm) {
-                window.onkeydown = null;
-                if (isConfirm) {
-                    this.$apply(function () { laborlist.splice(index, 1); });
-                    let result = this.service.qpremovelabor(Id, laborlist.versionId, this.area.ID);
-                    resetversioninfo(result.VersionSummary);
-                    this.$apply(function () { calcversionsummary31(); });
-                    window.onkeydown = previousWindowKeyDown;
-                    swal({ title: "DELETED SUCCESSFULLY.", timer: 2000, showConfirmButton: false });
-                }
-            });
-    } else {
-        laborlist.splice(index, 1);  calcversionsummary31(); 
-    }
-} */
+
+removepartItems(Id,index, part, type,) {
+  let partItems = "";
+  switch (type) {
+      case "Material":
+          partItems = part.PartMaterialList;
+          this.service.qppartmaterialremove(Id, part.VersionID, part.AreaID).subscribe(data => {});
+          break;
+      case "Fab":
+          partItems = part.PartFabList;
+          this.service.qppartfabremove(Id, part.VersionID, part.AreaID).subscribe(data => {});
+          break;
+      case "Edge":
+          partItems = part.EdgeList;
+          this.service.qppartedgeremove(Id,  part.VersionID, part.AreaID,).subscribe(data => {});
+          this.partinfo.EdgeList.splice(index, 1);
+          break;
+      case "Splash":
+          partItems = part.SplashList;
+          this.service.qppartsplashremove(Id,  part.VersionID, part.AreaID,).subscribe(data => {});
+          this.partinfo.SplashList.splice(index, 1);
+          break;
+      case "CutOut":
+          partItems = part.CutoutList;
+          this.service.qppartcutoutremove(Id,  part.VersionID, part.AreaID,).subscribe(data => {});
+          this.partinfo.CutoutList.splice(index, 1);
+          break
+  }
+}
+
+removesink(Id, index, faucets) {
+  let result = this.service.qpremovesink(Id, faucets.VersionID, faucets.AreaID).subscribe(data => {result});
+}
+
+removefaucet(Id, index, faucets) {
+  let result = this.service.qpremovefaucet(Id, faucets.VersionID, faucets.AreaID).subscribe(data => {result});
+}
+
+  removelabor(Id, index, laborlist) {
+    let result = this.service.qpremovelabor(Id, laborlist.VersionID, laborlist.AreaID).subscribe(data => {result});
+}
+
+removeaddon(Id, index, addons) {
+  let result = this.service.qpremoveaddon(Id, addons.VersionID, addons.AreaID).subscribe(data => {result});
+}
+
+removetile(Id, index, list) {
+  let result = this.service.qpremovetile(Id, list.VersionID, list.AreaID).subscribe(data => {result});
+}
+
+
 }
 
 /***************Additional popups***********************/

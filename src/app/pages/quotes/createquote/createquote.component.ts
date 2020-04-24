@@ -27,9 +27,10 @@ export class CreatequoteComponent implements OnInit {
     quoteid: number, quoteno: string, versionid: number, customerid: number,
     accountid: number, childaccid: number, phaseid: number, viewtypeid: number, layoutId: 2
   };
+  bntStyle:string;
   constructor(private loadingController: LoadingController, public Modalcntrl: ModalController,
       private popoverCntrl: PopoverController,private qServe:QuoteService,private qRep:QuoterepService) { }
-  ngOnInit() {debugger;
+  ngOnInit() {
     this.header = {
       ProjectManagerID: 0, EstimatorID: 0,
       ID: 0, CustomerID: 0, QuoteOrLeadTypeID: 2, QuoteInfoType: "QUOTE", LocID: 1, CustJobNo: "", CustPoNo: "", QuoteDate: new Date().toLocaleDateString("en-US"),
@@ -38,7 +39,7 @@ export class CreatequoteComponent implements OnInit {
       //SalesPersonID : _userModel.logInUserEmpID,
       JobName: "", Address1: "", Address2: "", City: "", State: "", Zipcode: "", YearBuilt: "",
       LeadInfo: {
-        ID:0,LeadTypeID: "", SourceID: 0, HearBefore: 2, HearAbout: "",
+        ID:0,LeadTypeID: "", SourceID: 0, HearBefore: 2, HearAbout: "", AccountTypeId:"",
       },
       Version: {
         ID:0,AccName: "", ProductionTypeID: "", CustTypeID: 4, InvoiceTo: 1, ParentAccID: 0, ChildAccID: 0, StatusID: 1,
@@ -55,7 +56,7 @@ export class CreatequoteComponent implements OnInit {
         this.leadTypes =leadtypes.filter(s=>s.Name != "" && s.Name != null);
       }
     );
-    this.qServe.CustomerDictionayList(custDicIds).subscribe(data => { this.customerTypes = data[0] });
+    this.qServe.CustomerDictionayList(custDicIds).subscribe(data => {  console.log(data);this.customerTypes = data[0] });
     this.PopulateDropDownList(4);
     //FORM VALIDATIONS
   }
@@ -367,18 +368,37 @@ export class CreatequoteComponent implements OnInit {
     }
   }
   changeProgress(value) {
-    if (this.showProgress(value)) {
-      this.Progress = 0;
-    } else {
-      this.Progress = value;
+    this.Progress = value;
+  }
+
+  changeTab(postion:string) {
+    if(postion == "forward"){
+    if(this.header.LeadInfo.AccountTypeId && this.header.LeadInfo.LeadTypeID){
+     if(this.Progress == 0){
+        this.Progress = 1;
+        this.changeProgress(this.Progress);
+      }
+      else if(this.Progress == 1){
+        this.Progress = 2;
+        this.changeProgress(this.Progress);
+      }
     }
-  };
+    else{
+      
+    }
+  }
+    else if(postion == "back"){
+      if(this.Progress == 2){
+        this.Progress = 1;
+        this.changeProgress(this.Progress);
+      }
+      else if(this.Progress == 1){
+        this.Progress = 0;
+        this.changeProgress(this.Progress);
+      }
+    }
+  }
 
-  showProgress(value) {
-    return this.Progress === value;
-  };
-
-  
   showLoader() {
     this.loaderToShow = this.loadingController.create({
       message: 'please wait while saving'

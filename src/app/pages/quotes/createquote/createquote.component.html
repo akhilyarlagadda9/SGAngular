@@ -21,8 +21,8 @@
       <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCreateQuote(false)">X</ion-button>
     </ion-toolbar> -->
   </ion-header>
-  <ion-row>
-    <ion-col size="1" *ngIf="Progress == 1 || Progress == 0" style="padding-left: 13px;">
+  <!-- <ion-row> -->
+    <!-- <ion-col size="1" *ngIf="Progress == 1 || Progress == 0" style="padding-left: 13px;">
       <ion-fab-button color="primary" class="fabbtn" (click)="changeProgress(0)">1</ion-fab-button>
     </ion-col>
     <ion-col size="3" class="progbar-mat" *ngIf="Progress == 0">
@@ -36,7 +36,8 @@
     </ion-col>
     <ion-col size="1" *ngIf="Progress == 0">
       <ion-fab-button color="light" class="fabbtn" (click)="changeProgress(1)">2</ion-fab-button>
-    </ion-col>
+    </ion-col> -->
+    <!--Commented From Start-->
     <!-- <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 0">
       <ion-progress-bar></ion-progress-bar>
     </ion-col>
@@ -49,12 +50,13 @@
     <ion-col size="1" *ngIf="Progress == 0 || Progress == 1">
       <ion-fab-button color="light" class="fabbtn" (click)="changeProgress(2)">2</ion-fab-button>
     </ion-col> -->
-  </ion-row>
-  <ion-row>
+    
+  <!-- </ion-row> -->
+  <!-- <ion-row>
     <ion-col size="5" style="padding-left: 13px;"><span [ngClass]="{'txt-color' : Progress == 0 }">Account/Customer</span></ion-col>
     <ion-col size="5"><span [ngClass]="{'txt-color' : Progress == 1 }">Job Add</span></ion-col>
-    <!-- <ion-col size="4"><span [ngClass]="{'txt-color' : Progress == 2 }">Job</span></ion-col> -->
-  </ion-row>
+   //Commented From Start <ion-col size="4"><span [ngClass]="{'txt-color' : Progress == 2 }">Job</span></ion-col> 
+  </ion-row> -->
   <ion-content>
     <div *ngIf="Progress == 0">
       <ion-item>
@@ -75,7 +77,23 @@
           <ion-select-option *ngFor="let p of leadHearAbout" [value]="p.ID">{{p.Name}}</ion-select-option>
         </ion-select>
       </ion-item>
-     
+
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Account Types<span class="requiredField">*</span>
+        </ion-label>
+        <ion-select [(ngModel)]="header.LeadInfo.AccountTypeId" name="AccountTypeId" #AccountTypeId="ngModel" class="labelfont"
+        required>
+          <ion-select-option  *ngFor="let p of customerTypes"  [value]="p.ID">{{p.Name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <div *ngIf="form.submitted && AccountTypeId.invalid" class="invalid-feedback">
+        <div *ngIf="AccountTypeId.errors.required" class="color-red">Account Type is required</div>
+    </div>
+
+    </div>
+
+     <div *ngIf = "Progress == 1">
       <div *ngIf="header.Version.CustTypeID != 4 && header.Version.CustTypeID > 0">
         <ion-item>
           <ion-label class="labelfont" position="floating" color="primary">Customer/Account<span
@@ -122,7 +140,8 @@
           <ion-input [(ngModel)]="header.Version.Customer.LastName" name="LastName" type="text" class="labelfont">
           </ion-input>
         </ion-item>
-
+        
+        <div *ngIf = "header.LeadInfo.AccountTypeId !=13">
         <ion-item>
           <ion-label class="labelfont" position="floating" color="primary">Phone</ion-label>
           <ion-input type="text" [(ngModel)]="header.Version.Customer.PPhone" name="PPhone" class="labelfont">
@@ -133,6 +152,8 @@
           <ion-label class="labelfont" position="floating" color="primary">Email</ion-label>
           <ion-input type="text" [(ngModel)]="header.Version.Customer.Email" name="Email" class="labelfont"></ion-input>
         </ion-item>
+
+        </div>
       </div>
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Project Type<span
@@ -207,7 +228,7 @@
         </ion-row>
       </ion-item>
     </div>
-    <div *ngIf="Progress == 1">
+    <div *ngIf="Progress == 2">
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Job Name<span class="requiredField">*</span>
         </ion-label>
@@ -217,6 +238,7 @@
       <div *ngIf="form.submitted && QuoteName.invalid" class="invalid-feedback">
         <div *ngIf="QuoteName.errors.required" class="color-red">Job Name is required</div>
     </div>
+    <div *ngIf = "header.LeadInfo.AccountTypeId !=13">
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Job Address1</ion-label>
         <ion-input type="text" [(ngModel)]="header.Address1" name="Address1" class="labelfont"></ion-input>
@@ -251,6 +273,8 @@
         <ion-label class="labelfont" position="floating" color="primary">Job ZipCode</ion-label>
         <ion-input type="text" [(ngModel)]="header.Zipcode" name="Zipcode" class="labelfont"></ion-input>
       </ion-item>
+    </div>
+
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Year Built</ion-label>
         <ion-input type="text" [(ngModel)]="header.YearBuilt" name="YearBuilt" class="labelfont"></ion-input>
@@ -260,13 +284,29 @@
      
     </div> -->
   </ion-content>
-<ion-footer>
-  <ion-col *ngIf="Progress == 0">
-      <ion-button size="small" class="ion-float-right" color="primary" (click)="changeProgress(1)">Next</ion-button>
+  <ion-footer style="padding-right: 5px;background: aliceblue;">
+  <ion-col *ngIf="Progress == 0 || Progress == 1">
+      <ion-button size="small" id="forwardClick" class="ion-float-right" color="primary" (click)="changeTab('forward')">Next</ion-button>
   </ion-col>
-  <ion-col *ngIf="Progress == 1">
-        <ion-button size="small" class="ion-float-left" color="primary" (click)="changeProgress(0)">Back</ion-button>
+  <ion-col *ngIf="Progress == 1 || Progress == 2">
+        <ion-button size="small" class="ion-float-left" color="primary" (click)="changeTab('back')">Back</ion-button>
         <ion-button size="small" class="ion-float-right" color="success" type="submit">Save</ion-button>
   </ion-col>
+ 
+    <ion-segment style="height: 44px;">
+      <ion-segment-button checked (click)="changeProgress(0)">
+        <ion-icon name="quote" class="imghw1 paddzero"></ion-icon>
+        <ion-label [ngClass]="{'txt-color' : Progress == 0 }" class="font10 paddzero">Lead/Qoute</ion-label>
+      </ion-segment-button>
+      <ion-segment-button (click)="changeProgress(1)">
+        <ion-icon name="person-outline" class="imghw1 paddzero"></ion-icon>
+        <ion-label [ngClass]="{'txt-color' : Progress == 1 }" class="font10 paddzero">Cudstomer</ion-label>
+      </ion-segment-button>
+      <ion-segment-button (click)="changeProgress(2)">
+        <ion-icon name="file-tray-stacked-outline" class="imghw1 paddzero"></ion-icon>
+        <ion-label [ngClass]="{'txt-color' : Progress == 2 }" class="font10 paddzero">Job</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
 </ion-footer>
 </form>

@@ -174,7 +174,7 @@ ActionSaveMaterialInvSlabList(slabList: any): Observable<any> {
   return this.http.post<any>(this.url + 'api/Quote/SaveMaterialInvSlabList', model, { headers: { 'Content-Type': 'application/json' } })
 }
 //Action Batch Save Parts
-ActionBatchPartsSave(versionId, areaId, userId, partslist:any){
+ActionSaveBatchParts(versionId, areaId, userId, partslist:any){
   var model = JSON.stringify(partslist);
   return this.http.post<any>(this.url + 'api/QSave/ActionSaveBatchPartList?versionId=' + versionId + "&areaId=" + areaId + '&userId=' + userId, model, { headers: { 'Content-Type': 'application/json' } })
 }

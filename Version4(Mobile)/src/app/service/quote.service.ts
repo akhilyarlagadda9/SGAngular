@@ -80,6 +80,9 @@ CustTypeResourceList(parentId:number,typeId:number):Observable<any> {
 QuoteMasterList(typeID:number):Observable<any> {;
   return this.http.get<any>(this.url +  'api/QuoteAdmin/MasterList?typeID=' + typeID)
 }
+GetAdminProjectTypes(typeID:number):Observable<any> {;
+  return this.http.get<any>(this.url +  'api/QuoteAdmin/MasterList?typeID=' + typeID)
+}
 CustPriceList(typeID:number):Observable<any> {
   return this.http.get<any>(this.url +  'api/QuoteAdmin/CustPriceList?typeID=' + typeID)
 }

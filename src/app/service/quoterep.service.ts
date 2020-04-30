@@ -146,6 +146,7 @@ export class QuoterepService {
     header.CustomerID = newheader.Customer.ID;
     header.Version.CustomerID = newheader.Version.CustomerID;
     header.CustomerContacts = newheader.CustomerContacts;
+    header.Version = newheader.Version;
     return header;
   }
 
@@ -522,7 +523,7 @@ export class QuoterepService {
       case "splashLF":
         cost = details.UnitCost; price = details.UnitPrice; margin = details.LFMargin;
         break;
-      case "edge": case "sink": case "fat": case "labor": case "addon": case "tile": case "mat":
+      case "edge": case "sink": case "fat": case "labor": case "addon": case "tile": case "mat":case "other":
         cost = details.UnitCost; price = details.UnitPrice; margin = details.Margin;
         if (details.TaxVal > 0) { cost += this.roundToTwo(cost * (details.TaxVal / 100)); }
         break;

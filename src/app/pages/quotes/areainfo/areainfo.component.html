@@ -70,7 +70,7 @@
   </ion-col>
 </ion-row>
 <ion-row class="rowlineitem" *ngFor="let mat of areaInfo.AreaUnassignedMaterialList" class="color-red paddzero">
-  <ion-col *ngIf="mat.IsActive == 1 && mat.AreaID == areaInfo.ID && mat.Qty > 0" class="paddzero">
+  <ion-col *ngIf="mat.IsActive == 1 && mat.AreaID == areaInfo.ID && mat.Sqft != 0" class="paddzero">
     <ion-row>
     <ion-col>
       <span class="colorblue textfont14">UM:</span>

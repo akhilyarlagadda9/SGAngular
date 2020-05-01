@@ -38,8 +38,8 @@ export class QuoteService {
   ActionGetPaymentList(custID:number, quoteID:number):Observable<any>{
     return this.http.get<any>(this.url + 'api/accReceivable/ProjectPmtList?custID=' + custID + "&proID=" + quoteID) 
   }
-  ActionGetQuoteAreas(verId: any, mode:any): Observable<any> {
-    return this.http.get<any>(this.url + 'api/QEdit/ActionVersionAreaList?versionID=' + verId + "&mode=" + mode)
+   ActionGetQuoteAreas(verId:number,mode:number):Observable<any> {
+    return this.http.get<any>(this.url +  'api/QEdit/ActionVersionAreaList?versionID=' + verId + '&mode=' + mode)
   }
   GetCustomerContacts(custId:number):Observable<any> {
     return this.http.get<any>(this.url +  'api/QuoteRep3/GetCustomerContacts?custId=' + custId)

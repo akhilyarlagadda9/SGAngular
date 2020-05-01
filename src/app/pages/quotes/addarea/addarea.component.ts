@@ -2,23 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { QuoteService } from 'src/app/service/quote.service';
 import { AuthService } from 'src/app/service/auth.service';
- 
+
 declare var _qscope;
- 
+
 @Component({
   selector: 'app-addarea',
   templateUrl: './addarea.component.html',
   styleUrls: ['./addarea.component.scss'],
 })
 export class AddareaComponent implements OnInit {
-  Version: any;quote : any;userId:number;
+  Version: any; quote: any; userId: number;
   areas: any
   areasaveStatus: string;
   selectedareaId: any;
   arealists: any = [];
-  constructor(public Modalcntrl: ModalController, private service : QuoteService,private authService:AuthService) { }
+  resultareas: any;
+  constructor(public Modalcntrl: ModalController, private service: QuoteService, private authService: AuthService) { }
   ngOnInit() {
-    this.authService.GetStoredLoginUserID().then((resultId) => {this.userId = resultId});
+    this.authService.GetStoredLoginUserID().then((resultId) => { this.userId = resultId; });
   }
   ActionAddArea() {
     let jobTypeId = 0
@@ -32,79 +33,71 @@ export class AddareaComponent implements OnInit {
   }
   ActionSaveBatchAreas() {
     this.checkactivieareas();
-   // ischkareas = ischkareas == undefined ? true :ischkareas;
+    // ischkareas = ischkareas == undefined ? true :ischkareas;
     //if (ischkareas) {
-        let areaId = this.selectedareaId;
-        //let unitschgareaIds = this.getunitschangedareas(this.arealists);
-        this.service.ActionSaveAreaList(this.Version.ID, areaId, this.userId, this.arealists).subscribe(data => {
-          let resultareas = this.service.ActionGetQuoteAreas(this.Version.ID, 0);
-          if (_qscope.mode != 'draw') {
-            _qscope.quote.Version.AreaList = resultareas;
-          }
-          let currentareas = _qscope.quote.Version.AreaList;
-         // this.preapreareas(currentareas, resultareas);
-      //    this.preapreareas(this.Version.VersionAreaList, resultareas);
-        //  _qscope.quote.Version.AreaList = currentareas;
-          this.ActionCloseAddArea(true);
-          //this.saveareasummary(unitschgareaIds, versionid, userId);
-        });
- //   } 
-    // else {
-    //     swal('Please select at least one Area !');
-    // }
-}
-getunitschangedareas(areas) {
-  let areaids = '', allareaids = '', ischk = false;
-  for (let i = 0; i < areas.length; i++) {
+    let areaId = this.selectedareaId;
+    //let unitschgareaIds = this.getunitschangedareas(this.arealists);
+    this.service.ActionSaveAreaList(this.Version.ID, areaId, this.userId, this.arealists).subscribe(data => {
+      this.service.ActionGetQuoteAreas(this.Version.ID, 0).subscribe(results => {
+      this.resultareas = results;
+        _qscope.quote.Version.AreaList = this.resultareas;
+        let currentareas = _qscope.quote.Version.AreaList;
+        //this.preapreareas(currentareas, resultareas);
+        //this.preapreareas(this.Version.VersionAreaList, resultareas);
+        //_qscope.quote.Version.AreaList = currentareas;
+        this.ActionCloseAddArea(true);
+        //this.saveareasummary(unitschgareaIds, versionid, userId);
+      });
+    });
+  }
+
+  getunitschangedareas(areas) {
+    let areaids = '', allareaids = '', ischk = false;
+    for (let i = 0; i < areas.length; i++) {
       if (areas[i].UnitChg == 1) {//no of units changes
-          areaids += areas[i].ID + ',';
+        areaids += areas[i].ID + ',';
       }
       if (areas[i].IsActiveChg == true) { ischk = true; }
       allareaids += areas[i].ID + ',';
-  }
-  if (ischk) {
+    }
+    if (ischk) {
       areaids = allareaids;
+    }
+    return areaids;
   }
-  return areaids;
-}
-checkactivieareas() {
-  for (let i = 0; i < this.arealists.length; i++) {
-      if (this.arealists[i].Isactive == 1 && (this.arealists[i].Name == "" || this.arealists[i].Name == null)) {
-        this.arealists.splice(i, 1);
-      }
+  checkactivieareas() {
+    for (let i = 0; i < this.arealists.length; i++) {
+      let area = this.arealists[i];
+      if (area.JsonMaterial != undefined && area.JsonMaterial != null && typeof (area.JsonMaterial) == 'object') { area.JsonMaterial = JSON.stringify(area.JsonMaterial); }
+    }
   }
-}
-preapreareas(currentareas, resultareas) {
-  for (let i = 0; i < resultareas.length; i++) {
+  preapreareas(currentareas, resultareas) {
+    for (let i = 0; i < resultareas.length; i++) {
       let valid = this.resetsetarea(currentareas, resultareas[i]);
       if (!valid) {
-          currentareas.push(resultareas[i]);
+        currentareas.push(resultareas[i]);
       }
+    }
   }
-}
-resetsetarea(currentareas, area) {
-  let valid = false;
-  for (let i = 0; i < currentareas.length; i++) {
+  resetsetarea(currentareas, area) {
+    let valid = false;
+    for (let i = 0; i < currentareas.length; i++) {
       if (currentareas[i].ID == area.ID) {
-          currentareas[i].Name = area.Name;
-          currentareas[i].NoOfUnits = area.NoOfUnits;
-          currentareas[i].SrNo = area.SrNo;
-          return true;
+        currentareas[i].Name = area.Name;
+        currentareas[i].NoOfUnits = area.NoOfUnits;
+        currentareas[i].SrNo = area.SrNo;
+        return true;
       }
+    }
+    return valid;
   }
-  return valid;
-}
-saveareasummary(unitschgareaIds, versionid, userId){
-
-}
-
-
-ActionCloseAddArea(issave) {
-  this.Modalcntrl.dismiss({
-    'dismissed': true,
-    componentProps: this.arealists,
-    issave: issave
-  });
-}
+  ActionCloseAddArea(issave) {
+    let areas = {arealists:this.resultareas}
+    this.Modalcntrl.dismiss({
+      'dismissed': true,
+      componentProps: areas,
+      issave: issave
+    });
+  }
 
 }

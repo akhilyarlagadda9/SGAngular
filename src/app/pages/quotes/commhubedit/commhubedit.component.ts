@@ -97,7 +97,7 @@ export class CommhubeditComponent implements OnInit {
     this.qservice.FormsList(1).subscribe(
       data => {
         this.docFormList = data;
-        this.ActionChangeTempl(this.commDetails.FromID,0);
+        this.ActionChangeTempl(this.commDetails.FormID,0);
       }
     );
   }

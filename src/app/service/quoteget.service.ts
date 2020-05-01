@@ -25,6 +25,15 @@ export class QuotegetService {
   qsgetallcustomersearchlist(search:string, typeId:number, custTypeID:number):Observable<any> {
     return this.http.get<any>(this.url +  'api/customer/GetAllCustomerSearchList?search=' + search + "&typeId=" + typeId + "&custTypeID=" + custTypeID)
    }
+   //Search for Account
+   qsgetparentaccountswithtype(typeId:number,search:string):Observable<any>{
+    return this.http.get<any>(this.url +  'api/customer/GetParentAccListWithType?typeId=' + typeId + "&search=" + search)
+   }
+   //DropDown For Acount
+   qsgetparentaccounts(custtypeId:number):Observable<any>{
+    return this.http.get<any>(this.url +  'api/Customer/ParentAccListWithType?typeId=' + custtypeId)
+   }
+
   //Project Type List
   getpricelists(typeId:number):Observable<any> {
     return this.http.get<any>(this.url +  'api/QuoteAdmin/CustPriceList?typeID=' + "&typeId=" + typeId)

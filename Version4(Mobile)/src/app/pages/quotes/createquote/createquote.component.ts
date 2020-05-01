@@ -19,7 +19,7 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
 export class CreatequoteComponent implements OnInit {
   quoteId: number = 0; header: any; NavigateTab: number; CustTypeID: number = 4; Progress: number = 0;
   salesPersonsList: any = []; estimatorsList: any = []; projectManagersList: any = []; customerTypes: any = []; leadTypes: any = []; leadHearAbout: any = [];
-  priceList: any = []; productionTypeList: any = [];
+  priceList: any = []; productionTypeList: any = []; projectTypes:any;
   loaderToShow: any;
   form: any;
   layId: 1;
@@ -32,18 +32,18 @@ export class CreatequoteComponent implements OnInit {
       private popoverCntrl: PopoverController,private qServe:QuoteService,private qRep:QuoterepService) { }
   ngOnInit() {
     this.header = {
-      ProjectManagerID: 0, EstimatorID: 0,
+      ProjectManagerID: 0, EstimatorID: 0, ProjectTypeID:0,
       ID: 0, CustomerID: 0, QuoteOrLeadTypeID: 2, QuoteInfoType: "QUOTE", LocID: 1, CustJobNo: "", CustPoNo: "", QuoteDate: new Date().toLocaleDateString("en-US"),
       IsCheck: 1,
       //UserID : getloginuserId(),
       //SalesPersonID : _userModel.logInUserEmpID,
       JobName: "", Address1: "", Address2: "", City: "", State: "", Zipcode: "", YearBuilt: "",
       LeadInfo: {
-        ID:0,LeadTypeID: "", SourceID: 0, HearBefore: 2, HearAbout: "", AccountTypeId:"",
+        ID:0,LeadTypeID: "", SourceID: 0, HearBefore: 2, HearAbout: "",
       },
       Version: {
         ID:0,AccName: "", ProductionTypeID: "", CustTypeID: 4, InvoiceTo: 1, ParentAccID: 0, ChildAccID: 0, StatusID: 1,
-        ParentCustInfo: {}, ChildParentCustInfo: {},
+        ParentCustInfo: {}, ChildParentCustInfo: {}, IsCustRetail : 1,
         Customer: {
          ID:0,TypeID:0, Name: "", FirstName: "", LastName: "", PPhone: "", Email: "", chkflag: false,
         },
@@ -57,6 +57,7 @@ export class CreatequoteComponent implements OnInit {
       }
     );
     this.qServe.CustomerDictionayList(custDicIds).subscribe(data => {  console.log(data);this.customerTypes = data[0] });
+    this.qServe.GetAdminProjectTypes(28).subscribe(data => { this.projectTypes = data });
     this.PopulateDropDownList(4);
     //FORM VALIDATIONS
   }
@@ -96,6 +97,7 @@ export class CreatequoteComponent implements OnInit {
         this.hideLoader();
       });
     }
+    console.log(this.header); // just to test
   }
   ActionShowNewCustomerList(ev: any, typeId: number, search: string, clickType: number) {
     search = search == undefined ? "" : search;
@@ -128,9 +130,9 @@ export class CreatequoteComponent implements OnInit {
   header.Version.Financed  = header.Version.Financed == true ? 1 :0;
     this.header = header;
   }
-
   async ActionShowPopover(ev: any, typeId: number, search, clickType: number) {
-    let custTypeID = this.header.Version.ParentAccID > 0 && clickType == 0 ? 4 : 0;
+    let custTypeID = clickType == 0 ? 4 : this.header.Version.CustTypeID;
+    console.log(custTypeID);
     let obj = { search: search, selectTypeId: typeId, custTypeID: custTypeID }
     const popover = await this.Modalcntrl.create({
       component: CustomersearchComponent,
@@ -143,7 +145,8 @@ export class CreatequoteComponent implements OnInit {
     popover.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null) {
         if (detail.data.isselect == true) {
-          if (this.header.Version.ParentAccID > 0 && detail.data.componentProps.TypeID == 4) {
+          // if (this.header.Version.ParentAccID > 0 && detail.data.componentProps.TypeID == 4) {
+            if(detail.data.componentProps.TypeID == 4){
             this.PopulateCustomerInfo(detail.data.componentProps);
           } else {
             this.PopulateParentCustInfo(detail.data.componentProps);
@@ -154,8 +157,6 @@ export class CreatequoteComponent implements OnInit {
     });
     return await popover.present();
   }
-
-
   ActionChangeRetailCheckBox = function () {
     let custID = this.header.Version != undefined ? 0 : this.header.Version.CustomerID;
     if (custID == 0) {
@@ -164,8 +165,6 @@ export class CreatequoteComponent implements OnInit {
       this.header.Version.Customer.LastName = '';
     }
   }
-
-
   PopulateParentCustInfo(info: any) {
     this.header.Version.CustTypeID = info.TypeID;
     this.ActionPopulateParentAccounts(info.TypeID);
@@ -184,7 +183,6 @@ export class CreatequoteComponent implements OnInit {
     }
     console.log(this.header);
   }
-
   ActionPopulateParentAccounts = function (Id) {
     this.header.Version.IsCustRetail = 0;
     this.header.Version.ChildAccID = 0;
@@ -231,11 +229,32 @@ export class CreatequoteComponent implements OnInit {
   PopulateIsCustDefault(Id) {
     this.qServe.SelTypePrefInfo(Id, 5).subscribe(data => { if (data != null && data != "") { this.header.Version.IsCustRetail = data.Isdefault } });
   }
+  isSameChange(ev){
+    this.header.IsCheck = ev.target.checked;
+    this.header.IsCheck = ev.target.checked == true ? 1: 0;
+    if(this.header.IsCheck == 0){
+    this.header.Address1 = "";
+    this.header.Address2 = "";
+    this.header.City = "";
+    this.header.State = "";
+    this.header.Zipcode = "";
+    }
+    else{
+    this.header.Address1 = this.header.Customer.BillAddress == "" ? "" : this.header.Customer.BillAddress;
+    this.header.Address2 = this.header.Customer.BillAddress1 == "" ? "" : this.header.Customer.BillAddress1;
+    this.header.City = this.header.Customer.BillCity == "" ? "" : this.header.Customer.BillCity;
+    this.header.State = this.header.Customer.BillState== "" ? "" : this.header.Customer.BillState;
+    this.header.Zipcode = this.header.Customer.BillZipCode == "" ? "" : this.header.Customer.BillZipCode;
+    }
+  }
   PopulateCustomerInfo(info: any) {
     this.header = this.qRep.Preparecustomermodel(this.header, info);
+    console.log(this.header);
     if (this.header.Version.IsCustRetail == 1) {
       let childAccCode = this.header.Version.ChildAccID == 0 ? "" : this.header.Version.ParentCustInfo.Code + " - ";
-      this.header.QuoteName = this.header.Version.ParentCustInfo.SelCode + " - " + childAccCode + info.Name;
+      this.header.QuoteName =  (this.header.Version.ParentCustInfo.SelCode == null || this.header.Version.ParentCustInfo.SelCode == "" ||
+      this.header.Version.ParentCustInfo.SelCode == undefined) ? childAccCode + info.Name :
+      this.header.Version.ParentCustInfo.SelCode + " - " + childAccCode + info.Name;
     }
     this.ActionPopulateCustName();
     this.Getcustomercontacts();
@@ -348,6 +367,7 @@ export class CreatequoteComponent implements OnInit {
       state = header.Version.ParentCustInfo.BillState;
       zip = header.Version.ParentCustInfo.BillZipCode;
     }
+  console.log(this.header);
     header.Address1 = add1;
     header.Address2 = add2;
     header.City = city;
@@ -356,7 +376,6 @@ export class CreatequoteComponent implements OnInit {
     header.ContactId = contId; header.ContactInfo = coninfo;
     return header;
   }
-
   ActionNavigateToFro(loadtab: number, form: any) {
     if (loadtab == 2) {
       form.submitted = true;
@@ -367,38 +386,14 @@ export class CreatequoteComponent implements OnInit {
       this.NavigateTab = loadtab;
     }
   }
+  onChange(CustTypeID:number){
+    //Resetting the Parent Acc each time Account type changes
+    this.header.Version.ParentAccID=0;
+    this.header.Version.ParentCustInfo={};
+  }
   changeProgress(value) {
     this.Progress = value;
   }
-
-  changeTab(postion:string) {
-    if(postion == "forward"){
-    if(this.header.LeadInfo.AccountTypeId && this.header.LeadInfo.LeadTypeID){
-     if(this.Progress == 0){
-        this.Progress = 1;
-        this.changeProgress(this.Progress);
-      }
-      else if(this.Progress == 1){
-        this.Progress = 2;
-        this.changeProgress(this.Progress);
-      }
-    }
-    else{
-      
-    }
-  }
-    else if(postion == "back"){
-      if(this.Progress == 2){
-        this.Progress = 1;
-        this.changeProgress(this.Progress);
-      }
-      else if(this.Progress == 1){
-        this.Progress = 0;
-        this.changeProgress(this.Progress);
-      }
-    }
-  }
-
   showLoader() {
     this.loaderToShow = this.loadingController.create({
       message: 'please wait while saving'

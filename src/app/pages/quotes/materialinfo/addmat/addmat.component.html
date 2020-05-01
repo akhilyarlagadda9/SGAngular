@@ -179,7 +179,7 @@
           </ion-radio-group>
         </ion-col>
       <ion-row>
-        <ion-col size="4">
+        <ion-col size="3">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Cost</ion-label>
             <ion-input type="text" class="labelfont2" [(ngModel)]="material.Cost" name="Cost"
@@ -194,7 +194,7 @@
               (change)="ActionCalculateMaterialCost(material)"></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col size="4">
+        <ion-col size="5">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">Cost/SF</ion-label>
             <ion-input type="text" class="labelfont2" [(ngModel)]="material.UnitCost" readonly="readonly"
@@ -202,7 +202,7 @@
               (change)="ActionCalculeteMargin(1,material,'mat');ActionCalculateMaterialSummary(material)"></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col size="4">
+        <ion-col size="3">
           <ion-item>
             <ion-label class="labelfont2" position="floating" color="primary">M(%)</ion-label>
             <ion-input type="text" class="labelfont2" [(ngModel)]="material.Margin" name="Margin"
@@ -216,9 +216,9 @@
               (change)="ActionCalculeteMargin(3,material,'mat');ActionCalculateMaterialSummary(material)">$</ion-input>
           </ion-item>
         </ion-col>
-        <ion-col size="4">
+        <ion-col size="5">
           <ion-item>
-            <ion-label class="labelfont2" position="floating" color="primary">Price/SF</ion-label>
+            <ion-label class="labelfont2" position="floating" color="primary">Net Price/SF</ion-label>
             <ion-input type="text" class="labelfont2" *ngIf="material.PriceByID != 2" readonly="readonly"
               [(ngModel)]="material.UnitPrice" name="UnitPrice">$</ion-input>
             <ion-input type="text" class="labelfont2" *ngIf="material.PriceByID == 2" readonly="readonly"

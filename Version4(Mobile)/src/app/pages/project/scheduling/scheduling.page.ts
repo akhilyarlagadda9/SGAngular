@@ -96,7 +96,7 @@ export class SchedulingPage implements OnInit {
     this.options = {
       plugins: [dayGridPlugin, resourceTimelinePlugin, resourceTimeGridPlugin, resourceDayGridPlugin],
       height: height,
-      slotWidth: this.width,
+      //slotWidth: this.width,
       defaultView: "resourceTimeline",
       minTime: "07:00:00",
       maxTime: "22:00:00", defaultDate: _dafaultDate,
@@ -376,7 +376,6 @@ ChangedViewEvents() {
       }, {
         text: 'Allow',
         handler: () => {
-          debugger;
           this.schService.ActionDeleteActivity(obj.ActivityId).subscribe(data=>{
             if(this.calObj.CalendarView == "resourceTimeline"){
               this.ActionLoadEvents();

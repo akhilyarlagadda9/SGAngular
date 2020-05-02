@@ -23,7 +23,7 @@ export class MeasurementsComponent implements OnInit {
     this.ActionSetFabSqft();
 
   }
-  ActionSetFabSqft() {debugger
+  ActionSetFabSqft() {
     const sum = this.fab.MeasureList.reduce((sum, current) => this.quoterep.convertToFloat(sum) + current.Sqft, 0);
     this.fab.PartSqft = sum;
   }
@@ -34,6 +34,7 @@ export class MeasurementsComponent implements OnInit {
   ActionSaveMeasurement() {
       this.service.Actionsavepartfabrication(this.fab).subscribe(data => {
         this.fablist = data.FabList.filter(x => x.PartID === this.fab.PartID);
+        this.fablist[0].MeasureList = JSON.parse(this.fablist[0].Measurements)
         this.ActionToClose(true);
       })
   }

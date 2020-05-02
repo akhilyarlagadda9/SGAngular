@@ -13,7 +13,9 @@ declare var timings :any;
 export class CalendarsettingComponent implements OnInit {
   timings:any = timings;
   calObj: any;IsShowPopup:boolean= false;
-  calViews = [{Id: 1,name:'Resource By Day',Type:"resourceTimeline"},{Id: 3,name:'Activity Type By Day',Type:"resourceTimeline"},{Id: 2,name:'Day By Resource',Type:"resourcegridView"},{Id: 4,name:'Day By Timeline',Type:"restimelineDay"},{Id: 5,name:'Week By Day',Type:"dayGridWeek"}];
+  calViews = [{Id: 1,name:'Resource By Day',Type:"resourceTimeline"},{Id: 3,name:'Activity Type By Day',Type:"resourceTimeline"},
+  //{Id: 2,name:'Day By Resource',Type:"resourcegridView"},
+  {Id: 4,name:'Day By Timeline',Type:"restimelineDay"},{Id: 5,name:'Week By Day',Type:"dayGridWeek"}];
   calDays = [{Id: 1},{Id: 3},{Id: 5}];
   colorByActivities = [{ ID: 1, Name: 'Activity Type' }, { ID: 2, Name: 'Resource' }];
   // calViews = [{Id: 1,name:'Resource By Day',Type:"resourceTimeline"},{Id: 2,name:'Day By Resource',Type:"resourcegridView"},{Id: 3,name:'Day By Time',Type:"timelineDay"},{Id: 4,name:'Day By Resource By Time',Type:"resourceTimeGrid"},];

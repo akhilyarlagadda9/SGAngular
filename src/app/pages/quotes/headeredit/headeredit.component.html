@@ -96,7 +96,7 @@
           </ion-item>
         <ion-item>
             <ion-label >Production Type</ion-label>
-            <ion-select [(ngModel)]="headerinfo.Version.JobTypeID" name="JobTypeID" [selectedText]="headerinfo.JobType" (ngModelChange)="ActionGetProductionName($event)">
+            <ion-select [(ngModel)]="headerinfo.Version.JobTypeID" name="JobTypeID" [selectedText]="headerinfo.Version.JobType" (ngModelChange)="ActionGetProductionName($event)">
               <ion-select-option *ngFor="let p of productionTypeList" [value]="p.ID">{{p.Name}}
               </ion-select-option>
             </ion-select>

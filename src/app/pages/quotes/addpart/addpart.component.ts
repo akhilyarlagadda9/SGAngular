@@ -273,7 +273,7 @@ export class AddpartComponent implements OnInit {
 
   async ConfirmSuccess(){
     const alert = await this.alertCtrl.create({
-      header: "Activity Deleted Sucessfully!",
+      header: "Deleted Sucessfully!",
       buttons: [{
         text: 'OK',
       }]
@@ -283,7 +283,7 @@ export class AddpartComponent implements OnInit {
 
   async  ActionRemovePartItems(index:number, part, type){
     const alert = await this.alertCtrl.create({
-      header: "Are you sure you want to delete activity?",
+      header: "Are you sure you want to delete item?",
       message: "Do you want to continue?",
       buttons: [{
         text: 'Cancel',
@@ -304,7 +304,7 @@ export class AddpartComponent implements OnInit {
   }
   async ActionRemoveSink(index:number){
     const alert = await this.alertCtrl.create({
-      header: "Are you sure you want to delete activity?",
+      header: "Are you sure you want to delete item?",
       message: "Do you want to continue?",
       buttons: [{
         text: 'Cancel',
@@ -327,7 +327,7 @@ export class AddpartComponent implements OnInit {
   }
   async ActionRemoveFaucet(index:number){
     const alert = await this.alertCtrl.create({
-      header: "Are you sure you want to delete activity?",
+      header: "Are you sure you want to delete item?",
       message: "Do you want to continue?",
       buttons: [{
         text: 'Cancel',
@@ -349,7 +349,7 @@ export class AddpartComponent implements OnInit {
   }
   async ActionRemoveLabor(index:number){
     const alert = await this.alertCtrl.create({
-      header: "Are you sure you want to delete activity?",
+      header: "Are you sure you want to delete item?",
       message: "Do you want to continue?",
       buttons: [{
         text: 'Cancel',
@@ -371,7 +371,7 @@ export class AddpartComponent implements OnInit {
   }
   async ActionRemoveOther(index:number){
     const alert = await this.alertCtrl.create({
-      header: "Are you sure you want to delete activity?",
+      header: "Are you sure you want to delete item?",
       message: "Do you want to continue?",
       buttons: [{
         text: 'Cancel',
@@ -393,7 +393,7 @@ export class AddpartComponent implements OnInit {
   }
   async ActionRemoveAppliance(index:number){
     const alert = await this.alertCtrl.create({
-      header: "Are you sure you want to delete activity?",
+      header: "Are you sure you want to delete item?",
       message: "Do you want to continue?",
       buttons: [{
         text: 'Cancel',

@@ -557,7 +557,7 @@ export class QuoterepService {
       case "splashSF":
         details.SFPrice = priceVal;
         break;
-      case "splashLF": case "edge": case "sink": case "fat": case "labor": case "addon": case "tile": case "mat":
+      case "splashLF": case "edge": case "sink": case "fat": case "labor": case "addon": case "tile": case "mat":case "other":
         details.UnitPrice = priceVal;
         break;
       case "cutout":
@@ -568,7 +568,7 @@ export class QuoterepService {
   PopulateMargin(type: string, cost: number, price: number, margin: number, details: any) {
     var marVal = this.calcmargin(cost, price);
     switch (type) {
-      case "Fab": case "edge": case "cutout": case "sink": case "fat": case "labor": case "addon": case "tile": case "mat":
+      case "Fab": case "edge": case "cutout": case "sink": case "fat": case "labor": case "addon": case "tile": case "mat":case "other":
         details.Margin = marVal;
         break;
       case "splashSF":
@@ -585,7 +585,7 @@ export class QuoterepService {
   PopulateCost(type: string, cost: number, price: number, margin: number, details: any) {
     var costVal = this.calccost(margin, price);
     switch (type) {
-      case "Fab": case "splashLF": case "edge": case "cutout": case "sink": case "fat": case "labor": case "addon": case "tile": case "mat":
+      case "Fab": case "splashLF": case "edge": case "cutout": case "sink": case "fat": case "labor": case "addon": case "tile": case "mat":case "other":
         details.UnitCost = costVal; if (type == "mat") { details.Cost = costVal; }
         break;
       case "splashSF":

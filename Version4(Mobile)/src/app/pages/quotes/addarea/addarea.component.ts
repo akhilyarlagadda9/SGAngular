@@ -92,10 +92,9 @@ export class AddareaComponent implements OnInit {
     return valid;
   }
   ActionCloseAddArea(issave) {
-    let areas = {arealists:this.resultareas}
     this.Modalcntrl.dismiss({
       'dismissed': true,
-      componentProps: areas,
+      componentProps: this.resultareas,
       issave: issave
     });
   }

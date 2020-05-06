@@ -8,7 +8,8 @@ import { OverlayEventDetail } from '@ionic/core';
 import { QuoteService } from 'src/app/service/quote.service';
 @Component({
   selector: 'app-sink',
-  templateUrl: './sink.component.html',
+  //templateUrl: './sink.component.html',
+  templateUrl: './sinknew.component.html',
   styleUrls: ['./sink.component.scss'],
 })
 export class SinkComponent implements OnInit {

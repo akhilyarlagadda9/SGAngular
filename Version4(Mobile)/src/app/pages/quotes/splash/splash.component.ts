@@ -7,7 +7,8 @@ import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-splash',
-  templateUrl: './splash.component.html',
+  //templateUrl: './splash.component.html',
+  templateUrl: './splashnew.component.html',
   styleUrls: ['./splash.component.scss'],
 })
 export class SplashComponent implements OnInit {
@@ -32,7 +33,7 @@ export class SplashComponent implements OnInit {
     this.splash.Amount = this.quoterep.calcitemamt(this.splash.Qty, this.splash.UnitPrice);
     this.splash.Amt = this.splash.Amount;
   }
-  ActionSplashTypes() {
+  ActionSplashTypes() {debugger
     let typeIdList = []; typeIdList.push(6);
     this.getservice.qsgetpricelistitems(this.priceListID, typeIdList).subscribe(
       data => { this.splashlist = data[0]; console.log(this.splashlist) },

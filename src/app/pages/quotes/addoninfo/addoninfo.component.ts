@@ -8,7 +8,8 @@ import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-addoninfo',
-  templateUrl: './addoninfo.component.html',
+  //templateUrl: './addoninfo.component.html',
+  templateUrl: './addoninfonew.component.html',
   styleUrls: ['./addoninfo.component.scss'],
 })
 export class AddoninfoComponent implements OnInit {

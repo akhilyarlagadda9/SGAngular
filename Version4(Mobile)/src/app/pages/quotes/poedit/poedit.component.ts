@@ -8,7 +8,8 @@ import { QuoteService } from 'src/app/service/quote.service';
 declare const appUrl: any;
 @Component({
   selector: 'app-poedit',
-  templateUrl: './poedit.component.html',
+  //templateUrl: './poedit.component.html',
+  templateUrl: './poedit1.component.html',
   styleUrls: ['./poedit.component.scss'],
 })
 export class PoeditComponent implements OnInit {

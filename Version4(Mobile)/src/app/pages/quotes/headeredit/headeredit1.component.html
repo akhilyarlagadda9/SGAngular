@@ -1,0 +1,180 @@
+<form #form="ngForm" (ngSubmit)="ActionSaveHeader(form)" class="dis-content">
+    <ion-header>
+        <ion-toolbar color="light">
+            <ion-buttons slot="start">
+              <ion-button color="danger" type="button" (click)="ActionCloseJobEdit(false)">
+                Cancel
+              </ion-button>
+            </ion-buttons>
+            <ion-buttons slot="end">
+              <!-- <ion-button color="primary" type="submit">
+                Save
+              </ion-button> -->
+            </ion-buttons>
+            <ion-title align="center">
+                Job Info
+            </ion-title>
+          </ion-toolbar>
+        <!-- <ion-toolbar>
+            <ion-title class="titleheader">Job Info</ion-title>
+            <ion-button slot="end" color="success" size="small" (click)="ActionSaveHeader(true)">Save</ion-button>
+            <ion-button slot="end" color="danger" size="small" (click)="ActionCloseJobEdit(false)">X</ion-button>
+        </ion-toolbar> -->
+    </ion-header>
+    <ion-content>
+        <ion-list class="ion-no-margin ion-no-padding">
+            <ion-item>
+                <ion-label position="floating" color="primary" class="labelfont margin-zero">Job Name</ion-label>
+                <ion-input required type="text" [(ngModel)]="headerinfo.QuoteName" name="QuoteName" #QuoteName="ngModel" readonly="readonly"></ion-input>
+            </ion-item>
+            <div *ngIf="form.submitted && QuoteName.invalid" class="invalid-feedback padd-Left">
+                <div *ngIf="QuoteName.errors.required" class="color-red">Job Name is required</div>
+              </div>
+              <ion-item>
+                <ion-label>Quote #</ion-label>
+                <ion-input type="text" class="text-right" readonly="readonly" [(ngModel)]="headerinfo.QuoteNo" name="QuoteNo" ></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Address</ion-label>
+                <ion-input  type="text" class="text-right" [(ngModel)]="headerinfo.Address1" name="Address1" readonly="readonly"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label >City</ion-label>
+                <ion-input required type="text" class="text-right" [(ngModel)]="headerinfo.City" name="City" #City="ngModel" readonly="readonly"></ion-input>
+            </ion-item>
+            <div *ngIf="form.submitted && City.invalid" class="invalid-feedback padd-Left">
+                <div *ngIf="City.errors.required" class="color-red">City Name is required</div>
+              </div>
+            <ion-item>
+                <ion-label >State</ion-label>
+                <ion-input required type="text" class="text-right" [(ngModel)]="headerinfo.State" name="State" #State="ngModel" readonly="readonly"></ion-input>
+            </ion-item>
+            <div *ngIf="form.submitted && State.invalid" class="invalid-feedback padd-Left">
+                <div *ngIf="State.errors.required" class="color-red">State is required</div>
+              </div>
+            <ion-item>
+                <ion-label >Zipcode</ion-label>
+                <ion-input item-end type="text" class="text-right" [(ngModel)]="headerinfo.Zipcode" name="Zipcode" readonly="readonly"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Year Built</ion-label>
+                <ion-input type="text" class="text-right" [(ngModel)]="headerinfo.YearBuilt" name="YearBuilt" readonly="readonly"></ion-input>
+            </ion-item>
+            
+            <ion-item>
+                <ion-label  >Quote Date</ion-label>
+                <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="headerinfo.QuoteDate" name="QuoteDate" readonly="readonly"></ion-datetime>
+            </ion-item>
+            <ion-item>
+                <ion-label >Expiry Date</ion-label>
+                <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="headerinfo.Version.ExpiryDate" name="ExpiryDate" readonly="readonly"></ion-datetime>
+            </ion-item>
+            <ion-item>
+                <ion-label >Sales Rep</ion-label>
+                <ion-select required [(ngModel)]="headerinfo.SalesPersonID" name="SalesPersonID" [selectedText]="headerinfo.SalesPerson" #SalesPersonID="ngModel" (ngModelChange)="ActionGetSalesrepName($event)" disabled="true">
+                  <ion-select-option *ngFor="let p of salesPersonsList" [value]="p.ResourceID">{{p.ResourceName}}</ion-select-option>
+                </ion-select>
+             </ion-item>
+             <div *ngIf="form.submitted && SalesPersonID.invalid" class="invalid-feedback padd-Left">
+                <div *ngIf="SalesPersonID.errors.required" class="color-red">SalesPerson is required</div>
+              </div>
+            <ion-item>
+                <ion-label>Estimator</ion-label>
+                <ion-select [(ngModel)]="headerinfo.EstimatorID" name="EstimatorID"  [selectedText]="headerinfo.Estimator"  (ngModelChange)="ActionGetEstimatorName($event)" disabled="true">
+                  <ion-select-option [value]="0" selected>--Select One--</ion-select-option>
+                  <ion-select-option *ngFor="let p of estimatorsList" [selected]="(p.ResouceID == headerinfo.EstimatorID) ?true : false" [value]="p.ResourceID">{{p.ResourceName}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            <ion-item>
+                <ion-label>Project Manager</ion-label>
+                <ion-select [(ngModel)]="headerinfo.ProjectManagerID" name="ProjectManagerID" [selectedText]="headerinfo.ProjectManager" (ngModelChange)="ActionGetManagerName($event)" disabled="true">
+                    <ion-select-option [value]="0" selected>--Select One--</ion-select-option>
+                  <ion-select-option *ngFor="let p of projectManagersList" [value]="p.ResourceID">{{p.ResourceName}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            <ion-item>
+                <ion-label >Production Type</ion-label>
+                <ion-select [(ngModel)]="headerinfo.Version.JobTypeID" name="JobTypeID" [selectedText]="headerinfo.Version.JobType" (ngModelChange)="ActionGetProductionName($event)" disabled="true">
+                  <ion-select-option *ngFor="let p of productionTypeList" [value]="p.ID">{{p.Name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            <ion-item>
+                <ion-label >Price List</ion-label>      
+                <ion-select required [(ngModel)]="headerinfo.Version.PriceListID" name="PriceListID" [selectedText]="headerinfo.Version.PriceList" (ngModelChange)="ActionGetPriceList($event)" #PriceListID="ngModel" disabled="true">
+                  <ion-select-option *ngFor="let p of priceList" [value]="p.RefID">{{p.Name}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <div *ngIf="form.submitted && PriceListID.invalid"  class="invalid-feedback padd-Left">
+                <div *ngIf="PriceListID.errors.required" class="color-red">Price List is required</div>
+              </div>
+            <ion-item class="borbottom">
+                <ion-label >Lat & Long</ion-label>
+                <ion-input  type="text" class="text-right border-right" name="Lat" [(ngModel)]="headerinfo.Lat" readonly="readonly">
+                </ion-input>
+                <ion-input  type="text"  [(ngModel)]="headerinfo.Long" style="text-indent:5px;" name="Long" readonly="readonly"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label >Is Financed</ion-label>
+                <ion-checkbox color="dark" class="text-right" [(ngModel)]="headerinfo.Version.Financed" name="Financed" checked="headerinfo.Version.Financed ==1" readonly="readonly">
+                </ion-checkbox>
+            </ion-item>
+            <ion-row class="bgcolor-gray">
+                <ion-col size="12" color="primary">Contacts</ion-col>
+            </ion-row>
+            <ion-row *ngFor="let contact of headerinfo.QuoteContacts">
+                <ion-col size="12">
+                    <ion-label>
+                        <h2> {{contact.Name}}</h2>
+                        <p>
+                            <ion-icon name="mail"></ion-icon> {{contact.Email}}
+                        </p>
+                        <p>
+                            <ion-icon name="call"></ion-icon> {{contact.Phone}}
+                        </p>
+                    </ion-label>
+                </ion-col>
+            </ion-row>
+        </ion-list>
+        <ion-list class="martop0">
+            <ion-row style="background-color: lightgray;">
+                <ion-col size="9">
+                    <ion-label color="primary" class="labelfont margin-zero"><b>PO ITEMS</b></ion-label>
+                </ion-col>
+                <!-- <ion-col size="3" class="text-right" (click)="ActionEditPOItem(0)" style="color: #3171e0"><u><b>ADD+</b></u>
+                </ion-col> -->
+            </ion-row>
+            <ion-row  *ngFor="let info of headerinfo.PoItemList; let i = index">
+                <ion-col>
+                    <ion-row>
+                        <ion-col size="9" class="paddzero">
+                            <!-- <span (click)="ActionDeleteItem(info.ID)">
+                                <ion-icon name="trash" class="delsty"></ion-icon>
+                            </span> -->
+                            <span>&nbsp;&nbsp;<u (click)="ActionEditPOItem(info, i)"><b>PO#</b></u>:</span>
+                            <span>{{info.PONumber}}</span>,
+                            <span>{{info.POBy}}</span>
+                        </ion-col>
+                        <ion-col size="3" class="paddzero text-right">
+                            <span>{{info.PODate | date:'MM/dd/yyyy'}}</span>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <!-- <ion-col size="9" class="paddzero">
+                            <span style="padding-left: 21px;">Attachment(s):</span>
+                            <span>{{info.Path}}</span>
+                        </ion-col> -->
+                        <ion-col size="3" class="paddzero text-right">
+                            <span class="color-green">${{info.POAmount | number : '.2-2'}}</span>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row *ngIf="info.AttachmentList != null && info.AttachmentList != ''">
+                        <span *ngFor="let item of info.AttachmentList">&nbsp;&nbsp;{{item.Path}}  </span>
+                    </ion-row>
+                </ion-col>
+            </ion-row>
+        </ion-list>
+    </ion-content>
+    </form>

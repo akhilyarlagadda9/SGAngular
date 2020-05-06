@@ -9,7 +9,8 @@ import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-headeredit',
-  templateUrl: './headeredit.component.html',
+  //templateUrl: './headeredit.component.html',
+  templateUrl: './headeredit1.component.html',
   styleUrls: ['./headeredit.component.scss'],
 })
 export class HeadereditComponent implements OnInit {

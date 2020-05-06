@@ -8,7 +8,8 @@ import { NgForm } from '@angular/forms';
 declare var _qscope;
 @Component({
   selector: 'app-customeredit',
-  templateUrl: './customeredit.component.html',
+  //templateUrl: './customeredit.component.html',
+  templateUrl: './customeredit1.component.html',
   styleUrls: ['./customeredit.component.scss'],
 })
 export class CustomereditComponent implements OnInit {

@@ -8,7 +8,8 @@ import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-edgeinfo',
-  templateUrl: './edgeinfo.component.html',
+  //templateUrl: './edgeinfo.component.html',
+  templateUrl: './edgeinfonew.component.html',
   styleUrls: ['./edgeinfo.component.scss'],
 })
 export class EdgeinfoComponent implements OnInit {

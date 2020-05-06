@@ -1,0 +1,212 @@
+
+  <form #form="ngForm" (ngSubmit)="ActionSaveCutOut(form)" class="dis-content">
+    <ion-header>
+      <ion-toolbar color="light">
+        <ion-buttons slot="start">
+          <ion-button color="danger" type="button" (click)="ActionCloseCutout(false)">
+            Cancel
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <!-- <ion-button color="primary" type="submit">
+            Save
+          </ion-button> -->
+        </ion-buttons>
+        <ion-title align="center">
+          <div *ngIf="TypeID == 1">Sink Cutout</div>
+          <div *ngIf="TypeID == 3">Appliance Cutout</div>
+          <div *ngIf="TypeID == 2">Outlet Cutout</div>
+        </ion-title>
+      </ion-toolbar>
+      <!-- <ion-toolbar color="light">
+        <ion-buttons start>
+          <ion-button slot="start" color="danger" (click)="ActionCloseCutout(false)"> 
+            <span ion-text showWhen="ios" class="check-font" >Cancel</span></ion-button>
+        </ion-buttons>
+        <ion-title slot="end">
+          <div *ngIf="TypeID == 1">Sink Cutout</div>
+          <div *ngIf="TypeID == 3">Appliance Cutout</div>
+          <div *ngIf="TypeID == 2">Outlet Cutout</div>
+        </ion-title>
+        <ion-buttons slot="end">
+          <ion-button slot="end" color="secondary" type="submit"> <span ion-text class="check-font">Save</span></ion-button>
+        </ion-buttons> 
+      </ion-toolbar> -->
+      <!-- <ion-toolbar>
+        <ion-title class="titleheader">
+          <div *ngIf="TypeID == 1">Sink Cutout</div>
+          <div *ngIf="TypeID == 3">Appliance Cutout</div>
+          <div *ngIf="TypeID == 2">Outlet Cutout</div>
+        </ion-title>
+        <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
+        <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCutout(false)">X</ion-button>
+      </ion-toolbar> -->
+    </ion-header>
+    <ion-content>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Description</ion-label>
+      <ion-select disabled="disabled" [(ngModel)]="cutout.TypeID" name="TypeID" (ngModelChange)="ActionPopulateCutout($event)" [selectedText]="cutout.Type"
+        #nameField="ngModel" required disabled="disabled">
+        <ion-select-option *ngFor="let cut of cutoutlist" [value]="cut.ID"> <span>{{cut.Description}}</span>
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
+      <div class="error">Description is required</div>
+    </div>
+    <!-- <div *ngIf="submitted && f.add.errors"  class="invalid-feedback padd-Left">
+      <div *ngIf="f.add.errors.required" class="error">Description is required</div>
+  </div> -->
+
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Quantity</ion-label>
+      <ion-input readonly="readonly" type="text" class="labelfont" [(ngModel)]="cutout.LF" readonly="readonly" name="LF" (change)="ActionSetAmount()">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
+      <ion-input readonly="readonly" type="text" class="labelfont" [(ngModel)]="cutout.UnitCost" readonly="readonly" name="UnitCost"
+        (change)="ActionSetMargin(1,cutout,'cutout')">
+        <ion-row class="mar-right3">$</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
+      <ion-input readonly="readonly" type="text" class="labelfont" [(ngModel)]="cutout.Margin" readonly="readonly" name="Margin"
+        (change)="ActionSetMargin(2,cutout,'cutout')">
+        <ion-row class="mar-right3">%</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
+      <ion-input readonly="readonly" type="text" class="labelfont" [(ngModel)]="cutout.Unitprice" readonly="readonly" name="UnitPrice"
+        (change)="ActionSetMargin(3,cutout,'cutout')">
+        <ion-row class="mar-right3">$</ion-row>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
+      <ion-input  readonly="readonly" type="text" class="labelfont" [(ngModel)]="cutout.Amt" name="Amt" readonly="readonly">
+        <ion-row class="mar-right3">$</ion-row>
+      </ion-input>
+    </ion-item>
+  </ion-content>
+  </form>
+
+
+
+
+<!-- DONT DELETE THIS -->
+<!-- <ion-content>
+  <form>
+      <ion-row>
+          <ion-col size="3">
+             <ion-label>
+             </ion-label>
+          </ion-col>
+          <ion-col size="9">
+             <img src="assets/img/Uploadimg.png" alt="your image" style="width:150px;height:120px;margin-left: 10px;">
+          </ion-col>
+          <ion-col size="3">
+              <ion-label>
+              </ion-label>
+           </ion-col>
+           <ion-col size="9">
+              <ion-label style="text-align: center;font-style: italic; font-size: 11px; margin-left: 10px;" color="primary">(Tap image to view fullscreen)</ion-label>
+           </ion-col>
+       </ion-row>
+ 
+    <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Product Group</ion-label>
+        <ion-input type="text" class="labelfont" value="Cutout"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Product Sub-Group</ion-label>
+        <ion-input type="text" class="labelfont" value="Standard Cutout"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Product Code</ion-label>
+        <ion-input type="text" class="labelfont" value="1505"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Supplier Code</ion-label>
+        <ion-input type="text" class="labelfont" value="1505"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Supplier</ion-label>
+        <ion-input type="text" class="labelfont" value="MSI"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Product Name</ion-label>
+        <ion-input type="text" class="labelfont" value="Kitchen Cutout"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Sink Type</ion-label>
+        <ion-input type="text" class="labelfont" *ngIf="TypeID == 1"value="Sink Cutout" readonly="readonly"></ion-input>
+        <ion-input type="text" class="labelfont" *ngIf="TypeID == 2"value="Applience Cutout" readonly="readonly"></ion-input>
+        <ion-input type="text" class="labelfont" *ngIf="TypeID == 3"value="Outlet Cutout" readonly="readonly"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Cutout Type</ion-label>
+        <ion-input type="text" class="labelfont" value="Undermount"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Measurements(WxH)</ion-label>
+        <ion-input type="text" class="labelfont" readonly="readonly" value="Backsplash"></ion-input>
+      </ion-item>
+      <ion-item style="margin-left: -6%;">
+        <ion-row>
+          <ion-col size="12" style="padding: 0px; margin-left: 14%;">
+                  <ion-col size="3"><input type="text" readonly="readonly" style="width:20%" value="120"></ion-col>
+                  <ion-col size="1">X</ion-col>
+                  <ion-col size="3"><input type="text" readonly="readonly" style="width:20%" value="2"></ion-col>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">No. of Faucet Holes</ion-label>
+        <ion-input type="text" class="labelfont"  value="0"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Basin Type</ion-label>
+        <ion-input type="text" class="labelfont" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">UOM</ion-label>
+        <ion-input type="text" class="labelfont" value="Esch" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Risk level</ion-label>
+        <ion-input type="text" class="labelfont" value="Low" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Re-Order</ion-label>
+        <ion-input type="text" class="labelfont"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Max</ion-label>
+        <ion-input type="text" class="labelfont" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="stacked" color="primary">Cost</ion-label>
+        <ion-input type="text" class="labelfont" readonly="readonly" value="10"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
+        <ion-input type="text" class="labelfont"  value="0"><ion-row style="margin-right: 3px;">%</ion-row></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="stacked" color="primary">Tax</ion-label>
+        <ion-input type="text" class="labelfont" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="stacked" color="primary">Price</ion-label>
+        <ion-input type="text" class="labelfont" value="12.5"><ion-row style="margin-right: 3px;">$</ion-row></ion-input>
+      </ion-item>
+      
+    <ion-item>
+      <ion-label class="labelfont" position="floating" color="primary">Note</ion-label>
+      <ion-textarea rows="10" cols="25" value="Enter Text Here..." class="borderall"></ion-textarea>
+    </ion-item>
+  </form>
+</ion-content> -->

@@ -1,0 +1,58 @@
+<ion-header>
+    <ion-toolbar color="light">
+      <ion-buttons slot="start">
+        <ion-button color="danger" type="button" (click)="ActionClosePOItem(false)">
+          Cancel
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <!-- <ion-button color="primary" type="submit" (click)="ActionSavePOItem(0)">
+          Save
+        </ion-button> -->
+      </ion-buttons>
+      <ion-title align="center">
+        PO Item Info
+      </ion-title>
+    </ion-toolbar>
+      <!-- <ion-toolbar>
+        <ion-title class="titleheader">PO Item Info</ion-title>
+        <ion-button slot="end" color="success" size="small" (click)="ActionSavePOItem()">Save</ion-button>
+        <ion-button slot="end" color="danger" size="small" (click)="ActionClosePOItem(false)">X</ion-button>
+      </ion-toolbar> -->
+    </ion-header>
+    <ion-content>
+      <ion-list class="ion-no-margin ion-no-padding">
+        <ion-item>
+              <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Number:</ion-label>
+              <ion-input type="text" [(ngModel)]="poitem.PONumber" class="inputheight" readonly="readonly"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Uploaded By:</ion-label>
+            <ion-select [(ngModel)]="poitem.POByID" name="POByID" [selectedText]="poitem.POBy" (ngModelChange)="GetSelectedSalespersonName($event)" disabled="true">
+                 <ion-select-option *ngFor="let s of salespersons" [value]="s.ResourceID">{{s.ResourceName}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Date:</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="poitem.PODate" readonly="readonly"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label class="no-margin labelfont1" position="floating" color="primary">PO Total($):</ion-label>
+          <ion-input type="text" [(ngModel)]="poitem.POAmount" class="inputheight" readonly="readonly"></ion-input>
+        </ion-item>
+        <ion-row>
+          <span class="btn btn-success fileinput-button" ngClass="{disabled: disabled}">
+             <u class="labelstyle color-primary">Attachments:</u>
+            <ion-col size="7" class="paddzero text-left">
+              <input type="file" (change)="ActionUploadPoAttach($event)">
+            </ion-col>
+          </span>
+        </ion-row>
+        <ion-row *ngFor="let attah of poitem.AttachmentList">
+          <ion-col class="paddleft5">
+            <!-- <span (click)="ActionDeleteImage(attah.ID)"><ion-icon name="trash" class="delsty"></ion-icon></span>&nbsp; -->
+            <span>{{attah.Path}}</span>
+          </ion-col>
+      </ion-row>
+      </ion-list>
+    </ion-content>

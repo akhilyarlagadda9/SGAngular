@@ -9,7 +9,8 @@ import { OverlayEventDetail } from '@ionic/core';
 import { AdditionalitemserachComponent } from '../additionalitemserach/additionalitemserach.component';
 @Component({
   selector: 'app-addpart',
-  templateUrl: './addpart.component.html',
+  //templateUrl: './addpart.component.html',
+  templateUrl: './addpart1.component.html',
   styleUrls: ['./addpart.component.scss'],
 })
 export class AddpartComponent implements OnInit {

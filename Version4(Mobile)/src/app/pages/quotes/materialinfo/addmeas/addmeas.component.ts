@@ -6,7 +6,8 @@ declare var _qscope :any;
 
 @Component({
   selector: 'app-addmeas',
-  templateUrl: './addmeas.component.html',
+  //templateUrl: './addmeas.component.html',
+  templateUrl: './addmeasnew.component.html',
   styleUrls: ['./addmeas.component.scss'],
 })
 export class AddmeasComponent implements OnInit {

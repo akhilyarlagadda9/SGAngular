@@ -7,7 +7,8 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
 
 @Component({
   selector: 'app-materialinfo',
-  templateUrl: './materialinfo.component.html',
+  //templateUrl: './materialinfo.component.html',
+  templateUrl: './materialinfonew.component.html',
   styleUrls: ['./materialinfo.component.scss'],
 })
 export class MaterialinfoComponent implements OnInit {

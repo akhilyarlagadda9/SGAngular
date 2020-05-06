@@ -9,7 +9,8 @@ declare var _qscope: any;
 
 @Component({
   selector: 'app-addmat',
-  templateUrl: './addmat.component.html',
+  //templateUrl: './addmat.component.html',
+  templateUrl: './addmatnew.component.html',
   styleUrls: ['./addmat.component.scss'],
 })
 export class AddmatComponent implements OnInit {

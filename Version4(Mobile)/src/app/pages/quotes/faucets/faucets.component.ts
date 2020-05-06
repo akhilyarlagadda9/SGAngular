@@ -8,7 +8,8 @@ import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-faucets',
-  templateUrl: './faucets.component.html',
+  //templateUrl: './faucets.component.html',
+  templateUrl: './faucetsnew.component.html',
   styleUrls: ['./faucets.component.scss'],
 })
 export class FaucetsComponent implements OnInit {

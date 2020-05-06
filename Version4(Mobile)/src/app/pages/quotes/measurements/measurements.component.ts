@@ -24,7 +24,7 @@ export class MeasurementsComponent implements OnInit {
 
   }
   ActionSetFabSqft() {
-    const sum = this.fab.MeasureList.reduce((sum, current) => this.quoterep.convertToFloat(sum) + current.Sqft, 0);
+    const sum = this.fab.MeasureList.reduce((sum, current) => sum + this.quoterep.convertToFloat(current.Sqft), 0);
     this.fab.PartSqft = sum;
   }
   ActionDelete(index:number){

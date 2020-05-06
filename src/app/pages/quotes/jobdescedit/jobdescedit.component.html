@@ -6,9 +6,9 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button color="primary" type="submit" (click)="ActionSaveJobDescEdit(Version)">
+      <!-- <ion-button color="primary" type="submit" (click)="ActionSaveJobDescEdit(Version)">
         Save
-      </ion-button>
+      </ion-button> -->
     </ion-buttons>
     <ion-title align="center">
       Private Notes
@@ -29,7 +29,7 @@
                 &nbsp;Job Description:</ion-label>
           </ion-row>
           <ion-row class="paddall">
-              <ion-textarea rows="10" cols="25" [(ngModel)]="Version.Description" class="borderall"></ion-textarea>
+              <ion-textarea rows="10" cols="25" [(ngModel)]="Version.Description" class="borderall" readonly="readonly"></ion-textarea>
           </ion-row>
       </div>
       <div *ngIf="TypeID == 2">
@@ -39,7 +39,7 @@
               &nbsp;Private:</ion-label>
         </ion-row>
         <ion-row class="paddall">
-            <ion-textarea rows="10" cols="25" [(ngModel)]="Version.PrivateNote" class="borderall"></ion-textarea>
+            <ion-textarea rows="10" cols="25" [(ngModel)]="Version.PrivateNote" class="borderall" readonly="readonly"></ion-textarea>
         </ion-row>
       </div>
     </ion-list>

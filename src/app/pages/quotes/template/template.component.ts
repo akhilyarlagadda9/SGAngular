@@ -6,7 +6,8 @@ import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-template',
-  templateUrl: './template.component.html',
+  //templateUrl: './template.component.html',
+  templateUrl: './templatenew.component.html',
   styleUrls: ['./template.component.scss'],
 })
 export class TemplateComponent implements OnInit {

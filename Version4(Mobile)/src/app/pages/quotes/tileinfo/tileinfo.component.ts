@@ -8,7 +8,8 @@ import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-tileinfo',
-  templateUrl: './tileinfo.component.html',
+  //templateUrl: './tileinfo.component.html',
+  templateUrl: './tileinfonew.component.html',
   styleUrls: ['./tileinfo.component.scss'],
 })
 export class TileinfoComponent implements OnInit {

@@ -51,6 +51,10 @@ export class QuoteService {
     POItemDelete(id:number):Observable<any> {
       return this.http.post<any>(this.url +  'api/QSave/ActionRemovePOItems?Id=' + id,{})
    }
+   GetAreaSummaryList(verId,mode):Observable<any>{
+     mode = mode == undefined ? 0 : mode;
+     return this.http.get<any>(this.url + 'api/QEdit/ActionVersionAreaSummaryList?versionID=' + verId + "&mode=" + mode)
+   }
 //#region JobView
 ActionGetPhaseList(versionId: number): Observable<any> {
   return this.http.get<any>(this.url + 'api/Project3/ActionGetPhaseList?versionId=' + versionId)

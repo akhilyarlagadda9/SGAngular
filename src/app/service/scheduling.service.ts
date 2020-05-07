@@ -87,6 +87,10 @@ ActionCheckIsExistSameRes(Id:any, resId:any, sDate:any, eDate:any):Observable<an
 ActionDeleteResource(resourceId:any):Observable<any> {
   return this.http.get<any>(this.url +  'api/Project/DeleteResource?resourceId=' + resourceId)
 }
+//Get Audit Details
+ActionGetAuditList(refID:any,modID:any,refType:any):Observable<any> {
+  return this.http.get<any>(this.url +  'api/audit/ActAuditDetails?refID=' + refID + '&modID=' + modID + '&refType=' + refType)
+}
 
 /**************************** POST SERVICES *********************************************/
 
@@ -112,6 +116,11 @@ ActionSaveResourceInfo(model:any, activityId:any) {
 //Delete Activity
 ActionDeleteActivity(activityId:any):Observable<any>{
   return this.http.get<any>(this.url +  'api/Project/DeleteActivity?activityId=' + activityId);
+}
+//Save Audit
+ActionSaveAuditDetails(list:any):Observable<any>{
+  var parameter = JSON.stringify(list);
+  return this.http.post<any>(this.url +  'api/audit/SaveAuditModel', parameter, { headers: { 'Content-Type': 'application/json' } })
 }
 
 

@@ -3,35 +3,43 @@
     <!-- <ion-buttons slot="start" >
         <img src="assets/img/companylogo.png" alt="your image" style="width:25px;height:25px;">
       </ion-buttons> -->
-      <ion-title slot="start" class="titleheader"><h1> {{CompanyInfo.Name}} </h1></ion-title>
-      <ion-buttons slot="end">
-        <ion-icon slot="end"  name="person" (click)="ActionLogout()"></ion-icon>
-        <div class="check-font">
-          {{UserInfo.loginUserName}}
-        </div>
-        <ion-icon slot="end" class="btn-logout" name="power" (click)="ActionLogout()"></ion-icon>
-      </ion-buttons>
+    <ion-title slot="start" class="titleheader">
+      <h1> {{CompanyInfo.Name}} </h1>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-icon slot="end" name="person" (click)="ActionLogout()"></ion-icon>
+      <div class="check-font">
+        {{UserInfo.loginUserName}}
+      </div>
+      <ion-icon slot="end" class="btn-logout" name="power" (click)="ActionLogout()"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-      <ion-item *ngIf="userAccess.quote != 0">
-          <ion-col  (click)="ActionLoadModule('/home/quotelist')">
-              <h2><img src="assets/img/Quote1.png" alt="img" class="imghw35"> Quoting</h2>
-        </ion-col>
-      </ion-item>
-      <ion-item *ngIf="userAccess.calendar != 0">
-        <ion-col  (click)="ActionLoadModule('/home/scheduling')">
-            <h2><img src="assets/img/calendar-icon.png" alt="img" class="imghw35"> Scheduling</h2></ion-col>
-      </ion-item>
-      <ion-item >
+    <ion-item>
+      <ion-col>
+        <h2><img src="assets/img/Scheduled.png" alt="img" class="imghw35"> Follow-up</h2>
+      </ion-col>
+    </ion-item>
+    <ion-item *ngIf="userAccess.quote != 0">
+      <ion-col (click)="ActionLoadModule('/home/quotelist')">
+        <h2><img src="assets/img/Quote1.png" alt="img" class="imghw35"> Quoting</h2>
+      </ion-col>
+    </ion-item>
+    <ion-item *ngIf="userAccess.calendar != 0">
+      <ion-col (click)="ActionLoadModule('/home/scheduling')">
+        <h2><img src="assets/img/calendar-icon.png" alt="img" class="imghw35"> Scheduling</h2>
+      </ion-col>
+    </ion-item>
+    <!-- <ion-item >
           <ion-col>
               <h2><img src="assets/img/Purchasing Icon5.jpg" alt="img" class="imghw35">  Purchasing</h2></ion-col>
       </ion-item>
         <ion-item >
             <ion-col>
                 <h2><img src="assets/img/Inventory34.png" alt="img" class="imghw35"> Inventory</h2></ion-col>
-      </ion-item>
+      </ion-item> -->
   </ion-list>
 </ion-content>

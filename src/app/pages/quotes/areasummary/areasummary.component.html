@@ -3,7 +3,7 @@
   <ion-row  (click)="ActionAreaSelect(area.ID)">
     <ion-col size="9">{{area.Name}} (#{{area.NoOfUnits}})</ion-col>
     <!-- <ion-col size="2">#P - {{1}}</ion-col> -->
-    <ion-col size="3" class="text-right">$ {{area.FinalAreaAmt}}</ion-col>
+    <ion-col size="3" class="text-right" *ngIf="PhaseId == 0">$ {{area.FinalAreaAmt}}</ion-col>
   </ion-row>
   <ion-row style="font-size:12px">
     <ion-col>

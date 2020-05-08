@@ -33,7 +33,7 @@ export class SplashComponent implements OnInit {
     this.splash.Amount = this.quoterep.calcitemamt(this.splash.Qty, this.splash.UnitPrice);
     this.splash.Amt = this.splash.Amount;
   }
-  ActionSplashTypes() {debugger
+  ActionSplashTypes() {
     let typeIdList = []; typeIdList.push(6);
     this.getservice.qsgetpricelistitems(this.priceListID, typeIdList).subscribe(
       data => { this.splashlist = data[0]; console.log(this.splashlist) },

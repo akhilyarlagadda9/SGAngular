@@ -5,7 +5,8 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
 
 @Component({
   selector: 'app-measurements',
-  templateUrl: './measurements.component.html',
+  //templateUrl: './measurements.component.html',
+  templateUrl: './measurementnew.component.html',
   styleUrls: ['./measurements.component.scss'],
 })
 export class MeasurementsComponent implements OnInit {

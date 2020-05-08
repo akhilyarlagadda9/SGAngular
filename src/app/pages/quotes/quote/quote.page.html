@@ -3,30 +3,41 @@
     <ion-buttons slot="start">
       <ion-icon name="arrow-round-back" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
     </ion-buttons>
-    <ion-title class="headersty"><h1>Quote Inquiry</h1></ion-title>
+    <ion-title class="headersty">
+      <h1>Quote Inquiry</h1>
+    </ion-title>
     <!-- <ion-icon name="refresh" slot="end" class="paddright font30" (click)="ActionQuoteList(1)"></ion-icon> -->
     <ion-icon name="add-circle" slot="end" class="fontlarge paddright" (click)="ActionCreateQuote()"></ion-icon>
     <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-searchbar #quotesearch (keyup.enter)="ActionSearch(quotesearch.value)" placeholder="Enter Customer Name/Job#" (ionClear)="onCancel($event)"></ion-searchbar>
-<ion-card *ngFor="let header of quotelist" class="margin-bottom">
-  <ion-item (click)="ActionQuoteEdit(header)"><ion-label>
-   <h2># {{header.QuoteNo}} - {{header.QuoteName}}</h2>
-   <p><ion-icon name="contact" class="color-coral fontmedium"></ion-icon><span class="valignsup">{{header.CustomerName}} &nbsp;- &nbsp;</span><ion-icon name="person" class="fontmedium" style="color:#3880ff;"></ion-icon><span class="valignsup">{{header.SalesPerson}}</span></p> </ion-label>
-  
-  </ion-item>
-  <!-- <ion-row>
+  <ion-searchbar #quotesearch (keyup.enter)="ActionSearch(quotesearch.value)" placeholder="Enter Customer Name/Job#"
+    (ionClear)="onCancel($event)"></ion-searchbar>
+  <ion-card *ngFor="let header of quotelist" class="margin-bottom">
+    <ion-item (click)="ActionQuoteEdit(header)">
+      <ion-label>
+        <h2># {{header.QuoteNo}} - {{header.QuoteName}}</h2>
+        <p>
+         {{header.Address1}} 
+         <span *ngIf="(header.City != null && header.City != '') && (header.Address1 != null && header.Address1 != '')">,</span> {{header.City}}
+         <span *ngIf="header.State != null && header.State != ''">, {{header.State}}</span>
+         <span *ngIf="header.Zipcode != null && header.Zipcode != ''"> - {{header.Zipcode}}</span>
+        </p>
+        <p>{{header.CustomerName}}</p>
+      </ion-label>
+
+    </ion-item>
+    <!-- <ion-row>
     <ion-col>
       <span (click)="ActionQuoteEdit1(header,1)" ><u>LA1</u></span>&nbsp;<span (click)="ActionQuoteEdit1(header,2)"><u>LA2</u></span>&nbsp;
   <span (click)="ActionQuoteEdit1(header,3)"><u>LA3</u></span>&nbsp;<span (click)="ActionQuoteEdit1(header,4)"><u>LA4</u></span>&nbsp;
     </ion-col>
   </ion-row> -->
-</ion-card>
+  </ion-card>
 
-    <ion-infinite-scroll threshold="50%" (ionInfinite)="AtiondoInfinite($event)">
-      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+  <ion-infinite-scroll threshold="50%" (ionInfinite)="AtiondoInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

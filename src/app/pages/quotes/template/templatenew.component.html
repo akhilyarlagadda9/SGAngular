@@ -38,8 +38,6 @@
         <ion-label class="labelfont" position="floating" color="primary">Description</ion-label>
         <ion-input type="text" class="labelfont" readonly="readonly" [(ngModel)]="labor.Description" name="Description" #nameField="ngModel"
           required></ion-input>
-        <ion-icon slot="end" class="marg18" name="arrow-dropdown"></ion-icon>
-        <ion-icon slot="end" class="marg18" name="search"></ion-icon>
       </ion-item>
       <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
         <div class="error">Description is required</div>

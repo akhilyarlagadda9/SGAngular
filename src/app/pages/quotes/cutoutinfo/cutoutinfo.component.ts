@@ -8,7 +8,8 @@ import { QuoteService } from 'src/app/service/quote.service';
 
 @Component({
   selector: 'app-cutoutinfo',
-  templateUrl: './cutoutinfo.component.html',
+  //templateUrl: './cutoutinfo.component.html',
+  templateUrl: './cutoutinfonew.component.html',
   styleUrls: ['./cutoutinfo.component.scss'],
 })
 export class CutoutinfoComponent implements OnInit {

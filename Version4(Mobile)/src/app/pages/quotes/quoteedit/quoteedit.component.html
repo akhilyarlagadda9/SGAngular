@@ -3,8 +3,8 @@
         <ion-buttons slot="start">
             <ion-icon class="fontlarge" (click)="ActionCloseQuoteInfo()" name="arrow-back"></ion-icon>
         </ion-buttons>
-        <ion-title>
-            <div style="font-size: 22px;" class="text-left">
+        <ion-title align="center">
+            <div style="font-size: 22px;" class="text-center">
                {{headerInfo.QuoteNo}} -
                <select class="statusColor" [(ngModel)]="qprmsobj.phaseid" *ngIf="qprmsobj.viewtypeid == 2" (change)="ActionLoadPhase(qprmsobj.phaseid)"
                 style="border: 0px;">
@@ -19,7 +19,7 @@
                    
         </ion-title>
         <!-- <span size="small" slot="end" (click)="ActionNewAction()"><h1 class="h1marg">Action</h1></span> -->
-        <ion-icon name="arrow-dropdown-circle" slot="end" class="fontlarge" (click)="ActionNewAction()"></ion-icon>&nbsp;
+        <!-- <ion-icon name="arrow-dropdown-circle" slot="end" class="fontlarge" (click)="ActionNewAction()"></ion-icon>&nbsp; -->
         <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
     </ion-toolbar>
     <ion-toolbar>
@@ -76,8 +76,8 @@
                 <div *ngFor="let contact of headerInfo.QuoteContacts">
                     <ion-col size="12" class="paddtopzero">
                         <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon>
-                        <span class="valignsup">
-                            {{contact.Name}}
+                        <span class="valignsup" (click)="ActionEditCustomer(1,headerInfo.Customer,headerInfo.CustomerContacts)">
+                            <u>{{contact.Name}}</u>
                         </span>
                         <span *ngIf="contact.Phone != '' && contact.Phone != null" name="contact" class="valignsup">
                             - &nbsp; {{contact.Phone}}
@@ -92,17 +92,13 @@
             </ion-row>
             <ion-row>
                 <ion-col size="12" class="text-font paddtopzero">
-                    <div class="valignsup">
-                        <span class="color-primary"
-                            (click)="ActionEditCustomer(1,headerInfo.Customer,headerInfo.CustomerContacts)"><u>Cust:</u></span>{{headerInfo.Customer.Name}}
+                    <div class="valignsup" *ngIf="headerInfo.Version.ParentAccID  > 0">
+                        <span class="color-primary">Account:</span><span
+                            class="labelfont">&nbsp;{{headerInfo.ParentAccount.Name}}</span>
                     </div>
                     <div class="valignsup" *ngIf="headerInfo.Version.ChildAccID  > 0">
-                        <span >Child Acc:</span><span
+                        <span class="color-primary">Child Acc:</span><span
                             class="labelfont">&nbsp;{{headerInfo.ChildAccount.Name}}</span>
-                    </div>
-                    <div class="valignsup" *ngIf="headerInfo.Version.ParentAccID  > 0">
-                        <span>Acc:</span><span
-                            class="labelfont">&nbsp;{{headerInfo.ParentAccount.Name}}</span>
                     </div>
                 </ion-col>
                 <ion-col size="12" class="text-font paddtopzero">

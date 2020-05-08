@@ -8,7 +8,8 @@ import { AdditionalitemserachComponent } from '../additionalitemserach/additiona
 
 @Component({
   selector: 'app-laborinfo',
-  templateUrl: './laborinfo.component.html',
+  //templateUrl: './laborinfo.component.html',
+  templateUrl: './laborinfonew.component.html',
   styleUrls: ['./laborinfo.component.scss'],
 })
 export class LaborinfoComponent implements OnInit {

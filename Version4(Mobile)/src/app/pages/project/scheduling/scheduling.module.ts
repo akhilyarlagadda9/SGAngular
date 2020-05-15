@@ -9,7 +9,7 @@ import { SchedulingPageRoutingModule } from './scheduling-routing.module';
 import { SchedulingPage } from './scheduling.page';
 import { FullCalendarModule } from '@fullcalendar/angular';
 //import { NgCalendarModule  } from 'ionic2-calendar';
-import { ActinfoComponent } from '../actinfo/actinfo.component';
+import { ActinfoComponent, AuditDetails } from '../actinfo/actinfo.component';
 import {AreaPartsComponent} from '../area-parts/area-parts.component';
 import { FilterPipe } from 'src/app/FilterPipe';
 import { AddactivityComponent, jobssearchComponent,resorceListComponent } from '../addactivity/addactivity.component';
@@ -23,8 +23,8 @@ import { CalendarsettingComponent } from '../calendarsetting/calendarsetting.com
     IonicModule,
     SchedulingPageRoutingModule,FullCalendarModule,
   ],
-  declarations: [SchedulingPage,ActinfoComponent,FilterPipe,AddactivityComponent,AreaPartsComponent,jobssearchComponent,CalendarfilterComponent,CalendarsettingComponent,resorceListComponent],
+  declarations: [SchedulingPage,ActinfoComponent,FilterPipe,AddactivityComponent,AreaPartsComponent,jobssearchComponent,CalendarfilterComponent,CalendarsettingComponent,resorceListComponent,AuditDetails],
   entryComponents: [ActinfoComponent,AddactivityComponent,jobssearchComponent,AreaPartsComponent,
-  CalendarfilterComponent,CalendarsettingComponent,resorceListComponent],
+  CalendarfilterComponent,CalendarsettingComponent,resorceListComponent,AuditDetails],
 })
 export class SchedulingPageModule {}

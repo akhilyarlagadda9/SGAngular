@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
 import { AuthService } from 'src/app/service/auth.service';
 import { Storage } from '@ionic/storage';
-
+import { Audit } from 'src/app/Model/audit.model';
+import { AuditService } from 'src/app/service/audit.service';
+declare var google;
 declare var platform: string;
 @Component({
   selector: 'app-login',
@@ -15,7 +17,7 @@ export class LoginPage implements OnInit {
   };
   ErrorMsg: string;
   constructor(private navCtrl: NavController, private authservise: AuthService,
-    private plt: Platform, private storage: Storage) {
+    private plt: Platform, private storage: Storage,private audit:AuditService) {
 
   }
   ngOnInit() {
@@ -78,8 +80,20 @@ export class LoginPage implements OnInit {
     this.SetUserPermissions(this.user.UserPermissions, this.user.logInUserIsAdmin);
     //set company info
     const company = await this.storage.set("CompanyInfo", CompanyInfo);
-    this.navCtrl.navigateRoot('/home');
+    let audt = new Audit();
+    audt.userName = this.user.UserName;
+    audt.reqStartTime = new Date().getTime();
+    audt.viewName = "LoginToHome"
+    const strFullAddress = this.audit.geocodeAddress();
+    strFullAddress.then(res => {
+      audt.location = res;
+      this.navCtrl.navigateRoot('/home', { state: { audt } });
+    }).catch(error => {
+      audt.location = error;
+      this.navCtrl.navigateRoot('/home', { state: { audt } });
+    });
   }
+
 
   SetUserModel(data) {
     let userModel = {
@@ -121,7 +135,7 @@ export class LoginPage implements OnInit {
     }
     let useraccess = { quote: quoteaccess, job: jobaccess, calendar: calendaraccess }
     await this.storage.set("userModuleAccess", useraccess);
-     await this.storage.set("quoteaccess", quoteaccess);
+    await this.storage.set("quoteaccess", quoteaccess);
     // await this.storage.set("salestrackeraccess", salestrackeraccess);
     // await this.storage.set("jobaccess", jobaccess);
     await this.storage.set("calendaraccess", calendaraccess);

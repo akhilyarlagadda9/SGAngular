@@ -237,6 +237,9 @@ CommHubPhaseList(versionID:any):Observable<any> {
 ActionTemplateList(typeId:any):Observable<any> {
   return this.http.get<any>(this.url + 'api/messageCenter/TemplateList?typeId=' + typeId) 
 }
+GetUserLocationList(Id:any):Observable<any> {
+  return this.http.get<any>(this.url + 'api/user/UserLocationList?Id=' + Id) 
+}
 ActionNoteInfo(Id:any):Observable<any> {
   return this.http.get<any>(this.url + 'api/Quote/NoteInfo?Id=' + Id) 
 }
@@ -254,7 +257,7 @@ ActionGetEmailsEmployeeList(contactList):Observable<any> {
   return this.http.post<any>(this.url + 'api/Quote/GetEmailsEmployeeList', parameter, { headers: { 'Content-Type': 'application/json' } })
 }
 ActionGetQuoteCustContactList(versionid:any):Observable<any> {
-  return this.http.get<any>(this.url + 'api/Quote/CustomerContactList?versionid=' + versionid) 
+  return this.http.get<any>(this.url + 'api/Quote/CustomerContactList1?versionid=' + versionid) 
 } 
 ActionCommunicationMessageList1(versionId:number, catId:number, phaseId:number, typeId:number, customerId:number, projectId:number):Observable<any> {
   return this.http.get<any>(this.url + 'api/Quote/CommunicationMessageList1?versionId=' + versionId + "&catagoryId=" + catId + "&phaseId=" + phaseId + "&typeId=" + typeId + "&customerId=" + customerId + '&projectId=' + projectId) 

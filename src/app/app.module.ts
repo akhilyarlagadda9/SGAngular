@@ -11,6 +11,7 @@ import { AppComponent, DropdownDirective } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { QuotePageModule } from './pages/quotes/quote/quote.module';
 import { SchedulingPageModule } from './pages/project/scheduling/scheduling.module';
+import { Device } from '@ionic-native/device/ngx';
 //import { AgmCoreModule } from '@agm/core';
 //import { GoogleMaps} from '@ionic-native/google-maps/ngx';
 //import { Storage } from '@ionic/storage';
@@ -32,6 +33,7 @@ declare var urlss;
   providers: [
     StatusBar,
     SplashScreen,
+    Device,
     //GoogleMaps,
     { provide: RouteReuseStrategy,useClass: IonicRouteStrategy }
   ],

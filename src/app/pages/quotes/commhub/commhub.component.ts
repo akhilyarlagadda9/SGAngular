@@ -117,23 +117,13 @@ ActionPreviewFile(fileName){
     modal.onDidDismiss().then((result: OverlayEventDetail) => {
       if (result.data !== null && result.data != undefined) {
         if (result.data.issave == true) {
-          // this.UpdateActivty(result.data.componentProps);
-          //this.ActionLoadEvents();
-          //this.GetPictureList();
+          this.GetQuoteNoteList();
         }
       }
     });
     return await modal.present();
   }
-  //Comm.Hub Email Edit Function
-  async ActionEditCommEmail(note: any) {
-    let commDetails = {versionId : this.VersionId,commDetails: note}   
-    const modal = await this.Modalcntrl.create({
-      component: MaileditComponent,
-      componentProps : commDetails
-    });
-    return await modal.present();
-  }
+ 
  //Status List Function
   GetprocessstatusList() {
     this.qservice.ProjectProcessList(1).subscribe(

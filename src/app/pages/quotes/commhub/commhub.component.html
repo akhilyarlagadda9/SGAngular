@@ -1,60 +1,65 @@
-
 <ion-row>
   <ion-col size="5">
     <ion-select [(ngModel)]="CategoryID" class="btninfo" (ngModelChange)="ActionChangeCategory($event)">
       <ion-select-option [value]="0" selected="selected">ALL</ion-select-option>
-      <ion-select-option *ngFor="let process of processtypeList" [value]="process.ID" >{{process.Name}}
+      <ion-select-option *ngFor="let process of processtypeList" [value]="process.ID">{{process.Name}}
       </ion-select-option>
     </ion-select>
   </ion-col>
   <ion-col size="7" class="text-right">
-    <ion-button *ngIf="selectedhubtype == 2" (click)="ActionEditCommHubMail(0)" size="small" class="text-right fontbold">Compose</ion-button>
-    <ion-button *ngIf="selectedhubtype == 1" (click)="ActionEditCommHub(0)" size="small" class="text-right fontbold">ADD</ion-button>
+    <ion-button *ngIf="selectedhubtype == 2" (click)="ActionEditCommHubMail(0)" size="small"
+      class="text-right fontbold">Compose</ion-button>
+    <ion-button *ngIf="selectedhubtype == 1" (click)="ActionEditCommHub(0)" size="small" class="text-right fontbold">ADD
+    </ion-button>
   </ion-col>
 </ion-row>
 
 <ion-list class="ion-no-margin" *ngIf="selectedhubtype == 1">
-  <ion-item class="paddzero item-marg" *ngFor="let note of notesList" >
-    <ion-col size="9">
-      <ion-row (click)="ActionEditCommHub(note)">
-        <ion-label>
-          <h2>{{note.Subject}}</h2>
-          <h3>{{note.User}} - {{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</h3>
-          <p innerHTML="{{note.Body}}"></p>
-         </ion-label>
-      </ion-row>
-      <ion-row class="paddzero" *ngFor="let category of note.AttachmentList; let i = index">
-        <ion-col class="paddzero" size="1">
-          <ion-icon *ngIf="i == 0" ios="ios-attach"  md="md-attach"></ion-icon>
+  <ion-item class="paddzero item-marg" *ngFor="let note of notesList">
+    <ion-col size="12">
+      <ion-row>
+        <span class="font-text" (click)="ActionEditCommHub(note)">{{note.Subject}}</span>
+          <ion-col size="9">
+            <ion-label>
+              <h3>{{note.User}} - {{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</h3>
+              <p innerHTML="{{note.Body}}"></p>
+            </ion-label>
+            <ion-row class="paddzero" *ngFor="let category of note.AttachmentList; let i = index">
+              <ion-col class="paddzero" size="1">
+                <ion-icon *ngIf="i == 0" ios="ios-attach" md="md-attach"></ion-icon>
+              </ion-col>
+              <ion-col size="11">
+                <ion-label (click)="ActionPreviewFile(category.FileName)">
+                  <h3>{{category.FileName}}</h3>
+                </ion-label>
+              </ion-col>
+            </ion-row>
           </ion-col>
-          <ion-col size="11">
-            <ion-label (click)="ActionPreviewFile(category.FileName)"><h3>{{category.FileName}}</h3></ion-label>
+          <ion-col size="3">
+            <ion-button shape="round" fill="outline" (click)="ActionEditCommHubMail(note)">Mail</ion-button>
           </ion-col>
-          
       </ion-row>
     </ion-col>
-    <ion-col size="1" >
-      <ion-button shape="round" fill="outline" (click)="ActionEditCommHubMail(note)">Mail</ion-button>
-    </ion-col>
-   </ion-item>
+
+  </ion-item>
 </ion-list>
 <ion-list class="ion-no-margin" *ngIf="selectedhubtype == 2">
   <ion-item *ngFor="let note of msgList" (click)="ActionEditCommHub(note)">
-   <ion-label>
-    <h2>{{note.Subject}}</h2>
-    <h3>{{note.User}} - {{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</h3>
-    <p innerHTML="note.Body"></p>
-   </ion-label>
+    <ion-label>
+      <h2>{{note.Subject}}</h2>
+      <h3>{{note.User}} - {{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</h3>
+      <p innerHTML="note.Body"></p>
+    </ion-label>
   </ion-item>
 </ion-list>
 <ion-list class="ion-no-margin" *ngIf="selectedhubtype == 3">
   <ion-card class="margin-bottom margcard" style="margin-top: 0px;" *ngFor="let picture of pictureList">
     <ion-col class="no-padding paddzero" style="overflow-y: scroll;">
-        <ion-row class="marbot">
-          <ion-col class="paddzero text-center">
-            <span style="font-size: medium;">{{picture.Name}}</span>
-          </ion-col>
-        </ion-row>
+      <ion-row class="marbot">
+        <ion-col class="paddzero text-center">
+          <span style="font-size: medium;">{{picture.Name}}</span>
+        </ion-col>
+      </ion-row>
     </ion-col>
     <img [src]="picture.Path" style="width:100%;height:200px;" (click)="ActionPreviewFile(picture.Path)">
   </ion-card>
@@ -83,4 +88,3 @@
 </ion-footer>
 
 </div> -->
-

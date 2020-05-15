@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams, AlertController } from '@ionic/angular';
+import { ModalController, NavParams, AlertController, LoadingController } from '@ionic/angular';
 import { SchedulingService } from 'src/app/service/scheduling.service';
 import { OverlayEventDetail } from '@ionic/core';
 import { DatePipe } from '@angular/common';
 import { NgForm } from '@angular/forms';
-declare var timings :any;
-import {AreaPartsComponent} from '../area-parts/area-parts.component';
+declare var timings: any;
+import { AreaPartsComponent } from '../area-parts/area-parts.component';
 import { AuthService } from 'src/app/service/auth.service';
 @Component({
   selector: 'app-addactivity',
@@ -14,16 +14,17 @@ import { AuthService } from 'src/app/service/auth.service';
   providers: [DatePipe]
 })
 export class AddactivityComponent implements OnInit {
-  actinfo: any = this.navParams.data; ApproveList: any; serObj: any;
+  actinfo: any = this.navParams.data; ApproveList: any; serObj: any; orginalData: Object = {};
   ActTypeList: any; statusList: any; phaseList: any; ResourceList: any[]; PhasePartList: any; ResourceListWithDates: any[];
-  eventCopy: any;calAccess:boolean;
+  eventCopy: any; calAccess: boolean;
   IsResource: boolean;
   IsSelectedPopulate: number;
   resourceList: any;
-  QuotePartList: any;timings:any = timings;
+  QuotePartList: any; timings: any = timings;
+  loaderToShow: Promise<void>;
   //arrShowItems:any;
-  constructor(public Modalcntrl: ModalController, private schService: SchedulingService,private navParams: NavParams,
-    private datePipe: DatePipe, private alertCtrl: AlertController,private authservise:AuthService) { }
+  constructor(public Modalcntrl: ModalController, private schService: SchedulingService, private navParams: NavParams,
+    private datePipe: DatePipe, private alertCtrl: AlertController, private authservise: AuthService, public loadingController: LoadingController,) { }
 
   ngOnInit() {
     this.LoadCalendarAccess();
@@ -31,6 +32,8 @@ export class AddactivityComponent implements OnInit {
       this.ActionActivityInfo();
     } else {
       // this.ActionActivityInfoWithDates();
+      this.actinfo.SchEndTime  = (this.actinfo.SchEndTime).substring(0,(this.actinfo.SchEndTime).indexOf("T"));
+      this.GetSelectedData(this.actinfo);
       this.statusList = this.actinfo.StatusList;
     }
 
@@ -44,302 +47,351 @@ export class AddactivityComponent implements OnInit {
     }
 
     console.log(this.actinfo);
-  } 
+  }
 
-//#region Actions
-ActionActivityInfo() {
-  let start = this.datePipe.transform(this.actinfo.SchStartTime, "MM-dd-yyyy");
-  let result = this.schService.ActivityInfo(this.actinfo.ID, this.actinfo.ActTypeID, start, start).subscribe(
-    data => {
-     this.actinfo = data;
-      this.actinfo.PrevStartDate = data.SchStartTime;
-      this.actinfo.PrevEndDate = data.SchEndTime;
-      this.statusList = data.StatusList;
-      this.PopulateActualDate();
-      //this.ActionActivityInfoWithDates();
-    },
-    error => console.log(error));
-}
-ActionApprovedJobList(search, typeId) {
-  this.schService.ApprovedJobList(search, typeId).subscribe(
-    data => {
-      this.ApproveList = data;
-      this.Actionsearchjobs(this.ApproveList);
+  GetSelectedData(data) {
+    //var original = {};
+    var arrValues: Array<any> = [];
+    if (data.QuotePartList != []) {
+      data.QuotePartList.forEach(data => {
+        arrValues.push(data.AreaName + "-Part" + data.SrNo + "-" + data.JobSqft + "SF");
+      });
     }
-  );
-}
-ActionGetSelectedAreas(ev:any) {
-  for(let i = 0; i <= ev.length; i++){
-    let actinfo = this.QuotePartList.find(s => s.ID == i[0]);
+    this.orginalData["ID"] = data.ID;
+    this.orginalData["ActTypeName"] = data.ActTypeName;
+    //this.orginalData["SchStartTime"] = data.ActStartDate;
+    //this.orginalData["SchEndTime"] = data.ActEndDate;
+    //original.SchStartTime = data.SchStartTime;
+    //original.SchEndTime = data.SchEndTime;
+    this.orginalData["Duration"] = data.Duration;
+    this.orginalData["StatusName"] = data.StatusName;
+    this.orginalData["Memo"] = data.Memo;
+    this.orginalData["PhaseID"] = data.PhaseID;
+    this.orginalData["PhaseSrNo"] = data.PhaseSrNo;
+    this.orginalData["MatTypeID"] = data.MatTypeID;
+    this.orginalData["Area"] = arrValues;
+    this.orginalData["DelayHr"] = data.DelayHr;
+    this.orginalData["DelayMin"] = data.DelayMin;
+    this.orginalData["ResourceName"] = data.ResourceName;
+    //if (data.StatusID == 5) {
+    this.orginalData["ActualStartDate"] = data.ActualStartDate;
+    this.orginalData["ActualEndDate"] = data.ActualEndDate;
+    //}
+    console.log(this.orginalData);
+  }
+
+  //#region Actions
+  ActionActivityInfo() {
+    let start = this.datePipe.transform(this.actinfo.SchStartTime, "MM-dd-yyyy");
+    let result = this.schService.ActivityInfo(this.actinfo.ID, this.actinfo.ActTypeID, start, start).subscribe(
+      data => {
+        this.actinfo = data;
+        this.actinfo.PrevStartDate = data.SchStartTime;
+        this.actinfo.PrevEndDate = data.SchEndTime;
+        this.statusList = data.StatusList;
+        this.PopulateActualDate();
+        //this.ActionActivityInfoWithDates();
+      },
+      error => console.log(error));
+  }
+  ActionApprovedJobList(search, typeId) {
+    this.showLoader();
+    this.schService.ApprovedJobList(search, typeId).subscribe(
+      data => {
+        this.ApproveList = data;
+        this.Actionsearchjobs(this.ApproveList);
+        this.hideLoader();
+      }
+    );
+  }
+  ActionGetSelectedAreas(ev: any) {
+    for (let i = 0; i <= ev.length; i++) {
+      let actinfo = this.QuotePartList.find(s => s.ID == i[0]);
+      if (actinfo != null) {
+        this.QuotePartList.AreasName = this.QuotePartList.AreaName;
+      }
+    }
+  }
+  ActionPhaseist(typeId) {
+    this.schService.PhaseList(this.actinfo.VersionID).subscribe(
+      data => {
+        this.phaseList = data;
+        if (typeId == 1) {
+          this.ActionChangePhase(this.phaseList[0].ID);
+        }
+        this.ActionGetSelectedPhase();
+      });
+  }
+  ActionGetSelectedPhase() {
+    let actinfo = this.phaseList.find(s => s.ID == this.actinfo.PhaseID);
     if (actinfo != null) {
-      this.QuotePartList.AreasName = this.QuotePartList.AreaName;
+      this.actinfo.PhaseName = actinfo.Name;
     }
   }
-}
-ActionPhaseist(typeId) {
-  this.schService.PhaseList(this.actinfo.VersionID).subscribe(
-    data => {
-      this.phaseList = data;
-      if(typeId == 1){ 
-        this.ActionChangePhase(this.phaseList[0].ID);
-       }
-      this.ActionGetSelectedPhase();
+  ActionChangePhase(Id) {
+    let phase = this.phaseList.find(s => s.ID == Id);
+    if (phase != null) {
+      this.actinfo.PhaseID = phase.ID;
+      this.actinfo.PhaseSrNo = phase.Code;
+      this.actinfo.MatTypeID = phase.MatTypeID;
+      this.actinfo.MaterialName = phase.Materials;
+      this.ActionPhasePartList(1);
+    }
+  }
+  ActionPhasePartList(ischange) {
+    this.actinfo.ActPartIds = this.actinfo.ActPartIds == undefined ? null : this.actinfo.ActPartIds;
+    this.actinfo.Area = this.actinfo.Area == undefined ? null : this.actinfo.Area;
+    this.schService.ActionPhasePartList(this.actinfo.VersionID, this.actinfo.PhaseID, this.actinfo.ActTypeID, this.actinfo.ActPartIds, this.actinfo.Area).subscribe(
+      data => {
+        this.PhasePartList = data;
+        if (ischange == 1) {
+          // this.actinfo.QuotePartList =this.PhasePartList;
+          this.SetAreaPartIDs(this.PhasePartList);
+        }
+      }
+    );
+  }
+  ActionActivityTypeList() {
+    this.schService.ActivityTypeList(4).subscribe(
+      data => {
+        this.ActTypeList = data;
+        //this.GetResoucreList();
+        this.ActionGetSelectedActivityType();
+      }
+    );
+  }
+  ActionGetSelectedActivityType() {
+    let actinfo = this.ActTypeList.find(s => s.ID == this.actinfo.ActTypeID);
+    if (actinfo != null) {
+      this.actinfo.ActivityType = actinfo.Name;
+    }
+  }
+  ActionGetStatusResourceList(Id) {
+    let sdate = this.datePipe.transform(this.actinfo.SchStartTime, "MM-dd-yyyy");
+    this.schService.GetActTypeInfo(Id, sdate).subscribe(data => {
+      this.PreapareActivity(data);
     });
-}
-ActionGetSelectedPhase() {
-  let actinfo = this.phaseList.find(s => s.ID == this.actinfo.PhaseID);
-  if (actinfo != null) {
-    this.actinfo.PhaseName = actinfo.Name;
   }
-}
-ActionChangePhase(Id) {
-  let phase = this.phaseList.find(s => s.ID == Id);
-  if (phase != null) {
-    this.actinfo.PhaseID = phase.ID;
-    this.actinfo.PhaseSrNo = phase.Code;
-    this.actinfo.MatTypeID = phase.MatTypeID;
-    this.actinfo.MaterialName = phase.Materials;
-    this.ActionPhasePartList(1);
+  ActionStatusList() {
+    this.schService.ActionStatusList().subscribe(data => {
+      this.statusList = data;
+    });
   }
-}
-ActionPhasePartList(ischange) {
-  this.actinfo.ActPartIds = this.actinfo.ActPartIds == undefined ? null : this.actinfo.ActPartIds;
-  this.actinfo.Area = this.actinfo.Area == undefined ? null : this.actinfo.Area;
-  this.schService.ActionPhasePartList(this.actinfo.VersionID, this.actinfo.PhaseID, this.actinfo.ActTypeID, this.actinfo.ActPartIds, this.actinfo.Area).subscribe(
-    data => { this.PhasePartList = data; 
-      if(ischange == 1){
-       // this.actinfo.QuotePartList =this.PhasePartList;
-        this.SetAreaPartIDs(this.PhasePartList);
+  ActionSetStatus(id) {
+    let statusinfo = this.statusList.find(s => s.ID == id);
+    if (statusinfo != undefined && statusinfo != null) {
+      if (id == 5) {
+        let currDate = this.datePipe.transform(new Date(), "MM-dd-yyyy");
+        let actStartYear = this.datePipe.transform(this.actinfo.ActualStartDate, "yyyy");
+        let actEndYear = this.datePipe.transform(this.actinfo.ActualEndDate, "yyyy");
+        if ((actStartYear == "0001" || actStartYear == "0000")) {
+          this.actinfo.ActualStartDate = currDate + " " + this.actinfo.STime;
+        }
+        if ((actEndYear == "0001" || actEndYear == "0000")) {
+          this.actinfo.ActualEndDate = currDate + " " + this.actinfo.ETime;
+        }
       }
-     }
-  );
-}
-ActionActivityTypeList() {
-  this.schService.ActivityTypeList(4).subscribe(
-    data => {
-      this.ActTypeList = data;
-      //this.GetResoucreList();
-      this.ActionGetSelectedActivityType();
+      this.actinfo.StatusName = statusinfo.Name;
+      this.actinfo.IconPath = statusinfo.IconName;
     }
-  );
-}
-ActionGetSelectedActivityType() {
-  let actinfo = this.ActTypeList.find(s => s.ID == this.actinfo.ActTypeID);
-  if (actinfo != null) {
-    this.actinfo.ActivityType = actinfo.Name;
-  }
-}
-ActionGetStatusResourceList(Id) {
-  let sdate = this.datePipe.transform(this.actinfo.SchStartTime, "MM-dd-yyyy");
-  this.schService.GetActTypeInfo(Id, sdate).subscribe(data => {
-    this.PreapareActivity(data);
-  });
-}
-ActionStatusList() {
-  this.schService.ActionStatusList().subscribe(data => {
-    this.statusList = data;
-  });
-}
-ActionSetStatus(id){
- let statusinfo = this.statusList.find(s=>s.ID == id);
- if(statusinfo != undefined &&  statusinfo != null){
-   if(id == 5){
-  let currDate = this.datePipe.transform(new Date(), "MM-dd-yyyy");
-  let actStartYear = this.datePipe.transform(this.actinfo.ActualStartDate, "yyyy");
-  let actEndYear = this.datePipe.transform(this.actinfo.ActualEndDate, "yyyy");
-  if ((actStartYear == "0001" || actStartYear == "0000")) {
-    this.actinfo.ActualStartDate = currDate + " " + this.actinfo.STime;
-  }
-  if ((actEndYear == "0001" || actEndYear == "0000")) {
-    this.actinfo.ActualEndDate = currDate + " " + this.actinfo.ETime;
-  }
-}
-  this.actinfo.StatusName = statusinfo.Name;
-  this.actinfo.IconPath = statusinfo.IconName;
- }
-  
 
-}
-ActionCloseActivity(issave) {
-  this.Modalcntrl.dismiss({
-    'dismissed': true,
-    componentProps: this.eventCopy,
-    issave: issave
-  });
-}
-ActionChangeDate(selctedDate, typeId, type) {
-  let obj: any;
-  if(type == "sDate"){
-    this.actinfo.SchStartTime = selctedDate; 
-  }else if(type == "eDate"){
-    this.actinfo.SchEndTime = selctedDate; 
+
   }
-  let start = type == "" ? "" : this.datePipe.transform(selctedDate, "MM-dd-yyyy");
-  let today = this.datePipe.transform(new Date(), "MM-dd-yyyy");
-  if (new Date(start) < new Date(today) || this.actinfo.StatusID == 5) {
-    var alertMsg = this.actinfo.StatusID == 5 ? "Activity is Completed" : "Past Date(s)";
-    obj = {
-      Header: "Activity Schedule!",
-      ChangedDateType: type,
-      ShowCalFollowUp: 1,
-      HolidayName: "PastDate",
-      Message: alertMsg + "Schedule Change is not allowed",
-      SubAlert: "Do you want to continue?",
-      ClickType: 1, Type: type, StartDate: selctedDate, TypeID: typeId
+  ActionCloseActivity(issave) {
+    this.Modalcntrl.dismiss({
+      'dismissed': true,
+      componentProps: this.eventCopy,
+      issave: issave
+    });
+  }
+  ActionChangeDate(selctedDate, typeId, type) {
+    let obj: any;
+    if (type == "sDate") {
+      this.actinfo.SchStartTime = selctedDate;
+    } else if (type == "eDate") {
+      this.actinfo.SchEndTime = selctedDate;
     }
-    this.ShowConfirmAlert(obj);
-  }
-  else {
-    this.GetDuration(typeId);
-  }
+    let start = type == "" ? "" : this.datePipe.transform(selctedDate, "MM-dd-yyyy");
+    let today = this.datePipe.transform(new Date(), "MM-dd-yyyy");
+    if (new Date(start) < new Date(today) || this.actinfo.StatusID == 5) {
+      var alertMsg = this.actinfo.StatusID == 5 ? "Activity is Completed" : "Past Date(s)";
+      obj = {
+        Header: "Activity Schedule!",
+        ChangedDateType: type,
+        ShowCalFollowUp: 1,
+        HolidayName: "PastDate",
+        Message: alertMsg + "Schedule Change is not allowed",
+        SubAlert: "Do you want to continue?",
+        ClickType: 1, Type: type, StartDate: selctedDate, TypeID: typeId
+      }
+      this.ShowConfirmAlert(obj);
+    }
+    else {
+      this.GetDuration(typeId);
+    }
 
-}
-ActionChangeDuration(value,typeId){
-  if(typeId == 1){
-    this.actinfo.Hrs = value;
-  }else{
-    this.actinfo.Mins =value; 
   }
-  this.GetDuration(0);
-}
-ActionSaveActivity(form: NgForm) {
-  if (form.valid) {
-    this.actinfo.SchStartTime = new Date(this.actinfo.SchStartTime).toDateString() + " " + this.actinfo.STime;
-    this.actinfo.SchEndTime= new Date(this.actinfo.SchEndTime).toDateString() + " " + this.actinfo.ETime;
-    if (this.actinfo.IsDateChange == true || this.actinfo.ID == 0) {
-      this.schService.FollowUpStatus(this.actinfo).subscribe(data => {
-        var follow = data; let obj: any;
-        // Sunaday and Company Holiday
-        if ((follow.SeletedDayOfWeek != null && follow.SeletedDayOfWeek != "") || follow.IsCompanyHoliday == "True") { // For Sunday
-          var alertMsg = follow.IsCompanyHoliday == "True" ? "Company holiday (" + follow.HolidayName + ") " : follow.SeletedDayOfWeek
-          obj = {
-            IsExistSunday: 1,
-            ShowCalFollowUp: 0,
-            Header: "Activity Schedule!",
-            ChangedDateType: "",
-            HolidayName: "PastDate",
-            Message: alertMsg + "Schedule Change is not allowed",
-            SubAlert: "Do you want to continue?",
-            ClickType: 2,
-          }
-          this.ShowConfirmAlert(obj);
-        }
-        // For Resource and Company Events
-        else if (follow.IsUserHoliday == "True") {
-          var alertMsg1 = follow.IsCompanyHoliday == "True" ? "Company holiday" : "Resource";
-          obj = {
-            IsExistSunday: 1,
-            ShowCalFollowUp: 0,
-            Header: "Activity Schedule!",
-            ChangedDateType: "",
-            HolidayName: "",
-            Message: follow.HolidayName + " (OFF) Schedule Change is not allowed",
-          }
-          this.ShowAlert(obj);
-        }
-        //Duplicate Activites Timings
-        else if (this.actinfo.ID == 0 && follow.DuplicateActs != null && follow.DuplicateActs != "") {
-          obj = {
-            IsExistSunday: 1,
-            ShowCalFollowUp: 0,
-            Header: "Resource Schedule!",
-            ChangedDateType: "",
-            HolidayName: "",
-            Message: follow.DuplicateActs + "Scheduled with same Resource same Time",
-            SubAlert: "Do you want to continue?",
-            ClickType: 2,
-          }
-          this.ShowConfirmAlert(obj);
-        }
-        else {
-          this.ConfirmSaveActInfo();
-        }
-      })
+  ActionChangeDuration(value, typeId) {
+    if (typeId == 1) {
+      this.actinfo.Hrs = value;
     } else {
-      this.ConfirmSaveActInfo();
+      this.actinfo.Mins = value;
     }
+    this.GetDuration(0);
+  }
+  ActionSaveActivity(form: NgForm) {
+    if (form.valid) {
+      this.actinfo.SchStartTime = new Date(this.actinfo.SchStartTime).toDateString() + " " + this.actinfo.STime;
+      this.actinfo.SchEndTime = new Date(this.actinfo.SchEndTime).toDateString() + " " + this.actinfo.ETime;
+      if (this.actinfo.IsDateChange == true || this.actinfo.ID == 0) {
+        this.schService.FollowUpStatus(this.actinfo).subscribe(data => {
+          var follow = data; let obj: any;
+          // Sunaday and Company Holiday
+          if ((follow.SeletedDayOfWeek != null && follow.SeletedDayOfWeek != "") || follow.IsCompanyHoliday == "True") { // For Sunday
+            var alertMsg = follow.IsCompanyHoliday == "True" ? "Company holiday (" + follow.HolidayName + ") " : follow.SeletedDayOfWeek
+            obj = {
+              IsExistSunday: 1,
+              ShowCalFollowUp: 0,
+              Header: "Activity Schedule!",
+              ChangedDateType: "",
+              HolidayName: "PastDate",
+              Message: alertMsg + "Schedule Change is not allowed",
+              SubAlert: "Do you want to continue?",
+              ClickType: 2,
+            }
+            this.ShowConfirmAlert(obj);
+          }
+          // For Resource and Company Events
+          else if (follow.IsUserHoliday == "True") {
+            var alertMsg1 = follow.IsCompanyHoliday == "True" ? "Company holiday" : "Resource";
+            obj = {
+              IsExistSunday: 1,
+              ShowCalFollowUp: 0,
+              Header: "Activity Schedule!",
+              ChangedDateType: "",
+              HolidayName: "",
+              Message: follow.HolidayName + " (OFF) Schedule Change is not allowed",
+            }
+            this.ShowAlert(obj);
+          }
+          //Duplicate Activites Timings
+          else if (this.actinfo.ID == 0 && follow.DuplicateActs != null && follow.DuplicateActs != "") {
+            obj = {
+              IsExistSunday: 1,
+              ShowCalFollowUp: 0,
+              Header: "Resource Schedule!",
+              ChangedDateType: "",
+              HolidayName: "",
+              Message: follow.DuplicateActs + "Scheduled with same Resource same Time",
+              SubAlert: "Do you want to continue?",
+              ClickType: 2,
+            }
+            this.ShowConfirmAlert(obj);
+          }
+          else {
+            this.ConfirmSaveActInfo();
+          }
+        })
+      } else {
+        this.ConfirmSaveActInfo();
+      }
 
-  }
-}
-// Delete resource function
-ActionDeleteSelectedItems(Id, index, list) {
-  if (Id > 0) {
-    this.schService.ActionDeleteResource(Id).subscribe(data => {
-      let success = data;
-    })
-  }
-  this.actinfo.ResourceList.splice(index, 1);
-}
-ActionAllDayClick(event){
-  this.actinfo.STime = "8:00 AM";
-  this.actinfo.ETime = "9:00 AM";
-  if (event.detail.checked) {
-    this.actinfo.Hrs = 9; this.actinfo.Mins = 0;
-    this.actinfo.ETime = "6:00 PM";
-    this.actinfo.Duration = 540;
-  } else {
-    this.actinfo.Hrs = 1; this.actinfo.Mins = 0; this.actinfo.Duration = 60;
-  }
-}
-//#endregion
-//#region  popups
-async Actionsearchjobs(ev: any) {
-  let approvelist = { ApproveList: ev }
-  const popover = await this.Modalcntrl.create({
-    component: jobssearchComponent,
-    componentProps: approvelist,
-    //translucent: true,
-  });
-  popover.onDidDismiss().then((detail: OverlayEventDetail) => {
-    if (detail !== null) {
-      if (detail.data.isselect == true) {
-        this.PopulateVersionInfo(detail.data.componentProps);
-      }
     }
-  });
-  return await popover.present();
-}
-async ActionopenResourcePopup() {
-  let start = new Date(this.actinfo.SchStartTime).toDateString() + " " + this.actinfo.STime;
-  let end = new Date(this.actinfo.SchEndTime).toDateString() + " " + this.actinfo.ETime;
-  let obj={start:start,end:end,actTypeId:this.actinfo.ActTypeID,actResList:this.actinfo.ResourceList,actId:this.actinfo.ID}
-  const popover = await this.Modalcntrl.create({
-    component: resorceListComponent,
-    componentProps: obj,
-  });
-  popover.onDidDismiss().then((detail: OverlayEventDetail) => {
-    if (detail !== null) {
-      if (detail.data.isselect == true) {
-        this.actinfo.ResourceList = detail.data.componentProps;
-      //  this.PopulateVersionInfo(detail.data.componentProps);
-      }
+  }
+  // Delete resource function
+  ActionDeleteSelectedItems(Id, index, list) {
+    if (Id > 0) {
+      this.schService.ActionDeleteResource(Id).subscribe(data => {
+        let success = data;
+      })
     }
-  });
-  return await popover.present();
-}
-async ActionOpenAreaPart(){
-  let objAreaInfo = {PhasePartList:this.PhasePartList, ActPartIds:this.actinfo.ActPartIds, ActAreaParts:this.actinfo.ActAreaParts};
-  const popover = await this.Modalcntrl.create({
-    component: AreaPartsComponent,
-    componentProps: objAreaInfo,
-  });
-  popover.onDidDismiss().then((result: OverlayEventDetail) => {
-    console.log(result);
-    if (result.data.componentProps !== null && result.data.componentProps != undefined) {
-      if (result.data.isSelect == true) {
-      this.SetAreaPartIDs(result.data.componentProps);
-      }
+    this.actinfo.ResourceList.splice(index, 1);
+  }
+  ActionAllDayClick(event) {
+    this.actinfo.STime = "8:00 AM";
+    this.actinfo.ETime = "9:00 AM";
+    if (event.detail.checked) {
+      this.actinfo.Hrs = 9; this.actinfo.Mins = 0;
+      this.actinfo.ETime = "6:00 PM";
+      this.actinfo.Duration = 540;
+    } else {
+      this.actinfo.Hrs = 1; this.actinfo.Mins = 0; this.actinfo.Duration = 60;
     }
+  }
+  //#endregion
+  //#region  popups
+  async Actionsearchjobs(ev: any) {
+    let approvelist = { ApproveList: ev }
+    const popover = await this.Modalcntrl.create({
+      component: jobssearchComponent,
+      componentProps: approvelist,
+      //translucent: true,
+    });
+    popover.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null) {
+        if (detail.data.isselect == true) {
+          this.PopulateVersionInfo(detail.data.componentProps);
+        }
+      }
+    });
+    return await popover.present();
+  }
+  async ActionopenResourcePopup() {
+    let start = new Date(this.actinfo.SchStartTime).toDateString() + " " + this.actinfo.STime;
+    let end = new Date(this.actinfo.SchEndTime).toDateString() + " " + this.actinfo.ETime;
+    let obj = { start: start, end: end, actTypeId: this.actinfo.ActTypeID, actResList: this.actinfo.ResourceList, actId: this.actinfo.ID }
+    const popover = await this.Modalcntrl.create({
+      component: resorceListComponent,
+      componentProps: obj,
+    });
+    popover.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null) {
+        if (detail.data.isselect == true) {
+          this.actinfo.ResourceList = detail.data.componentProps;
+          //  this.PopulateVersionInfo(detail.data.componentProps);
+        }
+      }
+    });
+    return await popover.present();
+  }
+  async ActionOpenAreaPart() {
+    let objAreaInfo = { PhasePartList: this.PhasePartList, ActPartIds: this.actinfo.ActPartIds, ActAreaParts: this.actinfo.ActAreaParts };
+    const popover = await this.Modalcntrl.create({
+      component: AreaPartsComponent,
+      componentProps: objAreaInfo,
+    });
+    popover.onDidDismiss().then((result: OverlayEventDetail) => {
+      console.log(result);
+      if (result.data.componentProps !== null && result.data.componentProps != undefined) {
+        if (result.data.isSelect == true) {
+          this.SetAreaPartIDs(result.data.componentProps);
+        }
+      }
+    });
+    return await popover.present();
+  }
+  
+showLoader() {
+  this.loaderToShow = this.loadingController.create({
+    message: 'please wait'
+  }).then((res) => {
+    res.present();
+    res.onDidDismiss().then((dis) => {
+      console.log('Loading dismissed!');
+    });
   });
-  return await popover.present();
 }
-//#endregion
+async hideLoader() {
+  this.loadingController.dismiss();
+} 
+  //#endregion
   //#region activity preparation
-  LoadCalendarAccess(){
+  LoadCalendarAccess() {
     this.authservise.GetStoredCalAccess().then(result => {
       let access = result == 2 ? true : false;
-      this.calAccess = access;});
-      }
+      this.calAccess = access;
+    });
+  }
   PopulateVersionInfo(version: any) {
     this.actinfo.JobName = version.Header.QuoteName;
     this.actinfo.QuoteNo = version.Header.QuoteNo;
@@ -429,32 +481,32 @@ async ActionOpenAreaPart(){
       }
       else {
         let eDate = results[0] + " " + results[1];
-        this.actinfo.SchEndTime = eDate;this.actinfo.ETime =  results[1];
+        this.actinfo.SchEndTime = eDate; this.actinfo.ETime = results[1];
       }
       this.actinfo.PrevStartDate = this.actinfo.SchStartTime;
       this.actinfo.PrevEndDate = this.actinfo.SchEndTime;
       this.actinfo.Duration = Number(this.actinfo.Hrs * 60) + Number(this.actinfo.Mins);
     })
   }
-  SetAreaPartIDs(list){
+  SetAreaPartIDs(list) {
     this.actinfo.QuotePartList = [];
     let Ids = ""; let sqft = 0;
     for (let j in list) {
       let obj = list[j];
-        Ids += obj.ID + ",";
-        sqft += obj.JobSqft;
-        let part = {
-          ID :obj.ID,
-          AreaID:obj.AreaID,
-          AreaName:obj.Area.Name,
-          JobPartName:obj.JobPartName,
-          NewSrNo:obj.NewSrNo,
-          JobSqft:obj.JobSqft,
-        };
-        this.actinfo.QuotePartList.push(part);     
+      Ids += obj.ID + ",";
+      sqft += obj.JobSqft;
+      let part = {
+        ID: obj.ID,
+        AreaID: obj.AreaID,
+        AreaName: obj.Area.Name,
+        JobPartName: obj.JobPartName,
+        NewSrNo: obj.NewSrNo,
+        JobSqft: obj.JobSqft,
+      };
+      this.actinfo.QuotePartList.push(part);
     }
     this.actinfo.ActPartIds = Ids.replace(/(^,)|(,$)/g, "");
-    this.actinfo.PhaseSF = sqft; 
+    this.actinfo.PhaseSF = sqft;
   }
   //#endregion
   //#region alerts
@@ -520,13 +572,83 @@ async ActionOpenAreaPart(){
   ConfirmSaveActInfo() {
     let id = this.actinfo.ID;
     this.schService.ActionSaveActivityInfo(this.actinfo).subscribe(data => {
-      if(data != null){
-        this.actinfo = data;
+      console.log(data);
+      if (data != null) {
+        this.actinfo = data;// new one
         this.actinfo.ExtID = id;
         this.eventCopy = this.actinfo;
       }
-      this.ActionCloseActivity(true);
-    })
+      this.authservise.GetStoredLoginUserID().then(data => {
+        let loginUserID = data;
+        this.ActionSaveAuditLog(this.actinfo, loginUserID);
+        this.ActionCloseActivity(true);
+      });
+    });
+  }
+
+  ActionSaveAuditLog(actinfo, loginUserID) {
+    var Description = "";
+    //var root = $routeParams.isPurchase == 1 ? "Purchase" : $routeParams.isJob == 3 ? "Quote" : $routeParams.isJob == 1 ? "Job" : $routeParams.isJob == 0 ? "Calendar" : "";
+    if (actinfo.ID == 0) {
+      Description = "<b>Action:</b> Activity Created From Calender View";
+    } else {
+      Description = "<div>" + "<b>Action:</b> Activity Changed From Calendar View" + "</div>" + "<div>" + this.ActionfindDiff(this.orginalData, actinfo) + "</div>";
+    }
+    if (Description.length > 0) {
+      var auditModel = {};
+      auditModel["UpdatedBy"] = loginUserID;
+      auditModel["ModuleID"] = 4;
+      auditModel["Decription"] = Description;
+      auditModel["RefID"] = actinfo.ID == 0 ? actinfo.ActTypeID : actinfo.ID;
+      auditModel["RefType"] = "3";
+      auditModel["ViewType"] = "ActivityEdit";
+      var selList = actinfo.ActivityTypeInfo.ResFollowUpList;
+      selList = selList == undefined || selList == null ? [] : selList;
+      if (selList.length > 0) {
+        var refType = actinfo.ActTypeName + " Date Changed";
+        auditModel["RefType"] = refType;
+        auditModel["FollowUpActs"] = selList;
+      }
+      console.log(auditModel);
+      this.schService.ActionSaveAuditDetails(auditModel).subscribe(data => {
+        console.log(data);
+      });
+    }
+  }
+
+  ActionfindDiff(orgData, changedData) {
+    let arrAreaName: Array<any> = []   // TODO: Can it be Done in Different Way?
+    changedData.QuotePartList.forEach(data => {
+      arrAreaName.push(data.AreaName + "-Part" + data.SrNo + "-" + data.JobSqft + "SF");
+    });
+    var Description = "";
+    for (var key in orgData) {
+      if (orgData[key] != 0 && orgData[key] != null) {
+        if (orgData[key] !== changedData[key] && key !== "ResourceName" && key !== "Area") {
+          Description = Description + key + ' from ' + orgData[key] + ' to ' + changedData[key];
+          Description = Description + ' | ';
+        }
+      }
+      if (key == "ResourceName" && (orgData[key] == null || orgData[key] == '')) {
+        orgData[key] = orgData[key] == null ? ' - ' : orgData[key];
+        if (orgData[key] !== changedData[key]) {
+          Description = Description + key + ' from ' + orgData[key] + ' to ' + changedData[key];
+          Description = Description + ' | ';
+        }
+      }
+      if (key == "Area" && (orgData[key] == null || orgData[key] == '')) {
+        orgData[key] = orgData[key] == null ? ' - ' : orgData[key];
+        orgData[key].forEach(orgArea => {
+          arrAreaName.forEach(chgArea => {
+            if (orgArea !== chgArea) {
+              Description = Description + key + ' from ' + orgArea + ' to ' + chgArea;
+              Description = Description + ' | ';
+            }
+          });
+        });
+      }
+    }
+    return Description;
   }
   //#endregion
 }
@@ -589,10 +711,10 @@ export class jobssearchComponent implements OnInit {
   templateUrl: './resources.component.html',
 })
 export class resorceListComponent implements OnInit {
-  resourceList:any = [];start:any;end:any;actTypeId:any;actResList:any;actId:number;
-  constructor(private Modalcntrl: ModalController,private schService:SchedulingService,private alertCtrl:AlertController) {
+  resourceList: any = []; start: any; end: any; actTypeId: any; actResList: any; actId: number;
+  constructor(private Modalcntrl: ModalController, private schService: SchedulingService, private alertCtrl: AlertController) {
   }
-  ngOnInit() {this.GetResoucreList(); }
+  ngOnInit() { this.GetResoucreList(); }
   GetResoucreList() {
     this.schService.ActTypeResListWithDates(this.actTypeId, this.start, this.end).subscribe(
       data => {
@@ -601,23 +723,23 @@ export class resorceListComponent implements OnInit {
       },
       error => console.log(error));
   }
-  ActionPushResource(data,resource) {
+  ActionPushResource(data, resource) {
     if (data == true) {
       this.schService.ActionCheckIsExistSameRes(this.actId, resource.ResourceID, this.start, this.end).subscribe(results => {
         var success = results.data;
         if (success != null && success != "") {
           let obj = {
-              IsExistSunday: 1,
-              ShowCalFollowUp: 0,
-              Header: "Resource Schedule!",
-              ChangedDateType: "",
-              HolidayName: "",
-              Message: success + "Scheduled with same Resource same Time",
-              SubAlert: "Do you want to continue?",
-              ClickType: 3,
-              model: resource,
-            }
-            this.ShowResConfirmAlert(obj);
+            IsExistSunday: 1,
+            ShowCalFollowUp: 0,
+            Header: "Resource Schedule!",
+            ChangedDateType: "",
+            HolidayName: "",
+            Message: success + "Scheduled with same Resource same Time",
+            SubAlert: "Do you want to continue?",
+            ClickType: 3,
+            model: resource,
+          }
+          this.ShowResConfirmAlert(obj);
         } else {
           this.ConfirmResPopulate(resource);
         }
@@ -643,7 +765,7 @@ export class resorceListComponent implements OnInit {
         role: 'cancel',
         cssClass: 'danger',
         handler: (blah) => {
-          
+
         }
       }, {
         text: 'Allow',
@@ -654,19 +776,19 @@ export class resorceListComponent implements OnInit {
     });
     alert.present();
   }
-  ConfirmResPopulate(data){
+  ConfirmResPopulate(data) {
     var addToArray = true;
     var model = {
-    ResourceName:data.ResourceName,
-    ResourceID:data.ResourceID,
-    ActivityID:this.actId,
-    IsActive:data.IsActive,
-    EmpMail:data.EmpMail,
-    EmpPinNo:data.EmpPin,
-    EmpPhone:data.EmpPhone,
-    Provider:data.Provider,
-    AssignTypeID:1,
-    }   
+      ResourceName: data.ResourceName,
+      ResourceID: data.ResourceID,
+      ActivityID: this.actId,
+      IsActive: data.IsActive,
+      EmpMail: data.EmpMail,
+      EmpPinNo: data.EmpPin,
+      EmpPhone: data.EmpPhone,
+      Provider: data.Provider,
+      AssignTypeID: 1,
+    }
     if (this.actResList == null) {
       this.actResList = [];
     }
@@ -675,17 +797,17 @@ export class resorceListComponent implements OnInit {
       this.actResList.push(model);
     }
   }
-   isCheck(list, id) {
+  isCheck(list, id) {
     var addToArray = true;
     if (list != null && list != undefined) {
-        for (var i = 0; i < list.length; i++) {
-            if (list[i].ResourceID === id) {
-                addToArray = false;
-            }
+      for (var i = 0; i < list.length; i++) {
+        if (list[i].ResourceID === id) {
+          addToArray = false;
         }
+      }
     }
     return addToArray;
-}
+  }
   ActionToClosePop(isselect) {
     this.Modalcntrl.dismiss({
       'dismissed': true,

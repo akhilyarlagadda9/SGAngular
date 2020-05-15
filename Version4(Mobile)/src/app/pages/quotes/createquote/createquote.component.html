@@ -79,10 +79,10 @@
       </ion-item>
 
       <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Account Types<span
+        <ion-label class="labelfont" position="stacked" color="primary">Account Types<span
             class="requiredField">*</span>
         </ion-label>
-        <ion-select name="CustTypeID" #CustTypeID="ngModel" class="labelfont" [(ngModel)]="header.Version.CustTypeID" (ionChange)="onChange(CustTypeID.value)" required>
+        <ion-select name="CustTypeID" #CustTypeID="ngModel" class="labelfont" [selectedText]="CustType" [(ngModel)]="header.Version.CustTypeID" (ionChange)="onChange(CustTypeID.value)" required>
           <ion-select-option *ngFor="let p of customerTypes" [value]="p.ID">{{p.Name}}</ion-select-option>
         </ion-select>
       </ion-item>
@@ -175,8 +175,8 @@
               required>
             </ion-input>
           </ion-item>
-          <div *ngIf="form.submitted && BillCity.invalid" class="invalid-feedback">
-            <div *ngIf="BillCity.errors.required" class="color-red">City is required</div>
+          <div *ngIf="form.submitted && City.invalid" class="invalid-feedback">
+            <div *ngIf="City.errors.required" class="color-red">City is required</div>
           </div>
 
           <ion-item>
@@ -187,8 +187,8 @@
               class="labelfont" required>
             </ion-input>
           </ion-item>
-          <div *ngIf="form.submitted && BillState.invalid" class="invalid-feedback">
-            <div *ngIf="BillState.errors.required" class="color-red">State is required</div>
+          <div *ngIf="form.submitted && State.invalid" class="invalid-feedback">
+            <div *ngIf="State.errors.required" class="color-red">State is required</div>
           </div>
 
           <ion-item>
@@ -201,17 +201,13 @@
       </div>
 
       <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Project Type<span
-            class="requiredField">*</span>
+        <ion-label class="labelfont" position="floating" color="primary">Project Type
         </ion-label>
-        <ion-select [(ngModel)]="header.ProjectTypeID"   name="ProjectTypeID" #ProjectTypeID="ngModel" class="labelfont" required>
+        <ion-select [(ngModel)]="header.ProjectTypeID" name="ProjectTypeID" #ProjectTypeID="ngModel" class="labelfont" required>
           <ion-select-option *ngFor="let p of projectTypes" raedonly="readonly" [value]="p.ID">{{p.Name}}</ion-select-option>
         </ion-select>
         <!-- <ion-input type="text" [(ngModel)]="header.Version.CustTypeID" name="CustTypeID" #CustTypeID="ngModel" class="labelfont" required readonly="readonly"></ion-input> -->
       </ion-item>
-      <div *ngIf="form.submitted && ProjectTypeID.invalid" class="invalid-feedback padd-Left">
-        <div *ngIf="ProjectTypeID.errors.required" class="error">Project Type is required</div>
-      </div>
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Sales Rep<span class="requiredField">*</span>
         </ion-label>
@@ -343,11 +339,11 @@
         <ion-label [ngClass]="{'txt-color' : Progress == 0 }" class="font10 paddzero">Lead/Qoute</ion-label>
       </ion-segment-button>
       <ion-segment-button (click)="changeProgress(1)">
-        <ion-icon name="person-outline" class="imghw1 paddzero"></ion-icon>
+        <ion-icon ios="ios-people" md="md-people"></ion-icon>
         <ion-label [ngClass]="{'txt-color' : Progress == 1 }" class="font10 paddzero">Customer</ion-label>
       </ion-segment-button>
       <ion-segment-button (click)="changeProgress(2)">
-        <ion-icon name="file-tray-stacked-outline" class="imghw1 paddzero"></ion-icon>
+        <ion-icon ios="ios-briefcase" md="md-briefcase"></ion-icon>
         <ion-label [ngClass]="{'txt-color' : Progress == 2 }" class="font10 paddzero">Job</ion-label>
       </ion-segment-button>
     </ion-segment>

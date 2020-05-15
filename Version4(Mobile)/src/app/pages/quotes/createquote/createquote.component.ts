@@ -28,6 +28,7 @@ export class CreatequoteComponent implements OnInit {
     accountid: number, childaccid: number, phaseid: number, viewtypeid: number, layoutId: 2
   };
   bntStyle:string;
+  CustType: any;
   constructor(private loadingController: LoadingController, public Modalcntrl: ModalController,
       private popoverCntrl: PopoverController,private qServe:QuoteService,private qRep:QuoterepService) { }
   ngOnInit() {
@@ -56,7 +57,7 @@ export class CreatequoteComponent implements OnInit {
         this.leadTypes =leadtypes.filter(s=>s.Name != "" && s.Name != null);
       }
     );
-    this.qServe.CustomerDictionayList(custDicIds).subscribe(data => {  console.log(data);this.customerTypes = data[0] });
+    this.qServe.CustomerDictionayList(custDicIds).subscribe(data => {  this.customerTypes = data[0];this.selectcusttype(this.header.Version.CustTypeID) });
     this.qServe.GetAdminProjectTypes(28).subscribe(data => { this.projectTypes = data });
     this.PopulateDropDownList(4);
     //FORM VALIDATIONS
@@ -81,7 +82,8 @@ export class CreatequoteComponent implements OnInit {
 
   //get f() { return this.registerForm.controls; }
 
-  ActionQuoteSubmit(form: any) {
+  ActionQuoteSubmit(form: any) {debugger
+    console.log(form);
     if (form.valid) {
       this.showLoader();
       this.ValidateHeader();
@@ -96,8 +98,9 @@ export class CreatequoteComponent implements OnInit {
         this.ActionCloseCreateQuote(true);
         this.hideLoader();
       });
-    }
+   
     console.log(this.header); // just to test
+    }
   }
   ActionShowNewCustomerList(ev: any, typeId: number, search: string, clickType: number) {
     search = search == undefined ? "" : search;
@@ -300,7 +303,6 @@ export class CreatequoteComponent implements OnInit {
           header.Version.CustContactID = model.ID;
         }
         //  customerContacts.map(function (elem) { if (elem.CustomerID == header.CustomerID && elem.IsDefault == 1) { model = elem; } });
-
       }
     });
   }
@@ -390,9 +392,16 @@ export class CreatequoteComponent implements OnInit {
     //Resetting the Parent Acc each time Account type changes
     this.header.Version.ParentAccID=0;
     this.header.Version.ParentCustInfo={};
+    this.selectcusttype(CustTypeID);
   }
   changeProgress(value) {
     this.Progress = value;
+  }
+  selectcusttype(TypeID){debugger;
+    let custtype = this.customerTypes.find(s => s.ID == TypeID);
+    if (custtype != null) {
+      this.CustType = custtype.Name;
+    }
   }
   showLoader() {
     this.loaderToShow = this.loadingController.create({

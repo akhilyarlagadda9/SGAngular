@@ -82,7 +82,7 @@ export class CreatequoteComponent implements OnInit {
 
   //get f() { return this.registerForm.controls; }
 
-  ActionQuoteSubmit(form: any) {debugger
+  ActionQuoteSubmit(form: any) {
     console.log(form);
     if (form.valid) {
       this.showLoader();
@@ -397,7 +397,7 @@ export class CreatequoteComponent implements OnInit {
   changeProgress(value) {
     this.Progress = value;
   }
-  selectcusttype(TypeID){debugger;
+  selectcusttype(TypeID){
     let custtype = this.customerTypes.find(s => s.ID == TypeID);
     if (custtype != null) {
       this.CustType = custtype.Name;

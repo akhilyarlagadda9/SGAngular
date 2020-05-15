@@ -9,6 +9,7 @@ import { OverlayEventDetail } from '@ionic/core';
 import { QlayoutComponent } from '../qlayout/qlayout.component';
 import { version } from 'punycode';
 import { QuickquoteComponent } from '../quickquote/quickquote.component';
+import { AuditService } from 'src/app/service/audit.service';
 
 
 @Pipe({
@@ -23,7 +24,8 @@ export class QuotePage implements OnInit {
   NavigateTab: number;
   selectedtabtype: number;
 
-  constructor(private service: QuoteService, public Modalcntrl: ModalController, private navCtrl: NavController, private loadingController: LoadingController) { }
+  constructor(private service: QuoteService, public Modalcntrl: ModalController, private navCtrl: NavController, private loadingController: LoadingController,
+    private auditService: AuditService) { }
   loaderToShow: any;
   quotelist: any[] = [];
   // pageindex:number= 0;
@@ -81,6 +83,11 @@ export class QuotePage implements OnInit {
     let result = this.service.ActionQuoteList(obj.search, obj.statusId, obj.index, obj.noOfRecords, obj.accessmode, 0, obj.sortTypeId, obj.sortby).subscribe(
       data => { this.quotelist = obj.searchmode == 1 ? data : this.quotelist.concat(data); this.hideLoader(); },
       error => console.log(error));
+      if(history.state.audt){
+        history.state.audt.reqEndTime = new Date().getTime();
+        history.state.audt.reqDuration = (history.state.audt.reqEndTime - history.state.audt.reqStartTime)/1000;
+        this.auditService.modifyForAuditSave(history.state.audt);
+      }
     if (event) {
       event.target.complete();
     }

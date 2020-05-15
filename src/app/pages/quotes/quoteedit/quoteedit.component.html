@@ -73,7 +73,8 @@
                         {{headerInfo.FullAddres}}
                     </span>
                 </ion-col>
-                <div *ngFor="let contact of headerInfo.QuoteContacts">
+                <div *ngFor="let contact of headerInfo.QuoteContacts;let i = index">
+                    <ion-row *ngIf="i == 0">
                     <ion-col size="12" class="paddtopzero">
                         <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon>
                         <span class="valignsup" (click)="ActionEditCustomer(1,headerInfo.Customer,headerInfo.CustomerContacts)">
@@ -88,6 +89,7 @@
                         <ion-icon class="text-font" class="fontsmall" name="call" (click)="callNow(contact.Phone)"></ion-icon> <span
                             class="valignsup">{{contact.Email}}</span>
                     </ion-col>
+                </ion-row>
                 </div>
             </ion-row>
             <ion-row>

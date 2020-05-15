@@ -1,145 +1,136 @@
 <form #form="ngForm" (ngSubmit)="ActionSaveActivity(form)" class="dis-content">
-<ion-header>
-  <ion-toolbar color="light">
-    <ion-buttons slot="start">
-      <ion-button color="danger" type="button" (click)="ActionCloseCommhubedit(false)">
-        Close
-      </ion-button>
-    </ion-buttons>
-    
-    <ion-buttons slot="end">
-      <!-- <ion-button color="primary" >
-        <ion-icon ios="ios-attach"  slot="end" md="md-attach">
-          <input type="file" (change)="ActionUploadCommhubAttach($event)">
-        </ion-icon>
-      </ion-button> -->
-      <ion-button color="primary" type="submit">
-        <ion-icon ios="ios-send" md="md-send"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title align="center">Email</ion-title>
-  </ion-toolbar>
-  <!-- <ion-toolbar>
-    <ion-title>
-      <div><b>Email</b></div>
+  <ion-header>
+    <ion-toolbar color="light">
+      <ion-buttons slot="start">
+        <ion-button color="danger" type="button" (click)="ActionCloseCommhubedit(false)">
+          Close
+        </ion-button>
+      </ion-buttons>
 
-    </ion-title>
-  
-   <ion-button slot="end" size="small" type="submit" (click)="ActionOnAttach()"><ion-icon ios="ios-attach"  slot="end" md="md-attach" style="color:black;zoom:2.0;"></ion-icon></ion-button>
-
-    <input type="file" (change)="ActionUploadCommhubAttach($event)">
-    <ion-button slot="end" size="small" type="submit"><ion-icon ios="ios-send" md="md-send" style="color:black;zoom:2.0;"></ion-icon></ion-button>
-    <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCommhubedit(false)">X</ion-button>
-  </ion-toolbar> -->
-</ion-header>
-<ion-item *ngIf="blnIsAtttachAvailable">
-  <ion-row style="width: 100%;" *ngFor="let attach of getNoteAttachments" (click)="addAttach(attach)">
-    <ion-row style="width: 100%;">
-      <ion-col size="8">
-        <span>{{attach.FileName}}</span>
-      </ion-col>
-     </ion-row>
-  </ion-row>
-</ion-item>
-<ion-content>
-  <ion-item>
-    <ion-label>Template:<span
-      class="requiredField">*</span></ion-label>
-    <ion-select class="btninfo" [(ngModel)]="templateList.Name" name="Name" #Name="ngModel" required (ngModelChange)="ActionChangeTempl($event)"  [selectedText]="templateList.Name">
-      <ion-select-option *ngFor="let template of templateList" [value]="template.Name">{{template.Name}}</ion-select-option>
-    </ion-select>
-    <div [hidden]="!form.submitted || Name.valid" class="invalid-feedback padd-Left">
-      <div class="error">Select Template</div>
-    </div>
-  </ion-item>
-  <ion-item>
-  <ion-label text-uppercase style="display: flex !important;"><span style="margin-top: 10px;">Email:&nbsp;</span><ion-checkbox  color="dark" name="Text" checked></ion-checkbox></ion-label>
-    
-  <ion-label text-uppercase class="text-right">Text:</ion-label>
-    <ion-checkbox color="dark" name="Text"></ion-checkbox>
-  </ion-item>
-  <ion-item>
-    <ion-label>From: </ion-label>
-    <ion-text >{{mailDetails.From}}</ion-text>
-  </ion-item>
-  
-  <ion-item>
-    <ion-label>To:<span
-      class="requiredField">*</span></ion-label>
-    <!-- <ion-text>{{mailDetails.To}}</ion-text> -->
-    <ion-textarea [(ngModel)]="mailDetails.To" name="To" #To="ngModel" required (ngModelChange)="getToItems($event)"></ion-textarea>
-  </ion-item>
-        <ion-list *ngIf="isItemToAvailable">
-            <ion-item   *ngFor="let item of arrInfo" (click)="addMail(item.Email,1)" style="overflow-y: scroll; background-color: grey; min-height: 25px;border-bottom: black;">
-              <ion-row>
-                {{item.Name}}&nbsp; &nbsp;{{item.Email}}
-                <span style="display: block;">
-                {{item.Phone}}
-                </span>
-              </ion-row>
-              </ion-item>
-        </ion-list> 
-  <div [hidden]="!form.submitted || To.valid" class="invalid-feedback padd-Left">
-    <div class="error">Select To</div>
-  </div>
-
-  <ion-item>
-    <ion-label>CC: </ion-label>
-    <!-- <ion-text>{{mailDetails.CC}}</ion-text> -->
-    <ion-textarea contenteditable="true" [(ngModel)]="mailDetails.CC" name="CC"  type="text" (ngModelChange)="getCCItems($event)"></ion-textarea>
-  </ion-item>
-
-  <ion-list *ngIf="isItemCCAvailable">
-    <ion-item  *ngFor="let item of arrInfo" (click)="addMail(item.Email,2)" style="overflow-y: scroll; height:50px;background-color:LightGray;">
-      <ion-row>
-        {{item.Name}}&nbsp; &nbsp; &nbsp;{{item.Email}}
-        <br>
-        {{item.Phone}}
-      </ion-row>
-      </ion-item>
-</ion-list> 
-
-  <ion-item>
-    <!-- <ion-label>Subject: </ion-label> -->
-    <ion-input placeholder="Subject" [(ngModel)]="mailDetails.Subject" name="Subject" autofocus></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label floating>
-      <span class="btn btn-success fileinput-button" ngClass="{disabled: disabled}" floating>
-        <u>Attachments:</u>
-        <ion-col size="7" class="paddzero text-left">
-          <input type="file" (change)="ActionUploadCommhubAttach($event)">
+      <ion-buttons slot="end">
+        <ion-button color="primary" type="submit">
+          <ion-icon ios="ios-send" md="md-send"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title align="center">Email</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-item *ngIf="blnIsAtttachAvailable">
+    <ion-row style="width: 100%;" *ngFor="let attach of getNoteAttachments" (click)="addAttach(attach)">
+      <ion-row style="width: 100%;">
+        <ion-col size="8">
+          <span>{{attach.FileName}}</span>
         </ion-col>
-        <div class="quizz-progress ion-text-center" id="progress">
-          <ion-progress-bar color="secondary" [value]="progressNumber" style="min-height:12px;width: 95px;"></ion-progress-bar>{{fileUploadProgress}}
-        </div>
-      </span>
-    </ion-label>
-  <ion-label>
-    <ion-row *ngFor="let category of commDetails.AttachmentList" >
-      <ion-col class="paddleft5" (click)="ActionPreviewFile(commDetails.Path)">
-        <span><ion-icon name="trash" class="delIcon"></ion-icon></span>&nbsp;
-        <span >{{category.FileName}}</span>
-      </ion-col>
+      </ion-row>
     </ion-row>
-  </ion-label>
   </ion-item>
 
+  <ion-content>
+    <ion-item>
+      <ion-label>Template:<span class="requiredField">*</span></ion-label>
+      <ion-select class="btninfo" [(ngModel)]="templateList.Name" name="Name" #Name="ngModel" required
+        (ngModelChange)="ActionChangeTempl($event)" [selectedText]="templateList.Name">
+        <ion-select-option *ngFor="let template of templateList" [value]="template.Name">{{template.Name}}
+        </ion-select-option>
+      </ion-select>
+      <div [hidden]="!form.submitted || Name.valid" class="invalid-feedback padd-Left">
+        <div class="error">Select Template</div>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label text-uppercase style="display: flex !important;"><span style="margin-top: 10px;">Email:&nbsp;</span>
+        <ion-checkbox color="dark" name="Text" checked></ion-checkbox>
+      </ion-label>
+
+      <ion-label text-uppercase class="text-right">Text:</ion-label>
+      <ion-checkbox color="dark" name="Text"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>From: </ion-label>
+      <ion-text>{{mailDetails.From}}</ion-text>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>To:<span class="requiredField">*</span></ion-label>
+      <!-- <ion-text>{{mailDetails.To}}</ion-text> -->
+      <ion-textarea [(ngModel)]="mailDetails.To" name="To" #To="ngModel" required (ngModelChange)="getToItems($event)">
+      </ion-textarea>
+    </ion-item>
+    <ion-list *ngIf="isItemToAvailable">
+      <ion-item *ngFor="let item of arrInfo" (click)="addMail(item.Email,1)"
+        style="overflow-y: scroll; background-color: grey; min-height: 25px;border-bottom: black;">
+        <ion-row>
+          {{item.Name}}&nbsp; &nbsp;{{item.Email}}
+          <span style="display: block;">
+            {{item.Phone}}
+          </span>
+        </ion-row>
+      </ion-item>
+    </ion-list>
+    <div [hidden]="!form.submitted || To.valid" class="invalid-feedback padd-Left">
+      <div class="error">Select To</div>
+    </div>
+
+    <ion-item>
+      <ion-label>CC: </ion-label>
+      <!-- <ion-text>{{mailDetails.CC}}</ion-text> -->
+      <ion-textarea contenteditable="true" [(ngModel)]="mailDetails.CC" name="CC" type="text"
+        (ngModelChange)="getCCItems($event)"></ion-textarea>
+    </ion-item>
+
+    <ion-list *ngIf="isItemCCAvailable">
+      <ion-item *ngFor="let item of arrInfo" (click)="addMail(item.Email,2)"
+        style="overflow-y: scroll; height:50px;background-color:LightGray;">
+        <ion-row>
+          {{item.Name}}&nbsp; &nbsp; &nbsp;{{item.Email}}
+          <br>
+          {{item.Phone}}
+        </ion-row>
+      </ion-item>
+    </ion-list>
+
+    <ion-item>
+      <!-- <ion-label>Subject: </ion-label> -->
+      <ion-input placeholder="Subject" [(ngModel)]="mailDetails.Subject" name="Subject" autofocus></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>
+        <span class="btn btn-success fileinput-button" ngClass="{disabled: disabled}" floating>
+          <u>Attachments:</u>
+          <ion-col size="7" class="paddzero text-left">
+            <input type="file" (change)="ActionUploadCommhubAttach($event)">
+          </ion-col>
+          <div class="quizz-progress ion-text-center" id="progress">
+            <ion-progress-bar color="secondary" [value]="progressNumber" style="min-height:12px;width: 95px;">
+            </ion-progress-bar>{{fileUploadProgress}}
+          </div>
+        </span>
+      </ion-label>
+      <ion-label>
+        <ion-row *ngFor="let category of commDetails.AttachmentList">
+          <ion-col class="paddleft5" (click)="ActionPreviewFile(commDetails.Path)">
+            <span>
+              <ion-icon name="trash" class="delIcon"></ion-icon>
+            </span>&nbsp;
+            <span>{{category.FileName}}</span>
+          </ion-col>
+        </ion-row>
+      </ion-label>
+    </ion-item>
+
+
+    <!-- <ckeditor tagName="textarea" [(ngModel)]="mailDetails.mailBody" name="mailBody" [editor]="Editor" ></ckeditor> -->
+    <!-- <angular-editor [(ngModel)]="mailDetails.mailBody" name="mailBody" [config]="config"></angular-editor> -->
   
-  <!-- <ckeditor tagName="textarea" [(ngModel)]="mailDetails.mailBody" name="mailBody" [editor]="Editor" ></ckeditor> -->
-  <!-- <angular-editor [(ngModel)]="mailDetails.mailBody" name="mailBody" [config]="config"></angular-editor> -->
-  &nbsp;
-  <!-- <div class="col-xs-6 col-sm-3" class="wideInput" id="mail_body" contenteditable="true" data-text="Enter text here" [innerHTML]="mailDetails.mailBody" (blur)="onBlurMethod()">
-  
-  </div> -->
-  <ion-textarea class="mail-text" placeholder="Enter mail Body" [innerHTML]="mailDetails.mailBody" contenteditable="true"></ion-textarea>
-  <!-- <ion-item>
+    <ion-textarea class="mail-text" placeholder="Enter mail Body" [innerHTML]="mailDetails.mailBody" name="mailBody"
+      contenteditable="true" autofocus></ion-textarea>
+    <!-- <ion-item>
     <ion-label floating><u>Note:</u></ion-label>
   </ion-item> -->
-  <!-- <ion-row class="padding5">
+    <!-- <ion-row class="padding5">
     <ion-textarea rows="4" cols="10" name="Body" class="borderall" placeholder="Enter mail Body" [innerHTML]="mailDetails.mailBody"></ion-textarea>
   </ion-row> -->
-</ion-content>
+  </ion-content>
 </form>
 
 <!-- <ion-row *ngIf="isItemToAvailable" class="popupCls2">
@@ -170,5 +161,3 @@
      </ion-row>
   </ion-row>
 </ion-row> -->
-
-

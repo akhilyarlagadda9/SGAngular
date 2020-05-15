@@ -15,6 +15,10 @@ import { HomePage } from './home.page';
         component: HomePage
       },
       {
+        path: 'leadfollowup',
+        loadChildren: () => import('../pages/leads/lead/lead.module').then( m => m.LeadPageModule)
+      },
+      {
         path: 'quotelist',
        // component:QuotePage
         loadChildren: () => import('../pages/quotes/quote/quote.module').then( m => m.QuotePageModule)

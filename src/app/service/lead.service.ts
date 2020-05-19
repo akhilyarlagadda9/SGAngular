@@ -35,25 +35,20 @@ export class LeadService {
     var info = JSON.stringify(model);
     return this.http.post<any>(this.url + 'api/lead/SaveLeadActivityInfo', info, { headers: { 'Content-Type': 'application/json' } })
   }
-  /////****MEETING TYPE LIST PASTE THIS FUNCTION IN TS FILE *****/
-//   this.MeetingTypes = [
-//     {
-//         ID: 1,
-//         Name: 'Phone Call',
-//         IconClass: 'fa-phone'
-//     },
-//     {
-//         ID: 2,
-//         Name: 'Email',
-//         IconClass: 'fa-envelope-o'
-//     }, {
-//         ID: 3,
-//         Name: 'Meeting',
-//         IconClass: 'fa-briefcase'
-//     },
-//  {
-//      ID: 4,
-//      Name: 'In Person',
-//      IconClass: 'fa-user-md'
-//  }];
+  //Lead Activity type List
+  LeadActTypeList(moduleId: any, seltypeId): Observable<any> {
+    return this.http.get<any>(this.url + 'api/lead/LeadActTypeList?moduleID=' + moduleId + "&seltypeId=" + seltypeId)
+  }
+  //Lead Activity Info
+  GetLeadActivityInfo(activityId, startDate, endDate): Observable<any> {
+    return this.http.get<any>(this.url + 'api/lead/LeadActivityInfo?activityId=' + activityId + "&startDate=" + startDate + "&endDate=" + endDate)
+  }
+  //Lead Activity type List
+  GetSalesRepDetails(Id): Observable<any> {
+    return this.http.get<any>(this.url + 'api/lead/SalesPersonDetails?Id=' + Id)
+  }
+  GetParentAccListWithType(typeId): Observable<any> {
+    return this.http.get<any>(this.url + 'api/Customer/ParentAccListWithType?typeId=' + typeId)
+  }
+
 }

@@ -456,7 +456,7 @@ ChangedViewEvents() {
     var htmlstring = '';
     htmlstring = "<div style='font-size: 13px;white-space: normal' >";
     //htmlstring += "<div>" + event.ActivityType;
-    htmlstring += "<div><img class='ico' src='" + event.Imageurl + "' width='15' height='15'>" + event.ActivityType + "</div>";
+    htmlstring += "<div style='word-break:break-all'><img class='ico' src='" + event.Imageurl + "' width='15' height='15'>" + event.ActivityType + "</div>";
     htmlstring += "<div style='font-size: 10px;'>" + event.StartTime + " - " + event.EndTime + "</div>";
     htmlstring += "<div><b>" + event.QuoteNo + "- P" + event.PhaseSrNo + "</b></div>";
     htmlstring += "<div>" + event.QuoteName + "</div></div>"

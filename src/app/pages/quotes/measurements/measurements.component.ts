@@ -13,6 +13,7 @@ export class MeasurementsComponent implements OnInit {
   fab:any;countertypes: any = [];fablist: any;
   constructor(public Modalcntrl: ModalController, private service: QuoteService, private quoterep: QuoterepService) { }
   ngOnInit() {
+    this.fab.PartSqft = Math.round(this.fab.PartSqft * 1e2) / 1e2;
     this.GetCounterTypes();
   }
   GetCounterTypes() {

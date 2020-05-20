@@ -87,7 +87,7 @@ export class LeadPage implements OnInit {
 
   getActivityData() {
     this.authService.GetStoredLoginUserID().then(data=> { 
-    this.leadService.LeadFollowUpActList(0, 0, 0, 0, 0, this.calObj.StartDate, this.calObj.EndDate, "").subscribe(data => {
+    this.leadService.LeadFollowUpActList(0, data, 0, 0, 0, this.calObj.StartDate, this.calObj.EndDate, "").subscribe(data => {
       console.log(data);
       this.actlist = []; // clear up the storage
       for (let j in data) {

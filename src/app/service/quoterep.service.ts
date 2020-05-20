@@ -1163,10 +1163,10 @@ export class QuoterepService {
     let duet = this.convertToFloat(details.DueTeamplate) / 100;
     let duei = this.convertToFloat(details.DueInstall) / 100;
     let dueo = this.convertToFloat(details.DueOther) / 100;
-    details.SigningAmt = Math.round((qamount + details.RoundOff) * dues);
-    details.TeamplateAmt = Math.round((qamount + details.RoundOff) * duet);
-    details.InstallAmt = Math.round(qamount * duei);
-    details.OtherAmt = Math.round(qamount * dueo);
+    details.SigningAmt = this.convertToFloat((qamount + details.RoundOff) * dues);
+    details.TeamplateAmt = this.convertToFloat((qamount + details.RoundOff) * duet);
+    details.InstallAmt = this.convertToFloat(qamount * duei);
+    details.OtherAmt = this.convertToFloat(qamount * dueo);
     return details;
   }
   /*  getviewtypeid() {

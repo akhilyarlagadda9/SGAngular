@@ -1,0 +1,224 @@
+<form #form="ngForm" (ngSubmit)="ActionSaveLead(form)" class="dis-content">
+  <ion-header>
+    <ion-toolbar color="light">
+      <ion-buttons slot="start">
+        <ion-button color="danger" type="button" (click)="ActionCloseCreateLead(false)">
+          Cancel
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button color="primary" type="submit">
+          Save
+        </ion-button>
+      </ion-buttons>
+      <ion-title align="center">
+        Create Lead
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Lead Type<span class="requiredField">*</span>
+        </ion-label>
+        <ion-select [(ngModel)]="leadInfo.LeadTypeID" name="LeadTypeID" #LeadTypeID="ngModel" class="labelfont"
+          required>
+          <ion-select-option *ngFor="let p of leadTypes" [value]="p.ID">{{p.Name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <div *ngIf="form.submitted && LeadTypeID.invalid" class="invalid-feedback">
+        <div *ngIf="LeadTypeID.errors.required" class="color-red">Lead Type is required</div>
+      </div>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Hear About us?</ion-label>
+        <ion-select [(ngModel)]="leadInfo.SourceID" name="SourceID" class="labelfont" (ionChange)="populatehearabout(leadInfo.SourceID)">
+          <ion-select-option *ngFor="let p of leadHearAbout" [value]="p.ID">{{p.Name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="labelfont" position="stacked" color="primary">Account Types<span
+            class="requiredField">*</span>
+        </ion-label>
+        <ion-select name="CustTypeID" #CustTypeID="ngModel" class="labelfont" [selectedText]="CustType"
+          [(ngModel)]="leadInfo.CustTypeID" (ionChange)="populate(leadInfo.CustTypeID)" required>
+          <ion-select-option *ngFor="let p of customerTypes" [value]="p.ID">{{p.Name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <div *ngIf="form.submitted && CustTypeID.invalid" class="invalid-feedback">
+        <div *ngIf="CustTypeID.errors.required" class="color-red">Account Type is required</div>
+      </div>
+
+      <div *ngIf="leadInfo.CustTypeID != 4 && leadInfo.CustTypeID > 0">
+        <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary">Account<span class="requiredField">*</span>
+          </ion-label>
+          <ion-input [(ngModel)]="leadInfo.AccName" name="AccName" #AccName="ngModel"
+            (keyup.enter)="ActionShowNewCustomerList($event,1,leadInfo.AccName,1)" required></ion-input>
+          <ion-icon slot="end" class="martop35" name="arrow-dropdown"
+            (click)="ActionShowNewCustomerList($event,2,leadInfo.AccName,1)"></ion-icon>
+          <ion-icon slot="end" class="martop35" name="search"
+            (click)="ActionShowNewCustomerList($event,1,leadInfo.AccName,1)"></ion-icon>
+        </ion-item>
+        <div *ngIf="form.submitted && AccName.invalid" class="invalid-feedback">
+          <div *ngIf="AccName.errors.required" class="color-red">Account is required</div>
+        </div>
+        <ion-item>
+          <ion-checkbox color="dark" name="IsCustRetail" [(ngModel)]="leadInfo.IsCustRetail"
+            checked="leadInfo.IsCustRetail ==1" (click)="ActionChangeRetailCheckBox(leadInfo.IsCustRetail)">
+          </ion-checkbox>
+          <ion-label>Retail</ion-label>
+        </ion-item>
+
+      </div>
+      <div *ngIf="leadInfo.CustTypeID == 4 || leadInfo.IsCustRetail == 1">
+        <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary">Customer<span class="requiredField">*</span>
+          </ion-label>
+          <ion-input [(ngModel)]="leadInfo.LeadCustomer.Name" name="Name" #Name="ngModel" type="text" class="labelfont"
+            (keyup.enter)="ActionShowNewCustomerList($event,1,leadInfo.LeadCustomer.Name,0)" required></ion-input>
+          <ion-icon slot="end" class="martop35" name="arrow-dropdown"
+            (click)="ActionShowNewCustomerList($event,2,leadInfo.LeadCustomer.Name,0)"></ion-icon>
+          <ion-icon slot="end" class="martop35" name="search"
+            (click)="ActionShowNewCustomerList($event,1,leadInfo.LeadCustomer.Name,0)"></ion-icon>
+        </ion-item>
+        <div *ngIf="form.submitted && Name.invalid" class="invalid-feedback">
+          <div *ngIf="Name.errors.required" class="color-red">Customer Name is required</div>
+        </div>
+
+        <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary">First Name</ion-label>
+          <ion-input [(ngModel)]="leadInfo.LeadCustomer.FirstName" name="FirstName" type="text" class="labelfont">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary">Last Name</ion-label>
+          <ion-input [(ngModel)]="leadInfo.LeadCustomer.LastName" name="LastName" type="text" class="labelfont">
+          </ion-input>
+        </ion-item>
+
+
+        <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary">Primary Phone</ion-label>
+          <ion-input type="text" [(ngModel)]="leadInfo.LeadCustomer.PPhone" name="PPhone" class="labelfont"
+            maxlength="10">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary">Mobile Phone</ion-label>
+          <ion-input type="text" [(ngModel)]="leadInfo.LeadCustomer.MPhone" name="MPhone" class="labelfont"
+            maxlength="10">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary">Email</ion-label>
+          <ion-input type="text" [(ngModel)]="leadInfo.LeadCustomer.Email" name="Email" class="labelfont"></ion-input>
+        </ion-item>
+
+
+        <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary"> Address1</ion-label>
+          <ion-input type="text" [(ngModel)]="leadInfo.LeadCustomer.BillAddress" name="BillAddress" class="labelfont">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary"> Address2</ion-label>
+          <ion-input type="text" [(ngModel)]="leadInfo.LeadCustomer.BillAddress1" name="BillAddress1" class="labelfont">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary"> City<span class="requiredField">*</span>
+          </ion-label>
+          <ion-input type="text" [(ngModel)]="leadInfo.LeadCustomer.BillCity" name="BillCity" #City="ngModel"
+            class="labelfont" required>
+          </ion-input>
+        </ion-item>
+        <div *ngIf="form.submitted && City.invalid" class="invalid-feedback">
+          <div *ngIf="City.errors.required" class="color-red">City is required</div>
+        </div>
+
+        <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary"> State<span class="requiredField">*</span>
+          </ion-label>
+          <ion-input type="text" [(ngModel)]="leadInfo.LeadCustomer.BillState" name="BillState" #State="ngModel"
+            class="labelfont" required>
+          </ion-input>
+        </ion-item>
+        <div *ngIf="form.submitted && State.invalid" class="invalid-feedback">
+          <div *ngIf="State.errors.required" class="color-red">State is required</div>
+        </div>
+
+        <ion-item>
+          <ion-label class="labelfont" position="floating" color="primary"> ZipCode</ion-label>
+          <ion-input type="text" [(ngModel)]="leadInfo.LeadCustomer.BillZipCode" name="BillZipCode" class="labelfont">
+          </ion-input>
+        </ion-item>
+
+      </div>
+
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Project Type
+        </ion-label>
+        <ion-select [(ngModel)]="leadInfo.ProjectTypeID" name="ProjectTypeID" #ProjectTypeID="ngModel"
+          class="labelfont">
+          <ion-select-option *ngFor="let p of projectTypes" raedonly="readonly" [value]="p.ID">{{p.Name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Sales Rep<span class="requiredField">*</span>
+        </ion-label>
+        <ion-select [(ngModel)]="leadInfo.SalesPersonID" name="SalesPersonID" #SalesPersonID="ngModel" class="labelfont"
+          class="labelfont" required>
+          <ion-select-option *ngFor="let s of salesPersonsList" [value]="s.ResourceID">{{s.ResourceName}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="form.submitted && SalesPersonID.invalid" class="invalid-feedback">
+        <div *ngIf="SalesPersonID.errors.required" class="color-red">Sales Person is required</div>
+      </div>
+
+
+      <ion-item *ngIf="leadInfo.CustTypeID != 4">
+        <ion-label class="labelfont" position="floating" color="primary">Estimator</ion-label>
+        <ion-select [(ngModel)]="leadInfo.EstimatorID" name="EstimatorID" class="labelfont">
+          <ion-select-option *ngFor="let p of estimatorsList" [value]="p.ResourceID">{{p.ResourceName}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="leadInfo.CustTypeID != 4">
+        <ion-label class="labelfont" position="floating" color="primary">Project Manager</ion-label>
+        <ion-select [(ngModel)]="leadInfo.ProjectManagerID" name="ProjectManagerID" class="labelfont">
+          <ion-select-option *ngFor="let p of projectManagersList" [value]="p.ResourceID">{{p.ResourceName}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label class="labelfont" position="floating" color="primary">Production Type</ion-label>
+        <ion-select [(ngModel)]="leadInfo.JobTypeID" name="JobTypeID" class="labelfont">
+          <ion-select-option *ngFor="let p of productionTypeList" [value]="p.ID">{{p.Name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+
+  </ion-content>
+  <!-- <ion-footer style="height: 44px;">
+      <ion-button checked (click)="ActionSelectTab(1)">
+        <ion-icon name="quote" class="imghw1 paddzero"></ion-icon>
+        <ion-label [ngClass]="{'txt-color' : SelectTabId == 1 }" class="font10 paddzero">Lead</ion-label>
+      </ion-button>
+      <ion-button (click)="ActionSelectTab(2)">
+        <ion-icon ios="ios-people" md="md-people"></ion-icon>
+        <ion-label [ngClass]="{'txt-color' : SelectTabId == 2 }" class="font10 paddzero">Customer</ion-label>
+      </ion-button>
+  </ion-footer> -->
+</form>

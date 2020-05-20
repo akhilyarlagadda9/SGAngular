@@ -65,6 +65,10 @@
                 <ion-label  >Quote Date</ion-label>
                 <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="headerinfo.QuoteDate" name="QuoteDate" readonly="readonly"></ion-datetime>
             </ion-item>
+            <ion-item *ngIf="headerinfo.Version.StatusID == 6">
+                <ion-label >Accepted Date</ion-label>
+                <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="headerinfo.Version.AcceptedDate" name="AcceptedDate" readonly="readonly"></ion-datetime>
+            </ion-item>
             <ion-item>
                 <ion-label >Expiry Date</ion-label>
                 <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="headerinfo.Version.ExpiryDate" name="ExpiryDate" readonly="readonly"></ion-datetime>

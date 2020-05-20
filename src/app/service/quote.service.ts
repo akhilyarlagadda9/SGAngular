@@ -98,6 +98,9 @@ SelTypePrefInfo(custTypeId:number,typeId:number):Observable<any> {
   }
   ActionGetProjectTypes(typeId:any):Observable<any> {
     return this.http.get<any>(this.url + 'api/Project/ProjectProcessList?typeId=' + typeId,) 
+  };
+  GetUserLocList(userId:any):Observable<any>{
+    return this.http.get<any>(this.url + 'api/user/UserLocList?Id=' + userId)
   }
   //#endregion
 //#region Save Methods

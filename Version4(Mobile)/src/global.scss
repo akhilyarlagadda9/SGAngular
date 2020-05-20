@@ -30,6 +30,11 @@
 ion-icon{
     zoom:1.1;
 }
+.fc-axis { width: 55.25px !important;}
+.fc-ltr .fc-axis {text-align: left;}
+.fc-scroller-clip{ 
+    overflow-x: hidden; 
+  }
 /***** PADDING<MARGINS *****/
 .searchbar-search-icon.sc-ion-searchbar-md {
     left: 7px;

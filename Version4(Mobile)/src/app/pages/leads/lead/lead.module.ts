@@ -8,6 +8,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { LeadPageRoutingModule } from './lead-routing.module';
 
 import { LeadPage } from './lead.page';
+import { CreateleadComponent } from '../createlead/createlead.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { LeadPage } from './lead.page';
     FullCalendarModule,
     LeadPageRoutingModule
   ],
-  declarations: [LeadPage]
+  declarations: [LeadPage, CreateleadComponent],
+  entryComponents: [CreateleadComponent]
 })
 export class LeadPageModule {}

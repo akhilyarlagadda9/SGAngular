@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, ModalController, LoadingController } from '@ionic/angular';
 import { OptionsInput } from '@fullcalendar/core';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import TimeGridView from '@fullcalendar/timegrid/AbstractTimeGridView';
-
+import { OverlayEventDetail } from '@ionic/core';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { AuthService } from 'src/app/service/auth.service';
 import { DatePipe } from '@angular/common';
 import { LeadService } from 'src/app/service/lead.service';
+import { CreateleadComponent } from '../createlead/createlead.component';
 
 @Component({
   selector: 'app-lead',
@@ -15,6 +16,7 @@ import { LeadService } from 'src/app/service/lead.service';
   <ion-header>
   <ion-toolbar color="primary">
   <ion-title class="headersty">FollowUp</ion-title>
+  <ion-icon name="add-circle" slot="end" class="fontlarge" (click)="ActionCreateLead()"></ion-icon>
   <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
   </ion-toolbar>
 </ion-header>
@@ -50,67 +52,70 @@ themeSystem= 'cerulean'
   providers: [DatePipe]
 })
 export class LeadPage implements OnInit {
-  options: OptionsInput; width:number = 0; actlist: any = []; CalendarTitle:any; currentDate:Date; 
+  options: OptionsInput; width: number = 0; actlist: any = []; CalendarTitle: any; currentDate: Date;
   @ViewChild('calendar', { static: false }) fullcalendar: FullCalendarComponent;
   calObj: any = {
-    StartDate: Date, EndDate: Date,CalendarDays:1}
+    StartDate: Date, EndDate: Date, CalendarDays: 1
+  }
   logInUserID: any;
-  constructor(private navCtrl: NavController,private leadService:LeadService,private authService: AuthService,private datePipe:DatePipe) { }
+  constructor(private navCtrl: NavController, public Modalcntrl: ModalController, private leadService: LeadService, private authService: AuthService,
+     private datePipe: DatePipe, private loadingController : LoadingController) { }
 
   ngOnInit() {
-    this.authService.GetStoredLoginUser().then((data) => { this.logInUserID = data.logInUserID; });
-    this.CalendarTitle = this.datePipe.transform(new Date(),"MMM dd");
+    this.CalendarTitle = this.datePipe.transform(new Date(), "MMM dd");
     let height = window.innerHeight - 110; this.width = window.innerHeight;
     var _dafaultDate = new Date();
     this.options = {
-      plugins:[timeGridPlugin],
+      plugins: [timeGridPlugin],
       height: height,
       defaultView: "timeGridDay",
       defaultDate: _dafaultDate,
       views: {
-        timeGridDay: { type: 'timeGridDay',duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00"},
+        timeGridDay: { type: 'timeGridDay', duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00" },
       },
     }
-  
+
   }
 
   Actioncall(info) {
-  if(info.view.type == "timeGridDay"){ // for now its always bes timegridDay
-    this.calObj.StartDate = this.datePipe.transform(info.view.activeStart, "MM/dd/yyyy");
-    this.calObj.EndDate = this.datePipe.transform(info.view.activeStart, "MM/dd/yyyy");
-  }
+    if (info.view.type == "timeGridDay") { // for now its always bes timegridDay
+      this.calObj.StartDate = this.datePipe.transform(info.view.activeStart, "MM/dd/yyyy");
+      this.calObj.EndDate = this.datePipe.transform(info.view.activeEnd, "MM/dd/yyyy");
+    }
     this.getActivityData();
   }
-  
-  getActivityData(){
-      this.leadService.LeadFollowUpActList(0,0,0,0,0,this.calObj.StartDate,this.calObj.EndDate,"").subscribe(data=>{
-       console.log(data);
-        this.actlist = []; // clear up the storage
-        for (let j in data) {
-          let item = data[j];
-          this.ActionLoadEvents(item);
-        }
-      });
+
+  getActivityData() {
+    this.authService.GetStoredLoginUserID().then(data=> { 
+    this.leadService.LeadFollowUpActList(0, 0, 0, 0, 0, this.calObj.StartDate, this.calObj.EndDate, "").subscribe(data => {
+      console.log(data);
+      this.actlist = []; // clear up the storage
+      for (let j in data) {
+        let item = data[j];
+        this.ActionLoadEvents(item);
+      }
+    });
+  });
   }
 
-  ActionLoadEvents(item){
+  ActionLoadEvents(item) {
     console.log(item.SchStartTime);
     console.log(item.SchEndTime);
     let sDate = new Date(item.SchStartTime);
-      let eDate = new Date(item.SchEndTime);
-      console.log(sDate + "  "+ eDate);
-    this.actlist.push({ title: item.CustName, start: sDate, end: eDate, backgroundColor: item.ColorCode, textColor: item.TextColor, borderColor: item.TextColor,extendedProps: item});
-    console.log(this.actlist); 
+    let eDate = new Date(item.SchEndTime);
+    console.log(sDate + "  " + eDate);
+    this.actlist.push({ title: item.CustName, start: sDate, end: eDate, backgroundColor: item.ColorCode, textColor: item.TextColor, borderColor: item.TextColor, extendedProps: item });
+    console.log(this.actlist);
   }
 
 
   ActionNavigateView(navtype) {
     let calendarApi = this.fullcalendar.getApi();
-      let sDate = new Date(this.calObj.StartDate);
-      let daycount = navtype == "prev" ? -this.calObj.CalendarDays : this.calObj.CalendarDays;
-      sDate.setDate(sDate.getDate() + daycount);
-      this.calObj.StartDate = sDate;
-      this.CalendarTitle = this.datePipe.transform(this.calObj.StartDate, "MMM dd")
+    let sDate = new Date(this.calObj.StartDate);
+    let daycount = navtype == "prev" ? -this.calObj.CalendarDays : this.calObj.CalendarDays;
+    sDate.setDate(sDate.getDate() + daycount);
+    this.calObj.StartDate = sDate;
+    this.CalendarTitle = this.datePipe.transform(this.calObj.StartDate, "MMM dd")
 
     if (navtype == "prev") {
       calendarApi.prev();
@@ -120,15 +125,15 @@ export class LeadPage implements OnInit {
   }
 
   ActionRenderEvent(evnt) {
-// If need to Dp anything we can do
-     console.log(evnt.event.extendedProps);
+    // If need to Dp anything we can do
+    console.log(evnt.event.extendedProps);
     let event = evnt.event.extendedProps;
 
     var htmlstring = '';
     htmlstring = "<div style='font-size: 13px;white-space: normal' >";
     //htmlstring += "<div>" + event.ActivityType;
     htmlstring += "<div><img class='ico' src='" + event.IconPath + "' width='15' height='15'>" + event.ActivityType + "</div>";
-    htmlstring += "<div style='font-size: 10px;'>" + this.datePipe.transform(event.SchStartTime,"HH:mm:ss") + " - " + this.datePipe.transform(event.SchEndTime,"HH:mm:ss") + "</div>";
+    htmlstring += "<div style='font-size: 10px;'>" + this.datePipe.transform(event.SchStartTime, "HH:mm:ss") + " - " + this.datePipe.transform(event.SchEndTime, "HH:mm:ss") + "</div>";
     htmlstring += "<div><b>" + event.LeadExtID + "- L" + event.LeadID + "</b></div>";
     //htmlstring += "<div>" + event.QuoteName + "</div></div>"
     evnt.el.innerHTML = htmlstring;
@@ -136,5 +141,25 @@ export class LeadPage implements OnInit {
 
   ActionGoToHome() {
     this.navCtrl.navigateRoot('/home');
+  }
+
+
+  //Create New Lead
+  /***** CREATE QUOTE *****/
+  async ActionCreateLead() {
+    const modal = await this.Modalcntrl.create({
+      component: CreateleadComponent,
+    });
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null) {
+        if (detail.data.isSave == true) {
+          this.hideLoader();
+        }
+      }
+    });
+    return await modal.present();
+  }
+  hideLoader() {
+    this.loadingController.dismiss();
   }
 }

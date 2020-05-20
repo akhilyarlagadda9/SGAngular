@@ -87,7 +87,7 @@ export class LeadPage implements OnInit {
 
   getActivityData() {
     this.authService.GetStoredLoginUserID().then(data=> { 
-    this.leadService.LeadFollowUpActList(0, data, 0, 0, 0, this.calObj.StartDate, this.calObj.EndDate, "").subscribe(data => {
+    this.leadService.LeadFollowUpActList(0, 0, 0, 0, 0, this.calObj.StartDate, this.calObj.EndDate, "").subscribe(data => {
       console.log(data);
       this.actlist = []; // clear up the storage
       for (let j in data) {
@@ -133,8 +133,8 @@ export class LeadPage implements OnInit {
     htmlstring = "<div style='font-size: 13px;white-space: normal' >";
     //htmlstring += "<div>" + event.ActivityType;
     htmlstring += "<div><img class='ico' src='" + event.IconPath + "' width='15' height='15'>" + event.ActivityType + "</div>";
-    htmlstring += "<div style='font-size: 10px;'>" + this.datePipe.transform(event.SchStartTime, "HH:mm:ss") + " - " + this.datePipe.transform(event.SchEndTime, "HH:mm:ss") + "</div>";
-    htmlstring += "<div><b>" + event.LeadExtID + "- L" + event.LeadID + "</b></div>";
+    htmlstring += "<div style='font-size: 10px;'>" + this.datePipe.transform(event.SchStartTime, "hh:mm a") + " - " + this.datePipe.transform(event.SchEndTime, "hh:mm a") + "</div>";
+    htmlstring += "<div><b>" + event.LeadExtID + "- " + event.CustName + "</b></div>";
     //htmlstring += "<div>" + event.QuoteName + "</div></div>"
     evnt.el.innerHTML = htmlstring;
   }

@@ -20,7 +20,7 @@
         <h2># {{header.QuoteNo}} - {{header.QuoteName}}</h2>
         <p>
          {{header.Address1}} 
-         <span *ngIf="(header.City != null && header.City != '') && (header.Address1 != null && header.Address1 != '')">,</span> {{header.City}}
+         {{header.City}}
          <span *ngIf="header.State != null && header.State != ''">, {{header.State}}</span>
          <span *ngIf="header.Zipcode != null && header.Zipcode != ''"> - {{header.Zipcode}}</span>
         </p>

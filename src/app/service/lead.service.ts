@@ -8,7 +8,7 @@ declare const appUrl: any;
 export class LeadService {
   url = appUrl;
   constructor(private http: HttpClient) { }
-
+  //#region getlist
   // Get Follow-Up Calendar Activities
   LeadFollowUpActList(followupId, userId, custTypeId, salesRepID, actTypeId, startDate, endDate, search): Observable<any> {
     return this.http.get<any>(this.url + 'api/lead/LeadFollowUpActList?followupId=' + followupId + "&userId=" + userId + "&custTypeId=" + custTypeId + "&salesRepID=" + salesRepID + "&actTypeId=" + actTypeId + "&startDate=" + startDate + "&endDate=" + endDate + "&search=" + search)
@@ -29,14 +29,8 @@ export class LeadService {
   GetStatusList(): Observable<any> {
     return this.http.get<any>(this.url + 'api/Project/ActivityStatusList')
   }
-
-  //Action Save Lead Activity
-  ActionSaveLeadActivity(model: any): Observable<any> {
-    var info = JSON.stringify(model);
-    return this.http.post<any>(this.url + 'api/lead/SaveLeadActivityInfo', info, { headers: { 'Content-Type': 'application/json' } })
-  }
   //Lead Activity type List
-  LeadActTypeList(moduleId: any, seltypeId): Observable<any> {
+  LeadActTypeList(moduleId: any, seltypeId:any): Observable<any> {
     return this.http.get<any>(this.url + 'api/lead/LeadActTypeList?moduleID=' + moduleId + "&seltypeId=" + seltypeId)
   }
   //Lead Activity Info
@@ -50,5 +44,22 @@ export class LeadService {
   GetParentAccListWithType(typeId): Observable<any> {
     return this.http.get<any>(this.url + 'api/Customer/ParentAccListWithType?typeId=' + typeId)
   }
-
+  //#endregion
+  //#region Save Functions
+  //Action Save Lead Activity
+  ActionSaveLeadActivity(model: any): Observable<any> {
+    var info = JSON.stringify(model);
+    return this.http.post<any>(this.url + 'api/lead/SaveLeadActivityInfo', info, { headers: { 'Content-Type': 'application/json' } })
+  }
+  //ActionSaveLead
+  ActionSaveLead(model: any): Observable<any> {
+    var leadInfo = JSON.stringify(model);
+    return this.http.post<any>(this.url + 'api/lead/SaveLead', leadInfo, { headers: { 'Content-Type': 'application/json' } })
+  }
+  //sendleadmessage
+  ActionSendLeadMessage(model: any): Observable<any> {
+    var parameter = JSON.stringify(model);
+    return this.http.post<any>(this.url + 'api/lead/SendLeadMessage', parameter, { headers: { 'Content-Type': 'application/json' } })
+  }
+  //#endregion
 }

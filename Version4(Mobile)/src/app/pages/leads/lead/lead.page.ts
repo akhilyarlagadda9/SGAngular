@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/service/auth.service';
 import { DatePipe } from '@angular/common';
 import { LeadService } from 'src/app/service/lead.service';
 import { CreateleadComponent } from '../createlead/createlead.component';
+import { LAddActivityComponent } from '../LeadAddActivity/LAddActivity.component';
 
 @Component({
   selector: 'app-lead',
@@ -20,6 +21,9 @@ import { CreateleadComponent } from '../createlead/createlead.component';
   <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
   </ion-toolbar>
 </ion-header>
+<ion-fab vertical="bottom" horizontal="end">
+  <ion-button  color="primary" (click)="ActionAddActivity(0)"><ion-icon name="add"></ion-icon> </ion-button>
+ </ion-fab>
 <ion-content>
 <ion-list class="paddzero no-margin">
   <ion-row>
@@ -137,6 +141,37 @@ export class LeadPage implements OnInit {
     htmlstring += "<div><b>" + event.LeadExtID + "- " + event.CustName + "</b></div>";
     //htmlstring += "<div>" + event.QuoteName + "</div></div>"
     evnt.el.innerHTML = htmlstring;
+  }
+
+  async ActionAddActivity(Id: number) {
+    let actinfo = {
+      ID: Id, ActTypeID: 11, ResourceList: [], SchStartTime: new Date(), SchEndTime: new Date(),
+      LeadName: "", TypeID: 0,MeetingTypeID:1,messageID:94
+    }
+    //actinfo = Id > 0 ? this.eventinfo : actinfo ///Need to Change while Editing
+    console.log(actinfo);
+    //let viewtypeId = { viewtypeId: viewId }
+    const modal = await this.Modalcntrl.create({
+      component: LAddActivityComponent,
+      componentProps: actinfo,
+    });
+
+    modal.onDidDismiss().then((result: OverlayEventDetail) => {
+      if (result.data !== null && result.data != undefined) {
+        if (result.data.issave == true) {
+          // this.UpdateActivty(result.data.componentProps);
+          //this.ActionLoadEvents();
+        }
+        //this.calObj.ActTypeID = result.data.ActTypeId;
+        // this.calObj.ResourceIds = result.data.ResourceIds;
+        // this.calObj.ResourceNames = result.data.ResourceNames;
+        // this.calObj.ActivityType = result.data.ActivityType
+        //this.ActionLoadEvents();
+      }
+    });
+
+    return await modal.present();
+
   }
 
   ActionGoToHome() {

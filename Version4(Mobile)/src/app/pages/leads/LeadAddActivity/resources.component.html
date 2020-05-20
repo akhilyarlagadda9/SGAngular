@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-toolbar color="light">
+      <ion-buttons slot="start">
+        <ion-button color="danger" type="button" (click)="ActionToClosePop(false)">
+          Cancel
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button color="secondary" type="submit" (click)="ActionToClosePop(true)">
+          Select
+        </ion-button>
+      </ion-buttons>
+      <ion-title align="center">Resources</ion-title>
+    </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+        <ion-row *ngFor="let resource of resourceList" class="border-btm">
+                <ion-col>
+                    <ion-row style="width:100%">
+                        <ion-col size="1" class="paddzero">
+                          <ion-checkbox color="dark"  class="martb checksty" disabled="disabled" *ngIf="resource.CheckStatusID == 1"
+                          [(ngModel)]="resource.Check" checked="resource.Check == 1"></ion-checkbox>
+                        <ion-checkbox color="dark"  class="martb checksty" *ngIf="resource.CheckStatusID == 0"
+                          (ngModelChange)="ActionPushResource($event,resource)" [(ngModel)]="resource.Check" checked="resource.Check == 1">
+                        </ion-checkbox>
+                        </ion-col>
+                        <ion-col size="7" class="paddzero">{{resource.ResourceName}}</ion-col>
+                        <ion-col size="4" class="paddzero" class="text-right">
+                          <span *ngIf="resource.IsLocked == 1"> <i class="fa fa-lock"></i>&nbsp;</span>
+                          <span>{{resource.DayMaxSqft | number : '.2-2'}} | <span
+                              style="color:red">{{resource.DaySqft | number : '.2-2'}}</span> </span>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row style="width:100%">
+                      <ion-col size="1" class="paddzero"></ion-col>
+                        <ion-col size="11" class="paddzero" *ngIf="resource.EmpMail != '' && resource.EmpMail != null">
+                          <span>{{resource.EmpMail}}</span>&nbsp;&nbsp;
+                          <span>{{resource.EmpPhone}}</span>
+                          <!-- <span class="color-red" *ngIf="resource.OffID == 1"><b> &nbsp; (DAY OFF)</b></span> -->
+                        </ion-col>
+                    </ion-row>
+                  </ion-col>
+        </ion-row>
+    </ion-content>

@@ -142,7 +142,7 @@ export class AuditDetails implements OnInit {
   ngOnInit() {
     this.auditdata = this.actData[0];
     this.auditdata.forEach(data=>{
-        data.UpdatedDate =this.datePipe.transform(data.UpdatedDate, "MM-dd-yyyy hh:mm:A");
+        data.UpdatedDate =this.datePipe.transform(data.UpdatedDate, "MM-dd-yyyy hh:mm a");
     });
   }
 

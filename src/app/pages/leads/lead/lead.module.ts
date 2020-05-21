@@ -9,6 +9,7 @@ import { LeadPageRoutingModule } from './lead-routing.module';
 
 import { LeadPage } from './lead.page';
 import {LAddActivityComponent, leadssearchComponent, resorceListComponent} from '../LeadAddActivity/LAddActivity.component';
+import { CreateleadComponent } from '../createlead/createlead.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import {LAddActivityComponent, leadssearchComponent, resorceListComponent} from 
     FullCalendarModule,
     LeadPageRoutingModule,
   ],
-  declarations: [LeadPage,LAddActivityComponent,leadssearchComponent,resorceListComponent],
-  entryComponents: [LAddActivityComponent,leadssearchComponent,resorceListComponent]
+  declarations: [LeadPage,CreateleadComponent,LAddActivityComponent,leadssearchComponent,resorceListComponent],
+  entryComponents: [CreateleadComponent,LAddActivityComponent,leadssearchComponent,resorceListComponent]
 })
 export class LeadPageModule {}

@@ -2,9 +2,17 @@
   <form #form="ngForm" (ngSubmit)="ActionSaveCustomerItems(form)" class="dis-content">
     <ion-header>
       <ion-toolbar>
-        <ion-title class="titleheader">Customer Item</ion-title>
-        <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
-        <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCustomerItems(false)">X</ion-button>
+        <ion-buttons slot="start">
+          <ion-button color="danger" type="button" (click)="ActionCloseCustomerItems(false)">
+            Cancel
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <!-- <ion-button color="primary" type="submit">
+            Save
+          </ion-button> -->
+        </ion-buttons>
+        <ion-title align="center">Customer Item</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -12,7 +20,7 @@
       <ion-label position="floating" color="primary" class="margin-zero">Description</ion-label>
       <ion-input required type="text" class="inputheight" [(ngModel)]="response.Description" name="Description"
         #nameField="ngModel" required (ionChange)="setFilteredItems()"></ion-input>
-      <ion-button slot="end" (click)="ActionSearchSelect()" class="martop20">Select</ion-button>
+      <!-- <ion-button slot="end" (click)="ActionSearchSelect()" class="martop20">Select</ion-button> -->
     </ion-item>
     <div [hidden]="!form.submitted  || nameField.valid" class="invalid-feedback padd-Left">
       <div class="error">Description is required</div>

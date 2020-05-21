@@ -577,6 +577,8 @@ ion-icon{
 }
 .dis-content{
     display: contents;
+    width: 100%;
+    height: 100%;
 }
 .txt-color{
   color: blue;
@@ -744,4 +746,8 @@ ion-icon{
 .mail-text {
     padding: 16px;
     margin-top: -25px;
+}
+
+.widthfull {
+    width:100%!important;
 }

@@ -22,6 +22,7 @@ export class AddactivityComponent implements OnInit {
   resourceList: any;
   QuotePartList: any; timings: any = timings;
   loaderToShow: Promise<void>;
+  dayCheck: any;
   //arrShowItems:any;
   constructor(public Modalcntrl: ModalController, private schService: SchedulingService, private navParams: NavParams,
     private datePipe: DatePipe, private alertCtrl: AlertController, private authservise: AuthService, public loadingController: LoadingController,) { }
@@ -45,7 +46,7 @@ export class AddactivityComponent implements OnInit {
     if (this.actinfo.PhaseID > 0) {
       this.ActionPhasePartList(0);
     }
-
+    this.dayCheck = this.actinfo.STime == "08:00 AM" && this.actinfo.ETime == "06:00 PM" ? 1 : 0;
     console.log(this.actinfo);
   }
 
@@ -313,9 +314,9 @@ export class AddactivityComponent implements OnInit {
     if (event.detail.checked) {
       this.actinfo.Hrs = 9; this.actinfo.Mins = 0;
       this.actinfo.ETime = "6:00 PM";
-      this.actinfo.Duration = 540;
+      this.actinfo.Duration = 540;this.dayCheck = 1;
     } else {
-      this.actinfo.Hrs = 1; this.actinfo.Mins = 0; this.actinfo.Duration = 60;
+      this.actinfo.Hrs = 1; this.actinfo.Mins = 0; this.actinfo.Duration = 60;this.dayCheck = 0;
     }
   }
   //#endregion

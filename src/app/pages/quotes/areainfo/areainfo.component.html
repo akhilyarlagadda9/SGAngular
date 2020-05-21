@@ -1,35 +1,35 @@
 <div *ngIf="PhaseId == 0">
-    <ion-row class="rowlineitem">
-      <ion-col size="2" class="textfont14">Area
-      </ion-col>
-      <ion-col size="10">
-        <ion-select class="btninfo" [(ngModel)]="AreaID" name="AreaID" [selectedText]="AreaName"
-          (ionChange)="ActionPartsByArea(AreaID, 1)">
-          <ion-select-option *ngFor="let area of arealist" [value]="area.ID">{{area.Name}}</ion-select-option>
-        </ion-select>
-      </ion-col>
-      <!-- <ion-col size="1" class="paddzero mar-top5 color-primary text-right">
+  <ion-row class="rowlineitem">
+    <ion-col size="2" class="textfont14">Area
+    </ion-col>
+    <ion-col size="10">
+      <ion-select class="btninfo" [(ngModel)]="AreaID" name="AreaID" [selectedText]="AreaName"
+        (ionChange)="ActionPartsByArea(AreaID, 1)">
+        <ion-select-option *ngFor="let area of arealist" [value]="area.ID">{{area.Name}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <!-- <ion-col size="1" class="paddzero mar-top5 color-primary text-right">
         <ion-icon name="add-circle" class="fontmedium" (click)="ActionAddArea(AreaID)"></ion-icon>
       </ion-col> -->
-    </ion-row>
+  </ion-row>
 
 
-<ion-row class="rowlineitem">
-  <ion-col size="2" class="textfont14">Part</ion-col>
-  <!-- <ion-col size="2" *ngIf="partinfo.ID > 0" (click)="ActionAddPart(partinfo.ID)">*ngIf="partinfo.ID == 0 || partinfo.ID == '' || partinfo.ID == null" <u class="colorblue textfont14">Part</u>  </ion-col> -->
-  <ion-col size="10" class="text-left">
-    <ion-select class="btninfo" [(ngModel)]="AreaPartID" name="AreaPartID"
-      (ionChange)="ActionGetPartInfo(AreaPartID)">
-      <ion-select-option *ngFor="let part of areaInfo.PartList" [value]="part.ID"><span
-          *ngIf="part.Name == '' || part.Name == null">Part{{part.SrNo}}</span>{{part.Name}}</ion-select-option>
-    </ion-select>
-  </ion-col>
-  <!-- <ion-col size="1" class="paddzero mar-top5 color-primary text-right">
+  <ion-row class="rowlineitem">
+    <ion-col size="2" class="textfont14">Part</ion-col>
+    <!-- <ion-col size="2" *ngIf="partinfo.ID > 0" (click)="ActionAddPart(partinfo.ID)">*ngIf="partinfo.ID == 0 || partinfo.ID == '' || partinfo.ID == null" <u class="colorblue textfont14">Part</u>  </ion-col> -->
+    <ion-col size="10" class="text-left">
+      <ion-select class="btninfo" [(ngModel)]="AreaPartID" name="AreaPartID"
+        (ionChange)="ActionGetPartInfo(AreaPartID)">
+        <ion-select-option *ngFor="let part of areaInfo.PartList" [value]="part.ID"><span
+            *ngIf="part.Name == '' || part.Name == null">Part{{part.SrNo}}</span>{{part.Name}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <!-- <ion-col size="1" class="paddzero mar-top5 color-primary text-right">
     <ion-icon name="add-circle" class="fontmedium" (click)="ActionAddPart(0)"></ion-icon>
   </ion-col> -->
-</ion-row>
+  </ion-row>
 
-<!-- <ion-row>
+  <!-- <ion-row>
   <ion-col size="5">
     <ion-row>
       <ion-col size="3" class="paddzero">
@@ -64,454 +64,572 @@
   </ion-col>
 </ion-row> -->
 
-<ion-row>
-  <ion-col>
-    <div class="areasvg text-center"></div>
-  </ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let mat of areaInfo.AreaUnassignedMaterialList" class="color-red paddzero">
-  <ion-col *ngIf="mat.IsActive == 1 && mat.AreaID == areaInfo.ID && mat.Sqft != 0" class="paddzero">
-    <ion-row>
+  <ion-row>
     <ion-col>
-      <span class="colorblue textfont14">UM:</span>
-      <span *ngIf="mat.IsChg == '2' && mat.MaterialID > 0">{{ mat.MaterialName }}
-          <span *ngIf="(mat.ProductItemNo != '' && mat.ProductItemNo != null) || (mat.ProSubGroup !=null && mat.ProSubGroup !='')">[# {{mat.ProductItemNo}} - {{mat.ProSubGroup}}]
-          </span>&nbsp;
-        </span>
-      <span *ngIf="mat.IsChg == '0' && mat.MaterialID > 0">{{ mat.MaterialName }}
-      <span *ngIf="(mat.ProductItemNo != '' && mat.ProductItemNo != null) || (mat.ProSubGroup !=null && mat.ProSubGroup !='')">[# {{mat.ProductItemNo}} - {{mat.ProSubGroup}}]</span></span>
-      <span *ngIf="mat.CoSrNo > 0 && mat.MaterialID > 0">&nbsp;C{{mat.CoSrNo}}&nbsp;</span>
-      <span *ngIf="mat.PriceByID == '1' && mat.Qty != 0 && mat.MaterialID > 0">(Price By Slab)</span>
-      <span *ngIf="mat.PriceByID == '1' && mat.Qty == 0 && mat.MaterialID > 0">(Price By Slab)</span>
-      <span *ngIf="mat.PriceByID == '2' && mat.MaterialID > 0">(Slab Wgt. Avg.)</span>
-      <span *ngIf="(mat.ProductItemNo == null || mat.ProductItemNo == '')">(No Match)</span>
-      &nbsp;<span *ngIf="mat.IsOptional == 1">&nbsp;Optional&nbsp;</span>@
-      <span *ngIf="mat.IsChg == '2'">{{mat.Qty | number:'.2-2'}}</span>
-      <span *ngIf="mat.IsChg == '0'">{{mat.Qty | number:'.2-2'}}</span>
-    </ion-col>
-    <ion-col size="3" class="text-right">$&nbsp;
-      <span *ngIf="mat.IsChg == '2'">{{(mat.Qty * mat.UnitPrice) | number:'.2-2'}}&nbsp;</span>
-      <span *ngIf="mat.IsChg == '0'">{{(mat.Qty * mat.UnitPrice) | number:'.2-2'}}&nbsp;</span>
+      <div class="areasvg text-center"></div>
     </ion-col>
   </ion-row>
-  </ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let material of partinfo.PartMaterialList">
-  <ion-col (click)="ActionEditMaterial(material)"><u class="colorblue textfont14">M</u>:
-    <span *ngIf="material.IsChg == '2' && material.ID > 0">{{material.MaterialName }}</span>
-    <span *ngIf="material.IsChg == '0' && material.ID > 0">{{ material.MaterialName }}</span>
-    <span *ngIf="material.CoSrNo > 0 && material.ID > 0">&nbsp;C{{material.CoSrNo}}</span>
-    <span *ngIf="material.IsOptional == 1">Optional</span>&nbsp;
-    <span>@<u class="colorgreen">
-        <span *ngIf="material.IsChg == '2'">{{ material.Qty | number : '.2-2'}}</span>
-        <span *ngIf="material.IsChg == '0'">{{ material.Qty | number : '.2-2'}}</span>
-      </u>
-    </span>
-  </ion-col>
-  <ion-col size="3" class="text-right">$&nbsp;
-    <span *ngIf="material.IsChg == '2'">{{ (material.Qty * material.UnitPrice) | number : '.2-2'}}&nbsp;</span>
-    <span *ngIf="material.IsChg == '0'">{{ (material.Qty * material.UnitPrice) | number : '.2-2'}}&nbsp;</span>
-  </ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList"
-  (click)="ActionEditMeasurement(fabrication)">
-  <ion-col><u class="colorblue textfont14">Siz</u>:
-    <span *ngFor="let size of fabrication.MeasureList">
-      <span *ngIf="size.Sqft != 0">
-        <span *ngIf="size.CounterType != '' && size.CounterType != null">({{size.CounterType}})</span>
-        <span *ngIf="fabrication.IsChg == '2'">({{size.Width}} * {{size.Height}})</span>
-        <span *ngIf="fabrication.IsChg != '2'">({{size.Width}} * {{size.Height}})</span>
-      </span> <span *ngIf="size.Sqft == 0">-</span>&nbsp;
-    </span>
-    <span>@
-      <u class="colorgreen">
-        <span *ngIf="fabrication.IsChg == '2'">{{ fabrication.PartSqft | number : '.2-2'}}</span>
-        <span *ngIf="fabrication.IsChg != '2'">{{ fabrication.PartSqft | number : '.2-2'}}</span>
-      </u>
-    </span>
-  </ion-col>
-  <ion-col size="3" class="text-right">-&nbsp;</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let splash of partinfo.SplashList">
-  <ion-col (click)="ActionEditSplash(splash, i)"><u class="colorblue textfont14">Spl</u>:
-    <span *ngIf="splash.IsChg == '2'">{{ splash.Splash }}</span>
-    <span *ngIf="splash.IsChg != '2'">{{ splash.Splash }}</span>
-    <span *ngIf="splash.CoSrNo > '0'">&nbsp;C{{splash.CoSrNo}}</span>
-    &nbsp;<span *ngIf="splash.IsOptional == 1">Optional</span>&nbsp;
-    <span>@<u class="colorgreen">
-        <span *ngIf="splash.IsChg == '2'">{{ splash.Sqft | number : '.2-2'}}</span>
-        <span *ngIf="splash.IsChg == '0'">{{ splash.Sqft | number : '.2-2'}}</span>
-      </u>
-    </span>
-  </ion-col>
-  <ion-col size="3" class="text-right">-&nbsp;</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let edge of partinfo.EdgeList">
-  <ion-col (click)="ActionEditEdge(edge)"><u class="colorblue textfont14">E</u>:
-    <span *ngIf="edge.IsChg == '2'">{{ edge.EdgeProfile }}</span>
-    <span *ngIf="edge.IsChg != '2'">{{ edge.EdgeProfile }}</span>
-    <span *ngIf="edge.CoSrNo > '0'">C{{edge.CoSrNo}}</span>
-    <span *ngIf="edge.IsOptional == 1">&nbsp;Optional</span>&nbsp;
-    <span>@
-      <u class="colorgreen">
-        <span *ngIf="edge.IsChg == '2'">{{ edge.LF | number : '.2-2'}}</span>
-        <span *ngIf="edge.IsChg == '0'">{{ edge.LF | number : '.2-2'}}</span>
-      </u>
-    </span>
-  </ion-col>
-  <ion-col size="3" class="text-right">$
-    <span *ngIf="edge.IsChg == '2'">{{ edge.Amt | number : '.2-2'}}&nbsp;</span>
-    <span *ngIf="edge.IsChg == '0'">{{ edge.Amt | number : '.2-2'}}&nbsp;</span>
-  </ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let sinkfaucet of partinfo.SinkList">
-  <ion-col (click)="ActionEditSink(sinkfaucet)"><u class="colorblue textfont14">S</u>:
-    <span *ngIf="sinkfaucet.Description != null">
-      <span *ngIf="sinkfaucet.IsChg == '2'"> {{ sinkfaucet.Description }}</span>
-      <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Description }} </span>
-      <span *ngIf="sinkfaucet.CoSrNo > 0">&nbsp;C{{sinkfaucet.CoSrNo}}</span>
-      <span *ngIf="sinkfaucet.IsOptional == 1">Optional</span>&nbsp;
-    </span>
-    <span>
-      @<u class="colorgreen">
-        <span *ngIf="sinkfaucet.IsChg == '2'">{{ sinkfaucet.Qty | number : '.2-2'}}</span>
-        <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Qty | number : '.2-2'}}</span>
-      </u>
-    </span>
-  </ion-col>
-  <ion-col size="3" class="text-right">$
-    <span *ngIf="sinkfaucet.IsChg == '2'">{{ sinkfaucet.Amount | number : '.2-2'}}&nbsp;</span>
-    <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Amount | number : '.2-2'}}&nbsp;</span>
-  </ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let faucet of partinfo.FaucetList">
-  <ion-col (click)="ActionEditFaucet(faucet)"><u class="colorblue textfont14">F</u>:
-    <span *ngIf="faucet.Description != null">
-      <span *ngIf="faucet.IsChg == '2'">{{ faucet.Description }} </span>
-      <span *ngIf="faucet.IsChg == '0'"> {{ faucet.Description }}</span>
-      <span *ngIf="faucet.CoSrNo > 0">&nbsp;C{{faucet.CoSrNo}}&nbsp;</span>
-      <span *ngIf="faucet.IsOptional == 1">&nbsp;Optional&nbsp;</span> &nbsp;
-    </span>
-    <span>@
-      <u class="colorgreen">
-        <span *ngIf="faucet.IsChg == '2'">{{ faucet.Qty | number : '.2-2'}}</span>
-        <span *ngIf="faucet.IsChg == '0'">{{ faucet.Qty | number : '.2-2'}}</span>
-      </u>
-    </span>
-  </ion-col>
-  <ion-col size="3" class="text-right">$
-    <span *ngIf="faucet.IsChg == '2'">{{ faucet.Amount | number : '.2-2'}}&nbsp;</span>
-    <span *ngIf="faucet.IsChg == '0'">{{ faucet.Amount | number : '.2-2'}}&nbsp;</span>
-  </ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let coutout of partinfo.CutoutList">
-  <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 1">
-    <ion-row>
-      <ion-col (click)="ActionCreateCutout(1, coutout)"><u class="colorblue textfont14">SC</u>:
-        <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
-        <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
-        <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
-        &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
-        <span>@
-          <u class="colorgreen">
-            <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
-            <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
-          </u>
-        </span>
-      </ion-col>
-      <ion-col size="3" class="text-right">$
-        <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
-        <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
-      </ion-col>
-    </ion-row>
-  </ion-col>
-  <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 3">
-    <ion-row>
-      <ion-col (click)="ActionCreateCutout(3, coutout)"><u class="colorblue textfont14">AC</u>:
-        <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
-        <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
-        <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
-        &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
-        <span>@
-          <u class="colorgreen">
-            <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
-            <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
-          </u>
-        </span>
-      </ion-col>
-      <ion-col size="3" class="text-right">$
-        <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
-        <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
-      </ion-col>
-    </ion-row>
-  </ion-col>
-  <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 2">
-    <ion-row>
-      <ion-col (click)="ActionCreateCutout(2, coutout)"><u class="colorblue textfont14">OC</u>:
-        <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
-        <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
-        <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
-        &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
-        <span>@
-          <u class="colorgreen">
-            <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
-            <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
-          </u>
-        </span>
-      </ion-col>
-      <ion-col size="3" class="text-right">$
-        <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
-        <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
-      </ion-col>
-    </ion-row>
-  </ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList">
-  <ion-col (click)="ActionEditFabrication(fabrication)"><u class="colorblue textfont14">F</u>:
-    <span *ngIf="fabrication.IsChg == '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}} Sqft.
-      Fabrication</span>
-    <span *ngIf="fabrication.IsChg != '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}} Sqft.
-      Fabrication</span>
-    <span *ngIf="fabrication.CoSrNo > '0'">C{{fabrication.CoSrNo}}</span>&nbsp;
-    <span>@
-      <u class="colorgreen">
-        <span
-          *ngIf="fabrication.IsChg == '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}}</span>
-        <span
-          *ngIf="fabrication.IsChg != '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}}</span>
-      </u>
-    </span>
-  </ion-col>
-  <ion-col size="3" class="text-right">$
-    <span
-      *ngIf="fabrication.IsChg == '2'">{{ ((fabrication.PartSqft + fabrication.SplashSqft) * fabrication.LaborUnitPrice) | number : '.2-2'}}&nbsp;</span>
-    <span
-      *ngIf="fabrication.IsChg != '2'">{{ ((fabrication.PartSqft + fabrication.SplashSqft) * fabrication.LaborUnitPrice)  | number : '.2-2'}}&nbsp;</span>
-  </ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let labor of partinfo.LaborList">
-  <ion-col *ngIf="labor.ViewTypeID == 1 && labor.Description == 'Template'" class="paddzero">
-    <ion-row>
-      <ion-col (click)="ActionEditLabor(1, labor, 'Template')"><u class="colorblue textfont14">T</u>:
-        <span>
+  <ion-row class="rowlineitem" *ngFor="let mat of areaInfo.AreaUnassignedMaterialList" class="color-red paddzero">
+    <ion-col *ngIf="mat.IsActive == 1 && mat.AreaID == areaInfo.ID && mat.Sqft != 0" class="paddzero">
+      <ion-row>
+        <ion-col>
+          <span class="colorblue textfont14">UM:</span>
+          <span *ngIf="mat.IsChg == '2' && mat.MaterialID > 0">{{ mat.MaterialName }}
+            <span
+              *ngIf="(mat.ProductItemNo != '' && mat.ProductItemNo != null) || (mat.ProSubGroup !=null && mat.ProSubGroup !='')">[#
+              {{mat.ProductItemNo}} - {{mat.ProSubGroup}}]
+            </span>&nbsp;
+          </span>
+          <span *ngIf="mat.IsChg == '0' && mat.MaterialID > 0">{{ mat.MaterialName }}
+            <span
+              *ngIf="(mat.ProductItemNo != '' && mat.ProductItemNo != null) || (mat.ProSubGroup !=null && mat.ProSubGroup !='')">[#
+              {{mat.ProductItemNo}} - {{mat.ProSubGroup}}]</span></span>
+          <span *ngIf="mat.CoSrNo > 0 && mat.MaterialID > 0">&nbsp;C{{mat.CoSrNo}}&nbsp;</span>
+          <span *ngIf="mat.PriceByID == '1' && mat.Qty != 0 && mat.MaterialID > 0">(Price By Slab)</span>
+          <span *ngIf="mat.PriceByID == '1' && mat.Qty == 0 && mat.MaterialID > 0">(Price By Slab)</span>
+          <span *ngIf="mat.PriceByID == '2' && mat.MaterialID > 0">(Slab Wgt. Avg.)</span>
+          <span *ngIf="(mat.ProductItemNo == null || mat.ProductItemNo == '')">(No Match)</span>
+          &nbsp;<span *ngIf="mat.IsOptional == 1">&nbsp;Optional&nbsp;</span>@
+          <span *ngIf="mat.IsChg == '2'">{{mat.Qty | number:'.2-2'}}</span>
+          <span *ngIf="mat.IsChg == '0'">{{mat.Qty | number:'.2-2'}}</span>
+        </ion-col>
+        <ion-col size="3" class="text-right">$&nbsp;
+          <span *ngIf="mat.IsChg == '2'">{{(mat.Qty * mat.UnitPrice) | number:'.2-2'}}&nbsp;</span>
+          <span *ngIf="mat.IsChg == '0'">{{(mat.Qty * mat.UnitPrice) | number:'.2-2'}}&nbsp;</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let material of partinfo.PartMaterialList">
+    <ion-col (click)="ActionEditMaterial(material)"><u class="colorblue textfont14">M</u>:
+      <span *ngIf="material.IsChg == '2' && material.ID > 0">{{material.MaterialName }}</span>
+      <span *ngIf="material.IsChg == '0' && material.ID > 0">{{ material.MaterialName }}</span>
+      <span *ngIf="material.CoSrNo > 0 && material.ID > 0">&nbsp;C{{material.CoSrNo}}</span>
+      <span *ngIf="material.IsOptional == 1">Optional</span>&nbsp;
+      <span>@<u class="colorgreen">
+          <span *ngIf="material.IsChg == '2'">{{ material.Qty | number : '.2-2'}}</span>
+          <span *ngIf="material.IsChg == '0'">{{ material.Qty | number : '.2-2'}}</span>
+        </u>
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">$&nbsp;
+      <span *ngIf="material.IsChg == '2'">{{ (material.Qty * material.UnitPrice) | number : '.2-2'}}&nbsp;</span>
+      <span *ngIf="material.IsChg == '0'">{{ (material.Qty * material.UnitPrice) | number : '.2-2'}}&nbsp;</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList"
+    (click)="ActionEditMeasurement(fabrication)">
+    <ion-col><u class="colorblue textfont14">Siz</u>:
+      <span *ngFor="let size of fabrication.MeasureList">
+        <span *ngIf="size.Sqft != 0">
+          <span *ngIf="size.CounterType != '' && size.CounterType != null">({{size.CounterType}})</span>
+          <span *ngIf="fabrication.IsChg == '2'">({{size.Width}} * {{size.Height}})</span>
+          <span *ngIf="fabrication.IsChg != '2'">({{size.Width}} * {{size.Height}})</span>
+        </span> <span *ngIf="size.Sqft == 0">-</span>&nbsp;
+      </span>
+      <span>@
+        <u class="colorgreen">
+          <span *ngIf="fabrication.IsChg == '2'">{{ fabrication.PartSqft | number : '.2-2'}}</span>
+          <span *ngIf="fabrication.IsChg != '2'">{{ fabrication.PartSqft | number : '.2-2'}}</span>
+        </u>
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">-&nbsp;</ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let splash of partinfo.SplashList">
+    <ion-col (click)="ActionEditSplash(splash, i)"><u class="colorblue textfont14">Spl</u>:
+      <span *ngIf="splash.IsChg == '2'">{{ splash.Splash }}</span>
+      <span *ngIf="splash.IsChg != '2'">{{ splash.Splash }}</span>
+      <span *ngIf="splash.CoSrNo > '0'">&nbsp;C{{splash.CoSrNo}}</span>
+      &nbsp;<span *ngIf="splash.IsOptional == 1">Optional</span>&nbsp;
+      <span>@<u class="colorgreen">
+          <span *ngIf="splash.IsChg == '2'">{{ splash.Sqft | number : '.2-2'}}</span>
+          <span *ngIf="splash.IsChg == '0'">{{ splash.Sqft | number : '.2-2'}}</span>
+        </u>
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">-&nbsp;</ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let edge of partinfo.EdgeList">
+    <ion-col (click)="ActionEditEdge(edge)"><u class="colorblue textfont14">E</u>:
+      <span *ngIf="edge.IsChg == '2'">{{ edge.EdgeProfile }}</span>
+      <span *ngIf="edge.IsChg != '2'">{{ edge.EdgeProfile }}</span>
+      <span *ngIf="edge.CoSrNo > '0'">C{{edge.CoSrNo}}</span>
+      <span *ngIf="edge.IsOptional == 1">&nbsp;Optional</span>&nbsp;
+      <span>@
+        <u class="colorgreen">
+          <span *ngIf="edge.IsChg == '2'">{{ edge.LF | number : '.2-2'}}</span>
+          <span *ngIf="edge.IsChg == '0'">{{ edge.LF | number : '.2-2'}}</span>
+        </u>
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">$
+      <span *ngIf="edge.IsChg == '2'">{{ edge.Amt | number : '.2-2'}}&nbsp;</span>
+      <span *ngIf="edge.IsChg == '0'">{{ edge.Amt | number : '.2-2'}}&nbsp;</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let sinkfaucet of partinfo.SinkList">
+    <ion-col (click)="ActionEditSink(sinkfaucet)"><u class="colorblue textfont14">S</u>:
+      <span *ngIf="sinkfaucet.Description != null">
+        <span *ngIf="sinkfaucet.IsChg == '2'"> {{ sinkfaucet.Description }}</span>
+        <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Description }} </span>
+        <span *ngIf="sinkfaucet.CoSrNo > 0">&nbsp;C{{sinkfaucet.CoSrNo}}</span>
+        <span *ngIf="sinkfaucet.IsOptional == 1">Optional</span>&nbsp;
+      </span>
+      <span>
+        @<u class="colorgreen">
+          <span *ngIf="sinkfaucet.IsChg == '2'">{{ sinkfaucet.Qty | number : '.2-2'}}</span>
+          <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Qty | number : '.2-2'}}</span>
+        </u>
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">$
+      <span *ngIf="sinkfaucet.IsChg == '2'">{{ sinkfaucet.Amount | number : '.2-2'}}&nbsp;</span>
+      <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Amount | number : '.2-2'}}&nbsp;</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let faucet of partinfo.FaucetList">
+    <ion-col (click)="ActionEditFaucet(faucet)"><u class="colorblue textfont14">F</u>:
+      <span *ngIf="faucet.Description != null">
+        <span *ngIf="faucet.IsChg == '2'">{{ faucet.Description }} </span>
+        <span *ngIf="faucet.IsChg == '0'"> {{ faucet.Description }}</span>
+        <span *ngIf="faucet.CoSrNo > 0">&nbsp;C{{faucet.CoSrNo}}&nbsp;</span>
+        <span *ngIf="faucet.IsOptional == 1">&nbsp;Optional&nbsp;</span> &nbsp;
+      </span>
+      <span>@
+        <u class="colorgreen">
+          <span *ngIf="faucet.IsChg == '2'">{{ faucet.Qty | number : '.2-2'}}</span>
+          <span *ngIf="faucet.IsChg == '0'">{{ faucet.Qty | number : '.2-2'}}</span>
+        </u>
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">$
+      <span *ngIf="faucet.IsChg == '2'">{{ faucet.Amount | number : '.2-2'}}&nbsp;</span>
+      <span *ngIf="faucet.IsChg == '0'">{{ faucet.Amount | number : '.2-2'}}&nbsp;</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let coutout of partinfo.CutoutList">
+    <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 1">
+      <ion-row>
+        <ion-col (click)="ActionCreateCutout(1, coutout)"><u class="colorblue textfont14">SC</u>:
+          <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
+          <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
+          <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
+          &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
+          <span>@
+            <u class="colorgreen">
+              <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
+              <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
+            </u>
+          </span>
+        </ion-col>
+        <ion-col size="3" class="text-right">$
+          <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+          <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 3">
+      <ion-row>
+        <ion-col (click)="ActionCreateCutout(3, coutout)"><u class="colorblue textfont14">AC</u>:
+          <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
+          <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
+          <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
+          &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
+          <span>@
+            <u class="colorgreen">
+              <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
+              <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
+            </u>
+          </span>
+        </ion-col>
+        <ion-col size="3" class="text-right">$
+          <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+          <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 2">
+      <ion-row>
+        <ion-col (click)="ActionCreateCutout(2, coutout)"><u class="colorblue textfont14">OC</u>:
+          <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
+          <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
+          <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
+          &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
+          <span>@
+            <u class="colorgreen">
+              <span *ngIf="coutout.IsChg == '2'">{{ coutout.LF | number : '.2-2'}}</span>
+              <span *ngIf="coutout.IsChg == '0'">{{ coutout.LF | number : '.2-2'}}</span>
+            </u>
+          </span>
+        </ion-col>
+        <ion-col size="3" class="text-right">$
+          <span *ngIf="coutout.IsChg == '2'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+          <span *ngIf="coutout.IsChg == '0'">{{ coutout.Amt | number : '.2-2'}}&nbsp;</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList">
+    <ion-col (click)="ActionEditFabrication(fabrication)"><u class="colorblue textfont14">F</u>:
+      <span *ngIf="fabrication.IsChg == '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}}
+        Sqft.
+        Fabrication</span>
+      <span *ngIf="fabrication.IsChg != '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}}
+        Sqft.
+        Fabrication</span>
+      <span *ngIf="fabrication.CoSrNo > '0'">C{{fabrication.CoSrNo}}</span>&nbsp;
+      <span>@
+        <u class="colorgreen">
+          <span
+            *ngIf="fabrication.IsChg == '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}}</span>
+          <span
+            *ngIf="fabrication.IsChg != '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}}</span>
+        </u>
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">$
+      <span
+        *ngIf="fabrication.IsChg == '2'">{{ ((fabrication.PartSqft + fabrication.SplashSqft) * fabrication.LaborUnitPrice) | number : '.2-2'}}&nbsp;</span>
+      <span
+        *ngIf="fabrication.IsChg != '2'">{{ ((fabrication.PartSqft + fabrication.SplashSqft) * fabrication.LaborUnitPrice)  | number : '.2-2'}}&nbsp;</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let labor of partinfo.LaborList">
+    <ion-col *ngIf="labor.ViewTypeID == 1 && labor.Description == 'Template'" class="paddzero">
+      <ion-row>
+        <ion-col (click)="ActionEditLabor(1, labor, 'Template')"><u class="colorblue textfont14">T</u>:
+          <span>
+            <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+            <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
+            <span *ngIf="labor.CoSrNo > 0">&nbsp;C{{labor.CoSrNo}}&nbsp;</span>
+            <span *ngIf="labor.IsOptional == 1">&nbsp;Optional&nbsp;</span>
+          </span>&nbsp;
+          <span>@
+            <u class="colorgreen">
+              <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
+              <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
+            </u>
+          </span>
+        </ion-col>
+        <ion-col size="3" class="text-right">$
+          <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+          <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col *ngIf="labor.ViewTypeID == 1 && labor.Description == 'Install'" class="paddzero">
+      <ion-row>
+        <ion-col (click)="ActionEditLabor(1, labor, 'Install')"><u class="colorblue textfont14">I</u>:
+          <span>
+            <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+            <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
+            <span *ngIf="labor.CoSrNo > 0">&nbsp;C{{labor.CoSrNo}}&nbsp;</span>
+            <span *ngIf="labor.IsOptional == 1">&nbsp;Optional&nbsp;</span>
+          </span>&nbsp;
+          <span>@
+            <u class="colorgreen">
+              <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
+              <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
+            </u>
+          </span>
+        </ion-col>
+        <ion-col size="3" class="text-right">$
+          <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+          <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col *ngIf="labor.ViewTypeID != 1" class="paddzero">
+      <ion-row>
+        <ion-col (click)="ActionEditLabor(0,labor,'Labor')"><u class="colorblue textfont14">L</u>:
           <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
-          <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
-          <span *ngIf="labor.CoSrNo > 0">&nbsp;C{{labor.CoSrNo}}&nbsp;</span>
-          <span *ngIf="labor.IsOptional == 1">&nbsp;Optional&nbsp;</span>
-        </span>&nbsp;
-        <span>@
-          <u class="colorgreen">
-            <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
-            <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
-          </u>
-        </span>
-      </ion-col>
-      <ion-col size="3" class="text-right">$
-        <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-        <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-      </ion-col>
-    </ion-row>
-  </ion-col>
-  <ion-col *ngIf="labor.ViewTypeID == 1 && labor.Description == 'Install'" class="paddzero">
-    <ion-row>
-      <ion-col (click)="ActionEditLabor(1, labor, 'Install')"><u class="colorblue textfont14">I</u>:
-        <span>
-          <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
-          <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
-          <span *ngIf="labor.CoSrNo > 0">&nbsp;C{{labor.CoSrNo}}&nbsp;</span>
-          <span *ngIf="labor.IsOptional == 1">&nbsp;Optional&nbsp;</span>
-        </span>&nbsp;
-        <span>@
-          <u class="colorgreen">
-            <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
-            <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
-          </u>
-        </span>
-      </ion-col>
-      <ion-col size="3" class="text-right">$
-        <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-        <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-      </ion-col>
-    </ion-row>
-  </ion-col>
-  <ion-col *ngIf="labor.ViewTypeID != 1" class="paddzero">
-    <ion-row>
-      <ion-col (click)="ActionEditLabor(0,labor,'Labor')"><u class="colorblue textfont14">L</u>:
+          <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
+          <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
+          <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
+          <span>@
+            <u class="colorgreen">
+              <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
+              <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
+            </u>
+          </span>
+        </ion-col>
+        <ion-col size="3" class="text-right">$
+          <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+          <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let sinkfaucet of partinfo.ApplianceList">
+    <ion-col (click)="ActionEditTile(18,'Appliance', sinkfaucet)"><u class="colorblue textfont14">A</u>:
+      <span *ngIf="sinkfaucet.Description != null">
+        <span *ngIf="sinkfaucet.IsChg == '2'"> {{ sinkfaucet.Description }} </span>
+        <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Description }}</span>
+        <span *ngIf="sinkfaucet.CoSrNo > 0">C{{sinkfaucet.CoSrNo}}</span>
+        <span *ngIf="sinkfaucet.IsOptional == 1">Optional</span>&nbsp;
+      </span>
+      <span>@
+        <u class="colorgreen">
+          <span *ngIf="sinkfaucet.IsChg == '2'">{{ sinkfaucet.Qty | number : '.2-2'}}</span>
+          <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Qty | number : '.2-2'}}</span>
+        </u>
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">$
+      <span *ngIf="sinkfaucet.IsChg == '2'">{{ sinkfaucet.Amount | number : '.2-2'}}&nbsp;</span>
+      <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Amount | number : '.2-2'}}&nbsp;</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let other of partinfo.OtherList">
+    <ion-col (click)="ActionEditAddon(other)"><u class="colorblue textfont14">Adn</u>:
+      <span>
+        <span *ngIf="other.IsChg == '2'">{{ other.Description }}</span>
+        <span *ngIf="other.IsChg == '0'">{{ other.Description }}</span>
+        <span *ngIf="other.CoSrNo > 0">C{{other.CoSrNo}}</span>
+        <span *ngIf="other.IsOptional == 1">Optional</span>&nbsp;
+      </span>
+      <span>@
+        <u class="colorgreen">
+          <span *ngIf="other.IsChg == '2'">{{ other.Qty | number : '.2-2'}}</span>
+          <span *ngIf="other.IsChg == '0'">{{ other.Qty | number : '.2-2'}}</span>
+        </u>
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">$
+      <span *ngIf="other.IsChg == '2'">{{ other.Amount | number : '.2-2'}}&nbsp;</span>
+      <span *ngIf="other.IsChg == '0'">{{ other.Amount | number : '.2-2'}}&nbsp;</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let labor of partinfo.TileList">
+    <ion-col (click)="ActionEditTile(12,'Tile', labor)"><u class="colorblue textfont14">Tile</u>:
+      <span>
         <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
-        <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
+        <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
         <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
         <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
-        <span>@
-          <u class="colorgreen">
-            <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
-            <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
-          </u>
-        </span>
-      </ion-col>
-      <ion-col size="3" class="text-right">$
-        <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-        <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-      </ion-col>
-    </ion-row>
-  </ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let sinkfaucet of partinfo.ApplianceList">
-  <ion-col (click)="ActionEditTile(18,'Appliance', sinkfaucet)"><u class="colorblue textfont14">A</u>:
-    <span *ngIf="sinkfaucet.Description != null">
-      <span *ngIf="sinkfaucet.IsChg == '2'"> {{ sinkfaucet.Description }} </span>
-      <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Description }}</span>
-      <span *ngIf="sinkfaucet.CoSrNo > 0">C{{sinkfaucet.CoSrNo}}</span>
-      <span *ngIf="sinkfaucet.IsOptional == 1">Optional</span>&nbsp;
-    </span>
-    <span>@
-      <u class="colorgreen">
-        <span *ngIf="sinkfaucet.IsChg == '2'">{{ sinkfaucet.Qty | number : '.2-2'}}</span>
-        <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Qty | number : '.2-2'}}</span>
-      </u>
-    </span>
-  </ion-col>
-  <ion-col size="3" class="text-right">$
-    <span *ngIf="sinkfaucet.IsChg == '2'">{{ sinkfaucet.Amount | number : '.2-2'}}&nbsp;</span>
-    <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Amount | number : '.2-2'}}&nbsp;</span>
-  </ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let other of partinfo.OtherList">
-  <ion-col (click)="ActionEditAddon(other)"><u class="colorblue textfont14">Adn</u>:
-    <span>
-      <span *ngIf="other.IsChg == '2'">{{ other.Description }}</span>
-      <span *ngIf="other.IsChg == '0'">{{ other.Description }}</span>
-      <span *ngIf="other.CoSrNo > 0">C{{other.CoSrNo}}</span>
-      <span *ngIf="other.IsOptional == 1">Optional</span>&nbsp;
-    </span>
-    <span>@
-      <u class="colorgreen">
-        <span *ngIf="other.IsChg == '2'">{{ other.Qty | number : '.2-2'}}</span>
-        <span *ngIf="other.IsChg == '0'">{{ other.Qty | number : '.2-2'}}</span>
-      </u>
-    </span>
-  </ion-col>
-  <ion-col size="3" class="text-right">$
-    <span *ngIf="other.IsChg == '2'">{{ other.Amount | number : '.2-2'}}&nbsp;</span>
-    <span *ngIf="other.IsChg == '0'">{{ other.Amount | number : '.2-2'}}&nbsp;</span>
-  </ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let labor of partinfo.TileList">
-  <ion-col (click)="ActionEditTile(12,'Tile', labor)"><u class="colorblue textfont14">Tile</u>:
-    <span>
+      </span>
+      <span>@
+        <u class="colorgreen">
+          <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
+          <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
+        </u>
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">$
+      <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+      <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let labor of partinfo.CabinetList">
+    <ion-col (click)="ActionEditTile(2,'Cabinet', labor)"><u class="colorblue textfont14">Cab</u>:
       <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
-      <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
+      <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
       <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
       <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
-    </span>
-    <span>@
-      <u class="colorgreen">
-        <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
-        <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
-      </u>
-    </span>
-  </ion-col>
-  <ion-col size="3" class="text-right">$
-    <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-    <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-  </ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let labor of partinfo.CabinetList">
-  <ion-col (click)="ActionEditTile(2,'Cabinet', labor)"><u class="colorblue textfont14">Cab</u>:
-    <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
-    <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
-    <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
-    <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
-    <span>@
-      <u class="colorgreen">
-        <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
-        <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
-      </u>
-    </span>
-  </ion-col>
-  <ion-col size="3" class="text-right">$
-    <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-    <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-  </ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let labor of partinfo.CarpetList">
-  <ion-col (click)="ActionEditTile(14,'Carpet', labor)"><u class="colorblue textfont14">Car</u>:
-    <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
-    <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
-    <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
-    <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
-    <span>@
-      <u class="colorgreen">
-        <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
-        <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
-      </u>
-    </span>
-  </ion-col>
-  <ion-col size="3" class="text-right">$
-    <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-    <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-  </ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let labor of partinfo.ConsumableList">
-  <ion-col (click)="ActionEditTile(19,'Consumable', labor)"><u class="colorblue textfont14">Con</u>:
-    <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
-    <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
-    <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
-    <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
-    <span>@
-      <u class="colorgreen">
-        <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
-        <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
-      </u>
-    </span>
-  </ion-col>
-  <ion-col size="3" class="text-right">$
-    <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-    <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-  </ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let labor of partinfo.ToolList">
-  <ion-col (click)="ActionEditTile(3,'Tool',labor)"><u class="colorblue textfont14">Tool</u>:
-    <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
-    <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
-    <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
-    <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
-    <span>@
-      <u class="colorgreen">
-        <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
-        <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
-      </u>
-    </span>
-  </ion-col>
-  <ion-col size="3" class="text-right">$
-    <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-    <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
-  </ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let response of partinfo.CustomerItemList">
-  <ion-col (click)="ActionEditCustItems(response)"><u class="colorblue textfont14">Cust</u>:
-    <span *ngIf="response.IsChg == '2'">{{ response.Description }}</span>
-    <span *ngIf="response.IsChg == '0'">{{ response.Description }}</span>
-    <span *ngIf="response.CoSrNo > 0">C{{response.CoSrNo}}</span>
-  </ion-col>
-  <ion-col size="3" class="text-right">-&nbsp;</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let partdisc of partinfo.PartDiscountList">
-  <ion-col *ngIf="partdisc.Isactive == 1 && partdisc.PartID == 0 && partdisc.Price != 0" class="paddzero">
-    <ion-row>
-      <ion-col (click)="ActionCreateTile(3,'Tool')" color="danger"><u class="colorblue textfont14">Disc</u>:
-        <span>{{partdisc.Description}}</span>
-        <span>@
-          <u class="colorgreen">
-            {{ partdisc.Qty | number: '.2-2'}}
-          </u>
-        </span>
-      </ion-col>
-      <ion-col size="3" class="text-right">$
-        {{ (partdisc.Qty * partdisc.Price) | number: '.2-2'}}&nbsp;
-      </ion-col>
-    </ion-row>
-  </ion-col>
-</ion-row>
+      <span>@
+        <u class="colorgreen">
+          <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
+          <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
+        </u>
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">$
+      <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+      <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let labor of partinfo.CarpetList">
+    <ion-col (click)="ActionEditTile(14,'Carpet', labor)"><u class="colorblue textfont14">Car</u>:
+      <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+      <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
+      <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
+      <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
+      <span>@
+        <u class="colorgreen">
+          <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
+          <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
+        </u>
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">$
+      <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+      <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let labor of partinfo.ConsumableList">
+    <ion-col (click)="ActionEditTile(19,'Consumable', labor)"><u class="colorblue textfont14">Con</u>:
+      <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+      <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
+      <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
+      <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
+      <span>@
+        <u class="colorgreen">
+          <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
+          <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
+        </u>
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">$
+      <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+      <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let labor of partinfo.ToolList">
+    <ion-col (click)="ActionEditTile(3,'Tool',labor)"><u class="colorblue textfont14">Tool</u>:
+      <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+      <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
+      <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
+      <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
+      <span>@
+        <u class="colorgreen">
+          <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
+          <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
+        </u>
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">$
+      <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+      <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let response of partinfo.CustomerItemList">
+    <ion-col (click)="ActionEditCustItems(response)"><u class="colorblue textfont14">Cust</u>:
+      <span *ngIf="response.IsChg == '2'">{{ response.Description }}</span>
+      <span *ngIf="response.IsChg == '0'">{{ response.Description }}</span>
+      <span *ngIf="response.CoSrNo > 0">C{{response.CoSrNo}}</span>
+    </ion-col>
+    <ion-col size="3" class="text-right">-&nbsp;</ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let partdisc of partinfo.PartDiscountList">
+    <ion-col *ngIf="partdisc.Isactive == 1 && partdisc.PartID == 0 && partdisc.Price != 0" class="paddzero">
+      <ion-row>
+        <ion-col (click)="ActionCreateTile(3,'Tool')" color="danger"><u class="colorblue textfont14">Disc</u>:
+          <span>{{partdisc.Description}}</span>
+          <span>@
+            <u class="colorgreen">
+              {{ partdisc.Qty | number: '.2-2'}}
+            </u>
+          </span>
+        </ion-col>
+        <ion-col size="3" class="text-right">$
+          {{ (partdisc.Qty * partdisc.Price) | number: '.2-2'}}&nbsp;
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col style="color: blue;"
+      *ngIf="areaInfo.laborList.length > 0 || areaInfo.otherList.length > 0 || areaInfo.tileList.length > 0 || areaInfo.responseList.length > 0 || areaInfo.cabinetList.length > 0">
+      <h6><span style="background: lightblue;border: 1px solid #ddd;padding: 5px;">Area Items: {{AreaName}}</span></h6>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let labor of areaInfo.laborList">
+    <ion-col class="paddzero">
+      <ion-row *ngIf="areaInfo.laborList.length > 0 && labor.ViewTypeID != 1 && labor.PartID == 0">
+        <ion-col (click)="ActionEditLabor(0,labor,'Labor')"><u class="colorblue textfont14">Lab</u>:
+          <span>
+            <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+            <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
+            <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
+            <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
+          </span>
+          <span>@
+            <u class="colorgreen">
+              <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
+              <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
+            </u>
+          </span>
+        </ion-col>
+        <ion-col size="3" class="text-right">$
+          <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+          <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let addon of areaInfo.otherList">
+    <ion-col class="paddzero">
+      <ion-row *ngIf="areaInfo.otherList.length > 0 && addon.PartID == 0">
+        <ion-col (click)="ActionEditAddon(addon)"><u class="colorblue textfont14">Adn</u>:
+          <span>
+            <span *ngIf="addon.IsChg == '2'">{{ addon.Description }}</span>
+            <span *ngIf="addon.IsChg == '0'">{{ addon.Description }} </span>
+            <span *ngIf="addon.CoSrNo > 0">C{{addon.CoSrNo}}</span>
+            <span *ngIf="addon.IsOptional == 1">Optional</span>&nbsp;
+          </span>
+          <span>@
+            <u class="colorgreen">
+              <span *ngIf="addon.IsChg == '2'">{{ addon.Qty | number : '.2-2'}}</span>
+              <span *ngIf="addon.IsChg == '0'">{{ addon.Qty | number : '.2-2'}}</span>
+            </u>
+          </span>
+        </ion-col>
+        <ion-col size="3" class="text-right">$
+          <span *ngIf="addon.IsChg == '2'">{{ addon.Amount | number : '.2-2'}}&nbsp;</span>
+          <span *ngIf="addon.IsChg == '0'">{{ addon.Amount | number : '.2-2'}}&nbsp;</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let labor of areaInfo.tileList">
+    <ion-col class="paddzero">
+      <ion-row *ngIf="areaInfo.tileList.length > 0 && labor.PartID == 0">
+        <ion-col (click)="ActionEditTile(12,'Tile', labor)"><u class="colorblue textfont14">Tile</u>:
+          <span>
+            <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+            <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
+            <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
+            <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
+          </span>
+          <span>@
+            <u class="colorgreen">
+              <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
+              <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
+            </u>
+          </span>
+        </ion-col>
+        <ion-col size="3" class="text-right">$
+          <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+          <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let labor of areaInfo.cabinetList">
+    <ion-col class="paddzero">
+      <ion-row *ngIf="areaInfo.cabinetList.length > 0 && labor.PartID == 0">
+        <ion-col (click)="ActionEditTile(2,'Cabinet', labor)"><u class="colorblue textfont14">Cab</u>:
+          <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+          <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
+          <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
+          <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
+          <span>@
+            <u class="colorgreen">
+              <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
+              <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
+            </u>
+          </span>
+        </ion-col>
+        <ion-col size="3" class="text-right">$
+          <span *ngIf="labor.IsChg == '2'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+          <span *ngIf="labor.IsChg == '0'">{{ labor.Amount | number : '.2-2'}}&nbsp;</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let response of areaInfo.responseList">
+    <ion-col class="paddzero">
+      <ion-row *ngIf="areaInfo.responseList.length > 0 && response.PartID == 0">
+        <ion-col (click)="ActionEditCustItems(response)"><u class="colorblue textfont14">Cust</u>:
+          <span *ngIf="response.IsChg == '2'">{{ response.Description }}</span>
+          <span *ngIf="response.IsChg == '0'">{{ response.Description }}</span>
+          <span *ngIf="response.CoSrNo > 0">C{{response.CoSrNo}}</span>
+        </ion-col>
+        <ion-col size="3" class="text-right">-&nbsp;</ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
 </div>
 
 
@@ -521,25 +639,24 @@
     <ion-col size="2" class="textfont14">Area
     </ion-col>
     <ion-col size="10">
-      <ion-select class="btninfo" [(ngModel)]="AreaID" name="AreaID"
-        (ionChange)="ActionPartsByArea(AreaID, 1)">
+      <ion-select class="btninfo" [(ngModel)]="AreaID" name="AreaID" (ionChange)="ActionPartsByArea(AreaID, 1)">
         <ion-select-option *ngFor="let area of arealist" [value]="area.ID">{{area.Name}}</ion-select-option>
       </ion-select>
     </ion-col>
   </ion-row>
-<ion-row class="rowlineitem">
-<ion-col size="2" class="textfont14">Part</ion-col>
-<!-- <ion-col size="2" *ngIf="partinfo.ID > 0" (click)="ActionAddPart(partinfo.ID)"><u class="colorblue textfont14">Part</u>  </ion-col> -->
-<ion-col size="10" class="text-left">
-  <ion-select class="btninfo" [(ngModel)]="AreaPartID" name="AreaPartID"
-    (ionChange)="ActionGetPartInfo(AreaPartID)">
-    <ion-select-option *ngFor="let part of areaInfo.PartList" [value]="part.ID"><span
-        *ngIf="part.Name == '' || part.Name == null">Part{{part.SrNo}}</span>{{part.Name}}</ion-select-option>
-  </ion-select>
-</ion-col>
-</ion-row>
+  <ion-row class="rowlineitem">
+    <ion-col size="2" class="textfont14">Part</ion-col>
+    <!-- <ion-col size="2" *ngIf="partinfo.ID > 0" (click)="ActionAddPart(partinfo.ID)"><u class="colorblue textfont14">Part</u>  </ion-col> -->
+    <ion-col size="10" class="text-left">
+      <ion-select class="btninfo" [(ngModel)]="AreaPartID" name="AreaPartID"
+        (ionChange)="ActionGetPartInfo(AreaPartID)">
+        <ion-select-option *ngFor="let part of areaInfo.PartList" [value]="part.ID"><span
+            *ngIf="part.Name == '' || part.Name == null">Part{{part.SrNo}}</span>{{part.Name}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+  </ion-row>
 
-<!-- <ion-row>
+  <!-- <ion-row>
 <ion-col size="5">
   <ion-row>
     <ion-col size="3" class="paddzero">
@@ -574,307 +691,415 @@
 </ion-col>
 </ion-row> -->
 
-<ion-row>
-<ion-col>
-  <div class="areasvg text-center"></div>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let mat of areaInfo.AreaUnassignedMaterialList" class="color-red paddzero">
-<ion-col *ngIf="mat.IsActive == 1 && mat.AreaID == areaInfo.ID && mat.Qty > 0" class="paddzero">
   <ion-row>
-  <ion-col>
-    <span class="colorblue textfont14">UM:</span>
-  
-    <span *ngIf="mat.MaterialID > 0">{{ mat.MaterialName }}
-    <span *ngIf="(mat.ProductItemNo != '' && mat.ProductItemNo != null) || (mat.ProSubGroup !=null && mat.ProSubGroup !='')">[# {{mat.ProductItemNo}} - {{mat.ProSubGroup}}]</span></span>
-    <span *ngIf="mat.CoSrNo > 0 && mat.MaterialID > 0">&nbsp;C{{mat.CoSrNo}}&nbsp;</span>
-    <span *ngIf="mat.PriceByID == '1' && mat.Qty != 0 && mat.MaterialID > 0">(Price By Slab)</span>
-    <span *ngIf="mat.PriceByID == '1' && mat.Qty == 0 && mat.MaterialID > 0">(Price By Slab)</span>
-    <span *ngIf="mat.PriceByID == '2' && mat.MaterialID > 0">(Slab Wgt. Avg.)</span>
-    <span *ngIf="(mat.ProductItemNo == null || mat.ProductItemNo == '')">(No Match)</span>
-    &nbsp;<span *ngIf="mat.IsOptional == 1">&nbsp;Optional&nbsp;</span>
-   
-  </ion-col>
-  <ion-col size="3" class="text-right">
-    <span>{{mat.JobQty | number:'.2-2'}}</span>
-  </ion-col>
-</ion-row>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let material of partinfo.PartMaterialList">
-<ion-col (click)="ActionEditMaterial(material)"><u class="colorblue textfont14">M</u>:
+    <ion-col>
+      <div class="areasvg text-center"></div>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let mat of areaInfo.AreaUnassignedMaterialList" class="color-red paddzero">
+    <ion-col *ngIf="mat.IsActive == 1 && mat.AreaID == areaInfo.ID && mat.Qty > 0" class="paddzero">
+      <ion-row>
+        <ion-col>
+          <span class="colorblue textfont14">UM:</span>
 
-  <span *ngIf="material.ID > 0">{{ material.MaterialName }}</span>
-  <span *ngIf="material.CoSrNo > 0 && material.ID > 0">&nbsp;C{{material.CoSrNo}}</span>
-  <span *ngIf="material.IsOptional == 1">Optional</span>&nbsp;
-</ion-col>
-<ion-col size="3" class="text-right">
-  <span>{{  material.JobQty | number : '.2-2'}}</span>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList"
-(click)="ActionEditMeasurement(fabrication)">
-<ion-col><u class="colorblue textfont14">Siz</u>:
-  <span *ngFor="let size of fabrication.MeasureList">
-    <span *ngIf="size.Sqft != 0">
-      <span *ngIf="size.CounterType != '' && size.CounterType != null">({{size.CounterType}})</span>
-      <span *ngIf="fabrication.IsChg == '2'">({{size.Width}} * {{size.Height}})</span>
-      <span *ngIf="fabrication.IsChg != '2'">({{size.Width}} * {{size.Height}})</span>
-    </span> <span *ngIf="size.Sqft == 0">-</span>&nbsp;
-  </span>
-</ion-col>
-<ion-col size="3" class="text-right">&nbsp;
+          <span *ngIf="mat.MaterialID > 0">{{ mat.MaterialName }}
+            <span
+              *ngIf="(mat.ProductItemNo != '' && mat.ProductItemNo != null) || (mat.ProSubGroup !=null && mat.ProSubGroup !='')">[#
+              {{mat.ProductItemNo}} - {{mat.ProSubGroup}}]</span></span>
+          <span *ngIf="mat.CoSrNo > 0 && mat.MaterialID > 0">&nbsp;C{{mat.CoSrNo}}&nbsp;</span>
+          <span *ngIf="mat.PriceByID == '1' && mat.Qty != 0 && mat.MaterialID > 0">(Price By Slab)</span>
+          <span *ngIf="mat.PriceByID == '1' && mat.Qty == 0 && mat.MaterialID > 0">(Price By Slab)</span>
+          <span *ngIf="mat.PriceByID == '2' && mat.MaterialID > 0">(Slab Wgt. Avg.)</span>
+          <span *ngIf="(mat.ProductItemNo == null || mat.ProductItemNo == '')">(No Match)</span>
+          &nbsp;<span *ngIf="mat.IsOptional == 1">&nbsp;Optional&nbsp;</span>
+
+        </ion-col>
+        <ion-col size="3" class="text-right">
+          <span>{{mat.JobQty | number:'.2-2'}}</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let material of partinfo.PartMaterialList">
+    <ion-col (click)="ActionEditMaterial(material)"><u class="colorblue textfont14">M</u>:
+
+      <span *ngIf="material.ID > 0">{{ material.MaterialName }}</span>
+      <span *ngIf="material.CoSrNo > 0 && material.ID > 0">&nbsp;C{{material.CoSrNo}}</span>
+      <span *ngIf="material.IsOptional == 1">Optional</span>&nbsp;
+    </ion-col>
+    <ion-col size="3" class="text-right">
+      <span>{{  material.JobQty | number : '.2-2'}}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList"
+    (click)="ActionEditMeasurement(fabrication)">
+    <ion-col><u class="colorblue textfont14">Siz</u>:
+      <span *ngFor="let size of fabrication.MeasureList">
+        <span *ngIf="size.Sqft != 0">
+          <span *ngIf="size.CounterType != '' && size.CounterType != null">({{size.CounterType}})</span>
+          <span *ngIf="fabrication.IsChg == '2'">({{size.Width}} * {{size.Height}})</span>
+          <span *ngIf="fabrication.IsChg != '2'">({{size.Width}} * {{size.Height}})</span>
+        </span> <span *ngIf="size.Sqft == 0">-</span>&nbsp;
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">&nbsp;
       <span>{{ fabrication.Sqft | number : '.2-2'}}</span>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let splash of partinfo.SplashList">
-<ion-col (click)="ActionEditSplash(splash, i)"><u class="colorblue textfont14">Spl</u>:
-  <span *ngIf="splash.IsChg == '2'">{{ splash.Splash }}</span>
-  <span *ngIf="splash.IsChg != '2'">{{ splash.Splash }}</span>
-  <span *ngIf="splash.CoSrNo > '0'">&nbsp;C{{splash.CoSrNo}}</span>
-  &nbsp;<span *ngIf="splash.IsOptional == 1">Optional</span>&nbsp;
-</ion-col>
-<ion-col size="3" class="text-right">&nbsp;
-  <span >{{ splash.JobQty | number : '.2-2'}}</span>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let edge of partinfo.EdgeList">
-<ion-col (click)="ActionEditEdge(edge)"><u class="colorblue textfont14">E</u>:
-  <span *ngIf="edge.IsChg == '2'">{{ edge.EdgeProfile }}</span>
-  <span *ngIf="edge.IsChg != '2'">{{ edge.EdgeProfile }}</span>
-  <span *ngIf="edge.CoSrNo > '0'">C{{edge.CoSrNo}}</span>
-  <span *ngIf="edge.IsOptional == 1">&nbsp;Optional</span>&nbsp;
-</ion-col>
-<ion-col size="3" class="text-right">
-      <span >{{ edge.JobQty | number : '.2-2'}}</span>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let sinkfaucet of partinfo.SinkList">
-<ion-col (click)="ActionEditSink(sinkfaucet)"><u class="colorblue textfont14">S</u>:
-  <span *ngIf="sinkfaucet.Description != null">
-    <span *ngIf="sinkfaucet.IsChg == '2'"> {{ sinkfaucet.Description }}</span>
-    <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Description }} </span>
-    <span *ngIf="sinkfaucet.CoSrNo > 0">&nbsp;C{{sinkfaucet.CoSrNo}}</span>
-    <span *ngIf="sinkfaucet.IsOptional == 1">Optional</span>&nbsp;
-  </span>
-</ion-col>
-<ion-col size="3" class="text-right">
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let splash of partinfo.SplashList">
+    <ion-col (click)="ActionEditSplash(splash, i)"><u class="colorblue textfont14">Spl</u>:
+      <span *ngIf="splash.IsChg == '2'">{{ splash.Splash }}</span>
+      <span *ngIf="splash.IsChg != '2'">{{ splash.Splash }}</span>
+      <span *ngIf="splash.CoSrNo > '0'">&nbsp;C{{splash.CoSrNo}}</span>
+      &nbsp;<span *ngIf="splash.IsOptional == 1">Optional</span>&nbsp;
+    </ion-col>
+    <ion-col size="3" class="text-right">&nbsp;
+      <span>{{ splash.JobQty | number : '.2-2'}}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let edge of partinfo.EdgeList">
+    <ion-col (click)="ActionEditEdge(edge)"><u class="colorblue textfont14">E</u>:
+      <span *ngIf="edge.IsChg == '2'">{{ edge.EdgeProfile }}</span>
+      <span *ngIf="edge.IsChg != '2'">{{ edge.EdgeProfile }}</span>
+      <span *ngIf="edge.CoSrNo > '0'">C{{edge.CoSrNo}}</span>
+      <span *ngIf="edge.IsOptional == 1">&nbsp;Optional</span>&nbsp;
+    </ion-col>
+    <ion-col size="3" class="text-right">
+      <span>{{ edge.JobQty | number : '.2-2'}}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let sinkfaucet of partinfo.SinkList">
+    <ion-col (click)="ActionEditSink(sinkfaucet)"><u class="colorblue textfont14">S</u>:
+      <span *ngIf="sinkfaucet.Description != null">
+        <span *ngIf="sinkfaucet.IsChg == '2'"> {{ sinkfaucet.Description }}</span>
+        <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Description }} </span>
+        <span *ngIf="sinkfaucet.CoSrNo > 0">&nbsp;C{{sinkfaucet.CoSrNo}}</span>
+        <span *ngIf="sinkfaucet.IsOptional == 1">Optional</span>&nbsp;
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">
       <span>{{ sinkfaucet.JobQty | number : '.2-2'}}</span>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let faucet of partinfo.FaucetList">
-<ion-col (click)="ActionEditFaucet(faucet)"><u class="colorblue textfont14">F</u>:
-  <span *ngIf="faucet.Description != null">
-    <span *ngIf="faucet.IsChg == '2'">{{ faucet.Description }} </span>
-    <span *ngIf="faucet.IsChg == '0'"> {{ faucet.Description }}</span>
-    <span *ngIf="faucet.CoSrNo > 0">&nbsp;C{{faucet.CoSrNo}}&nbsp;</span>
-    <span *ngIf="faucet.IsOptional == 1">&nbsp;Optional&nbsp;</span> &nbsp;
-  </span>
-</ion-col>
-<ion-col size="3" class="text-right">
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let faucet of partinfo.FaucetList">
+    <ion-col (click)="ActionEditFaucet(faucet)"><u class="colorblue textfont14">F</u>:
+      <span *ngIf="faucet.Description != null">
+        <span *ngIf="faucet.IsChg == '2'">{{ faucet.Description }} </span>
+        <span *ngIf="faucet.IsChg == '0'"> {{ faucet.Description }}</span>
+        <span *ngIf="faucet.CoSrNo > 0">&nbsp;C{{faucet.CoSrNo}}&nbsp;</span>
+        <span *ngIf="faucet.IsOptional == 1">&nbsp;Optional&nbsp;</span> &nbsp;
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">
       <span>{{ faucet.JobQty | number : '.2-2'}}</span>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let coutout of partinfo.CutoutList">
-<ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 1">
-  <ion-row>
-    <ion-col (click)="ActionCreateCutout(1, coutout)"><u class="colorblue textfont14">SC</u>:
-      <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
-      <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
-      <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
-      &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
-    </ion-col>
-    <ion-col size="3" class="text-right">
-          <span>{{ coutout.JobQty | number : '.2-2'}}</span>
     </ion-col>
   </ion-row>
-</ion-col>
-<ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 3">
-  <ion-row>
-    <ion-col (click)="ActionCreateCutout(3, coutout)"><u class="colorblue textfont14">AC</u>:
-      <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
-      <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
-      <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
-      &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
-    </ion-col>
-    <ion-col size="3" class="text-right">
+  <ion-row class="rowlineitem" *ngFor="let coutout of partinfo.CutoutList">
+    <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 1">
+      <ion-row>
+        <ion-col (click)="ActionCreateCutout(1, coutout)"><u class="colorblue textfont14">SC</u>:
+          <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
+          <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
+          <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
+          &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
+        </ion-col>
+        <ion-col size="3" class="text-right">
           <span>{{ coutout.JobQty | number : '.2-2'}}</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 3">
+      <ion-row>
+        <ion-col (click)="ActionCreateCutout(3, coutout)"><u class="colorblue textfont14">AC</u>:
+          <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
+          <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
+          <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
+          &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
+        </ion-col>
+        <ion-col size="3" class="text-right">
+          <span>{{ coutout.JobQty | number : '.2-2'}}</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 2">
+      <ion-row>
+        <ion-col (click)="ActionCreateCutout(2, coutout)"><u class="colorblue textfont14">OC</u>:
+          <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
+          <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
+          <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
+          &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
+        </ion-col>
+        <ion-col size="3" class="text-right">
+          <span>{{ coutout.JobQty | number : '.2-2'}}</span>
+        </ion-col>
+      </ion-row>
     </ion-col>
   </ion-row>
-</ion-col>
-<ion-col class="paddzero" *ngIf="coutout.CutOutTypeID == 2">
-  <ion-row>
-    <ion-col (click)="ActionCreateCutout(2, coutout)"><u class="colorblue textfont14">OC</u>:
-      <span *ngIf="coutout.IsChg == '2'">{{coutout.Type }}</span>
-      <span *ngIf="coutout.IsChg != '2'">{{coutout.Type }}</span>
-      <span *ngIf="coutout.CoSrNo > '0'">C{{coutout.CoSrNo}}</span>
-      &nbsp;<span *ngIf="coutout.IsOptional == 1">Optional</span>&nbsp;
+  <ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList">
+    <ion-col (click)="ActionEditFabrication(fabrication)"><u class="colorblue textfont14">F</u>:
+      <span *ngIf="fabrication.IsChg == '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}}
+        Sqft.
+        Fabrication</span>
+      <span *ngIf="fabrication.IsChg != '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}}
+        Sqft.
+        Fabrication</span>
+      <span *ngIf="fabrication.CoSrNo > '0'">C{{fabrication.CoSrNo}}</span>&nbsp;
     </ion-col>
     <ion-col size="3" class="text-right">
-          <span>{{ coutout.JobQty | number : '.2-2'}}</span>
-    </ion-col>
-  </ion-row>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let fabrication of partinfo.PartFabList">
-<ion-col (click)="ActionEditFabrication(fabrication)"><u class="colorblue textfont14">F</u>:
-  <span *ngIf="fabrication.IsChg == '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}} Sqft.
-    Fabrication</span>
-  <span *ngIf="fabrication.IsChg != '2'">{{ (fabrication.PartSqft + fabrication.SplashSqft) | number : '.2-2'}} Sqft.
-    Fabrication</span>
-  <span *ngIf="fabrication.CoSrNo > '0'">C{{fabrication.CoSrNo}}</span>&nbsp;
-</ion-col>
-<ion-col size="3" class="text-right">
       <span>{{ (fabrication.JobQty + fabrication.JobSplashSf) | number : '.2-2'}}</span>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let labor of partinfo.LaborList">
-<ion-col *ngIf="labor.ViewTypeID == 1 && labor.Description == 'Template'" class="paddzero">
-  <ion-row>
-    <ion-col (click)="ActionEditLabor(1, labor, 'Template')"><u class="colorblue textfont14">T</u>:
-      <span>
-        <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
-        <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
-        <span *ngIf="labor.CoSrNo > 0">&nbsp;C{{labor.CoSrNo}}&nbsp;</span>
-        <span *ngIf="labor.IsOptional == 1">&nbsp;Optional&nbsp;</span>
-      </span>&nbsp;
-    </ion-col>
-    <ion-col size="3" class="text-right">
-          <span >{{ labor.JobQty | number : '.2-2'}}</span>
     </ion-col>
   </ion-row>
-</ion-col>
-<ion-col *ngIf="labor.ViewTypeID == 1 && labor.Description == 'Install'" class="paddzero">
-  <ion-row>
-    <ion-col (click)="ActionEditLabor(1, labor, 'Install')"><u class="colorblue textfont14">I</u>:
-      <span>
-        <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
-        <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
-        <span *ngIf="labor.CoSrNo > 0">&nbsp;C{{labor.CoSrNo}}&nbsp;</span>
-        <span *ngIf="labor.IsOptional == 1">&nbsp;Optional&nbsp;</span>
-      </span>&nbsp;
-    </ion-col>
-    <ion-col size="3" class="text-right">
+  <ion-row class="rowlineitem" *ngFor="let labor of partinfo.LaborList">
+    <ion-col *ngIf="labor.ViewTypeID == 1 && labor.Description == 'Template'" class="paddzero">
+      <ion-row>
+        <ion-col (click)="ActionEditLabor(1, labor, 'Template')"><u class="colorblue textfont14">T</u>:
+          <span>
+            <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+            <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
+            <span *ngIf="labor.CoSrNo > 0">&nbsp;C{{labor.CoSrNo}}&nbsp;</span>
+            <span *ngIf="labor.IsOptional == 1">&nbsp;Optional&nbsp;</span>
+          </span>&nbsp;
+        </ion-col>
+        <ion-col size="3" class="text-right">
           <span>{{ labor.JobQty | number : '.2-2'}}</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col *ngIf="labor.ViewTypeID == 1 && labor.Description == 'Install'" class="paddzero">
+      <ion-row>
+        <ion-col (click)="ActionEditLabor(1, labor, 'Install')"><u class="colorblue textfont14">I</u>:
+          <span>
+            <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+            <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
+            <span *ngIf="labor.CoSrNo > 0">&nbsp;C{{labor.CoSrNo}}&nbsp;</span>
+            <span *ngIf="labor.IsOptional == 1">&nbsp;Optional&nbsp;</span>
+          </span>&nbsp;
+        </ion-col>
+        <ion-col size="3" class="text-right">
+          <span>{{ labor.JobQty | number : '.2-2'}}</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col *ngIf="labor.ViewTypeID != 1" class="paddzero">
+      <ion-row>
+        <ion-col (click)="ActionEditLabor(0,labor,'Labor')"><u class="colorblue textfont14">L</u>:
+          <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+          <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
+          <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
+          <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
+        </ion-col>
+        <ion-col size="3" class="text-right">
+          <span>{{ labor.JobQty | number : '.2-2'}}</span>
+        </ion-col>
+      </ion-row>
     </ion-col>
   </ion-row>
-</ion-col>
-<ion-col *ngIf="labor.ViewTypeID != 1" class="paddzero">
-  <ion-row>
-    <ion-col (click)="ActionEditLabor(0,labor,'Labor')"><u class="colorblue textfont14">L</u>:
+  <ion-row class="rowlineitem" *ngFor="let sinkfaucet of partinfo.ApplianceList">
+    <ion-col (click)="ActionEditTile(18,'Appliance', sinkfaucet)"><u class="colorblue textfont14">A</u>:
+      <span *ngIf="sinkfaucet.Description != null">
+        <span *ngIf="sinkfaucet.IsChg == '2'"> {{ sinkfaucet.Description }} </span>
+        <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Description }}</span>
+        <span *ngIf="sinkfaucet.CoSrNo > 0">C{{sinkfaucet.CoSrNo}}</span>
+        <span *ngIf="sinkfaucet.IsOptional == 1">Optional</span>&nbsp;
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">
+      <span>{{ sinkfaucet.JobQty | number : '.2-2'}}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let other of partinfo.OtherList">
+    <ion-col (click)="ActionEditAddon(other)"><u class="colorblue textfont14">Adn</u>:
+      <span>
+        <span *ngIf="other.IsChg == '2'">{{ other.Description }}</span>
+        <span *ngIf="other.IsChg == '0'">{{ other.Description }}</span>
+        <span *ngIf="other.CoSrNo > 0">C{{other.CoSrNo}}</span>
+        <span *ngIf="other.IsOptional == 1">Optional</span>&nbsp;
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">
+      <span>{{ other.JobQty | number : '.2-2'}}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let labor of partinfo.TileList">
+    <ion-col (click)="ActionEditTile(12,'Tile', labor)"><u class="colorblue textfont14">Tile</u>:
+      <span>
+        <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+        <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
+        <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
+        <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
+      </span>
+    </ion-col>
+    <ion-col size="3" class="text-right">
+      <span>{{ labor.JobQty | number : '.2-2'}}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let labor of partinfo.CabinetList">
+    <ion-col (click)="ActionEditTile(2,'Cabinet', labor)"><u class="colorblue textfont14">Cab</u>:
       <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
       <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
       <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
       <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
     </ion-col>
     <ion-col size="3" class="text-right">
-          <span>{{ labor.JobQty | number : '.2-2'}}</span>
+      <span>{{ labor.JobQty | number : '.2-2'}}</span>
     </ion-col>
   </ion-row>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let sinkfaucet of partinfo.ApplianceList">
-<ion-col (click)="ActionEditTile(18,'Appliance', sinkfaucet)"><u class="colorblue textfont14">A</u>:
-  <span *ngIf="sinkfaucet.Description != null">
-    <span *ngIf="sinkfaucet.IsChg == '2'"> {{ sinkfaucet.Description }} </span>
-    <span *ngIf="sinkfaucet.IsChg == '0'">{{ sinkfaucet.Description }}</span>
-    <span *ngIf="sinkfaucet.CoSrNo > 0">C{{sinkfaucet.CoSrNo}}</span>
-    <span *ngIf="sinkfaucet.IsOptional == 1">Optional</span>&nbsp;
-  </span>
-</ion-col>
-<ion-col size="3" class="text-right">
-      <span>{{ sinkfaucet.JobQty | number : '.2-2'}}</span>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let other of partinfo.OtherList">
-<ion-col (click)="ActionEditAddon(other)"><u class="colorblue textfont14">Adn</u>:
-  <span>
-    <span *ngIf="other.IsChg == '2'">{{ other.Description }}</span>
-    <span *ngIf="other.IsChg == '0'">{{ other.Description }}</span>
-    <span *ngIf="other.CoSrNo > 0">C{{other.CoSrNo}}</span>
-    <span *ngIf="other.IsOptional == 1">Optional</span>&nbsp;
-  </span>
-</ion-col>
-<ion-col size="3" class="text-right">
-      <span>{{ other.JobQty | number : '.2-2'}}</span>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let labor of partinfo.TileList">
-<ion-col (click)="ActionEditTile(12,'Tile', labor)"><u class="colorblue textfont14">Tile</u>:
-  <span>
-    <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
-    <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
-    <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
-    <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
-  </span>
-</ion-col>
-<ion-col size="3" class="text-right">
-      <span>{{ labor.JobQty | number : '.2-2'}}</span>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let labor of partinfo.CabinetList">
-<ion-col (click)="ActionEditTile(2,'Cabinet', labor)"><u class="colorblue textfont14">Cab</u>:
-  <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
-  <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
-  <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
-  <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
-</ion-col>
-<ion-col size="3" class="text-right">
-      <span>{{ labor.JobQty | number : '.2-2'}}</span>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let labor of partinfo.CarpetList">
-<ion-col (click)="ActionEditTile(14,'Carpet', labor)"><u class="colorblue textfont14">Car</u>:
-  <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
-  <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
-  <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
-  <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
-</ion-col>
-<ion-col size="3" class="text-right">
-  <span >{{ labor.JobQty | number : '.2-2'}}</span>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let labor of partinfo.ConsumableList">
-<ion-col (click)="ActionEditTile(19,'Consumable', labor)"><u class="colorblue textfont14">Con</u>:
-  <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
-  <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
-  <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
-  <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
-</ion-col>
-<ion-col size="3" class="text-right">
-      <span>{{ labor.JobQty | number : '.2-2'}}</span>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let labor of partinfo.ToolList">
-<ion-col (click)="ActionEditTile(3,'Tool',labor)"><u class="colorblue textfont14">Tool</u>:
-  <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
-  <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
-  <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
-  <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
-</ion-col>
-<ion-col size="3" class="text-right">
-  <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
-      <span>{{ labor.JobQty | number : '.2-2'}}</span>
-</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let response of partinfo.CustomerItemList">
-<ion-col (click)="ActionEditCustItems(response)"><u class="colorblue textfont14">Cust</u>:
-  <span *ngIf="response.IsChg == '2'">{{ response.Description }}</span>
-  <span *ngIf="response.IsChg == '0'">{{ response.Description }}</span>
-  <span *ngIf="response.CoSrNo > 0">C{{response.CoSrNo}}</span>
-</ion-col>
-<ion-col size="3" class="text-right">-&nbsp;</ion-col>
-</ion-row>
-<ion-row class="rowlineitem" *ngFor="let partdisc of partinfo.PartDiscountList">
-<ion-col *ngIf="partdisc.Isactive == 1 && partdisc.PartID == 0 && partdisc.Price != 0" class="paddzero">
-  <ion-row>
-    <ion-col (click)="ActionCreateTile(3,'Tool')" color="danger"><u class="colorblue textfont14">Disc</u>:
-      <span>{{partdisc.Description}}</span>
+  <ion-row class="rowlineitem" *ngFor="let labor of partinfo.CarpetList">
+    <ion-col (click)="ActionEditTile(14,'Carpet', labor)"><u class="colorblue textfont14">Car</u>:
+      <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+      <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
+      <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
+      <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
     </ion-col>
     <ion-col size="3" class="text-right">
-      {{ partdisc.JobQty | number: '.2-2'}}&nbsp;
+      <span>{{ labor.JobQty | number : '.2-2'}}</span>
     </ion-col>
   </ion-row>
-</ion-col>
-</ion-row> 
+  <ion-row class="rowlineitem" *ngFor="let labor of partinfo.ConsumableList">
+    <ion-col (click)="ActionEditTile(19,'Consumable', labor)"><u class="colorblue textfont14">Con</u>:
+      <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+      <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
+      <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
+      <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
+    </ion-col>
+    <ion-col size="3" class="text-right">
+      <span>{{ labor.JobQty | number : '.2-2'}}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let labor of partinfo.ToolList">
+    <ion-col (click)="ActionEditTile(3,'Tool',labor)"><u class="colorblue textfont14">Tool</u>:
+      <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+      <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
+      <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
+      <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
+    </ion-col>
+    <ion-col size="3" class="text-right">
+      <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
+      <span>{{ labor.JobQty | number : '.2-2'}}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let response of partinfo.CustomerItemList">
+    <ion-col (click)="ActionEditCustItems(response)"><u class="colorblue textfont14">Cust</u>:
+      <span *ngIf="response.IsChg == '2'">{{ response.Description }}</span>
+      <span *ngIf="response.IsChg == '0'">{{ response.Description }}</span>
+      <span *ngIf="response.CoSrNo > 0">C{{response.CoSrNo}}</span>
+    </ion-col>
+    <ion-col size="3" class="text-right">-&nbsp;</ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let partdisc of partinfo.PartDiscountList">
+    <ion-col *ngIf="partdisc.Isactive == 1 && partdisc.PartID == 0 && partdisc.Price != 0" class="paddzero">
+      <ion-row>
+        <ion-col (click)="ActionCreateTile(3,'Tool')" color="danger"><u class="colorblue textfont14">Disc</u>:
+          <span>{{partdisc.Description}}</span>
+        </ion-col>
+        <ion-col size="3" class="text-right">
+          {{ partdisc.JobQty | number: '.2-2'}}&nbsp;
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col style="color: blue;"
+      *ngIf="areaInfo.laborList.length > 0 || areaInfo.otherList.length > 0 || areaInfo.tileList.length > 0 || areaInfo.responseList.length > 0 || areaInfo.cabinetList.length > 0">
+      <h6><span style="background: lightblue;border: 1px solid #ddd;padding: 5px;">Area Items: {{AreaName}}</span></h6>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let labor of areaInfo.laborList">
+    <ion-col class="paddzero">
+      <ion-row *ngIf="areaInfo.laborList.length > 0 && labor.ViewTypeID != 1 && labor.PartID == 0">
+        <ion-col (click)="ActionEditLabor(0,labor,'Labor')"><u class="colorblue textfont14">Lab</u>:
+          <span>
+            <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+            <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
+            <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
+            <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
+          </span>
+        </ion-col>
+        <ion-col size="3" class="text-right">
+          <span>@
+            <u class="colorgreen">
+              <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
+              <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
+            </u>
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let addon of areaInfo.otherList">
+    <ion-col class="paddzero">
+      <ion-row *ngIf="areaInfo.otherList.length > 0 && addon.PartID == 0">
+        <ion-col (click)="ActionEditAddon(addon)"><u class="colorblue textfont14">Adn</u>:
+          <span>
+            <span *ngIf="addon.IsChg == '2'">{{ addon.Description }}</span>
+            <span *ngIf="addon.IsChg == '0'">{{ addon.Description }} </span>
+            <span *ngIf="addon.CoSrNo > 0">C{{addon.CoSrNo}}</span>
+            <span *ngIf="addon.IsOptional == 1">Optional</span>&nbsp;
+          </span>
+        </ion-col>
+        <ion-col size="3" class="text-right">
+          <span>@
+            <u class="colorgreen">
+              <span *ngIf="addon.IsChg == '2'">{{ addon.Qty | number : '.2-2'}}</span>
+              <span *ngIf="addon.IsChg == '0'">{{ addon.Qty | number : '.2-2'}}</span>
+            </u>
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let labor of areaInfo.tileList">
+    <ion-col class="paddzero">
+      <ion-row *ngIf="areaInfo.tileList.length > 0 && labor.PartID == 0">
+        <ion-col (click)="ActionEditTile(12,'Tile', labor)"><u class="colorblue textfont14">Tile</u>:
+          <span>
+            <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+            <span *ngIf="labor.IsChg == '0'">{{ labor.Description }} </span>
+            <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
+            <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
+          </span>
+        </ion-col>
+        <ion-col size="3" class="text-right">
+          <span>@
+            <u class="colorgreen">
+              <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
+              <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
+            </u>
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let labor of areaInfo.cabinetList">
+    <ion-col class="paddzero">
+      <ion-row *ngIf="areaInfo.cabinetList.length > 0 && labor.PartID == 0">
+        <ion-col (click)="ActionEditTile(2,'Cabinet', labor)"><u class="colorblue textfont14">Cab</u>:
+          <span *ngIf="labor.IsChg == '2'">{{ labor.Description }}</span>
+          <span *ngIf="labor.IsChg == '0'">{{ labor.Description }}</span>
+          <span *ngIf="labor.CoSrNo > 0">C{{labor.CoSrNo}}</span>
+          <span *ngIf="labor.IsOptional == 1">Optional</span>&nbsp;
+        </ion-col>
+        <ion-col size="3" class="text-right">
+          <span>@
+            <u class="colorgreen">
+              <span *ngIf="labor.IsChg == '2'">{{ labor.Qty | number : '.2-2'}}</span>
+              <span *ngIf="labor.IsChg == '0'">{{ labor.Qty | number : '.2-2'}}</span>
+            </u>
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="rowlineitem" *ngFor="let response of areaInfo.responseList">
+    <ion-col class="paddzero">
+      <ion-row *ngIf="areaInfo.responseList.length > 0 && response.PartID == 0">
+        <ion-col (click)="ActionEditCustItems(response)"><u class="colorblue textfont14">Cust</u>:
+          <span *ngIf="response.IsChg == '2'">{{ response.Description }}</span>
+          <span *ngIf="response.IsChg == '0'">{{ response.Description }}</span>
+          <span *ngIf="response.CoSrNo > 0">C{{response.CoSrNo}}</span>
+        </ion-col>
+        <ion-col size="3" class="text-right">-&nbsp;</ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
 </div>

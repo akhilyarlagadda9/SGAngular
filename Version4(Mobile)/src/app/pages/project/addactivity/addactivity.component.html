@@ -117,7 +117,8 @@
     <ion-label>:</ion-label>
     <ion-input type="text" [(ngModel)]="actinfo.Mins" (change)="ActionChangeDuration(actinfo.Mins,2)"  name="Mins" class="labelfont"></ion-input>
     <ion-label>All Day</ion-label>
-    <ion-toggle checked="false" (ionChange)="ActionAllDayClick($event)"></ion-toggle>
+    <ion-toggle *ngIf="dayCheck == 1" [(ngModel)]="dayCheck" checked="true" (ionChange)="ActionAllDayClick($event)"></ion-toggle>
+    <ion-toggle *ngIf="dayCheck == 0" [(ngModel)]="dayCheck" checked="false" (ionChange)="ActionAllDayClick($event)"></ion-toggle>
   </ion-item>
 </ion-list>
 <ion-list *ngIf="actinfo.StatusID ==5" class="bg-lightgrey" >

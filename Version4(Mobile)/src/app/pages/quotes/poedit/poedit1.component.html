@@ -41,12 +41,7 @@
           <ion-input type="text" [(ngModel)]="poitem.POAmount" class="inputheight" readonly="readonly"></ion-input>
         </ion-item>
         <ion-row>
-          <span class="btn btn-success fileinput-button" ngClass="{disabled: disabled}">
-             <u class="labelstyle color-primary">Attachments:</u>
-            <ion-col size="7" class="paddzero text-left">
-              <input type="file" (change)="ActionUploadPoAttach($event)">
-            </ion-col>
-          </span>
+             <span class="labelstyle color-primary">Attachments:</span>
         </ion-row>
         <ion-row *ngFor="let attah of poitem.AttachmentList">
           <ion-col class="paddleft5">

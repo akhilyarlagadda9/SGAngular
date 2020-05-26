@@ -56,6 +56,8 @@ schedulerLicenseKey ="GPL-My-Project-Is-Open-Source"
 themeSystem= 'cerulean'
 resourceLabelText= " "
 [height]="options.height"
+[slotWidth] = "options.slotWidth"
+[resourceAreaWidth]="options.resourceAreaWidth"
 [header]="false"
 [minTime] = "options.minTime"
 [maxTime] = "options.maxTime"
@@ -91,12 +93,15 @@ export class SchedulingPage implements OnInit {
     public actionSheetCtrl: ActionSheetController,private alertCtrl: AlertController,private authService:AuthService) { }
 
   ngOnInit() {
-    let height = window.innerHeight - 110; this.width = 85;
+    let height = window.innerHeight - 110; this.width = ((window.innerWidth)-120)/3;
+    console.log(window.innerWidth);
+    console.log(this.width);
     var _dafaultDate = new Date();
     this.options = {
       plugins: [dayGridPlugin, resourceTimelinePlugin, resourceTimeGridPlugin, resourceDayGridPlugin],
       height: height,
-      //slotWidth: this.width,
+      slotWidth: this.width,
+      resourceAreaWidth: 110,
       defaultView: "resourceTimeline",
       minTime: "07:00:00",
       maxTime: "22:00:00", defaultDate: _dafaultDate,
@@ -117,6 +122,7 @@ export class SchedulingPage implements OnInit {
     }
   }
   ngAfterViewInit() {
+      console.log(this.fullcalendar);
     this.calendarApi4 = this.fullcalendar;
     this.resources = [
       {
@@ -191,6 +197,7 @@ export class SchedulingPage implements OnInit {
       let sDate = this.calObj.StartDate; let eDate = this.calObj.EndDate;
       let colorId =  this.calObj.CalID == 1 ? 1 : this.calObj.CalColorID;
       this.schService.ActionQuickActList(sDate, eDate, this.calObj.Search, this.calObj.ActTypeIDs, 0, this.calObj.ResourceIDs, this.calObj.StatusIDs,colorId).subscribe(data => {
+        console.log(data);
         this.actlist = [];
         if (this.calObj.CalID == 1) {
           let filterIds = this.calObj.ResourceIDs;
@@ -331,15 +338,16 @@ ChangedViewEvents() {
     let sDate = new Date(ev.event._def.extendedProps.StartDate);
     let eDate = new Date(ev.event._def.extendedProps.EndDate);
     let obj = { actId: ev.event._def.extendedProps.ID, actTypeID: ev.event._def.extendedProps.ActivityTypeID, StartDate: sDate, EndDate: eDate }
+    console.log(obj);
     const modal = await this.Modalcntrl.create({
       component: ActinfoComponent,
       componentProps: obj
     });
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail.data != null) {
-        console.log(detail.data);
         if (detail.data.issave) {
           this.eventinfo = detail.data.componentProps
+          console.log(this.eventinfo);
           this.ActionAddActivity(ev.event.id);
           //  this.actlist.push(detail.data.componentProps);
           //this.beforeViewType = detail.data.componentProps.eventType;
@@ -426,6 +434,7 @@ ChangedViewEvents() {
       ProjectID: 0, JobName: "", TypeID: 0
     }
     actinfo = Id > 0 ? this.eventinfo : actinfo
+    console.log(actinfo);
     //let viewtypeId = { viewtypeId: viewId }
     const modal = await this.Modalcntrl.create({
       component: AddactivityComponent,
@@ -452,6 +461,7 @@ ChangedViewEvents() {
 //#endregion
 //#region Prepare Methods
   PrepareEventHtml(evnt) {
+    console.log(evnt.event.extendedProps);
     let event = evnt.event.extendedProps;
     var htmlstring = '';
     htmlstring = "<div style='font-size: 13px;white-space: normal' >";
@@ -549,6 +559,7 @@ ChangedViewEvents() {
   SetResouceEvents(item, filterIds) {
     let sDate = new Date(item.StartDate);
     let eDate = new Date(item.EndDate);
+   
     var resids = (item.ResourceIDs != null && item.ResourceIDs != "") ? item.ResourceIDs.split(',') : "0";
     for (var s = 0; s < resids.length; s++) {
       let isexist = true;

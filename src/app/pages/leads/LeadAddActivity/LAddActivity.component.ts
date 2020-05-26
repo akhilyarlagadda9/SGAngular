@@ -173,18 +173,20 @@ export class LAddActivityComponent implements OnInit {
     }
     this.GetDuration(0);
   }
-  GetDuration(type) {
+  GetDuration(type) {debugger;
     var hrs = this.actinfo.Hrs;
     var mins = this.actinfo.Mins;
     let sDate = new Date(this.actinfo.SchStartTime).toDateString() + " " + this.actinfo.STime;
     let edate = new Date(this.actinfo.SchEndTime).toDateString() + " " + this.actinfo.ETime;
     this.schService.GetDuration(hrs, mins, sDate, edate, type).subscribe(results => {
+      console.log(results);
       if (type == 1) {
         this.actinfo.Hrs = results[0];
         this.actinfo.Mins = results[1];
       }
       else {
-        let eDate = results[0] + " " + results[1];
+       // let eDate = results[0] + " " + results[1];
+       let eDate = results[0];
         this.actinfo.SchEndTime = eDate; this.actinfo.ETime = results[1];
       }
       this.actinfo.PrevStartDate = this.actinfo.SchStartTime;
@@ -192,7 +194,7 @@ export class LAddActivityComponent implements OnInit {
       this.actinfo.Duration = Number(this.actinfo.Hrs * 60) + Number(this.actinfo.Mins);
     })
   }
-  ActionChangeDate(selctedDate, typeId, type) {
+  ActionChangeDate(selctedDate, typeId, type) {debugger;
     let obj: any;
     if (type == "sDate") {
       this.actinfo.SchStartTime = selctedDate;
@@ -321,12 +323,13 @@ export class LAddActivityComponent implements OnInit {
     this.leadService.ActionSaveLeadActivity(model).subscribe(data=>{
         console.log(data);
     });
-    this.ActionCloseActivity(true);
+     this.ActionCloseActivity(true);
   }
 
   PrepareToSave(){
    console.log(this.actinfo.SchStartTime +"  "+this.actinfo.SchEndTime);
     this.actinfo["MeetingIcon"] = this.MeetingTypes[this.actinfo.MeetingTypeID].IconClass;
+    this.actinfo.Duration = this.actinfo.Duration == undefined? this.actinfo.Hrs : this.actinfo.Duration;
     let dbactivity = {};
                 dbactivity["LeadID"] = this.actinfo.LeadID;
                 dbactivity["ActTypeID"] = this.actinfo.ActTypeID;
@@ -362,8 +365,8 @@ export class LAddActivityComponent implements OnInit {
         arrIds.push(data.ResourceID);
         arrNames.push(data.ResourceName);
       });
-      dbactivity["ResourceIDs"] = arrIds;
-      dbactivity["ResourceName"] = arrNames;
+      dbactivity["ResourceIDs"] = arrIds.join(",");
+      dbactivity["ResourceName"] = arrNames.join(",");
     }
     console.log(dbactivity);
     return dbactivity;

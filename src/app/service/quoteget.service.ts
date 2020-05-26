@@ -166,6 +166,10 @@ NoteAttachements(Id:number):Observable<any> {
  QuoteactivitiesList(versionID:number,phaseId:number):Observable<any> {
   return this.http.get<any>(this.url +  'api/Project/QuoteBiddingActivityList?versionID=' + versionID + '&phaseId=' + phaseId)
  }
+ //Job Activities List
+ JobActivitiesList(versionID:number,phaseId:number):Observable<any> {
+  return this.http.get<any>(this.url +  'api/Project/JobPhaseActivityList?versionID=' + versionID + '&phaseId=' + phaseId)
+ }
  
 // Created Quote
 

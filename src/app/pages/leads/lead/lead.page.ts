@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, LOCALE_ID } from '@angular/core';
 import { NavController, ModalController, LoadingController } from '@ionic/angular';
-import { OptionsInput } from '@fullcalendar/core';
+import { OptionsInput,EventInput } from '@fullcalendar/core';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import TimeGridView from '@fullcalendar/timegrid/AbstractTimeGridView';
 import { OverlayEventDetail } from '@ionic/core';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { AuthService } from 'src/app/service/auth.service';
@@ -10,13 +9,14 @@ import { DatePipe } from '@angular/common';
 import { LeadService } from 'src/app/service/lead.service';
 import { CreateleadComponent } from '../createlead/createlead.component';
 import { LAddActivityComponent } from '../LeadAddActivity/LAddActivity.component';
-
+declare const imgUrl: any;
 @Component({
   selector: 'app-lead',
   template: `
   <ion-header>
   <ion-toolbar color="primary">
   <ion-title class="headersty">FollowUp</ion-title>
+  <ion-icon name="refresh" class="fontmedium"  slot="start" (click)="ActionRefreshCalendar()"></ion-icon>
   <ion-icon name="add-circle" slot="end" class="fontlarge" (click)="ActionCreateLead()"></ion-icon>
   <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
   </ion-toolbar>
@@ -42,11 +42,16 @@ schedulerLicenseKey ="GPL-My-Project-Is-Open-Source"
 [slotEventOverlap] = "false"
 [defaultView]="options.defaultView"
 [defaultDate]="options.defaultDate"
-[plugins]="options.plugins"
-[views]="options.views"
-themeSystem= 'cerulean'
+[allDaySlot] = "options.allDaySlot"
+themeSystem= "cerulean"
 [height]="options.height"
 [header]="false"
+
+[minTime] = "options.minTime"
+[maxTime] = "options.maxTime"
+[duration]="options.duration"
+[views]="options.views"
+[plugins]="options.plugins"
 (datesRender)="Actioncall($event)"
 [events]="actlist"
 (eventRender)="ActionRenderEvent($event)"
@@ -56,33 +61,43 @@ themeSystem= 'cerulean'
   providers: [DatePipe]
 })
 export class LeadPage implements OnInit {
-  options: OptionsInput; width: number = 0; actlist: any = []; CalendarTitle: any; currentDate: Date;
+  options: OptionsInput; width: number = 0; actlist:any = []; CalendarTitle: any; currentDate: Date;
   @ViewChild('calendar', { static: false }) fullcalendar: FullCalendarComponent;
   calObj: any = {
     StartDate: Date, EndDate: Date, CalendarDays: 1
   }
   logInUserID: any;
   constructor(private navCtrl: NavController, public Modalcntrl: ModalController, private leadService: LeadService, private authService: AuthService,
-     private datePipe: DatePipe, private loadingController : LoadingController) { }
+     private datePipe: DatePipe,public loadingController : LoadingController) { }
 
   ngOnInit() {
     this.CalendarTitle = this.datePipe.transform(new Date(), "MMM dd");
     let height = window.innerHeight - 110; this.width = window.innerHeight;
-    var _dafaultDate = new Date();
+    var _defaultDate = new Date();
     this.options = {
       plugins: [timeGridPlugin],
       height: height,
+      allDaySlot:false,
+      timeZone: 'local',
       defaultView: "timeGridDay",
-      defaultDate: _dafaultDate,
+      minTime: "07:00:00",
+      maxTime: "22:00:00",
+      defaultDate: _defaultDate,
       views: {
-        timeGridDay: { type: 'timeGridDay', duration: { days: 1 }, buttonText: "day", slotDuration: "00:15:00" },
+        timeGridDay: { type: "timeGridDay", duration: { days: 1 }, buttonText: "day",slotDuration: "00:15:00"},
       },
+      
     }
+  }
 
+  ngAfterViewInit() {
+    setTimeout(data=>{
+      this.fullcalendar.getApi().render();
+    },10); // give some time to reload
   }
 
   Actioncall(info) {
-    if (info.view.type == "timeGridDay") { // for now its always bes timegridDay
+    if (info.view.type == "timeGridDay") { // for now its always be timegridDay
       this.calObj.StartDate = this.datePipe.transform(info.view.activeStart, "MM/dd/yyyy");
       this.calObj.EndDate = this.datePipe.transform(info.view.activeEnd, "MM/dd/yyyy");
     }
@@ -90,28 +105,32 @@ export class LeadPage implements OnInit {
   }
 
   getActivityData() {
-    this.authService.GetStoredLoginUserID().then(data=> { 
+    console.log(this.calObj.StartDate);
+    console.log(this.calObj.EndDate);
     this.leadService.LeadFollowUpActList(0, 0, 0, 0, 0, this.calObj.StartDate, this.calObj.EndDate, "").subscribe(data => {
-      console.log(data);
       this.actlist = []; // clear up the storage
       for (let j in data) {
         let item = data[j];
+        item.Imageurl = imgUrl + 'Status/' + item.IconPath;
         this.ActionLoadEvents(item);
       }
-    });
   });
   }
 
+
   ActionLoadEvents(item) {
-    console.log(item.SchStartTime);
-    console.log(item.SchEndTime);
     let sDate = new Date(item.SchStartTime);
     let eDate = new Date(item.SchEndTime);
-    console.log(sDate + "  " + eDate);
-    this.actlist.push({ title: item.CustName, start: sDate, end: eDate, backgroundColor: item.ColorCode, textColor: item.TextColor, borderColor: item.TextColor, extendedProps: item });
-    console.log(this.actlist);
+    this.actlist.push({ title: item.CustName,start:sDate, end:eDate, backgroundColor: item.ColorCode, textColor: item.TextColor, borderColor: item.TextColor, extendedProps: item });
   }
 
+  ActionRefreshCalendar(){
+    this.calObj.StartDate = this.datePipe.transform(new Date(),"MM/dd/yyyy");
+    let endDate = new Date().setDate(new Date().getDate()+1);
+    this.calObj.EndDate = this.datePipe.transform(endDate,"MM/dd/yyyy");
+    this.fullcalendar.getApi().render(); // Fastest Way to Render events
+   // this.getActivityData();
+  }
 
   ActionNavigateView(navtype) {
     let calendarApi = this.fullcalendar.getApi();
@@ -129,17 +148,14 @@ export class LeadPage implements OnInit {
   }
 
   ActionRenderEvent(evnt) {
-    // If need to Dp anything we can do
-    console.log(evnt.event.extendedProps);
+    // If need to Do anything we can do
     let event = evnt.event.extendedProps;
-
+    console.log(event);
     var htmlstring = '';
-    htmlstring = "<div style='font-size: 13px;white-space: normal' >";
-    //htmlstring += "<div>" + event.ActivityType;
-    htmlstring += "<div><img class='ico' src='" + event.IconPath + "' width='15' height='15'>" + event.ActivityType + "</div>";
+    htmlstring = "<div style='font-size: 10px;white-space: normal;word-wrap: break-word'>";
+    htmlstring += "<div style='word-break:break-all'><img class='ico' src='" + event.Imageurl + "' width='15' height='15'>" + event.ActivityType + "</div>";
     htmlstring += "<div style='font-size: 10px;'>" + this.datePipe.transform(event.SchStartTime, "hh:mm a") + " - " + this.datePipe.transform(event.SchEndTime, "hh:mm a") + "</div>";
-    htmlstring += "<div><b>" + event.LeadExtID + "- " + event.CustName + "</b></div>";
-    //htmlstring += "<div>" + event.QuoteName + "</div></div>"
+    htmlstring += "<div style='word-break:break-all'><b>" + event.LeadExtID + "- " + event.CustName + "</b></div></div>";
     evnt.el.innerHTML = htmlstring;
   }
 
@@ -148,9 +164,6 @@ export class LeadPage implements OnInit {
       ID: Id, ActTypeID: 11, ResourceList: [], SchStartTime: new Date(), SchEndTime: new Date(),
       LeadName: "", TypeID: 0,MeetingTypeID:1,messageID:94
     }
-    //actinfo = Id > 0 ? this.eventinfo : actinfo ///Need to Change while Editing
-    console.log(actinfo);
-    //let viewtypeId = { viewtypeId: viewId }
     const modal = await this.Modalcntrl.create({
       component: LAddActivityComponent,
       componentProps: actinfo,
@@ -159,14 +172,8 @@ export class LeadPage implements OnInit {
     modal.onDidDismiss().then((result: OverlayEventDetail) => {
       if (result.data !== null && result.data != undefined) {
         if (result.data.issave == true) {
-          // this.UpdateActivty(result.data.componentProps);
-          //this.ActionLoadEvents();
+         this.ActionRefreshCalendar();
         }
-        //this.calObj.ActTypeID = result.data.ActTypeId;
-        // this.calObj.ResourceIds = result.data.ResourceIds;
-        // this.calObj.ResourceNames = result.data.ResourceNames;
-        // this.calObj.ActivityType = result.data.ActivityType
-        //this.ActionLoadEvents();
       }
     });
 

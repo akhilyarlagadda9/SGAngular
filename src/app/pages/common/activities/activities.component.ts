@@ -23,10 +23,15 @@ export class ActivitiesComponent implements OnInit {
   }
  //Activites List Function
   GetActivitiesList() {
-    this.getservice.QuoteactivitiesList(this.VersionId,this.PhaseId).subscribe(
-      data => { this.ActivitiesList = data; }
-    );
-    console.log(this.ActivitiesList)
+    if(this.PhaseId == 0){
+      this.getservice.QuoteactivitiesList(this.VersionId,0).subscribe(
+        data => { this.ActivitiesList = data; }
+      );
+    }else{
+      this.getservice.JobActivitiesList(this.VersionId,this.PhaseId).subscribe(
+        data => { this.ActivitiesList = data; }
+      );
+    }
   }
 
   

@@ -464,7 +464,7 @@ ChangedViewEvents() {
     console.log(evnt.event.extendedProps);
     let event = evnt.event.extendedProps;
     var htmlstring = '';
-    htmlstring = "<div style='font-size: 13px;white-space: normal' >";
+    htmlstring = "<div style='font-size: 13px;white-space: normal;word-break:break-all' >";
     //htmlstring += "<div>" + event.ActivityType;
     htmlstring += "<div style='word-break:break-all'><img class='ico' src='" + event.Imageurl + "' width='15' height='15'>" + event.ActivityType + "</div>";
     htmlstring += "<div style='font-size: 10px;'>" + event.StartTime + " - " + event.EndTime + "</div>";
@@ -616,6 +616,10 @@ ChangedViewEvents() {
       this.fullcalendar.views.resourceTimeline.duration = { days: this.calObj.CalendarDays };
       this.fullcalendar.dateIncrement = this.calObj.CalendarDays;
       //calendarApi.setOption('duration', duration);
+      if(this.calObj.CalendarDays == 5 || this.calObj.CalendarDays == 1){
+        let width = ((window.innerWidth)-120)/this.calObj.CalendarDays;
+        calendarApi.setOption('slotWidth', width);
+    }
       calendarApi.batchRendering(function () {
         calendarApi.setOption('duration', duration);
         calendarApi.changeView(obj.CalendarView, obj.StartDate);

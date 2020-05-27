@@ -63,25 +63,25 @@
         <span *ngIf="fabrication.SplashSqft == 0">{{fabrication.PartSqft | number : '.2-2'}}</span>
       </ion-row>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="PhaseId == 0">
       <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
       <ion-input readonly="readonly" readonly="readonly" type="text" class="labelfont" [(ngModel)]="fabrication.UnitCost" name="UnitCost" (change)="ActionSetMargin(1,fabrication,'Fab')">
         <ion-row style="margin-right: 3px;">$</ion-row>
       </ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="PhaseId == 0">
       <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
       <ion-input readonly="readonly" type="text" class="labelfont" readonly="readonly" [(ngModel)]="fabrication.Margin" name="Margin" (change)="ActionSetMargin(2,fabrication,'Fab')">
         <ion-row style="margin-right: 3px;">%</ion-row>
       </ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="PhaseId == 0">
       <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
       <ion-input readonly="readonly" type="text" class="labelfont" readonly="readonly" [(ngModel)]="fabrication.LaborUnitPrice" name="LaborUnitPrice" (change)="ActionSetMargin(3,fabrication,'Fab')">
         <ion-row style="margin-right: 3px;">$</ion-row>
       </ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="PhaseId == 0">
       <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
       <ion-row style="margin-right: 3px;" class="labelfont">$ 
         <span *ngIf="fabrication.SplashSqft != 0">{{fabrication.LaborUnitPrice * (fabrication.PartSqft + fabrication.SplashSqft)| number : '.2-2'}}</span>

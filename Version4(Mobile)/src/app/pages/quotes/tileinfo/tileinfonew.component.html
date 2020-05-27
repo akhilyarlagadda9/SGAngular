@@ -66,28 +66,28 @@
       <ion-input type="text" class="labelfont" readonly="readonly" [(ngModel)]="tile.Qty" (change)="ActionSetAmount()" name="Qty">
       </ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="PhaseId == 0">
       <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
       <ion-input type="text" class="labelfont" readonly="readonly" [(ngModel)]="tile.UnitCost" (change)="ActionSetMargin(1,tile,'tile')"
         name="UnitCost">
         <ion-row style="margin-right: 3px;">$</ion-row>
       </ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="PhaseId == 0">
       <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
       <ion-input type="text" class="labelfont" readonly="readonly" [(ngModel)]="tile.Margin" (change)="ActionSetMargin(2,tile,'tile')"
         name="Margin">
         <ion-row style="margin-right: 3px;">%</ion-row>
       </ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="PhaseId == 0">
       <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
       <ion-input type="text" class="labelfont" readonly="readonly" [(ngModel)]="tile.UnitPrice" (change)="ActionSetMargin(3,tile,'tile')"
         name="UnitPrice">
         <ion-row style="margin-right: 3px;">$</ion-row>
       </ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="PhaseId == 0">
       <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
       <ion-input type="text" class="labelfont" readonly="readonly" [(ngModel)]="tile.Amount" name="Amount">
         <ion-row style="margin-right: 3px;">$</ion-row>

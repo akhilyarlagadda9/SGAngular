@@ -152,7 +152,7 @@ export class AreainfoComponent implements OnInit {
   // }
   async ActionEditMaterial(mat: any) {
     let copyobj = JSON.parse(JSON.stringify(mat));
-    let material = { material: copyobj, priceListID: Number(this.Version.PriceListID),areaInfo : this.areaInfo, partinfo : this.partinfo,Version:this.Version }
+    let material = { material: copyobj, priceListID: Number(this.Version.PriceListID),areaInfo : this.areaInfo, partinfo : this.partinfo,Version:this.Version, PhaseId: this.PhaseId }
     const modal = await this.Modalcntrl.create({
       component: MaterialinfoComponent,
       componentProps: material
@@ -162,7 +162,7 @@ export class AreainfoComponent implements OnInit {
   /***** MEASUREMENT DETAILS *****/
   async ActionEditMeasurement(fab: any) {
     let copyobj = JSON.parse(JSON.stringify(fab));
-    let sizes = { fab: copyobj, priceListID: Number(this.Version.PriceListID) }
+    let sizes = { fab: copyobj, priceListID: Number(this.Version.PriceListID), PhaseId: this.PhaseId }
     const modal = await this.Modalcntrl.create({
       component: MeasurementsComponent,
       componentProps: sizes
@@ -177,7 +177,7 @@ export class AreainfoComponent implements OnInit {
   /***** SPLASH DETAILS *****/
   async ActionEditSplash(spl: any) {
     let copyobj = JSON.parse(JSON.stringify(spl));
-    let splash = { splash: copyobj, priceListID: Number(this.Version.PriceListID) }
+    let splash = { splash: copyobj, priceListID: Number(this.Version.PriceListID), PhaseId: this.PhaseId }
     const modal = await this.Modalcntrl.create({
       component: SplashComponent,
       componentProps: splash
@@ -192,7 +192,7 @@ export class AreainfoComponent implements OnInit {
   /***** EDGE DETAILS *****/
   async ActionEditEdge(edg: any) {
     let copyobj = JSON.parse(JSON.stringify(edg));
-    let edge = { edge: copyobj, priceListID: Number(this.Version.PriceListID) }
+    let edge = { edge: copyobj, priceListID: Number(this.Version.PriceListID), PhaseId: this.PhaseId }
     const modal = await this.Modalcntrl.create({
       component: EdgeinfoComponent,
       componentProps: edge
@@ -207,7 +207,7 @@ export class AreainfoComponent implements OnInit {
   /***** CUTOUT DETAILS *****/
   async ActionCreateCutout(typeId: any, cutouts: any) {
     let copyobj = JSON.parse(JSON.stringify(cutouts));
-    let cutout = { cutout: copyobj, TypeID: typeId, priceListID: Number(this.Version.PriceListID) }
+    let cutout = { cutout: copyobj, TypeID: typeId, priceListID: Number(this.Version.PriceListID), PhaseId: this.PhaseId }
     const modal = await this.Modalcntrl.create({
       component: CutoutinfoComponent,
       componentProps: cutout
@@ -222,7 +222,7 @@ export class AreainfoComponent implements OnInit {
   /***** SINK DETAILS *****/
   async ActionEditSink(snk: any) {
     let copyobj = JSON.parse(JSON.stringify(snk));
-    let sinkfaucet = { sinkfaucet: copyobj, priceListID: Number(this.Version.PriceListID) }
+    let sinkfaucet = { sinkfaucet: copyobj, priceListID: Number(this.Version.PriceListID), PhaseId: this.PhaseId }
     const modal = await this.Modalcntrl.create({
       component: SinkComponent,
       componentProps: sinkfaucet
@@ -237,7 +237,7 @@ export class AreainfoComponent implements OnInit {
   /***** FAUCETS DETAILS *****/
   async ActionEditFaucet(fau: any) {
     let copyobj = JSON.parse(JSON.stringify(fau));
-    let faucet = { faucet: copyobj, priceListID: Number(this.Version.PriceListID) }
+    let faucet = { faucet: copyobj, priceListID: Number(this.Version.PriceListID), PhaseId: this.PhaseId }
     const modal = await this.Modalcntrl.create({
       component: FaucetsComponent,
       componentProps: faucet
@@ -251,7 +251,7 @@ export class AreainfoComponent implements OnInit {
   }
   async ActionEditFabrication(fab: any) {
     let copyobj = JSON.parse(JSON.stringify(fab));
-    let fabrication = { fabrication: copyobj }
+    let fabrication = { fabrication: copyobj, PhaseId: this.PhaseId }
     const modal = await this.Modalcntrl.create({
       component: FabricationComponent,
       componentProps: fabrication
@@ -265,7 +265,7 @@ export class AreainfoComponent implements OnInit {
   }
   async ActionEditTemplate(typeId: number, temp: any, viewtype: string) {
     let copyobj = JSON.parse(JSON.stringify(temp));
-    let labor = { labor: copyobj, TypeID: typeId, ViewType: viewtype }
+    let labor = { labor: copyobj, TypeID: typeId, ViewType: viewtype, PhaseId: this.PhaseId }
     const modal = await this.Modalcntrl.create({
       component: TemplateComponent,
       componentProps: labor
@@ -279,7 +279,7 @@ export class AreainfoComponent implements OnInit {
   }
   async ActionEditLabor(typeId: number, temp: any, viewtype: string) {
     let copyobj = JSON.parse(JSON.stringify(temp));
-    let labor = { labor: copyobj, TypeID: typeId, ViewType: viewtype, priceListID: Number(this.Version.PriceListID) }
+    let labor = { labor: copyobj, TypeID: typeId, ViewType: viewtype, priceListID: Number(this.Version.PriceListID), PhaseId: this.PhaseId }
     const modal = await this.Modalcntrl.create({
       component: LaborinfoComponent,
       componentProps: labor
@@ -294,7 +294,7 @@ export class AreainfoComponent implements OnInit {
   /***** ADD ON DETAILS *****/
   async ActionEditAddon(oth: any) {
     let copyobj = JSON.parse(JSON.stringify(oth));
-    let other = { other: copyobj, priceListID: Number(this.Version.PriceListID) }
+    let other = { other: copyobj, priceListID: Number(this.Version.PriceListID), PhaseId: this.PhaseId }
     const modal = await this.Modalcntrl.create({
       component: AddoninfoComponent,
       componentProps: other
@@ -309,7 +309,7 @@ export class AreainfoComponent implements OnInit {
   /***** TILE DETAILS *****/
   async ActionEditTile(typeId, name, tile: any) {
     let copyobj = JSON.parse(JSON.stringify(tile));
-    let tileobj = { TypeID: typeId, selName: name, tile: copyobj, priceListID: Number(this.Version.PriceListID) }
+    let tileobj = { TypeID: typeId, selName: name, tile: copyobj, priceListID: Number(this.Version.PriceListID), PhaseId: this.PhaseId }
     const modal = await this.Modalcntrl.create({
       component: TileinfoComponent,
       componentProps: tileobj

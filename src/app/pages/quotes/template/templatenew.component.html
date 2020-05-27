@@ -52,28 +52,28 @@
           (change)="ActionSetAmount()">
         </ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="PhaseId == 0">
         <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
         <ion-input type="text" class="labelfont" [(ngModel)]="labor.UnitCost" readonly="readonly" name="UnitCost"
           (change)="ActionSetMargin(1,labor,'labor')">
           <ion-row style="margin-right: 3px;">$</ion-row>
         </ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="PhaseId == 0">
         <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
         <ion-input type="text" class="labelfont" [(ngModel)]="labor.Margin" readonly="readonly" name="Margin"
           (change)="ActionSetMargin(2,labor,'labor')">
           <ion-row style="margin-right: 3px;">%</ion-row>
         </ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="PhaseId == 0">
         <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
         <ion-input type="text" class="labelfont" [(ngModel)]="labor.UnitPrice" readonly="readonly" name="UnitPrice"
           (change)="ActionSetMargin(3,labor,'labor')">
           <ion-row style="margin-right: 3px;">$</ion-row>
         </ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="PhaseId == 0">
         <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
         <ion-input type="text" class="labelfont" [(ngModel)]="labor.Amount" readonly="readonly" name="Amount">
           <ion-row style="margin-right: 3px;">$</ion-row>

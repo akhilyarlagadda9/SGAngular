@@ -63,28 +63,28 @@
       <ion-input readonly="readonly" type="text" class="labelfont" [(ngModel)]="cutout.LF" readonly="readonly" name="LF" (change)="ActionSetAmount()">
       </ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="PhaseId == 0">
       <ion-label class="labelfont" position="stacked" color="primary">Cost/Unit</ion-label>
       <ion-input readonly="readonly" type="text" class="labelfont" [(ngModel)]="cutout.UnitCost" readonly="readonly" name="UnitCost"
         (change)="ActionSetMargin(1,cutout,'cutout')">
         <ion-row class="mar-right3">$</ion-row>
       </ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="PhaseId == 0">
       <ion-label class="labelfont" position="stacked" color="primary">Margin</ion-label>
       <ion-input readonly="readonly" type="text" class="labelfont" [(ngModel)]="cutout.Margin" readonly="readonly" name="Margin"
         (change)="ActionSetMargin(2,cutout,'cutout')">
         <ion-row class="mar-right3">%</ion-row>
       </ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="PhaseId == 0">
       <ion-label class="labelfont" position="stacked" color="primary">Price/Unit</ion-label>
       <ion-input readonly="readonly" type="text" class="labelfont" [(ngModel)]="cutout.Unitprice" readonly="readonly" name="UnitPrice"
         (change)="ActionSetMargin(3,cutout,'cutout')">
         <ion-row class="mar-right3">$</ion-row>
       </ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="PhaseId == 0">
       <ion-label class="labelfont" position="stacked" color="primary">Amount</ion-label>
       <ion-input  readonly="readonly" type="text" class="labelfont" [(ngModel)]="cutout.Amt" name="Amt" readonly="readonly">
         <ion-row class="mar-right3">$</ion-row>

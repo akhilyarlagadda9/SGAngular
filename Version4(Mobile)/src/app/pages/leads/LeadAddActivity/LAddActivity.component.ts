@@ -45,6 +45,9 @@ export class LAddActivityComponent implements OnInit {
         Name: 'In Person',
         IconClass: 'fa-user-md'
       }];
+    if(this.actinfo.ID>0){
+    this.ActionApprovedLeadList('',2);
+    }
     this.ActionActivityTypeList();
     this.ActivityStatusList();
     this.ActionGetMessageList();
@@ -54,8 +57,21 @@ export class LAddActivityComponent implements OnInit {
     this.leadService.GetMessageStatusList(11).subscribe(data => {
       console.log(data);
       this.messageList = data;
-      this.ActionMessageStatus(this.actinfo.messageID);
+      this.ActionMessageStatus(this.actinfo.PriorityIcon);
     });
+  }
+
+  
+  ActionMessageStatus(icon){
+    let priorityCheck = this.messageList.find(s => s.Path == icon);
+    this.actinfo["StatusName"] = priorityCheck.Name
+    this.actinfo["PriorityIcon"] = priorityCheck.Path;
+  }
+
+  ActionSetMessageStatus(id){
+    let priorityCheck = this.messageList.find(s => s.ID == id);
+    this.actinfo["StatusName"] = priorityCheck.Name
+    this.actinfo["PriorityIcon"] = priorityCheck.Path;
   }
 
   ActionActivityTypeList() {
@@ -67,35 +83,70 @@ export class LAddActivityComponent implements OnInit {
   }
 
   ActionGetSelectedActivityType() {
-    let actinfo = this.ActTypeList.find(s => s.ID == this.actinfo.ActTypeID);
+    let actinfo = this.ActTypeList.find(s => s.ID == this.actinfo.ActTypeID); // Only For Edit 
     if (actinfo != null) {
-      console.log(actinfo);
       this.actinfo.ActTypeID = actinfo.ID;
+      this.actinfo.ActivityType = actinfo.Name;
     }
     else {
       this.actinfo.ActTypeID = "";
+    }
+  }
+  ActionSetActType(id){
+    let acttypeInfo = this.ActTypeList.find(s => s.ID == id);
+    if (acttypeInfo != undefined && acttypeInfo != null) {
+      this.actinfo["ActTypeID"] = acttypeInfo.ID;
+      this.actinfo["ActivityType"] = acttypeInfo.Name;
     }
   }
   ActivityStatusList() {
     this.leadService.GetStatusList().subscribe(data => {
       console.log(data);
       this.statusList = data;
+      this.ActionGetSeelctedStatusType();
       //this.actinfo["StatusID"] = data
     });
   }
+  ActionGetSeelctedStatusType(){
+    let statusInfo = this.statusList.find(s => s.ID == this.actinfo.StatusID); // Only For Edit 
+    if (statusInfo != null) {
+      this.actinfo.StatusID = statusInfo.ID;
+      this.actinfo.ActStatusName = statusInfo.Name;
+    }
+    else {
+      this.actinfo.StatusID = "";
+    }
+  }
+
   ActionSetStatus(id) {
     console.log(id);
     let statusinfo = this.statusList.find(s => s.ID == id);
     if (statusinfo != undefined && statusinfo != null) {
       this.actinfo["StatusID"] = statusinfo.ID;
+      this.actinfo["ActStatusName"] = statusinfo.Name;
       this.actinfo["IconPath"] = statusinfo.IconName;
     }
   }
   ActionApprovedLeadList(strSearch, id) {
     this.leadService.LeadSearchList(strSearch, id).subscribe(data => {
+      if(this.actinfo.ID > 0){
+        this.ActionEditJobName(this.actinfo.LeadID,data);
+      }
+      else{
       console.log(data);
       this.leadlist = data;
       this.Actionsearchjobs(this.leadlist);
+      }
+    });
+  }
+
+  ActionEditJobName(id,data){
+    data.forEach(element => {
+      if(element.ID == id){
+        console.log(element);
+       // this.actinfo["LeadName"] = element.LeadCustomer.Name;
+        this.PrepareLeadDetails(element); // While Editing
+      }
     });
   }
 
@@ -118,13 +169,13 @@ export class LAddActivityComponent implements OnInit {
   }
   PrepareLeadDetails(LeadDetails) {
     console.log(LeadDetails);
-    this.actinfo.LeadName = LeadDetails.LeadCustomer.Name;
     LeadDetails.LeadCustomer.BillAddress = LeadDetails.LeadCustomer.BillAddress == null ? "" : LeadDetails.LeadCustomer.BillAddress;
     LeadDetails.LeadCustomer.BillCity = LeadDetails.LeadCustomer.BillCity == null ? "" : LeadDetails.LeadCustomer.BillCity;
     LeadDetails.LeadCustomer.BillState = LeadDetails.LeadCustomer.BillState == null ? "" : LeadDetails.LeadCustomer.BillState;
     LeadDetails.LeadCustomer.BillZipCode = LeadDetails.LeadCustomer.BillZipCode == null ? "" : LeadDetails.LeadCustomer.BillZipCode;
     let strLeadAddress = LeadDetails.LeadCustomer.BillAddress + "," + LeadDetails.LeadCustomer.BillCity + "," + LeadDetails.LeadCustomer.BillState + "," + LeadDetails.LeadCustomer.BillZipCode;
     strLeadAddress = strLeadAddress.replace(",,", "");
+    this.actinfo.LeadName = LeadDetails.LeadCustomer.Name;
     this.actinfo["LeadExtID"] = LeadDetails.ExtID;
     this.actinfo["LeadID"] = LeadDetails.ID;
     this.actinfo["RefTypeID"] = LeadDetails.LeadCustomer.RefID;
@@ -139,6 +190,7 @@ export class LAddActivityComponent implements OnInit {
     this.actinfo["CustTypeID"] = LeadDetails.CustTypeID;
     this.actinfo["UserID"] = LeadDetails.UserID;
     this.actinfo["IsActive"] = LeadDetails.IsActive;
+    console.log(this.actinfo);
     this.getSalesPersonalDetais(); // Get sales Rep Details
   }
   getSalesPersonalDetais(){
@@ -150,19 +202,29 @@ export class LAddActivityComponent implements OnInit {
     })
   }
 
-  ActionMessageStatus(id){
-    let priorityCheck = this.messageList.find(s => s.ID == id);
-    this.actinfo["StatusName"] = priorityCheck.Name
-    this.actinfo["PriorityIcon"] = priorityCheck.Path;
-  }
 
   PrepareDate() {
+    if(this.actinfo.ID > 0){
+      let startDate =this.actinfo.StartDate.substring(0,this.actinfo.StartDate.indexOf("T"));
+      let endDate =  this.actinfo.EndDate.substring(0,this.actinfo.EndDate.indexOf("T"));
+      this.actinfo.SchStartTime = this.datePipe.transform(startDate, "MM/dd/yyyy");
+      this.actinfo.SchEndTime = this.datePipe.transform(endDate, "MM/dd/yyyy");
+      this.actinfo.STime = this.datePipe.transform(this.actinfo.StartDate, "hh:mm a","-400");
+      this.actinfo.STime = this.actinfo.STime.charAt(0) == "0" ? this.actinfo.STime.substr(1,this.actinfo.STime.length): this.actinfo.STime;
+      this.actinfo.ETime = this.datePipe.transform(this.actinfo.EndDate, "hh:mm a","-400");
+      this.actinfo.ETime = this.actinfo.ETime.charAt(0) == "0" ? this.actinfo.ETime.substr(1,this.actinfo.ETime.length): this.actinfo.ETime;
+      this.actinfo.Duration = this.actinfo.Duration;
+      this.actinfo.Hrs = Math.floor(this.actinfo.Duration/60);
+      this.actinfo.Mins = this.actinfo.Duration % 60;
+    }
+    else{
     this.actinfo.SchStartTime = this.datePipe.transform(this.actinfo.SchStartTime, "MM/dd/yyyy");
     this.actinfo.SchEndTime = this.datePipe.transform(this.actinfo.SchEndTime, "MM/dd/yyyy");
-    this.actinfo.STime = "7:30AM";
-    this.actinfo.ETime = "8:30AM";
+    this.actinfo.STime = "7:30 AM";
+    this.actinfo.ETime = "8:30 AM";
     this.actinfo.Hrs = "1";
     this.actinfo.Mins = "0";
+    }
   }
 
   ActionChangeDuration(value, typeId) {
@@ -183,14 +245,16 @@ export class LAddActivityComponent implements OnInit {
       if (type == 1) {
         this.actinfo.Hrs = results[0];
         this.actinfo.Mins = results[1];
+        //Need To make the start and end Time to their back form
+        this.actinfo.SchEndTime = this.datePipe.transform(this.actinfo.SchEndTime,"MM/dd/yyyy");
       }
       else {
-       // let eDate = results[0] + " " + results[1];
-       let eDate = results[0];
-        this.actinfo.SchEndTime = eDate; this.actinfo.ETime = results[1];
+        this.actinfo.SchEndTime =  results[0]; this.actinfo.ETime =results[1]; 
+        //Need To make the start and end Time to their back form
+      this.actinfo.SchStartTime = this.datePipe.transform(this.actinfo.SchStartTime,"MM/dd/yyyy");
       }
-      this.actinfo.PrevStartDate = this.actinfo.SchStartTime;
-      this.actinfo.PrevEndDate = this.actinfo.SchEndTime;
+      //this.actinfo.PrevStartDate = this.actinfo.SchStartTime;
+      //this.actinfo.PrevEndDate = this.actinfo.SchEndTime;
       this.actinfo.Duration = Number(this.actinfo.Hrs * 60) + Number(this.actinfo.Mins);
     })
   }
@@ -264,6 +328,7 @@ export class LAddActivityComponent implements OnInit {
     if (form.valid) {
       // this.actinfo.SchStartTime = this.datePipe.transform(this.actinfo.SchStartTime);
       // this.actinfo.SchEndTime = this.datePipe.transform(this.actinfo.SchEndTime);
+      console.log(this.actinfo.SchStartTime);
       this.actinfo.SchStartTime = this.actinfo.SchStartTime + " " + this.actinfo.STime;
       this.actinfo.SchEndTime = this.actinfo.SchEndTime + " " + this.actinfo.ETime;
       let obj = {
@@ -319,7 +384,7 @@ export class LAddActivityComponent implements OnInit {
   ConfirmSaveActInfo() {
     console.log(this.actinfo);
     let model={};
-    model = this.PrepareToSave();
+     model = this.PrepareToSave();
     this.leadService.ActionSaveLeadActivity(model).subscribe(data=>{
         console.log(data);
     });
@@ -329,8 +394,9 @@ export class LAddActivityComponent implements OnInit {
   PrepareToSave(){
    console.log(this.actinfo.SchStartTime +"  "+this.actinfo.SchEndTime);
     this.actinfo["MeetingIcon"] = this.MeetingTypes[this.actinfo.MeetingTypeID].IconClass;
-    this.actinfo.Duration = this.actinfo.Duration == undefined? this.actinfo.Hrs : this.actinfo.Duration;
+    this.actinfo.Duration = this.actinfo.Duration == undefined? 60 : this.actinfo.Duration;
     let dbactivity = {};
+                dbactivity["ID"] = this.actinfo.ID;
                 dbactivity["LeadID"] = this.actinfo.LeadID;
                 dbactivity["ActTypeID"] = this.actinfo.ActTypeID;
                 dbactivity["SchStartTime"] = this.actinfo.SchStartTime;

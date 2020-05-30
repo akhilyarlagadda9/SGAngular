@@ -170,13 +170,18 @@
                             <span style="padding-left: 21px;">Attachment(s):</span>
                             <span>{{info.Path}}</span>
                         </ion-col> -->
+                        <ion-col size="9" class="paddzero text-right">
+                            <ion-row *ngIf="info.AttachmentList != null && info.AttachmentList != ''">
+                                <ion-row *ngFor="let item of info.AttachmentList">
+                                    <span>&nbsp;&nbsp;{{item.Path}}  </span>
+                                </ion-row>
+                            </ion-row>
+                        </ion-col>
                         <ion-col size="3" class="paddzero text-right">
                             <span class="color-green">${{info.POAmount | number : '.2-2'}}</span>
                         </ion-col>
                     </ion-row>
-                    <ion-row *ngIf="info.AttachmentList != null && info.AttachmentList != ''">
-                        <span *ngFor="let item of info.AttachmentList">&nbsp;&nbsp;{{item.Path}}  </span>
-                    </ion-row>
+                    
                 </ion-col>
             </ion-row>
         </ion-list>

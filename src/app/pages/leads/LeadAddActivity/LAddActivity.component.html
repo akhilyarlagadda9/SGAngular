@@ -14,16 +14,15 @@
           <ion-title align="center">Activity Details</ion-title>
         </ion-toolbar>
       <ion-toolbar>
-        <!-- <ion-item *ngIf="actinfo.ID > 0">
+        <ion-item *ngIf="actinfo.ID > 0">
           <ion-label>
-            <h2>{{actinfo.QuoteNo}} - {{actinfo.JobName}}</h2>
-            <h3>{{actinfo.CustName}}</h3>
-            <h3>{{actinfo.SalesPerName}}</h3>
+            <h2>{{actinfo.LeadName}}</h2>
+            <h3>{{actinfo.LeadAddress}}</h3>
             <p>
-              {{actinfo.JobFullAddres}}
+              {{actinfo.SalesPerson}}
             </p>
           </ion-label>
-        </ion-item> -->
+        </ion-item>
         <ion-item *ngIf="actinfo.ID == 0">
           <ion-input type="text" placeholder="LeadNo and Name"  [(ngModel)]="actinfo.LeadName" name="LeadName"  #LeadName="ngModel" required></ion-input>
           <ion-icon slot="end"  name="arrow-dropdown"
@@ -58,7 +57,7 @@
 
   <ion-item>
     <ion-label floating>Act Type<span class="requiredField">*</span>:</ion-label>
-    <ion-select [(ngModel)]="actinfo.ActTypeID" name="ActTypeID" [selectedText]="actinfo.ActivityType"
+    <ion-select [(ngModel)]="actinfo.ActTypeID" name="ActTypeID" [selectedText]="actinfo.ActivityType" (ngModelChange)="ActionSetActType($event)"
       #ActTypeID="ngModel" required>
       <ion-select-option *ngFor="let c of ActTypeList" [value]="c.ID">{{c.Name}}</ion-select-option>
     </ion-select>
@@ -68,7 +67,7 @@
   </ion-item>
   <ion-item>
     <ion-label floating>Act Status:</ion-label>
-    <ion-select [(ngModel)]="actinfo.StatusID" name="StatusID" #StatusID="ngModel" (ngModelChange)="ActionSetStatus($event)">
+    <ion-select [(ngModel)]="actinfo.StatusID" name="StatusID" #StatusID="ngModel" [selectedText]="actinfo.ActStatusName" (ngModelChange)="ActionSetStatus($event)">
       <ion-select-option *ngFor="let c of statusList" [value]="c.ID">{{c.Name}}</ion-select-option>
     </ion-select>
   </ion-item>
@@ -83,7 +82,7 @@
   </ion-item>
   <ion-item>
     <ion-label floating>Status:</ion-label>
-    <ion-select [(ngModel)]="actinfo.messageID" name="messageID" #messageID="ngModel" (ngModelChange)="ActionMessageStatus($event)" [selectedText]="actinfo.StatusName">
+    <ion-select [(ngModel)]="actinfo.messageID" name="messageID" #messageID="ngModel" (ngModelChange)="ActionSetMessageStatus($event)" [selectedText]="actinfo.StatusName">
       <ion-select-option *ngFor="let message of messageList" [value]="message.ID">{{message.Name}}</ion-select-option>
    </ion-select>
   </ion-item>

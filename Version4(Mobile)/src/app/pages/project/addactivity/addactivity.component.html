@@ -127,12 +127,18 @@
         <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY hh:mm:A" pickerFormat="MMM D:HH:mm" name="ActStartDate"
           [(ngModel)]="actinfo.ActualStartDate">
         </ion-datetime><span class="select-icon ion-float-right"></span>
+        <ion-select class="btninfo" [(ngModel)]="actinfo.STime" name="STime"  [selectedText]="actinfo.STime">
+          <ion-select-option *ngFor="let time of timings" [value]="time">{{time}}</ion-select-option>
+        </ion-select>
   </ion-item>
   <ion-item >
     <ion-label floating>Act End:</ion-label>
         <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY hh:mm:A" pickerFormat="MMM D:HH:mm" name="ActEndDate"
           [(ngModel)]="actinfo.ActualEndDate">
         </ion-datetime><span class="select-icon ion-float-right"></span>
+        <ion-select class="btninfo" [(ngModel)]="actinfo.ETime" name="ETime"  [selectedText]="actinfo.ETime">
+          <ion-select-option *ngFor="let time of timings" [value]="time">{{time}}</ion-select-option>
+        </ion-select>
    
   </ion-item>
 </ion-list>

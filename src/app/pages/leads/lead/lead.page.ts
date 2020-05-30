@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Inject, LOCALE_ID } from '@angular/core';
-import { NavController, ModalController, LoadingController } from '@ionic/angular';
+import { NavController, ModalController, LoadingController, ActionSheetController } from '@ionic/angular';
 import { OptionsInput,EventInput } from '@fullcalendar/core';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { OverlayEventDetail } from '@ionic/core';
@@ -47,27 +47,26 @@ themeSystem= "cerulean"
 [height]="options.height"
 [header]="false"
 
-[minTime] = "options.minTime"
-[maxTime] = "options.maxTime"
 [duration]="options.duration"
 [views]="options.views"
 [plugins]="options.plugins"
 (datesRender)="Actioncall($event)"
 [events]="actlist"
 (eventRender)="ActionRenderEvent($event)"
+(eventClick)="ActionOnEventSelected($event)"
 ></full-calendar>
 </ion-content>`,
   styleUrls: ['./lead.page.scss'],
   providers: [DatePipe]
 })
 export class LeadPage implements OnInit {
-  options: OptionsInput; width: number = 0; actlist:any = []; CalendarTitle: any; currentDate: Date;
+  options: OptionsInput; width: number = 0; actlist:any = []; CalendarTitle: any; currentDate: Date; objEditActivity:any;
   @ViewChild('calendar', { static: false }) fullcalendar: FullCalendarComponent;
   calObj: any = {
     StartDate: Date, EndDate: Date, CalendarDays: 1
   }
   logInUserID: any;
-  constructor(private navCtrl: NavController, public Modalcntrl: ModalController, private leadService: LeadService, private authService: AuthService,
+  constructor(private navCtrl: NavController, public Modalcntrl: ModalController, private leadService: LeadService, private authService: AuthService,private actionSheetCtrl:ActionSheetController,
      private datePipe: DatePipe,public loadingController : LoadingController) { }
 
   ngOnInit() {
@@ -77,11 +76,18 @@ export class LeadPage implements OnInit {
     this.options = {
       plugins: [timeGridPlugin],
       height: height,
+      // slotLabelFormat: [
+      //   {
+      //       hour: '2-digit',
+      //       minute: '2-digit',
+      //       hour12:false
+      //   }
+      //   ],
       allDaySlot:false,
       timeZone: 'local',
       defaultView: "timeGridDay",
-      minTime: "07:00:00",
-      maxTime: "22:00:00",
+      minTime: "07:00:00", // Should We give it ? Not Sure
+      maxTime: "22:00:00",// Should We give it ? Not Sure
       defaultDate: _defaultDate,
       views: {
         timeGridDay: { type: "timeGridDay", duration: { days: 1 }, buttonText: "day",slotDuration: "00:15:00"},
@@ -119,8 +125,15 @@ export class LeadPage implements OnInit {
 
 
   ActionLoadEvents(item) {
-    let sDate = new Date(item.SchStartTime);
-    let eDate = new Date(item.SchEndTime);
+   let startDate = item.SchEndTime.substring(0,item.SchStartTime.indexOf("T"));
+   let endDate =  item.SchEndTime.substring(0,item.SchStartTime.indexOf("T"));
+    
+    let eDate= new Date(this.datePipe.transform(endDate,"MM/dd/yyyy") + " " + this.datePipe.transform(item.SchEndTime, "hh:mm a","-400"));
+    let sDate = new Date(this.datePipe.transform(startDate,"MM/dd/yyyy") + " " + this.datePipe.transform(item.SchStartTime, "hh:mm a","-400"));
+    //let eDate = this.datePipe.transform(item.SchEndTime,"MM/dd/yyyy") + " " + this.datePipe.transform(item.SchEndTime,"hh:mm a");
+    console.log(sDate);
+    console.log(eDate);
+    
     this.actlist.push({ title: item.CustName,start:sDate, end:eDate, backgroundColor: item.ColorCode, textColor: item.TextColor, borderColor: item.TextColor, extendedProps: item });
   }
 
@@ -131,6 +144,7 @@ export class LeadPage implements OnInit {
     this.fullcalendar.getApi().render(); // Fastest Way to Render events
    // this.getActivityData();
   }
+
 
   ActionNavigateView(navtype) {
     let calendarApi = this.fullcalendar.getApi();
@@ -154,16 +168,29 @@ export class LeadPage implements OnInit {
     var htmlstring = '';
     htmlstring = "<div style='font-size: 10px;white-space: normal;word-wrap: break-word'>";
     htmlstring += "<div style='word-break:break-all'><img class='ico' src='" + event.Imageurl + "' width='15' height='15'>" + event.ActivityType + "</div>";
-    htmlstring += "<div style='font-size: 10px;'>" + this.datePipe.transform(event.SchStartTime, "hh:mm a") + " - " + this.datePipe.transform(event.SchEndTime, "hh:mm a") + "</div>";
+    htmlstring += "<div style='font-size: 10px;'>" +this.datePipe.transform(event.SchStartTime, "hh:mm a",'-400') + " - " + this.datePipe.transform(event.SchEndTime, "hh:mm a",'-400') + "</div>";
     htmlstring += "<div style='word-break:break-all'><b>" + event.LeadExtID + "- " + event.CustName + "</b></div></div>";
     evnt.el.innerHTML = htmlstring;
   }
 
+  ActionEditActivity(ev) {
+    //console.log(ev);
+    let objAlrtShow={};
+    console.log(ev);
+    let sDate =ev.event._def.extendedProps.SchStartTime;
+    let eDate = ev.event._def.extendedProps.SchEndTime;
+    this.objEditActivity = { ID: ev.event._def.extendedProps.ID, ActTypeID: ev.event._def.extendedProps.ActTypeID, StartDate: sDate, EndDate: eDate,
+      LeadID: ev.event._def.extendedProps.LeadID, MeetingTypeID: ev.event._def.extendedProps.MeetingTypeID,PriorityIcon:ev.event._def.extendedProps.PriorityIcon,
+      StatusID:ev.event._def.extendedProps.StatusID, Duration: ev.event._def.extendedProps.Duration,Memo:ev.event._def.extendedProps.Memo,IconPath:ev.event._def.extendedProps.IconPath}
+    this.ActionAddActivity(ev.event._def.extendedProps.ID);
+  }
+
   async ActionAddActivity(Id: number) {
-    let actinfo = {
-      ID: Id, ActTypeID: 11, ResourceList: [], SchStartTime: new Date(), SchEndTime: new Date(),
+    let objInitAdd = {
+      ID: 0, ActTypeID: 11, ResourceList: [], SchStartTime: new Date(), SchEndTime: new Date(),
       LeadName: "", TypeID: 0,MeetingTypeID:1,messageID:94
     }
+    let actinfo = Id > 0 ? this.objEditActivity : objInitAdd;
     const modal = await this.Modalcntrl.create({
       component: LAddActivityComponent,
       componentProps: actinfo,
@@ -179,6 +206,34 @@ export class LeadPage implements OnInit {
 
     return await modal.present();
 
+  }
+
+  async ActionOnEventSelected(ev) {
+    let actionSheet = this.actionSheetCtrl.create({
+      //title: 'Actions',
+      cssClass: 'action-sheets-basic-page',
+      buttons: [       {
+          text: 'Activity Edit',
+         // role: 'destructive',
+          handler: () => {this.ActionEditActivity(ev);}
+        },
+        {
+          text: 'Job View',
+          cssClass:'color-orange',
+          handler: () => {this.ActionEditJobView(ev);}
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel', // will always sort to be on the bottom
+          handler: () => { }
+        }
+      ]
+    });
+    (await actionSheet).present();
+  }
+
+  ActionEditJobView(ev){
+    //TODO: Later
   }
 
   ActionGoToHome() {

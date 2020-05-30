@@ -8,9 +8,9 @@
         </ion-button>
       </ion-buttons>
       <ion-buttons slot="end">
-        <ion-button color="primary" (click)="ActionSaveQuoteNote()">
+        <!-- <ion-button color="primary" (click)="ActionSaveQuoteNote()">
           Save
-        </ion-button>
+        </ion-button> -->
       </ion-buttons>
       <ion-title align="center">MESSAGE</ion-title>
     </ion-toolbar>
@@ -27,29 +27,29 @@
       <ion-list >
         <ion-item>
           <ion-label style="width: 30%;">Category:</ion-label>
-          <ion-select [(ngModel)]="commDetails.CategoryID" name="CategoryID" [selectedText]="commDetails.Category" (ngModelChange)="ActionGetCatagory($event)">
+          <ion-select disabled="disabled" [(ngModel)]="commDetails.CategoryID" name="CategoryID" [selectedText]="commDetails.Category" (ngModelChange)="ActionGetCatagory($event)">
              <ion-select-option *ngFor="let category of categoryList" [value]="category.ID">{{category.Name}}</ion-select-option>
          </ion-select>
         </ion-item>
         <ion-item>
           <ion-label>Phase:</ion-label>
-          <ion-select [(ngModel)]="commDetails.PhaseID" name="PhaseID" [selectedText]="commDetails.Phase" (ngModelChange)="ActionChangephase($event)">
+          <ion-select disabled="disabled" [(ngModel)]="commDetails.PhaseID" name="PhaseID" [selectedText]="commDetails.Phase" (ngModelChange)="ActionChangephase($event)">
              <ion-select-option *ngFor="let category of phaseList" [value]="category.ID">{{category.Name}}</ion-select-option>
          </ion-select>
         </ion-item>
         <ion-item>
           <ion-label>Type:</ion-label>
-          <ion-select [(ngModel)]="commDetails.FormID" name="FormID" [selectedText]="commDetails.formtype" (ngModelChange)="ActionChangeTempl($event,1)">
+          <ion-select disabled="disabled" [(ngModel)]="commDetails.FormID" name="FormID" [selectedText]="commDetails.formtype" (ngModelChange)="ActionChangeTempl($event,1)">
             <ion-select-option *ngFor="let c of docFormList" [value]="c.ID">{{c.Name}}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
           <ion-label>Subject:</ion-label>
-          <ion-input type="text" [(ngModel)]="commDetails.Subject" name="Subject"></ion-input>
+          <ion-input type="text" readonly="readonly" [(ngModel)]="commDetails.Subject" name="Subject"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>Status:</ion-label>
-          <ion-select [(ngModel)]="commDetails.Status" name="StatusID" [selectedText]="commDetails.Status">
+          <ion-select disabled="disabled" [(ngModel)]="commDetails.Status" name="StatusID" [selectedText]="commDetails.Status">
             <ion-select-option *ngFor="let category of msgStatusList" [value]="">{{category.Name}}</ion-select-option>
           </ion-select>
         </ion-item>
@@ -58,7 +58,12 @@
             <span class="btn btn-success fileinput-button" ngClass="{disabled: disabled}" floating>
               <u>Attachments:</u>
               <ion-col size="7" class="paddzero text-left">
-                <input type="file" (change)="ActionUploadCommhubAttach($event)">
+                <input readonly="readonly" type="file" (change)="ActionUploadCommhubAttach($event)">
+                <ion-buttons slot="end">
+                  <!-- <ion-button color="danger" (click)="ActionDelete()">
+                    <ion-icon name="trash" class="delIcon"></ion-icon>
+                  </ion-button> -->
+                </ion-buttons>
                 <div class="quizz-progress ion-text-center" id="progress">
                 <ion-progress-bar color="secondary" [value]="progressNumber" style="min-height:12px;width: 95px;"></ion-progress-bar>{{fileUploadProgress}}
               </div>
@@ -69,7 +74,7 @@
           <ion-row *ngFor="let category of commDetails.AttachmentList">
             <ion-col class="paddleft5">
               <span *ngIf="category.ID!=intID">
-              <span (click)="ActionDelete(category.ID)"><ion-icon name="trash" class="delIcon"></ion-icon></span>&nbsp;
+              <!-- <span (click)="ActionDelete(category.ID)"><ion-icon name="trash" class="delIcon"></ion-icon></span> -->&nbsp;
               <span>{{category.FileName}}</span>
             </span>
             </ion-col>
@@ -81,7 +86,7 @@
           <ion-label floating><u>Note:</u></ion-label>
         </ion-item>
         <ion-row class="padding5">
-          <ion-textarea rows="4" cols="10"  [(ngModel)]="commDetails.Body" name="Body" class="borderall"></ion-textarea>
+          <ion-textarea rows="4" cols="10"  [innerHTML]="commDetails.Body" name="Body" class="borderall"></ion-textarea>
         </ion-row>
       </ion-list>
     </ion-content >

@@ -38,11 +38,11 @@
       </div>
     </ion-item>
     <ion-item>
-      <ion-label text-uppercase style="display: flex !important;"><span style="margin-top: 10px;">Email:&nbsp;</span>
+      <ion-label class="ion-text-uppercase" style="display: flex !important;"><span style="margin-top: 10px;">Email:&nbsp;</span>
         <ion-checkbox color="dark" name="Text" checked></ion-checkbox>
       </ion-label>
 
-      <ion-label text-uppercase class="text-right">Text:</ion-label>
+      <ion-label class="ion-text-uppercase" class="text-right">Text:</ion-label>
       <ion-checkbox color="dark" name="Text"></ion-checkbox>
     </ion-item>
     <ion-item>
@@ -121,9 +121,10 @@
 
     <!-- <ckeditor tagName="textarea" [(ngModel)]="mailDetails.mailBody" name="mailBody" [editor]="Editor" ></ckeditor> -->
     <!-- <angular-editor [(ngModel)]="mailDetails.mailBody" name="mailBody" [config]="config"></angular-editor> -->
-  
+  <ion-item>
     <ion-textarea class="mail-text" placeholder="Enter mail Body" [innerHTML]="mailDetails.mailBody" name="mailBody"
-      contenteditable="true" autofocus></ion-textarea>
+      contenteditable="true"></ion-textarea>
+  </ion-item>
     <!-- <ion-item>
     <ion-label floating><u>Note:</u></ion-label>
   </ion-item> -->

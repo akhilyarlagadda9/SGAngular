@@ -56,6 +56,9 @@ export class HomePage {
     });
     this.authservise.GetStoredCompany().then(result => {
       this.CompanyInfo = result;
+      if(this.CompanyInfo.Name == "RIVER STONEWORKS INC."){ // Temporary Fix only for River StoneWorks
+        this.CompanyInfo.Name = "RIVER STONE...";
+    }
     });
     this.authservise.GetStoredUserModuleAccess().then(result => {
       this.userAccess = result;

@@ -44,18 +44,23 @@
               }
             ],
             "scripts": [
-               "./node_modules/jquery/jquery-1.8.3.min.js","./node_modules/@drawingjs/d3.min.js", 
-              "./node_modules/@drawingjs/drawing3.js", "./node_modules/@drawingjs/shapedraw3.js",
-              "./node_modules/@drawingjs/quotebridge3.js","./node_modules/@drawingjs/layout3.js",
-              "./node_modules/@drawingjs/shapepart3.js", "./node_modules/@drawingjs/shapesides3.js",
-              "./node_modules/@drawingjs/shapetools3.js", "./node_modules/@drawingjs/sideangles3.js",
-              "./node_modules/@drawingjs/sidecorners3.js", "./node_modules/@drawingjs/sidecutouts3.js",
-              "./node_modules/@drawingjs/sideedges3.js", "./node_modules/@drawingjs/sideseams3.js",
-              "./node_modules/@drawingjs/sideshapes3.js", "./node_modules/@drawingjs/sidesplashs3.js",
-              "./node_modules/@drawingjs/sidesplashseams3.js", "./node_modules/@drawingjs/sidesplashshapes3.js",
-              "./node_modules/@drawingjs/slabparts3.js", "./node_modules/@drawingjs/slabshape3.js",
-              "./node_modules/@drawingjs/slabsplashs3.js", "./node_modules/@drawingjs/slabsplashseams3.js",
-              "./node_modules/@drawingjs/vectormath3.js", "./node_modules/@drawingjs/drawinglog3.js"             
+              "./node_modules/jquery/jquery-1.8.3.min.js","./node_modules/@drawingjs/bezier.js", 
+              "./node_modules/@drawingjs/drawing3.2.js", 
+              "./node_modules/@drawingjs/drawinglog3.2.js",
+              "./node_modules/@drawingjs/layout3.2.js", "./node_modules/@drawingjs/quotebridge3.2.js",
+              "./node_modules/@drawingjs/shapedraw3.2.js", "./node_modules/@drawingjs/shapelabels3.2.js",
+              "./node_modules/@drawingjs/shapepart3.2.js", "./node_modules/@drawingjs/shapesides3.2.copy.js",
+              "./node_modules/@drawingjs/shapesides3.2.js", "./node_modules/@drawingjs/shapetools3.2.js",
+              "./node_modules/@drawingjs/sideangles3.2.js", "./node_modules/@drawingjs/sidecorners3.2.js",
+              "./node_modules/@drawingjs/sidecutouts3.2.js", "./node_modules/@drawingjs/sideedges3.2.js",
+              "./node_modules/@drawingjs/sideseams3.2.js", "./node_modules/@drawingjs/sideshapes3.2.js",
+              "./node_modules/@drawingjs/sidesplashs3.2.js", "./node_modules/@drawingjs/sidesplashseams3.2.js",
+              "./node_modules/@drawingjs/sidesplashseams3.2.js", "./node_modules/@drawingjs/sidesplashshapes3.2.js",
+              "./node_modules/@drawingjs/slabdglayout3.2.js", "./node_modules/@drawingjs/slablayout3.2.js",
+              "./node_modules/@drawingjs/slabparts3.2.js", "./node_modules/@drawingjs/slabpartsdg3.2.js",
+              "./node_modules/@drawingjs/slabshape3.2.js","./node_modules/@drawingjs/slabsplashs3.2.js",
+              "./node_modules/@drawingjs/slabsplashseams3.2.js", "./node_modules/@drawingjs/vectormath3.2.js",
+              "./node_modules/@drawingjs/d3.min.js", "./node_modules/@drawingjs/qscope3.1.js"
             ]
           },
           "configurations": {

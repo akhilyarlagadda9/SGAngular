@@ -32,9 +32,8 @@ ion-icon{
 }
 .fc-axis { width: 55.25px !important;}
 .fc-ltr .fc-axis {text-align: left;}
-.fc-scroller-clip{ 
-    overflow-x: hidden; 
-  }
+.fc-time-grid .fc-slats td{height: 3em;}
+
 /***** PADDING<MARGINS *****/
 .searchbar-search-icon.sc-ion-searchbar-md {
     left: 7px;
@@ -744,7 +743,7 @@ ion-icon{
 }
 
 .mail-text {
-    padding: 16px;
+    padding: 25px;
     margin-top: -25px;
 }
 

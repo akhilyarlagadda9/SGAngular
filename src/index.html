@@ -5,10 +5,12 @@
   <meta charset="utf-8" />
   <title>Stone App</title>
 
+  <!-- server -->
+  <!-- <base href="/StoneApp.Mobile/" /> -->
+ <!-- Local -->
   <base href="/" />
-
   <meta name="viewport"
-    content="viewport-fit=cover, width=device-width, height=device-height,target-densitydpi=device-dpi, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="msapplication-tap-highlight" content="no" />
 
@@ -32,14 +34,17 @@
 
 <body>
   <app-root></app-root>
-  <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLkwxgLxSXDDXWgMss9nnIwBciWaZkPL8"></script>  -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLkwxgLxSXDDXWgMss9nnIwBciWaZkPL8"></script> 
   <script>
-  //appUrl = 'http://localhost/StoneApp.WebAPI/'; // For local
-  appUrl = '/StoneApp.WebAPI/';               // For IIS
- //appUrl="http://localhost:1758/";              
-  appUrl = "http://64.251.30.12:50007/StoneApp.WebAPI/";
-  //imgUrl="/StoneApp.App/DigitalContent/"
-  imgUrl="http://64.251.30.12:50007/StoneApp.App/DigitalContent/"
+
+    //server
+    //appUrl = '/StoneApp.WebAPI/';   
+    //imgUrl="/StoneApp.App/DigitalContent/"
+     
+    //local
+    appUrl="http://64.251.30.12:50007/StoneApp.WebAPI/";              
+    imgUrl="http://64.251.30.12:50007/StoneApp.App/DigitalContent/"
+
     _qscope = {}; platform=""; 
     timings = ['7:00 AM', '7:15 AM', '7:30 AM', '7:45 AM', '8:00 AM', '8:15 AM', '8:30 AM', '8:45 AM', '9:00 AM', '9:15 AM', '9:30 AM', '9:45 AM', '10:00 AM', '10:15 AM', '10:30 AM', '10:45 AM',
   '11:00 AM', '11:15 AM', '11:30 AM', '11:45 AM', '12:00 PM', '12:15 PM', '12:30 PM', '12:45 PM', '1:00 PM', '1:15 PM', '1:30 PM', '1:45 PM', '2:00 PM', '2:15 PM', '2:30 PM', '2:45 PM',

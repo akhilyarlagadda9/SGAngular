@@ -23,12 +23,12 @@ ActionAreaList(){
   })
 }
   SetDefaultArea() {
-    _qscope.quote.Version.AreaList = this.arealist;
-    _qscope.quote.Version.AreaID = 0;
+    _qscope.quote.header.Version.AreaList = this.arealist;
+    _qscope.quote.header.Version.AreaID = 0;
   }
 
   ActionAreaSelect(areaId) {
-    _qscope.quote.Version.AreaID = areaId;
+    _qscope.quote.header.Version.AreaID = areaId;
     this.selectedevent = "success"
      this.areaevent.emit( this.selectedevent);
   }

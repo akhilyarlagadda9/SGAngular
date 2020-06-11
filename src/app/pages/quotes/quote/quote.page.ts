@@ -10,7 +10,7 @@ import { QlayoutComponent } from '../qlayout/qlayout.component';
 import { version } from 'punycode';
 import { QuickquoteComponent } from '../quickquote/quickquote.component';
 import { AuditService } from 'src/app/service/audit.service';
-
+import { AuthService } from 'src/app/service/auth.service';
 
 @Pipe({
   name: 'filter'
@@ -23,9 +23,8 @@ import { AuditService } from 'src/app/service/audit.service';
 export class QuotePage implements OnInit {
   NavigateTab: number;
   selectedtabtype: number;
-
   constructor(private service: QuoteService, public Modalcntrl: ModalController, private navCtrl: NavController, private loadingController: LoadingController,
-    private auditService: AuditService) { }
+    private auditService: AuditService, private authService:AuthService) { }
   loaderToShow: any;
   quotelist: any[] = [];
   // pageindex:number= 0;
@@ -78,9 +77,10 @@ export class QuotePage implements OnInit {
   }
   GetQuoteList(event) {
     //this.showLoader();
+     this.authService.GetStoredLoginUserID().then(data => {
     let obj = this.qsearchobj;
     //get list from db
-    let result = this.service.ActionQuoteList(obj.search, obj.statusId, obj.index, obj.noOfRecords, obj.accessmode, 0, obj.sortTypeId, obj.sortby).subscribe(
+    let result = this.service.ActionQuoteList(obj.search, obj.statusId, obj.index, obj.noOfRecords, obj.accessmode, 0, obj.sortTypeId, obj.sortby,0,data).subscribe(
       data => { this.quotelist = obj.searchmode == 1 ? data : this.quotelist.concat(data); this.hideLoader(); },
       error => console.log(error));
       if(history.state.audt){
@@ -91,6 +91,7 @@ export class QuotePage implements OnInit {
     if (event) {
       event.target.complete();
     }
+  });
   }
   async hideLoader() {
     this.loadingController.dismiss();

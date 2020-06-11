@@ -373,9 +373,10 @@ export class CommonEditMailHubComponent implements OnInit {
   PushImage(result) {
     var result = result.toString().replace('[', "").replace(']', "");
     let array = result.split('+');
+    //console.log(array); arr[0] = "Name" arr[1]= ID
     let name = array[0].replace(/"/g, '');
     var model = {
-      ID: Number(array[2].replace(/"/g, '')), FileName: name,
+      ID: Number(array[1].replace(/"/g, '')), FileName: name,
       Check: 1, ThumbPath: "thumb_" + name, QuoteNo: this.header.QuoteNo, TypeID: this.commDetails.TypeID,
     };
     this.commDetails.AttachmentList.push(model);
@@ -383,6 +384,17 @@ export class CommonEditMailHubComponent implements OnInit {
     this.progressNumber = 0;
     //this.hideLoader()
 
+  }
+
+  ActionDelete(id){ // To delete the Attachment
+    this.qservice.ActionDeleteImage(id).subscribe(id=>{
+    console.log(id);
+    this.commDetails.AttachmentList.forEach(element => {
+      if(element.ID == id){
+        this.commDetails.AttachmentList.splice(0);
+      }
+    });
+  });
   }
 
   /* ActionSaveQuoteNote(){;

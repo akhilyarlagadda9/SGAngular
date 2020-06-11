@@ -40,8 +40,8 @@ export class AddareaComponent implements OnInit {
     this.service.ActionSaveAreaList(this.Version.ID, areaId, this.userId, this.arealists).subscribe(data => {
       this.service.ActionGetQuoteAreas(this.Version.ID, 0).subscribe(results => {
       this.resultareas = results;
-        _qscope.quote.Version.AreaList = this.resultareas;
-        let currentareas = _qscope.quote.Version.AreaList;
+        _qscope.quote.header.Version.AreaList = this.resultareas;
+        let currentareas = _qscope.quote.header.Version.AreaList;
         //this.preapreareas(currentareas, resultareas);
         //this.preapreareas(this.Version.VersionAreaList, resultareas);
         //_qscope.quote.Version.AreaList = currentareas;

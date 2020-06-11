@@ -138,18 +138,21 @@
   </ion-row>
   <ion-row class="rowlineitem" *ngFor="let splash of partinfo.SplashList">
     <ion-col (click)="ActionEditSplash(splash, i)"><u class="colorblue textfont14">Spl</u>:
-      <span *ngIf="splash.IsChg == '2'">{{ splash.Splash }}</span>
-      <span *ngIf="splash.IsChg != '2'">{{ splash.Splash }}</span>
+      <span *ngIf="splash.IsChg == '2'">{{ splash.Splash }} Sqft</span>
+      <span *ngIf="splash.IsChg != '2'">{{ splash.Splash }} Sqft</span>
       <span *ngIf="splash.CoSrNo > '0'">&nbsp;C{{splash.CoSrNo}}</span>
       &nbsp;<span *ngIf="splash.IsOptional == 1">Optional</span>&nbsp;
       <span>@<u class="colorgreen">
           <span *ngIf="splash.IsChg == '2'">{{ splash.Sqft | number : '.2-2'}}</span>
           <span *ngIf="splash.IsChg == '0'">{{ splash.Sqft | number : '.2-2'}}</span>
         </u>
-      </span>
+      </span><br/>
+      <span *ngIf="splash.LF !=0">{{splash.Splash}} LF @{{splash.LF}}</span> 
     </ion-col>
     <ion-col size="3" class="text-right">-&nbsp;</ion-col>
   </ion-row>
+
+  
   <ion-row class="rowlineitem" *ngFor="let edge of partinfo.EdgeList">
     <ion-col (click)="ActionEditEdge(edge)"><u class="colorblue textfont14">E</u>:
       <span *ngIf="edge.IsChg == '2'">{{ edge.EdgeProfile }}</span>
@@ -519,10 +522,10 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col style="color: blue;"
+    <!-- <ion-col style="color: blue;"
       *ngIf="areaInfo.laborList.length > 0 || areaInfo.otherList.length > 0 || areaInfo.tileList.length > 0 || areaInfo.responseList.length > 0 || areaInfo.cabinetList.length > 0">
       <h6><span style="background: lightblue;border: 1px solid #ddd;padding: 5px;">Area Items: {{AreaName}}</span></h6>
-    </ion-col>
+    </ion-col> -->
   </ion-row>
   <ion-row class="rowlineitem" *ngFor="let labor of areaInfo.laborList">
     <ion-col class="paddzero">

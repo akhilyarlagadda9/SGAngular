@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, PipeTransform } from '@angular/core';
 import { NavController, ModalController, NavParams, AlertController, PopoverController, ActionSheetController } from '@ionic/angular';
+import {DomSanitizer} from "@angular/platform-browser";
 import { QuoteService } from 'src/app/service/quote.service'
 import { HeadereditComponent } from 'src/app/pages/quotes/headeredit/headeredit.component';
 import { OverlayEventDetail } from '@ionic/core';
@@ -19,10 +20,11 @@ declare var _qscope: any;
   templateUrl: './quoteedit.component.html',
   styleUrls: ['./quoteedit.component.scss'],
 })
-export class QuoteeditComponent implements OnInit {
-  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private service: QuoteService,
+export class QuoteeditComponent implements OnInit,PipeTransform {
+  constructor(public Modalcntrl: ModalController, private navParams: NavParams, private service: QuoteService,private sanitizer:DomSanitizer,
     private navCtrl: NavController, private repService: QuoterepService,
     public actionSheetCtrl: ActionSheetController, private qrepservice: QuoterepService,private authService: AuthService) { }
+
   qprmsobj = this.navParams.data;
   headerInfo: any={QuoteContacts:[]};
   versionList: any = []; phaseList: any = [];
@@ -47,8 +49,8 @@ export class QuoteeditComponent implements OnInit {
   ActionAreaList(typeId: number) {
     this.service.ActionQuoteAreaList(this.qprmsobj.versionid, this.qprmsobj.phaseid).subscribe(data => {
       data;
-      _qscope.quote.Version.AreaList = data;
-      _qscope.quote.Version.AreaID = 0;
+      _qscope.quote.header.Version.AreaList = data;
+      _qscope.quote.header.Version.AreaID = 0;
       if (typeId == 0) {
         this.selectedtabtype = 2;
       }
@@ -124,9 +126,15 @@ async ActionQuoteHeader() {
   });
   return await modal.present();
 }
+
+transform(html) {
+  return this.sanitizer.bypassSecurityTrustHtml(html);
+}
 //Job Description Edit Function
 async ActionEditJobDesc(typeId: any) {
   let ver = { TypeID: typeId, Version: this.headerInfo.Version }
+  ver.Version.Description = this.transform(ver.Version.Description); // Get the Value we wanted(with styles)
+  console.log(ver);
   const modal = await this.Modalcntrl.create({
     component: JobdesceditComponent,
     componentProps: ver,
@@ -259,7 +267,7 @@ appButtons = appButtons.filter(x => x.text != "");
     this.contacts = model.componentProps.ContactList;
   }
   SetVersionInfo(typeId) {
-    _qscope.quote = this.headerInfo;
+    _qscope.quote.header = this.headerInfo;
     if (this.navParams.data.layoutId == 2 || typeId == 1) {
       this.ActionAreaList(typeId);
     }

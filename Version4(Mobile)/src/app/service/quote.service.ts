@@ -9,8 +9,8 @@ export class QuoteService {
   url = appUrl;
   constructor(private http: HttpClient) { }
 //#region Get
-  ActionQuoteList(search:string,statusId:number,index:number,noOfRecords:number,accessmode:number,userempid:number,sortTypeId:number,sortby:number): Observable<any> {
-    return this.http.get<any>(this.url +  'api/QList/ActionQuoteList?search=' + search + "&statusId=" + statusId + "&index=" + index + "&noOfRecords=" + noOfRecords + "&preferenceId=" + accessmode + "&userRefId=" + userempid + "&sortTypeId=" + sortTypeId + "&quoteSortId=" + sortby) 
+  ActionQuoteList(search:string,statusId:number,index:number,noOfRecords:number,accessmode:number,userempid:number,sortTypeId:number,sortby:number,locId:number,userID:any): Observable<any> {
+    return this.http.get<any>(this.url +  'api/QList/ActionQuoteList?search=' + search + "&statusId=" + statusId + "&index=" + index + "&noOfRecords=" + noOfRecords + "&preferenceId=" + accessmode + "&userRefId=" + userempid + "&sortTypeId=" + sortTypeId + "&quoteSortId=" + sortby + "&locId=" + locId + "&userId=" + userID) 
   }
   ActionQuoteInfo(quoteid:number,quoteNo:string,versionId:number,customerId:number,accountId:number,parAccountId:number): Observable<any> {
     return this.http.get<any>(this.url +  'api/QEdit/ActionHeaderInfo?quoteId=' + quoteid + '&quoteNo=' + quoteNo + '&versionId=' + versionId + '&customerId=' + customerId + '&accountId=' + accountId + '&parAccountId=' + parAccountId) 
@@ -382,6 +382,10 @@ qpremoveaddon(Id, versionId, areaId): Observable<any> {
 }
 qpremovetile(Id, versionId, areaId): Observable<any> {
   return this.http.post<any>(this.url + 'api/QSave/ActionRemoveTile?Id=' + Id + '&versionId=' + versionId + '&areaId=' + areaId, { headers: { 'Content-Type': 'application/json' } })
+}
+
+LeadFollowUpActList(followupId, userId, custTypeId, salesRepID, actTypeId, startDate, endDate, search): Observable<any> {
+  return this.http.get<any>(this.url + 'api/lead/LeadFollowUpActList?followupId=' + followupId + "&userId=" + userId + "&custTypeId=" + custTypeId + "&salesRepID=" + salesRepID + "&actTypeId=" + actTypeId + "&startDate=" + startDate + "&endDate=" + endDate + "&search=" + search)
 }
 
   

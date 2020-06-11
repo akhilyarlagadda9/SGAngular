@@ -108,9 +108,9 @@
       </ion-label>
       <ion-label>
         <ion-row *ngFor="let category of commDetails.AttachmentList">
-          <ion-col class="paddleft5" (click)="ActionPreviewFile(commDetails.Path)">
+          <ion-col class="paddleft5">
             <span>
-              <ion-icon name="trash" class="delIcon"></ion-icon>
+              <ion-icon name="trash" class="delIcon" (click)="ActionDelete(commDetails.ID)"></ion-icon>
             </span>&nbsp;
             <span>{{category.FileName}}</span>
           </ion-col>

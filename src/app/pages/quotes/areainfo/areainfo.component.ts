@@ -19,7 +19,8 @@ import { QuoterepService } from 'src/app/service/quoterep.service';
 import { FabricationComponent } from '../fabrication/fabrication.component';
 import { LaborinfoComponent } from '../laborinfo/laborinfo.component';
 import { AddpartComponent } from '../addpart/addpart.component';
-declare var _qscope, QBRinitAreadrawing, QBRinitdrawingareapartshape, QBRinitdrawarea: any;
+//declare var _qscope, QBRinitAreadrawing, QBRinitdrawingareapartshape, QBRinitdrawarea: any;
+declare var _qscope, QBRinitdrawing31:any;
 @Component({
   selector: 'app-areainfo',
   templateUrl: './areainfo.component.html',
@@ -37,18 +38,21 @@ export class AreainfoComponent implements OnInit {
   constructor(private service: QuoteService, public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private quoterep: QuoterepService) {
   }
   ngOnInit() {
+    console.log(this.PhaseId);
     this.InitLoad();
   }
   InitLoad() {
+    console.log(_qscope);
     this.coId = this.Version.LatestCoID;this.coSrNo = this.Version.LatestCoSrNo;
     //this.Version = _qscope.quote.Version;
-    this.arealist = _qscope.quote.Version.AreaList;
-    if (_qscope.quote.Version.AreaID == 0) {
+    this.arealist = _qscope.quote.header.Version.AreaList;
+    if (_qscope.quote.header.Version.AreaID == 0) {
       this.AreaID = this.arealist[0].ID;
     } else {
-      this.AreaID = _qscope.quote.Version.AreaID;
+      this.AreaID = _qscope.quote.header.Version.AreaID;
     }
     this.ActionPartsByArea(this.AreaID, 0);
+    
   }
 
 
@@ -68,8 +72,13 @@ export class AreainfoComponent implements OnInit {
   ActionPartsByArea(areaID: any, parttype: number) {
     if(this.arealist != null){this.GetAreaName(areaID);}
     this.service.ActionQuickPartList(this.Version.ID,this.PhaseId, areaID, 0, 0).subscribe(data => {
+      console.log(data);
       this.areaInfo = data;
       this.areaInfo.PartList = this.areaInfo.PartList == null ? [] : this.areaInfo.PartList;
+      let areaindex = this.getareaindexbyareaid(areaID);
+      _qscope.quote.header.Version.AreaList[areaindex].PartList =this.areaInfo.PartList;
+
+
       let length = this.areaInfo.PartList.length;
       if(length > 0){
         this.AreaPartID = data.PartInfo.ID;
@@ -85,7 +94,7 @@ export class AreainfoComponent implements OnInit {
     })
   }
   getareaindexbyareaid(areaid) {
-    let areas = _qscope.quote.Version.AreaList; for (let i = 0; i < areas.length; i++) { if (areas[i].ID == areaid) { return i; } }
+    let areas = _qscope.quote.header.Version.AreaList; for (let i = 0; i < areas.length; i++) { if (areas[i].ID == areaid) { return i; } }
   }
 
 
@@ -99,15 +108,17 @@ export class AreainfoComponent implements OnInit {
       error => console.log(error));
   }
   PartDrawing(partId: number) {
-    QBRinitAreadrawing('quote');
+    //QBRinitAreadrawing('quote');
     let areaindex = this.getareaindexbyareaid(this.AreaID);
-    QBRinitdrawingareapartshape(partId, this.areaInfo);
-    QBRinitdrawarea(areaindex, 'quote');
+    console.log(areaindex);
+    QBRinitdrawing31('quote',areaindex);
+    //QBRinitdrawingareapartshape(partId, this.areaInfo);
+    //QBRinitdrawarea(areaindex, 'quote');
   }
   /***** Addarea DETAILS *****/
   async ActionAddArea(areaId:any) {
     let copyobj = JSON.parse(JSON.stringify(this.arealist));
-    let info = {arealists : copyobj, Version : this.Version, quote : _qscope.quote, selectedareaId : areaId}
+    let info = {arealists : copyobj, Version : this.Version, quote : _qscope.quote.header, selectedareaId : areaId}
     const modal = await this.Modalcntrl.create({
       component: AddareaComponent,
       componentProps : info
@@ -115,7 +126,7 @@ export class AreainfoComponent implements OnInit {
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail.data.issave == true) {
       this.arealist = detail.data.componentProps;
-      _qscope.quote.Version.AreaList = detail.data.componentProps;
+      _qscope.quote.header.Version.AreaList = detail.data.componentProps;
       this.GetAreaName(this.AreaID);
       }
     });
@@ -176,6 +187,7 @@ export class AreainfoComponent implements OnInit {
   }
   /***** SPLASH DETAILS *****/
   async ActionEditSplash(spl: any) {
+    console.log(spl);
     let copyobj = JSON.parse(JSON.stringify(spl));
     let splash = { splash: copyobj, priceListID: Number(this.Version.PriceListID), PhaseId: this.PhaseId }
     const modal = await this.Modalcntrl.create({

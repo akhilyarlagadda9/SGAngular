@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { LeadService } from 'src/app/service/lead.service';
 import { CreateleadComponent } from '../createlead/createlead.component';
 import { LAddActivityComponent } from '../LeadAddActivity/LAddActivity.component';
+import { LeadEditComponent } from '../../quotes/LeadEdit/LeadEdit.component';
 declare const imgUrl: any;
 @Component({
   selector: 'app-lead',
@@ -114,6 +115,7 @@ export class LeadPage implements OnInit {
     console.log(this.calObj.StartDate);
     console.log(this.calObj.EndDate);
     this.leadService.LeadFollowUpActList(0, 0, 0, 0, 0, this.calObj.StartDate, this.calObj.EndDate, "").subscribe(data => {
+      console.log(data);
       this.actlist = []; // clear up the storage
       for (let j in data) {
         let item = data[j];
@@ -164,12 +166,11 @@ export class LeadPage implements OnInit {
   ActionRenderEvent(evnt) {
     // If need to Do anything we can do
     let event = evnt.event.extendedProps;
-    console.log(event);
     var htmlstring = '';
     htmlstring = "<div style='font-size: 10px;white-space: normal;word-wrap: break-word'>";
     htmlstring += "<div style='word-break:break-all'><img class='ico' src='" + event.Imageurl + "' width='15' height='15'>" + event.ActivityType + "</div>";
     htmlstring += "<div style='font-size: 10px;'>" +this.datePipe.transform(event.SchStartTime, "hh:mm a",'-400') + " - " + this.datePipe.transform(event.SchEndTime, "hh:mm a",'-400') + "</div>";
-    htmlstring += "<div style='word-break:break-all'><b>" + event.LeadExtID + "- " + event.CustName + "</b></div></div>";
+    htmlstring += "<div style='word-break:break-all'><b>" + event.LeadID + "- " + event.CustName + "</b></div></div>";
     evnt.el.innerHTML = htmlstring;
   }
 
@@ -218,9 +219,9 @@ export class LeadPage implements OnInit {
           handler: () => {this.ActionEditActivity(ev);}
         },
         {
-          text: 'Job View',
+          text: 'Lead View',
           cssClass:'color-orange',
-          handler: () => {this.ActionEditJobView(ev);}
+          handler: () => {this.ActionEditLeadView(ev);}
         },
         {
           text: 'Cancel',
@@ -232,8 +233,19 @@ export class LeadPage implements OnInit {
     (await actionSheet).present();
   }
 
-  ActionEditJobView(ev){
-    //TODO: Later
+  async ActionEditLeadView(ev){
+    let event = ev.event.extendedProps;  
+    console.log(event);
+    //let qprmsobj = {}; Need TO BE SURE WHETHER WE CAN SEND THE WHOLE INFO or NOT
+      // let qprmsobj = {
+      //   leadId: event.LeadID, quoteno: event.QuoteNo, versionid: event.VersionID, customerid: 0,
+      //   accountid: 0, childaccid: 0,layoutId: 1,statusId:event.StatusID,
+      // }; 
+    const modal = await this.Modalcntrl.create({
+      component: LeadEditComponent,
+      componentProps: event,
+    });
+    return await modal.present();
   }
 
   ActionGoToHome() {

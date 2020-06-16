@@ -59,6 +59,7 @@ import { MaileditComponent } from '../mailedit/mailedit.component';
 import { ActionquoteComponent } from '../actionquote/actionquote.component';
 import { AddmeasComponent } from '../materialinfo/addmeas/addmeas.component';
 import { QuickquoteComponent } from '../quickquote/quickquote.component';
+import {LeadEditComponent} from '../LeadEdit/LeadEdit.component';
 // import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
 // import { File } from '@ionic-native/file/ngx';
 // import { FileTransfer} from '@ionic-native/file-transfer/ngx';
@@ -91,13 +92,13 @@ import { QuickquoteComponent } from '../quickquote/quickquote.component';
     MaterialinfoComponent, CutoutinfoComponent, EdgeinfoComponent, 
     SplashComponent, AddoninfoComponent, SinkComponent,
     QuoteeditComponent,HeadereditComponent,HeaderinfoComponent,
-    PoitemsComponent,CommhubComponent,PrintsComponent,
+    PoitemsComponent,PrintsComponent,
     JobdesComponent,AreainfoComponent,PoeditComponent,
     JobdesceditComponent,CustomereditComponent,CommhubeditComponent, CommonEditMailHubComponent,
     CustomerinfoComponent,AddareaComponent,CustomersearchComponent,
     ManagementsummaryComponent,additemComponent,ActivitiesComponent,AreasummaryComponent,
     FabricationComponent,LaborinfoComponent,MapComponent,QlayoutComponent,ArealayoutComponent,QnavigationComponent,OtherComponent,
-     AddpartComponent, AddSizesComponent,MaileditComponent, QuickquoteComponent,AddmeasComponent],
+     AddpartComponent, AddSizesComponent,MaileditComponent, QuickquoteComponent,AddmeasComponent,LeadEditComponent,CommhubComponent],
   declarations: [QuotePage,AddmeasComponent, SearchComponent, ActionquoteComponent, 
     TransactionComponent,AccountsComponent,NewtranComponent,PaymentScheduleComponent,AdditionalitemserachComponent,
     taxComponent,feeComponent,DiscountComponent, itemsearchComponent,
@@ -106,11 +107,11 @@ import { QuickquoteComponent } from '../quickquote/quickquote.component';
     CutoutinfoComponent, EdgeinfoComponent, SplashComponent, AddoninfoComponent, 
     SinkComponent, CreatequoteComponent,QuoteeditComponent,
     HeadereditComponent,HeaderinfoComponent,PoitemsComponent,
-    CommhubComponent,PrintsComponent,JobdesComponent,
+    PrintsComponent,JobdesComponent,
     AreainfoComponent,PoeditComponent,JobdesceditComponent,
     CustomereditComponent,CommhubeditComponent,CustomerinfoComponent,CommonEditMailHubComponent,
     AddareaComponent,CustomersearchComponent,ManagementsummaryComponent,ActivitiesComponent,AreasummaryComponent,
     additemComponent,additemComponent,FabricationComponent,LaborinfoComponent,MapComponent,QnavigationComponent,
-    QlayoutComponent,ArealayoutComponent,OtherComponent,AddpartComponent,AddSizesComponent,MaileditComponent, QuickquoteComponent,AddmeasComponent]
+    QlayoutComponent,ArealayoutComponent,OtherComponent,AddpartComponent,AddSizesComponent,MaileditComponent, QuickquoteComponent,AddmeasComponent,LeadEditComponent,CommhubComponent]
 })
 export class QuotePageModule {}

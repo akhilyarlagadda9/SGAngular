@@ -89,8 +89,8 @@ import { CommhubComponent } from '../commhub/commhub.component';
       // }
 
       async ActionLoadMap() {   // Calling Map
-        let copyobj = JSON.parse(JSON.stringify(this.headerInfo));
-        let obj = {headerInfo: copyobj,MapCalled:"Quote"};
+        let copyobj = JSON.parse(JSON.stringify(this.qprmsobj));
+        let obj = {headerInfo: copyobj,MapCalled:"Lead"};
         const modal = await this.Modalcntrl.create({
           component: MapComponent,
           componentProps: obj,

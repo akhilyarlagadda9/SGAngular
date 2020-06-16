@@ -154,7 +154,7 @@
                         <ion-row *ngIf="headerInfo.Version.PayTypeID == 2" class="font12">
                             Pay Terms: <span class="color-blue">{{headerInfo.Version.PaymentTerm}}</span>
                             <span>$
-                                {{((headerInfo.Version.TotalAmt + headerInfo.Version.TaxAmt) - (headerInfo.Version.DiscountAmt))| number : '.2-2'}}</span>
+                                {{((headerInfo.Version.TotalAmt + headerInfo.Version.Tax) - (headerInfo.Version.DiscountAmt))| number : '.2-2'}}</span>
                         </ion-row>
                     </ion-col>
                     <ion-col size="7" class="paddzero">
@@ -174,12 +174,12 @@
                         <ion-row>
                             <ion-col size="7" class="fontbold text-right">Sales Tax:</ion-col>
                             <ion-col size="5" class="fontbold text-right">&nbsp;$
-                                {{headerInfo.Version.TaxAmt | number : '.2-2'}}</ion-col>
+                                {{headerInfo.Version.Tax | number : '.2-2'}}</ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col size="7" class="fontbold text-right">Net Total:</ion-col>
                             <ion-col size="5" class="fontbold text-right">&nbsp;$
-                                {{((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt - (headerInfo.Version.RefAmt + headerInfo.Version.RoundOff)) - (headerInfo.Version.DiscountAmt)) | number : '.2-2'}}
+                                {{((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.Tax - (headerInfo.Version.RefAmt + headerInfo.Version.RoundOff)) - (headerInfo.Version.DiscountAmt)) | number : '.2-2'}}
                             </ion-col>
                         </ion-row>
                         <ion-row>
@@ -190,7 +190,7 @@
                         <ion-row>
                             <ion-col size="7" class="fontbold text-right">Final Total:</ion-col>
                             <ion-col size="5" class="fontbold text-right">&nbsp;$
-                                {{((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt) - (headerInfo.Version.DiscountAmt)) | number : '.2-2'}}
+                                {{((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.Tax) - (headerInfo.Version.DiscountAmt)) | number : '.2-2'}}
                             </ion-col>
                         </ion-row>
                         <ion-row>
@@ -207,7 +207,7 @@
                             *ngIf="headerInfo.Version.PmtReceived != 0 || headerInfo.Version.RefundAmount != 0 || headerInfo.Version.CreditAmount != 0">
                             <ion-col size="7" class="fontbold text-right">Balance:</ion-col>
                             <ion-col size="5" class="fontbold text-right">$
-                                &nbsp;{{((((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt) - headerInfo.Version.DiscountAmt) - (headerInfo.Version.PmtReceived - headerInfo.Version.RefundAmount) - headerInfo.Version.CreditAmount)) | number : '.2-2'}}
+                                &nbsp;{{((((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.Tax) - headerInfo.Version.DiscountAmt) - (headerInfo.Version.PmtReceived - headerInfo.Version.RefundAmount) - headerInfo.Version.CreditAmount)) | number : '.2-2'}}
                             </ion-col>
                         </ion-row>
                     </ion-col>
@@ -217,11 +217,14 @@
         <ion-col *ngSwitchCase="2">
             <app-areainfo [Version]="headerInfo.Version" [PhaseId]="qprmsobj.phaseid"></app-areainfo>
         </ion-col>
+        <!-- <ion-col *ngSwitchCase="2">
+            <app-arealayout [Version]="headerInfo.Version" [PhaseId]="qprmsobj.phaseid"></app-arealayout>
+        </ion-col> -->
         <ion-col *ngSwitchCase="3" style="padding-bottom: 70px;">
             <app-commhub [VersionId]="headerInfo.Version.ID" [PhaseId]="qprmsobj.phaseid" (comHubClick)="ActionLoadHubInfo($event)"></app-commhub>
         </ion-col>
         <ion-col *ngSwitchCase="4">
-            <app-activities [VersionId]="headerInfo.Version.ID" [PhaseId]="qprmsobj.phaseid"></app-activities>
+            <app-activities [VersionId]="headerInfo.Version.ID" [PhaseId]="qprmsobj.phaseid" [qprmsobj]="qprmsobj"></app-activities>
         </ion-col>
 
         <ion-col *ngSwitchCase="5" style="padding-bottom: 70px;">

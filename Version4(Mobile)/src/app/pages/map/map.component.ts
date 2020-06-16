@@ -35,6 +35,12 @@ objDataInfo = this.navParams.data;
     });
     this.map = GoogleMaps.create('map_canvas');
 
+    if(this.objDataInfo.MapCalled == "Lead"){
+      this.strCustFullAdd=this.objDataInfo.headerInfo.FullAddres;
+      this.strHeadToShow = "Lead#"+this.objDataInfo.headerInfo.LeadID+"-"+this.objDataInfo.headerInfo.CustType+"-"+this.strCustFullAdd;
+      this.markerLine();
+    }
+
     if(this.objDataInfo.MapCalled == "Quote"){
       this.strCustFullAdd=this.objDataInfo.headerInfo.Address1+","+this.objDataInfo.headerInfo.City+","+this.objDataInfo.headerInfo.State+",0"+this.objDataInfo.headerInfo.Zipcode;
       this.strHeadToShow = this.objDataInfo.headerInfo.QuoteNo+"-"+this.objDataInfo.headerInfo.QuoteName+"-"+this.strCustFullAdd;
@@ -102,8 +108,8 @@ markerLine(){
   this.authService.GetCompanyInfo().subscribe(data=>{
     console.log(data);
     strfullAdd = data.Name+"\r\n"+data.ShippingAddress+","+data.ShippingCity+","+data.State+",0"+data.ZipCode; // Company Address
-   console.log(strfullAdd); // Customer Address
-   console.log(this.strCustFullAdd);
+   strfullAdd = strfullAdd.includes(",,")?strfullAdd.replace(",,",","):strfullAdd; //Company Address, removing ,,
+  this.strCustFullAdd = this.strCustFullAdd.includes(",,")?this.strCustFullAdd.replace(",,",","):this.strCustFullAdd;  //Customer Address removing ,,
   Geocoder.geocode({
     address:  [
       strfullAdd,
@@ -118,7 +124,7 @@ markerLine(){
    });
    console.log(this.arrInformation[0]);
    this.map.addMarker({
-    'title': strfullAdd.bold(),
+    'title': strfullAdd.includes(",,")?strfullAdd.replace(",,",",").bold():strfullAdd.bold(),
     'icon' : 'Green',
     'animation': 'BOUNCE',
     'position':this.arrInformation[0]
@@ -127,7 +133,7 @@ markerLine(){
   });
   
   this.map.addMarker({
-    'title':this.strHeadToShow.bold(),
+    'title':this.strHeadToShow.includes(",,")?this.strHeadToShow.replace(",,",",").bold():this.strHeadToShow.bold(),
     'icon' : 'blue',
     'animation': 'BOUNCE',
     'position': this.arrInformation[1]

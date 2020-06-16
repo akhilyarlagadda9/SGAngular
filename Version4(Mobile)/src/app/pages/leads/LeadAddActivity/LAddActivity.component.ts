@@ -19,12 +19,13 @@ export class LAddActivityComponent implements OnInit {
   calAccess: boolean = true;
   ActTypeList: any; statusList: any;
   leadlist: any; timings: any = timings; eventCopy;any;
-  messageList: any; MeetingTypes: any;
+  messageList: any; MeetingTypes: any; minYear:any;
   constructor(public Modalcntrl: ModalController, private navParams: NavParams,
     private datePipe: DatePipe, private alertCtrl: AlertController, private leadService: LeadService, private schService: SchedulingService) { }
 
 
   ngOnInit() {
+    this.minYear = (new Date().getFullYear());
     this.MeetingTypes = [
       {
         ID: 1,
@@ -56,6 +57,7 @@ export class LAddActivityComponent implements OnInit {
   ActionGetMessageList() {
     this.leadService.GetMessageStatusList(11).subscribe(data => {
       console.log(data);
+      this.actinfo["StatusName"] = "Normal";
       this.messageList = data;
       this.ActionMessageStatus(this.actinfo.PriorityIcon);
     });
@@ -64,8 +66,11 @@ export class LAddActivityComponent implements OnInit {
   
   ActionMessageStatus(icon){
     let priorityCheck = this.messageList.find(s => s.Path == icon);
+    if(priorityCheck){ // Check only if it is not Undefined
+    this.actinfo["messageID"] = priorityCheck.ID;
     this.actinfo["StatusName"] = priorityCheck.Name
     this.actinfo["PriorityIcon"] = priorityCheck.Path;
+    }
   }
 
   ActionSetMessageStatus(id){
@@ -175,7 +180,7 @@ export class LAddActivityComponent implements OnInit {
     LeadDetails.LeadCustomer.BillZipCode = LeadDetails.LeadCustomer.BillZipCode == null ? "" : LeadDetails.LeadCustomer.BillZipCode;
     let strLeadAddress = LeadDetails.LeadCustomer.BillAddress + "," + LeadDetails.LeadCustomer.BillCity + "," + LeadDetails.LeadCustomer.BillState + "," + LeadDetails.LeadCustomer.BillZipCode;
     strLeadAddress = strLeadAddress.replace(",,", "");
-    this.actinfo.LeadName = LeadDetails.LeadCustomer.Name;
+    this.actinfo["LeadName"] = LeadDetails.LeadCustomer.Name;
     this.actinfo["LeadExtID"] = LeadDetails.ExtID;
     this.actinfo["LeadID"] = LeadDetails.ID;
     this.actinfo["RefTypeID"] = LeadDetails.LeadCustomer.RefID;
@@ -235,7 +240,7 @@ export class LAddActivityComponent implements OnInit {
     }
     this.GetDuration(0);
   }
-  GetDuration(type) {debugger;
+  GetDuration(type) {
     var hrs = this.actinfo.Hrs;
     var mins = this.actinfo.Mins;
     let sDate = new Date(this.actinfo.SchStartTime).toDateString() + " " + this.actinfo.STime;
@@ -307,7 +312,7 @@ export class LAddActivityComponent implements OnInit {
     return await popover.present();
   }
 
-  ActionDeleteSelectedItems(Id, index, list) {
+  ActionDeleteSelectedItems(Id, index) {
     if (Id > 0) {
       this.schService.ActionDeleteResource(Id).subscribe(data => {
         let success = data;

@@ -79,6 +79,7 @@ export class SchedulingPage implements OnInit {
   actResources: any = []; width: number;
   @ViewChild('calendar', { static: false }) fullcalendar: FullCalendarComponent;
   CalendarTitle: any; ActiveDate: Date; calendarApi4 = null;
+  loaderToShow: Promise<void>;
   calObj: any = {
     StartDate: Date, EndDate: Date, ActTypeIDs: "11", ActTypes: "Template", ResourceIDs: "", 
     ResourceNames: "ALL", StatusIDs: "", StatusNames: "ALL",IsDateChange: false, IsDayChange: false,
@@ -121,6 +122,8 @@ export class SchedulingPage implements OnInit {
       },
     }
   }
+
+  hide
   ngAfterViewInit() {
       console.log(this.fullcalendar);
     this.calendarApi4 = this.fullcalendar;
@@ -192,6 +195,7 @@ export class SchedulingPage implements OnInit {
     // }
   }
   ActionLoadEvents() {
+    //this.showLoader()
     if (this.calObj.CalendarView != "" && this.calObj.CalendarView != undefined) {
       let resids = "";
       let sDate = this.calObj.StartDate; let eDate = this.calObj.EndDate;
@@ -218,8 +222,21 @@ export class SchedulingPage implements OnInit {
         }
       });
     }
-
   }
+
+  showLoader() {
+    this.loaderToShow = this.loadingController.create({
+      message: 'please wait'
+    }).then((res) => {
+      res.present();
+      res.onDidDismiss().then((dis) => {
+        console.log('Loading dismissed!');
+      });
+    });
+  }
+  async hideLoader() {
+    this.loadingController.dismiss();
+  } 
   ActionRefreshCalendar() {
     this.calObj.ActTypeIDs = "11"; this.calObj.ActTypes = "Template";
     this.calObj.ResourceIDs = ""; this.calObj.ResourceNames = "ALL";
@@ -414,9 +431,14 @@ ChangedViewEvents() {
  
   async ActionEditJobView(ev) {
     //console.log(ev);
-    let event = ev.event.extendedProps;  
+    let event = ev.event.extendedProps;
+    let sDate = new Date(ev.event._def.extendedProps.StartDate);
+    let eDate = new Date(ev.event._def.extendedProps.EndDate);
+    let obj = { actId: ev.event._def.extendedProps.ID, actTypeID: ev.event._def.extendedProps.ActivityTypeID, StartDate: sDate, EndDate: eDate }
+    console.log(obj);
+    console.log(event); 
       let qprmsobj = {
-        quoteid: event.ProjectID, quoteno: event.QuoteNo, versionid: event.VersionID, customerid: 0,
+        quoteid: event.ProjectID, quoteno: event.QuoteNo, versionid: event.VersionID, customerid: 0,obj:obj,
         accountid: 0, childaccid: 0, phaseid: event.PhaseID, viewtypeid: event.PhaseID > 0 ? 2 : 1, layoutId: 1,statusId:event.PhaseID > 0 ? 6 : 1,
       }; 
     const modal = await this.Modalcntrl.create({

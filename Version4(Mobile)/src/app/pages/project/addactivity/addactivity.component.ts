@@ -21,16 +21,20 @@ export class AddactivityComponent implements OnInit {
   IsSelectedPopulate: number;
   resourceList: any;
   QuotePartList: any; timings: any = timings;dayCheck:any;
-  loaderToShow: Promise<void>;
+  loaderToShow: Promise<void>; minYear:any;
   //arrShowItems:any;
   constructor(public Modalcntrl: ModalController, private schService: SchedulingService, private navParams: NavParams,
     private datePipe: DatePipe, private alertCtrl: AlertController, private authservise: AuthService, public loadingController: LoadingController,) { }
 
   ngOnInit() {
+    this.minYear = (new Date().getFullYear());
     this.LoadCalendarAccess();
     if (this.actinfo.ID == 0) {
+      console.log(this.actinfo);
       this.ActionActivityInfo();
     } else {
+      this.actinfo.STime = this.actinfo.STime.charAt(0)=="0"?this.actinfo.STime.substr(1,this.actinfo.STime.length): this.actinfo.STime;
+      this.actinfo.ETime = this.actinfo.ETime.charAt(0)=="0"?this.actinfo.ETime.substr(1,this.actinfo.ETime.length):this.actinfo.ETime;
       // this.ActionActivityInfoWithDates();
       this.actinfo.SchEndTime  = (this.actinfo.SchEndTime).substring(0,(this.actinfo.SchEndTime).indexOf("T"));
       this.GetSelectedData(this.actinfo);
@@ -181,14 +185,17 @@ export class AddactivityComponent implements OnInit {
     let statusinfo = this.statusList.find(s => s.ID == id);
     if (statusinfo != undefined && statusinfo != null) {
       if (id == 5) {
+        let strCurrentTime = this.datePipe.transform(new Date().getTime(), "hh:mm a");
         let currDate = this.datePipe.transform(new Date(), "MM-dd-yyyy");
         let actStartYear = this.datePipe.transform(this.actinfo.ActualStartDate, "yyyy");
         let actEndYear = this.datePipe.transform(this.actinfo.ActualEndDate, "yyyy");
+        this.actinfo.ActStart =  (strCurrentTime.charAt(0))=="0"?strCurrentTime.substr(1,strCurrentTime.length):strCurrentTime;
+        this.actinfo.ActEnd =  (strCurrentTime.charAt(0))=="0"?strCurrentTime.substr(1,strCurrentTime.length):strCurrentTime;
         if ((actStartYear == "0001" || actStartYear == "0000")) {
-          this.actinfo.ActualStartDate = currDate + " " + this.actinfo.STime;
+          this.actinfo.ActualStartDate = currDate + " " + this.actinfo.STime; // Need to check whether need to add STime, because anyhow we are adding time
         }
         if ((actEndYear == "0001" || actEndYear == "0000")) {
-          this.actinfo.ActualEndDate = currDate + " " + this.actinfo.ETime;
+          this.actinfo.ActualEndDate = currDate + " " + this.actinfo.ETime; // Need to check whether need to add ETime, because anyhow we are adding time
         }
       }
       this.actinfo.StatusName = statusinfo.Name;

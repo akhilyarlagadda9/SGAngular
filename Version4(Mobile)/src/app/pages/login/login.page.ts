@@ -84,14 +84,14 @@ export class LoginPage implements OnInit {
     audt.userName = this.user.UserName;
     audt.reqStartTime = new Date().getTime();
     audt.viewName = "LoginToHome"
-    const strFullAddress = this.audit.geocodeAddress();
-    strFullAddress.then(res => {
-      audt.location = res;
-      this.navCtrl.navigateRoot('/home', { state: { audt } });
-    }).catch(error => {
-      audt.location = error;
-      this.navCtrl.navigateRoot('/home', { state: { audt } });
-    });
+    // const strFullAddress = this.audit.geocodeAddress();
+    // strFullAddress.then(res => {
+    //   audt.location = res;
+       this.navCtrl.navigateRoot('/home', { state: { audt } });
+    // }).catch(error => {
+    //   audt.location = error;
+    //   this.navCtrl.navigateRoot('/home', { state: { audt } });
+    // });
   }
 
 

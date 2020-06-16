@@ -42,7 +42,7 @@
         <ion-label class="labelfont" position="stacked" color="primary">Account Types<span
             class="requiredField">*</span>
         </ion-label>
-        <ion-select name="CustTypeID" #CustTypeID="ngModel" class="labelfont" [selectedText]="CustType"
+        <ion-select name="CustTypeID" #CustTypeID="ngModel" class="labelfont"
           [(ngModel)]="leadInfo.CustTypeID" (ionChange)="populate(leadInfo.CustTypeID)" required>
           <ion-select-option *ngFor="let p of customerTypes" [value]="p.ID">{{p.Name}}</ion-select-option>
         </ion-select>

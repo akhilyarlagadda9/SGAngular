@@ -29,7 +29,7 @@ declare var _qscope, QBRinitdrawing31:any;
 })
 export class AreainfoComponent implements OnInit {
   public Version: any; coId: number; coSrNo: string;PhaseId:number;
-  arealist: any = []; AreaID: number;AreaName:string;
+  arealist: any = []; AreaID: number;AreaName:any="";
   partinfo: any = []; AreaPartID: number;
    areaInfo: any = {
     //PartList: [], ID: 0,
@@ -48,6 +48,7 @@ export class AreainfoComponent implements OnInit {
     this.arealist = _qscope.quote.header.Version.AreaList;
     if (_qscope.quote.header.Version.AreaID == 0) {
       this.AreaID = this.arealist[0].ID;
+      this.AreaName =  this.arealist[0].Name; // Pre-select the value on dropdown field
     } else {
       this.AreaID = _qscope.quote.header.Version.AreaID;
     }
@@ -84,9 +85,9 @@ export class AreainfoComponent implements OnInit {
         this.AreaPartID = data.PartInfo.ID;
         this.partinfo = data.PartInfo;
         console.log(data.PartInfo);
-        //if (this.areaInfo.PartList != null) {
+        if (data.PartInfo.Shape != "") {
             this.PartDrawing(this.AreaPartID);
-       // }
+        }
       }else{
         this.partinfo = {};this.partinfo.ID = 0;
       }
@@ -102,8 +103,11 @@ export class AreainfoComponent implements OnInit {
   ActionGetPartInfo(partId: number) {
     let result = this.service.ActionPartInfo(this.Version.ID,this.PhaseId, this.AreaID, partId, 0).subscribe(
       data => {
+        console.log(data);
         this.partinfo = data;
+        if(data.Shape != ""){
         this.PartDrawing(partId);
+        }
       },
       error => console.log(error));
   }

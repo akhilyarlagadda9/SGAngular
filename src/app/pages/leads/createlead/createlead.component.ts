@@ -351,7 +351,7 @@ export class CreateleadComponent implements OnInit {
   }
 
   //SaveLead
-  ActionSaveLead(form: any) {
+  ActionSaveLead(form: any) {debugger
     if (form.valid) {
       this.showLoader();
       if (this.leadInfo.CustTypeID != 4 && this.leadInfo.ParentAccID == 0) { this.leadInfo.AccName = ""; return; }
@@ -363,13 +363,17 @@ export class CreateleadComponent implements OnInit {
           this.leadInfo.Status = "Initiated";
           this.leadInfo.AccountName = this.CustType;
           var model = this.leadTypes.filter(s => s.ID == this.leadInfo.LeadTypeID);
-          if (model != null && model != undefined) { this.leadInfo.LeadType = model[0].Name; }
+          if (model != null && model != undefined) { this.leadInfo.LeadType = model[0].Name;this.hideLoader(); }
           this.ActionCloseCreateLead(true);
           //this.SendLeadMessage();
+
         }
-      }, function (error) { alert(error.data); });
+        this.hideLoader();
+      }, function (error) { alert(error.data);console.log(this.leadInfo) });
     }
   }
+
+  
   prepareLead() {
     this.leadInfo.ActTypeID = this.leadInfo.CustTypeID == this.commercialAccType ? this.commActType : this.DefLeadActType;
     this.leadInfo.CustomerName = this.leadInfo.CustomerName == null ? this.leadInfo.LeadCustomer.Name : this.leadInfo.CustomerName;

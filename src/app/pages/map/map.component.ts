@@ -8,7 +8,6 @@ import {
   GoogleMapsEvent,
   Marker,
   GoogleMapsAnimation,
-  MyLocation
 } from '@ionic-native/google-maps';
 declare var google;
 declare var plugin;
@@ -37,14 +36,14 @@ objDataInfo = this.navParams.data;
     this.map = GoogleMaps.create('map_canvas');
 
     if(this.objDataInfo.MapCalled == "Quote"){
-      this.strCustFullAdd=this.objDataInfo.headerInfo.Address1+","+this.objDataInfo.headerInfo.City+","+this.objDataInfo.headerInfo.State+","+this.objDataInfo.headerInfo.Zipcode;
+      this.strCustFullAdd=this.objDataInfo.headerInfo.Address1+","+this.objDataInfo.headerInfo.City+","+this.objDataInfo.headerInfo.State+",0"+this.objDataInfo.headerInfo.Zipcode;
       this.strHeadToShow = this.objDataInfo.headerInfo.QuoteNo+"-"+this.objDataInfo.headerInfo.QuoteName+"-"+this.strCustFullAdd;
       this.markerLine();
     }
     else if(this.objDataInfo.MapCalled == "Scheduling"){
       //this.scheduleMap();
       this.objDataInfo.headerInfo.forEach(data => {
-        this.strCustFullAdd = data.extendedProps.Address+","+data.extendedProps.City+","+data.extendedProps.State+","+data.extendedProps.Zipcode;
+        this.strCustFullAdd = data.extendedProps.Address+","+data.extendedProps.City+","+data.extendedProps.State+",0"+data.extendedProps.Zipcode;
         this.strHeadToShow = data.extendedProps.QuoteNo+"-"+data.extendedProps.QuoteName+ this.strCustFullAdd;
         this.arrData.push(this.strCustFullAdd);
         this.arrHead.push(this.strHeadToShow);
@@ -59,6 +58,7 @@ objDataInfo = this.navParams.data;
     this.scheduleMap();
   }
 }
+
 
 ActionZoom(){
   this.map.setCameraZoom(4.3);
@@ -101,8 +101,8 @@ markerLine(){
   var strfullAdd = "";
   this.authService.GetCompanyInfo().subscribe(data=>{
     console.log(data);
-    strfullAdd = data.ShippingAddress+","+data.ShippingCity+","+data.State+","+data.ZipCode;
-   console.log(strfullAdd);
+    strfullAdd = data.Name+"\r\n"+data.ShippingAddress+","+data.ShippingCity+","+data.State+",0"+data.ZipCode; // Company Address
+   console.log(strfullAdd); // Customer Address
    console.log(this.strCustFullAdd);
   Geocoder.geocode({
     address:  [
@@ -118,7 +118,7 @@ markerLine(){
    });
    console.log(this.arrInformation[0]);
    this.map.addMarker({
-    'title':'SG',
+    'title': strfullAdd.bold(),
     'icon' : 'Green',
     'animation': 'BOUNCE',
     'position':this.arrInformation[0]

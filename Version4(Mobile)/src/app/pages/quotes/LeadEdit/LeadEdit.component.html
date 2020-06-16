@@ -1,0 +1,128 @@
+<ion-header>
+    <ion-toolbar color="{{headerInfo.StatusColor}}">
+        <ion-buttons slot="start">
+            <ion-icon class="fontlarge" (click)="ActionCloseQuoteInfo()" name="arrow-back"></ion-icon>
+        </ion-buttons>
+        <ion-title align="center">
+            <div style="font-size: 22px;" class="text-center">
+               Lead# - {{headerInfo.LeadID}}
+            </div>  
+                   
+        </ion-title>
+        <!-- <span size="small" slot="end" (click)="ActionNewAction()"><h1 class="h1marg">Action</h1></span> -->
+        <!-- <ion-icon name="arrow-dropdown-circle" slot="end" class="fontlarge" (click)="ActionNewAction()"></ion-icon>&nbsp; -->
+    </ion-toolbar>
+    <ion-toolbar>
+        <ion-row>
+            <ion-col class="paddtopzero text-center" (click)="ActionLoadTabInfo(1)">
+                <img src="assets/img/Checklist-icon.png" alt="your image" style="width:35px;height:35px;">
+                <div ><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 1 }">Summary</span></div>
+            </ion-col>
+
+            <ion-col class="paddtopzero text-center" (click)="ActionLoadTabInfo(3)">
+                <img src="assets/img/email-icon.png" alt="your image" style="width:35px;height:35px;">
+                <div><span style="font-size:11px;white-space: nowrap;" [ngClass]="{'txt-color' : selectedtabtype == 3 }">Comm Hub</span></div>
+            </ion-col>
+            <ion-col class="paddtopzero text-center"
+                (click)="ActionLoadTabInfo(4)">
+                <img src="assets/img/calendar-icon.png" alt="your image" style="width:35px;height:35px;">
+                <div><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 4 }">Activities</span></div>
+            </ion-col>
+
+        </ion-row>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-row [ngSwitch]="selectedtabtype">
+        <ion-col *ngSwitchCase="1">
+            <ion-row style="background:#ddd">
+                <ion-col size="7" class="paddtopzero" (click)="ActionEditJob()">
+                    <h2 class="fontsmall no-margin"><u>{{headerInfo.CustName}}</u></h2>
+                </ion-col>
+                <ion-col size="5" class="text-right paddtopzero">
+                    <p class="no-margin">Account Type {{headerInfo.CustType }}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="12" class="paddtopzero">
+                  <span (click)="ActionLoadMap()"><ion-icon class="text-font" class="fontsmall" name="pin"></ion-icon></span>
+                    <span class="valignsup">
+                        {{headerInfo.FullAddres}}
+                    </span>
+                </ion-col>
+                <div>
+                    <ion-row>
+                    <ion-col size="12" class="paddtopzero">
+                        <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon>
+                        <span class="valignsup" *ngIf="headerInfo.SalesPerson !='' && headerInfo.SalesPerson != null">
+                            <u>{{headerInfo.SalesPerson}}</u>
+                        </span>
+                        <span *ngIf="headerInfo.SalesRepPhone != '' && headerInfo.SalesRepPhone != null" name="contact" class="valignsup">
+                            - &nbsp; {{headerInfo.SalesRepPhone}}
+                        </span>
+                    </ion-col>
+                    <ion-col size="12" *ngIf="headerInfo.SalesRepEmail != '' && headerInfo.SalesRepEmail != null">
+                        <ion-icon class="text-font" class="fontsmall" style="display: none;" name="contact"></ion-icon>
+                        <ion-icon class="text-font" class="fontsmall" name="call" (click)="callNow(contact.Phone)"></ion-icon> <span
+                            class="valignsup">{{headerInfo.SalesRepEmail}}</span>
+                    </ion-col>
+                </ion-row>
+                </div>
+            </ion-row>
+            <!-- <ion-row>
+                <ion-col size="12" class="text-font paddtopzero">
+                    <div class="valignsup" *ngIf="headerInfo.Version.ParentAccID > 0">
+                        <span class="color-primary">Account:</span><span
+                            class="labelfont">&nbsp;{{headerInfo.ParentAccount.Name}}</span>
+                    </div>
+                    <div class="valignsup" *ngIf="headerInfo.Version.ChildAccID  > 0">
+                        <span class="color-primary">Child Acc:</span><span
+                            class="labelfont">&nbsp;{{headerInfo.ChildAccount.Name}}</span>
+                    </div>
+                </ion-col>
+                <ion-col size="12" class="text-font paddtopzero">
+                    <div class="valignsup">
+                        <span class="color-primary" (click)="ActionEditJobDesc(1)"><u>Job Description:</u></span>
+                        <span class="labelfont"
+                            *ngIf="headerInfo.Version.Description && headerInfo.Version.Description.length >= 85 && expanded == false">
+                            <div [innerHTML]="headerInfo.Version.Description.substr(0,85)"></div>
+                            <span (click)="expanded = true" class="color-blue"><u>Read More</u></span>
+                        </span>
+                        <span class="labelfont" *ngIf="expanded == true">
+                            <div [innerHTML]="headerInfo.Version.Description"></div>
+                            <span (click)="expanded = false" class="color-blue"><u>Read Less</u></span>
+                        </span>
+                    </div>
+                </ion-col>
+            </ion-row> -->
+        </ion-col>
+       
+         <ion-col *ngSwitchCase="3" style="padding-bottom: 70px;">
+            <app-commhub [VersionId]="headerInfo.Version.ID" [PhaseId]="PhaseID" (comHubClick)="ActionLoadHubInfo($event)"></app-commhub>
+        </ion-col>
+
+        <ion-col *ngSwitchCase="4">
+            <app-activities [VersionId]="headerInfo.Version.ID" [PhaseId]="PhaseID"></app-activities>
+        </ion-col>
+
+    </ion-row>
+</ion-content>
+
+
+<ion-footer style="padding-right: 5px;background: aliceblue;" *ngIf="selectedtabtype == 3">
+    <ion-segment style="height: 44px;">
+      <ion-segment-button checked (click)="ActionLoadCommHub(1)">
+        <ion-icon name="book" class="imghw1 paddzero"></ion-icon>
+        <ion-label [ngClass]="{'txt-color' : selChildTabId == 1 }" class="font10 paddzero">Notes</ion-label>
+      </ion-segment-button>
+      <ion-segment-button (click)="ActionLoadCommHub(2)">
+        <ion-icon name="mail" class="imghw1 paddzero"></ion-icon>
+        <ion-label [ngClass]="{'txt-color' : selChildTabId == 2 }" class="font10 paddzero">Mail</ion-label>
+      </ion-segment-button>
+      <ion-segment-button (click)="ActionLoadCommHub(3)">
+        <ion-icon name="document" class="imghw1 paddzero"></ion-icon>
+        <ion-label [ngClass]="{'txt-color' : selChildTabId == 3 }" class="font10 paddzero">Files</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-footer>

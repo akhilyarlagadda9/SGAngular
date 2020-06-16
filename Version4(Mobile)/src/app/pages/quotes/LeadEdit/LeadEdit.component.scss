@@ -1,0 +1,107 @@
+.padd-scroll{
+    padding: 0px 5px;
+  }
+  .bar-header1 {
+    border: 0px !important;
+    border-bottom-color: transparent !important;
+    background-image: none !important;
+    border-bottom: none !important;
+  }
+  .scroll{
+    overflow-x: scroll;
+    overflow-y: hidden;
+    .list-scroll{
+      height: 100%;
+      white-space: nowrap;
+    }
+  }
+  ::-webkit-scrollbar { 
+    display: none; 
+  }
+  ion-segment-button {
+    --padding-top: 0;
+    --padding-end: 16px;
+    --padding-bottom: 0;
+    --padding-start: 16px;
+    --transition: color 0.15s linear 0s,opacity 0.15s linear 0s;
+    min-width: 90px;
+    max-width: 150px !important;
+    min-height: 48px;
+    font-size: 16px !important;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    line-height: 40px;
+    text-transform: uppercase;
+  }
+  .fontheading{
+    font-size: 20px;
+    font-weight: 600;
+    color:green;
+  }
+  .btn-ion{
+    --background: #ddd;
+    color: black;
+    font-size: 18px;
+    height: 35px;
+    font-weight: 600;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+  .active{
+    --background:#3880ff;
+    color:#FFFFFF;
+  }
+  .paddleft10 {
+    padding-left: 10px;
+  }
+  
+  .textsty{
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .btninfo{
+    border:1px solid #ddd;
+    background-color:lightblue;
+    padding:5px;
+    border-radius: 5px;
+  }
+  .marbot {
+    margin-bottom: 4px;
+  }
+  .paddleft {
+    padding-left: 10px;
+  }
+  .liststy {
+    padding-left:10px;
+    width:100%;
+    font-size:14px;
+  }
+  .downloadsty {
+    font-size:20px;
+    background-color: #23c6c8;
+    border-color: #23c6c8;
+    color: #FFFFFF;
+  }
+  .uploadsty {
+    font-size:20px;
+    background-color: #1ab394;
+    border-color: #1ab394;
+    color: #FFFFFF;
+  }
+  .iconsty {
+    color: royalblue;
+    font-size: 12px;
+  }
+  .margintop5 {
+    margin-top: 5px;
+  }
+  .font12 {
+    font-size: 12px;
+  }
+  .pad2 {
+    padding: 5px;
+    font-size: 14px;
+  }
+  .imghw3 {
+    height: 23px;
+  }

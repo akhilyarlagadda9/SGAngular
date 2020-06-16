@@ -95,7 +95,7 @@
 <ion-list class="bg-lightgrey" >
   <ion-item>
     <ion-label floating >Start:</ion-label>
-    <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" max="2099-10-31"
+    <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" max="2099-10-31" [min] = "minYear"
     (ngModelChange)="actinfo.IsDateChange = true;ActionChangeDate($event,0,'sDate')" name="SchStartTime" [(ngModel)]="actinfo.SchStartTime">
   </ion-datetime>
   <ion-select class="btninfo" [(ngModel)]="actinfo.STime" name="STime" (ngModelChange)="ActionChangeDate($event,0,'')"  [selectedText]="actinfo.STime">
@@ -104,7 +104,7 @@
   </ion-item>
   <ion-item>
     <ion-label floating >End:</ion-label>
-    <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" max="2099-10-31"
+    <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" max="2099-10-31" [min] = "minYear"
     (ngModelChange)="actinfo.IsDateChange = true;ActionChangeDate($event,1,'eDate')" name="SchEndTime" [(ngModel)]="actinfo.SchEndTime">
   </ion-datetime>
   <ion-select class="btninfo" [(ngModel)]="actinfo.ETime" name="ETime" (ngModelChange)="ActionChangeDate($event,1,'')"  [selectedText]="actinfo.ETime">
@@ -124,21 +124,21 @@
 <ion-list *ngIf="actinfo.StatusID ==5" class="bg-lightgrey" >
   <ion-item>
     <ion-label floating>Act Start</ion-label>
-        <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" max="2099-10-31" name="ActStartDate"
+        <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" max="2099-10-31" [min] = "minYear" name="ActStartDate"
           [(ngModel)]="actinfo.ActualStartDate">
         </ion-datetime><span class="select-icon ion-float-right"></span>
 
-        <ion-select class="btninfo" [(ngModel)]="actinfo.STime" name="STime"  [selectedText]="actinfo.STime">
+        <ion-select class="btninfo" [(ngModel)]="actinfo.ActStart" name="ActStart"  [selectedText]="actinfo.ActStart">
           <ion-select-option *ngFor="let time of timings" [value]="time">{{time}}</ion-select-option>
         </ion-select>
   </ion-item>
   <ion-item >
     <ion-label floating>Act End:</ion-label>
-        <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" max="2099-10-31" name="ActEndDate"
+        <ion-datetime class="paddzero" displayFormat="MM/DD/YYYY" max="2099-10-31" [min] = "minYear" name="ActEndDate"
           [(ngModel)]="actinfo.ActualEndDate">
         </ion-datetime><span class="select-icon ion-float-right"></span>
 
-        <ion-select class="btninfo" [(ngModel)]="actinfo.ETime" name="ETime"  [selectedText]="actinfo.ETime">
+        <ion-select class="btninfo" [(ngModel)]="actinfo.ActEnd" name="ActEnd"  [selectedText]="actinfo.ActEnd">
           <ion-select-option *ngFor="let time of timings" [value]="time">{{time}}</ion-select-option>
         </ion-select>
   </ion-item>

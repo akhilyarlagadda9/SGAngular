@@ -2,10 +2,10 @@
     <ion-row>
       <ion-col size="8"></ion-col>
       <ion-col size="4">
-        <ion-button size="small" *ngIf="PhaseId > 0" class="text-right fontbold" (click)="addActivities(0)">Add Activity</ion-button>
+        <ion-button size="small" *ngIf="PhaseId > 0" class="text-right fontbold" (click)="addActivities()">Add Activity</ion-button>
       </ion-col>
     </ion-row>
-  <ion-card class="margintop" *ngFor="let activity of ActivitiesList,let i = index">
+  <ion-card (click)="ActionEditActivity(i)" class="margintop" *ngFor="let activity of ActivitiesList,let i = index">
     <ion-item class="paddzero">
      <ion-col size="12" class="paddzero">
       <ion-row class="paddzero paddtop3" style="color: darkcyan;">

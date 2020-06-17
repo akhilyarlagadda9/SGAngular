@@ -50,6 +50,8 @@ objDataInfo = this.navParams.data;
       //this.scheduleMap();
       this.objDataInfo.headerInfo.forEach(data => {
         this.strCustFullAdd = data.extendedProps.Address+","+data.extendedProps.City+","+data.extendedProps.State+",0"+data.extendedProps.Zipcode;
+        this.strCustFullAdd = this.strCustFullAdd.includes(",,")? this.strCustFullAdd.replace(",,",","):this.strCustFullAdd;
+        console.log(this.strCustFullAdd); // Incase we recieve any error
         this.strHeadToShow = data.extendedProps.QuoteNo+"-"+data.extendedProps.QuoteName+ this.strCustFullAdd;
         this.arrData.push(this.strCustFullAdd);
         this.arrHead.push(this.strHeadToShow);

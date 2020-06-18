@@ -633,6 +633,7 @@ ChangedViewEvents() {
     } else if (obj.IsDateChange == true && obj.IsViewChange == false && obj.IsViewChange == false) {
       calendarApi.gotoDate(obj.StartDate);
     } else {
+      let endtime = this.ActionConvertTimeFormat(obj.endtime); // To prepare time for resTimelineDay//Convert time to 12 hours --> 24 hours
       let duration = { days: this.calObj.CalendarDays };
       this.options.views.resourceTimeline.duration = { days: this.calObj.CalendarDays };
       this.fullcalendar.views.resourceTimeline.duration = { days: this.calObj.CalendarDays };
@@ -643,12 +644,29 @@ ChangedViewEvents() {
         calendarApi.setOption('slotWidth', width);
     }
       calendarApi.batchRendering(function () {
+        calendarApi.setOption('maxTime',endtime)
         calendarApi.setOption('duration', duration);
         calendarApi.changeView(obj.CalendarView, obj.StartDate);
       });
     }
     this.calObj.IsViewChange = false;
     this.calObj.IsViewChange = false;
+  }
+
+  ActionConvertTimeFormat(time12h) {
+    const [time, modifier] = time12h.split(' ');
+  
+    let [hours, minutes] = time.split(':');
+  
+    if (hours === '12') {
+      hours = '00';
+    }
+  
+    if (modifier === 'PM') {
+      hours = parseInt(hours, 10) + 12;
+    }
+  
+    return `${hours}:${minutes}`;
   }
   //#endregion
 }

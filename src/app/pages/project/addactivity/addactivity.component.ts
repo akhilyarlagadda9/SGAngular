@@ -33,9 +33,13 @@ export class AddactivityComponent implements OnInit {
       console.log(this.actinfo);
       this.ActionActivityInfo();
     } else {
+      console.log(this.actinfo);
       this.actinfo.STime = this.actinfo.STime.charAt(0)=="0"?this.actinfo.STime.substr(1,this.actinfo.STime.length): this.actinfo.STime;
       this.actinfo.ETime = this.actinfo.ETime.charAt(0)=="0"?this.actinfo.ETime.substr(1,this.actinfo.ETime.length):this.actinfo.ETime;
       // this.ActionActivityInfoWithDates();
+      this.actinfo.ActualStartDate = this.datePipe.transform(this.actinfo.ActualStartDate.substr(0,(this.actinfo.ActualStartDate).indexOf("T")),"MM/dd/yyyy");
+      this.actinfo.ActualEndDate = this.datePipe.transform(this.actinfo.ActualEndDate.substr(0,(this.actinfo.ActualEndDate).indexOf("T")),"MM/dd/yyyy");
+      console.log(this.actinfo.ActualStartDate);
       this.actinfo.SchEndTime  = (this.actinfo.SchEndTime).substring(0,(this.actinfo.SchEndTime).indexOf("T"));
       this.GetSelectedData(this.actinfo);
       this.statusList = this.actinfo.StatusList;
@@ -187,16 +191,19 @@ export class AddactivityComponent implements OnInit {
       if (id == 5) {
         let strCurrentTime = this.datePipe.transform(new Date().getTime(), "hh:mm a");
         let currDate = this.datePipe.transform(new Date(), "MM-dd-yyyy");
-        let actStartYear = this.datePipe.transform(this.actinfo.ActualStartDate, "yyyy");
-        let actEndYear = this.datePipe.transform(this.actinfo.ActualEndDate, "yyyy");
+        //let actStartYear = this.datePipe.transform(this.actinfo.ActualStartDate, "yyyy");
+      // let actEndYear = this.datePipe.transform(this.actinfo.ActualEndDate, "yyyy");
         this.actinfo.ActStart =  (strCurrentTime.charAt(0))=="0"?strCurrentTime.substr(1,strCurrentTime.length):strCurrentTime;
         this.actinfo.ActEnd =  (strCurrentTime.charAt(0))=="0"?strCurrentTime.substr(1,strCurrentTime.length):strCurrentTime;
-        if ((actStartYear == "0001" || actStartYear == "0000")) {
-          this.actinfo.ActualStartDate = currDate + " " + this.actinfo.STime; // Need to check whether need to add STime, because anyhow we are adding time
-        }
-        if ((actEndYear == "0001" || actEndYear == "0000")) {
-          this.actinfo.ActualEndDate = currDate + " " + this.actinfo.ETime; // Need to check whether need to add ETime, because anyhow we are adding time
-        }
+        debugger;
+        //if ((actStartYear == "0001" || actStartYear == "0000")) {
+          //this.actinfo.ActualStartDate = currDate + " " + this.actinfo.STime; // Need to check whether need to add STime, because anyhow we are adding time
+          this.actinfo.ActualStartDate = currDate + " "+this.actinfo.ActStart;
+       // }
+        //if ((actEndYear == "0001" || actEndYear == "0000")) {
+          //this.actinfo.ActualEndDate = currDate + " " + this.actinfo.ETime; // Need to check whether need to add ETime, because anyhow we are adding time
+          this.actinfo.ActualEndDate = currDate + " "+this.actinfo.ActEnd;
+        //}
       }
       this.actinfo.StatusName = statusinfo.Name;
       this.actinfo.IconPath = statusinfo.IconName;
@@ -247,6 +254,7 @@ export class AddactivityComponent implements OnInit {
     this.GetDuration(0);
   }
   ActionSaveActivity(form: NgForm) {
+    console.log(this.actinfo);
     if (form.valid) {
       this.actinfo.SchStartTime = new Date(this.actinfo.SchStartTime).toDateString() + " " + this.actinfo.STime;
       this.actinfo.SchEndTime = new Date(this.actinfo.SchEndTime).toDateString() + " " + this.actinfo.ETime;

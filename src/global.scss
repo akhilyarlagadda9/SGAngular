@@ -32,7 +32,10 @@ ion-icon{
 }
 .fc-axis { width: 55.25px !important;}
 .fc-ltr .fc-axis {text-align: left;}
-.fc-time-grid .fc-slats td{height: 3em;}
+.fc-time-grid .fc-slats td{height: 4.5em;}
+.native-input.sc-ion-input-ios{
+    font-size: larger;
+}
 
 /***** PADDING<MARGINS *****/
 .searchbar-search-icon.sc-ion-searchbar-md {

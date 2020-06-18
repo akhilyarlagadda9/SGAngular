@@ -15,48 +15,9 @@
         Create Quote
       </ion-title>
     </ion-toolbar>
-    <!-- <ion-toolbar>
-      <ion-title class="titleheader">Create Quote</ion-title>
-      <ion-button slot="end" color="success" size="small" type="submit">Save</ion-button>
-      <ion-button slot="end" color="danger" size="small" (click)="ActionCloseCreateQuote(false)">X</ion-button>
-    </ion-toolbar> -->
+   
   </ion-header>
-  <!-- <ion-row> -->
-  <!-- <ion-col size="1" *ngIf="Progress == 1 || Progress == 0" style="padding-left: 13px;">
-      <ion-fab-button color="primary" class="fabbtn" (click)="changeProgress(0)">1</ion-fab-button>
-    </ion-col>
-    <ion-col size="3" class="progbar-mat" *ngIf="Progress == 0">
-      <ion-progress-bar></ion-progress-bar>
-    </ion-col>
-    <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1">
-      <ion-progress-bar value="1"></ion-progress-bar>
-    </ion-col>
-    <ion-col size="1" *ngIf="Progress == 1">
-      <ion-fab-button color="primary" class="fabbtn" (click)="changeProgress(1)">2</ion-fab-button>
-    </ion-col>
-    <ion-col size="1" *ngIf="Progress == 0">
-      <ion-fab-button color="light" class="fabbtn" (click)="changeProgress(1)">2</ion-fab-button>
-    </ion-col> -->
-  <!--Commented From Start-->
-  <!-- <ion-col size="3" class="progbar-mat" *ngIf="Progress == 1 || Progress == 0">
-      <ion-progress-bar></ion-progress-bar>
-    </ion-col>
-    <ion-col size="3" class="progbar-mat">
-      <ion-progress-bar value="1"></ion-progress-bar>
-    </ion-col>
-    <ion-col size="1" *ngIf="Progress == 3">
-      <ion-fab-button color="primary" class="fabbtn" (click)="changeProgress(2)">2</ion-fab-button>
-    </ion-col>
-    <ion-col size="1" *ngIf="Progress == 0 || Progress == 1">
-      <ion-fab-button color="light" class="fabbtn" (click)="changeProgress(2)">2</ion-fab-button>
-    </ion-col> -->
-
-  <!-- </ion-row> -->
-  <!-- <ion-row>
-    <ion-col size="5" style="padding-left: 13px;"><span [ngClass]="{'txt-color' : Progress == 0 }">Account/Customer</span></ion-col>
-    <ion-col size="5"><span [ngClass]="{'txt-color' : Progress == 1 }">Job Add</span></ion-col>
-   //Commented From Start <ion-col size="4"><span [ngClass]="{'txt-color' : Progress == 2 }">Job</span></ion-col> 
-  </ion-row> -->
+  
   <ion-content>
     <div *ngIf="Progress == 0">
       <ion-item>
@@ -98,7 +59,7 @@
         <ion-item>
           <ion-label class="labelfont" position="floating" color="primary">Account<span class="requiredField">*</span>
           </ion-label>
-          <ion-input [(ngModel)]="header.Version.AccName" name="AccName" #AccName="ngModel"
+          <ion-input [(ngModel)]="header.Version.AccName"  name="AccName" #AccName="ngModel"
             (keyup.enter)="ActionShowNewCustomerList($event,1,header.Version.AccName,1)" required></ion-input>
           <ion-icon slot="end" class="martop35" name="arrow-dropdown"
             (click)="ActionShowNewCustomerList($event,2,header.Version.AccName,1)"></ion-icon>
@@ -119,7 +80,7 @@
         <ion-item>
           <ion-label class="labelfont" position="floating" color="primary">Customer<span class="requiredField">*</span>
           </ion-label>
-          <ion-input [(ngModel)]="header.Version.Customer.Name" name="Name" #Name="ngModel" type="text"
+          <ion-input [(ngModel)]="header.Version.Customer.Name"  name="Name" #Name="ngModel" type="text"
             class="labelfont" (keyup.enter)="ActionShowNewCustomerList($event,1,header.Version.Customer.Name,0)"
             required></ion-input>
           <ion-icon slot="end" class="martop35" name="arrow-dropdown"
@@ -206,7 +167,6 @@
         <ion-select [(ngModel)]="header.ProjectTypeID" name="ProjectTypeID" #ProjectTypeID="ngModel" class="labelfont" required>
           <ion-select-option *ngFor="let p of projectTypes" raedonly="readonly" [value]="p.ID">{{p.Name}}</ion-select-option>
         </ion-select>
-        <!-- <ion-input type="text" [(ngModel)]="header.Version.CustTypeID" name="CustTypeID" #CustTypeID="ngModel" class="labelfont" required readonly="readonly"></ion-input> -->
       </ion-item>
       <ion-item>
         <ion-label class="labelfont" position="floating" color="primary">Sales Rep<span class="requiredField">*</span>
@@ -221,7 +181,7 @@
         <div *ngIf="SalesPersonID.errors.required" class="color-red">Sales Person is required</div>
       </div>
       <ion-item>
-        <ion-label class="labelfont" position="floating" color="primary">Price List<span class="requiredField">*</span>
+        <ion-label class="labelfont" position="floating" color="primary">Price Book<span class="requiredField">*</span>
         </ion-label>
         <ion-select [(ngModel)]="header.Version.PriceListID" name="PriceListID" #PriceListID="ngModel" class="labelfont"
           required>
@@ -319,24 +279,14 @@
         <ion-input type="text" [(ngModel)]="header.YearBuilt" name="YearBuilt" class="labelfont"></ion-input>
       </ion-item>
     </div>
-    <!-- <div *ngIf="Progress == 2">
-     
-    </div> -->
+
   </ion-content>
   <ion-footer style="padding-right: 5px;background: aliceblue;">
-
-    <!--<ion-col *ngIf="Progress == 0 || Progress == 1">
-      <ion-button size="small" id="forwardClick" class="ion-float-right" color="primary" (click)="changeTab('forward')">Next</ion-button>
-  </ion-col>
-  <ion-col *ngIf="Progress == 1 || Progress == 2">
-        <ion-button size="small" class="ion-float-left" color="primary" (click)="changeTab('back')">Back</ion-button>
-        <ion-button size="small" class="ion-float-right" color="success" type="submit">Save</ion-button>
-  </ion-col> -->
 
     <ion-segment style="height: 44px;">
       <ion-segment-button checked (click)="changeProgress(0)">
         <ion-icon name="quote" class="imghw1 paddzero"></ion-icon>
-        <ion-label [ngClass]="{'txt-color' : Progress == 0 }" class="font10 paddzero">Lead/Qoute</ion-label>
+        <ion-label [ngClass]="{'txt-color' : Progress == 0 }" class="font10 paddzero">Lead/Quote</ion-label>
       </ion-segment-button>
       <ion-segment-button (click)="changeProgress(1)">
         <ion-icon ios="ios-people" md="md-people"></ion-icon>

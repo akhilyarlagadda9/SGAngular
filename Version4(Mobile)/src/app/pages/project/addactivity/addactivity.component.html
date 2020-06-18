@@ -113,9 +113,9 @@
   </ion-item>
   <ion-item>
     <ion-label floating>Duration(Hrs:Min):</ion-label>
-    <ion-input type="text" [(ngModel)]="actinfo.Hrs" (change)="ActionChangeDuration(actinfo.Hrs,1)"  name="Hrs" class="labelfont text-right"></ion-input>
+    <ion-input disabled="true" type="text" [(ngModel)]="actinfo.Hrs" (change)="ActionChangeDuration(actinfo.Hrs,1)" name="Hrs" class="labelfont text-right"></ion-input>
     <ion-label>:</ion-label>
-    <ion-input type="text" [(ngModel)]="actinfo.Mins" (change)="ActionChangeDuration(actinfo.Mins,2)"  name="Mins" class="labelfont"></ion-input>
+    <ion-input disabled="true" type="text" [(ngModel)]="actinfo.Mins" (change)="ActionChangeDuration(actinfo.Mins,2)"  name="Mins" class="labelfont"></ion-input>
     <ion-label>All Day</ion-label>
     <ion-toggle *ngIf="dayCheck == 1" [(ngModel)]="dayCheck" checked="true" (ionChange)="ActionAllDayClick($event)"></ion-toggle>
     <ion-toggle *ngIf="dayCheck == 0" [(ngModel)]="dayCheck" checked="false" (ionChange)="ActionAllDayClick($event)"></ion-toggle>

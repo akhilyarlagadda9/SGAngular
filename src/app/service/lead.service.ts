@@ -44,6 +44,10 @@ export class LeadService {
   GetParentAccListWithType(typeId): Observable<any> {
     return this.http.get<any>(this.url + 'api/Customer/ParentAccListWithType?typeId=' + typeId)
   }
+  //get Lead Info
+  GetLeadInfo(Id):Observable<any>{
+    return this.http.get<any>(this.url + 'api/lead/LeadInfo?Id=' + Id)
+  }
   //#endregion
   //#region Save Functions
   //Action Save Lead Activity

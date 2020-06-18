@@ -73,7 +73,7 @@
   </ion-item>
   <ion-item>
     <ion-label floating >Contact Type<span class="requiredField">*</span>:</ion-label>
-    <ion-select [(ngModel)]="actinfo.MeetingTypeID" name="MeetingTypeID" #MeetingTypeID="ngModel">
+    <ion-select [(ngModel)]="actinfo.MeetingTypeID" name="MeetingTypeID" #MeetingTypeID="ngModel" [selectedText]="actinfo.MeetingTypeName" (ngModelChange)="ActionSetMeetingType($event)">
         <ion-select-option *ngFor="let meeting of MeetingTypes" [value]="meeting.ID">{{meeting.Name}}</ion-select-option>
      </ion-select>
      <div [hidden]="!form.submitted  || MeetingTypeID.valid" class="invalid-feedback padd-Left">

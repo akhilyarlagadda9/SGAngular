@@ -63,6 +63,14 @@ export class LAddActivityComponent implements OnInit {
     });
   }
 
+  ActionSetMeetingType(id){
+    console.log(id);
+    this.actinfo["MeetingTypeName"] = this.MeetingTypes[id].Name;
+    this.actinfo.MeetingTypeID = this.MeetingTypes[id].ID;
+    this.actinfo.MeetingIcon = this.MeetingTypes[id].IconClass;
+    console.log(this.actinfo);
+  }
+
   
   ActionMessageStatus(icon){
     let priorityCheck = this.messageList.find(s => s.Path == icon);
@@ -395,6 +403,7 @@ export class LAddActivityComponent implements OnInit {
     });
      this.ActionCloseActivity(true);
   }
+
 
   PrepareToSave(){
    console.log(this.actinfo.SchStartTime +"  "+this.actinfo.SchEndTime);

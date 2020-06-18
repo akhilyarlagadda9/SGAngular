@@ -5,7 +5,7 @@
         </ion-buttons>
         <ion-title align="center">
             <div style="font-size: 22px;" class="text-center">
-               Lead# - {{headerInfo.LeadID}}
+               Lead# - {{headerInfo.ID}}
             </div>  
                    
         </ion-title>
@@ -37,35 +37,47 @@
     <ion-row [ngSwitch]="selectedtabtype">
         <ion-col *ngSwitchCase="1">
             <ion-row style="background:#ddd">
-                <ion-col size="7" class="paddtopzero" (click)="ActionEditJob()">
-                    <h2 class="fontsmall no-margin"><u>{{headerInfo.CustName}}</u></h2>
+                <ion-col size="7" class="paddtopzero">
+                    <h2 class="fontsmall no-margin"><u>{{headerInfo.CustomerContacts[0].Name}}</u></h2>
                 </ion-col>
                 <ion-col size="5" class="text-right paddtopzero">
-                    <p class="no-margin">Account Type: {{headerInfo.CustType }}</p>
+                    <p class="no-margin"> Lead Date: {{headerInfo.LeadDate| date:'dd/MM' }}</p>
                 </ion-col>
             </ion-row>
             <ion-row>
                 <ion-col size="12" class="paddtopzero">
                   <span (click)="ActionLoadMap()"><ion-icon class="text-font" class="fontsmall" name="pin"></ion-icon></span>
                     <span class="valignsup">
-                        {{headerInfo.FullAddres}}
+                        {{headerInfo.CustomerContacts[0].Address}}
                     </span>
                 </ion-col>
                 <div>
                     <ion-row>
                     <ion-col size="12" class="paddtopzero">
-                        <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon>
-                        <span class="valignsup" *ngIf="headerInfo.SalesPerson !='' && headerInfo.SalesPerson != null">
-                            <u>{{headerInfo.SalesPerson}}</u>
-                        </span>
-                        <span *ngIf="headerInfo.SalesRepPhone != '' && headerInfo.SalesRepPhone != null" name="contact" class="valignsup">
-                            - &nbsp; {{headerInfo.SalesRepPhone}}
+                        <ion-icon class="text-font" class="fontsmall" name="call"></ion-icon>
+                        <span *ngIf="headerInfo.CustomerContacts[0].MPhone != '' && headerInfo.CustomerContacts[0].MPhone != null" name="contact" class="valignsup">
+                            - &nbsp; {{headerInfo.CustomerContacts[0].MPhone}}
                         </span>
                     </ion-col>
-                    <ion-col size="12" *ngIf="headerInfo.SalesRepEmail != '' && headerInfo.SalesRepEmail != null">
+                    <ion-col size="12" *ngIf="headerInfo.CustomerContacts[0].Email != '' && headerInfo.CustomerContacts[0].Email != null">
+                        <ion-icon class="text-font" class="fontsmall" name="mail"></ion-icon>
+                        <span class="valignsup">{{headerInfo.CustomerContacts[0].Email}}</span>
+                    </ion-col>
+                </ion-row>
+                </div>
+                <div>
+                    <ion-row>
+                    <ion-col size="12" class="paddtopzero">
+                        <span *ngIf="headerInfo.LeadType != '' && headerInfo.LeadType != null" name="contact" class="valignsup">
+                           Lead Type: - &nbsp; {{headerInfo.LeadType}}
+                        </span>
+                    </ion-col>
+                    <span *ngIf="headerInfo.HearAbout != '' && headerInfo.HearAbout != null" name="contact" class="valignsup">
+                        Hear about us?- &nbsp; {{headerInfo.HearAbout}}
+                    </span>
+                    <ion-col size="12" *ngIf="headerInfo.SalesPerson != '' && headerInfo.SalesPerson != null">
                         <ion-icon class="text-font" class="fontsmall" style="display: none;" name="contact"></ion-icon>
-                        <ion-icon class="text-font" class="fontsmall" name="call" (click)="callNow(contact.Phone)"></ion-icon> <span
-                            class="valignsup">{{headerInfo.SalesRepEmail}}</span>
+                           <span class="valignsup">Sales Rep: {{headerInfo.SalesPerson}}</span>
                     </ion-col>
                 </ion-row>
                 </div>
@@ -80,30 +92,20 @@
                         <span class="color-primary">Child Acc:</span><span
                             class="labelfont">&nbsp;{{headerInfo.ChildAccount.Name}}</span>
                     </div>
-                </ion-col>
+                </ion-col>-->
                 <ion-col size="12" class="text-font paddtopzero">
                     <div class="valignsup">
-                        <span class="color-primary" (click)="ActionEditJobDesc(1)"><u>Job Description:</u></span>
-                        <span class="labelfont"
-                            *ngIf="headerInfo.Version.Description && headerInfo.Version.Description.length >= 85 && expanded == false">
-                            <div [innerHTML]="headerInfo.Version.Description.substr(0,85)"></div>
-                            <span (click)="expanded = true" class="color-blue"><u>Read More</u></span>
-                        </span>
-                        <span class="labelfont" *ngIf="expanded == true">
-                            <div [innerHTML]="headerInfo.Version.Description"></div>
-                            <span (click)="expanded = false" class="color-blue"><u>Read Less</u></span>
-                        </span>
+                        <span class="color-primary" (click)="ActionEditJobDesc(1)"><u>Lead Description:</u></span>
                     </div>
                 </ion-col>
-            </ion-row> -->
         </ion-col>
        
          <ion-col *ngSwitchCase="3" style="padding-bottom: 70px;">
-            <app-commhub [VersionId]="headerInfo.Version.ID" [PhaseId]="PhaseID" (comHubClick)="ActionLoadHubInfo($event)"></app-commhub>
+            <app-commhub [VersionId]="headerInfo.VersionID" [PhaseId]="PhaseID" (comHubClick)="ActionLoadHubInfo($event)"></app-commhub>
         </ion-col>
 
         <ion-col *ngSwitchCase="4">
-            <app-activities [VersionId]="headerInfo.Version.ID" [PhaseId]="PhaseID"></app-activities>
+            <app-activities [VersionId]="headerInfo.VersionID" [PhaseId]="PhaseID"></app-activities>
         </ion-col>
 
     </ion-row>

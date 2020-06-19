@@ -36,8 +36,8 @@ objDataInfo = this.navParams.data;
     this.map = GoogleMaps.create('map_canvas');
 
     if(this.objDataInfo.MapCalled == "Lead"){
-      this.strCustFullAdd=this.objDataInfo.headerInfo.FullAddres;
-      this.strHeadToShow = "Lead#"+this.objDataInfo.headerInfo.LeadID+"-"+this.objDataInfo.headerInfo.CustType+"-"+this.strCustFullAdd;
+      this.strCustFullAdd=this.objDataInfo.headerInfo;
+      this.strHeadToShow = "Lead #"+this.objDataInfo.leadID+"-"+this.objDataInfo.CustName+"-"+this.strCustFullAdd;
       this.markerLine();
     }
 

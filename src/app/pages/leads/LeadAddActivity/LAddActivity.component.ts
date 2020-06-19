@@ -49,6 +49,7 @@ export class LAddActivityComponent implements OnInit {
     if(this.actinfo.ID>0){
     this.ActionApprovedLeadList('',2);
     }
+    this.SetMeetingType(this.actinfo.MeetingTypeID);
     this.ActionActivityTypeList();
     this.ActivityStatusList();
     this.ActionGetMessageList();
@@ -63,13 +64,20 @@ export class LAddActivityComponent implements OnInit {
     });
   }
 
-  ActionSetMeetingType(id){
-    console.log(id);
-    this.actinfo["MeetingTypeName"] = this.MeetingTypes[id].Name;
-    this.actinfo.MeetingTypeID = this.MeetingTypes[id].ID;
-    this.actinfo.MeetingIcon = this.MeetingTypes[id].IconClass;
-    console.log(this.actinfo);
-  }
+  SetMeetingType(id){
+    let meetingSet = this.MeetingTypes.find(m=>m.ID == id);
+    this.actinfo["MeetingTypeName"] = meetingSet.Name;
+    this.actinfo.MeetingTypeID = meetingSet.ID;
+    this.actinfo.MeetingIcon = meetingSet.IconClass;
+}
+
+  // ActionSetMeetingType(index){
+  //   console.log(index)
+  //   this.actinfo["MeetingTypeName"] = this.MeetingTypes[index].Name;
+  //   this.actinfo.MeetingTypeID = this.MeetingTypes[index].ID;
+  //   this.actinfo.MeetingIcon = this.MeetingTypes[index].IconClass;
+  //   console.log(this.actinfo);
+  // }
 
   
   ActionMessageStatus(icon){
@@ -407,7 +415,7 @@ export class LAddActivityComponent implements OnInit {
 
   PrepareToSave(){
    console.log(this.actinfo.SchStartTime +"  "+this.actinfo.SchEndTime);
-    this.actinfo["MeetingIcon"] = this.MeetingTypes[this.actinfo.MeetingTypeID].IconClass;
+   // this.actinfo["MeetingIcon"] = this.MeetingTypes[this.actinfo.MeetingTypeID].IconClass;
     this.actinfo.Duration = this.actinfo.Duration == undefined? 60 : this.actinfo.Duration;
     let dbactivity = {};
                 dbactivity["ID"] = this.actinfo.ID;

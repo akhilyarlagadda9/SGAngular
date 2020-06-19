@@ -289,6 +289,10 @@ UpdateActivty(info) {
 }
 LoadFilterView() {
   let obj = this.calObj;
+  if (this.calObj.CalendarView == "restimelineDay") {
+    obj.IsDateChange = true;// TO make sure we are changing the time accordingly
+    obj.IsDayChange = true;
+  }
   this.resources = this.calObj.CalID == 3 ? this.calObj.ActTypeList : this.actResources;
   if (obj.IsViewChange == true || obj.IsDateChange == true || obj.IsDayChange == true) {
     this.SetCalendarOptions(obj);
@@ -630,7 +634,7 @@ ChangedViewEvents() {
     }
     if (calendarApi.view.type == this.calObj.CalendarView && obj.IsDayChange != true && obj.IsDateChange != true) {
       this.ActionEventsByFilterSettings();
-    } else if (obj.IsDateChange == true && obj.IsViewChange == false && obj.IsViewChange == false) {
+    } else if (obj.IsDateChange == true && obj.IsViewChange == false && obj.IsDayChange !=true) {
       calendarApi.gotoDate(obj.StartDate);
     } else {
       let endtime = this.ActionConvertTimeFormat(obj.endtime); // To prepare time for resTimelineDay//Convert time to 12 hours --> 24 hours
@@ -654,6 +658,7 @@ ChangedViewEvents() {
   }
 
   ActionConvertTimeFormat(time12h) {
+    console.log(time12h);
     const [time, modifier] = time12h.split(' ');
   
     let [hours, minutes] = time.split(':');

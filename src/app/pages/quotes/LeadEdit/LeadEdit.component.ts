@@ -81,7 +81,8 @@ import { LeadService } from 'src/app/service/lead.service';
 
       async ActionLoadMap() {   // Calling Map
         let copyobj = JSON.parse(JSON.stringify(this.fullAddress));
-        let obj = {headerInfo: copyobj,MapCalled:"Lead"};
+        console.log(this.qprmsobj);
+        let obj = {CustName:this.qprmsobj.CustName,leadID:this.qprmsobj.LeadID,headerInfo: copyobj,MapCalled:"Lead"};
         const modal = await this.Modalcntrl.create({
           component: MapComponent,
           componentProps: obj,

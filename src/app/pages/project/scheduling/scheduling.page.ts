@@ -637,6 +637,7 @@ ChangedViewEvents() {
     } else if (obj.IsDateChange == true && obj.IsViewChange == false && obj.IsDayChange !=true) {
       calendarApi.gotoDate(obj.StartDate);
     } else {
+      let startTime = this.ActionConvertTimeFormat(obj.starttime);
       let endtime = this.ActionConvertTimeFormat(obj.endtime); // To prepare time for resTimelineDay//Convert time to 12 hours --> 24 hours
       let duration = { days: this.calObj.CalendarDays };
       this.options.views.resourceTimeline.duration = { days: this.calObj.CalendarDays };
@@ -648,6 +649,7 @@ ChangedViewEvents() {
         calendarApi.setOption('slotWidth', width);
     }
       calendarApi.batchRendering(function () {
+        calendarApi.setOption('minTime',startTime)
         calendarApi.setOption('maxTime',endtime)
         calendarApi.setOption('duration', duration);
         calendarApi.changeView(obj.CalendarView, obj.StartDate);

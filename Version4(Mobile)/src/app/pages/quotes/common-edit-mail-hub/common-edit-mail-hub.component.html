@@ -15,9 +15,10 @@
       <ion-title align="center">Email</ion-title>
     </ion-toolbar>
   </ion-header>
+  
   <ion-item *ngIf="blnIsAtttachAvailable">
-    <ion-row style="width: 100%;" *ngFor="let attach of getNoteAttachments" (click)="addAttach(attach)">
-      <ion-row style="width: 100%;">
+    <ion-row *ngFor="let attach of getNoteAttachments" (click)="addAttach(attach)">
+      <ion-row>
         <ion-col size="8">
           <span>{{attach.FileName}}</span>
         </ion-col>
@@ -91,7 +92,7 @@
 
     <ion-item>
       <!-- <ion-label>Subject: </ion-label> -->
-      <ion-input placeholder="Subject" [(ngModel)]="mailDetails.Subject" name="Subject" autofocus></ion-input>
+      <ion-input placeholder="Subject" [(ngModel)]="mailDetails.Subject" name="Subject"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label floating>

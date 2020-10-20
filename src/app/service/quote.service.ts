@@ -28,6 +28,9 @@ export class QuoteService {
   ActionQuoteAreaList(versionID:number,phaseID:number): Observable<any> {
     return this.http.get<any>(this.url +  'api/QEdit/ActionQuoteAreaList?versionID=' + versionID + "&phaseID=" + phaseID) 
   }
+  ActionVersionInfo2(verId:number,quoteId:number,salesrepId:number): Observable<any> {
+    return this.http.get<any>(this.url +  'api/QEdit/ActionVersionInfo2?quoteId=' + quoteId + '&versionId=' + verId + "&salesrepId=" + salesrepId,) 
+  }
   ActionQuickPartList(versionId:number,phaseId:number,areaId:number,partId:number,mode:number):Observable<any>{
     return this.http.get<any>(this.url +  'api/QEdit/ActionQuickPartList?versionId=' + versionId +'&phaseId=' + phaseId + '&areaId=' + areaId + "&partId=" + partId + "&mode=" + mode) 
   }

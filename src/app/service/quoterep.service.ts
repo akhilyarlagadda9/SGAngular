@@ -7,6 +7,7 @@ import { AuthService } from './auth.service';
 })
 export class QuoterepService {
   header: any;
+  areaslist: any;
   constructor(private authservice: AuthService) { }
   private _interfacesource = new Subject<any>();
   interface$ = this._interfacesource.asObservable();
@@ -115,6 +116,12 @@ export class QuoterepService {
     var zipcodeComma = header.Zipcode != "" && (header.State != "" || header.City != "") ? " - " : "";
     address = address1 + city + state + zipcodeComma + header.Zipcode;
     return address;
+  }
+  SetAreasList(arealist:any){
+    this.areaslist = arealist;
+  }
+  getareas(){
+    return this.areaslist;
   }
   ResetQuote(header, newheader) {
     header.QuoteName = newheader.QuoteName;

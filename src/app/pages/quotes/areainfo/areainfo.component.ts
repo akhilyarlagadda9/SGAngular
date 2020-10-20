@@ -23,7 +23,7 @@ import { AddpartComponent } from '../addpart/addpart.component';
 declare var _qscope, QBRinitdrawing31:any;
 @Component({
   selector: 'app-areainfo',
-  templateUrl: './areainfo.component.html',
+  templateUrl: './areasmryinfo.component.html',
   styleUrls: ['./areainfo.component.scss'],
   inputs: [`Version`,`PhaseId`]
 })
@@ -35,6 +35,7 @@ export class AreainfoComponent implements OnInit {
     //PartList: [], ID: 0,
   };
   viewid: any;
+  areas: any;
   constructor(private service: QuoteService, public Modalcntrl: ModalController, private popoverCntrl: PopoverController, private quoterep: QuoterepService) {
   }
   ngOnInit() {
@@ -42,20 +43,23 @@ export class AreainfoComponent implements OnInit {
     this.InitLoad();
   }
   InitLoad() {
-    console.log(_qscope);
     this.coId = this.Version.LatestCoID;this.coSrNo = this.Version.LatestCoSrNo;
     //this.Version = _qscope.quote.Version;
-    this.arealist = _qscope.quote.header.Version.AreaList;
-    if (_qscope.quote.header.Version.AreaID == 0) {
+    this.arealist = this.quoterep.areaslist;
+    if (this.Version.AreaID == 0) {
       this.AreaID = this.arealist[0].ID;
       this.AreaName =  this.arealist[0].Name; // Pre-select the value on dropdown field
     } else {
-      this.AreaID = _qscope.quote.header.Version.AreaID;
+      this.AreaID = this.Version.AreaID;
     }
-    this.ActionPartsByArea(this.AreaID, 0);
-    
+    //this.ActionPartsByArea(this.AreaID, 0);
+    this.ActionSetDefaultArea(this.AreaID);
   }
-
+  ActionSetDefaultArea(areaId:number){
+    let area = this.arealist.find(s => s.ID == areaId);
+    this.areaInfo = area;
+    if(this.arealist != null){this.GetAreaName(areaId);}
+  }
 
   // ActionGetAreaList() {
   //   let result = this.service.ActionQuickAreaList(this.Version.ID, 0, 0, 0).subscribe(
@@ -70,16 +74,15 @@ export class AreainfoComponent implements OnInit {
   //     },
   //     error => console.log(error));
   // }
-  ActionPartsByArea(areaID: any, parttype: number) {
+  ActionPartsByArea(areaID: any, parttype: number) { 
     if(this.arealist != null){this.GetAreaName(areaID);}
     this.service.ActionQuickPartList(this.Version.ID,this.PhaseId, areaID, 0, 0).subscribe(data => {
       console.log(data);
       this.areaInfo = data;
       this.areaInfo.PartList = this.areaInfo.PartList == null ? [] : this.areaInfo.PartList;
       let areaindex = this.getareaindexbyareaid(areaID);
-      _qscope.quote.header.Version.AreaList[areaindex].PartList =this.areaInfo.PartList;
-
-
+      this.areas = this.quoterep.areaslist;
+      this.areas[areaindex].PartList =this.areaInfo.PartList;
       let length = this.areaInfo.PartList.length;
       if(length > 0){
         this.AreaPartID = data.PartInfo.ID;
@@ -95,7 +98,7 @@ export class AreainfoComponent implements OnInit {
     })
   }
   getareaindexbyareaid(areaid) {
-    let areas = _qscope.quote.header.Version.AreaList; for (let i = 0; i < areas.length; i++) { if (areas[i].ID == areaid) { return i; } }
+    let areas = this.quoterep.areaslist; for (let i = 0; i < areas.length; i++) { if (areas[i].ID == areaid) { return i; } }
   }
 
 

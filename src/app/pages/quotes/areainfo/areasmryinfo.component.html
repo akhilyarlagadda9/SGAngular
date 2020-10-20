@@ -45,9 +45,9 @@
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let fab of areaInfo.FabList">
         <ion-col class="textfont14"><span class="colorblue">Siz:</span>
-            <span *ngFor="let size of fab.MeasureList">
+            <span *ngFor="let size of fab.MeasureList;first as isfirst">
                 <span [ngStyle]="{'color':fab.CoID > 0 ? 'green' : '' }" class="{{fab.CoChgClass}}">
-                    <span *ngIf="$index == 0" class="rowhighlighted"><b>P{{fab.PartSrNo}} <span
+                    <span class="colorblue" *ngIf="isfirst"><b>&nbsp;P{{fab.PartSrNo}} <span
                                 *ngIf="fab.PartName != '' && fab.PartName != null">-
                                 {{fab.PartName}}</span>:</b></span>
                     <span
@@ -469,7 +469,7 @@
         <ion-col class="textfont14"><span class="colorblue">Siz:</span>
             <span *ngFor="let size of fab.MeasureList">
                 <span [ngStyle]="{'color':fab.CoID > 0 ? 'green' : '' }" class="{{fab.CoChgClass}}">
-                    <span *ngIf="$index == 0" class="rowhighlighted"><b>P{{fab.PartSrNo}} <span
+                    <span class="colorblue"><b>P{{fab.PartSrNo}} <span
                                 *ngIf="fab.PartName != '' && fab.PartName != null">-
                                 {{fab.PartName}}</span>:</b></span>
                     <span
@@ -551,7 +551,6 @@
         <ion-col size="3" class="text-right">
             <span [ngStyle]="{'color':cutout.CoID > 0 ? 'green' : '' }"
                 class="{{cutout.CoChgClass}}">{{ cutout.LF | number: '.2-2'}}</span>
-            </span>
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let sink of areaInfo.sinkfaucetList">

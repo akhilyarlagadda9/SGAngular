@@ -249,7 +249,8 @@ export class SchedulingPage implements OnInit {
     //this.ActionGetResList();
   }
   ActionGetResList() {
-    this.schService.GetResourcesAndHolidays(this.calObj.StartDate, this.calObj.EndDate, this.calObj.ActTypeIDs, 1, this.calObj.ResourceIDs).subscribe(data => {
+    let locationId = 1;
+    this.schService.GetResourcesAndHolidays(this.calObj.StartDate, this.calObj.EndDate, this.calObj.ActTypeIDs, 1, this.calObj.ResourceIDs,locationId).subscribe(data => {
       this.ActionLoadEvents();
       this.resources = [];
       for (let j in data.ActTypeResList) {

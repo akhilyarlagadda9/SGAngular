@@ -75,9 +75,9 @@ ActTypeResListWithDates(actTypeId:any, startDate:any, endDate:any):Observable<an
   return this.http.get<any>(this.url +  'api/Project/ActTypeResListWithDates?actTypeId=' + actTypeId + "&startDate=" + startDate + "&endDate=" + endDate)
 }
 //Resource List With Dates
-GetResourcesAndHolidays(startDate:any, endDate:any,actTypeIds:string,typeId:number,resIDs:string):Observable<any> {
+GetResourcesAndHolidays(startDate:any, endDate:any,actTypeIds:string,typeId:number,resIDs:string,locationId:number):Observable<any> {
   let stageId =0;
-  return this.http.get<any>(this.url +  'api/Project/GetResourcesAndHolidays?startDate=' + startDate + "&endDate=" + endDate + "&actTypeIds=" + actTypeIds + "&stageId=" + stageId + "&typeId=" + typeId + "&resIDs=" + resIDs)
+  return this.http.get<any>(this.url +  'api/Project/GetResourcesAndHolidays?startDate=' + startDate + "&endDate=" + endDate + "&actTypeIds=" + actTypeIds + "&stageId=" + stageId + "&typeId=" + typeId + "&resIDs=" + resIDs + "&locationId=" + locationId)
 }
 //Resources check function
 ActionCheckIsExistSameRes(Id:any, resId:any, sDate:any, eDate:any):Observable<any> {

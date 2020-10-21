@@ -29,7 +29,7 @@ declare var platform: string;declare const imgUrl: any;
   <ion-toolbar color="primary">
   <ion-icon name="menu" class="fontlarge"  slot="start" (click)="ActionCalendarSetting()"></ion-icon>
   <ion-icon name="refresh" class="fontmedium"  slot="start" (click)="ActionRefreshCalendar()"></ion-icon>
-  <ion-icon ios="ios-locate" class="fontmedium" md="md-locate" (click)="ActionMapView()"></ion-icon>
+  <ion-icon ios="ios-locate" class="fontmedium" slot="start" md="md-locate" (click)="ActionMapView()"></ion-icon>
   <ion-title class="headersty">{{calObj.ActTypes}}</ion-title>
   <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
   </ion-toolbar>

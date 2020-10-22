@@ -456,7 +456,7 @@
                     class="text-center numberCircle colorgreen">&nbsp;C{{areaMat.CoSrNo}}&nbsp;</span>
             </span>
         </ion-col>
-        <ion-col size="3" class="text-right">$&nbsp;
+        <ion-col size="3" class="text-right">&nbsp;
             <span *ngIf="(areaMat.IsMatChg == 1 && areaMat.CoID > 0)|| areaMat.CoID == 0"
                 [ngStyle]="{'color':areaMat.CoID > 0 ? 'green' : '' }"
                 class="{{areaMat.CoChgClass}}">{{ areaMat.Qty  | number: '.2-2'}} </span>

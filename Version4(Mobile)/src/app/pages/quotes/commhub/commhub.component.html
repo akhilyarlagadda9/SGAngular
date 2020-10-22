@@ -19,7 +19,7 @@
     <ion-col size="12">
       <ion-row>
         <span class="font-text" (click)="ActionEditCommHub(note)">{{note.Subject}}</span>
-          <ion-col size="9">
+          <ion-col size="9" class="labelfont2">
             <ion-label>
               <h3>{{note.User}} - {{note.MsgDate | date:'MM/dd/yyyy h:mm a'}}</h3>
               <p innerHTML="{{note.Body}}"></p>

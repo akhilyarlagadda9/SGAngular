@@ -21,7 +21,7 @@
     </ion-row>
 
     <ion-row class="rowlineitem" *ngFor="let areaMat of areaInfo.AreaMaterialList">
-        <ion-col class="textfont14"><span class="colorblue">Mat:</span>
+        <ion-col class="textfont14"><span class="colorblue">MAT:</span>
             <span [ngStyle]="{'color':areaMat.CoID > 0 ? 'green' : '' }" class="{{areaMat.CoChgClass}}">
                 <span [ngStyle]="{'color':areaMat.MaterialID > 0 ? '' : 'red' }">{{areaMat.MaterialName}}</span>
                 <span *ngIf="areaMat.CoSrNo > 0"
@@ -44,7 +44,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let fab of areaInfo.FabList">
-        <ion-col class="textfont14"><span class="colorblue">Siz:</span>
+        <ion-col class="textfont14"><span class="colorblue">SIZE:</span>
             <span *ngFor="let size of fab.MeasureList;first as isfirst">
                 <span [ngStyle]="{'color':fab.CoID > 0 ? 'green' : '' }" class="{{fab.CoChgClass}}">
                     <span class="colorblue" *ngIf="isfirst"><b>&nbsp;P{{fab.PartSrNo}} <span
@@ -66,7 +66,7 @@
         <ion-col size="3" class="text-right">-&nbsp;</ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let splash of areaInfo.AreaItems.SplashList">
-        <ion-col class="textfont14"><span class="colorblue">Spl:</span>
+        <ion-col class="textfont14"><span class="colorblue">SPL:</span>
             <span [ngStyle]="{'color':splash.CoID > 0 ? 'green' : '' }" class="{{splash.CoChgClass}}">
                 {{ splash.Qty | number: '.2-2'}} Sqft. {{splash.Splash}}
             </span>
@@ -91,7 +91,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let edge of areaInfo.AreaItems.EdgeList">
-        <ion-col class="textfont14"><span class="colorblue">Edg:</span>
+        <ion-col class="textfont14"><span class="colorblue">EDG:</span>
             <span [ngStyle]="{'color':edge.CoID > 0 ? 'green' : '' }"
                 class="{{edge.CoChgClass}}">{{ edge.EdgeProfile }}</span>
             <span *ngIf="edge.CoSrNo > 0"
@@ -107,7 +107,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let cutout of areaInfo.AreaItems.SinkCutoutList">
-        <ion-col class="textfont14"><span class="colorblue">Co(S):</span>
+        <ion-col class="textfont14"><span class="colorblue">CO(S):</span>
             <span [ngStyle]="{'color':cutout.CoID > 0 ? 'green' : '' }"
                 class="{{cutout.CoChgClass}}">{{ cutout.Type }}</span>
             <span *ngIf="cutout.CoSrNo > 0"
@@ -125,7 +125,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let cutout of areaInfo.AreaItems.OutletCutoutList">
-        <ion-col class="textfont14"><span class="colorblue">Co(O):</span>
+        <ion-col class="textfont14"><span class="colorblue">CO(O):</span>
             <span [ngStyle]="{'color':cutout.CoID > 0 ? 'green' : '' }"
                 class="{{cutout.CoChgClass}}">{{ cutout.Type }}</span>
             <span *ngIf="cutout.CoSrNo > 0"
@@ -143,7 +143,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let cutout of areaInfo.AreaItems.ApplianceCutoutList">
-        <ion-col class="textfont14"><span class="colorblue">Co(A):</span>
+        <ion-col class="textfont14"><span class="colorblue">CO(A):</span>
             <span [ngStyle]="{'color':cutout.CoID > 0 ? 'green' : '' }"
                 class="{{cutout.CoChgClass}}">{{ cutout.Type }}</span>
             <span *ngIf="cutout.CoSrNo > 0"
@@ -161,7 +161,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let sink of areaInfo.sinkfaucetList">
-        <ion-col class="textfont14"><span class="colorblue">Sink:</span>
+        <ion-col class="textfont14"><span class="colorblue">SINK:</span>
             <span [ngStyle]="{'color':sink.CoID > 0 ? 'green' : '' }" class="{{sink.CoChgClass}}">
                 {{ sink.Description }}
             </span>
@@ -180,7 +180,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let sink of areaInfo.faucetList">
-        <ion-col class="textfont14"><span class="colorblue">Fau:</span>
+        <ion-col class="textfont14"><span class="colorblue">FAU:</span>
             <span [ngStyle]="{'color':sink.CoID > 0 ? 'green' : '' }" class="{{sink.CoChgClass}}">
                 {{ sink.Description }}
             </span>
@@ -199,7 +199,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let tile of areaInfo.ApplianceList">
-        <ion-col class="textfont14"><span class="colorblue">App:</span>
+        <ion-col class="textfont14"><span class="colorblue">APP:</span>
             <span [ngStyle]="{'color':tile.CoID > 0 ? 'green' : '' }" class="{{tile.CoChgClass}}">
                 {{ tile.Description }}
             </span>
@@ -216,7 +216,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let fab of areaInfo.AreaItems.FabList">
-        <ion-col class="textfont14"><span class="colorblue">Fab:</span>
+        <ion-col class="textfont14"><span class="colorblue">FAB:</span>
             <span [ngStyle]="{'color':fab.CoID > 0 ? 'green' : '' }" class="{{fab.CoChgClass}}">
                 {{ fab.PartSqft | number: '.2-2'}} Sqft. &nbsp; Fabrication
             </span>
@@ -233,7 +233,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let labor of areaInfo.AreaItems.TemplateList">
-        <ion-col class="textfont14"><span class="colorblue">Tmp:</span>
+        <ion-col class="textfont14"><span class="colorblue">TMP:</span>
             <span [ngStyle]="{'color':labor.CoID > 0 ? 'green' : '' }" class="{{labor.CoChgClass}}">
                 {{ labor.Description }}
             </span>
@@ -250,7 +250,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let labor of areaInfo.AreaItems.InstallList">
-        <ion-col class="textfont14"><span class="colorblue">Ins:</span>
+        <ion-col class="textfont14"><span class="colorblue">INS:</span>
             <span [ngStyle]="{'color':labor.CoID > 0 ? 'green' : '' }" class="{{labor.CoChgClass}}">
                 {{ labor.Description }}
             </span>
@@ -269,7 +269,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let labor of areaInfo.laborList">
-        <ion-col class="colorblue textfont14"><span class="colorblue">Lbr:</span>
+        <ion-col class="colorblue textfont14"><span class="colorblue">LBR:</span>
             <span [ngStyle]="{'color':labor.CoID > 0 ? 'green' : '' }" class="{{labor.CoChgClass}}">
                 {{ labor.Description }}
             </span>
@@ -286,7 +286,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let other of areaInfo.otherList">
-        <ion-col class="textfont14"><span class="colorblue">Ado:</span>
+        <ion-col class="textfont14"><span class="colorblue">ADN:</span>
             <span [ngStyle]="{'color':other.CoID > 0 ? 'green' : '' }" class="{{other.CoChgClass}}">
                 {{ other.Description }}
             </span>
@@ -303,7 +303,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let tile of areaInfo.TileList">
-        <ion-col class="textfont14"><span class="colorblue">Tile:</span>
+        <ion-col class="textfont14"><span class="colorblue">TILE:</span>
             <span [ngStyle]="{'color':tile.CoID > 0 ? 'green' : '' }" class="{{tile.CoChgClass}}">
                 {{ tile.Description }}
                 <span *ngIf="tile.CoSrNo > 0"
@@ -320,7 +320,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let tile of areaInfo.CabinetList">
-        <ion-col class="textfont14"><span class="colorblue">Cab:</span>
+        <ion-col class="textfont14"><span class="colorblue">CAB:</span>
             <span [ngStyle]="{'color':tile.CoID > 0 ? 'green' : '' }" class="{{tile.CoChgClass}}">
                 {{ tile.Description }}
                 <span *ngIf="tile.CoSrNo > 0"
@@ -337,7 +337,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let tile of areaInfo.CarpetList">
-        <ion-col class="textfont14"><span class="colorblue">Car:</span>
+        <ion-col class="textfont14"><span class="colorblue">CAR:</span>
             <span [ngStyle]="{'color':tile.CoID > 0 ? 'green' : '' }" class="{{tile.CoChgClass}}">
                 {{ tile.Description }}
             </span>
@@ -354,7 +354,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let tile of areaInfo.FloorList">
-        <ion-col class="textfont14"><span class="colorblue">Wfl:</span>
+        <ion-col class="textfont14"><span class="colorblue">WFL:</span>
             <span [ngStyle]="{'color':tile.CoID > 0 ? 'green' : '' }" class="{{tile.CoChgClass}}">
                 {{ tile.Description }}
             </span>
@@ -371,7 +371,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let tile of areaInfo.ConsumableList">
-        <ion-col class="textfont14"><span class="colorblue">Con:</span>
+        <ion-col class="textfont14"><span class="colorblue">CON:</span>
             <span [ngStyle]="{'color':tile.CoID > 0 ? 'green' : '' }" class="{{tile.CoChgClass}}">
                 {{ tile.Description }}
             </span>
@@ -388,7 +388,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let tile of areaInfo.ToolList">
-        <ion-col class="textfont14"><span class="colorblue">Tool:</span>
+        <ion-col class="textfont14"><span class="colorblue">TOOL:</span>
             <span [ngStyle]="{'color':tile.CoID > 0 ? 'green' : '' }" class="{{tile.CoChgClass}}">
                 {{ tile.Description }}
             </span>
@@ -405,7 +405,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let response of areaInfo.responseList">
-        <ion-col class="textfont14"><span class="colorblue">Cust:</span>
+        <ion-col class="textfont14"><span class="colorblue">CUST:</span>
             <span class="{{response.CoChgClass}}">
                 {{ response.Description }}
             </span>
@@ -413,7 +413,7 @@
         <ion-col size="3" class="text-right">-&nbsp;</ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let partdisc of areaInfo.QuoteAreaDiscountList">
-        <ion-col color="danger" class="textfont14"><span class="colorblue">Disc:</span>
+        <ion-col color="danger" class="textfont14"><span class="colorblue">DISC:</span>
             <span> {{partdisc.Description}}</span>
             <span>@
                 {{ partdisc.Qty | number: '.2-2'}}
@@ -449,7 +449,7 @@
     </ion-row>
 
     <ion-row class="rowlineitem" *ngFor="let areaMat of areaInfo.AreaMaterialList">
-        <ion-col class="textfont14"><span class="colorblue">Mat:</span>
+        <ion-col class="textfont14"><span class="colorblue">MAT:</span>
             <span [ngStyle]="{'color':areaMat.CoID > 0 ? 'green' : '' }" class="{{areaMat.CoChgClass}}">
                 <span [ngStyle]="{'color':areaMat.MaterialID > 0 ? '' : 'red' }">{{areaMat.MaterialName}}</span>
                 <span *ngIf="areaMat.CoSrNo > 0"
@@ -466,7 +466,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let fab of areaInfo.FabList">
-        <ion-col class="textfont14"><span class="colorblue">Siz:</span>
+        <ion-col class="textfont14"><span class="colorblue">SIZE:</span>
             <span *ngFor="let size of fab.MeasureList">
                 <span [ngStyle]="{'color':fab.CoID > 0 ? 'green' : '' }" class="{{fab.CoChgClass}}">
                     <span class="colorblue"><b>P{{fab.PartSrNo}} <span
@@ -487,7 +487,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let splash of areaInfo.AreaItems.SplashList">
-        <ion-col class="textfont14"><span class="colorblue">Spl:</span>
+        <ion-col class="textfont14"><span class="colorblue">SPL:</span>
             <span [ngStyle]="{'color':splash.CoID > 0 ? 'green' : '' }" class="{{splash.CoChgClass}}">
                 {{ splash.Qty | number: '.2-2'}} Sqft. {{splash.Splash}}
             </span>
@@ -506,7 +506,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let edge of areaInfo.AreaItems.EdgeList">
-        <ion-col class="textfont14"><span class="colorblue">Edg:</span>
+        <ion-col class="textfont14"><span class="colorblue">EDG:</span>
             <span [ngStyle]="{'color':edge.CoID > 0 ? 'green' : '' }"
                 class="{{edge.CoChgClass}}">{{ edge.EdgeProfile }}</span>
             <span *ngIf="edge.CoSrNo > 0"
@@ -518,7 +518,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let cutout of areaInfo.AreaItems.SinkCutoutList">
-        <ion-col class="textfont14"><span class="colorblue">Co(S):</span>
+        <ion-col class="textfont14"><span class="colorblue">CO(S):</span>
             <span [ngStyle]="{'color':cutout.CoID > 0 ? 'green' : '' }"
                 class="{{cutout.CoChgClass}}">{{ cutout.Type }}</span>
             <span *ngIf="cutout.CoSrNo > 0"
@@ -530,7 +530,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let cutout of areaInfo.AreaItems.OutletCutoutList">
-        <ion-col class="textfont14"><span class="colorblue">Co(O):</span>
+        <ion-col class="textfont14"><span class="colorblue">CO(O):</span>
             <span [ngStyle]="{'color':cutout.CoID > 0 ? 'green' : '' }"
                 class="{{cutout.CoChgClass}}">{{ cutout.Type }}</span>
             <span *ngIf="cutout.CoSrNo > 0"
@@ -542,7 +542,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let cutout of areaInfo.AreaItems.ApplianceCutoutList">
-        <ion-col class="textfont14"><span class="colorblue">Co(A):</span>
+        <ion-col class="textfont14"><span class="colorblue">CO(A):</span>
             <span [ngStyle]="{'color':cutout.CoID > 0 ? 'green' : '' }"
                 class="{{cutout.CoChgClass}}">{{ cutout.Type }}</span>
             <span *ngIf="cutout.CoSrNo > 0"
@@ -554,7 +554,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let sink of areaInfo.sinkfaucetList">
-        <ion-col class="textfont14"><span class="colorblue">Sink:</span>
+        <ion-col class="textfont14"><span class="colorblue">SINK:</span>
             <span [ngStyle]="{'color':sink.CoID > 0 ? 'green' : '' }" class="{{sink.CoChgClass}}">
                 {{ sink.Description }}
             </span>
@@ -567,7 +567,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let sink of areaInfo.faucetList">
-        <ion-col class="textfont14"><span class="colorblue">Fau:</span>
+        <ion-col class="textfont14"><span class="colorblue">FAU:</span>
             <span [ngStyle]="{'color':sink.CoID > 0 ? 'green' : '' }" class="{{sink.CoChgClass}}">
                 {{ sink.Description }}
             </span>
@@ -581,7 +581,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let tile of areaInfo.ApplianceList">
-        <ion-col class="textfont14"><span class="colorblue">App:</span>
+        <ion-col class="textfont14"><span class="colorblue">APP:</span>
             <span [ngStyle]="{'color':tile.CoID > 0 ? 'green' : '' }" class="{{tile.CoChgClass}}">
                 {{ tile.Description }}
             </span>
@@ -594,7 +594,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let fab of areaInfo.AreaItems.FabList">
-        <ion-col class="textfont14"><span class="colorblue">Fab:</span>
+        <ion-col class="textfont14"><span class="colorblue">FAB:</span>
             <span [ngStyle]="{'color':fab.CoID > 0 ? 'green' : '' }" class="{{fab.CoChgClass}}">
                 {{ fab.PartSqft | number: '.2-2'}} Sqft. &nbsp; Fabrication
             </span>
@@ -607,7 +607,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let labor of areaInfo.AreaItems.TemplateList">
-        <ion-col class="textfont14"><span class="colorblue">Tmp:</span>
+        <ion-col class="textfont14"><span class="colorblue">TMP:</span>
             <span [ngStyle]="{'color':labor.CoID > 0 ? 'green' : '' }" class="{{labor.CoChgClass}}">
                 {{ labor.Description }}
             </span>
@@ -620,7 +620,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let labor of areaInfo.AreaItems.InstallList">
-        <ion-col class="textfont14"><span class="colorblue">Ins:</span>
+        <ion-col class="textfont14"><span class="colorblue">INS:</span>
             <span [ngStyle]="{'color':labor.CoID > 0 ? 'green' : '' }" class="{{labor.CoChgClass}}">
                 {{ labor.Description }}
             </span>
@@ -636,7 +636,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let labor of areaInfo.laborList">
-        <ion-col class="colorblue textfont14"><span class="colorblue">Lbr:</span>
+        <ion-col class="colorblue textfont14"><span class="colorblue">LBR:</span>
             <span [ngStyle]="{'color':labor.CoID > 0 ? 'green' : '' }" class="{{labor.CoChgClass}}">
                 {{ labor.Description }}
             </span>
@@ -649,7 +649,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let other of areaInfo.otherList">
-        <ion-col class="textfont14"><span class="colorblue">Ado:</span>
+        <ion-col class="textfont14"><span class="colorblue">ADN:</span>
             <span [ngStyle]="{'color':other.CoID > 0 ? 'green' : '' }" class="{{other.CoChgClass}}">
                 {{ other.Description }}
             </span>
@@ -663,7 +663,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let tile of areaInfo.TileList">
-        <ion-col class="textfont14"><span class="colorblue">Tile:</span>
+        <ion-col class="textfont14"><span class="colorblue">TILE:</span>
             <span [ngStyle]="{'color':tile.CoID > 0 ? 'green' : '' }" class="{{tile.CoChgClass}}">
                 {{ tile.Description }}
                 <span *ngIf="tile.CoSrNo > 0"
@@ -677,7 +677,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let tile of areaInfo.CabinetList">
-        <ion-col class="textfont14"><span class="colorblue">Cab:</span>
+        <ion-col class="textfont14"><span class="colorblue">CAB:</span>
             <span [ngStyle]="{'color':tile.CoID > 0 ? 'green' : '' }" class="{{tile.CoChgClass}}">
                 {{ tile.Description }}
                 <span *ngIf="tile.CoSrNo > 0"
@@ -690,7 +690,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let tile of areaInfo.CarpetList">
-        <ion-col class="textfont14"><span class="colorblue">Car:</span>
+        <ion-col class="textfont14"><span class="colorblue">CAR:</span>
             <span [ngStyle]="{'color':tile.CoID > 0 ? 'green' : '' }" class="{{tile.CoChgClass}}">
                 {{ tile.Description }}
             </span>
@@ -704,7 +704,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let tile of areaInfo.FloorList">
-        <ion-col class="textfont14"><span class="colorblue">Wfl:</span>
+        <ion-col class="textfont14"><span class="colorblue">WFL:</span>
             <span [ngStyle]="{'color':tile.CoID > 0 ? 'green' : '' }" class="{{tile.CoChgClass}}">
                 {{ tile.Description }}
             </span>
@@ -717,7 +717,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let tile of areaInfo.ConsumableList">
-        <ion-col class="textfont14"><span class="colorblue">Con:</span>
+        <ion-col class="textfont14"><span class="colorblue">CON:</span>
             <span [ngStyle]="{'color':tile.CoID > 0 ? 'green' : '' }" class="{{tile.CoChgClass}}">
                 {{ tile.Description }}
             </span>
@@ -730,7 +730,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let tile of areaInfo.ToolList">
-        <ion-col class="textfont14"><span class="colorblue">Tool:</span>
+        <ion-col class="textfont14"><span class="colorblue">TOOL:</span>
             <span [ngStyle]="{'color':tile.CoID > 0 ? 'green' : '' }" class="{{tile.CoChgClass}}">
                 {{ tile.Description }}
             </span>
@@ -743,7 +743,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let response of areaInfo.responseList">
-        <ion-col class="textfont14"><span class="colorblue">Cust:</span>
+        <ion-col class="textfont14"><span class="colorblue">CUST:</span>
             <span class="{{response.CoChgClass}}">
                 {{ response.Description }}
             </span>
@@ -751,7 +751,7 @@
         <ion-col size="3" class="text-right">-&nbsp;</ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let partdisc of areaInfo.QuoteAreaDiscountList">
-        <ion-col color="danger" class="textfont14"><span class="colorblue">Disc:</span>
+        <ion-col color="danger" class="textfont14"><span class="colorblue">DISC:</span>
             <span> {{partdisc.Description}}</span>
         </ion-col>
         <ion-col size="3" class="text-right">

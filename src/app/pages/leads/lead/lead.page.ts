@@ -112,9 +112,10 @@ export class LeadPage implements OnInit {
   }
 
   getActivityData() {
+    let locationId = 1;
     console.log(this.calObj.StartDate);
     console.log(this.calObj.EndDate);
-    this.leadService.LeadFollowUpActList(0, 0, 0, 0, 0, this.calObj.StartDate, this.calObj.EndDate, "").subscribe(data => {
+    this.leadService.LeadFollowUpActList(0, 0, 0, 0, 0, this.calObj.StartDate, this.calObj.EndDate, '', locationId).subscribe(data => {
       console.log(data);
       this.actlist = []; // clear up the storage
       for (let j in data) {
@@ -271,7 +272,7 @@ export class LeadPage implements OnInit {
       if (detail !== null) {
         if (detail.data.isSave == true) {
           this.ActionRefreshCalendar(); // Refresh Calaendar
-          this.hideLoader();
+          //this.hideLoader();
         }
       }
     });

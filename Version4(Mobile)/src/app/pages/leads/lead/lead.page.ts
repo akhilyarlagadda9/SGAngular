@@ -13,12 +13,13 @@ import { LeadEditComponent } from '../../quotes/LeadEdit/LeadEdit.component';
 declare const imgUrl: any;
 @Component({
   selector: 'app-lead',
+  // <ion-icon name="add-circle" slot="end" class="fontlarge" (click)="ActionCreateLead()"></ion-icon>
   template: `
   <ion-header>
   <ion-toolbar color="primary">
   <ion-title class="headersty">FollowUp</ion-title>
   <ion-icon name="refresh" class="fontmedium"  slot="start" (click)="ActionRefreshCalendar()"></ion-icon>
-  <ion-icon name="add-circle" slot="end" class="fontlarge" (click)="ActionCreateLead()"></ion-icon>
+ 
   <ion-icon name="home" slot="end" class="fontlarge" (click)="ActionGoToHome()"></ion-icon>
   </ion-toolbar>
 </ion-header>
@@ -227,11 +228,11 @@ export class LeadPage implements OnInit {
         // role: 'destructive',
         handler: () => { this.ActionEditActivity(ev); }
       },
-      {
-        text: 'Lead View',
-        cssClass: 'color-orange',
-        handler: () => { this.ActionEditLeadView(ev); }
-      },
+      // {
+      //   text: 'Lead View',
+      //   cssClass: 'color-orange',
+      //   handler: () => { this.ActionEditLeadView(ev); }
+      // },
       {
         text: 'Cancel',
         role: 'cancel', // will always sort to be on the bottom

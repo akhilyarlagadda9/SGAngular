@@ -76,7 +76,7 @@ export class QuotePage implements OnInit {
     };
   }
   GetQuoteList(event) {
-    //this.showLoader();
+    this.showLoader();
      this.authService.GetStoredLoginUserID().then(data => {
     let obj = this.qsearchobj;
     //get list from db

@@ -5,18 +5,18 @@
         </ion-buttons>
         <ion-title align="center">
             <div style="font-size: 22px;" class="text-center">
-               {{headerInfo.QuoteNo}} -
-               <select class="statusColor" [(ngModel)]="qprmsobj.phaseid" *ngIf="qprmsobj.viewtypeid == 2" (change)="ActionLoadPhase(qprmsobj.phaseid)"
-                style="border: 0px;">
-               <option *ngFor="let phase of phaseList" value="{{phase.ID}}">P{{phase.Code}}
-               </option>
-           </select>
-           <select class="statusColor" [(ngModel)]="qprmsobj.versionid" *ngIf="qprmsobj.viewtypeid == 1" (change)="ActionLoadVersion(qprmsobj.versionid)"
-           style="border: 0px;">
-           <option *ngFor="let version of versionList" value="{{version.ID}}">V{{version.SrNo}}
-           </option>
-       </select></div>  
-                   
+                {{headerInfo.QuoteNo}} -
+                <select class="statusColor" [(ngModel)]="qprmsobj.phaseid" *ngIf="qprmsobj.viewtypeid == 2"
+                    (change)="ActionLoadPhase(qprmsobj.phaseid)" style="border: 0px;">
+                    <option *ngFor="let phase of phaseList" value="{{phase.ID}}">P{{phase.Code}}
+                    </option>
+                </select>
+                <select class="statusColor" [(ngModel)]="qprmsobj.versionid" *ngIf="qprmsobj.viewtypeid == 1"
+                    (change)="ActionLoadVersion(qprmsobj.versionid)" style="border: 0px;">
+                    <option *ngFor="let version of versionList" value="{{version.ID}}">V{{version.SrNo}}
+                    </option>
+                </select></div>
+
         </ion-title>
         <!-- <span size="small" slot="end" (click)="ActionNewAction()"><h1 class="h1marg">Action</h1></span> -->
         <!-- <ion-icon name="arrow-dropdown-circle" slot="end" class="fontlarge" (click)="ActionNewAction()"></ion-icon>&nbsp; -->
@@ -26,20 +26,23 @@
         <ion-row>
             <ion-col class="paddtopzero text-center" (click)="ActionLoadTabInfo(1)">
                 <img src="assets/img/Checklist-icon.png" alt="your image" style="width:35px;height:35px;">
-                <div ><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 1 }">Summary</span></div>
+                <div><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 1 }">Summary</span>
+                </div>
             </ion-col>
             <ion-col class="paddtopzero text-center" (click)="ActionLoadTabInfo(2)">
                 <img src="assets/img/Drawing-icon.png" alt="your image" style="width:35px;height:35px;">
-                <div ><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 2 }">Area Info</span></div>
+                <div><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 2 }">Area Info</span>
+                </div>
             </ion-col>
             <ion-col class="paddtopzero text-center" (click)="ActionLoadTabInfo(3)">
                 <img src="assets/img/email-icon.png" alt="your image" style="width:35px;height:35px;">
-                <div><span style="font-size:11px;white-space: nowrap;" [ngClass]="{'txt-color' : selectedtabtype == 3 }">Comm Hub</span></div>
+                <div><span style="font-size:11px;white-space: nowrap;"
+                        [ngClass]="{'txt-color' : selectedtabtype == 3 }">Comm Hub</span></div>
             </ion-col>
-            <ion-col class="paddtopzero text-center" *ngIf="qprmsobj.statusId == 6"
-                (click)="ActionLoadTabInfo(4)">
+            <ion-col class="paddtopzero text-center" *ngIf="qprmsobj.statusId == 6" (click)="ActionLoadTabInfo(4)">
                 <img src="assets/img/calendar-icon.png" alt="your image" style="width:35px;height:35px;">
-                <div><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 4 }">Activities</span></div>
+                <div><span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 4 }">Activities</span>
+                </div>
             </ion-col>
             <ion-col class="paddtopzero text-center" (click)="ActionLoadTabInfo(5)">
                 <img src="assets/img/marbles-icon.png" alt="your image" style="width:35px;height:35px;">
@@ -48,7 +51,8 @@
             <ion-col class="paddtopzero text-center" *ngIf="qprmsobj.statusId == 6 && qprmsobj.viewtypeid == 1"
                 (click)="ActionLoadTabInfo(6)">
                 <img src="assets/img/coin-us-dollar-icon.png" alt="your image" style="width:35px;height:35px;">
-                <div> <span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 6 }">Accounts</span></div>
+                <div> <span style="font-size:11px;" [ngClass]="{'txt-color' : selectedtabtype == 6 }">Accounts</span>
+                </div>
             </ion-col>
         </ion-row>
     </ion-toolbar>
@@ -68,28 +72,32 @@
             </ion-row>
             <ion-row>
                 <ion-col size="12" class="paddtopzero">
-                  <span (click)="ActionLoadMap()"><ion-icon class="text-font" class="fontsmall" name="pin"></ion-icon></span>
+                    <span (click)="ActionLoadMap()">
+                        <ion-icon class="text-font" class="fontsmall" name="pin"></ion-icon>
+                    </span>
                     <span class="valignsup">
                         {{headerInfo.FullAddres}}
                     </span>
                 </ion-col>
                 <div *ngFor="let contact of headerInfo.QuoteContacts;let i = index">
                     <ion-row *ngIf="i == 0">
-                    <ion-col size="12" class="paddtopzero">
-                        <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon>
-                        <span class="valignsup" (click)="ActionEditCustomer(1,headerInfo.Customer,headerInfo.CustomerContacts)">
-                            <u>{{contact.Name}}</u>
-                        </span>
-                        <span *ngIf="contact.Phone != '' && contact.Phone != null" name="contact" class="valignsup">
-                            - &nbsp; {{contact.Phone}}
-                        </span>
-                    </ion-col>
-                    <ion-col size="12" *ngIf="contact.Email != '' && contact.Email != null">
-                        <ion-icon class="text-font" class="fontsmall" style="display: none;" name="contact"></ion-icon>
-                        <ion-icon class="text-font" class="fontsmall" name="call" (click)="callNow(contact.Phone)"></ion-icon> <span
-                            class="valignsup">{{contact.Email}}</span>
-                    </ion-col>
-                </ion-row>
+                        <ion-col size="12" class="paddtopzero">
+                            <ion-icon class="text-font" class="fontsmall" name="contact"></ion-icon>
+                            <span class="valignsup"
+                                (click)="ActionEditCustomer(1,headerInfo.Customer,headerInfo.CustomerContacts)">
+                                <u>{{contact.Name}}</u>
+                            </span>
+                            <span *ngIf="contact.Phone != '' && contact.Phone != null" name="contact" class="valignsup">
+                                - &nbsp; {{contact.Phone}}
+                            </span>
+                        </ion-col>
+                        <ion-col size="12" *ngIf="contact.Email != '' && contact.Email != null">
+                            <ion-icon class="text-font" class="fontsmall" style="display: none;" name="contact">
+                            </ion-icon>
+                            <ion-icon class="text-font" class="fontsmall" name="call" (click)="callNow(contact.Phone)">
+                            </ion-icon> <span class="valignsup">{{contact.Email}}</span>
+                        </ion-col>
+                    </ion-row>
                 </div>
             </ion-row>
             <ion-row>
@@ -125,14 +133,16 @@
                     </ion-col>
                 </ion-row>
 
-                <app-areasummary [VersionId]="headerInfo.Version.ID"  [PhaseId]="qprmsobj.phaseid" (areaevent)="AreaSummarySelect($event)">
+                <app-areasummary [VersionId]="headerInfo.Version.ID" [PhaseId]="qprmsobj.phaseid"
+                    (areaevent)="AreaSummarySelect($event)">
                 </app-areasummary>
             </div>
 
             <ion-list class="ion-no-margin" *ngIf="qprmsobj.viewtypeid == 1">
                 <ion-row class="paddzero">
-                    <ion-col size="5" class="paddzero margintop5">
-                        <ion-row>
+                    <ion-col size="5" class="paddzero margintop5"
+                        *ngFor="let paysch of headerInfo.Version.VersionPaymentScheduleList;let i = index">
+                        <!-- <ion-row>
                             <div><b class="fontbold text-right">Payment Schedule</b></div>
                         </ion-row>
                         <ion-row *ngIf="headerInfo.Version.PayTypeID == 1" class="font12">
@@ -155,6 +165,49 @@
                             Pay Terms: <span class="color-blue">{{headerInfo.Version.PaymentTerm}}</span>
                             <span>$
                                 {{((headerInfo.Version.TotalAmt + headerInfo.Version.Tax) - (headerInfo.Version.DiscountAmt))| number : '.2-2'}}</span>
+                        </ion-row> -->
+                        <ion-row>
+                            <span *ngIf="i == 0">1.{{paysch.Name}}:</span>
+                            <span *ngIf="i > 0">{{$index + 1}}.{{paysch.Name}}:</span>
+                        </ion-row>
+                        <ion-row>
+                            <span *ngIf="paysch.TypeID == 1">
+                                <span class="color-blue">
+                                    {{paysch.DueSigningName}}:({{paysch.DueSigning}}%)
+                                </span>
+                                <span>
+                                    <span>{{CSymbol}} {{paysch.SignAmt| number : '.2-2'}}&nbsp;</span>
+                                </span>
+                            </span>
+                            <span *ngIf="paysch.TypeID == 1 && paysch.DueTeamplate != 0">
+                                <span class="color-blue">
+                                    {{paysch.DueTeamplateName}}:({{paysch.DueTeamplate}}%)
+                                </span>
+                                <span>
+                                    <span>{{CSymbol}}
+                                        {{paysch.TemplateAmt| number : '.2-2'}}&nbsp;</span>
+                                </span>
+                            </span>
+                            <span *ngIf="paysch.TypeID == 1 && paysch.OtherAmt != 0">
+                                <span class="color-blue">
+                                    {{paysch.DueOtherName}}:({{paysch.DueOther}}%)
+                                </span>
+                                <span>
+                                    <span>{{CSymbol}} {{paysch.OtherAmt| number : '.2-2'}}&nbsp;</span>
+                                </span>
+                            </span>
+                            <span *ngIf="paysch.TypeID == 1 && paysch.DueInstall != 0">
+                                <span class="color-blue">
+                                    {{paysch.DueInstallName}}: ({{paysch.DueInstall}}%)
+                                </span>
+                                <span>
+                                    <span>{{CSymbol}} {{paysch.FinalAmt | number : '.2-2'}}&nbsp;</span>
+                                </span>
+                            </span>
+                            <span *ngIf="paysch.TypeID == 2">
+                                <span class="color-blue">{{paysch.PaymentTerm}}</span>
+                                <span>{{CSymbol}} {{paysch.NetTermAmt | number : '.2-2'}}</span>
+                            </span>
                         </ion-row>
                     </ion-col>
                     <ion-col size="7" class="paddzero">
@@ -174,23 +227,24 @@
                         <ion-row>
                             <ion-col size="7" class="fontbold text-right">Sales Tax:</ion-col>
                             <ion-col size="5" class="fontbold text-right">&nbsp;$
-                                {{headerInfo.Version.Tax | number : '.2-2'}}</ion-col>
+                                {{headerInfo.Version.TaxAmt | number : '.2-2'}}</ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col size="7" class="fontbold text-right">Net Total:</ion-col>
                             <ion-col size="5" class="fontbold text-right">&nbsp;$
-                                {{((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.Tax - (headerInfo.Version.RefAmt + headerInfo.Version.RoundOff)) - (headerInfo.Version.DiscountAmt)) | number : '.2-2'}}
+                                {{(headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt - (headerInfo.Version.RefAmt + headerInfo.Version.RoundOff)) - headerInfo.Version.DiscountAmt | number : '.2-2'}}
                             </ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col size="7" class="fontbold text-right">Fee & Charge:</ion-col>
                             <ion-col size="5" class="fontbold text-right">&nbsp;$
-                                {{(headerInfo.Version.RefAmt + headerInfo.Version.RoundOff) | number : '.2-2'}}</ion-col>
+                                {{(headerInfo.Version.RefAmt + headerInfo.Version.RoundOff) | number : '.2-2'}}
+                            </ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col size="7" class="fontbold text-right">Final Total:</ion-col>
                             <ion-col size="5" class="fontbold text-right">&nbsp;$
-                                {{((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.Tax) - (headerInfo.Version.DiscountAmt)) | number : '.2-2'}}
+                                {{((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt) - (headerInfo.Version.DiscountAmt)) | number : '.2-2'}}
                             </ion-col>
                         </ion-row>
                         <ion-row>
@@ -207,7 +261,7 @@
                             *ngIf="headerInfo.Version.PmtReceived != 0 || headerInfo.Version.RefundAmount != 0 || headerInfo.Version.CreditAmount != 0">
                             <ion-col size="7" class="fontbold text-right">Balance:</ion-col>
                             <ion-col size="5" class="fontbold text-right">$
-                                &nbsp;{{((((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.Tax) - headerInfo.Version.DiscountAmt) - (headerInfo.Version.PmtReceived - headerInfo.Version.RefundAmount) - headerInfo.Version.CreditAmount)) | number : '.2-2'}}
+                                &nbsp;{{((((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt) - headerInfo.Version.DiscountAmt) - (headerInfo.Version.PmtReceived - headerInfo.Version.RefundAmount) - headerInfo.Version.CreditAmount)) | number : '.2-2'}}
                             </ion-col>
                         </ion-row>
                     </ion-col>
@@ -221,10 +275,12 @@
             <app-arealayout [Version]="headerInfo.Version" [PhaseId]="qprmsobj.phaseid"></app-arealayout>
         </ion-col> -->
         <ion-col *ngSwitchCase="3" style="padding-bottom: 70px;">
-            <app-commhub [VersionId]="headerInfo.Version.ID" [PhaseId]="qprmsobj.phaseid" (comHubClick)="ActionLoadHubInfo($event)"></app-commhub>
+            <app-commhub [VersionId]="headerInfo.Version.ID" [PhaseId]="qprmsobj.phaseid"
+                (comHubClick)="ActionLoadHubInfo($event)"></app-commhub>
         </ion-col>
         <ion-col *ngSwitchCase="4">
-            <app-activities [VersionId]="headerInfo.Version.ID" [PhaseId]="qprmsobj.phaseid" [qprmsobj]="qprmsobj"></app-activities>
+            <app-activities [VersionId]="headerInfo.Version.ID" [PhaseId]="qprmsobj.phaseid" [qprmsobj]="qprmsobj">
+            </app-activities>
         </ion-col>
 
         <ion-col *ngSwitchCase="5" style="padding-bottom: 70px;">
@@ -239,34 +295,34 @@
 
 <ion-footer style="padding-right: 5px;background: aliceblue;" *ngIf="selectedtabtype == 3">
     <ion-segment style="height: 44px;">
-      <ion-segment-button checked (click)="ActionLoadCommHub(1)">
-        <ion-icon name="book" class="imghw1 paddzero"></ion-icon>
-        <ion-label [ngClass]="{'txt-color' : selChildTabId == 1 }" class="font10 paddzero">Notes</ion-label>
-      </ion-segment-button>
-      <ion-segment-button (click)="ActionLoadCommHub(2)">
-        <ion-icon name="mail" class="imghw1 paddzero"></ion-icon>
-        <ion-label [ngClass]="{'txt-color' : selChildTabId == 2 }" class="font10 paddzero">Mail</ion-label>
-      </ion-segment-button>
-      <ion-segment-button (click)="ActionLoadCommHub(3)">
-        <ion-icon name="document" class="imghw1 paddzero"></ion-icon>
-        <ion-label [ngClass]="{'txt-color' : selChildTabId == 3 }" class="font10 paddzero">Files</ion-label>
-      </ion-segment-button>
+        <ion-segment-button checked (click)="ActionLoadCommHub(1)">
+            <ion-icon name="book" class="imghw1 paddzero"></ion-icon>
+            <ion-label [ngClass]="{'txt-color' : selChildTabId == 1 }" class="font10 paddzero">Notes</ion-label>
+        </ion-segment-button>
+        <ion-segment-button (click)="ActionLoadCommHub(2)">
+            <ion-icon name="mail" class="imghw1 paddzero"></ion-icon>
+            <ion-label [ngClass]="{'txt-color' : selChildTabId == 2 }" class="font10 paddzero">Mail</ion-label>
+        </ion-segment-button>
+        <ion-segment-button (click)="ActionLoadCommHub(3)">
+            <ion-icon name="document" class="imghw1 paddzero"></ion-icon>
+            <ion-label [ngClass]="{'txt-color' : selChildTabId == 3 }" class="font10 paddzero">Files</ion-label>
+        </ion-segment-button>
     </ion-segment>
-  </ion-footer>
+</ion-footer>
 
-  <ion-footer  style="padding-right: 5px;background: aliceblue;margin-bottom: -4px;"  *ngIf="selectedtabtype == 5">
+<ion-footer style="padding-right: 5px;background: aliceblue;margin-bottom: -4px;" *ngIf="selectedtabtype == 5">
     <ion-segment>
-      <ion-segment-button checked (click)="ActionLoadOtherTab(1)">
-        <img src="assets/img/material2.png" alt="your image" class="imghw3">
-        <ion-label [ngClass]="{'txt-color' : selChildTabId == 1 }" class="font10">Material</ion-label>
-      </ion-segment-button>
-      <ion-segment-button (click)="ActionLoadOtherTab(2)">
-        <img src="assets/img/sinks2.png" alt="your image" class="imghw3">
-        <ion-label [ngClass]="{'txt-color' : selChildTabId == 2 }" class="font10">Sinks</ion-label>
-      </ion-segment-button>
-      <ion-segment-button (click)="ActionLoadOtherTab(3)">
-        <img src="assets/img/addon3.png" alt="your image" class="imghw3">
-        <ion-label [ngClass]="{'txt-color' : selChildTabId == 3 }" class="font10">Addons</ion-label>
-      </ion-segment-button>
+        <ion-segment-button checked (click)="ActionLoadOtherTab(1)">
+            <img src="assets/img/material2.png" alt="your image" class="imghw3">
+            <ion-label [ngClass]="{'txt-color' : selChildTabId == 1 }" class="font10">Material</ion-label>
+        </ion-segment-button>
+        <ion-segment-button (click)="ActionLoadOtherTab(2)">
+            <img src="assets/img/sinks2.png" alt="your image" class="imghw3">
+            <ion-label [ngClass]="{'txt-color' : selChildTabId == 2 }" class="font10">Sinks</ion-label>
+        </ion-segment-button>
+        <ion-segment-button (click)="ActionLoadOtherTab(3)">
+            <img src="assets/img/addon3.png" alt="your image" class="imghw3">
+            <ion-label [ngClass]="{'txt-color' : selChildTabId == 3 }" class="font10">Addons</ion-label>
+        </ion-segment-button>
     </ion-segment>
-  </ion-footer>
+</ion-footer>

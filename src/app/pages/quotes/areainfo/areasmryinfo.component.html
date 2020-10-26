@@ -636,7 +636,7 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let labor of areaInfo.laborList">
-        <ion-col class="colorblue textfont14"><span class="colorblue">LBR:</span>
+        <ion-col class="textfont14"><span class="colorblue">LBR:</span>
             <span [ngStyle]="{'color':labor.CoID > 0 ? 'green' : '' }" class="{{labor.CoChgClass}}">
                 {{ labor.Description }}
             </span>

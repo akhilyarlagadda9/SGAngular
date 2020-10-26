@@ -3,15 +3,15 @@
   <ion-row  (click)="ActionAreaSelect(area.ID)">
     <ion-col size="9">{{area.Name}} (#{{area.NoOfUnits}})</ion-col>
     <!-- <ion-col size="2">#P - {{1}}</ion-col> -->
-    <ion-col size="3" class="text-right" *ngIf="PhaseId == 0">$ {{area.FinalAreaAmt}}</ion-col>
+    <ion-col size="3" class="text-right" *ngIf="PhaseId == 0">$ {{area.FinalAreaAmt | number : '.2-2'}}</ion-col>
   </ion-row>
   <ion-row style="font-size:12px">
     <ion-col>
-      <span>Mat : <b>{{area.MaterialSqft}}SF</b></span>,
-      <span>Fab : <b>{{area.FabLaborSqft}}SF</b></span>,
-      <span>Edg : <b>{{area.EdgeLnft}}LF</b></span>,
-      <span>CutOut : <b>{{area.CutOutLnft}}</b></span>,
-      <span>Snk : <b>{{area.SinkQty}}</b></span>
+      <span>Mat : <b>{{area.MaterialSqft | number : '.2-2'}}SF</b></span>,
+      <span>Fab : <b>{{area.FabLaborSqft | number : '.2-2'}}SF</b></span>,
+      <span>Edg : <b>{{area.EdgeLnft | number : '.2-2'}}LF</b></span>,
+      <span>CutOut : <b>{{area.CutOutLnft | number : '.2-2'}}</b></span>,
+      <span>Snk : <b>{{area.SinkQty | number : '.2-2'}}</b></span>
     </ion-col>
   </ion-row>
 </ion-list>

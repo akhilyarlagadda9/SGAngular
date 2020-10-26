@@ -59,7 +59,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content  *ngIf="headerInfo.Version != '' && headerInfo.Version != null && headerInfo.Version != undefined">
     <ion-row [ngSwitch]="selectedtabtype">
         <ion-col *ngSwitchCase="1">
             <ion-row style="background:#ddd">

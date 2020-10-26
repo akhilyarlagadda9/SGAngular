@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="{{headerInfo.StatusColor}}">
+    <ion-toolbar color="primary"  *ngIf="headerInfo != null && headerInfo != '' && headerInfo != undefined">
         <ion-buttons slot="start">
             <ion-icon class="fontlarge" (click)="ActionCloseQuoteInfo()" name="arrow-back"></ion-icon>
         </ion-buttons>
@@ -33,7 +33,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="headerInfo != null && headerInfo != '' && headerInfo != undefined">
     <ion-row [ngSwitch]="selectedtabtype">
         <ion-col *ngSwitchCase="1">
             <ion-row style="background:#ddd">

@@ -140,7 +140,7 @@
 
             <ion-list class="ion-no-margin" *ngIf="qprmsobj.viewtypeid == 1">
                 <ion-row class="paddzero">
-                    <ion-col size="5" class="paddzero margintop5"
+                    <ion-col size="6" class="paddzero margintop5"
                         *ngFor="let paysch of headerInfo.Version.VersionPaymentScheduleList;let i = index">
                         <!-- <ion-row>
                             <div><b class="fontbold text-right">Payment Schedule</b></div>
@@ -210,57 +210,57 @@
                             </span>
                         </ion-row>
                     </ion-col>
-                    <ion-col size="7" class="paddzero">
+                    <ion-col size="6" class="paddzero">
                         <ion-row>
-                            <ion-col size="7" class="fontbold text-right">
+                            <ion-col size="6" class="fontbold text-right">
                                 Sub Total:
                             </ion-col>
-                            <ion-col size="5" class="fontbold text-right">&nbsp;$
+                            <ion-col size="6" class="fontbold text-right">&nbsp;$
                                 {{headerInfo.Version.TotalAmt | number : '.2-2'}}</ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col size="7" class="fontbold text-right">Discount:</ion-col>
-                            <ion-col size="5" class="fontbold text-right"><span
+                            <ion-col size="6" class="fontbold text-right">Discount:</ion-col>
+                            <ion-col size="6" class="fontbold text-right"><span
                                     style="color:red;">&nbsp;(${{(headerInfo.Version.DiscountAmt) | number : '.2-2'}})</span>
                             </ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col size="7" class="fontbold text-right">Sales Tax:</ion-col>
-                            <ion-col size="5" class="fontbold text-right">&nbsp;$
+                            <ion-col size="6" class="fontbold text-right">Sales Tax:</ion-col>
+                            <ion-col size="6" class="fontbold text-right">&nbsp;$
                                 {{headerInfo.Version.TaxAmt | number : '.2-2'}}</ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col size="7" class="fontbold text-right">Net Total:</ion-col>
-                            <ion-col size="5" class="fontbold text-right">&nbsp;$
+                            <ion-col size="6" class="fontbold text-right">Net Total:</ion-col>
+                            <ion-col size="6" class="fontbold text-right">&nbsp;$
                                 {{(headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt - (headerInfo.Version.RefAmt + headerInfo.Version.RoundOff)) - headerInfo.Version.DiscountAmt | number : '.2-2'}}
                             </ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col size="7" class="fontbold text-right">Fee & Charge:</ion-col>
-                            <ion-col size="5" class="fontbold text-right">&nbsp;$
+                            <ion-col size="6" class="no-padding fontbold text-right" style="margin-right: -10px;">Fee & Charge:</ion-col>
+                            <ion-col size="6" class="no-padding fontbold text-right"style="margin-left: 10px;">&nbsp;$
                                 {{(headerInfo.Version.RefAmt + headerInfo.Version.RoundOff) | number : '.2-2'}}
                             </ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col size="7" class="fontbold text-right">Final Total:</ion-col>
-                            <ion-col size="5" class="fontbold text-right">&nbsp;$
+                            <ion-col size="6" class="fontbold text-right">Final Total:</ion-col>
+                            <ion-col size="6" class="fontbold text-right">&nbsp;$
                                 {{((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt) - (headerInfo.Version.DiscountAmt)) | number : '.2-2'}}
                             </ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col size="7" class="fontbold text-right">Payment:</ion-col>
-                            <ion-col size="5" class="fontbold text-right"><span style="color:red;">&nbsp;($
+                            <ion-col size="6" class="fontbold text-right">Payment:</ion-col>
+                            <ion-col size="6" class="fontbold text-right"><span style="color:red;">&nbsp;($
                                     {{(headerInfo.Version.PmtReceived) | number : '.2-2'}})</span></ion-col>
                         </ion-row>
                         <ion-row *ngIf="headerInfo.Version.RefundAmount > 0">
-                            <ion-col size="7" class="fontbold text-right">Refunds:</ion-col>
-                            <ion-col size="5" class="fontbold text-right">&nbsp;$
+                            <ion-col size="6" class="fontbold text-right">Refunds:</ion-col>
+                            <ion-col size="6" class="fontbold text-right">&nbsp;$
                                 {{(headerInfo.Version.RefundAmount) | number : '.2-2'}}</ion-col>
                         </ion-row>
                         <ion-row
                             *ngIf="headerInfo.Version.PmtReceived != 0 || headerInfo.Version.RefundAmount != 0 || headerInfo.Version.CreditAmount != 0">
-                            <ion-col size="7" class="fontbold text-right">Balance:</ion-col>
-                            <ion-col size="5" class="fontbold text-right">$
+                            <ion-col size="6" class="fontbold text-right">Balance:</ion-col>
+                            <ion-col size="6" class="fontbold text-right">$
                                 &nbsp;{{((((headerInfo.Version.TotalAmt + headerInfo.Version.RoundOff + headerInfo.Version.TaxAmt) - headerInfo.Version.DiscountAmt) - (headerInfo.Version.PmtReceived - headerInfo.Version.RefundAmount) - headerInfo.Version.CreditAmount)) | number : '.2-2'}}
                             </ion-col>
                         </ion-row>

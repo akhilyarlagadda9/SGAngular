@@ -84,7 +84,7 @@ export class QuoteeditComponent implements OnInit, PipeTransform {
   }
   ActionLoadVersion(id) {
     this.qprmsobj.versionid = id;
-    this.service.ActionVersionInfo1(this.qprmsobj.quoteid, id, 0).subscribe(data => {
+    this.service.ActionVersionInfo2(this.qprmsobj.versionid, this.qprmsobj.quoteid, 0).subscribe(data => {
       this.headerInfo.Version = data;
       this.qprmsobj.statusId = data.StatusID;
       this.SetVersionInfo(1);

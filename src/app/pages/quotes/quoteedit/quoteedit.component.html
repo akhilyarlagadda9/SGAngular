@@ -59,7 +59,7 @@
 </ion-header>
 
 
-<ion-content  *ngIf="headerInfo.Version != '' && headerInfo.Version != null && headerInfo.Version != undefined">
+<ion-content *ngIf="headerInfo.Version != '' && headerInfo.Version != null && headerInfo.Version != undefined">
     <ion-row [ngSwitch]="selectedtabtype">
         <ion-col *ngSwitchCase="1">
             <ion-row style="background:#ddd">
@@ -140,8 +140,7 @@
 
             <ion-list class="ion-no-margin" *ngIf="qprmsobj.viewtypeid == 1">
                 <ion-row class="paddzero">
-                    <ion-col size="6" class="paddzero margintop5"
-                        *ngFor="let paysch of headerInfo.Version.VersionPaymentScheduleList;let i = index">
+                    <ion-col size="6" class="paddzero margintop5">
                         <!-- <ion-row>
                             <div><b class="fontbold text-right">Payment Schedule</b></div>
                         </ion-row>
@@ -166,48 +165,51 @@
                             <span>$
                                 {{((headerInfo.Version.TotalAmt + headerInfo.Version.Tax) - (headerInfo.Version.DiscountAmt))| number : '.2-2'}}</span>
                         </ion-row> -->
-                        <ion-row>
-                            <span *ngIf="i == 0">1.{{paysch.Name}}:</span>
-                            <span *ngIf="i > 0">{{$index + 1}}.{{paysch.Name}}:</span>
-                        </ion-row>
-                        <ion-row>
-                            <span *ngIf="paysch.TypeID == 1">
-                                <span class="color-blue">
-                                    {{paysch.DueSigningName}}:({{paysch.DueSigning}}%)
+                        <ion-row class="paddzero"
+                            *ngFor="let paysch of headerInfo.Version.VersionPaymentScheduleList;let i = index">
+                            <ion-row class="paddzero">
+                                <span *ngIf="i == 0">1.{{paysch.Name}}:</span>
+                                <span *ngIf="i > 0">{{$index + 1}}.{{paysch.Name}}:</span>
+                            </ion-row>
+                            <ion-row class="paddzero">
+                                <span *ngIf="paysch.TypeID == 1">
+                                    <span class="color-blue">
+                                        {{paysch.DueSigningName}}:({{paysch.DueSigning}}%)
+                                    </span>
+                                    <span>
+                                        <span>{{CSymbol}} {{paysch.SignAmt| number : '.2-2'}}&nbsp;</span>
+                                    </span>
                                 </span>
-                                <span>
-                                    <span>{{CSymbol}} {{paysch.SignAmt| number : '.2-2'}}&nbsp;</span>
+                                <span *ngIf="paysch.TypeID == 1 && paysch.DueTeamplate != 0">
+                                    <span class="color-blue">
+                                        {{paysch.DueTeamplateName}}:({{paysch.DueTeamplate}}%)
+                                    </span>
+                                    <span>
+                                        <span>{{CSymbol}}
+                                            {{paysch.TemplateAmt| number : '.2-2'}}&nbsp;</span>
+                                    </span>
                                 </span>
-                            </span>
-                            <span *ngIf="paysch.TypeID == 1 && paysch.DueTeamplate != 0">
-                                <span class="color-blue">
-                                    {{paysch.DueTeamplateName}}:({{paysch.DueTeamplate}}%)
+                                <span *ngIf="paysch.TypeID == 1 && paysch.OtherAmt != 0">
+                                    <span class="color-blue">
+                                        {{paysch.DueOtherName}}:({{paysch.DueOther}}%)
+                                    </span>
+                                    <span>
+                                        <span>{{CSymbol}} {{paysch.OtherAmt| number : '.2-2'}}&nbsp;</span>
+                                    </span>
                                 </span>
-                                <span>
-                                    <span>{{CSymbol}}
-                                        {{paysch.TemplateAmt| number : '.2-2'}}&nbsp;</span>
+                                <span *ngIf="paysch.TypeID == 1 && paysch.DueInstall != 0">
+                                    <span class="color-blue">
+                                        {{paysch.DueInstallName}}: ({{paysch.DueInstall}}%)
+                                    </span>
+                                    <span>
+                                        <span>{{CSymbol}} {{paysch.FinalAmt | number : '.2-2'}}&nbsp;</span>
+                                    </span>
                                 </span>
-                            </span>
-                            <span *ngIf="paysch.TypeID == 1 && paysch.OtherAmt != 0">
-                                <span class="color-blue">
-                                    {{paysch.DueOtherName}}:({{paysch.DueOther}}%)
+                                <span *ngIf="paysch.TypeID == 2">
+                                    <span class="color-blue">{{paysch.PaymentTerm}}</span>
+                                    <span>{{CSymbol}} {{paysch.NetTermAmt | number : '.2-2'}}</span>
                                 </span>
-                                <span>
-                                    <span>{{CSymbol}} {{paysch.OtherAmt| number : '.2-2'}}&nbsp;</span>
-                                </span>
-                            </span>
-                            <span *ngIf="paysch.TypeID == 1 && paysch.DueInstall != 0">
-                                <span class="color-blue">
-                                    {{paysch.DueInstallName}}: ({{paysch.DueInstall}}%)
-                                </span>
-                                <span>
-                                    <span>{{CSymbol}} {{paysch.FinalAmt | number : '.2-2'}}&nbsp;</span>
-                                </span>
-                            </span>
-                            <span *ngIf="paysch.TypeID == 2">
-                                <span class="color-blue">{{paysch.PaymentTerm}}</span>
-                                <span>{{CSymbol}} {{paysch.NetTermAmt | number : '.2-2'}}</span>
-                            </span>
+                            </ion-row>
                         </ion-row>
                     </ion-col>
                     <ion-col size="6" class="paddzero">
@@ -236,8 +238,9 @@
                             </ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col size="6" class="no-padding fontbold text-right" style="margin-right: -10px;">Fee & Charge:</ion-col>
-                            <ion-col size="6" class="no-padding fontbold text-right"style="margin-left: 10px;">&nbsp;$
+                            <ion-col size="6" class="no-padding fontbold text-right"
+                                style="margin-left: -10px;white-space: nowrap;">Fee & Charge:</ion-col>
+                            <ion-col size="6" class="no-padding fontbold text-right" style="margin-left: 10px;">&nbsp;$
                                 {{(headerInfo.Version.RefAmt + headerInfo.Version.RoundOff) | number : '.2-2'}}
                             </ion-col>
                         </ion-row>

@@ -76,12 +76,13 @@ export class QuotePage implements OnInit {
     };
   }
   GetQuoteList(event) {
-    this.showLoader();
+    //this.showLoader();
      this.authService.GetStoredLoginUserID().then(data => {
     let obj = this.qsearchobj;
     //get list from db
     let result = this.service.ActionQuoteList(obj.search, obj.statusId, obj.index, obj.noOfRecords, obj.accessmode, 0, obj.sortTypeId, obj.sortby,0,data).subscribe(
-      data => { this.quotelist = obj.searchmode == 1 ? data : this.quotelist.concat(data); this.hideLoader(); },
+      data => { this.quotelist = obj.searchmode == 1 ? data : this.quotelist.concat(data); //this.hideLoader();
+       },
       error => console.log(error));
       if(history.state.audt){
         history.state.audt.reqEndTime = new Date().getTime();

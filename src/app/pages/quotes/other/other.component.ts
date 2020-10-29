@@ -35,8 +35,8 @@ export class OtherComponent implements OnInit {
       this.GetSinkList();
       this.GetFaucetList();
       this.GetApplianceList();
-      this.GetConsumablesList();
-      this.GetToolsList();
+      //this.GetConsumablesList();
+      //this.GetToolsList();
     }else{
       this.GetAddonsList();
     }

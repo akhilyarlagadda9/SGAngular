@@ -66,7 +66,11 @@
         <ion-col size="3" class="text-right">-&nbsp;</ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let splash of areaInfo.AreaItems.SplashList">
-        <ion-col class="textfont14"><span class="colorblue">SPL:</span>
+        <ion-col class="textfont14">
+            <span class="colorblue" *ngIf="splash.TypeID == 0">SPL:</span>
+            <span class="colorblue" *ngIf="splash.TypeID == 1">APN:</span>
+            <span class="colorblue" *ngIf="splash.TypeID == 2">LAM:</span>
+            <span class="colorblue" *ngIf="splash.TypeID == 3">MIT:</span>
             <span [ngStyle]="{'color':splash.CoID > 0 ? 'green' : '' }" class="{{splash.CoChgClass}}">
                 {{ splash.Qty | number: '.2-2'}} Sqft. {{splash.Splash}}
             </span>
@@ -487,7 +491,11 @@
         </ion-col>
     </ion-row>
     <ion-row class="rowlineitem" *ngFor="let splash of areaInfo.AreaItems.SplashList">
-        <ion-col class="textfont14"><span class="colorblue">SPL:</span>
+        <ion-col class="textfont14">
+            <span class="colorblue" *ngIf="splash.TypeID == 0">SPL:</span>
+            <span class="colorblue" *ngIf="splash.TypeID == 1">APN:</span>
+            <span class="colorblue" *ngIf="splash.TypeID == 2">LAM:</span>
+            <span class="colorblue" *ngIf="splash.TypeID == 3">MIT:</span>
             <span [ngStyle]="{'color':splash.CoID > 0 ? 'green' : '' }" class="{{splash.CoChgClass}}">
                 {{ splash.Qty | number: '.2-2'}} Sqft. {{splash.Splash}}
             </span>

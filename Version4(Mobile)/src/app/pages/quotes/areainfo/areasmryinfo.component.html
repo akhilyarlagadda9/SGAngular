@@ -256,8 +256,8 @@
             </span>
             <span *ngIf="labor.CoSrNo > 0"
                 class="text-center numberCircle colorgreen">&nbsp;C{{labor.CoSrNo}}&nbsp;</span>
-            <span *ngIf="fab.CoSrNo > 0"
-                class="text-center numberCircle colorgreen">&nbsp;C{{fab.CoSrNo}}&nbsp;</span>&nbsp;
+            <span *ngIf="labor.CoSrNo > 0"
+                class="text-center numberCircle colorgreen">&nbsp;C{{labor.CoSrNo}}&nbsp;</span>&nbsp;
             <span>@
                 <span [ngStyle]="{'color':labor.CoID > 0 ? 'green' : '' }"
                     class="{{labor.CoChgClass}}">{{ labor.Qty | number: '.2-2'}}</span>
@@ -626,8 +626,8 @@
             </span>
             <span *ngIf="labor.CoSrNo > 0"
                 class="text-center numberCircle colorgreen">&nbsp;C{{labor.CoSrNo}}&nbsp;</span>
-            <span *ngIf="fab.CoSrNo > 0"
-                class="text-center numberCircle colorgreen">&nbsp;C{{fab.CoSrNo}}&nbsp;</span>&nbsp;
+            <span *ngIf="labor.CoSrNo > 0"
+                class="text-center numberCircle colorgreen">&nbsp;C{{labor.CoSrNo}}&nbsp;</span>&nbsp;
         </ion-col>
         <ion-col size="3" class="text-right">
             <span [ngStyle]="{'color':labor.CoID > 0 ? 'green' : '' }"

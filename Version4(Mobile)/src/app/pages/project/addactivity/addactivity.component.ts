@@ -102,7 +102,7 @@ export class AddactivityComponent implements OnInit {
       },
       error => console.log(error));
   }
-  ActionApprovedJobList(search, typeId) {debugger
+  ActionApprovedJobList(search, typeId) {
     this.showLoader();
     let locationId = 1;
     this.schService.ApprovedJobList(search, typeId, locationId).subscribe(

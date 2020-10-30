@@ -146,7 +146,7 @@ export class LeadPage implements OnInit {
     let endDate = new Date().setDate(new Date().getDate() + 1);
     this.calObj.EndDate = this.datePipe.transform(endDate, "MM/dd/yyyy");
     this.fullcalendar.getApi().render(); // Fastest Way to Render events
-    // this.getActivityData();
+    this.getActivityData();
   }
 
 
@@ -177,7 +177,7 @@ export class LeadPage implements OnInit {
         htmlstring = "<div style='font-size: 10px;white-space: normal;word-wrap: break-word'>";
         htmlstring += "<div style='word-break:break-all'><img class='ico' src='" + event.Imageurl + "' width='15' height='15'>" + event.ActivityType + "</div>";
         //htmlstring += "<div style='font-size: 10px;'>" +this.datePipe.transform(event.SchStartTime, "hh:mm a",'-400') + " - " + this.datePipe.transform(event.SchEndTime, "hh:mm a",'-400') + "</div>";
-        htmlstring += "<div style='word-break:break-all'><b>" + event.LeadID + "- " + strCustName + "</b></div></div>";
+        htmlstring += "<div style='word-break:break-all'><b>" + event.LeadExtID + "- " + strCustName + "</b></div></div>";
         evnt.el.innerHTML = htmlstring.trim();
       });
   }

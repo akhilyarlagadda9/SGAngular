@@ -446,6 +446,7 @@ export class LAddActivityComponent implements OnInit {
                 dbactivity["SalesRepProvider"] = this.actinfo.SalesRepProvider;
                 dbactivity["IsActive"] = 1;
                 dbactivity["PriorityIcon"] = this.actinfo.PriorityIcon;
+                dbactivity["LocID"] = 1;
     if(this.actinfo.ResourceList != null && this.actinfo.ResourceList.length > 0){
       let arrIds = [];
       let arrNames = [];

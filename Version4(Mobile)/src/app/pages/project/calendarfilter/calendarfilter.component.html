@@ -12,10 +12,12 @@
       <!-- <input type="checkbox" [(ngModel)]="masterSelected" (change)="checkMaster()"/> <strong>Select/ Unselect All</strong> -->
     <ion-item>  <ion-checkbox style="width:30px" color="dark" [(ngModel)]="flagtoCheckResStatus" (click)="ActionAll()"></ion-checkbox><font size="4">ALL</font></ion-item>
       <!-- [ngClass]="{ 'activeBgColor': item.ID == result.ActTypeId }" -->
-      <ion-item *ngFor="let item of ActTypeList | FilterPipe: queryString : searchableList">
+      <ion-row *ngFor="let item of ActTypeList | FilterPipe: queryString : searchableList">
+         <ion-item *ngIf="item.Name != '' && item.Name != null && item.Name != undefined" class="fullwidth">
           <ion-checkbox style="width:30px" color="dark" [(ngModel)]="item.Check" (ngModelChange)="ActionIsselectAll()"></ion-checkbox>
           {{item.Name}}
-      </ion-item>
+         </ion-item>
+      </ion-row>
     </ion-col>
     <ion-col size="12" *ngIf="result.FiterTypeID == 2">
       <ion-item style="color: darkblue;font-weight:bold">Resources</ion-item>

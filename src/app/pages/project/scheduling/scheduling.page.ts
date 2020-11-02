@@ -242,8 +242,8 @@ export class SchedulingPage implements OnInit {
     this.calObj.ResourceIDs = ""; this.calObj.ResourceNames = "ALL";
     this.calObj.StatusIDs = ""; this.calObj.StatusNames = "ALL"
     this.calObj.CalID = 1,
-      // this.calObj.CalendarView= "resourceTimeline";
-      this.calObj.CalendarDays = 3, this.calObj.CalFields = ""; this.calObj.Search = ""; this.calObj.UserId = 0;
+    this.calObj.CalendarView= "resourceTimeline";
+    this.calObj.CalendarDays = 3, this.calObj.CalFields = ""; this.calObj.Search = ""; this.calObj.UserId = 0;
     this.calObj.IsViewChange = false;
     this.ActionEventsByFilterSettings();
     //this.ActionGetResList();

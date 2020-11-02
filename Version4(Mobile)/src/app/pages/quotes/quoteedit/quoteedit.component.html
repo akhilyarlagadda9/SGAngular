@@ -11,7 +11,7 @@
                     <option *ngFor="let phase of phaseList" value="{{phase.ID}}">P{{phase.Code}}
                     </option>
                 </select>
-                <select class="statusColor" [(ngModel)]="qprmsobj.versionid" *ngIf="qprmsobj.viewtypeid == 1"
+                <select class="statusColor" [(ngModel)]="qprmsobj.versionid" *ngIf="qprmsobj.viewtypeid == 1" [disabled]="selectedtabtype != 1 ? true : null"
                     (change)="ActionLoadVersion(qprmsobj.versionid)" style="border: 0px;">
                     <option *ngFor="let version of versionList" value="{{version.ID}}">V{{version.SrNo}}
                     </option>

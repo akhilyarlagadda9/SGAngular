@@ -78,7 +78,7 @@ export class QuoteeditComponent implements OnInit, PipeTransform {
  
   ActionLoadTabInfo(componet: any) {
     this.selectedtabtype = componet; this.selChildTabId = 1;
-    if (componet == 1) {
+    if (componet == 1 || componet == 2) {
       this.ActionLoadVersion(this.qprmsobj.versionid);
     }
   }
@@ -86,6 +86,7 @@ export class QuoteeditComponent implements OnInit, PipeTransform {
     this.qprmsobj.versionid = id;
     this.service.ActionVersionInfo2(this.qprmsobj.versionid, this.qprmsobj.quoteid, 0).subscribe(data => {
       this.headerInfo.Version = data;
+      this.repService.SetAreasList(data.AreaList);
       this.qprmsobj.statusId = data.StatusID;
       this.SetVersionInfo(1);
     })

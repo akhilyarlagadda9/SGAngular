@@ -43,8 +43,8 @@ ActivityInfo(activityId:number, actTypeId:number, startDate:any, endDate:any):Ob
   return this.http.get<any>(this.url +  'api/Project/ActivityInfo?activityId=' + activityId + "&actTypeId=" + actTypeId + "&startDate=" + startDate + "&endDate=" + endDate)
 }
 //Approved Job List
-ApprovedJobList(search:string,typeId:number,locationId:number):Observable<any> {
-  return this.http.get<any>(this.url + 'api/Project/ApprovedJobList?search=' + search + '&typeId=' + typeId+ "&locationId=" + locationId)
+ApprovedJobList(search:string,typeId:number,locId:number):Observable<any> {
+  return this.http.get<any>(this.url + 'api/Project/ApprovedJobList?search=' + search + '&typeId=' + typeId + '&locId=' + locId)
 }
 //Phase List
 PhaseList(versionID:number):Observable<any> {

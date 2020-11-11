@@ -195,7 +195,6 @@ export class AddactivityComponent implements OnInit {
       // let actEndYear = this.datePipe.transform(this.actinfo.ActualEndDate, "yyyy");
         this.actinfo.ActStart =  (strCurrentTime.charAt(0))=="0"?strCurrentTime.substr(1,strCurrentTime.length):strCurrentTime;
         this.actinfo.ActEnd =  (strCurrentTime.charAt(0))=="0"?strCurrentTime.substr(1,strCurrentTime.length):strCurrentTime;
-        debugger;
         //if ((actStartYear == "0001" || actStartYear == "0000")) {
           //this.actinfo.ActualStartDate = currDate + " " + this.actinfo.STime; // Need to check whether need to add STime, because anyhow we are adding time
           this.actinfo.ActualStartDate = currDate + " "+this.actinfo.ActStart;

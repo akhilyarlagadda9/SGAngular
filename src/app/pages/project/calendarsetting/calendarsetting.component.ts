@@ -28,7 +28,7 @@ export class CalendarsettingComponent implements OnInit {
     this.calObj.IsDayChange = false;
     
   }
-  ActionPopulateView(Id){debugger
+  ActionPopulateView(Id){
    let model = this.calViews.find(s=>s.Id == Id);
    if(model != undefined && model != null){
     this.calObj.ViewName = model.name;

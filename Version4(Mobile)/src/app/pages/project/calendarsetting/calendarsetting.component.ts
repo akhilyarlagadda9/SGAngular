@@ -28,12 +28,15 @@ export class CalendarsettingComponent implements OnInit {
     this.calObj.IsDayChange = false;
     
   }
-  ActionPopulateView(Id){
+  ActionPopulateView(Id){debugger
    let model = this.calViews.find(s=>s.Id == Id);
    if(model != undefined && model != null){
     this.calObj.ViewName = model.name;
     this.calObj.CalendarView =model.Type;
     this.calObj.IsViewChange = true;
+    if(model.Id == 5){
+      this.calObj.CalendarDays = 7;
+    }
    }
   }
   ActionPopulateColor(Id){

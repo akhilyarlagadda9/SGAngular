@@ -138,7 +138,7 @@ export class QuoteeditComponent implements OnInit, PipeTransform {
   //Job Description Edit Function
   async ActionEditJobDesc(typeId: any) {
     let ver = { TypeID: typeId, Version: this.headerInfo.Version }
-    ver.Version.Description = this.transform(ver.Version.Description); // Get the Value we wanted(with styles)
+    //ver.Version.Description = this.transform(ver.Version.Description); // Get the Value we wanted(with styles)
     console.log(ver);
     const modal = await this.Modalcntrl.create({
       component: JobdesceditComponent,

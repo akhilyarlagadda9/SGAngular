@@ -53,7 +53,7 @@ export class AddactivityComponent implements OnInit {
     if (this.actinfo.PhaseID > 0) {
       this.ActionPhasePartList(0);
     }
-    this.dayCheck = this.actinfo.STime == "08:00 AM" && this.actinfo.ETime == "06:00 PM" ? 1: 0;
+    this.dayCheck = this.actinfo.Duration == 540 ? 1 : 0;
     console.log(this.actinfo);
   }
 

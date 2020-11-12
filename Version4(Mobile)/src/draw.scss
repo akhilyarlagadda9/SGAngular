@@ -278,7 +278,154 @@
       fill:gray;
       fill-opacity: 0.1;
   }
+  .shapecornergreen1 {
+      stroke: none;
+      fill: green;
+      cursor: crosshair
+  }
+  
+  .shapecornerblue {
+      stroke: none;
+      fill: cadetblue;
+      cursor: crosshair
+  }
+  
+  .shapepath {
+      fill: yellow;
+      fill-opacity: 0
+  }
+  
+  .slabshape {
+      stroke: green;
+      stroke-width: 1px;
+      stroke-opacity: 1;
+      fill: white;
+      fill-opacity: .1
+  }
+  
+  .splashshape {
+      stroke: green;
+      stroke-width: 1px;
+      stroke-opacity: 1;
+      fill: gray;
+      fill-opacity: .1
+  }
+  
   .shapeside {
+      stroke: blue;
+      stroke-width: 1.5px;
+      fill: none
+  }
+  
+  .shapesideblue {
+      stroke: blue;
+      stroke-width: 12px;
+      cursor: crosshair;
+      fill: none
+  }
+  
+  .shapesideblue1 {
+      stroke: blue;
+      stroke-width: 1.5px;
+      fill: none
+  }
+  
+  .shapeside1 {
+      stroke: green;
+      stroke-width: 1.5px;
+      fill: none;
+  }
+  
+  .shapesidegreen1 {
+      stroke: green;
+      stroke-width: 12px;
+      cursor: crosshair;
+      fill: none
+  }
+  
+  .shapesidewhite {
+      stroke: white;
+      stroke-width: 3px;
+      stroke-opacity: 1;
+      fill: none
+  }
+  
+  .shapesideseam {
+      stroke: yellow;
+      stroke-width: 2px;
+      stroke-opacity: 1
+  }
+  
+  .shapedbline {
+      stroke: green;
+      stroke-width: 1px;
+      stroke-opacity: 1
+  }
+  
+  .shapesidered {
+      stroke: red;
+      stroke-width: 1.5px;
+      fill: none
+  }
+  
+  .shapesidepurple {
+      stroke: purple;
+      stroke-width: 1.5px;
+      fill: none
+  }
+  
+  .shapesideorange {
+      stroke: orange;
+      stroke-width: 1.5px;
+      fill: none
+  }
+  
+  .shapesidegold {
+      stroke: goldenrod;
+      stroke-width: 1.5px;
+      fill: none
+  }
+  
+  .shapesideblack {
+      stroke: black;
+      stroke-width: 1.5px;
+      fill: none
+  }
+  
+  .shapesplash {
+      stroke: none;
+      fill: yellow;
+      fill-opacity: .1
+  }
+  
+  .sideshape {
+      stroke: none;
+      fill: yellow;
+      fill-opacity: .1
+  }
+  
+  .sideshapearc {
+      stroke: green;
+      stroke-width: 1px;
+      stroke-opacity: 1;
+      fill: yellow;
+      fill-opacity: .1
+  }
+  
+  .splashside {
+      stroke: green;
+      stroke-width: 1px;
+      stroke-opacity: 1
+  }
+  
+  .shapeseam {
+      stroke: red;
+      stroke-width: 1px;
+      stroke-dasharray: 5,5;
+      stroke-opacity: 1;
+      fill-opacity: .1
+  }
+  /*.shapeside {
       stroke: blue;
       stroke-width: 1.5px;
       fill: none;
@@ -330,9 +477,6 @@
       stroke-width: 1.5px;
       fill: none;
   }
-  .shapemarker {
-    /*font-size:11px;*/  
-  }
   .shapesplash {
       stroke: none;
       fill: yellow;    
@@ -361,7 +505,7 @@
       stroke-dasharray:5,5;
       stroke-opacity: 1.0;
       fill-opacity: 0.1;
-  }
+  }*/
   .ns-handle {
       stroke: red;
       stroke-width: 5px;

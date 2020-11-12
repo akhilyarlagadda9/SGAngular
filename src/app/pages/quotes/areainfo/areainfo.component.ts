@@ -58,7 +58,10 @@ export class AreainfoComponent implements OnInit {
   ActionSetDefaultArea(areaId:number){
     let area = this.arealist.find(s => s.ID == areaId);
     this.areaInfo = area;
-    if(this.arealist != null){this.GetAreaName(areaId);}
+    if(this.arealist != null){this.GetAreaName(areaId);}   
+    let areaindex = this.getareaindexbyareaid(this.AreaID);
+    console.log(areaindex);
+    QBRinitdrawing31('quote',areaindex);
   }
 
   // ActionGetAreaList() {

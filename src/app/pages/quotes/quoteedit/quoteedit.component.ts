@@ -60,9 +60,9 @@ export class QuoteeditComponent implements OnInit, PipeTransform {
   ActionAreaList(typeId: number) {
     _qscope.quote.header.Version.AreaList = this.qrepservice.areaslist;
     _qscope.quote.header.Version.AreaID = 0;
-    if (typeId == 0) {
-      this.selectedtabtype = 2;
-    }
+    // if (typeId == 0) {
+    //   this.selectedtabtype = 2;
+    // }
   }
   ActionGoToHome() {
     this.ActionCloseQuoteInfo();
@@ -76,13 +76,77 @@ export class QuoteeditComponent implements OnInit, PipeTransform {
         this.versionList = this.headerInfo.VersionList;
         this.service.ActionVersionInfo2(this.qprmsobj.versionid, this.qprmsobj.quoteid, 0).subscribe(data => {
           this.headerInfo.Version = data;
+          this.calclastpaymentscheduleamt(this.headerInfo.Version.VersionPaymentScheduleList);
           this.repService.SetAreasList(data.AreaList);
           this.SetVersionInfo(0);
         })
       },
       error => console.log(error));
   }
-
+  calclastpaymentscheduleamt(quotepayschedulelist) {
+    //ref fee
+    let refFeepencentage = this.findpercentageval(this.headerInfo.Version.TotalAmt - this.headerInfo.Version.RefAmt, this.headerInfo.Version.TotalAmt);
+    //discount
+    let areadiscount = this.getareadiscountAmt();
+    let schcount = this.getschpaycount(quotepayschedulelist);
+    //disc,tax
+    let discamt = this.qrepservice.roundToTwo((this.headerInfo.Version.DiscountAmt - areadiscount) / schcount);
+    let taxamt = this.qrepservice.roundToTwo(this.headerInfo.Version.TaxAmt / schcount);
+    //calculations
+    for (let i = 0; i < quotepayschedulelist.length; i++) {
+        let payschdule = quotepayschedulelist[i];
+        let obj = this.getareapaymentscheduletotalamt(payschdule.PaymentTypeID);
+        let totalamount = obj.totalamt;
+        if (totalamount != 0) {
+            //fee
+            totalamount = totalamount + this.qrepservice.convertToFloat(obj.totalamtwithdiscount * (refFeepencentage / 100));
+            //total - disc
+            totalamount = this.qrepservice.convertToFloat(totalamount + taxamt - discamt);
+            //totals
+            payschdule.SignAmt = totalamount * (payschdule.DueSigning / 100);
+            payschdule.TemplateAmt = totalamount * (payschdule.DueTeamplate / 100);
+            payschdule.OtherAmt = totalamount * (payschdule.DueOther / 100);
+            payschdule.FinalAmt = totalamount * (payschdule.DueInstall / 100);
+            payschdule.NetTermAmt = totalamount;
+        }
+    }        
+}
+getareadiscountAmt() {
+  let areadiscamt = 0;
+  let areas = this.headerInfo.Version.AreaList;
+  for (let i = 0; i < areas.length; i++) {
+      areadiscamt += areas[i].AreaDiscAmt;
+  }
+  return areadiscamt;
+}
+findpercentageval(cost, price) {
+    let markValue = 0;
+    markValue = ((price - cost) / cost) * 100;
+    markValue = this.qrepservice.roundToTwo(markValue);
+    return markValue;
+}
+getschpaycount(quotepayschedulelist) {
+  let count = 0;
+  for (let i = 0; i < quotepayschedulelist.length; i++) {
+      let payschdule = quotepayschedulelist[i];
+      let obj = this.getareapaymentscheduletotalamt(payschdule.PaymentTypeID);
+      if (obj.totalamt != 0) {
+          count += 1;
+      }
+  }
+  return count;
+}
+getareapaymentscheduletotalamt(paymenttypeid) {
+  let obj = { totalamt: 0, totalamtwithdiscount: 0 };
+  let areas = this.headerInfo.Version.AreaList;
+  for (let i = 0; i < areas.length; i++) {
+      if (areas[i].PaymentTypeID == paymenttypeid) {
+          obj.totalamt += areas[i].TotalAmt;
+          obj.totalamtwithdiscount += areas[i].TotalAmt + areas[i].AreaDiscAmt;
+      }
+  }
+  return obj;
+}
   ActionLoadTabInfo(componet: any) {
     this.selectedtabtype = componet; this.selChildTabId = 1;
     if (componet == 1 || componet == 2) {
@@ -94,6 +158,7 @@ export class QuoteeditComponent implements OnInit, PipeTransform {
     this.service.ActionVersionInfo2(this.qprmsobj.versionid, this.qprmsobj.quoteid, 0).subscribe(data => {
       this.headerInfo.Version = data;
       this.repService.SetAreasList(data.AreaList);
+      this.calclastpaymentscheduleamt(this.headerInfo.Version.VersionPaymentScheduleList);
       this.qprmsobj.statusId = data.StatusID;
       this.SetVersionInfo(1);
     })

@@ -46,16 +46,23 @@ export class QuoteeditComponent implements OnInit, PipeTransform {
       this.ActionGetPhaseList();
     }
   }
-  ActionAreaList(typeId: number) {
-    this.service.ActionQuoteAreaList(this.qprmsobj.versionid, this.qprmsobj.phaseid).subscribe(data => {
-      data;
-      _qscope.quote.header.Version.AreaList = data;
-      _qscope.quote.header.Version.AreaID = 0;
-      if (typeId == 0) {
-        this.selectedtabtype = 2;
-      }
+  // ActionAreaList(typeId: number) {
+  //   this.service.ActionQuoteAreaList(this.qprmsobj.versionid, this.qprmsobj.phaseid).subscribe(data => {
+  //     data;
+  //     _qscope.quote.header.Version.AreaList = data;
+  //     _qscope.quote.header.Version.AreaID = 0;
+  //     if (typeId == 0) {
+  //       this.selectedtabtype = 2;
+  //     }
 
-    })
+  //   })
+  // }
+  ActionAreaList(typeId: number) {
+    _qscope.quote.header.Version.AreaList = this.qrepservice.areaslist;
+    _qscope.quote.header.Version.AreaID = 0;
+    if (typeId == 0) {
+      this.selectedtabtype = 2;
+    }
   }
   ActionGoToHome() {
     this.ActionCloseQuoteInfo();
@@ -75,7 +82,7 @@ export class QuoteeditComponent implements OnInit, PipeTransform {
       },
       error => console.log(error));
   }
- 
+
   ActionLoadTabInfo(componet: any) {
     this.selectedtabtype = componet; this.selChildTabId = 1;
     if (componet == 1 || componet == 2) {
@@ -273,7 +280,7 @@ export class QuoteeditComponent implements OnInit, PipeTransform {
   }
   SetVersionInfo(typeId) {
     _qscope.quote.header = this.headerInfo;
-    if (this.navParams.data.layoutId == 2 || typeId == 1) {
+    if (this.navParams.data.layoutId == 2 || typeId == 1 || typeId == 0) {
       this.ActionAreaList(typeId);
     }
     this.UpdateColor();

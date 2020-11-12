@@ -36,6 +36,8 @@ export class CalendarsettingComponent implements OnInit {
     this.calObj.IsViewChange = true;
     if(model.Id == 5){
       this.calObj.CalendarDays = 7;
+    }else{
+      this.calObj.CalendarDays = 3;
     }
    }
   }

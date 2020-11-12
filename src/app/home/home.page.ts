@@ -25,27 +25,30 @@ export class HomePage {
     this.LoadCompanyAndUser();
   }
 
-  ActionLoadModule(path: string) {
-    let viewName = "";
-    if (path == "/home/quotelist") {
-      viewName = "Quote To QuoteList";
-    }
-    else {
-      viewName = "Scheduling";
-    }
-    let audt = new Audit();
-    audt.reqStartTime = new Date().getTime();
-    audt.viewName = viewName;
-    const strFullAddress = this.auditService.geocodeAddress();
-    strFullAddress.then(res => {
-      audt.location = res;
-      this.navCtrl.navigateRoot(path, { state: { audt } });
-    }).catch(error => {
-      audt.location = error;
-      this.navCtrl.navigateRoot(path, { state: { audt } });
-    });
-  }
-
+  // ActionLoadModule(path: string) {
+  //   let viewName = "";
+  //   if (path == "/home/quotelist") {
+  //     viewName = "Quote To QuoteList";
+  //   }
+  //   else {
+  //     viewName = "Scheduling";
+  //   }
+  //   let audt = new Audit();
+  //   audt.reqStartTime = new Date().getTime();
+  //   audt.viewName = viewName;
+  //   const strFullAddress = this.auditService.geocodeAddress();
+  //   strFullAddress.then(res => {
+  //     audt.location = res;
+  //     this.navCtrl.navigateRoot(path, { state: { audt } });
+  //   }).catch(error => {
+  //     audt.location = error;
+  //     this.navCtrl.navigateRoot(path, { state: { audt } });
+  //   });
+  // }
+  ActionLoadModule(path:string){
+    this.navCtrl.navigateRoot(path);
+   }
+  
   ActionLogout() {
     this.navCtrl.navigateRoot('/login');
   }

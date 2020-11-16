@@ -136,7 +136,7 @@
                             <ion-icon name="mail"></ion-icon> {{contact.Email}}
                         </p>
                         <p>
-                            <ion-icon name="call"></ion-icon> {{contact.Phone}}
+                            <ion-icon name="call"></ion-icon> ({{contact.Phone | slice:0:3}}) {{contact.Phone | slice:3:6}} - {{contact.Phone | slice:6:10}}
                         </p>
                     </ion-label>
                 </ion-col>
